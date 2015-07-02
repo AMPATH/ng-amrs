@@ -1,9 +1,5 @@
-(function(){
-	'use strict';
-	
-	angular
-    .module('authentication', [
-   		
-  ]);
-	
+(function() {
+'use strict';
+angular
+    .module('authentication', []);
 })();
