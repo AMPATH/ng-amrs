@@ -34,7 +34,13 @@
       templateUrl: 'views/appDashboard/about.html',
       controller: 'AboutCtrl',
       data: { requireLogin: true }
-    });
+    })
+    .state('dashboard', {
+    url: '/dashboard',
+    templateUrl: 'views/authentication/login.html',
+    controller: 'AboutCtrl',
+    data: { requireLogin: true }
+  });
 
   }).run(function($rootScope, $state, $location) {
 
