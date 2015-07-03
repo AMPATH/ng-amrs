@@ -1,8 +1,8 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('OpenMRS_RestServices', [
+  angular
+        .module('OpenmrsRestServices', [
             'base64',
             'ngResource'
         ]);

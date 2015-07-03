@@ -1,33 +1,32 @@
-/*jshint -W003 */
-/*jshint -W026 */
+/*jshint -W003, -W026, -W117, -W098 */
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('OpenMRS_RestServices')
-        .service('OpenMRS_Settings', Service);
+  angular
+        .module('OpenmrsRestServices')
+        .service('OpenmrsSettings', OpenmrsSettings);
 
-    Service.$inject = [];
+  OpenmrsSettings.$inject = [];
 
-    function Service() {
-        var serviceDefinition;
-        var restUrlBaseList = ['https://test1.ampath.or.ke:8443/amrs/ws/rest/v1/'];
-        var restUrlBase = restUrlBaseList[0];
+  function OpenmrsSettings() {
+    var serviceDefinition;
+    var restUrlBaseList = ['https://test1.ampath.or.ke:8443/amrs/ws/rest/v1/'];
+    var restUrlBase = restUrlBaseList[0];
 
-        serviceDefinition = {
-          getCurrentRestUrlBase:getCurrentRestUrlBase,
-          setCurrentRestUrlBase:setCurrentRestUrlBase,
-          restUrlBase:restUrlBase
+    serviceDefinition = {
+          getCurrentRestUrlBase: getCurrentRestUrlBase,
+          setCurrentRestUrlBase: setCurrentRestUrlBase,
+          restUrlBase: restUrlBase
         };
-        return serviceDefinition;
+    return serviceDefinition;
 
-        function getCurrentRestUrlBase() {
+    function getCurrentRestUrlBase() {
           return restUrlBase;
         }
 
-        function setCurrentRestUrlBase(url) {
+    function setCurrentRestUrlBase(url) {
           restUrlBase = url;
         }
 
-    }
+  }
 })();

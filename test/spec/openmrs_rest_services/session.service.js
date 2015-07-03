@@ -1,10 +1,10 @@
-//jshint -W026
+/*jshint -W026 */
 (function() {
-    'use strict';
+  'use strict';
 
-    describe('Open MRS Session Service Unit Tests', function() {
+  describe('Open MRS Session Service Unit Tests', function() {
       beforeEach(function() {
-        module('OpenMRS_RestServices');
+        module('OpenmrsRestServices');
       });
 
       var baseURl = 'https://test1.ampath.or.ke:8443/amrs/ws/rest/v1/';
@@ -13,55 +13,60 @@
         onSuccessCalled:false,
         onFailedCalled:false,
         message:null,
-        onSuccessfulAuthentication: function(){
+        onSuccessfulAuthentication: function() {
           callbacks.onSuccessCalled = true;
         },
-        onFailedAuthentication: function(message){
+
+        onFailedAuthentication: function(message) {
           callbacks.onFailedCalled = true;
           callbacks.message = message;
         }
       };
 
-      var httpBackend, sessionService;
+      var httpBackend;
+      var sessionService;
 
       var mockAuthenticatedSession = {
         authenticated:true,
         sessionId:'test-authenticated-session'
       };
 
-      beforeEach(inject(function ($injector) {
+      beforeEach(inject(function($injector) {
         httpBackend = $injector.get('$httpBackend');
         sessionService = $injector.get('SessionResService');
       }));
 
-      afterEach (function () {
+      afterEach (function() {
         httpBackend.verifyNoOutstandingExpectation ();
+
         //httpBackend.verifyNoOutstandingRequest (); expectation is sufficient for now
       });
 
-      it('should have Session service defined', function () {
+      it('should have Session service defined', function() {
         expect(sessionService).toBeDefined();
       });
 
-      it('should make an api call to the session resource when getSession is called', function(){
-        httpBackend.expectGET(baseURl+ 'session').respond(mockAuthenticatedSession);
-        sessionService.currentSession =null;
-        sessionService.getSession(function(){}, function(){});
+      it('should make an api call to the session resource when getSession is called', function() {
+        httpBackend.expectGET(baseURl + 'session').respond(mockAuthenticatedSession);
+        sessionService.currentSession = null;
+        sessionService.getSession(function() {}, function() {});
+
         httpBackend.flush();
         expect(sessionService.currentSession).toEqual(mockAuthenticatedSession.sessionId);
       });
 
-      it('should make an api delete session call to the session resource when logout is called', function(){
-        debugger;
-        httpBackend.expect('DELETE',baseURl+ 'session').respond(mockAuthenticatedSession);
-        sessionService.currentSession =null;
-        sessionService.logout(function(){});
+      it('should make an api delete session call to the session resource when logout is called', function() {
+        httpBackend.expect('DELETE', baseURl + 'session').respond(mockAuthenticatedSession);
+        sessionService.currentSession = null;
+        sessionService.logout(function() {});
+
         httpBackend.flush();
+
         //expect(sessionService.currentSession).toEqual(mockAuthenticatedSession.sessionId);
       });
 
-      it('should call the onSuccess callback getSession request successfully returns a session', function(){
-        httpBackend.expectGET(baseURl+ 'session').respond(mockAuthenticatedSession);
+      it('should call the onSuccess callback getSession request successfully returns a session', function() {
+        httpBackend.expectGET(baseURl + 'session').respond(mockAuthenticatedSession);
         callbacks.onSuccessCalled = false;
         callbacks.onFailedCalled = false;
         sessionService.getSession(callbacks.onSuccessfulAuthentication, callbacks.onFailedAuthentication);
@@ -70,8 +75,8 @@
         expect(callbacks.onFailedCalled).toEqual(false);
       });
 
-      it('should call the onFailed callback when getSession request is not successfull', function(){
-        httpBackend.expectGET(baseURl+ 'session').respond(500);
+      it('should call the onFailed callback when getSession request is not successfull', function() {
+        httpBackend.expectGET(baseURl + 'session').respond(500);
         callbacks.onSuccessCalled = false;
         callbacks.onFailedCalled = false;
         callbacks.message = '';
