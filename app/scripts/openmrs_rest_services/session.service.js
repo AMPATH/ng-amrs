@@ -1,18 +1,17 @@
-//jshint -W003
-//jshint -W098
+/*jshint -W003, -W098, -W117, -W026 */
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('OpenMRS_RestServices')
-        .service('SessionResService', Service);
+  angular
+        .module('OpenmrsRestServices')
+        .service('SessionResService', SessionResService);
 
-    Service.$inject = ['OpenMRS_Settings','$resource'];
+  SessionResService.$inject = ['OpenmrsSettings', '$resource'];
 
-    function Service(OpenmrsSettings, $resource) {
+  function SessionResService(OpenmrsSettings, $resource) {
         var serviceDefinition;
         var currentSession;
-        serviceDefinition ={
+        serviceDefinition = {
           getResource:getResource,
           getSession:getSession,
           currentSession:currentSession,
@@ -20,30 +19,31 @@
         };
         return serviceDefinition;
 
-        function getResource(){
+        function getResource() {
           return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'session');
         }
 
         function getSession(successCallback, failedCallback) {
           var resource = getResource();
           return resource.get({}).$promise
-          .then(function(response){
+          .then(function(response) {
             serviceDefinition.currentSession = response.sessionId;
             successCallback(response);
           })
-          .catch(function(error){
+          .catch(function(error) {
             serviceDefinition.currentSession = null;
-            failedCallback('Error processing request',error);
+            failedCallback('Error processing request', error);
             console.error(error);
           });
         }
+
         function logout(callback) {
           var resource = getResource();
           return resource.delete({}).$promise
-          .then(function(response){
+          .then(function(response) {
             callback(response);
           })
-          .catch(function(error){
+          .catch(function(error) {
             callback(error);
             console.error(error);
           });
