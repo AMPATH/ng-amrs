@@ -3,6 +3,7 @@
 
     angular
         .module('OpenMRS_RestServices', [
-            'base64'
+            'base64',
+            'ngResource'
         ]);
 })();
