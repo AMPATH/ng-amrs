@@ -13,6 +13,7 @@ module.exports = function(config) {
     // base path, that will be used to resolve files and exclude
     basePath: '../',
 
+
     // testing framework to use (jasmine/mocha/qunit/...)
     // as well as any additional frameworks (requirejs/chai/sinon/...)
     frameworks: [
@@ -35,6 +36,7 @@ module.exports = function(config) {
       'bower_components/angular-base64/angular-base64.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
+      'app/scripts/**/*.init.js',
       "app/scripts/**/*.js",
       "test/mock/**/*.js",
       "test/spec/**/*.js"
@@ -56,7 +58,7 @@ module.exports = function(config) {
     // - PhantomJS
     // - IE (only Windows)
     browsers: [
-      "PhantomJS"
+      'PhantomJS'
     ],
 
     // Which plugins to enable
