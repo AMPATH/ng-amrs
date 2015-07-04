@@ -40,9 +40,9 @@ module.exports = function(config) {
       'bower_components/bardjs/dist/bard-ngRouteTester.js',
       // endbower
       'app/scripts/**/*.module.js',
-      "app/scripts/**/*.js",
-      "test/mock/**/*.js",
-      "test/spec/**/*.js"
+      'app/scripts/**/*.js',
+      'test/mock/**/*.js',
+      'test/spec/**/*.js'
     ],
 
     // list of files / patterns to exclude

@@ -7,7 +7,7 @@
         module('OpenmrsRestServices');
       });
 
-      var baseURl = 'https://test1.ampath.or.ke:8443/amrs/ws/rest/v1/';
+      var baseURl = 'https://etl1.ampath.or.ke:8443/amrs/ws/rest/v1/';
 
       var callbacks = {
         onSuccessCalled:false,

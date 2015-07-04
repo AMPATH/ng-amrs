@@ -39,24 +39,28 @@
     .state('dashboard', {
     url: '/dashboard',
     templateUrl: 'views/authentication/login.html',
-    controller: 'AboutCtrl',
+    controller: 'LoginCtrl',
     data: { requireLogin: true }
-  });
+  })
+  .state('login', {
+  url: '/login',
+  templateUrl: 'views/authentication/login.html',
+  controller: 'LoginCtrl',
+  data: { requireLogin: false }
+});
 
-  }).run(function($rootScope, $state, $location) {
+  }).run(function($rootScope, $state, $location, AuthService) {
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
 
-      /*   var shouldLogin = toState.data !== undefined && toState.data.requireLogin && !Authentication.isAuthenticated ;
-         if(shouldLogin)
-         {
-           $state.go('login',{onSuccessRout:toState, onSuccessParams:toParams});
-           event.preventDefault();
-           return;
-         }
-         //else navigate to page
-         */
+      var shouldLogin = toState.data !== undefined && toState.data.requireLogin && !AuthService.authenticated;
+      if (shouldLogin) {
+        $state.go('login', {onSuccessRout:toState, onSuccessParams:toParams});
+        event.preventDefault();
+        return;
+      }
 
+      //else navigate to page
     });
   });
 })();

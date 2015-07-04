@@ -6,28 +6,53 @@
         .module('authentication')
         .factory('AuthService', AuthService);
 
-  AuthService.$inject = ['$resource'];
+  AuthService.$inject = ['$base64', '$http', 'SessionResService', '$location'];
 
-  function AuthService($resource) {
-    var baseUrl = 'https://etl1.ampath.or.ke:8443/amrs/ws/rest/v1/'; //this should be configurable moving forward but we'll use it as it is for now
+  function AuthService(base64, $http, session, $location) {
     var service = {
-      getSession: getSession,
-      isAuthenticated: isAuthenticated
+      isAuthenticated: isAuthenticated,
+      setCredentials: setCredentials,
+      clearCredentials: clearCredentials,
+      authenticated: false
     };
 
     return service;
 
-    function getSessionResource() {
-      return $resource(baseUrl + 'session', {}, {query:{method: 'GET', isArray:false}});
-    }
-
-    function getSession() {
-      //to do stuff
-
-    }
-
-    function isAuthenticated(CurrentUser) {
+    function isAuthenticated(CurrentUser, callback) {
       //authenticate user
+      setCredentials(CurrentUser);
+      session.getSession(function(data) {
+        //console.log(data);
+        service.authenticated = data.authenticated;
+        if (service.authenticated)
+        {
+          $location.path('/'); //go to the home page if user is authenticated
+        }
+
+        callback(data.authenticated); //return authentication status (true/false)
+
+        //console.log(service.authenticated);
+      },
+
+      function(error) {
+        console.log(error);
+        callback(error);
+      });
+
     }
+
+    function setCredentials(CurrentUser) {
+      //set user credentials
+      //console.log('set credentials base64 log');
+      //console.log(base64.encode(CurrentUser.username + ':' + CurrentUser.password));
+      $http.defaults.headers.common.Authorization = 'Basic ' + base64.encode(CurrentUser.username + ':' + CurrentUser.password);
+
+    }
+
+    function clearCredentials() {
+      //clear user credentials
+      $http.defaults.headers.common.Authorization = 'Basic';
+    }
+
   }
 })();

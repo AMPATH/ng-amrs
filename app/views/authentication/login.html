@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="LoginCtrl">
   <form role="form" class="form-horizontal">
     <div>
       <div class="form-group">
@@ -7,15 +7,15 @@
       <div class="form-group">
         <label for="username" class="control-label col-sm-6">Username:</label>
         <div class="col-sm-6">
-          <input type="text" name="username" id="username" ng-model="username"/>
+          <input type="text" name="username" id="username" ng-model="CurrentUser.username"/>
         </div>
       </div>
       <div class="form-group">
         <label for="password" class="control-label col-sm-6">Password:</label>
         <div class="col-sm-6">
-            <input type="password" name="password" ng-model="password"/>
+            <input type="password" name="password" ng-model="CurrentUser.password"/>
         </div>
-      </diV>
+      </div>
       <div class="form-group">
         <div align="center">
           <input type="button" id="login" value="Login" ng-click="authenticate()"/>
@@ -23,7 +23,7 @@
 
       </div>
       <div class="form-group">
-        <div style="color:red" class="col-sm-12">{{errors}}</div>
+        <div style="color:red; text-align:center;" class="col-sm-12">{{errors}}</div>
       </div>
 
     </div>
