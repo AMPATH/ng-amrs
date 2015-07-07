@@ -5,14 +5,14 @@ angular
         .module('authentication')
         .controller('LoginCtrl', LoginCtrl);
 
-LoginCtrl.$inject = ['$scope', 'AuthService', 'SessionModel'];
+LoginCtrl.$inject = ['$scope', 'AuthService'];
 
-function LoginCtrl($scope, auth, SessionModel) {
+function LoginCtrl($scope, auth) {
   $scope.errors = '';
   $scope.CurrentUser = {username:'',
               password:''
   };
-  $scope.session = new SessionModel.session();
+  
   $scope.authenticate = function() {
     //to do authenticate
     console.log('you clicked me');
