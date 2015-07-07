@@ -6,9 +6,9 @@
         .module('authentication')
         .factory('AuthService', AuthService);
 
-  AuthService.$inject = ['$base64', '$http', 'SessionResService', '$location'];
+  AuthService.$inject = ['$base64', '$http', 'SessionResService', '$location', 'SessionModel'];
 
-  function AuthService(base64, $http, session, $location) {
+  function AuthService(base64, $http, session, $location, SessionModel) {
     var service = {
       isAuthenticated: isAuthenticated,
       setCredentials: setCredentials,
@@ -23,7 +23,8 @@
       setCredentials(CurrentUser);
       session.getSession(function(data) {
         //console.log(data);
-        service.authenticated = data.authenticated;
+        var session = new SessionModel.session(data.sessionId,data.authenticated);
+        service.authenticated = session.isAuthenticated();
         if (service.authenticated)
         {
           $location.path('/'); //go to the home page if user is authenticated
