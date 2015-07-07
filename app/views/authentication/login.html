@@ -28,5 +28,10 @@
 
     </div>
   </form>
+  <div>
+    <input type="text" name="username" id="username" ng-model="session.sessionId" ng-model-options="{getterSetter:true}" />
+    <br/><span>{{session.sessionId()}}</span>
+    <br/><span>{{session.openmrsModel()}}</span>
+  </div>
 
 </div>
