@@ -39,38 +39,39 @@ jshint -W098, -W117, -W030
 
     it('login controller should be created successfully', function() {
       //debugger;
-      expect(controller).toBeDefined();
+      expect(controller).to.exist;
     });
 
     it('currentUser Object should be created successfully', function() {
       //debugger;
-      expect(scope.CurrentUser).toBeDefined();
+      expect(scope.CurrentUser).to.exist;
     });
 
     it('currentUser Object should have empty strings', function() {
       //debugger;
       currentUser = {username:'', password:''};
-      expect(scope.CurrentUser).toEqual(currentUser);
+      expect(scope.CurrentUser).to.deep.equal(currentUser);
     });
 
     it('authenticate function should be successfully defined', function() {
       //debugger;
       currentUser = {username:'', password:''};
-      expect(scope.authenticate).toBeDefined();
+      expect(scope.authenticate).to.exist;
     });
 
     describe('authenticate function:', function() {
       it('User login should be successfull', function() {
         currentUser = {username:'test', password:'test'};
         console.info(currentUser);
+        //debugger;
         var login = false;
         var authenticate = function() {
-          AuthService.isAuthenticated(currentUser, function(data) {
+          authService.isAuthenticated(currentUser, function(data) {
             login = data;
           });
         };
-
-        expect(login).toBe(false);
+        authenticate();
+        expect(login).to.equal(true);
       });
     });
   });

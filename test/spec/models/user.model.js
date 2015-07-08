@@ -13,7 +13,7 @@
       }));
 
       it('should have User Model Factory defined', function() {
-        expect(userModelFactory).toBeDefined();
+        expect(userModelFactory).to.exist;
       });
 
       it('should always create user model with all required members defined ', function() {
@@ -22,21 +22,21 @@
         var userName = 'username' ;
         var personUuId = 'personuuid' ;
         var password =  'password' ;
-        
+
         var model = new userModelFactory.user(userName, personUuId, password, uuId, systemId);
-        
-        expect(model.uuId).toBeDefined();
-        expect(model.systemId).toBeDefined();
-        expect(model.userName).toBeDefined();
-        expect(model.personUuId).toBeDefined();
-        expect(model.password).toBeDefined();
-        
-        expect(model.uuId()).toEqual(uuId);
-        expect(model.systemId()).toEqual(systemId);
-        expect(model.userName()).toEqual(userName);
-        expect(model.personUuId()).toEqual(personUuId);
-        expect(model.password()).toEqual(password);
-        
+
+        expect(model.uuId).to.exist;
+        expect(model.systemId).to.exist;
+        expect(model.userName).to.exist;
+        expect(model.personUuId).to.exist;
+        expect(model.password).to.exist;
+
+        expect(model.uuId()).to.equal(uuId);
+        expect(model.systemId()).to.equal(systemId);
+        expect(model.userName()).to.equal(userName);
+        expect(model.personUuId()).to.equal(personUuId);
+        expect(model.password()).to.equal(password);
+
       });
 
       it('should always create user model that returns a valid openmrs user payload', function() {
@@ -49,7 +49,7 @@
 
         var model = new userModelFactory.user(expectedOpenmrsUser.username,
           expectedOpenmrsUser.person, expectedOpenmrsUser.password);
-          expect(model.openmrsModel()).toEqual(expectedOpenmrsUser);
+        expect(model.openmrsModel()).to.deep.equal(expectedOpenmrsUser);
       });
 
     });
