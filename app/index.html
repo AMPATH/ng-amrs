@@ -22,8 +22,8 @@
 
     <!-- Add your site or application content here -->
     <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container">
+      <nav class="navbar navbar-default navbar-fixed-top navbar-inverted" role="navigation">
+        <div class="container-fluid">
           <div class="navbar-header">
 
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
@@ -33,30 +33,48 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#/">ngAmrs</a>
+            <a class="navbar-brand" href="#/" rel="home" title="point of care">
+              <img style="max-width:100px; margin-top: -10px; padding-bottom: 2px;"
+                   src="images/logo.png" alt="P.O.C">
+            </a>
           </div>
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav">
               <li ui-sref-active="active" ui-sref="home"><a href="#/">Home</a></li>
-              <li ui-sref-active="active"><a ui-sref="about" ng-href="#/about">About</a></li>
-              <li ui-sref-active="active"><a ui-sref="dashboard" ng-href="#/dashboard">Dashboard</a></li>
+              <li ui-sref-active="active" ui-sref="about"><a href="#/">Patient Search</a></li>
+              <li ui-sref-active="active" class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" >
+                  Dashboards <b class="caret"></b></a>
+                <ul role="menu" class="dropdown-menu">
+                        <li><a ng-href="#/dashboard">Clinic Dashboard</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Other</a></li>
+                </ul>
+              </li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+              <li ui-sref-active="active"><a ui-sref="login" ng-href="#/dashboard">Sign In</a></li>
             </ul>
           </div>
         </div>
-      </div>
+      </nav>
     </div>
 
     <div class="container">
     <div ui-view></div>
     </div>
 
-    <div class="footer">
-      <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+
+      <div class="navbar navbar-default navbar-fixed-bottom">
+        <div class="footer container">
+        <p class="pull-right"><span class="glyphicon glyphicon-copyright-mark"></span> AMPATH 2015</p>
+        </div>
       </div>
-    </div>
+
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
