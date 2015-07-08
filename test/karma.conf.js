@@ -13,11 +13,10 @@ module.exports = function(config) {
     // base path, that will be used to resolve files and exclude
     basePath: '../',
 
-
     // testing framework to use (jasmine/mocha/qunit/...)
     // as well as any additional frameworks (requirejs/chai/sinon/...)
     frameworks: [
-      "jasmine"
+      'chai', 'mocha', 'sinon'
     ],
 
     // list of files / patterns to load in the browser
@@ -58,16 +57,24 @@ module.exports = function(config) {
     // - Firefox
     // - Opera
     // - Safari (only Mac)
-    // - PhantomJS
+    // - P'hantomJS
     // - IE (only Windows)
     browsers: [
       'PhantomJS'
     ],
 
+    // reporters configuration
+    reporters: ['mocha'],
+
     // Which plugins to enable
     plugins: [
-      "karma-phantomjs-launcher",
-      "karma-jasmine"
+      'karma-phantomjs-launcher',
+
+      //"karma-chrome-launcher",
+      'karma-mocha-reporter',
+      'karma-sinon',
+      'karma-mocha',
+      'karma-chai'
     ],
 
     // Continuous Integration mode
@@ -78,7 +85,7 @@ module.exports = function(config) {
 
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_INFO
 
     // Uncomment the following lines if you are using grunt's server to run the tests
     // proxies: {
