@@ -3,12 +3,12 @@
   'use strict';
 
   angular
-        .module('authentication')
+        .module('OpenmrsRestServices')
         .factory('AuthService', AuthService);
 
-  AuthService.$inject = ['$base64', '$http', 'SessionResService', '$location', 'SessionModel'];
+  AuthService.$inject = ['$base64', '$http', 'SessionResService', '$state', 'SessionModel'];
 
-  function AuthService(base64, $http, session, $location, SessionModel) {
+  function AuthService(base64, $http, session, $state, SessionModel) {
     var service = {
       isAuthenticated: isAuthenticated,
       setCredentials: setCredentials,
@@ -23,11 +23,15 @@
       setCredentials(CurrentUser);
       session.getSession(function(data) {
         //console.log(data);
-        var session = new SessionModel.session(data.sessionId,data.authenticated);
+        var session = new SessionModel.session(data.sessionId, data.authenticated);
         service.authenticated = session.isAuthenticated();
         if (service.authenticated)
         {
-          $location.path('/'); //go to the home page if user is authenticated
+          console.log('routing to the right page');
+          //$location.path('/'); //go to the home page if user is authenticated or
+          $state.go('home');
+          //console.log('Resolved View');
+          //console.log($state.go('home'));
         }
 
         callback(data.authenticated); //return authentication status (true/false)

@@ -11,7 +11,7 @@ jshint -W098, -W117, -W030
     var scope;
 
     beforeEach(function() {
-      module('authentication');
+      module('ngAmrsApp');
 
       //bard.inject('$scope', 'AuthService', '$rootScope');
     });
