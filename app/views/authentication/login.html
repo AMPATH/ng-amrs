@@ -1,8 +1,10 @@
-<div class="container-fluid" ng-controller="LoginCtrl">
-  <form role="form" class="form-horizontal">
+<div ng-controller="LoginCtrl" class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6 well">
+    <form role="form" class="form-horizontal">
     <div>
       <div class="form-group">
-        <h5 style="text-align:center;">Welcome to AMPATH AMRS Point of CARE. Please log in to prooceed:</h5>
+        <h5 style="text-align:center;">Welcome to AMPATH AMRS Point of CARE.<br/>Please log in to prooceed:</h5>
       </div>
       <div class="form-group">
         <label for="username" class="control-label col-sm-6">Username:</label>
@@ -17,8 +19,8 @@
         </div>
       </div>
       <div class="form-group">
-        <div align="center">
-          <input type="button" id="login" value="Login" ng-click="authenticate()"/>
+        <div align="right" style="margin-right: 10px;">
+          <input class="btn btn-info" type="button" id="login" value="Login" ng-click="authenticate()"/>
         </div>
 
       </div>
@@ -28,4 +30,6 @@
 
     </div>
   </form>
+  </div>
+  <div class="col-md-3"></div>
 </div>
