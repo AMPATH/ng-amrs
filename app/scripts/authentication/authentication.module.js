@@ -2,6 +2,7 @@
 'use strict';
 angular
     .module('authentication', [
-      'OpenmrsRestServices'
+      'OpenmrsRestServices',
+      'models'
     ]);
 })();

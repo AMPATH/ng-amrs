@@ -12,6 +12,7 @@ function LoginCtrl($scope, auth) {
   $scope.CurrentUser = {username:'',
               password:''
   };
+  
   $scope.authenticate = function() {
     //to do authenticate
     console.log('you clicked me');
