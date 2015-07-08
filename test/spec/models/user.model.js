@@ -1,7 +1,10 @@
+/*
+jshint -W030
+*/
 (function() {
-    'use strict';
+  'use strict';
 
-    describe('UserModel Factory Unit Tests', function() {
+  describe('UserModel Factory Unit Tests', function() {
       beforeEach(function() {
         module('models');
       });
