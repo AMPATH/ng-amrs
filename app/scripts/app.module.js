@@ -19,7 +19,7 @@
     'ngSanitize',
     'ngTouch',
     'ui.router',
-    'authentication'
+    'app.context'
   ])
     .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -49,11 +49,12 @@
   data: { requireLogin: false }
 });
 
-  }).run(function($rootScope, $state, $location, AuthService) {
+  }).run(function($rootScope, $state, $location, ContextService) {
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
 
-      var shouldLogin = toState.data !== undefined && toState.data.requireLogin && !AuthService.authenticated;
+      var shouldLogin = toState.data !== undefined && toState.data.requireLogin && !ContextService.getAuthService().authenticated;
+      //console.log(shouldLogin);
       if (shouldLogin) {
         $state.go('login', {onSuccessRout:toState, onSuccessParams:toParams});
         event.preventDefault();

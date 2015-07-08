@@ -2,21 +2,21 @@
 (function() {
 'use strict';
 angular
-        .module('authentication')
+        .module('ngAmrsApp')
         .controller('LoginCtrl', LoginCtrl);
 
-LoginCtrl.$inject = ['$scope', 'AuthService'];
+LoginCtrl.$inject = ['$scope', 'ContextService'];
 
-function LoginCtrl($scope, auth) {
+function LoginCtrl($scope, context) {
   $scope.errors = '';
   $scope.CurrentUser = {username:'',
               password:''
   };
-  
+
   $scope.authenticate = function() {
     //to do authenticate
     console.log('you clicked me');
-    auth.isAuthenticated($scope.CurrentUser, function(authenticated) {
+    context.getAuthService().isAuthenticated($scope.CurrentUser, function(authenticated) {
       console.log(authenticated);
       if (!authenticated) // check if user is authenticated
       {

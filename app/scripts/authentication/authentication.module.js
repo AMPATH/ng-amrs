@@ -1,8 +1,7 @@
 (function() {
 'use strict';
 angular
-    .module('authentication', [
-      'OpenmrsRestServices',
-      'models'
+    .module('app.authentication', [
+      'app.context'
     ]);
 })();
