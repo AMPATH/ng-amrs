@@ -16,7 +16,7 @@ jshint -W098, -W117, -W003, -W026
     return service;
 
     function isAuthenticated(user, callback) {
-      jasmine.log(user);
+      console.log(user);
       if ((user.username === 'test') && (user.password === 'test'))
       {
         callback(true);

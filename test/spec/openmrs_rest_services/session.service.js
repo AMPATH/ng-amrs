@@ -43,7 +43,7 @@
       });
 
       it('should have Session service defined', function() {
-        expect(sessionService).toBeDefined();
+        expect(sessionService).to.exist;
       });
 
       it('should make an api call to the session resource when getSession is called', function() {
@@ -52,7 +52,7 @@
         sessionService.getSession(function() {}, function() {});
 
         httpBackend.flush();
-        expect(sessionService.currentSession).toEqual(mockAuthenticatedSession.sessionId);
+        expect(sessionService.currentSession).to.equal(mockAuthenticatedSession.sessionId);
       });
 
       it('should make an api delete session call to the session resource when logout is called', function() {
@@ -71,8 +71,8 @@
         callbacks.onFailedCalled = false;
         sessionService.getSession(callbacks.onSuccessfulAuthentication, callbacks.onFailedAuthentication);
         httpBackend.flush();
-        expect(callbacks.onSuccessCalled).toEqual(true);
-        expect(callbacks.onFailedCalled).toEqual(false);
+        expect(callbacks.onSuccessCalled).to.equal(true);
+        expect(callbacks.onFailedCalled).to.equal(false);
       });
 
       it('should call the onFailed callback when getSession request is not successfull', function() {
@@ -82,10 +82,10 @@
         callbacks.message = '';
         sessionService.getSession(callbacks.onSuccessfulAuthentication, callbacks.onFailedAuthentication);
         httpBackend.flush();
-        expect(callbacks.onSuccessCalled).toEqual(false);
-        expect(callbacks.onFailedCalled).toEqual(true);
-        expect(callbacks.message).toBeDefined();
-        expect(callbacks.message.trim()).not.toEqual('');
+        expect(callbacks.onSuccessCalled).to.equal(false);
+        expect(callbacks.onFailedCalled).to.equal(true);
+        expect(callbacks.message).to.exist;
+        expect(callbacks.message.trim()).not.to.equal('');
       });
 
     });
