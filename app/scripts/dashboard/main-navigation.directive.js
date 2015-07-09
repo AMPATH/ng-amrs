@@ -35,6 +35,12 @@
 
         $scope.isUserLoggedIn = false;
 
+        $scope.username = 'AKwatuha';
+
+        $scope.location = 'Ampath';
+
+        $scope.role ='S/W Programmer';
+
         $scope.$on('onUserAuthenticationDetermined',onUserAuthentionChanged);
 
 

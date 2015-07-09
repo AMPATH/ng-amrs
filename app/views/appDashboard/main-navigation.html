@@ -34,8 +34,23 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
+
           <li ng-hide="isUserLoggedIn" ui-sref-active="active"><a ui-sref="login" ng-href="#/dashboard">Sign In</a></li>
-          <li ng-show="isUserLoggedIn" ui-sref-active="active"><a ui-sref="login" ng-href="#/dashboard">Sign Out</a></li>
+          <li ui-sref-active="active" class="dropdown" ng-show="isUserLoggedIn">
+            <a data-toggle="dropdown" class="dropdown-toggle" >
+              {{username}} <span class="glyphicon glyphicon-user"></span></a>
+            <ul role="menu" class="dropdown-menu">
+              <li >
+                 <a><span>  Location: {{location}} <br/>  Role: {{role}}</span></a>
+              </li>
+              <li class="divider"></li>
+              <li  ui-sref-active="active">
+                <a ui-sref="login" ng-href="#/dashboard">
+                  <span class="glyphicon glyphicon-log-out"></span> Logout
+                </a>
+              </li>
+           </ul>
+          </li>
         </ul>
       </div>
     </div>
