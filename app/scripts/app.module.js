@@ -39,11 +39,11 @@
       controller: 'AboutCtrl',
       data: { requireLogin: true }
     })
-    .state('dashboard', {
-    url: '/dashboard',
+    .state('patientsearch', {
+    url: '/patientsearch',
     templateUrl: 'views/patientsearch/patientsearch.html',
     controller: 'PatientSearchCtrl',
-    data: { requireLogin: false }
+    data: { requireLogin: true}
   })
   .state('login', {
   url: '/login',
