@@ -34,9 +34,7 @@ module.exports = function(config) {
       'bower_components/angular-ui-router/release/angular-ui-router.js',
       'bower_components/angular-base64/angular-base64.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/sinon/index.js',
-      'bower_components/bardjs/dist/bard.js',
-      'bower_components/bardjs/dist/bard-ngRouteTester.js',
+      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       // endbower
       'app/scripts/**/*.module.js',
       'app/scripts/**/*.js',

@@ -2,7 +2,7 @@
 (function() {
 'use strict';
 angular
-        .module('ngAmrsApp')
+        .module('app.authentication')
         .controller('LoginCtrl', LoginCtrl);
 
 LoginCtrl.$inject = ['$scope', 'ContextService'];
