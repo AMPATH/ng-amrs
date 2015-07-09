@@ -11,7 +11,7 @@ jshint -W098, -W117, -W030
     var scope;
 
     beforeEach(function() {
-      module('authentication');
+      module('app.authentication');
 
       //bard.inject('$scope', 'AuthService', '$rootScope');
     });
@@ -63,6 +63,7 @@ jshint -W098, -W117, -W030
       it('User login should be successfull', function() {
         currentUser = {username:'test', password:'test'};
         console.info(currentUser);
+
         //debugger;
         var login = false;
         var authenticate = function() {
@@ -70,6 +71,7 @@ jshint -W098, -W117, -W030
             login = data;
           });
         };
+
         authenticate();
         expect(login).to.equal(true);
       });

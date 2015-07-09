@@ -21,42 +21,21 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-
-            <a class="navbar-brand" href="#/">ngAmrs</a>
-          </div>
-
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-            <ul class="nav navbar-nav">
-              <li ui-sref-active="active" ui-sref="home"><a href="#/">Home</a></li>
-              <li ui-sref-active="active"><a ui-sref="about" ng-href="#/about">About</a></li>
-              <li ui-sref-active="active"><a ui-sref="dashboard" ng-href="#/dashboard">Dashboard</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
+    <main-navigation-bar>
+    
+    </main-navigation-bar>
 
     <div class="container">
     <div ui-view></div>
     </div>
 
-    <div class="footer">
-      <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+
+      <div class="navbar navbar-default navbar-fixed-bottom">
+        <div class="footer container">
+        <p class="pull-right"><span class="glyphicon glyphicon-copyright-mark"></span> AMPATH 2015</p>
+        </div>
       </div>
-    </div>
+
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -83,10 +62,8 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-base64/angular-base64.js"></script>
-    <script src="bower_components/angular-mocks/angular-mocks.js"></script>
-    <script src="bower_components/sinon/index.js"></script>
-    <script src="bower_components/bardjs/dist/bard.js"></script>
-    <script src="bower_components/bardjs/dist/bard-ngRouteTester.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -95,13 +72,20 @@
         <script src="scripts/authentication/authentication.module.js"></script>
         <script src="scripts/models/model.module.js"></script>
         <script src="scripts/models/session.model.js"></script>
+        <script src="scripts/patientsearch/patientsearch.module.js"></script>
         <script src="scripts/openmrs_rest_services/openmrs-rest-services.module.js"></script>
+        <script src="scripts/context/context.module.js"></script>
+        <script src="scripts/context/context.service.js"></script>
         <script src="scripts/openmrs_rest_services/openmrs-settings.service.js"></script>
         <script src="scripts/openmrs_rest_services/session.service.js"></script>
         <script src="scripts/dashboard/main.js"></script>
         <script src="scripts/dashboard/about.js"></script>
-        <script src="scripts/authentication/authentication.service.js"></script>
+        <script src="scripts/dashboard/main-navigation.directive.js"></script>
+        <script src="scripts/openmrs_rest_services/authentication.service.js"></script>
         <script src="scripts/authentication/login.controller.js"></script>
+        <script src="scripts/patientsearch/patientsearch.controller.js"></script>
+        <script src="scripts/patientsearch/patientfilter.filter.js"></script>
+        <script src="scripts/openmrs_rest_services/patient_test.service.js"></script>
         <!-- endbuild -->
 </body>
 </html>

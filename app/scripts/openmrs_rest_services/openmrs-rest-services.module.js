@@ -4,6 +4,7 @@
   angular
         .module('OpenmrsRestServices', [
             'base64',
-            'ngResource'
+            'ngResource',
+            'models'
         ]);
 })();

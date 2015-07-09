@@ -19,7 +19,10 @@
     'ngSanitize',
     'ngTouch',
     'ui.router',
-    'authentication'
+    'ui.bootstrap',
+    'app.context',
+    'app.authentication',
+    'app.patientsearch'
   ])
     .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -38,9 +41,9 @@
     })
     .state('dashboard', {
     url: '/dashboard',
-    templateUrl: 'views/authentication/login.html',
-    controller: 'LoginCtrl',
-    data: { requireLogin: true }
+    templateUrl: 'views/patientsearch/patientsearch.html',
+    controller: 'PatientSearchCtrl',
+    data: { requireLogin: false }
   })
   .state('login', {
   url: '/login',
@@ -49,11 +52,12 @@
   data: { requireLogin: false }
 });
 
-  }).run(function($rootScope, $state, $location, AuthService) {
+  }).run(function($rootScope, $state, $location, ContextService) {
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
 
-      var shouldLogin = toState.data !== undefined && toState.data.requireLogin && !AuthService.authenticated;
+      var shouldLogin = toState.data !== undefined && toState.data.requireLogin && !ContextService.getAuthService().authenticated;
+      //console.log(shouldLogin);
       if (shouldLogin) {
         $state.go('login', {onSuccessRout:toState, onSuccessParams:toParams});
         event.preventDefault();
