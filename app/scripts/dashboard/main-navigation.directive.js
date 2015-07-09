@@ -1,3 +1,4 @@
+/*jshint -W003, -W098, -W117, -W026 */
 (function() {
     'use strict';
 
@@ -6,7 +7,7 @@
         .directive('mainNavigationBar', directive);
 
     function directive() {
-        var directive = {
+        var directiveDefinition = {
             restrict: 'EA',
             templateUrl: 'views/appDashboard/main-navigation.html',
             scope: {
@@ -17,7 +18,7 @@
             bindToController: true
         };
 
-        return directive;
+        return directiveDefinition;
 
         function linkFunc(scope, el, attr, ctrl) {
 
