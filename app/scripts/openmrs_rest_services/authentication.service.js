@@ -6,9 +6,9 @@
         .module('OpenmrsRestServices')
         .factory('AuthService', AuthService);
 
-  AuthService.$inject = ['$base64', '$http', 'SessionResService', '$state', 'SessionModel'];
+  AuthService.$inject = ['$base64', '$http', 'SessionResService', '$state', 'SessionModel', '$rootScope'];
 
-  function AuthService(base64, $http, session, $state, SessionModel) {
+  function AuthService(base64, $http, session, $state, SessionModel, $rootScope) {
     var service = {
       isAuthenticated: isAuthenticated,
       setCredentials: setCredentials,
@@ -30,9 +30,17 @@
           console.log('routing to the right page');
           //$location.path('/'); //go to the home page if user is authenticated or
           $state.go('home');
+
+
+
           //console.log('Resolved View');
           //console.log($state.go('home'));
         }
+        else{
+
+        }
+
+        $rootScope.$broadcast('onUserAuthenticationDetermined');
 
         callback(data.authenticated); //return authentication status (true/false)
 
