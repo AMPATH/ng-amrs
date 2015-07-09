@@ -19,7 +19,10 @@
     'ngSanitize',
     'ngTouch',
     'ui.router',
-    'app.context'
+    'ui.bootstrap',
+    'app.context',
+    'app.authentication',
+    'app.patientsearch'
   ])
     .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -38,9 +41,9 @@
     })
     .state('dashboard', {
     url: '/dashboard',
-    templateUrl: 'views/authentication/login.html',
-    controller: 'LoginCtrl',
-    data: { requireLogin: true }
+    templateUrl: 'views/patientsearch/patientsearch.html',
+    controller: 'PatientSearchCtrl',
+    data: { requireLogin: false }
   })
   .state('login', {
   url: '/login',
