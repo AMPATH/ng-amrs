@@ -20,9 +20,10 @@
     'ngTouch',
     'ui.router',
     'ui.bootstrap',
-    'app.context',
+    //'app.context',
     'app.authentication',
-    'app.patientsearch'
+    'app.patientsearch',
+    'app.patientdashboard'
   ])
     .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -30,7 +31,7 @@
       .state('home', {
       url: '/',
       templateUrl: 'views/appDashboard/main.html',
-      controller: 'MainCtrl',
+      //controller: 'AboutCtrl',
       data: { requireLogin: true }
     })
       .state('about', {
@@ -45,6 +46,12 @@
     controller: 'PatientSearchCtrl',
     data: { requireLogin: true}
   })
+  .state('patient', {
+  url: '/patient/:uuid',
+  templateUrl: 'views/appDashboard/patientdashboard.html',
+  controller: 'PatientDashboardCtrl',
+  data: { requireLogin: true}
+})
   .state('login', {
   url: '/login',
   templateUrl: 'views/authentication/login.html',
