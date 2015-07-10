@@ -1,4 +1,4 @@
-<div ng-controller="PatientSearchCtrl">
+<div ng-controller="PatientSearchCtrl" class="panel panel-info" style="padding:4px;">
 <!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.js"></script>-->
 <!-- <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script> -->
 
@@ -20,19 +20,20 @@
        <div class="col-sm-2">Identifier</div>
        <div class="col-sm-2">Given Name</div>
        <div class="col-sm-2">Middle Name</div>
-       <div class="col-sm-2">Family Name</div>
+       <div class="col-sm-1">Family Name</div>
        <div class="col-sm-2">Gender</div>
        <div class="col-sm-2">Birth Date</div>
-       <div class="col-sm-2">Age</div>
+       <div class="col-sm-1">Age</div>
     </div>
     <div class="row" ng-repeat="patient in patients = patients | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" class="small">
       <a href="#/patient/{{patient.uuid()}}">
-        <div class="col-sm-2">{{patient.identifier()[0].display.split('=')[1]}}</div>
+        <div class="col-sm-2">{{patient.identifierFormatted()}}</div>
         <div class="col-sm-2">{{patient.givenName()}}</div>
         <div class="col-sm-2">{{patient.middleName()}}</div>
-        <div class="col-sm-2">{{patient.familyName()}}</div>
-        <div class="col-sm-2">{{patient.gender()}}</div>
-        <div class="col-sm-2">{{patient.birthdate()}}</div>
+        <div class="col-sm-1">{{patient.familyName()}}</div>
+        <div class="col-sm-2">{{patient.genderFull()}}</div>
+        <div class="col-sm-2">{{patient.birthdate() | date:'yyyy-MM-dd'}}</div>
+        <div class="col-sm-1">{{patient.age()}}</div>
       </a>
 
 
