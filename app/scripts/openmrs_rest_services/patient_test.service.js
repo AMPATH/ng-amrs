@@ -18,7 +18,7 @@
     return service;
 
     function getResource() {
-          var v = 'custom:(uuid,identifiers:ref,person:(uuid,gender,birthdate,dead,deathDate,preferredName:(givenName,middleName,familyName),'
+          var v = 'custom:(uuid,identifiers:ref,person:(uuid,gender,birthdate,dead,deathDate,preferredName:(givenName,middleName,familyName),';
           v = v  + 'attributes:(uuid,value,attributeType:ref)))';
           var r = $resource(settings.getCurrentRestUrlBase() + 'patient/:uuid',
                 {uuid: '@uuid', v: v},
@@ -27,17 +27,16 @@
 
         }
 
-    function getPatientByUuid(uuid, successCallback, failedCallback) {
-          var resource = getResource();
-          return resource.get({uuid:uuid}).$promise
-          .then(function(response) {
-            successCallback(response);
-          })
-          .catch(function(error) {
-            failedCallback('Error processing request', error);
-            console.error(error);
-          });
+    function getPatientByUuid(params, callback) {
+      var PatientRes = getResource();
+
+      PatientRes.get(params,
+        function (data) {
+          //var d = new Patient(data);
+          callback(data);
         }
+      );
+    }
 
     function getPatientByName(name, successCallback, failedCallback) {
           var resource = getResource();
