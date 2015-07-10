@@ -27,7 +27,7 @@ function PatientDemographicsCtrl($scope, PatientResService) {
   $scope.patientUuid = '';
   $scope.patients = [];
   $scope.searchPatient = function() {
-    $scope.patients = PatientResService.getPatient($scope.patientUuid);
+    $scope.patients = PatientResService.getPatientQuery($scope.patientUuid);
   };
 }
 })();

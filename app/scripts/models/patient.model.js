@@ -23,19 +23,25 @@
 
     function patient(openmrsPatient) {
       //initialize private members by first checking whether the openmrPatient properties are set before assigning default values
+      console.log('patient value from the promise(REST SERVICE)');
+    //  console.log(openmrsPatient);
+
       var modelDefinition = this;
-      var _uuid= openmrsPatient.uuid||'';
-      var _name = openmrsPatient.display||'';
-      var _preferredName=openmrsPatient.preferredName.display||'';
-      var _age = openmrsPatient.age||0;
-      var _birthdate =openmrsPatient.birthdate|| '';
-      var _birthdateEstimated =openmrsPatient.birthdateEstimated|| false;
-      var _gender = openmrsPatient.gender||'';
-      var _address =mapAddress(openmrsPatient.preferredAddress)||'';
-      var _dead = openmrsPatient.dead||'';
-      var _deathDate = openmrsPatient.deathDate||'';
-      var _causeOfDeath = openmrsPatient.causeOfDeath||'';
-      var _attributes = openmrsPatient.attributes||'';
+      var _uuid = openmrsPatient.uuid || '';
+      var _identifier = openmrsPatient.identifiers || '';
+      var _givenName = openmrsPatient.person.preferredName.givenName || '';
+      var _middleName = openmrsPatient.person.preferredName.middleName  || '';
+      var _familyName = openmrsPatient.person.preferredName.familyName || '';
+      //var _preferredName=openmrsPatient.preferredName.display||'';
+      var _age = openmrsPatient.person.age||0;
+      var _birthdate =openmrsPatient.person.birthdate|| '';
+      //var _birthdateEstimated =openmrsPatient.birthdateEstimated|| false;
+      var _gender = openmrsPatient.person.gender||'';
+      //var _address =mapAddress(openmrsPatient.preferredAddress)||'';
+      var _dead = openmrsPatient.person.dead||'';
+      var _deathDate = openmrsPatient.person.deathDate||'';
+      //var _causeOfDeath = openmrsPatient.causeOfDeath||'';
+      //var _attributes = openmrsPatient.attributes||'';
 
       /*
        Below are getters and setters for private properties
@@ -43,6 +49,14 @@
        e.g _uuid is the private member and accessed via the setter below
       */
 
+      modelDefinition.identifier = function(value){
+        if(angular.isDefined(value)){
+          _identifier = value;
+        }
+        else{
+          return _identifier;
+        }
+      };
       modelDefinition.uuid = function(value){
         if(angular.isDefined(value)){
           _uuid = value;
@@ -52,12 +66,30 @@
         }
       };
 
-      modelDefinition.name = function(value){
+      modelDefinition.givenName = function(value){
         if(angular.isDefined(value)){
-          _name = value;
+          _givenName = value;
         }
         else{
-          return _name;
+          return _givenName;
+        }
+      };
+
+      modelDefinition.middleName = function(value){
+        if(angular.isDefined(value)){
+          _middleName = value;
+        }
+        else{
+          return _middleName;
+        }
+      };
+
+      modelDefinition.familyName = function(value){
+        if(angular.isDefined(value)){
+          _familyName = value;
+        }
+        else{
+          return _familyName;
         }
       };
 
@@ -79,14 +111,14 @@
         }
       };
 
-      modelDefinition.birthdateEstimated = function(value){
-        if(angular.isDefined(value)){
-          _birthdateEstimated = value;
-        }
-        else{
-          return _birthdateEstimated;
-        }
-      };
+      // modelDefinition.birthdateEstimated = function(value){
+      //   if(angular.isDefined(value)){
+      //     _birthdateEstimated = value;
+      //   }
+      //   else{
+      //     return _birthdateEstimated;
+      //   }
+      // };
 
       modelDefinition.gender  = function(value){
         if(angular.isDefined(value)){
@@ -97,41 +129,41 @@
         }
       };
 
-      modelDefinition.address = function(value){
-        if(angular.isDefined(value)){
-          _address = value;
-        }
-        else{
-          return _address;
-        }
-      };
+      // modelDefinition.address = function(value){
+      //   if(angular.isDefined(value)){
+      //     _address = value;
+      //   }
+      //   else{
+      //     return _address;
+      //   }
+      // };
 
-      modelDefinition.preferredName = function(value){
-        if(angular.isDefined(value)){
-          _preferredName = value;
-        }
-        else{
-          return _preferredName;
-        }
-      };
-
-      modelDefinition.attributes = function(value){
-        if(angular.isDefined(value)){
-          _attributes = value;
-        }
-        else{
-          return _attributes;
-        }
-      };
-
-      modelDefinition.causeOfDeath = function(value){
-        if(angular.isDefined(value)){
-          _causeOfDeath = value;
-        }
-        else{
-          return _causeOfDeath;
-        }
-      };
+      // modelDefinition.preferredName = function(value){
+      //   if(angular.isDefined(value)){
+      //     _preferredName = value;
+      //   }
+      //   else{
+      //     return _preferredName;
+      //   }
+      // };
+      //
+      // modelDefinition.attributes = function(value){
+      //   if(angular.isDefined(value)){
+      //     _attributes = value;
+      //   }
+      //   else{
+      //     return _attributes;
+      //   }
+      // };
+      //
+      // modelDefinition.causeOfDeath = function(value){
+      //   if(angular.isDefined(value)){
+      //     _causeOfDeath = value;
+      //   }
+      //   else{
+      //     return _causeOfDeath;
+      //   }
+      // };
 
       modelDefinition.deathDate = function(value){
         if(angular.isDefined(value)){
@@ -154,17 +186,21 @@
       modelDefinition.openmrsModel = function(value){
         return {
           uuid:_uuid,
-          name:_name,
-          preferredName:_preferredName,
+          identifier: _identifier,
+          givenName:_givenName,
+          familyName: _familyName,
+          middleName:_middleName,
+
+      //    preferredName:_preferredName,
           age:_age,
           birthdate:_birthdate,
-          gender :_gender ,
-          address:_address,
+          gender:_gender,
+        //  address:_address,
           dead:_dead,
-          deathDate:_deathDate,
-          causeOfDeath:_causeOfDeath,
-          attributes :_attributes,
-          birthdateEstimated:_birthdateEstimated
+          deathDate:_deathDate
+          //causeOfDeath:_causeOfDeath,
+          //attributes:_attributes,
+          //birthdateEstimated:_birthdateEstimated
 
         };
       };

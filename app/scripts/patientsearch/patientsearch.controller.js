@@ -22,13 +22,10 @@ jshint -W003, -W098, -W117, -W109
 
    $scope.$watch('searchString', function (searchString) {
      $scope.patients = [];
-     var v = "custom:(uuid,";
-     v += "person:(uuid,gender,birthdate,preferredName:(givenName,middleName,familyName),birthdate,attributes:(attributeType:(uuid),uuid)))";
-
      if (searchString && searchString.length > 3) {
        context.getPatientService().getPatientQuery({q:searchString},
-         function (data) {
-           if (data.results) data = data.results;
+         function(data) {
+           //if (data) data = data.results;
            console.log(data);
            $scope.patients = data;
           //  for (var i in data) {

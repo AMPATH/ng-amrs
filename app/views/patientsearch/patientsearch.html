@@ -26,13 +26,13 @@
        <div class="col-sm-2">Age</div>
     </div>
     <div class="row" ng-repeat="patient in patients = patients | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" class="small">
-      <a href="#/patient/{{patient.uuid}}">
-        <div class="col-sm-2">{{patient.identifiers[0].display}}</div>
-        <div class="col-sm-2">{{patient.person.preferredName.givenName}}</div>
-        <div class="col-sm-2">{{patient.person.preferredName.middleName}}</div>
-        <div class="col-sm-2">{{patient.person.preferredName.familyName}}</div>
-        <div class="col-sm-2">{{patient.person.gender}}</div>
-        <div class="col-sm-2">{{patient.person.birthdate}}</div>
+      <a href="#/patient/{{patient.uuid()}}">
+        <div class="col-sm-2">{{patient.identifier()[0].display.split('=')[1]}}</div>
+        <div class="col-sm-2">{{patient.givenName()}}</div>
+        <div class="col-sm-2">{{patient.middleName()}}</div>
+        <div class="col-sm-2">{{patient.familyName()}}</div>
+        <div class="col-sm-2">{{patient.gender()}}</div>
+        <div class="col-sm-2">{{patient.birthdate()}}</div>
       </a>
 
 
