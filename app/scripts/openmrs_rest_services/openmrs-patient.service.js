@@ -6,46 +6,57 @@
     .module('OpenmrsRestServices')
     .service('PatientResService', PatientResService);
 
-  PatientResService.$inject = ['OpenmrsSettings','SessionResService', '$resource', 'PatientModel'];
+  PatientResService.$inject = ['OpenmrsSettings', '$resource', 'PatientModel'];
 
-  function PatientResService(OpenmrsSettings,session, $resource, PatientModel) {
-    var serviceDefinition;
+  function PatientResService(OpenmrsSettings, $resource, PatientModel) {
+    var service;
     var currentSession;
-    serviceDefinition = {
-      getPatient:getPatient
+    service = {
+      getPatientByUuid: getPatientByUuid,
+      getPatientQuery: getPatientQuery
     };
-    return serviceDefinition;
+    return service;
+    function getResource() {
+          var v = 'custom:(uuid,identifiers:ref,person:(uuid,gender,birthdate,dead,deathDate,preferredName:(givenName,middleName,familyName),';
+          v = v  + 'attributes:(uuid,value,attributeType:ref)))';
+          var r = $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'patient/:uuid',
+                {uuid: '@uuid', v: v},
+                {query: {method: 'GET', isArray: false}});
+          return r;
 
-    function getPatientResource() {
-      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'patient?q=:name&v=custom:(uuid,person)',
-        {name: '@patientUuid'},
-        {query: {method: 'GET',
-          isArray: false}});
-    }
+        }
 
-    function getPatient(patientUuid) {
-      console.log("Entered UUUID"+patientUuid);
-      var resource = getPatientResource();
-      var patients=[];
-       resource.get({name:patientUuid}).$promise
-        .then(function(response) {
-          //success call
-          angular.forEach(response.results, function(value, key) {
-           var myperson=value.person;
-            var p=new PatientModel.patient(value.person);
-            console.log('Attedmted'+patientUuid);
-            console.log("New UUUID"+value.person.uuid+"d"+value.person.display);
-                patients.push(p);
-          });
+    function getPatientByUuid(params, callback) {
+        var PatientRes = getResource();
 
-        })
-        .catch(function(error) {
-          //error call
-           alert('There was error');
+        PatientRes.get(params, function(data) {
+          //console.log(data);
+          var p = {uuid:data.uuid,
+            identifiers:data.identifiers,
+            person:data.person};
+          console.log(p);
+          var d = new PatientModel.patient(p);
+          callback(d);
         });
-      return patients;//.length>0?patients:null;
+      }
+
+    function getPatientQuery(params, callback) {
+      var PatientRes = getResource();
+      var patients = [];
+      //console.log(params);
+      PatientRes.query(params, false, function(data) {
+        //console.log(data.results);
+        angular.forEach(data.results, function(value, key) {
+          console.log(value);
+          var myperson = value.person;
+          var p = new PatientModel.patient(value);
+          //console.log('Attedmted'+patientUuid);
+          //console.log("New UUUID"+value.person.uuid+"d"+value.person.display);
+          patients.push(p);
+      });
+
+        callback(patients);
+      });
     }
-
-
   }
 })();

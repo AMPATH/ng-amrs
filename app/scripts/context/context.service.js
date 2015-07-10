@@ -8,9 +8,9 @@ jshint -W117, -W098, -W116, -W003, -W026
         .module('app.context')
         .factory('ContextService', ContextService);
 
-  ContextService.$inject = ['SessionResService', 'AuthService', 'PatientService'];
+  ContextService.$inject = ['SessionResService', 'AuthService', 'PatientService', 'PatientResService'];
 
-  function ContextService(session, authService, patientService) {
+  function ContextService(session, authService, patientService, PatientResService) {
     var service = {
           getSession: getSession,
           getAuthService: getAuthService,
@@ -28,7 +28,7 @@ jshint -W117, -W098, -W116, -W003, -W026
     }
 
     function getPatientService() {
-      return patientService;
+      return PatientResService;
     }
   }
 }) ();
