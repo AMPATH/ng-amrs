@@ -3,18 +3,18 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-3">
-					<h5>Aoko Owino Test
+					<h5>{{patient.fullNames()}}
 						</h5>
 				</div>
 				<div class="col-md-3">
-					<h6>
-							KENYAN NATIONAL NUMBER: 1234567
-					</h6>
+					<h5>
+							Identifier: {{patient.identifierFormatted()}}
+					</h5>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-3">
-					<h5>Male 38 yrs (18-Jun-1977)</h5>
+					<h5>{{patient.genderFull()}} {{patient.age()}} ({{patient.birthdate()| date:'yyyy-MM-dd'}})</h5>
 				</div>
 				<div class="col-md-3">
 					<h5> 

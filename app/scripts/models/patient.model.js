@@ -57,6 +57,10 @@
           return _identifier;
         }
       };
+      modelDefinition.identifierFormatted = function(value){
+       
+          return _identifier[0].display.split('=')[1];
+      };
       modelDefinition.uuid = function(value){
         if(angular.isDefined(value)){
           _uuid = value;
@@ -82,6 +86,12 @@
         else{
           return _middleName;
         }
+      };
+      
+      modelDefinition.fullNames = function(value){
+       
+          return _givenName + ' ' + _middleName + ' '+  _familyName;
+        
       };
 
       modelDefinition.familyName = function(value){
@@ -127,6 +137,10 @@
         else{
           return _gender ;
         }
+      };
+      
+      modelDefinition.genderFull  = function(value){
+          return _gender === 'M' ? 'Male':'Female';
       };
 
       // modelDefinition.address = function(value){
