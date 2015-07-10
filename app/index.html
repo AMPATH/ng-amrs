@@ -8,6 +8,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- <link rel="stylesheet" href="bower_components/bootstrap-vertical-tabs/bootstrap.vertical-tabs.css"> -->
     <!-- bower:css -->
     <!-- endbower -->
     <!-- endbuild -->
@@ -25,16 +26,16 @@
 
     </main-navigation-bar>
 
-    <div class="container">
-    <div ui-view></div>
+    <div class="container-fluid " id="main-content">
+    <div ui-view style="height:100%; min-height:100%;"></div>
     </div>
 
 
-      <div class="navbar navbar-default navbar-fixed-bottom">
+     <!--<div class="navbar navbar-default navbar-fixed-bottom" style="margin-top:20px;">
         <div class="footer container">
         <p class="pull-right"><span class="glyphicon glyphicon-copyright-mark"></span> AMPATH 2015</p>
         </div>
-      </div>
+      </div> -->
 
 
 
@@ -48,6 +49,7 @@
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
     </script>
+    
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -75,11 +77,11 @@
         <script src="scripts/patientsearch/patientsearch.module.js"></script>
         <script src="scripts/openmrs_rest_services/openmrs-rest-services.module.js"></script>
         <script src="scripts/context/context.module.js"></script>
-        <script src="scripts/dashboard/patientdashboard.module.js"></script>
+        <script src="scripts/dashboard/patient-dashboard.module.js"></script>
         <script src="scripts/context/context.service.js"></script>
         <script src="scripts/openmrs_rest_services/openmrs-settings.service.js"></script>
         <script src="scripts/openmrs_rest_services/session.service.js"></script>
-        <script src="scripts/dashboard/patientdashboard.controller.js"></script>
+        <script src="scripts/dashboard/patient-dashboard.controller.js"></script>
         <script src="scripts/dashboard/about.js"></script>
         <script src="scripts/dashboard/main-navigation.directive.js"></script>
         <script src="scripts/openmrs_rest_services/authentication.service.js"></script>

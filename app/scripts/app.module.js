@@ -48,7 +48,7 @@
   })
   .state('patient', {
   url: '/patient/:uuid',
-  templateUrl: 'views/appDashboard/patientdashboard.html',
+  templateUrl: 'views/appDashboard/patient-dashboard.html',
   controller: 'PatientDashboardCtrl',
   data: { requireLogin: true}
 })
