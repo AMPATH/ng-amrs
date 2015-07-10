@@ -5,9 +5,11 @@
   padding: 0.2em 0;
 }
 
-body {
+html, body {
   padding: 0;
-  padding-top: 70px;
+  padding-top: 29px;
+  height: 95%;
+  min-height: 95%;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -60,6 +62,23 @@ body {
   margin-top: 28px;
 }
 
+  /* main content is the container between header and footer */
+  #main-content{
+    min-height: 100%;
+    height: 100%;
+  }
+  
+  #patient-dashboard{
+    min-height: 100%;
+    height: auto;
+    
+  }
+  
+  .show-me{
+    border-color: red;
+    border-width: 2px;
+  }
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
@@ -75,10 +94,12 @@ body {
   }
   /* Space out the masthead */
   .header {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
   }
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
   }
+  
+
 }
