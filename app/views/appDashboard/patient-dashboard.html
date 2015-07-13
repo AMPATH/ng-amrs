@@ -1,0 +1,64 @@
+<div class="panel panel-info" id="patient-dashboard">
+	<div class="panel-heading ">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-3">
+					<h5>{{patient.fullNames()}}
+						</h5>
+				</div>
+				<div class="col-md-3">
+					<h5>
+							Identifier: {{patient.identifierFormatted()}}
+					</h5>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					<h5>{{patient.genderFull()}} {{patient.age()}} ({{patient.birthdate()| date:'yyyy-MM-dd'}})</h5>
+				</div>
+				<div class="col-md-3">
+					<h5> 
+					Health Center: Location-10</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="panel-body" style="height:100%;">
+		<div class="container-fluid tabbing">
+			<ul class="nav nav-pills nav-stacked col-md-2">
+				<li class="active">
+					<a data-target="#tab1" data-toggle="tab">Demographics</a>
+				</li>
+				<li>
+					<a data-target="#tab2" data-toggle="tab">Encounters</a>
+				</li>
+				<li>
+					<a data-target="#tab3" data-toggle="tab">Forms</a>
+				</li>
+			</ul>
+			<div class="tab-content col-md-10">
+				<div class="tab-pane active" id="tab1">
+					<div class="page-header" style="margin-top:-20px;">
+						<h3>Demographics:
+							<small>The Patient</small>
+						</h3>
+					</div>
+				</div>
+				<div class="tab-pane" id="tab2">
+					<div class="page-header" style="margin-top:-20px;">
+						<h3>Encounters:
+							<small>The Patient</small>
+						</h3>
+					</div>
+				</div>
+				<div class="tab-pane" id="tab3">
+					<div class="page-header" style="margin-top:-20px;">
+						<h3>Forms:
+							<small>The Patient</small>
+						</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

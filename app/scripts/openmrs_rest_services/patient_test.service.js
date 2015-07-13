@@ -18,7 +18,7 @@
     return service;
 
     function getResource() {
-          var v = 'custom:(uuid,identifiers:ref,person:(uuid,gender,birthdate,dead,deathDate,preferredName:(givenName,middleName,familyName),';
+          var v = 'custom:(uuid,identifiers:ref,person:(uuid,gender,birthdate,age,dead,deathDate,preferredName:(givenName,middleName,familyName),';
           v = v  + 'attributes:(uuid,value,attributeType:ref)))';
           var r = $resource(settings.getCurrentRestUrlBase() + 'patient/:uuid',
                 {uuid: '@uuid', v: v},
