@@ -18,8 +18,6 @@
     $scope.patient = {};
     $scope.p = null;
 
-
-
     $timeout(function () {
       ContextService.getPatientService().getPatientByUuid({uuid:$stateParams.uuid},
         function (data) {
