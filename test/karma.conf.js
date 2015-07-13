@@ -38,6 +38,11 @@ module.exports = function(config) {
       'bower_components/angular-formly/dist/formly.js',
       'bower_components/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap.js',
       'bower_components/angular-mocks/angular-mocks.js',
+      'bower_components/sinon/index.js',
+      'bower_components/bardjs/dist/bard.js',
+      'bower_components/bardjs/dist/bard-ngRouteTester.js',
+      'bower_components/lodash/lodash.js',
+      'bower_components/restangular/dist/restangular.js',
       // endbower
       'app/scripts/**/*.module.js',
       'app/scripts/**/*.js',
