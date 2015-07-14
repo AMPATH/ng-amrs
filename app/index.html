@@ -49,7 +49,7 @@
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
     </script>
-    
+
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -69,27 +69,39 @@
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <!-- Modules -->
         <script src="scripts/app.module.js"></script>
         <script src="scripts/authentication/authentication.module.js"></script>
         <script src="scripts/models/model.module.js"></script>
-        <script src="scripts/models/session.model.js"></script>
-        <script src="scripts/models/patient.model.js"></script>
         <script src="scripts/patientsearch/patientsearch.module.js"></script>
         <script src="scripts/openmrs_rest_services/openmrs-rest-services.module.js"></script>
         <script src="scripts/context/context.module.js"></script>
         <script src="scripts/dashboard/patient-dashboard.module.js"></script>
+
+        <!-- Services -->
         <script src="scripts/context/context.service.js"></script>
         <script src="scripts/openmrs_rest_services/openmrs-settings.service.js"></script>
         <script src="scripts/openmrs_rest_services/session.service.js"></script>
-        <script src="scripts/dashboard/patient-dashboard.controller.js"></script>
-        <script src="scripts/dashboard/about.js"></script>
-        <script src="scripts/dashboard/main-navigation.directive.js"></script>
         <script src="scripts/openmrs_rest_services/authentication.service.js"></script>
-        <script src="scripts/authentication/login.controller.js"></script>
-        <script src="scripts/patientsearch/patientsearch.controller.js"></script>
-        <script src="scripts/patientsearch/patientfilter.filter.js"></script>
         <script src="scripts/openmrs_rest_services/patient_test.service.js"></script>
         <script src="scripts/openmrs_rest_services/openmrs-patient.service.js"></script>
+        <script src="scripts/openmrs_rest_services/user.service.js"></script>
+
+        <!-- models -->
+        <script src="scripts/models/session.model.js"></script>
+        <script src="scripts/models/patient.model.js"></script>
+        <script src="scripts/models/user.model.js"></script>
+        <!-- directives -->
+        <script src="scripts/dashboard/main-navigation.directive.js"></script>
+
+        <!-- Controllers -->
+        <script src="scripts/dashboard/patient-dashboard.controller.js"></script>
+        <script src="scripts/patientsearch/patientsearch.controller.js"></script>
+        <script src="scripts/authentication/login.controller.js"></script>
+
+        <!-- Others -->
+        <script src="scripts/dashboard/about.js"></script>
+        <script src="scripts/patientsearch/patientfilter.filter.js"></script>
         <!-- endbuild -->
 </body>
 </html>

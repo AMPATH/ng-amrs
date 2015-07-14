@@ -13,6 +13,7 @@ function LoginCtrl($scope, context) {
               password:''
   };
 
+
   $scope.authenticate = function() {
     //to do authenticate
     console.log('you clicked me');
@@ -21,6 +22,13 @@ function LoginCtrl($scope, context) {
       if (!authenticated) // check if user is authenticated
       {
         $scope.errors = 'Invalid user name or password. please try agian';
+      }
+      else {
+          context.getUserService().getUser({q:$scope.CurrentUser.username},function(data){
+          console.log(data);
+          
+
+        });
       }
 
     }); // authenticate user

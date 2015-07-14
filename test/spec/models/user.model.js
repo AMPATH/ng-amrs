@@ -25,8 +25,9 @@ jshint -W030
         var userName = 'username' ;
         var personUuId = 'personuuid' ;
         var password =  'password' ;
+        var userRole = [];
 
-        var model = new userModelFactory.user(userName, personUuId, password, uuId, systemId);
+        var model = new userModelFactory.user(userName, personUuId, password, uuId, systemId, userRole);
 
         expect(model.uuId).to.exist;
         expect(model.systemId).to.exist;
@@ -47,11 +48,12 @@ jshint -W030
           username:'username',
           password:'password',
           person:'person uuid',
-          systemId:''
+          systemId:'',
+          userRole:[]
         };
 
         var model = new userModelFactory.user(expectedOpenmrsUser.username,
-          expectedOpenmrsUser.person, expectedOpenmrsUser.password);
+          expectedOpenmrsUser.person, expectedOpenmrsUser.password, expectedOpenmrsUser.uuId, expectedOpenmrsUser.systemId, expectedOpenmrsUser.userRole);
         expect(model.openmrsModel()).to.deep.equal(expectedOpenmrsUser);
       });
 
