@@ -11,6 +11,7 @@
             restrict: 'EA',
             templateUrl: 'views/appDashboard/main-navigation.html',
             scope: {
+              user:'@'
             },
             link: linkFunc,
             controller: Controller,
@@ -42,8 +43,14 @@
 
         $scope.role ='S/W Programmer';
 
-        $scope.$on('onUserAuthenticationDetermined',onUserAuthentionChanged);
+        $scope.$on('loggedUser', function() {
+          console.log('checking broadcated user');
+          console.log(ContextService.getUserService().user.openmrsModel());
+          $scope.username = ContextService.getUserService().user.userName();
+          $scope.role = ContextService.getUserService().user.userRole()[0].name;
+      });
 
+      $scope.$on('onUserAuthenticationDetermined',onUserAuthentionChanged);
 
         activate();
 
@@ -59,6 +66,7 @@
 
         function updateNavBarVisibility(){
           $scope.showNavigationBar = authenticationService.authenticated;
+          console.log(authenticationService.authenticated);
         }
 
         function updateLoginLogoutMenutItems(){

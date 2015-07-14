@@ -15,7 +15,7 @@
 
     return service;
 
-    function user(userName_, personUuId_, password_, uuId_, systemId_) {
+    function user(userName_, personUuId_, password_, uuId_, systemId_, userRole_) {
       var modelDefinition = this;
 
       //initialize private members
@@ -23,7 +23,8 @@
       var _systemId = systemId_ ? systemId_ : '' ;
       var _userName = userName_ ? userName_ : '' ;
       var _personUuId = personUuId_ ? personUuId_ : '' ;
-      var _password = personUuId_ ? password_ : '' ;
+      var _password = password_ ? password_ : '' ;
+      var _userRole = userRole_ ? userRole_ : [] ;
 
       modelDefinition.uuId = function(value) {
         if (angular.isDefined(value)) {
@@ -70,11 +71,21 @@
               }
             };
 
+      modelDefinition.userRole = function(value) {
+                    if (angular.isDefined(value)) {
+                      _userRole = value;
+                    }
+                    else {
+                      return _userRole;
+                    }
+                  };
+
       modelDefinition.openmrsModel = function(value) {
               return {username: _userName,
                       password: _password,
                       person: _personUuId,
-                      systemId: _systemId};
+                      systemId: _systemId,
+                      userRole: _userRole};
             };
     }
   }

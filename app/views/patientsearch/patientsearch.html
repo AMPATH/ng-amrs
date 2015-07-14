@@ -17,23 +17,17 @@
 
    <div>
      <div class="row">
-       <div class="col-sm-2">Identifier</div>
-       <div class="col-sm-2">Given Name</div>
-       <div class="col-sm-2">Middle Name</div>
-       <div class="col-sm-1">Family Name</div>
-       <div class="col-sm-2">Gender</div>
-       <div class="col-sm-2">Birth Date</div>
-       <div class="col-sm-1">Age</div>
+       <div class="col-md-3">Identifier</div>
+       <div class="col-md-5">Patient Name</div>
+       <div class="col-md-2">Gender</div>
+       <div class="col-md-2">Age</div>
     </div>
     <div class="row" ng-repeat="patient in patients = patients | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" class="small">
       <a href="#/patient/{{patient.uuid()}}">
-        <div class="col-sm-2">{{patient.identifierFormatted()}}</div>
-        <div class="col-sm-2">{{patient.givenName()}}</div>
-        <div class="col-sm-2">{{patient.middleName()}}</div>
-        <div class="col-sm-1">{{patient.familyName()}}</div>
-        <div class="col-sm-2">{{patient.genderFull()}}</div>
-        <div class="col-sm-2">{{patient.birthdate() | date:'yyyy-MM-dd'}}</div>
-        <div class="col-sm-1">{{patient.age()}}</div>
+        <div class="col-md-3">{{patient.identifierFormatted()}}</div>
+        <div class="col-md-5">{{patient.fullNames()}}</div>
+        <div class="col-md-2">{{patient.gender()}}</div>
+        <div class="col-md-2">{{patient.age()}}</div>
       </a>
 
 
