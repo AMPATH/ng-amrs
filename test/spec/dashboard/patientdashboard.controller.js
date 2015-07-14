@@ -7,7 +7,7 @@ jshint -W098, -W117, -W030
     // body...
     var controller;
     var stateParams;
-    var ContextService;
+    var contextService;
     var scope;
     var timeout;
 
@@ -15,7 +15,9 @@ jshint -W098, -W117, -W030
       module('app.patientdashboard');
     });
 
-    beforeEach(inject(function($controller, $injector, _ContextService_, _$stateParams_, _$timeout_) {
+    beforeEach(module('ui.router')); //to enable using stateparams
+
+    beforeEach(inject(function($controller, $injector, _$stateParams_, $rootScope) {
       /*
       When testing controllers it not wise to inject them as it is done when testing services
       It is advisable to use $controller to instantiate instead of using the $injector service
@@ -25,11 +27,11 @@ jshint -W098, -W117, -W030
 
       //loading  required dependancies beforeEach test
       //authService = $injector.get('AuthService'); //used when loading the actual/real service
-      ContextService = _ContextService_;
-      scope = $injector.get('$rootScope');
-      stateParams = _$stateParams_;
-      timeout = _$timeout_;
-      controller = $controller('PatientDashboardCtrl', {$scope:scope, AuthService:authService});
+      contextService = $injector.get('ContextService');
+      scope = $rootScope.$new();
+      stateParams = _$stateParams_;//$injector.get('$stateParams');
+      timeout =$injector.get('$timeout');
+      controller = $controller('PatientDashboardCtrl', {$scope:scope, $stateParams: stateParams, $timeout:timeout, ContextService:contextService});
 
     }));
 
@@ -38,39 +40,10 @@ jshint -W098, -W117, -W030
       expect(controller).to.exist;
     });
 
-    it('currentUser Object should be created successfully', function() {
+    it('patient Object should be created successfully', function() {
       //debugger;
-      expect(scope.CurrentUser).to.exist;
+      expect(scope.patient).to.exist;
     });
 
-    it('currentUser Object should have empty strings', function() {
-      //debugger;
-      currentUser = {username:'', password:''};
-      expect(scope.CurrentUser).to.deep.equal(currentUser);
-    });
-
-    it('authenticate function should be successfully defined', function() {
-      //debugger;
-      currentUser = {username:'', password:''};
-      expect(scope.authenticate).to.exist;
-    });
-
-    describe('authenticate function:', function() {
-      it('User login should be successfull', function() {
-        currentUser = {username:'test', password:'test'};
-        console.info(currentUser);
-
-        //debugger;
-        var login = false;
-        var authenticate = function() {
-          authService.isAuthenticated(currentUser, function(data) {
-            login = data;
-          });
-        };
-
-        authenticate();
-        expect(login).to.equal(true);
-      });
-    });
   });
 })();
