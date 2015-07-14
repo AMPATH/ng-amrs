@@ -55,7 +55,7 @@ module.exports = function(config) {
     // - Firefox
     // - Opera
     // - Safari (only Mac)
-    // - P'hantomJS
+    // - PhantomJS
     // - IE (only Windows)
     browsers: [
       'PhantomJS'
