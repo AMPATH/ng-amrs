@@ -1,4 +1,4 @@
-/*jshint -W026 */
+/*jshint -W026, -W030 */
 (function() {
   'use strict';
 
@@ -7,7 +7,7 @@
         module('OpenmrsRestServices');
       });
 
-      var baseURl = 'https://etl1.ampath.or.ke:8443/amrs/ws/rest/v1/';
+      //var baseURl = 'https://etl1.ampath.or.ke:8443/amrs/ws/rest/v1/';
 
       var callbacks = {
         onSuccessCalled:false,
@@ -25,6 +25,7 @@
 
       var httpBackend;
       var sessionService;
+      var settingsService;
 
       var mockAuthenticatedSession = {
         authenticated:true,
@@ -34,6 +35,7 @@
       beforeEach(inject(function($injector) {
         httpBackend = $injector.get('$httpBackend');
         sessionService = $injector.get('SessionResService');
+        settingsService = $injector.get('OpenmrsSettings');
       }));
 
       afterEach (function() {
@@ -47,7 +49,7 @@
       });
 
       it('should make an api call to the session resource when getSession is called', function() {
-        httpBackend.expectGET(baseURl + 'session').respond(mockAuthenticatedSession);
+        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'session').respond(mockAuthenticatedSession);
         sessionService.currentSession = null;
         sessionService.getSession(function() {}, function() {});
 
@@ -56,7 +58,7 @@
       });
 
       it('should make an api delete session call to the session resource when logout is called', function() {
-        httpBackend.expect('DELETE', baseURl + 'session').respond(mockAuthenticatedSession);
+        httpBackend.expect('DELETE', settingsService.getCurrentRestUrlBase()  + 'session').respond(mockAuthenticatedSession);
         sessionService.currentSession = null;
         sessionService.logout(function() {});
 
@@ -66,7 +68,7 @@
       });
 
       it('should call the onSuccess callback getSession request successfully returns a session', function() {
-        httpBackend.expectGET(baseURl + 'session').respond(mockAuthenticatedSession);
+        httpBackend.expectGET(settingsService.getCurrentRestUrlBase()  + 'session').respond(mockAuthenticatedSession);
         callbacks.onSuccessCalled = false;
         callbacks.onFailedCalled = false;
         sessionService.getSession(callbacks.onSuccessfulAuthentication, callbacks.onFailedAuthentication);
@@ -76,7 +78,7 @@
       });
 
       it('should call the onFailed callback when getSession request is not successfull', function() {
-        httpBackend.expectGET(baseURl + 'session').respond(500);
+        httpBackend.expectGET(settingsService.getCurrentRestUrlBase()  + 'session').respond(500);
         callbacks.onSuccessCalled = false;
         callbacks.onFailedCalled = false;
         callbacks.message = '';
