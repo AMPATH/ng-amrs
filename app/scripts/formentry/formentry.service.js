@@ -41,9 +41,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116
           //add obs details
           for (var i = 0; i<schema.obs.length; i++)
           {
+            console.log(i)
+            var obsField ={};
             if ((schema.obs[i].type === 'text') || (schema.obs[i].type === 'number'))
             {
-              field = {
+              obsField = {
                 key: 'obs_' + i,
                 type: 'input',
                 model: {conceptUuid:schema.obs[i].obsConceptUuid,
@@ -55,7 +57,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116
               }
 
             }
-            else if ((schema.obs[i].type === 'radio') || (schema.obs[i].type === 'select') || (schema.obs[i].type === 'multicheckbox'))
+            else if ((schema.obs[i].type === 'radio') || (schema.obs[i].type === 'select') || (schema.obs[i].type === 'multiCheckbox'))
             {
               var opts= [];
               //get the radio/select options/multicheckbox
@@ -68,7 +70,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116
                  opts.push(item);
               }
 
-              field = {
+              obsField = {
                 key: 'obs_' + i,
                 type: schema.obs[i].type,
                 model: {conceptUuid:schema.obs[i].obsConceptUuid,
@@ -82,7 +84,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116
 
             }
 
-formSchema.push(field);
+            formSchema.push(obsField);
 
           }
           console.log('sample form');

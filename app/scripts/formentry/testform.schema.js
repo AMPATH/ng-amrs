@@ -59,7 +59,7 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117
             {
               obsConceptGroupUuid:'',
               obsConceptUuid:'uuid4',
-              type:'checkbox',
+              type:'multiCheckbox',
               obsAnswerConceptUuids:['conceptUuid1','conceptUuid2','conceptUuid3'],
               obsAnswerLabels:['Yes, and I love it!','Yes, but am not a fan...','Nope'],
               label:'Test Checkbox'
