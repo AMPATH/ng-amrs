@@ -1,4 +1,4 @@
-/*jshint -W003, -W098, -W117, -W026, -W040 */
+/*jshint -W003, -W098, -W117, -W026, -W040, -W004, -W093 */
 (function() {
   'use strict';
 
@@ -23,7 +23,7 @@
 
     function patient(openmrsPatient) {
       //initialize private members by first checking whether the openmrPatient properties are set before assigning default values
-      console.log('patient value from the promise(REST SERVICE)');
+    //  console.log('patient value from the promise(REST SERVICE)');
     //  console.log(openmrsPatient);
 
       var modelDefinition = this;
@@ -237,7 +237,7 @@
         cityVillage: preferredAddress.cityVillage,
         stateProvince: preferredAddress.stateProvince
       } : {};
-    };
+    }
 
 
 

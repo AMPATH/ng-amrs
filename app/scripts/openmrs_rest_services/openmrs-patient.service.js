@@ -47,7 +47,7 @@
       PatientRes.query(params, false, function(data) {
         //console.log(data.results);
         angular.forEach(data.results, function(value, key) {
-          console.log(value);
+          //console.log(value);
           var myperson = value.person;
           var p = new PatientModel.patient(value);
           //console.log('Attedmted'+patientUuid);
