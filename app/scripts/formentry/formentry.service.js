@@ -12,10 +12,19 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116
 
     function FormentryService() {
         var service = {
-            createForm: createForm
+            createForm: createForm,
+            getPayLoad: getPayLoad,
+            getConceptUuid:getConceptUuid
         };
 
         return service;
+
+        function getPayLoad(schema)
+        {
+          var payLoad={};
+
+          return payLoad;
+        }
 
         function createForm(schema) {
           var formSchema=[];
@@ -46,10 +55,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116
             if ((schema.obs[i].type === 'text') || (schema.obs[i].type === 'number'))
             {
               obsField = {
-                key: 'obs_' + i,
+                key: 'obs_' + schema.obs[i].obsConceptUuid,
                 type: 'input',
                 model: {conceptUuid:schema.obs[i].obsConceptUuid,
-                  groupUuid:schema.obs[i].obsConceptGroupUuid},
+                  groupUuid:schema.obs[i].obsConceptGroupUuid,
+                  answerValue:''},
                 templateOptions: {
                   type: schema.obs[i].type,
                   label: schema.obs[i].label
@@ -71,10 +81,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116
               }
 
               obsField = {
-                key: 'obs_' + i,
+                key: 'obs_' + schema.obs[i].obsConceptUuid,
                 type: schema.obs[i].type,
                 model: {conceptUuid:schema.obs[i].obsConceptUuid,
-                  groupUuid:schema.obs[i].obsConceptGroupUuid},
+                  groupUuid:schema.obs[i].obsConceptGroupUuid,
+                  answerValue:''},
                 templateOptions: {
                   type: schema.obs[i].type,
                   label: schema.obs[i].label,
