@@ -19,6 +19,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116
 
         return service;
 
+        function getConceptUuid()
+        {
+
+        }
+
         function getPayLoad(schema)
         {
           var payLoad={};
@@ -32,18 +37,49 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116
 
           //add encounter details
 
-          for (var key in schema.encounter)
+          for (var i=0; i<schema.encounter.length; i++)
           {
-            field = {
-              key: 'encounter_' + key,
-              type: 'input',
-              model: {conceptUuid:key},
-              templateOptions: {
-                type: 'text',
-                label: key,
-                placeholder: key
+            console.log(schema.encounter)
+            if(schema.encounter[i].type === 'datepicker')
+            {
+              field = {
+                key: 'enc_' + schema.encounter[i].idName,
+                type: 'input',
+                model: {encounter:'enc_' + schema.encounter[i].idName},
+                templateOptions: {
+                  type: 'text',
+                  label: schema.encounter[i].labelName,
+                  placeholder: schema.encounter[i].labelName
+                }
               }
             }
+            else if(schema.encounter[i].type === 'text')
+            {
+              field = {
+                key: 'enc_' + schema.encounter[i].idName,
+                type: 'input',
+                model: {encounter:'enc_' + schema.encounter[i].idName},
+                templateOptions: {
+                  type: 'text',
+                  label: schema.encounter[i].labelName,
+                  placeholder: schema.encounter[i].labelName
+                }
+              }
+            }
+            else {
+              field = {
+                key: 'enc_' + schema.encounter[i].idName,
+                type: schema.encounter[i].type,
+                model: {encounter:'enc_' + schema.encounter[i].idName},
+                templateOptions: {
+                  type: 'text',
+                  label: schema.encounter[i].labelName,
+                  placeholder: schema.encounter[i].labelName,
+                  options:[]
+                }
+              }
+            }
+
             formSchema.push(field);
           }
 
