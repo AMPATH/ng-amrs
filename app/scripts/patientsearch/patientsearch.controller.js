@@ -26,7 +26,7 @@ jshint -W003, -W098, -W117, -W109
        context.getPatientService().getPatientQuery({q:searchString},
          function(data) {
            //if (data) data = data.results;
-           console.log(data);
+           //console.log(data);
            $scope.patients = data;
           //  for (var i in data) {
           //    $scope.patients.push(PatientService.Patient(data[i]));

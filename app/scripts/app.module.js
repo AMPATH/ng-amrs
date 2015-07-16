@@ -23,7 +23,8 @@
     //'app.context',
     'app.authentication',
     'app.patientsearch',
-    'app.patientdashboard'
+    'app.patientdashboard',
+    'app.formentry'
   ])
     .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
@@ -52,6 +53,13 @@
   controller: 'PatientDashboardCtrl',
   data: { requireLogin: true}
 })
+.state('form1', {
+url: '/form1',
+templateUrl: 'views/formentry/test1.html',
+controller: 'TestFormCtrl',
+data: { requireLogin: true}
+})
+
   .state('login', {
   url: '/login',
   templateUrl: 'views/authentication/login.html',

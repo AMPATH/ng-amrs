@@ -1,7 +1,13 @@
 {
   "name": "ngamrs",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "angular": "^1.4.2",
+    "angular-formly": "^6.18.1",
+    "angular-formly-templates-bootstrap": "^5.0.2",
+    "api-check": "^7.5.0",
+    "bootstrap": "^3.3.5"
+  },
   "repository": {},
   "devDependencies": {
     "chai": "^3.0.0",
