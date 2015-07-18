@@ -13,11 +13,21 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
     function TestFormCtrl($scope, TestFormSchema, FormentryService) {
         $scope.vm = {};
         $scope.vm.user = {};
+        $scope.vm.error = '';
         $scope.vm.submit = function() {
           for(var i=0; i<$scope.vm.userFields.length; i++)
           {
             console.log($scope.vm.userFields[i].model);
           }
+
+            $scope.vm.error = FormentryService.validateForm($scope.vm.userFields);
+            if ($scope.vm.error === '')
+            {
+              FormentryService.getPayLoad($scope.vm.userFields);
+            }
+            else {
+              $scope.vm.error = '';
+            }
 
         }
 
