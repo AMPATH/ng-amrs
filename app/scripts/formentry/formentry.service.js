@@ -15,10 +15,184 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
             createForm: createForm,
             getPayLoad: getPayLoad,
             getConceptUuid:getConceptUuid,
-            validateForm:validateForm
+            validateForm:validateForm,
+            getEncounter:getEncounter
         };
 
         return service;
+
+        function getEncounter(uuid, formlySchema){
+          //cbce861a-790c-4b91-80e6-3d75e671a4de
+          console.log('Sample data from REST API')
+          console.log(uuid);
+          /*
+          Expected Encounter object format
+          {encounterDatetime: 'date',
+          encounterType:{display,uuid},
+          form:{},
+          location:{},
+          obs:[{concept:{display,uud},uuid,value{display,uuid},groupMembers:[]}],
+          patient:{uuid},
+          provider:{},
+          uuid:'encounter-uuid'
+          */
+
+          //Start by prefilling the encounter information
+          var encData = uuid;
+          var obsData = _.filter(encData.obs,function(obs){
+            if(obs.groupMembers === null) return obs
+          })
+          var obsGroupData =  _.filter(encData.obs,function(obs){
+            if(obs.groupMembers !== null) return obs
+          })
+          var key;
+
+          _.each(formlySchema, function(field) {
+            if(field.key.startsWith('enc_')) //using underscore.js and underscore.string.js Functions
+            {
+              console.log('Encounter Keys');
+              console.log(field.key);
+              key = field.key;
+              if(key === 'enc_patient')
+              {
+                //update the model property
+                field.model[key] = encData.patient.uuid;
+              }
+              else if(key === 'enc_encounterType')
+              {
+                //update the model property
+                field.model[key] = encData.encounterType.uuid;
+              }
+              else if(key === 'enc_encounterDatetime')
+              {
+                //update the model property
+                field.model[key] = encData.encounterDatetime;
+              }
+              else if(key === 'enc_encounterLocation')
+              {
+                //update the model property
+                if(encData.location !== null) field.model[key] = encData.location.uuid;
+              }
+              else if(key === 'enc_encounterProvider')
+              {
+                //update the model property
+                if(encData.provider !== null) field.model[key] = encData.provider.uuid;
+              }
+              //field.model[key] = encData.encounterDatetime;
+            }
+            else if(field.key.startsWith('obs_')) //using underscore.js and underscore.string.js Functions
+            {
+                //get obs fields without groups
+                console.log('starting obs prefill');
+                key = field.key;
+                var val;
+                var multiArr = []; //for multiselect fiellds like checkboxes
+                if(field.model.obsGroupUuid === '')
+                {
+                  if(field.type === 'select' || field.type === 'radio')
+                  {
+
+                    val = _.find(obsData,function(obs){
+                      if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
+                    });
+                    console.log('matching obs concept id:');
+                    console.log(val);
+                    if (val !== undefined) field.model[key] = val.value.uuid;
+                  }
+                  else if(field.type === 'multiCheckbox')
+                  {
+
+                    val = _.filter(obsData,function(obs){
+                      if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
+                    });
+                    console.log('matching multiCheckbox:');
+                    console.log(val);
+                    if (val !== undefined) {
+                      _.each(val, function(obs){
+                        multiArr.push(obs.value.uuid);
+                      });
+                      field.model[key] = multiArr;
+                    }
+                  }
+                  else{
+                    val = _.find(obsData,function(obs){
+                      if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
+                    });
+                      console.log('matching obs concept id: and autofilled model');
+                      console.log(val);
+                      console.log(field.model);
+                      if (val !== undefined) field.model[key] = val.value;
+                      console.log(field.model);
+                  }
+                }
+                //obs with obs group uuids
+                else if(field.model.obsGroupUuid !== '')
+                {
+                  if(field.type === 'select' || field.type === 'radio')
+                  {
+                    //get the group member matching the current key
+                    var groupMember;
+                    _.each(obsGroupData, function(obs) {
+                      groupMember = _.find(obs.groupMembers, function(item) {
+                        if(obs.concept.uuid === field.model.obsGroupUuid && item.concept.uuid === field.model.obsConceptUuid) return item;
+                      })
+                    })
+                    val = _.find(obsGroupData,function(obs){
+                      if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
+                    });
+                    console.log('matching obs concept id:');
+                    console.log(val);
+                    if (val !== undefined && groupMember !== undefined) field.model[key] = groupMember.value.uuid;
+                  }
+                  else if(field.type === 'multiCheckbox')
+                  {
+                    //get the group member matching the current key
+                    var groupMember;
+                    _.each(obsGroupData, function(obs) {
+                      groupMember = _.filter(obs.groupMembers, function(item) {
+                        if(obs.concept.uuid === field.model.obsGroupUuid && item.concept.uuid === field.model.obsConceptUuid) return item;
+                      })
+                    });
+
+                    val = _.find(obsGroupData,function(obs){
+                      if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
+                    });
+                    console.log('matching multiCheckbox:');
+                    console.log(val);
+                    if (val !== undefined && groupMember !== undefined) {
+                      _.each(groupMember, function(obs){
+                        multiArr.push(obs.value.uuid);
+                      });
+                      field.model[key] = multiArr;
+                    }
+                  }
+                  else{
+                    //get the group member matching the current key
+                    var groupMember;
+                    _.each(obsGroupData, function(obs) {
+                      groupMember = _.find(obs.groupMembers, function(item) {
+                        if(obs.concept.uuid === field.model.obsGroupUuid && item.concept.uuid === field.model.obsConceptUuid) return item;
+                      })
+                    });
+
+                    val = _.find(obsGroupData,function(obs){
+                      if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
+                    });
+                      console.log('matching obs concept id: and autofilled model');
+                      console.log(val);
+                      console.log(field.model);
+                      if (val !== undefined && groupMember !== undefined) field.model[key] = groupMember.value;
+                      console.log(field.model);
+                  }
+                }
+            }
+
+
+          });
+          console.log('obs group data')
+          console.log(obsGroupData);
+
+        }
 
         function validateForm(schema)
         {
@@ -45,9 +219,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
           //generate encounter section of the payload
           _.each(schema, function(field){
             var val= field.model.encounter;
-            console.log('encounter log');
+            //console.log('encounter log');
             //console.log(val);
-            console.log(field.model.encounter + '  ' + field.model[val] );
+            //console.log(field.model.encounter + '  ' + field.model[val] );
             if(field.model.encounter === 'enc_patient' && field.model[val] !== undefined)
             {
               //add property to the payload
@@ -81,10 +255,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
           // for loop using underscore js
           _.each(schema, function(field, index){
             var val = 'obs_' + field.model.obsConceptUuid;
-            console.log('logging val: ' + val);
+            //console.log('logging val: ' + val);
             if(val !== 'obs_undefined') // all only obs with some data to be posted
             {
-              console.log(field.model.obsConceptUuid + '  ' + field.model[val] );
+              //console.log(field.model.obsConceptUuid + '  ' + field.model[val] );
               /*
               Add all obs without obs groups
               */
@@ -99,7 +273,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
                 //add property to obs
                 var items = [];
                 items = field.model[val];
-                 console.log(items);
+                 //console.log(items);
                 for (var l = 0; l < items.length; l++)
                 {
                   obs.push({concept:field.model.obsConceptUuid, value:items[l]});
@@ -111,9 +285,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
           /*
           Get an array of all obs group available in the schema and
           create an obs group with group members of items having the same obs group uuid
-          the assumption here is that we will not have have more than one group sharing the same obs group uuid
-          in case we have more than one group sharing the same obs group uuid then all this members will be grouped in
-          same group
+          the assumption here is that we will not have have more than one group sharing
+          the same obs group uuid
+          in case we have more than one group sharing the same obs group uuid then all
+          this members will be grouped in same group
           */
           var obsGroupArr = {}; //dictionary object to store obs group uuids
           _.each(schema, function(field, i){
@@ -140,7 +315,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
           Build obs group array list for each unique obsGroupUuid
           */
           _.each(obsGroupArr,function(key,i){
-            console.log('logging keys in the dictionary ' + key);
+            //console.log('logging keys in the dictionary ' + key);
             //filter all fields related to the current obs group uuid
             var obsGroupFields = _.filter(schema,function(field){
               if(field.model.obsGroupUuid === key)
@@ -148,8 +323,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
                 return field;
               }
             });
-            console.log('obsGroupFields...');
-            console.log(obsGroupFields);
+            //console.log('obsGroupFields...');
+            //console.log(obsGroupFields);
             var groupMembers = [];
 
             _.each(obsGroupFields, function(field){
@@ -173,7 +348,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
                 //add property to obs
                 var items = [];
                 items = field.model[val];
-                 console.log(items);
+                 //console.log(items);
                 for (var l = 0; l < items.length; l++)
                 {
                   groupMembers.push({concept:field.model.obsConceptUuid, value:items[l]});
@@ -187,11 +362,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
 
           });
 
-          //console.log(obsGroupArr);
+
           //add obs to payload
           payLoad.obs = obs;
+          console.log('Pringting payload');
           console.log(JSON.stringify(payLoad));
-          //return JSON.stringify(payLoad);
+          return JSON.stringify(payLoad);
         }
 
 

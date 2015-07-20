@@ -8,35 +8,46 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
         .module('app.formentry')
         .controller('TestFormCtrl', TestFormCtrl);
 
-    TestFormCtrl.$inject = ['$scope', 'TestFormSchema', 'FormentryService'];
+    TestFormCtrl.$inject = ['$scope', 'TestFormSchema', 'FormentryService', 'EncounterService', '$timeout'];
 
-    function TestFormCtrl($scope, TestFormSchema, FormentryService) {
+    function TestFormCtrl($scope, TestFormSchema, FormentryService, EncounterService, $timeout) {
         $scope.vm = {};
         $scope.vm.user = {};
         $scope.vm.error = '';
         $scope.vm.submit = function() {
-          for(var i=0; i<$scope.vm.userFields.length; i++)
-          {
-            console.log($scope.vm.userFields[i].model);
-          }
-
-            $scope.vm.error = FormentryService.validateForm($scope.vm.userFields);
+          //  $scope.vm.error = FormentryService.validateForm($scope.vm.userFields);
             if ($scope.vm.error === '')
             {
-              FormentryService.getPayLoad($scope.vm.userFields);
+              //FormentryService.getPayLoad($scope.vm.userFields);
             }
             else {
               $scope.vm.error = '';
             }
-
+            var payLoad = FormentryService.getPayLoad($scope.vm.userFields);
+            EncounterService.postEncounter(payLoad,function (data) {
+              // body...
+              console.log(data);
+            })
         }
 
- // note, these field types will need to be
- // pre-defined. See the pre-built and custom templates
- // http://docs.angular-formly.com/v6.4.0/docs/custom-templates
  var formSchema=TestFormSchema.getFormSchema();
 
  $scope.vm.userFields = FormentryService.createForm(formSchema);
+
+ /*
+ Test logic to get a form filled with existing data.
+ */
+ var testParams={uuid:'713aa823-a594-4256-b3d7-364145fbbd2f'}; //drop after testing
+ var encData;
+
+ $timeout(function () {
+   EncounterService.getEncounter(testParams, function(data){
+     encData = data;
+     //console.log('Rest Feeback')
+     //console.log(encData);
+     FormentryService.getEncounter(encData,$scope.vm.userFields);
+   });
+ },1000);
 
  console.log(JSON.stringify($scope.vm.user));
 }

@@ -3,6 +3,6 @@
 
     angular
         .module('app.formentry', [
-            'formly', 'formlyBootstrap'
+            'formly', 'formlyBootstrap','OpenmrsRestServices'
         ]);
 })();

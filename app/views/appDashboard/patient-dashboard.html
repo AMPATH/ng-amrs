@@ -47,8 +47,20 @@
 				<div class="tab-pane" id="tab2">
 					<div class="page-header" style="margin-top:-20px;">
 						<h3>Encounters:
-							<small>The Patient</small>
+							<small>List of Encounters</small>
 						</h3>
+						<div class="page-content">
+							<div class="row" ng-repeat="encounter in encounters" class="small">
+					      <a href="#/patient/{{encounter.uuid}}">
+					        <div class="col-md-3">{{encounter.encounterDatetime}}</div>
+					        <div class="col-md-5">{{encounter.encounterType.display}}</div>
+					        <div class="col-md-2">{{encounter.location.display}}</div>
+					        <div class="col-md-2">{{encounter.provider.display}}</div>
+					      </a>
+
+
+					    </div>
+						</div>
 					</div>
 				</div>
 				<div class="tab-pane" id="tab3">

@@ -17,6 +17,7 @@
   function PatientDashboardCtrl($scope, $stateParams, $timeout, ContextService) {
     $scope.patient = {};
     $scope.p = null;
+    $scope.encounters = [];
 
     $timeout(function () {
       ContextService.getPatientService().getPatientByUuid({uuid:$stateParams.uuid},
@@ -24,6 +25,13 @@
           $scope.patient = data;
           console.log(data);
         });
+
+      ContextService.getEncounterService().getPatientEncounter({patient:$stateParams.uuid},
+        function (data) {
+          // body...
+          $scope.encounters = data;
+        }
+      )
     },1000);
     }
 })();

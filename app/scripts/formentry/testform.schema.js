@@ -21,7 +21,7 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117
           var schema = {};
           schema.encounter = [
             {encounterDatetime:'',type:'datepicker', labelName:'Visit Date', idName:'encounterDatetime'},
-            {encounterType:'', type:'select', labelName:'Encounter Type', idName:'encounterType'},
+            {encounterType:'', type:'text', labelName:'Encounter Type', idName:'encounterType'},
             {encounterProvider:'', type:'select', labelName:'Encounter Provider', idName:'EncounterProvider'},
             {encounterLocation:'',type:'select',labelName:'Facility Name', idName:'encounterLocation'},
             {patient:'',type:'text', labelName:'Patient Name', idName:'patient'}
@@ -29,40 +29,40 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117
 
           schema.obs = [
             {
-              obsConceptGroupUuid:'uuid5',
-              obsConceptUuid:'uuid1',
-              type:'text',
+              obsConceptGroupUuid:'a899e6d8-1350-11df-a1f1-0026b9348838',
+              obsConceptUuid:'a8a65fee-1350-11df-a1f1-0026b9348838',
+              type:'number',
               label:'Temperature'
             },
             {
-              obsConceptGroupUuid:'uuid5',
-              obsConceptUuid:'uuid2',
+              obsConceptGroupUuid:'a899e6d8-1350-11df-a1f1-0026b9348838',
+              obsConceptUuid:'a8a660ca-1350-11df-a1f1-0026b9348838',
               type:'number',
               label:'weight'
             },
             {
-              obsConceptGroupUuid:'grpuud',
-              obsConceptUuid:'',
+              obsConceptGroupUuid:'',
+              obsConceptUuid:'a899a9f2-1350-11df-a1f1-0026b9348838',
               type:'select',
-              obsAnswerConceptUuids:['conceptUuid1','conceptUuid2','conceptUuid3'],
-              obsAnswerLabels:['Yes, and I love it!','Yes, but am not a fan...','Nope'],
-              label:'Test dropdown'
+              obsAnswerConceptUuids:['a8aa76b0-1350-11df-a1f1-0026b9348838','a899ad58-1350-11df-a1f1-0026b93488382','a899ac7c-1350-11df-a1f1-0026b9348838'],
+              obsAnswerLabels:['Married','Divorced','Single'],
+              label:'Marital status'
             },
             {
               obsConceptGroupUuid:'',
-              obsConceptUuid:'uuid3',
+              obsConceptUuid:'774961c6-232f-4332-8a9f-f5c55ebe86d0',
               type:'radio',
-              obsAnswerConceptUuids:['conceptUuid1','conceptUuid2','conceptUuid3'],
-              obsAnswerLabels:['Yes, and I love it!','Yes, but am not a fan...','Nope'],
-              label:'Test radio'
+              obsAnswerConceptUuids:['a899b35c-1350-11df-a1f1-0026b9348838','a899b42e-1350-11df-a1f1-0026b9348838'],
+              obsAnswerLabels:['Yes','No','Nope'],
+              label:'Family Planning'
             },
             {
               obsConceptGroupUuid:'',
-              obsConceptUuid:'uuid4',
+              obsConceptUuid:'a894b1cc-1350-11df-a1f1-0026b9348838',
               type:'multiCheckbox',
-              obsAnswerConceptUuids:['conceptUuid1','conceptUuid2','conceptUuid3'],
-              obsAnswerLabels:['Yes, and I love it!','Yes, but am not a fan...','Nope'],
-              label:'Test Checkbox'
+              obsAnswerConceptUuids:['a893516a-1350-11df-a1f1-0026b9348838','b75702a6-908d-491b-9399-6495712c81cc','a8aaf3e2-1350-11df-a1f1-0026b9348838'],
+              obsAnswerLabels:['Condoms','Emergency OCP','Other'],
+              label:'Family Planning Method'
             }
 
           ];
