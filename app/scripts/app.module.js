@@ -53,6 +53,12 @@
   controller: 'PatientDashboardCtrl',
   data: { requireLogin: true}
 })
+.state('encounter', {
+url: '/encounter/:uuid',
+templateUrl: 'views/appDashboard/patient-dashboard.html',
+controller: 'PatientDashboardCtrl',
+data: { requireLogin: true}
+})
 .state('form1', {
 url: '/form1',
 templateUrl: 'views/formentry/test1.html',
@@ -81,5 +87,24 @@ data: { requireLogin: true}
 
       //else navigate to page
     });
+// add provision of tracking various states for easy navigation
+    $rootScope.previousState;
+    $rootScope.previousStateParams;
+    $rootScope.currentState;
+    $rootScope.currentStateParams;
+    $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+      $rootScope.previousState = from.name;
+      $rootScope.currentState = to.name;
+      $rootScope.previousStateParams = fromParams;
+      $rootScope.currentStateParams = toParams;
+
+      console.log('Previous state:'+$rootScope.previousState);
+      console.log('Previous state Params:'+$rootScope.previousStateParams);
+      console.log($rootScope.previousStateParams);
+      console.log('Current state:'+$rootScope.currentState);
+      console.log('Current Param Params:'+$rootScope.currentStateParams);
+      console.log($rootScope.currentStateParams);
+});
+
   });
 })();

@@ -14,7 +14,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-3">
-					<h5>{{patient.genderFull()}} {{patient.age()}} ({{patient.birthdate()| date:'yyyy-MM-dd'}})</h5>
+					<h5>{{patient.genderFull()}} {{patient.age()}} ({{patient.birthdate()| date:'dd-MM-yyyy'}})</h5>
 				</div>
 				<div class="col-md-3">
 					<h5>
@@ -51,11 +51,11 @@
 						</h3>
 						<div class="page-content">
 							<div class="row" ng-repeat="encounter in encounters" class="small">
-					      <a href="#/patient/{{encounter.uuid}}">
-					        <div class="col-md-3">{{encounter.encounterDatetime}}</div>
-					        <div class="col-md-5">{{encounter.encounterType.display}}</div>
-					        <div class="col-md-2">{{encounter.location.display}}</div>
-					        <div class="col-md-2">{{encounter.provider.display}}</div>
+					      <a href="#/encounter/{{encounter.uuid}}">
+					        <div class="col-md-3">{{encounter.encounterDate() | date:'dd-MM-yyyy'}} </div>
+					        <div class="col-md-5">{{encounter.encounterTypeName()}}</div>
+					        <div class="col-md-2">{{encounter.locationName()}}</div>
+					        <div class="col-md-2">{{encounter.providerName()}}</div>
 					      </a>
 
 

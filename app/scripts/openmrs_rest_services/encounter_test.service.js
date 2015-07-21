@@ -6,9 +6,9 @@
         .module('OpenmrsRestServices')
         .factory('EncounterService', EncounterService);
 
-    EncounterService.$inject = ['$resource', 'OpenmrsSettings'];
+    EncounterService.$inject = ['$resource', 'OpenmrsSettings', 'EncounterModel'];
 
-    function EncounterService($resource, settings) {
+    function EncounterService($resource, settings, EncounterModel) {
         var service = {
             postEncounter: postEncounter,
             getEncounter: getEncounter,
@@ -40,10 +40,24 @@
             var results=data.results;
             //sort encounters in dessending order
             var sortedList = _.sortBy(results, function(item){
-              return - item.encounterDatetime;
+              return item.encounterDatetime;
             })
-            console.log(sortedList);
-            callback(sortedList);
+             sortedList.reverse(); //sort list in desceding order
+             console.log(sortedList);
+            var encList = [];
+            _.each(sortedList, function(enc) {
+              console.log(enc)
+              var form='',loc='',prov='', provName='', locName='';
+              if (enc.form !== null) form = enc.form.uuid;
+              if (enc.provider !== null)
+              {prov = enc.provider.uuid; provName=enc.provider.display;}
+              if (enc.location !== null)
+              {loc = enc.location.uuid; locName=enc.location.display;}
+              var encItem = new EncounterModel.encounter(enc.uuid, enc.encounterType.display, enc.encounterType.uuid, form, provName, prov, enc.encounterDatetime, locName, loc);
+              encList.push(encItem);
+            });
+            console.log();
+            callback(encList);
           });
 
         }

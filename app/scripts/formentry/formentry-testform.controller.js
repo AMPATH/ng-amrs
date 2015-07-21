@@ -8,12 +8,17 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
         .module('app.formentry')
         .controller('TestFormCtrl', TestFormCtrl);
 
-    TestFormCtrl.$inject = ['$scope', 'TestFormSchema', 'FormentryService', 'EncounterService', '$timeout'];
+    TestFormCtrl.$inject = ['$rootScope', '$state', '$scope', 'TestFormSchema', 'FormentryService', 'EncounterService', '$timeout'];
 
-    function TestFormCtrl($scope, TestFormSchema, FormentryService, EncounterService, $timeout) {
+    function TestFormCtrl($rootScope, $state, $scope, TestFormSchema, FormentryService, EncounterService, $timeout) {
         $scope.vm = {};
         $scope.vm.user = {};
         $scope.vm.error = '';
+        $scope.vm.cancel = function ()
+        {
+          console.log($state);
+          //$state.go($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
+        }
         $scope.vm.submit = function() {
           //  $scope.vm.error = FormentryService.validateForm($scope.vm.userFields);
             if ($scope.vm.error === '')
