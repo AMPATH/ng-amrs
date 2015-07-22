@@ -41,14 +41,14 @@
             //sort encounters in dessending order
             var sortedList = _.sortBy(results, function(item){
               return item.encounterDatetime;
-            })
+            });
              sortedList.reverse(); //sort list in desceding order
              console.log(sortedList);
             var encList = [];
             _.each(sortedList, function(enc) {
-              console.log(enc)
+              console.log(enc);
               var form='',loc='',prov='', provName='', locName='';
-              if (enc.form !== null) form = enc.form.uuid;
+              if (enc.form !== null) {form = enc.form.uuid;}
               if (enc.provider !== null)
               {prov = enc.provider.uuid; provName=enc.provider.display;}
               if (enc.location !== null)

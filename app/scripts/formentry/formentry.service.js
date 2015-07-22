@@ -373,7 +373,17 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
 
 
 
+
         function createForm(schema) {
+          var validatorsArray = {};
+          validatorsArray['ipAddress'] = {
+            expression: function(viewValue, modelValue) {
+              var value = modelValue || viewValue;
+              //return !value || /(\d{1,3}\.){3}\d{1,3}/.test(value);
+              if (value>100) return false;
+            },
+            message: '$viewValue + " is above normal acceptable range!"'
+          };
           var formSchema=[];
           var field ={};
 
@@ -440,8 +450,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
                   answerValue:''},
                 templateOptions: {
                   type: schema.obs[i].type,
-                  label: schema.obs[i].label
-                }
+                  label: schema.obs[i].label,
+                  required:true
+                },
+        validators: {
+          //ipAddress: validatorsArray['ipAddress']
+        }
+
               }
 
             }

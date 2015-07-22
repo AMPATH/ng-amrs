@@ -1,5 +1,5 @@
 /*
-jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117, -W116
+jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069
 */
 (function() {
     'use strict';
@@ -11,20 +11,37 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117, -W116
     FormsMetaData.$inject = [];
 
     function FormsMetaData() {
+
+        var forms = {};
+        forms['form1'] = {
+          name: 'test',
+          uuid: 'xxx',
+          encounterType:'yyy'
+        };
+
+        forms['form2'] = {
+          name: 'test',
+          uuid: 'xxx',
+          encounterType:'yyy'
+        };
+
+        forms['form3'] = {
+          name: 'test',
+          uuid: 'xxx',
+          encounterType:'yyy'
+        };
+
         var service = {
             getForm: getForm
         };
 
         return service;
 
-        var forms = {
-          {name: 'form1', uuid: 'vv', encounterType: 'b2be0-c2cc-11de-8d13-0010c6dffd0f'},
-          {name: 'form2', uuid: 'vv', encounterType: 'vv'},
-          {name: 'form3', uuid: 'bb', encounterType: 'xxx'}
-        };
 
         function getForm(uuid) {
-          return _.findWhere(forms,{uuid:uuid});
+          _.find(forms,function(form) {
+            if (form.uuid === uuid) return form;
+          });
         }
     }
 })();

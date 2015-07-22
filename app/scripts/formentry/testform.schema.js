@@ -32,7 +32,10 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117
               obsConceptGroupUuid:'a899e6d8-1350-11df-a1f1-0026b9348838',
               obsConceptUuid:'a8a65fee-1350-11df-a1f1-0026b9348838',
               type:'number',
-              label:'Temperature'
+              label:'Temperature',
+              validators:{
+                
+              }
             },
             {
               obsConceptGroupUuid:'a899e6d8-1350-11df-a1f1-0026b9348838',
@@ -62,7 +65,10 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117
               type:'multiCheckbox',
               obsAnswerConceptUuids:['a893516a-1350-11df-a1f1-0026b9348838','b75702a6-908d-491b-9399-6495712c81cc','a8aaf3e2-1350-11df-a1f1-0026b9348838'],
               obsAnswerLabels:['Condoms','Emergency OCP','Other'],
-              label:'Family Planning Method'
+              label:'Family Planning Method',
+              validators:{
+
+              }
             }
 
           ];
