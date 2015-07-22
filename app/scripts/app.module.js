@@ -1,4 +1,4 @@
-/*jshint -W098 */
+/*jshint -W098, -W030 */
 (function() {
   'use strict';
 
@@ -55,12 +55,12 @@
 })
 .state('encounter', {
 url: '/encounter/:uuid',
-templateUrl: 'views/appDashboard/patient-dashboard.html',
-controller: 'PatientDashboardCtrl',
+templateUrl: 'views/formentry/test1.html',
+controller: 'TestFormCtrl',
 data: { requireLogin: true}
 })
-.state('form1', {
-url: '/form1',
+.state('forms', {
+url: '/form/:uuid',
 templateUrl: 'views/formentry/test1.html',
 controller: 'TestFormCtrl',
 data: { requireLogin: true}

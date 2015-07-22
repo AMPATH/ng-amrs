@@ -8,9 +8,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
         .module('app.formentry')
         .controller('TestFormCtrl', TestFormCtrl);
 
-    TestFormCtrl.$inject = ['$rootScope', '$state', '$scope', 'TestFormSchema', 'FormentryService', 'EncounterService', '$timeout'];
+    TestFormCtrl.$inject = ['$rootScope',  '$stateParams', '$state', '$scope', 'TestFormSchema', 'FormentryService', 'EncounterService', '$timeout'];
 
-    function TestFormCtrl($rootScope, $state, $scope, TestFormSchema, FormentryService, EncounterService, $timeout) {
+    function TestFormCtrl($rootScope, $stateParams, $state, $scope, TestFormSchema, FormentryService, EncounterService, $timeout) {
         $scope.vm = {};
         $scope.vm.user = {};
         $scope.vm.error = '';
@@ -37,21 +37,30 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
 
  var formSchema=TestFormSchema.getFormSchema();
 
- $scope.vm.userFields = FormentryService.createForm(formSchema);
+ $scope.vm.formlyFields = FormentryService.createForm(formSchema);
 
  /*
  Test logic to get a form filled with existing data.
  */
- var testParams={uuid:'713aa823-a594-4256-b3d7-364145fbbd2f'}; //drop after testing
+ var params={uuid: $stateParams.uuid}; //drop after testing
  var encData;
 
  $timeout(function () {
-   EncounterService.getEncounter(testParams, function(data){
-     encData = data;
-     //console.log('Rest Feeback')
-     //console.log(encData);
-     FormentryService.getEncounter(encData,$scope.vm.userFields);
-   });
+   console.log('testing encounter params')
+   console.log(params);
+   console.log($stateParams);
+   if (!params.uuid.startsWith('form'))
+   {
+     EncounterService.getEncounter(params,
+       function(data){
+       encData = data;
+       //console.log('Rest Feeback')
+       //console.log(encData);
+       FormentryService.getEncounter(encData,$scope.vm.formlyFields);
+      });
+    }
+    $scope.vm.userFields = $scope.vm.formlyFields;
+
  },1000);
 
  console.log(JSON.stringify($scope.vm.user));

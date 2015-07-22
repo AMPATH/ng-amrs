@@ -8,9 +8,9 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117
         .module('app.formentry')
         .factory('TestFormSchema', TestFormSchema);
 
-    TestFormSchema.$inject = [];
+    TestFormSchema.$inject = ['$http'];
 
-    function TestFormSchema() {
+    function TestFormSchema($http) {
         var service = {
             getFormSchema: getFormSchema
         };
@@ -18,6 +18,12 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117
         return service;
 
         function getFormSchema() {
+          $http.get('scripts/formentry/formschema/form1.json')
+            .success(function(response) {
+              console.log('testing json files');
+              console.log(response.schema);
+              });
+
           var schema = {};
           schema.encounter = [
             {encounterDatetime:'',type:'datepicker', labelName:'Visit Date', idName:'encounterDatetime'},
@@ -34,7 +40,7 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117
               type:'number',
               label:'Temperature',
               validators:{
-                
+
               }
             },
             {
