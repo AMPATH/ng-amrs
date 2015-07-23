@@ -6,7 +6,8 @@
             'formly',
             'formlyBootstrap',
             'OpenmrsRestServices',
-            'ngMessages'
+            'ngMessages',
+            'ui.bootstrap'
         ])
 
     .run(function(formlyConfig, formlyValidationMessages, formlyApiCheck) {

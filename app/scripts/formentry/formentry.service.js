@@ -388,26 +388,22 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
           var field ={};
 
           //add encounter details
-          var encounterFields = _.filter(schema, function(obj) {
-            //console.log(obj);
-            if (obj['encounter']) return obj;
-          });
-          console.log('encounterFields');
           //console.log(encounterFields);
           //console.log(schema);
 
-          _.each (encounterFields[0]['encounter'], function(encField) {
+          _.each (schema.encounter, function(encField) {
             //console.log(encField)
             if(encField.type === 'datepicker')
             {
               field = {
                 key: 'enc_' + encField.idName,
-                type: 'input',
+                type: 'datepicker',
                 model: {encounter:'enc_' + encField.idName},
                 templateOptions: {
                   type: 'text',
                   label: encField.labelName,
-                  placeholder: encField.labelName
+                  placeholder: encField.labelName,
+                  datepickerPopup: 'dd-MMMM-yyyy'
                 }
               }
             }
@@ -442,13 +438,8 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
           });
 
 
-          //add obs details
-          var obsFields = _.filter(schema, function(obj) {
-            //console.log(obj);
-            if (obj['obs']) return obj;
-          });
 
-          _.each(obsFields[0]['obs'], function(obs_Field) {
+          _.each(schema.obs, function(obs_Field) {
             console.log(obs_Field)
             var obsField ={};
             if ((obs_Field.type === 'text') || (obs_Field.type === 'number'))
