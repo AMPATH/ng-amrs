@@ -8,27 +8,76 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
         .module('app.formentry')
         .controller('TestFormCtrl', TestFormCtrl);
 
-    TestFormCtrl.$inject = ['$scope', 'TestFormSchema', 'FormentryService'];
+    TestFormCtrl.$inject = ['$location', '$rootScope',  '$stateParams', '$state', '$scope', 'TestFormSchema', 'FormentryService', 'EncounterService', '$timeout'];
 
-    function TestFormCtrl($scope, TestFormSchema, FormentryService) {
+    function TestFormCtrl($location, $rootScope, $stateParams, $state, $scope, TestFormSchema, FormentryService, EncounterService, $timeout) {
         $scope.vm = {};
-        $scope.vm.user = {};
-        $scope.vm.submit = function() {
-          for(var i=0; i<$scope.vm.userFields.length; i++)
-          {
-            console.log($scope.vm.userFields[i].model);
-          }
+        $scope.vm.error = '';
 
+        $scope.vm.cancel = function ()
+        {
+          console.log($state);
+          $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
         }
 
- // note, these field types will need to be
- // pre-defined. See the pre-built and custom templates
- // http://docs.angular-formly.com/v6.4.0/docs/custom-templates
- var formSchema=TestFormSchema.getFormSchema();
+        $scope.vm.submit = function() {
+          //  $scope.vm.error = FormentryService.validateForm($scope.vm.userFields);
+            if ($scope.vm.error === '')
+            {
+              //FormentryService.getPayLoad($scope.vm.userFields);
+            }
+            else {
+              $scope.vm.error = '';
+            }
+            var payLoad = FormentryService.getPayLoad($scope.vm.userFields);
+            EncounterService.postEncounter(payLoad,function (data) {
+              // body...
+              console.log(data);
+            })
+        }
 
- $scope.vm.userFields = FormentryService.createForm(formSchema);
+ var formSchema;
 
- console.log(JSON.stringify($scope.vm.user));
+
+
+
+
+ /*
+ Test logic to get either a blank form or form filled with existing data.
+ */
+ var params={uuid: $stateParams.encuuid}; //drop after testing
+ var encData;
+ $scope.vm.userFields = {};
+
+ $timeout(function () {
+   // get form schema data
+   var selectedForm = $stateParams.formuuid;
+   console.log('testing selected Form')
+   console.log(selectedForm);
+   TestFormSchema.getFormSchema(selectedForm, function(schema){
+     formSchema = schema;
+     $scope.vm.formlyFields = FormentryService.createForm(formSchema);
+     $scope.vm.userFields = $scope.vm.formlyFields;
+   });
+
+   console.log('testing encounter params')
+   console.log(params);
+   console.log($stateParams);
+   if (params.uuid !== undefined)
+   {
+     EncounterService.getEncounter(params,
+       function(data){
+       encData = data;
+       //console.log('Rest Feeback')
+       //console.log(encData);
+       FormentryService.getEncounter(encData,$scope.vm.formlyFields);
+      });
+    }
+    $scope.vm.userFields = $scope.vm.formlyFields;
+
+ },1000);
+
+ console.log(JSON.stringify($scope.vm.userFields));
 }
 
 })();

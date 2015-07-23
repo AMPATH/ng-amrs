@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <!-- <link rel="stylesheet" href="bower_components/bootstrap-vertical-tabs/bootstrap.vertical-tabs.css"> -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog.css" />
+    <link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog-theme-default.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -68,6 +70,10 @@
     <script src="bower_components/api-check/dist/api-check.js"></script>
     <script src="bower_components/angular-formly/dist/formly.js"></script>
     <script src="bower_components/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/underscore.string/dist/underscore.string.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/ngDialog/js/ngDialog.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -90,12 +96,14 @@
         <script src="scripts/openmrs_rest_services/patient_test.service.js"></script>
         <script src="scripts/openmrs_rest_services/openmrs-patient.service.js"></script>
         <script src="scripts/openmrs_rest_services/user.service.js"></script>
+        <script src="scripts/openmrs_rest_services/encounter_test.service.js"></script>
         <script src="scripts/formentry/formentry.service.js"></script>
 
         <!-- models -->
         <script src="scripts/models/session.model.js"></script>
         <script src="scripts/models/patient.model.js"></script>
         <script src="scripts/models/user.model.js"></script>
+        <script src="scripts/models/encounter.model.js"></script>
 
         <!-- directives -->
         <script src="scripts/dashboard/main-navigation.directive.js"></script>
