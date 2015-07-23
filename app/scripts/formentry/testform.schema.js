@@ -17,13 +17,23 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117
 
         return service;
 
-        function getFormSchema() {
-          $http.get('scripts/formentry/formschema/form1.json')
+        function getFormSchema(formName, callback) {
+          var schema = {};
+          formName = formName + '.json'
+          $http.get('scripts/formentry/formschema/'+formName)
             .success(function(response) {
               console.log('testing json files');
               console.log(response.schema);
-              });
+              schema = response.schema;
+              callback(schema);
+              })
+              .error(function(data, status, headers, config) {
+                console.log(data);
+                console.log(status);
+                if (status === 404) {alert('Form Resource not Available');}
 
+            });
+/*
           var schema = {};
           schema.encounter = [
             {encounterDatetime:'',type:'datepicker', labelName:'Visit Date', idName:'encounterDatetime'},
@@ -78,8 +88,8 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117
             }
 
           ];
-
-          return schema;
+*/
+          //return schema;
 
         }
     }

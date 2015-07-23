@@ -1,5 +1,5 @@
 /*
-jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
+jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
 */
 (function() {
     'use strict';
@@ -388,69 +388,80 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
           var field ={};
 
           //add encounter details
+          var encounterFields = _.filter(schema, function(obj) {
+            //console.log(obj);
+            if (obj['encounter']) return obj;
+          });
+          console.log('encounterFields');
+          //console.log(encounterFields);
+          //console.log(schema);
 
-          for (var i=0; i<schema.encounter.length; i++)
-          {
-            //console.log(schema.encounter)
-            if(schema.encounter[i].type === 'datepicker')
+          _.each (encounterFields[0]['encounter'], function(encField) {
+            //console.log(encField)
+            if(encField.type === 'datepicker')
             {
               field = {
-                key: 'enc_' + schema.encounter[i].idName,
+                key: 'enc_' + encField.idName,
                 type: 'input',
-                model: {encounter:'enc_' + schema.encounter[i].idName},
+                model: {encounter:'enc_' + encField.idName},
                 templateOptions: {
                   type: 'text',
-                  label: schema.encounter[i].labelName,
-                  placeholder: schema.encounter[i].labelName
+                  label: encField.labelName,
+                  placeholder: encField.labelName
                 }
               }
             }
-            else if(schema.encounter[i].type === 'text')
+            else if(encField.type === 'text')
             {
               field = {
-                key: 'enc_' + schema.encounter[i].idName,
+                key: 'enc_' + encField.idName,
                 type: 'input',
-                model: {encounter:'enc_' + schema.encounter[i].idName},
+                model: {encounter:'enc_' + encField.idName},
                 templateOptions: {
                   type: 'text',
-                  label: schema.encounter[i].labelName,
-                  placeholder: schema.encounter[i].labelName
+                  label: encField.labelName,
+                  placeholder: encField.labelName
                 }
               }
             }
             else {
               field = {
-                key: 'enc_' + schema.encounter[i].idName,
-                type: schema.encounter[i].type,
-                model: {encounter:'enc_' + schema.encounter[i].idName},
+                key: 'enc_' + encField.idName,
+                type: encField.type,
+                model: {encounter:'enc_' + encField.idName},
                 templateOptions: {
                   type: 'text',
-                  label: schema.encounter[i].labelName,
-                  placeholder: schema.encounter[i].labelName,
+                  label: encField.labelName,
+                  placeholder: encField.labelName,
                   options:[]
                 }
               }
             }
 
             formSchema.push(field);
-          }
+          });
+
 
           //add obs details
-          for (var i = 0; i<schema.obs.length; i++)
-          {
-            console.log(i)
+          var obsFields = _.filter(schema, function(obj) {
+            //console.log(obj);
+            if (obj['obs']) return obj;
+          });
+
+          _.each(obsFields[0]['obs'], function(obs_Field) {
+            console.log(obs_Field)
             var obsField ={};
-            if ((schema.obs[i].type === 'text') || (schema.obs[i].type === 'number'))
+            if ((obs_Field.type === 'text') || (obs_Field.type === 'number'))
             {
               obsField = {
-                key: 'obs_' + schema.obs[i].obsConceptUuid,
+                key: 'obs_' + obs_Field.obsConceptUuid,
                 type: 'input',
-                model: {obsConceptUuid:schema.obs[i].obsConceptUuid,
-                  obsGroupUuid:schema.obs[i].obsConceptGroupUuid,
+                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+                  obsGroupUuid:obs_Field.obsConceptGroupUuid,
                   answerValue:''},
                 templateOptions: {
-                  type: schema.obs[i].type,
-                  label: schema.obs[i].label,
+                  type: obs_Field.type,
+                  label: obs_Field.label,
                   required:true
                 },
         validators: {
@@ -460,28 +471,28 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
               }
 
             }
-            else if ((schema.obs[i].type === 'radio') || (schema.obs[i].type === 'select') || (schema.obs[i].type === 'multiCheckbox'))
+            else if ((obs_Field.type === 'radio') || (obs_Field.type === 'select') || (obs_Field.type === 'multiCheckbox'))
             {
               var opts= [];
               //get the radio/select options/multicheckbox
-              for(var l = 0; l<schema.obs[i].obsAnswerConceptUuids.length; l++)
+              for(var l = 0; l<obs_Field.obsAnswerConceptUuids.length; l++)
               {
                  var item={
-                   name:schema.obs[i].obsAnswerLabels[l],
-                   value:schema.obs[i].obsAnswerConceptUuids[l]
+                   name:obs_Field.obsAnswerLabels[l],
+                   value:obs_Field.obsAnswerConceptUuids[l]
                    };
                  opts.push(item);
               }
 
               obsField = {
-                key: 'obs_' + schema.obs[i].obsConceptUuid,
-                type: schema.obs[i].type,
-                model: {obsConceptUuid:schema.obs[i].obsConceptUuid,
-                  obsGroupUuid:schema.obs[i].obsConceptGroupUuid,
+                key: 'obs_' + obs_Field.obsConceptUuid,
+                type: obs_Field.type,
+                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+                  obsGroupUuid:obs_Field.obsConceptGroupUuid,
                   answerValue:''},
                 templateOptions: {
-                  type: schema.obs[i].type,
-                  label: schema.obs[i].label,
+                  type: obs_Field.type,
+                  label: obs_Field.label,
                   options:opts
                 }
               }
@@ -490,9 +501,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
 
             formSchema.push(obsField);
 
-          }
-          //console.log('sample form');
-          //console.log(formSchema);
+          });
+
+          console.log('sample form');
+          console.log(formSchema);
 
           return formSchema;
 

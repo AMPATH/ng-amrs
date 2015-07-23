@@ -30,8 +30,8 @@
         function (data) {
           // body...
           $scope.encounters = data;
-        }
-      )
+        });
     },1000);
+
     }
 })();

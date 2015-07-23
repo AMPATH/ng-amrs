@@ -40,6 +40,7 @@ module.exports = function(config) {
       'bower_components/underscore/underscore.js',
       'bower_components/underscore.string/dist/underscore.string.js',
       'bower_components/angular-messages/angular-messages.js',
+      'bower_components/ngDialog/js/ngDialog.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.module.js',

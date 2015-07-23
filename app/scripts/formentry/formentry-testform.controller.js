@@ -8,17 +8,18 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
         .module('app.formentry')
         .controller('TestFormCtrl', TestFormCtrl);
 
-    TestFormCtrl.$inject = ['$rootScope',  '$stateParams', '$state', '$scope', 'TestFormSchema', 'FormentryService', 'EncounterService', '$timeout'];
+    TestFormCtrl.$inject = ['$location', '$rootScope',  '$stateParams', '$state', '$scope', 'TestFormSchema', 'FormentryService', 'EncounterService', '$timeout'];
 
-    function TestFormCtrl($rootScope, $stateParams, $state, $scope, TestFormSchema, FormentryService, EncounterService, $timeout) {
+    function TestFormCtrl($location, $rootScope, $stateParams, $state, $scope, TestFormSchema, FormentryService, EncounterService, $timeout) {
         $scope.vm = {};
-        $scope.vm.user = {};
         $scope.vm.error = '';
+
         $scope.vm.cancel = function ()
         {
           console.log($state);
-          //$state.go($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
+          $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
         }
+
         $scope.vm.submit = function() {
           //  $scope.vm.error = FormentryService.validateForm($scope.vm.userFields);
             if ($scope.vm.error === '')
@@ -35,21 +36,34 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
             })
         }
 
- var formSchema=TestFormSchema.getFormSchema();
+ var formSchema;
 
- $scope.vm.formlyFields = FormentryService.createForm(formSchema);
+
+
+
 
  /*
- Test logic to get a form filled with existing data.
+ Test logic to get either a blank form or form filled with existing data.
  */
- var params={uuid: $stateParams.uuid}; //drop after testing
+ var params={uuid: $stateParams.encuuid}; //drop after testing
  var encData;
+ $scope.vm.userFields = {};
 
  $timeout(function () {
+   // get form schema data
+   var selectedForm = $stateParams.formuuid;
+   console.log('testing selected Form')
+   console.log(selectedForm);
+   TestFormSchema.getFormSchema(selectedForm, function(schema){
+     formSchema = schema;
+     $scope.vm.formlyFields = FormentryService.createForm(formSchema);
+     $scope.vm.userFields = $scope.vm.formlyFields;
+   });
+
    console.log('testing encounter params')
    console.log(params);
    console.log($stateParams);
-   if (!params.uuid.startsWith('form'))
+   if (params.uuid !== undefined)
    {
      EncounterService.getEncounter(params,
        function(data){
@@ -63,7 +77,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
 
  },1000);
 
- console.log(JSON.stringify($scope.vm.user));
+ console.log(JSON.stringify($scope.vm.userFields));
 }
 
 })();

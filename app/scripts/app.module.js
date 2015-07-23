@@ -54,13 +54,13 @@
   data: { requireLogin: true}
 })
 .state('encounter', {
-url: '/encounter/:uuid',
+url: '/encounter/:encuuid/patient/:uuid',
 templateUrl: 'views/formentry/test1.html',
 controller: 'TestFormCtrl',
 data: { requireLogin: true}
 })
 .state('forms', {
-url: '/form/:uuid',
+url: '/form/:formuuid/patient/:uuid',
 templateUrl: 'views/formentry/test1.html',
 controller: 'TestFormCtrl',
 data: { requireLogin: true}
