@@ -39,7 +39,8 @@
     }
 
     function getPatientEncounters(patientUuid, successCallback, errorCallback) {
-      Restangular.one('encounter').get({'patient':patientUuid}).then(function(data) {
+      Restangular.one('encounter').get({'patient':patientUuid, 'v':'default'}).then(function(data) {
+        if(angular.isDefined(data.results)) data = data.results;
         _successCallbackHandler(successCallback, data);
       },
       function(error) {
@@ -55,12 +56,8 @@
         ' results');
         return;
       }
-      if(data.results) {
-        // Just return the array (i.e unwrap the object returned by openmrs)
-        successCallback(data.results);
-      } else {
-        successCallback(data);
-      }
+      
+      successCallback(data);
     }
   }
 })();
