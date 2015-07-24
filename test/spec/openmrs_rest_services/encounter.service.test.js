@@ -66,7 +66,7 @@
                             ]
                           }
                       ]};
-          httpBackend.expectGET(testRestUrl + 'encounter?patient=patient-uuid').respond(response);
+          httpBackend.expectGET(testRestUrl + 'encounter?patient=patient-uuid&v=default').respond(response);
           encounterService.getPatientEncounters('patient-uuid',function(data){
             expect(data[0].uuid).to.equal('encounter-uuid-for-first-element');
           },function(error){console.log('Error')});
