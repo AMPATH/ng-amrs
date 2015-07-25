@@ -1,9 +1,13 @@
-<div ng-controller="TestFormCtrl" class="panel panel-info" style="padding:4px;">
+<div ng-controller="FormentryCtrl" class="panel panel-info" style="padding:4px;">
   <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
 
   <form name="vm.form">
+    <div>
+      Patient Details: Identifier: {{vm.patient.identifierFormatted()}} | Name : {{vm.patient.fullNames()}}
+    </div>
     <div>{{vm.error}}</div>
+
     <formly-form model="vm.user" fields="vm.userFields">
       <button type="submit" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
       <button type="submit" class="btn btn-default" ng-click="vm.submit(vm.user)">Submit</button>
@@ -11,13 +15,15 @@
         <h2>form data </h2>
         {{vm.userFields}}
       </div>
+
       <div>
         <h2>Fields</h2>
         <div ng-repeat="model in vm.userFields">
           {{model.model}}
         </div>
 
-        </div> -->
+        </div>
+        -->
     </formly-form>
 
   </form>

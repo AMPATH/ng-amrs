@@ -6,13 +6,15 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
 
     angular
         .module('app.formentry')
-        .controller('TestFormCtrl', TestFormCtrl);
+        .controller('FormentryCtrl', TestFormCtrl);
 
-    TestFormCtrl.$inject = ['$location', '$rootScope',  '$stateParams', '$state', '$scope', 'TestFormSchema', 'FormentryService', 'EncounterService', '$timeout'];
+    TestFormCtrl.$inject = ['$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'EncounterService', '$timeout'];
 
-    function TestFormCtrl($location, $rootScope, $stateParams, $state, $scope, TestFormSchema, FormentryService, EncounterService, $timeout) {
+    function TestFormCtrl($location, $rootScope, $stateParams, $state, $scope, FormentryService, EncounterService, $timeout) {
         $scope.vm = {};
         $scope.vm.error = '';
+        $scope.vm.patient = $rootScope.broadcastPatient;
+        $scope.vm.encounters = $rootScope.encounters;
 
         $scope.vm.cancel = function ()
         {
@@ -40,7 +42,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
 
 
 
-
+//trying to get broadcasted data
+$scope.$on('patientData', function(event, data) {
+    // do something useful here;
+    $scope.vm.patient = data;
+    console.log('broadcasted Patient data', $scope.vm.patient);
+});
 
  /*
  Test logic to get either a blank form or form filled with existing data.
@@ -50,6 +57,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
  $scope.vm.userFields = {};
 
  $timeout(function () {
+
    // get form schema data
    var selectedForm = $stateParams.formuuid;
    console.log('testing selected Form')

@@ -5,7 +5,7 @@ jshint -W003, -W026, -W098
   'use strict';
 
   angular
-        .module('OpenmrsRestServices')
+        .module('app.openmrsRestServices')
         .factory('UserResService', UserResService);
 
   UserResService.$inject = ['$resource', 'OpenmrsSettings', 'UserModel', '$rootScope'];

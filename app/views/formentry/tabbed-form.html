@@ -1,0 +1,14 @@
+<div class="panel panel-default" style="margin-bottom:4px; padding:2px;">
+	<ul class="nav nav-pills">
+		<li ng-repeat="page in vm.form" class="{{(page.isDefault && page.isDefault === true)? 'active':''}}">
+			<a data-toggle="tab" data-target="{{'#'+page.pageId}}">{{page.pageTitle}}</a>
+		</li>
+	</ul>
+</div>
+<div class="tab-content">
+	<div ng-repeat="page in vm.form" id="{{page.pageId}}" class="{{'tab-pane fade in' + ((page.isDefault && page.isDefault === true)? ' active':'') }}">
+		<div class="panel panel-default" style="padding:10px;">
+			<formly-form model="vm.model" fields="page.formFields" form="page.form" options="vm.options" />
+		</div>
+	</div>
+</div>

@@ -5,8 +5,9 @@
         .module('app.formentry', [
             'formly',
             'formlyBootstrap',
-            'OpenmrsRestServices',
-            'ngMessages'
+            'app.openmrsRestServices',
+            'ngMessages',
+            'ui.bootstrap'
         ])
 
     .run(function(formlyConfig, formlyValidationMessages, formlyApiCheck) {
