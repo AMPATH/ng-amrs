@@ -7,8 +7,8 @@
     "angular-formly-templates-bootstrap": "^5.0.2",
     "api-check": "^7.5.0",
     "bootstrap": "^3.3.5",
-    "grunt-karma": "^0.8.0",
-    "karma": "^0.12.0"
+    "grunt-karma": "^0.12.0",
+    "karma": "^0.13.3"
   },
   "repository": {},
   "devDependencies": {

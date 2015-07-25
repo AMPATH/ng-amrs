@@ -39,7 +39,7 @@
 
       it('Should call the appropriate rest end point when getEncounter is called', function() {
         //undo once you figure out the error
-        //Trying to solve the karma problem so that travis can run
+        //Trying to solve the karma problem so that travis can run perfectly well
         // httpBackend.expectGET(testRestUrl + 'encounter/encounter-test-uuid').respond(dummyEncounter);
         // encounterService.getEncounterByUuid('encounter-test-uuid', function(data){
         //   expect(data.uuid).to.equal(dummyEncounter.uuid);
