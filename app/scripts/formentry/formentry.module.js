@@ -5,7 +5,7 @@
         .module('app.formentry', [
             'formly',
             'formlyBootstrap',
-            'OpenmrsRestServices',
+            'app.openmrsRestServices',
             'ngMessages',
             'ui.bootstrap'
         ])

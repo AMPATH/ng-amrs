@@ -3,7 +3,7 @@
   'use strict';
 
   angular
-        .module('OpenmrsRestServices')
+        .module('app.openmrsRestServices')
         .factory('AuthService', AuthService);
 
   AuthService.$inject = ['$base64', '$http', 'SessionResService', '$state', 'SessionModel', '$rootScope'];

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-        .module('OpenmrsRestServices', [
+        .module('app.openmrsRestServices', [
             'base64',
             'ngResource',
             'models'

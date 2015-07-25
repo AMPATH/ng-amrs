@@ -3,7 +3,7 @@
   'use strict';
 
   angular
-        .module('OpenmrsRestServices')
+        .module('app.openmrsRestServices')
         .factory('PatientService', PatientService);
 
   PatientService.$inject = ['$resource', 'OpenmrsSettings'];

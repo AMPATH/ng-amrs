@@ -16,10 +16,37 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
             getPayLoad: getPayLoad,
             getConceptUuid:getConceptUuid,
             validateForm:validateForm,
-            getEncounter:getEncounter
+            getEncounter:getEncounter,
+            getFormSchema: getFormSchema
         };
 
         return service;
+
+        function getFormSchema(formName, callback) {
+          var schema = {};
+          // this should de dropped once we align all forms related issues
+          if (formName !== undefined)
+          {
+            formName = formName + '.json';
+          }
+          else {
+              formName = 'form1.json';
+          }
+
+          $http.get('scripts/formentry/formschema/'+formName)
+            .success(function(response) {
+              console.log('testing json files');
+              console.log(response.schema);
+              schema = response.schema;
+              callback(schema);
+              })
+              .error(function(data, status, headers, config) {
+                console.log(data);
+                console.log(status);
+                if (status === 404) {alert('Form Resource not Available');}
+
+            });
+        }
 
         function getEncounter(uuid, formlySchema){
           //cbce861a-790c-4b91-80e6-3d75e671a4de

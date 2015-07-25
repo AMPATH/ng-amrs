@@ -26,12 +26,12 @@
         }
     }
 
-    Controller.$inject = ['$scope','ContextService'];
+    Controller.$inject = ['$scope','OpenmrsRestService'];
 
-    function Controller($scope, ContextService) {
+    function Controller($scope, OpenmrsRestService) {
         var vm = this;
 
-        var authenticationService = ContextService.getAuthService();
+        var authenticationService = OpenmrsRestService.getAuthService();
 
         $scope.showNavigationBar = false;
 
@@ -45,9 +45,9 @@
 
         $scope.$on('loggedUser', function() {
           console.log('checking broadcated user');
-          console.log(ContextService.getUserService().user.openmrsModel());
-          $scope.username = ContextService.getUserService().user.userName();
-          $scope.role = ContextService.getUserService().user.userRole()[0].name;
+          console.log(OpenmrsRestService.getUserService().user.openmrsModel());
+          $scope.username = OpenmrsRestService.getUserService().user.userName();
+          $scope.role = OpenmrsRestService.getUserService().user.userRole()[0].name;
       });
 
       $scope.$on('onUserAuthenticationDetermined',onUserAuthentionChanged);

@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('OpenmrsRestServices')
+        .module('app.openmrsRestServices')
         .factory('EncounterService', EncounterService);
 
     EncounterService.$inject = ['$resource', 'OpenmrsSettings', 'EncounterModel'];

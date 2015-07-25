@@ -6,7 +6,7 @@
       beforeEach(function() {
           //debugger;
         module('ngAmrsApp');
-        module('OpenmrsRestServices');
+        module('app.openmrsRestServices');
         module('mock.sessionService');
       });
 

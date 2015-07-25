@@ -3,6 +3,6 @@
 
 angular
         .module('app.patientsearch', [
-            'app.context'
+            'app.openmrsRestServices'
         ]);
 })();

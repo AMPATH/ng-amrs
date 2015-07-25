@@ -5,7 +5,7 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069
     'use strict';
 
     angular
-        .module('formentry')
+        .module('app.formentry')
         .factory('FormsMetaData', FormsMetaData);
 
     FormsMetaData.$inject = [];

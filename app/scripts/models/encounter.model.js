@@ -118,7 +118,7 @@
                       encounterDate: _encounterDate,
                       locationName: _locationName,
                       locationUuid: _locationUuid,
-                      formUuid, _formUuid};
+                      formUuid: _formUuid};
             };
     }
   }
