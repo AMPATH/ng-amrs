@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('OpenmrsRestServices')
+    .module('app.openmrsRestServices')
           .factory('EncounterService', EncounterService);
 
   EncounterService.$inject = ['Restangular'];
@@ -56,7 +56,7 @@
         ' results');
         return;
       }
-      
+
       successCallback(data);
     }
   }

@@ -41,12 +41,9 @@ module.exports = function(config) {
       'bower_components/underscore.string/dist/underscore.string.js',
       'bower_components/angular-messages/angular-messages.js',
       'bower_components/ngDialog/js/ngDialog.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/sinon/index.js',
-      'bower_components/bardjs/dist/bard.js',
-      'bower_components/bardjs/dist/bard-ngRouteTester.js',
       'bower_components/lodash/lodash.js',
       'bower_components/restangular/dist/restangular.js',
+      'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.module.js',
       'app/scripts/**/*.js',
