@@ -43,7 +43,7 @@
 
         //httpBackend.verifyNoOutstandingRequest (); expectation is sufficient for now
       });
-
+//Trigger travis
       it('should have Session service defined', function() {
         expect(sessionService).to.exist;
       });
