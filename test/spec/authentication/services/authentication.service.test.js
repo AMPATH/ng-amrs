@@ -78,7 +78,7 @@
 
       it('should have isAuthenticated change state to home when authentication  is successfull', function() {
         //debugger;
-        httpBackend.when('GET','views/appDashboard/main.html').respond('');//prevent test from failing
+        httpBackend.when('GET','views/main/main.html').respond('');//prevent test from failing
         sessionServiceMock.mockedResponse = {authenticated:true, sessionId:'sessionId'};
         authenticationService.isAuthenticated(testUser,callbacks.callback);
         rootScope.$apply();
