@@ -8,9 +8,9 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
         .module('app.formentry')
         .factory('FormentryService', FormentryService);
 
-    FormentryService.$inject = [];
+    FormentryService.$inject = ['$http'];
 
-    function FormentryService() {
+    function FormentryService($http) {
         var service = {
             createForm: createForm,
             getPayLoad: getPayLoad,
@@ -481,10 +481,11 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                   type: obs_Field.type,
                   label: obs_Field.label,
                   required:true
-                },
-        validators: {
-          //ipAddress: validatorsArray['ipAddress']
-        }
+                }
+        //         ,
+        // validators: {
+        //   //ipAddress: validatorsArray['ipAddress']
+        // }
 
               }
 

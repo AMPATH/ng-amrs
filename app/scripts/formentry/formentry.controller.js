@@ -62,7 +62,7 @@ $scope.$on('patientData', function(event, data) {
    var selectedForm = $stateParams.formuuid;
    console.log('testing selected Form')
    console.log(selectedForm);
-   TestFormSchema.getFormSchema(selectedForm, function(schema){
+    FormentryService.getFormSchema(selectedForm, function(schema){
      formSchema = schema;
      $scope.vm.formlyFields = FormentryService.createForm(formSchema);
      $scope.vm.userFields = $scope.vm.formlyFields;
