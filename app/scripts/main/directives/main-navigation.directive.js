@@ -9,7 +9,7 @@
     function directive() {
         var directiveDefinition = {
             restrict: 'EA',
-            templateUrl: 'views/appDashboard/main-navigation.html',
+            templateUrl: 'views/main/main-navigation.html',
             scope: {
               user:'@'
             },

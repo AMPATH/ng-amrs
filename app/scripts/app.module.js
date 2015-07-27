@@ -31,13 +31,13 @@
     $stateProvider
       .state('home', {
       url: '/',
-      templateUrl: 'views/appDashboard/main.html',
+      templateUrl: 'views/main/main.html',
       //controller: 'AboutCtrl',
       data: { requireLogin: true }
     })
       .state('about', {
       url: '/about',
-      templateUrl: 'views/appDashboard/about.html',
+      templateUrl: 'views/main/about.html',
       controller: 'AboutCtrl',
       data: { requireLogin: true }
     })
@@ -49,7 +49,7 @@
   })
   .state('patient', {
   url: '/patient/:uuid',
-  templateUrl: 'views/appDashboard/patient-dashboard.html',
+  templateUrl: 'views/patient-dashboard/patient-dashboard.html',
   controller: 'PatientDashboardCtrl',
   data: { requireLogin: true}
 })
