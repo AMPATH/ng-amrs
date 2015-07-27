@@ -100,7 +100,9 @@
         "obsConceptGroupUuid":"a8a003a6-1350-11df-a1f1-0026b9348838", "id_g":"1852",
         "obsConceptUuid":"a898c56e-1350-11df-a1f1-0026b9348838", "id":"976",
         "type":"radio",
-        "obsAnswerConceptUuids":["1","0"],
+        "obsAnswerConceptUuids":["a899b35c-1350-11df-a1f1-0026b9348838",
+                                  "a899b42e-1350-11df-a1f1-0026b9348838"
+                                  ],
         "obsAnswerLabels":["Yes","No"],
         "label":"11a. Has patient been Hospitalized since last visit:",
         "validators":{}
@@ -127,7 +129,9 @@
         "obsConceptGroupUuid":"",
         "obsConceptUuid":"a89a94ca-1350-11df-a1f1-0026b9348838", "id":"1146",
         "type":"radio",
-        "obsAnswerConceptUuids":["1","0"],
+        "obsAnswerConceptUuids":["a899b35c-1350-11df-a1f1-0026b9348838",
+                                  "a899b42e-1350-11df-a1f1-0026b9348838"
+                                  ],
         "obsAnswerLabels":["Yes","No"],
         "label":"12c. Delivered (If Yes, fill out PMTCT form):",
         "validators":{}
@@ -187,7 +191,9 @@
         "obsConceptGroupUuid":"",
         "obsConceptUuid":"a89ae254-1350-11df-a1f1-0026b9348838", "id":"1192",
         "type":"radio",
-        "obsAnswerConceptUuids":["1","0"],
+        "obsAnswerConceptUuids":["a899b35c-1350-11df-a1f1-0026b9348838",
+                                  "a899b42e-1350-11df-a1f1-0026b9348838"
+                                  ],
         "obsAnswerLabels":["Yes","No"],
         "label":"13a. Currently on ARVS:",
         "validators":{}
@@ -251,12 +257,6 @@
 
         "label":"13e. Medication:",
         "validators":{}
-      },
-      {
-        "obsConceptGroupUuid":"a899e6d8-1350-11df-a1f1-0026b9348838",
-        "obsConceptUuid":"a8a660ca-1350-11df-a1f1-0026b9348838",
-        "type":"number",
-        "label":"weight"
       },
       {
         "obsConceptGroupUuid":"",

@@ -1,0 +1,17 @@
+<form name="patientSearchForm"  ng-submit="searchPatient(patientUuid)" novalidate>
+  <label for="patientUuid">Patient:</label>
+  <input type="text" id="patientUuid"
+         ng-model="patientUuid">
+  </p>
+  <button type="submit" ng-click="searchPatient">Find Patient</button>
+
+  <ul>
+    <li ng-repeat="patient in patients">
+      {{ patient.name() }} {{ patient.age() }} {{ patient.address().address1 }}
+      {{ patient.address().address2 }} {{ patient.address().cityVillage }}
+        <span ng-repeat="(key, val) in patient.address()" >{{val}} {{key}}</span>
+
+    </li>
+  </ul>
+
+</form>
