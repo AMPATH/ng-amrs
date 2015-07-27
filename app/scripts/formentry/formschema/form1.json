@@ -1,0 +1,290 @@
+{
+  "schema":{
+  "form":{"name":"form1", "uuid":"xxx"} ,
+  "encounter":[
+      {"encounterDatetime":"","type":"datepicker", "labelName":"Visit Date", "idName":"encounterDatetime"},
+      {"encounterType":"", "type":"text", "labelName":"Encounter Type", "idName":"encounterType"},
+      {"encounterProvider":"", "type":"select", "labelName":"Encounter Provider", "idName":"EncounterProvider"},
+      {"encounterLocation":"","type":"select","labelName":"Facility Name", "idName":"encounterLocation"},
+      {"patient":"","type":"text", "labelName":"Patient Name", "idName":"patient"}
+    ],
+    "obs":[
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"a8b02524-1350-11df-a1f1-0026b9348838", "id":"6266",
+        "type":"radio",
+        "obsAnswerConceptUuids":["8b715fed-97f6-4e38-8f6a-c167a42f8923","a899e0ac-1350-11df-a1f1-0026b9348838"],"id":"6815, 1107",
+        "obsAnswerLabels":["Yes","No"],
+        "label":"4. Patient covered by NHIF:",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"0f8b7f4e-1656-46b7-bc93-d1fe4f193f5d", "id":"7016",
+        "obsConceptUuid":"a8a06fc6-1350-11df-a1f1-0026b9348838","id_a":"1915",
+        "type":"text",
+        "label":"6. Transfer in from other clinic (specify):",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"a89ff9a6-1350-11df-a1f1-0026b9348838", "id":"1839",
+        "type":"radio",
+        "obsAnswerConceptUuids":["a89b6440-1350-11df-a1f1-0026b9348838","a89ff816-1350-11df-a1f1-0026b9348838","a89ff8de-1350-11df-a1f1-0026b9348838"],"id":"1246, 1837, 1838",
+        "obsAnswerLabels":["Scheduled visit", "Unscheduled Visit Early", "Unscheduled Visit Late"],
+        "label":"7a. Visit Type",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"dc1942b2-5e50-4adc-949d-ad6c905f054e","id":"7029",
+        "type":"datepicker",
+        "label":"7b. If Unscheduled, actual scheduled date",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"a899a9f2-1350-11df-a1f1-0026b9348838", "id":"1054",
+        "type":"radio",
+        "obsAnswerConceptUuids":["a899af10-1350-11df-a1f1-0026b9348838",
+                                  "a899af10-1350-11df-a1f1-0026b9348838",
+                                  "a8aa76b0-1350-11df-a1f1-0026b9348838",
+                                  "a8b03712-1350-11df-a1f1-0026b9348838",
+                                  "a899aba0-1350-11df-a1f1-0026b9348838",
+                                  "a899ac7c-1350-11df-a1f1-0026b9348838",
+                                  "a899ae34-1350-11df-a1f1-0026b9348838"],"id_a":"1060,1058,5555,  6290,  1056, 1057, 1059",
+        "obsAnswerLabels":["Cohabiting","Divorced","Married monogamous",
+                            "Married polygamous","Separated","Single","Widowed"],
+        "label":"8. Civil Status:Fill if there is change since last visit)",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"a8af49d8-1350-11df-a1f1-0026b9348838", "id":"6096",
+        "type":"radio",
+        "obsAnswerConceptUuids":["a899b35c-1350-11df-a1f1-0026b9348838",
+                                  "a899b42e-1350-11df-a1f1-0026b9348838",
+                                  "a899b50a-1350-11df-a1f1-0026b9348838",
+                                  "a89ad3a4-1350-11df-a1f1-0026b9348838"],"id_a":"1065,1066,1067,1175",
+        "obsAnswerLabels":["Yes", "No", "Unknown","N/A"],
+        "label":"9. Discordant couple:",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"93aa3f1d-1c39-4196-b5e6-8adc916cd5d6", "id":"6578",
+        "type":"radio",
+        "obsAnswerConceptUuids":["5da55301-e28e-4fdf-8b64-02622dedc8b0",
+                                  "a89ff438-1350-11df-a1f1-0026b9348838",
+                                  "a8af49d8-1350-11df-a1f1-0026b9348838",
+                                  "a890d57a-1350-11df-a1f1-0026b9348838",
+                                  "e19c35f0-12f0-46c2-94ea-97050f37b811",
+                                  "a89ad3a4-1350-11df-a1f1-0026b9348838"],"id_a": "8290,1832,6096,105,8291,1175",
+        "obsAnswerLabels":["Client of sex worker","Commercial sex worker","Discordant couple","IV drug use","MSM","N/A"],
+        "label":"10a Prevention With Positives: At risk population:",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"9ce5dbf0-a141-4ad8-8c9d-cd2bf84fe72b", "id":"8302",
+        "type":"radio",
+        "obsAnswerConceptUuids":["f0a280e8-eb88-41a8-837a-f9949ed1b9cd0",
+                                  "bf51f71e-937c-4da5-ae07-654acf59f5bb",
+                                  "a8af49d8-1350-11df-a1f1-0026b9348838",
+                                  "05656545-86be-4605-9527-34fb580534b1",
+                                  "a89ad3a4-1350-11df-a1f1-0026b9348838"],"id_a":"8305,8303,8306,8304,1175",
+        "obsAnswerLabels":["Condom promotion/provision","Couple counseling","Needle exchange","Targeted risk reduction","N/A"],
+        "label":"10b Prevention With Positives: PWP Services:",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"a8a003a6-1350-11df-a1f1-0026b9348838", "id_g":"1852",
+        "obsConceptUuid":"a898c56e-1350-11df-a1f1-0026b9348838", "id":"976",
+        "type":"radio",
+        "obsAnswerConceptUuids":["1","0"],
+        "obsAnswerLabels":["Yes","No"],
+        "label":"11a. Has patient been Hospitalized since last visit:",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"a89ff758-1350-11df-a1f1-0026b9348838","id":"1836",
+        "type":"datepicker",
+        "label":"12a. Females: LMP",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"6b4f1d00-0a27-41dd-a299-fb7dc730819c", "id":"8351",
+        "type":"radio",
+        "obsAnswerConceptUuids":["a899b35c-1350-11df-a1f1-0026b9348838",
+                                  "a899b42e-1350-11df-a1f1-0026b9348838"
+                                  ], "id_a":"1065,1066",
+        "obsAnswerLabels":["Yes","No"],
+        "label":"12b. Pregnant (Fill out PMTCT Form):",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"a89a94ca-1350-11df-a1f1-0026b9348838", "id":"1146",
+        "type":"radio",
+        "obsAnswerConceptUuids":["1","0"],
+        "obsAnswerLabels":["Yes","No"],
+        "label":"12c. Delivered (If Yes, fill out PMTCT form):",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"774961c6-232f-4332-8a9f-f5c55ebe86d0", "id":"8355",
+        "type":"radio",
+        "obsAnswerConceptUuids":["a899b35c-1350-11df-a1f1-0026b9348838",
+                                  "a899b42e-1350-11df-a1f1-0026b9348838"
+                                  ], "id_a":"1065,1066",
+        "obsAnswerLabels":["Yes","No"],
+        "label":"12d. Family Planning:",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"a894b1cc-1350-11df-a1f1-0026b9348838", "id":"374",
+        "type":"multiCheckbox",
+        "obsAnswerConceptUuids":["a893516a-1350-11df-a1f1-0026b9348838",
+                                  "b75702a6-908d-491b-9399-6495712c81cc",
+                                  "a8aff356-1350-11df-a1f1-0026b9348838",
+                                  "a8a71330-1350-11df-a1f1-0026b9348838",
+                                  "a8a71650-1350-11df-a1f1-0026b9348838",
+                                  "4a740e33-fee5-4a2b-b679-1904722e3d9e",
+                                  "a897dbd6-1350-11df-a1f1-0026b9348838",
+                                  "a8a714c0-1350-11df-a1f1-0026b9348838",
+                                  "a8a713f8-1350-11df-a1f1-0026b9348838",
+                                  "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+                                  ], "id_a":"190,6725,6220,5275,5279,8300,780,5277,5276,5622",
+        "obsAnswerLabels":["Condoms","Emergency OCP",
+                            "Implant","Injectable Hormones",
+                            "IUD", "Lactation Method","OCP",
+                            "Rhythm Method","Sterilization",
+                             "Other"
+                             ],
+        "label":"12e. Family Planning Method:",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"88ad5975-4762-4108-a967-072f12f91b0b", "id":"6687",
+        "type":"radio",
+        "obsAnswerConceptUuids":["2d6f977e-3b3f-4ea9-82ee-fde1fb4bdf56",
+                                  "37b27c86-cabb-4c82-9166-d67d2271a8a3",
+                                  "fb82f3b4-bcec-4cd2-a0a4-545b02d28a4d",
+                                  "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+                                  ], "id_a":"7062,8299,6685,5622",
+        "obsAnswerLabels":["Not sexual active",
+                            "Thinks can't get pregnant",
+                            "Wants to get pregnant",
+                            "Other"],
+        "label":"12f. f not on family panning, reason:",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"a89ae254-1350-11df-a1f1-0026b9348838", "id":"1192",
+        "type":"radio",
+        "obsAnswerConceptUuids":["1","0"],
+        "obsAnswerLabels":["Yes","No"],
+        "label":"13a. Currently on ARVS:",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"a8a0b54e-1350-11df-a1f1-0026b9348838", "id":"1999",
+        "type":"radio",
+        "obsAnswerConceptUuids":["a899b35c-1350-11df-a1f1-0026b9348838",
+                                  "a899b42e-1350-11df-a1f1-0026b9348838"
+                                  ],"id_a":"1065,1066",
+        "obsAnswerLabels":["Yes","No"],
+        "label":"13b. Has this patient ever had ARV drugs changed for any reason:",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"a89d200a-1350-11df-a1f1-0026b9348838","id":"1499",
+        "type":"datepicker",
+        "label":"13c. If started since last visit record the date",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"04616f5d-b961-4f41-bbd7-bcc0dd235577", "id":"6744",
+        "type":"radio",
+        "obsAnswerConceptUuids":["034047bd-3fa1-4b2a-b0f0-2787e9b9f7b3",
+                                  "8f8a715d-e49a-4b2c-aa3a-83fa9d7a4254",
+                                  "a90ebdd2-351f-485a-b850-4938fcca2729"
+                                  ],"id_a":"6693,6694,6695",
+        "obsAnswerLabels":["First Regimen","Second Regimen","Third regimen"],
+        "label":"13d. Treatment Categories:",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"a8a08344-1350-11df-a1f1-0026b9348838", "id_g":"1941",
+        "obsConceptUuid":"a899cf5e-1350-11df-a1f1-0026b9348838", "id":"1088",
+        "type":"multiCheckbox",
+        "obsAnswerConceptUuids":["6a73f32d-1870-4527-af6e-74443251ded2",
+                                  "1c4a75d0-cc91-4752-b0a5-4b833326ff7a",
+                                  "a89cc876-1350-11df-a1f1-0026b9348838",
+                                  "3d587177-984e-4eeb-93f2-3223b6c1dd7c",
+                                  "a896758e-1350-11df-a1f1-0026b9348838",
+                                  "a897e608-1350-11df-a1f1-0026b9348838",
+                                  "a8afcf84-1350-11df-a1f1-0026b9348838",
+                                  "a897e7c0-1350-11df-a1f1-0026b9348838",
+                                  "a8afc066-1350-11df-a1f1-0026b9348838",
+                                  "a897f8a0-1350-11df-a1f1-0026b9348838"
+                                  ], "id_a":"6467,6964,1400,6965,630,792,6180,794,6160,814",
+        "obsAnswerLabels":["NVP200/ZDV300/3TC150",
+                          "TDF300mg/3TC300mg/EFV600mg",
+                          "3TC300mg/TDF300mg",
+                          "3TC150mg/D4T30mg",
+                          "3TC150mg/ZDV300mg",
+                          "NVP200/D4T30/3TC150",
+                          "Emtri200mg/TDF300(Truvada)",
+                          "Aluvia(Kaletra)200mg/LPV50mgrit",
+                          "Atazanavir300/Ritonavir100",
+                          "Abacavir300mg"
+                          ],
+
+        "label":"13e. Medication:",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"a899e6d8-1350-11df-a1f1-0026b9348838",
+        "obsConceptUuid":"a8a660ca-1350-11df-a1f1-0026b9348838",
+        "type":"number",
+        "label":"weight"
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"a899a9f2-1350-11df-a1f1-0026b9348838",
+        "type":"select",
+        "obsAnswerConceptUuids":["a8aa76b0-1350-11df-a1f1-0026b9348838","a899ad58-1350-11df-a1f1-0026b93488382","a899ac7c-1350-11df-a1f1-0026b9348838"],
+        "obsAnswerLabels":["Married","Divorced","Single"],
+        "label":"Marital status"
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"774961c6-232f-4332-8a9f-f5c55ebe86d0",
+        "type":"radio",
+        "obsAnswerConceptUuids":["a899b35c-1350-11df-a1f1-0026b9348838","a899b42e-1350-11df-a1f1-0026b9348838"],
+        "obsAnswerLabels":["Yes","No"],
+        "label":"Family Planning"
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"a894b1cc-1350-11df-a1f1-0026b9348838",
+        "type":"multiCheckbox",
+        "obsAnswerConceptUuids":["a893516a-1350-11df-a1f1-0026b9348838","b75702a6-908d-491b-9399-6495712c81cc","a8aaf3e2-1350-11df-a1f1-0026b9348838"],
+        "obsAnswerLabels":["Condoms","Emergency OCP","Other"],
+        "label":"Family Planning Method",
+        "validators":{
+
+        }
+      }
+    ]
+  }
+}

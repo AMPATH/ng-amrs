@@ -7,7 +7,7 @@ jshint -W098, -W117, -W030
     // body...
     var controller;
     var stateParams;
-    var contextService;
+    var OpenmrsRestService;
     var scope;
     var timeout;
 
@@ -22,16 +22,16 @@ jshint -W098, -W117, -W030
       When testing controllers it not wise to inject them as it is done when testing services
       It is advisable to use $controller to instantiate instead of using the $injector service
 
-      _ContextService_ above is simply a mock service to mimic the actual service
+      _OpenmrsRestService_ above is simply a mock service to mimic the actual service
       */
 
       //loading  required dependancies beforeEach test
       //authService = $injector.get('AuthService'); //used when loading the actual/real service
-      contextService = $injector.get('ContextService');
+      OpenmrsRestService = $injector.get('OpenmrsRestService');
       scope = $rootScope.$new();
       stateParams = _$stateParams_;//$injector.get('$stateParams');
       timeout =$injector.get('$timeout');
-      controller = $controller('PatientDashboardCtrl', {$scope:scope, $stateParams: stateParams, $timeout:timeout, ContextService:contextService});
+      controller = $controller('PatientDashboardCtrl', {$scope:scope, $stateParams: stateParams, $timeout:timeout, OpenmrsRestService:OpenmrsRestService});
 
     }));
 

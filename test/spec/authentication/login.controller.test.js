@@ -53,11 +53,6 @@ jshint -W098, -W117, -W030
       expect(scope.CurrentUser).to.deep.equal(currentUser);
     });
 
-    it('authenticate function should be successfully defined', function() {
-      //debugger;
-      currentUser = {username:'', password:''};
-      expect(scope.authenticate).to.exist;
-    });
 
     describe('authenticate function:', function() {
       it('User login should be successfull', function() {

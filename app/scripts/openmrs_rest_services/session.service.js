@@ -3,7 +3,7 @@
   'use strict';
 
   angular
-        .module('OpenmrsRestServices')
+        .module('app.openmrsRestServices')
         .service('SessionResService', SessionResService);
 
   SessionResService.$inject = ['OpenmrsSettings', '$resource'];

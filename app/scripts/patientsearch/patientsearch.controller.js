@@ -8,9 +8,9 @@ jshint -W003, -W098, -W117, -W109
         .module('app.patientsearch')
         .controller('PatientSearchCtrl', PatientSearchCtrl);
 
-  PatientSearchCtrl.$inject = ['ContextService', '$scope', '$log', 'filterFilter'];
+  PatientSearchCtrl.$inject = ['OpenmrsRestService', '$scope', '$log', 'filterFilter'];
 
-  function PatientSearchCtrl(context, $scope, $log, filterFilter) {
+  function PatientSearchCtrl(OpenmrsRestService, $scope, $log, filterFilter) {
     $scope.filter = "";
     $scope.patients = [];
 
@@ -23,7 +23,7 @@ jshint -W003, -W098, -W117, -W109
    $scope.$watch('searchString', function (searchString) {
      $scope.patients = [];
      if (searchString && searchString.length > 3) {
-       context.getPatientService().getPatientQuery({q:searchString},
+       OpenmrsRestService.getPatientService().getPatientQuery({q:searchString},
          function(data) {
            //if (data) data = data.results;
            //console.log(data);

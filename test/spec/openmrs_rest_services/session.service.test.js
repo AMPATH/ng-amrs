@@ -4,7 +4,7 @@
 
   describe('Open MRS Session Service Unit Tests', function() {
       beforeEach(function() {
-        module('OpenmrsRestServices');
+        module('app.openmrsRestServices');
       });
 
       //var baseURl = 'https://etl1.ampath.or.ke:8443/amrs/ws/rest/v1/';

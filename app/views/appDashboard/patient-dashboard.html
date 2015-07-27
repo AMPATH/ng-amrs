@@ -14,7 +14,7 @@
 			</div>
 			<div class="row">
 				<div class="col-md-3">
-					<h5>{{patient.genderFull()}} {{patient.age()}} ({{patient.birthdate()| date:'yyyy-MM-dd'}})</h5>
+					<h5>{{patient.genderFull()}} {{patient.age()}} ({{patient.birthdate()| date:'dd-MM-yyyy'}})</h5>
 				</div>
 				<div class="col-md-3">
 					<h5>
@@ -47,8 +47,20 @@
 				<div class="tab-pane" id="tab2">
 					<div class="page-header" style="margin-top:-20px;">
 						<h3>Encounters:
-							<small>The Patient</small>
+							<small>List of Encounters</small>
 						</h3>
+						<div class="page-content">
+							<div class="row" ng-repeat="encounter in encounters" class="small">
+					      <a href="#/encounter/{{encounter.uuid()}}/patient/{{patient.uuid()}}">
+					        <div class="col-md-3">{{encounter.encounterDate() | date:'dd-MM-yyyy'}} </div>
+					        <div class="col-md-5">{{encounter.encounterTypeName()}}</div>
+					        <div class="col-md-2">{{encounter.locationName()}}</div>
+					        <div class="col-md-2">{{encounter.providerName()}}</div>
+					      </a>
+
+
+					    </div>
+						</div>
 					</div>
 				</div>
 				<div class="tab-pane" id="tab3">
@@ -58,9 +70,9 @@
 						</h3>
 					</div>
 					<div class="page-content">
-						<p><a href="#/form1">test form 1</a></p>
-						<p><a href="#/form2">test form 2</a></p>
-						<p><a href="#/form3">test form 3</a></p>
+						<p><a href="#/form/form1/patient/{{patient.uuid()}}">test form 1</a></p>
+						<p><a href="#/form/form2/patient/{{patient.uuid()}}">test form 2</a></p>
+						<p><a href="#/form/form3/patient/{{patient.uuid()}}">test form 3</a></p>
 					</div>
 				</div>
 			</div>
