@@ -16,4 +16,4 @@ branches:
 # whitelist
 branches:
   only:
-    - angular-formly
+    - master
