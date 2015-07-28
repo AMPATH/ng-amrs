@@ -109,7 +109,6 @@
         }
 
         function fromArrayOfWrappers(nameWrappersArray){
-            debugger;
             var array = [];
             for(var i = 0; i< nameWrappersArray.length; i++){
               array.push(nameWrappersArray[i].openmrsModel());
