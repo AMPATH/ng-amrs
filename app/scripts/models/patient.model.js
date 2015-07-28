@@ -37,12 +37,11 @@
       var _birthdate =openmrsPatient.person.birthdate|| '';
       //var _birthdateEstimated =openmrsPatient.birthdateEstimated|| false;
       var _gender = openmrsPatient.person.gender||'';
-      //var _address =mapAddress(openmrsPatient.preferredAddress)||'';
+      var _address =mapAddress(openmrsPatient.person.preferredAddress)||[];
       var _dead = openmrsPatient.person.dead||'';
       var _deathDate = openmrsPatient.person.deathDate||'';
+      var _attributes = openmrsPatient.person.attributes||[];
       //var _causeOfDeath = openmrsPatient.causeOfDeath||'';
-      //var _attributes = openmrsPatient.attributes||'';
-
       /*
        Below are getters and setters for private properties
        The convention is usually to name private properties starting with _
@@ -149,14 +148,14 @@
           return _gender === 'M' ? 'Male':'Female';
       };
 
-      // modelDefinition.address = function(value){
-      //   if(angular.isDefined(value)){
-      //     _address = value;
-      //   }
-      //   else{
-      //     return _address;
-      //   }
-      // };
+      modelDefinition.address = function(value){
+        if(angular.isDefined(value)){
+          _address = value;
+        }
+        else{
+          return _address;
+        }
+      };
 
       // modelDefinition.preferredName = function(value){
       //   if(angular.isDefined(value)){
@@ -184,7 +183,33 @@
       //     return _causeOfDeath;
       //   }
       // };
-
+      modelDefinition.phoneNumber = function(value) {
+        if(_attributes.length>0){
+          for(var i in _attributes) {
+            var attr = _attributes[i];
+            if(attr.attributeType.uuid == "72a759a8-1359-11df-a1f1-0026b9348838") {
+              return attr.value;
+            }
+          }
+        }
+      };
+      var _convertedAttributes = [];
+      modelDefinition.getPersonAttributes = function(value) {
+        _convertedAttributes.length = 0;
+        if(_attributes.length>0){
+          for(var i in _attributes) {
+            var attr = _attributes[i];
+            _convertedAttributes.push(
+              {uuid:attr.attributeType.uuid,
+                name:attr.attributeType.display,
+                value:attr.value,
+                size:_attributes.length
+              }
+            );
+          }
+        }
+        return _convertedAttributes;
+      };
       modelDefinition.deathDate = function(value){
         if(angular.isDefined(value)){
           _deathDate = value;
@@ -231,12 +256,14 @@
     //Other Util Functions
     function mapAddress(preferredAddress) {
       return preferredAddress ? {
-        address1: preferredAddress.address1,
-        address2: preferredAddress.address2,
-        address3: preferredAddress.address3,
-        cityVillage: preferredAddress.cityVillage,
-        stateProvince: preferredAddress.stateProvince
-      } : {};
+        "Address1": preferredAddress.address1,
+        "Address2": preferredAddress.address2,
+        "Address3": preferredAddress.address3,
+        "City Village": preferredAddress.cityVillage,
+        "State Province": preferredAddress.stateProvince
+
+        //Added the noAddress to aid in creating logic for hiding when the patient has no address
+      } : {noAddress:"None"};
     }
 
 
