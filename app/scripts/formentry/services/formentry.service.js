@@ -469,8 +469,35 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
           _.each(schema.obs, function(obs_Field) {
             console.log(obs_Field)
             var obsField ={};
-            if ((obs_Field.type === 'text') || (obs_Field.type === 'number'))
+            if((obs_Field.type === 'datepicker'))
             {
+              var required=false;
+              if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
+
+              obsField = {
+                key: 'obs_' + obs_Field.obsConceptUuid,
+                type: 'datepicker',
+                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+                  obsGroupUuid:obs_Field.obsConceptGroupUuid,
+                  answerValue:''},
+                templateOptions: {
+                  type: 'text',
+                  label: obs_Field.label,
+                  datepickerPopup: 'dd-MMMM-yyyy',
+                  required:required
+                }
+        //         ,
+        // validators: {
+        //   //ipAddress: validatorsArray['ipAddress']
+        // }
+
+              }
+            }
+            else if ((obs_Field.type === 'text') || (obs_Field.type === 'number'))
+            {
+              var required=false;
+              if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
+
               obsField = {
                 key: 'obs_' + obs_Field.obsConceptUuid,
                 type: 'input',
@@ -480,7 +507,7 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                 templateOptions: {
                   type: obs_Field.type,
                   label: obs_Field.label,
-                  required:true
+                  required:required
                 }
         //         ,
         // validators: {
@@ -502,6 +529,8 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                    };
                  opts.push(item);
               }
+              var required=false;
+              if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
 
               obsField = {
                 key: 'obs_' + obs_Field.obsConceptUuid,
@@ -512,6 +541,7 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                 templateOptions: {
                   type: obs_Field.type,
                   label: obs_Field.label,
+                  required:required,
                   options:opts
                 }
               }
