@@ -11,7 +11,7 @@ angular
 function patientDemographics() {
       var patientDemographicsDefinition = {
         restrict: 'EA',
-        templateUrl: 'views/patient-dashboard/patientdemographics.html',
+        templateUrl: 'views/patient-dashboard/patient-demographics.html',
         scope: {
           patientuuids: '='
         },
