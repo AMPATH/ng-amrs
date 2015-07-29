@@ -1740,6 +1740,40 @@
         "label":"31. Return to clinic Date:",
         "required":"true",
         "validators":{}
+      },
+      {
+        "obsConceptGroupUuid":"a8afdb8c-1350-11df-a1f1-0026b9348838",
+        "id_g":"6196",
+        "type":"repeatSection",
+        "sectionTitle":"Current TB Regimen",
+        "buttonLabel":"TB Regimen",
+        "cols":[
+        {
+        "obsConceptUuid":"a899e444-1350-11df-a1f1-0026b9348838",
+        "id":"1111",
+        "type":"select",
+        "obsAnswerConceptUuids":["a89c2f42-1350-11df-a1f1-0026b9348838",
+                                  "a89c301e-1350-11df-a1f1-0026b9348838",
+                                  "a89c301e-1350-11df-a1f1-0026b9348838"
+                                  ],
+        "obsAnswerLabels":["(RHZE)",
+                            "(RHZ)",
+                            "(RHE)"
+                            ],
+        "id_a":"1286,1287",
+        "label":"TB Regimen:",
+        "required":"false",
+        "validators":{}
+        },
+        {
+        "obsConceptUuid":"a8a07386-1350-11df-a1f1-0026b9348838",
+        "id":"1920",
+        "type":"number",
+        "label":"tabs/day",
+        "required":"false",
+        "validators":{}
+        }
+        ]
       }
     ]
   }
