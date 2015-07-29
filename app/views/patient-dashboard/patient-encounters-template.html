@@ -10,7 +10,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="encounter in vm.encounterList">
-        <td>{{encounter.encounterDateTime | date: dd-MM-yyyy}}</td>
+        <td>{{encounter.encounterDatetime | date: dd-MM-yyyy}}</td>
         <td>{{encounter.encounterType.display}}</td>
         <td>{{encounter.location.display}}</td>
         <td>{{encounter.provider.display}}</td>
