@@ -22,7 +22,6 @@ jshint -W117, -W098, -W116, -W003, -W026
           getAuthService: getAuthService,
           getPatientService: getPatientService,
           getUserService: getUserService,
-          getEncounterResService: getEncounterService,
           getLocationResService: getLocationService,
           getEncounterResService: getEncounterService
         };
