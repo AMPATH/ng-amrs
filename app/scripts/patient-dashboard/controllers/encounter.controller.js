@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('ngAmrsApp')
+    .module('app.patientdashboard')
     .controller('EncounterCtrl', EncounterCtrl)
 
     EncounterCtrl.$inject = [

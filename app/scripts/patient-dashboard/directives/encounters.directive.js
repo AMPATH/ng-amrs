@@ -2,13 +2,13 @@
   'use strict';
   
   angular
-    .module('ngAmrsApp')
+    .module('app.patientdashboard')
       .directive('patientEncounters', directive);
       
   function directive() {
     return {
       restrict: 'E',
-      templateUrl: '../views/patient-dashboard/patient-encounters-template.html'
+      templateUrl: '../../views/patient-dashboard/patient-encounters-template.html'
     }
   }
 })();
