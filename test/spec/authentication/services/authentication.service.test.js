@@ -81,11 +81,10 @@
         httpBackend.when('GET','views/main/main.html').respond('');//prevent test from failing
         sessionServiceMock.mockedResponse = {authenticated:true, sessionId:'sessionId'};
         authenticationService.isAuthenticated(testUser,callbacks.callback);
-        rootScope.$apply();
-        rootScope.$digest();
-        var isCurrentStateHome = (state.$current.name === '' || state.$current.name ==='home');
+        //rootScope.$apply();
+        //rootScope.$digest();
+        var isCurrentStateHome = state.$current.name === '' || state.$current.name ==='home';
         expect(isCurrentStateHome).to.equal(true);
-
       });
 
       it('should have isAuthenticated broadcast onUserAuthenticationDetermined when authentication is complete', function () {

@@ -8,16 +8,26 @@ jshint -W117, -W098, -W116, -W003, -W026
         .module('app.openmrsRestServices')
         .factory('OpenmrsRestService', OpenmrsRestService);
 
+<<<<<<< HEAD
   OpenmrsRestService.$inject = ['SessionResService', 'AuthService', 'PatientResService', 'UserResService', 'EncounterService','LocationResService'];
 
   function OpenmrsRestService(session, authService, PatientResService, UserResService, EncounterService, LocationResService) {
+=======
+  OpenmrsRestService.$inject = ['SessionResService', 'AuthService', 'PatientResService', 'UserResService', 'EncounterResService'];
+
+  function OpenmrsRestService(session, authService, PatientResService, UserResService, EncounterResService) {
+>>>>>>> Cleaning-up: Renaming files and service to agreed conventions. for example, using dash for directories and files
     var service = {
           getSession: getSession,
           getAuthService: getAuthService,
           getPatientService: getPatientService,
           getUserService: getUserService,
+<<<<<<< HEAD
           getEncounterService: getEncounterService,
           getLocationService: getLocationService
+=======
+          getEncounterResService: getEncounterService
+>>>>>>> Cleaning-up: Renaming files and service to agreed conventions. for example, using dash for directories and files
         };
 
     return service;
@@ -39,7 +49,7 @@ jshint -W117, -W098, -W116, -W003, -W026
     }
 
     function getEncounterService() {
-      return EncounterService;
+      return EncounterResService;
     }
     
      function getLocationService() {

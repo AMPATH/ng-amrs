@@ -1,15 +1,19 @@
-<div ng-if="personAttributes[0]">
-   <h4><b>Person Attributes</b></h4>
-     <div ng-repeat="attribute in personAttributes">
-            <small>{{ attribute.name }}:{{ attribute.value }}</small>
-      </div>
-  </div>
+<form name="patientSearchForm"  ng-submit="searchPatient(patientUuid)" novalidate>
+  <label for="patientUuid">Patient:</label>
+  <input type="text" id="patientUuid"
+         ng-model="patientUuid">
+  </p>
+  <button type="submit" ng-click="searchPatient">Find Patient</button>
 
-  <div ng-if="patient.address().noAddress!='None'">
-    <h5><b>Person Address</b></h5>
-       <div ng-repeat="(key,value) in patient.address()">
-         <div ng-if="value">
-                  <small>{{key}} :  {{value}}</small>
-          <div>
-       </div>
-    </div>
+  <ul>
+    <li ng-repeat="patient in patients">
+      {{ patient.name() }} {{ patient.age() }} {{ patient.address().address1 }}
+      {{ patient.address().address2 }} {{ patient.address().cityVillage }}
+        <span ng-repeat="(key, val) in patient.address()" >{{val}} {{key}}</span>
+
+    </li>
+  </ul>
+
+</form>
+
+
