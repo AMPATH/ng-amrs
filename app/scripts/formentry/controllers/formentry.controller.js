@@ -8,9 +8,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
         .module('app.formentry')
         .controller('FormentryCtrl', TestFormCtrl);
 
-    TestFormCtrl.$inject = ['$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'EncounterResService', '$timeout'];
+    TestFormCtrl.$inject = ['$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'EncounterService', '$timeout'];
 
-    function TestFormCtrl($location, $rootScope, $stateParams, $state, $scope, FormentryService, EncounterResService, $timeout) {
+    function TestFormCtrl($location, $rootScope, $stateParams, $state, $scope, FormentryService, EncounterService, $timeout) {
         $scope.vm = {};
         $scope.vm.error = '';
         $scope.vm.patient = $rootScope.broadcastPatient;
@@ -73,7 +73,7 @@ $scope.$on('patientData', function(event, data) {
    console.log($stateParams);
    if (params.uuid !== undefined)
    {
-     EncounterResService.getEncounter(params,
+     EncounterService.getEncounter(params,
        function(data){
        encData = data;
        //console.log('Rest Feeback')

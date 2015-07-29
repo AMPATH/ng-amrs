@@ -43,7 +43,7 @@
     })
     .state('patientsearch', {
     url: '/patientsearch',
-    templateUrl: 'views/patient-search/patient-search.html',
+    templateUrl: 'views/patientsearch/patientsearch.html',
     controller: 'PatientSearchCtrl',
     data: { requireLogin: true}
   })

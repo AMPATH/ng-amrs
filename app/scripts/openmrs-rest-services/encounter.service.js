@@ -3,11 +3,11 @@
 
   angular
     .module('app.openmrsRestServices')
-          .factory('EncounterResService', EncounterResService);
+          .factory('EncounterService', EncounterService);
 
-  EncounterResService.$inject = ['Restangular'];
+  EncounterService.$inject = ['Restangular'];
 
-  function EncounterResService(Restangular) {
+  function EncounterService(Restangular) {
     var service = {
       getEncounterByUuid: getEncounterByUuid,
       saveEncounter: saveEncounter,
