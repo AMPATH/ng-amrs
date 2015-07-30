@@ -225,7 +225,12 @@
                     else {
                       return _attributes;
                     }
-      };                            
+      };
+      
+      modelDefinition.display = function (value) {
+                
+                      return _name + ' [' + _description + ']';
+      };                           
                   
       
       modelDefinition.openmrsModel = function(value) {
@@ -250,7 +255,7 @@
       };
     }
           function toWrapper(openmrsModel){
-        var obj = new location(openmrsModel.name, openmrsModel.uuId, openmrsModel.description, openmrsModel.address1, openmrsModel.address2, openmrsModel.cityVillage, openmrsModel.stateProvince, openmrsModel.country, openmrsModel.postalCode, openmrsModel.latitude, openmrsModel.longitude, openmrsModel.countyDistrict, openmrsModel.address3, openmrsModel.address4, openmrsModel.address5, openmrsModel.address6, openmrsModel.tags, openmrsModel.parentLocation, openmrsModel.childLocations, openmrsModel.attributes);
+        var obj = new location(openmrsModel.name, openmrsModel.uuid, openmrsModel.description, openmrsModel.address1, openmrsModel.address2, openmrsModel.cityVillage, openmrsModel.stateProvince, openmrsModel.country, openmrsModel.postalCode, openmrsModel.latitude, openmrsModel.longitude, openmrsModel.countyDistrict, openmrsModel.address3, openmrsModel.address4, openmrsModel.address5, openmrsModel.address6, openmrsModel.tags, openmrsModel.parentLocation, openmrsModel.childLocations, openmrsModel.attributes);
         
         return obj;
         }

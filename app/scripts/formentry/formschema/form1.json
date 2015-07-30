@@ -3,8 +3,9 @@
   "form":{"name":"form1", "uuid":"xxx"} ,
   "encounter":[
       {"encounterDatetime":"","type":"datepicker", "labelName":"Visit Date", "idName":"encounterDatetime"},
-      {"encounterProvider":"", "type":"select", "labelName":"Encounter Provider", "idName":"EncounterProvider"},
-      {"encounterLocation":"","type":"select","labelName":"Facility Name", "idName":"encounterLocation"}
+      {"encounterType":"", "type":"text", "labelName":"Encounter Type", "idName":"encounterType"},
+      {"encounterProvider":"", "type":"provider-field", "labelName":"Encounter Provider", "idName":"EncounterProvider"},
+      {"encounterLocation":"","type":"location-field","labelName":"Facility Name", "idName":"encounterLocation"},
     ],
     "obs":[
       {
