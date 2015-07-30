@@ -8,9 +8,9 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
         .module('app.formentry')
         .factory('FormentryService', FormentryService);
 
-    FormentryService.$inject = ['$http'];
+    FormentryService.$inject = ['$http','ProviderResService'];
 
-    function FormentryService($http) {
+    function FormentryService($http, ProviderResService) {
         var service = {
             createForm: createForm,
             getPayLoad: getPayLoad,
@@ -444,6 +444,26 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                   type: 'text',
                   label: encField.labelName,
                   placeholder: encField.labelName
+                }
+              }
+            }
+            else if(encField.type === 'provider-field'){
+              field = {
+                key: 'enc_' + encField.idName,
+                type: 'ui-select-extended',
+                model: {encounter:'enc_' + encField.idName},
+                templateOptions: {
+                  type: 'text',
+                  label: encField.labelName,
+                  valueProp: 'uuid',
+                  labelProp:'display',
+                  deferredFilterFunction: ProviderResService.findProvider,
+                  getSelectedObjectFunction: ProviderResService.getProviderByUuid,
+                  required:false,
+                  addonLeft:{
+                    class:'glyphicon glyphicon-remove'
+                  },
+                  options:[]
                 }
               }
             }
