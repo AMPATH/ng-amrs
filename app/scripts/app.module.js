@@ -65,15 +65,7 @@ templateUrl: 'views/formentry/formentry.html',
 controller: 'FormentryCtrl',
 data: { requireLogin: true}
 })
-//drop this after testing the repeatSection
-.state('formsTest', {
-url: '/form/test',
-templateUrl: 'views/formentry/testrepeatsection.html',
-controller: 'TestCtrl',
-data: { requireLogin: true}
-})
-
-  .state('login', {
+.state('login', {
   url: '/login',
   templateUrl: 'views/authentication/login.html',
   controller: 'LoginCtrl',
