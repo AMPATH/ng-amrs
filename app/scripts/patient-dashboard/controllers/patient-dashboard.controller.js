@@ -27,14 +27,6 @@
           $rootScope.broadcastPatient = $scope.patient; // trying to broadcast
         });
 
-      OpenmrsRestService.getEncounterService().getPatientEncounter({patient:$stateParams.uuid},
-        function (data) {
-          // body...
-          $scope.encounters = data;
-          $rootScope.$broadcast('encounterData',  {data: $scope.encounters}); // trying to broadcast
-        });
-
-
     },1000);
 
 

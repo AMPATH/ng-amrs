@@ -21,13 +21,17 @@ function patientDemographics() {
       return patientDemographicsDefinition;
     }
 
-PatientDemographicsCtrl.$inject = ['$scope', 'PatientResService'];
+PatientDemographicsCtrl.$inject = ['$scope', '$stateParams', 'OpenmrsRestService'];
 
-function PatientDemographicsCtrl($scope, PatientResService) {
-  $scope.patientUuid = '';
-  $scope.patients = [];
-  $scope.searchPatient = function() {
-    $scope.patients = PatientResService.getPatientQuery($scope.patientUuid);
-  };
+function PatientDemographicsCtrl(scope, $stateParams,  OpenmrsRestService) {
+     var patient=OpenmrsRestService.getPatientService().getPatientByUuid({uuid:$stateParams.uuid},function (data) {
+       scope.patient = data;
+       scope.personAttributes=data.getPersonAttributes();
+
+     }
+
+    ) ;
+
+
 }
 })();

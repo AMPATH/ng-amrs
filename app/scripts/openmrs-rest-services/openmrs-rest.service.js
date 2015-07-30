@@ -8,15 +8,25 @@ jshint -W117, -W098, -W116, -W003, -W026
         .module('app.openmrsRestServices')
         .factory('OpenmrsRestService', OpenmrsRestService);
 
-  OpenmrsRestService.$inject = ['SessionResService', 'AuthService', 'PatientResService', 'UserResService', 'EncounterService'];
+  OpenmrsRestService.$inject = ['SessionResService',
+                                'AuthService',
+                                'PatientResService',
+                                'UserResService',
+                                'EncounterResService',
+                                'LocationResService',
+                                'ProviderResService'];
 
-  function OpenmrsRestService(session, authService, PatientResService, UserResService, EncounterService) {
+  function OpenmrsRestService(session, authService, PatientResService,
+              UserResService, EncounterResService, LocationResService,
+              ProviderResService) {
     var service = {
           getSession: getSession,
           getAuthService: getAuthService,
           getPatientService: getPatientService,
           getUserService: getUserService,
-          getEncounterService: getEncounterService
+          getLocationResService: getLocationService,
+          getEncounterResService: getEncounterService,
+          getProviderResService:getProviderResService
         };
 
     return service;
@@ -38,7 +48,15 @@ jshint -W117, -W098, -W116, -W003, -W026
     }
 
     function getEncounterService() {
-      return EncounterService;
+      return EncounterResService;
+    }
+    
+    function getLocationService() {
+      return LocationResService;
+    }
+    
+    function getProviderResService() {
+      return ProviderResService;
     }
   }
 }) ();

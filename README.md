@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/AMPATH/ng-amrs.svg?branch=master)](https://travis-ci.org/AMPATH/ng-amrs)
+
 # ng-amrs
 
 This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
