@@ -398,8 +398,195 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
         }
 
 
+        /*private method to create formly fields*/
+        function createObsFormlyField(obs_Field, f_type)
+        {
+          var obsField = {};
+          /*
+          Distinguish a whether a field belongs to a repeatSection
+          The repeatSection requires that we omit the model within
+          the field definition while the normal or other fields we maintain
+          the model property
+          */
+          if (f_type !== undefined)
+          {
+            /*
+            assumming that all repeatSection fields will have wiil
+            have some parameter value to Distinguish them
+            */
+            if((obs_Field.type === 'datepicker'))
+            {
+              var required=false;
+              if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
 
+              obsField = {
+                key: 'obs_' + obs_Field.obsConceptUuid,
+                type: 'datepicker',
+                /*
+                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+                  obsGroupUuid:obs_Field.obsConceptGroupUuid,
+                  answerValue:''},
+                  */
+                templateOptions: {
+                  type: 'text',
+                  label: obs_Field.label,
+                  datepickerPopup: 'dd-MMMM-yyyy',
+                  required:required
+                }
+        //         ,
+        // validators: {
+        //   //ipAddress: validatorsArray['ipAddress']
+        // }
 
+              }
+            }
+            else if ((obs_Field.type === 'text') || (obs_Field.type === 'number'))
+            {
+              var required=false;
+              if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
+
+              obsField = {
+                key: 'obs_' + obs_Field.obsConceptUuid,
+                type: 'input',
+                /*
+                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+                  obsGroupUuid:obs_Field.obsConceptGroupUuid,
+                  answerValue:''},
+                  */
+                templateOptions: {
+                  type: obs_Field.type,
+                  label: obs_Field.label,
+                  required:required
+                }
+        //         ,
+        // validators: {
+        //   //ipAddress: validatorsArray['ipAddress']
+        // }
+
+              }
+
+            }
+            else if ((obs_Field.type === 'radio') || (obs_Field.type === 'select') || (obs_Field.type === 'multiCheckbox'))
+            {
+              var opts= [];
+              //get the radio/select options/multicheckbox
+              for(var l = 0; l<obs_Field.obsAnswerConceptUuids.length; l++)
+              {
+                 var item={
+                   name:obs_Field.obsAnswerLabels[l],
+                   value:obs_Field.obsAnswerConceptUuids[l]
+                   };
+                 opts.push(item);
+              }
+              var required=false;
+              if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
+
+              obsField = {
+                key: 'obs_' + obs_Field.obsConceptUuid,
+                type: obs_Field.type,
+                /*
+                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+                  obsGroupUuid:obs_Field.obsConceptGroupUuid,
+                  answerValue:''},
+                  */
+                templateOptions: {
+                  type: obs_Field.type,
+                  label: obs_Field.label,
+                  required:required,
+                  options:opts
+                }
+              }
+
+            }
+          }
+          else {
+            /*
+            All other fields that do belongs
+            to the repeating section
+            */
+            if((obs_Field.type === 'datepicker'))
+            {
+              var required=false;
+              if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
+
+              obsField = {
+                key: 'obs_' + obs_Field.obsConceptUuid,
+                type: 'datepicker',
+                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+                  obsGroupUuid:obs_Field.obsConceptGroupUuid,
+                  answerValue:''},
+                templateOptions: {
+                  type: 'text',
+                  label: obs_Field.label,
+                  datepickerPopup: 'dd-MMMM-yyyy',
+                  required:required
+                }
+        //
+        // validators: {
+        //   //ipAddress: validatorsArray['ipAddress']
+        // }
+
+              }
+            }
+            else if ((obs_Field.type === 'text') || (obs_Field.type === 'number'))
+            {
+              var required=false;
+              if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
+
+              obsField = {
+                key: 'obs_' + obs_Field.obsConceptUuid,
+                type: 'input',
+                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+                  obsGroupUuid:obs_Field.obsConceptGroupUuid,
+                  answerValue:''},
+                templateOptions: {
+                  type: obs_Field.type,
+                  label: obs_Field.label,
+                  required:required
+                }
+        //         ,
+        // validators: {
+        //   //ipAddress: validatorsArray['ipAddress']
+        // }
+
+              }
+
+            }
+            else if ((obs_Field.type === 'radio') || (obs_Field.type === 'select') || (obs_Field.type === 'multiCheckbox'))
+            {
+              var opts= [];
+              //get the radio/select options/multicheckbox
+              for(var l = 0; l<obs_Field.obsAnswerConceptUuids.length; l++)
+              {
+                 var item={
+                   name:obs_Field.obsAnswerLabels[l],
+                   value:obs_Field.obsAnswerConceptUuids[l]
+                   };
+                 opts.push(item);
+              }
+              var required=false;
+              if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
+
+              obsField = {
+                key: 'obs_' + obs_Field.obsConceptUuid,
+                type: obs_Field.type,
+                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+                  obsGroupUuid:obs_Field.obsConceptGroupUuid,
+                  answerValue:''},
+
+                templateOptions: {
+                  type: obs_Field.type,
+                  label: obs_Field.label,
+                  required:required,
+                  options:opts
+                }
+              }
+
+            }
+          }
+
+          return obsField;
+        }
 
         function createForm(schema) {
           var validatorsArray = {};
@@ -467,55 +654,40 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
 
 
           _.each(schema.obs, function(obs_Field) {
-            console.log(obs_Field)
+            //console.log(obs_Field)
             var obsField ={};
-            if ((obs_Field.type === 'text') || (obs_Field.type === 'number'))
+            if ((obs_Field.type === 'repeatSection') || (obs_Field.type === 'repeatsection'))
             {
+              var repeatingFields = [];
+              //Get the fields in the repeating section
+              //get the number of cols
+              var n = obs_Field.cols.length;
+              var colsize=12/n;
+
+              _.each(obs_Field.cols,function(curField){
+                // process the fields the normal way
+                var selField=createObsFormlyField(curField,'repeating');
+                selField['className'] = 'col-md-2';
+                repeatingFields.push(selField);
+              })
               obsField = {
-                key: 'obs_' + obs_Field.obsConceptUuid,
-                type: 'input',
-                model: {obsConceptUuid:obs_Field.obsConceptUuid,
-                  obsGroupUuid:obs_Field.obsConceptGroupUuid,
-                  answerValue:''},
+                key:'obs_' + obs_Field.obsConceptGroupUuid,
+                type: 'repeatSection',
+                model:{},
                 templateOptions: {
-                  type: obs_Field.type,
-                  label: obs_Field.label,
-                  required:true
+                  label:obs_Field.sectionTitle,
+                  btnText:'Add ' + obs_Field.buttonLabel,
+                  fields:[
+                    {
+                      className: 'row',
+                      fieldGroup:repeatingFields
+                    }
+                  ]
                 }
-        //         ,
-        // validators: {
-        //   //ipAddress: validatorsArray['ipAddress']
-        // }
-
               }
-
             }
-            else if ((obs_Field.type === 'radio') || (obs_Field.type === 'select') || (obs_Field.type === 'multiCheckbox'))
-            {
-              var opts= [];
-              //get the radio/select options/multicheckbox
-              for(var l = 0; l<obs_Field.obsAnswerConceptUuids.length; l++)
-              {
-                 var item={
-                   name:obs_Field.obsAnswerLabels[l],
-                   value:obs_Field.obsAnswerConceptUuids[l]
-                   };
-                 opts.push(item);
-              }
-
-              obsField = {
-                key: 'obs_' + obs_Field.obsConceptUuid,
-                type: obs_Field.type,
-                model: {obsConceptUuid:obs_Field.obsConceptUuid,
-                  obsGroupUuid:obs_Field.obsConceptGroupUuid,
-                  answerValue:''},
-                templateOptions: {
-                  type: obs_Field.type,
-                  label: obs_Field.label,
-                  options:opts
-                }
-              }
-
+            else {
+              obsField=createObsFormlyField(obs_Field);
             }
 
             formSchema.push(obsField);
