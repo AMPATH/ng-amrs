@@ -49,8 +49,7 @@
           'v': params.rep || 'default'
         }
       }
-        
-      console.log('here ' + params);
+
       Restangular.one('encounter').get(objParams).then(function(data) {
         if(angular.isDefined(data.results)) data = data.results;
         _successCallbackHandler(successCallback, data);
