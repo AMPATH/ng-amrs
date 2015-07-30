@@ -8,9 +8,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
         .module('app.formentry')
         .controller('FormentryCtrl', FormentryCtrl);
 
-    FormentryCtrl.$inject = ['$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'EncounterService', '$timeout'];
+    FormentryCtrl.$inject = ['$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'EncounterResService', '$timeout'];
 
-    function FormentryCtrl($location, $rootScope, $stateParams, $state, $scope, FormentryService, EncounterService, $timeout) {
+    function FormentryCtrl($location, $rootScope, $stateParams, $state, $scope, FormentryService, EncounterResService, $timeout) {
 
         $scope.vm = {};
         $scope.vm.error = '';
