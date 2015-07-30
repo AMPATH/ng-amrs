@@ -46,7 +46,7 @@
       var resource = searchResource();
       return resource.get({ search: searchText }).$promise
         .then(function (response) {
-        successCallback(response);
+        successCallback(response.results? response.results: response);
       })
         .catch(function (error) {
         failedCallback('Error processing request', error);
