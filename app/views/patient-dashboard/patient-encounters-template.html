@@ -1,5 +1,6 @@
 <div ng-controller="EncounterCtrl as vm">
-  <table id="encounterIdGenerator()" class="table table-striped table-bordered" cellspacing="0" width="100%">
+  <div class="table-responsive">
+  <table class="table table-striped table-bordered table-condensed" cellspacing="0">
     <thead>
       <tr>
         <th>Encounter Date</th>
@@ -18,10 +19,5 @@
       </tr>
     </tbody>  
   </table>
+  </div>
 </div>
-
-<script>
-  function encounterIdGenerator() {
-    return 'encounter-section'+ Math.floor(Math.random() * 10000);
-  }
-</script>
