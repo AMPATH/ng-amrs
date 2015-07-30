@@ -3,10 +3,8 @@
   "form":{"name":"form1", "uuid":"xxx"} ,
   "encounter":[
       {"encounterDatetime":"","type":"datepicker", "labelName":"Visit Date", "idName":"encounterDatetime"},
-      {"encounterType":"", "type":"text", "labelName":"Encounter Type", "idName":"encounterType"},
       {"encounterProvider":"", "type":"select", "labelName":"Encounter Provider", "idName":"EncounterProvider"},
-      {"encounterLocation":"","type":"select","labelName":"Facility Name", "idName":"encounterLocation"},
-      {"patient":"","type":"text", "labelName":"Patient Name", "idName":"patient"}
+      {"encounterLocation":"","type":"select","labelName":"Facility Name", "idName":"encounterLocation"}
     ],
     "obs":[
       {
@@ -1762,7 +1760,6 @@
                             ],
         "id_a":"1286,1287",
         "label":"TB Regimen:",
-        "required":"false",
         "validators":{}
         },
         {
@@ -1770,7 +1767,6 @@
         "id":"1920",
         "type":"number",
         "label":"tabs/day",
-        "required":"false",
         "validators":{}
         }
         ]

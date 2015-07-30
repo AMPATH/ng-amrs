@@ -8,9 +8,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
         .module('app.formentry')
         .controller('FormentryCtrl', FormentryCtrl);
 
-    FormentryCtrl.$inject = ['$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'EncounterResService', '$timeout'];
+    FormentryCtrl.$inject = ['$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'EncounterResService', '$timeout', 'FormsMetaData'];
 
-    function FormentryCtrl($location, $rootScope, $stateParams, $state, $scope, FormentryService, EncounterResService, $timeout) {
+    function FormentryCtrl($location, $rootScope, $stateParams, $state, $scope, FormentryService, EncounterResService, $timeout, FormsMetaData) {
 
         $scope.vm = {};
         $scope.vm.error = '';
@@ -32,11 +32,16 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
             else {
               $scope.vm.error = '';
             }
-            var payLoad = FormentryService.getPayLoad($scope.vm.userFields);
-            EncounterService.postEncounter(payLoad,function (data) {
+            var form = FormsMetaData.getForm($stateParams.formuuid);
+            console.log('Selected Form');
+            console.log(form);
+            var payLoad = FormentryService.getPayLoad($scope.vm.userFields,$scope.vm.patient, form);
+            EncounterResService.saveEncounter(payLoad,function (data) {
               // body...
               console.log(data);
+              $scope.vm.success = 'Form Submitted successfully'
             })
+
         }
 
  var formSchema;
