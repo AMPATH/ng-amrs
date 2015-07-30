@@ -8,7 +8,7 @@
     </div>
     <div>{{vm.error}}</div>
 
-    <formly-form model="vm.user" fields="vm.userFields">
+    <formly-form fields="vm.userFields">
       <button type="submit" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
       <button type="submit" class="btn btn-default" ng-click="vm.submit(vm.user)">Submit</button>
       <!-- <div>
@@ -23,7 +23,6 @@
         </div>
 
         </div>
-        
     </formly-form>
 
   </form>
@@ -36,4 +35,38 @@
           </div>
         </div>
       </script>
+      <!--
+      Custom template to allows representation of repeatSection
+      in a form.
+      I would love to move this in it own template but initial
+      tests did not work. Will give some further consultations
+      later.....
+      -->
+            <script type="text/ng-template" id="repeatSection.html">
+            <div class="panel panel-default">
+            <div class="panel-heading">
+{{to.label}}
+            </div>
+            <div class="panel-body">
+            <!--loop through each element in model array-->
+            <div class="{{hideRepeat}}">
+              <div class="repeatsection" ng-repeat="element in model[options.key]" ng-init="fields = copyFields(to.fields)">
+                <formly-form fields="fields"
+                             model="element"
+                             bind-name="'formly_ng_repeat' + index + $parent.$index">
+                </formly-form>
+                <p>
+                  <button type="button" class="btn btn-sm btn-danger" ng-click="model[options.key].splice($index, 1)">
+                    Remove
+                  </button>
+                </p>
+                <hr>
+            </div>
+            <p class="AddNewButton">
+              <button type="button" class="btn btn-primary" ng-click="addNew()" >{{to.btnText}}</button>
+            </p>
+            </div>
+
+            </div>
+            </script>
 </div>
