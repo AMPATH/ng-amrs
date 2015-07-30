@@ -15,6 +15,11 @@
   function EncounterCtrl($scope, $stateParams, $timeout, EncounterResService) {
     var vm = this;
     vm.encounterList = [];
+    vm.selectedEncounter = null;
+    vm.setSelected = function(encounter) {
+      vm.selectedEncounter = encounter;
+    }
+    
     $timeout(function(){
       EncounterResService.getPatientEncounters($stateParams.uuid, function(data) {
         vm.encounterList = data;
