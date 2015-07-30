@@ -10,18 +10,11 @@
         formlyConfig.setType({
             name: 'ui-select-extended',
             wrapper: ['bootstrapLabel'],
-            template: '<ui-select ng-model="model[options.key]" theme="bootstrap" ng-required="{{to.required}}" ng-disabled="{{to.disabled}}" reset-search-input="false"> <ui-select-match placeholder="{{to.placeholder}}"> {{$select.selected[to.labelProp || \'name\']}} </ui-select-match> <ui-select-choices refresh="refreshItemSource($select.search)" group-by="to.groupBy" repeat="option[to.valueProp || \'value\'] as option in itemSource" > <div ng-bind-html="option[to.labelProp || \'name\'] | highlight: $select.search"></div> </ui-select-choices> </ui-select>',
+            template: '<ui-select ng-model="model[options.key]" theme="bootstrap" ng-required="{{to.required}}" ng-disabled="{{to.disabled}}" reset-search-input="false"> <ui-select-match placeholder="{{to.placeholder}}"> {{evaluateFunction($select.selected[to.labelProp || \'name\'])}} </ui-select-match> <ui-select-choices refresh="refreshItemSource($select.search)" group-by="to.groupBy" repeat="(evaluateFunction(option[to.valueProp || \'value\'])) as option in itemSource" > <div ng-bind-html="evaluateFunction(option[to.labelProp || \'name\']) | highlight: $select.search"></div> </ui-select-choices> </ui-select>',
             controller: function ($scope) {
                 $scope.itemSource = [];
-                $scope.refreshItemSource = function (value) {
-                    $scope.to.deferredFilterFunction(value,
-                        function (results) {
-                            $scope.itemSource = results;
-                        },
-                        function (error) {
-                            console.error(error);
-                        });
-                };
+                $scope.refreshItemSource = refreshItemSource;
+                $scope.evaluateFunction = evaluateFunction;
                 
                 activate();
                 function activate() {
@@ -30,7 +23,7 @@
                 }
                 
                 function getSelectedObject() {
-                    var selectedValue = $scope.model[$scope.options.key];
+                    var selectedValue = typeof $scope.model[$scope.options.key] === 'function' ? $scope.model[$scope.options.key]():$scope.model[$scope.options.key];
                     if(selectedValue !== undefined && selectedValue !== null)
                     $scope.to.getSelectedObjectFunction(selectedValue,
                         function (object) {
@@ -39,6 +32,23 @@
                         function (error) {
                             console.error(error);
                         });
+                }
+                
+                function refreshItemSource(value) {
+                    $scope.to.deferredFilterFunction(value,
+                        function (results) {
+                            $scope.itemSource = results;
+                        },
+                        function (error) {
+                            console.error(error);
+                        });
+                }
+                
+                function evaluateFunction(obj){
+                    if (obj && (typeof obj) === 'function') {
+                        return obj();
+                    }
+                    return obj;
                 }
                 
                 function validateTemplateOptions() {

@@ -8,9 +8,9 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
         .module('app.formentry')
         .factory('FormentryService', FormentryService);
 
-    FormentryService.$inject = ['$http','ProviderResService'];
+    FormentryService.$inject = ['$http', 'SearchDataService'];
 
-    function FormentryService($http, ProviderResService) {
+    function FormentryService($http, SearchDataService) {
         var service = {
             createForm: createForm,
             getPayLoad: getPayLoad,
@@ -644,12 +644,26 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                   label: encField.labelName,
                   valueProp: 'uuid',
                   labelProp:'display',
-                  deferredFilterFunction: ProviderResService.findProvider,
-                  getSelectedObjectFunction: ProviderResService.getProviderByUuid,
+                  deferredFilterFunction: SearchDataService.findProvider,
+                  getSelectedObjectFunction: SearchDataService.getProviderByUuid,
                   required:false,
-                  addonLeft:{
-                    class:'glyphicon glyphicon-remove'
-                  },
+                  options:[]
+                }
+              }
+            }
+            else if(encField.type === 'location-field'){
+              field = {
+                key: 'enc_' + encField.idName,
+                type: 'ui-select-extended',
+                model: {encounter:'enc_' + encField.idName},
+                templateOptions: {
+                  type: 'text',
+                  label: encField.labelName,
+                  valueProp: 'uuId',
+                  labelProp:'display',
+                  deferredFilterFunction: SearchDataService.findLocation,
+                  getSelectedObjectFunction: SearchDataService.getLocationByUuid,
+                  required:false,
                   options:[]
                 }
               }
