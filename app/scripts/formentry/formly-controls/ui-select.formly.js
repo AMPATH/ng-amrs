@@ -15,42 +15,50 @@
                 $scope.itemSource = [];
                 $scope.refreshItemSource = refreshItemSource;
                 $scope.evaluateFunction = evaluateFunction;
-                
+
                 activate();
                 function activate() {
                     validateTemplateOptions();
                     getSelectedObject();
                 }
-                
+
                 function getSelectedObject() {
-                    var selectedValue = typeof $scope.model[$scope.options.key] === 'function' ? $scope.model[$scope.options.key]():$scope.model[$scope.options.key];
-                    if(selectedValue !== undefined && selectedValue !== null)
-                    $scope.to.getSelectedObjectFunction(selectedValue,
-                        function (object) {
-                            $scope.itemSource = [object];
-                        },
-                        function (error) {
-                            console.error(error);
-                        });
+                    var selectedValue = typeof $scope.model[$scope.options.key] === 'function' ? $scope.model[$scope.options.key]() : $scope.model[$scope.options.key];
+                    if (selectedValue !== undefined && selectedValue !== null)
+                        $scope.to.getSelectedObjectFunction(selectedValue,
+                            function (object) {
+                                $scope.itemSource = [object];
+                            },
+                            function (error) {
+                                console.error(error);
+                            });
                 }
-                
+
                 function refreshItemSource(value) {
-                    $scope.to.deferredFilterFunction(value,
-                        function (results) {
-                            $scope.itemSource = results;
-                        },
-                        function (error) {
-                            console.error(error);
-                        });
+                    if(isBlank(value) === false)
+                        $scope.to.deferredFilterFunction(value,
+                            function (results) {
+                                $scope.itemSource = results;
+                            },
+                            function (error) {
+                                console.error(error);
+                            });
                 }
-                
-                function evaluateFunction(obj){
+
+                function evaluateFunction(obj) {
                     if (obj && (typeof obj) === 'function') {
                         return obj();
                     }
                     return obj;
                 }
                 
+                function isBlank(str) {
+
+                    if (str === null || str.length === 0 || str === " ") return true;
+                    return false;
+
+                }
+
                 function validateTemplateOptions() {
                     if (!$scope.to.deferredFilterFunction) {
                         console.error('Template Options must define deferredFilterFunction');
