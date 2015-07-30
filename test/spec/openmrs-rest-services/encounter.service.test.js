@@ -17,7 +17,26 @@
           uuid: 'test-patient-uuid'
         }
       }
-
+      
+      var dummyResponse = {
+        "results" :[
+                          {
+                            "uuid": "encounter-uuid-for-first-element",
+                            "display": "ADULTRETURN 01/02/2006",
+                          },
+                          {
+                            "uuid": "bf218490-1691-11df-97a5-7038c432aabf",
+                            "display": "ADULTRETURN 07/02/2006",
+                            "links": [
+                              {
+                                "uri": testRestUrl+"encounter/bf218490-1691-11df-97a5-7038c432aabf",
+                                "rel": "self"
+                              }
+                            ]
+                          }
+                      ]
+      }
+      
       beforeEach(inject(function($injector) {
         httpBackend = $injector.get('$httpBackend');
         encounterResService = $injector.get('EncounterResService');
@@ -52,26 +71,19 @@
       });
 
       it('Should make a call to retrieve a list of encounters for a patient', function (){
-        var response = { "results" :[
-                          {
-                            "uuid": "encounter-uuid-for-first-element",
-                            "display": "ADULTRETURN 01/02/2006",
-                          },
-                          {
-                            "uuid": "bf218490-1691-11df-97a5-7038c432aabf",
-                            "display": "ADULTRETURN 07/02/2006",
-                            "links": [
-                              {
-                                "uri": testRestUrl+"encounter/bf218490-1691-11df-97a5-7038c432aabf",
-                                "rel": "self"
-                              }
-                            ]
-                          }
-                      ]};
-          httpBackend.expectGET(testRestUrl + 'encounter?patient=patient-uuid&v=default').respond(response);
+          httpBackend.expectGET(testRestUrl + 'encounter?patient=patient-uuid&v=default').respond(dummyResponse);
           encounterResService.getPatientEncounters('patient-uuid',function(data){
             expect(data[0].uuid).to.equal('encounter-uuid-for-first-element');
           },function(error){console.log('Error')});
+          httpBackend.flush();
+      });
+      
+      it('getPatientEncounters should accept a params list object', function (){
+        var params = { patientUuid : 'patient-uuid', rep: 'ref'};
+        httpBackend.expectGET(testRestUrl + 'encounter?patient=patient-uuid&v=ref').respond(dummyResponse);
+        encounterResService.getPatientEncounters(params,function(data){
+          expect(data[0].uuid).to.equal('encounter-uuid-for-first-element');
+        },function(error){console.log('Error')});
           httpBackend.flush();
       });
   });
