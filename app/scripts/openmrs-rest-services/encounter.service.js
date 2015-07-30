@@ -1,3 +1,6 @@
+/*
+jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
+*/
 (function() {
   'use strict';
 

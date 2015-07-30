@@ -14,9 +14,9 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069
 
         var forms = {};
         forms['form1'] = {
-          name: 'test',
-          uuid: '8d5b2be0-c2cc-11de-8d13-0010c6dffd0f',
-          encounterType:'yyy'
+          name: 'form1',
+          uuid: 'form1',
+          encounterType:'8d5b2be0-c2cc-11de-8d13-0010c6dffd0f'
         };
 
         forms['form2'] = {
@@ -39,11 +39,16 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069
 
 
         function getForm(uuid) {
-          _.find(forms,function(form) {
+          //console.log('Available forms');
+          //console.log(forms);
+        var result =  _.find(forms,function(form) {
+            //console.log(form)
             if (form.uuid === uuid) return form;
             else if (form.encounterType === uuid) return form;
             else if (form.name === uuid) return form;
           });
+
+          return result;
         }
     }
 })();
