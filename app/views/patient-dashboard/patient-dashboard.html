@@ -56,16 +56,7 @@
 							<small>List of Encounters</small>
 						</h3>
 						<div class="page-content">
-							<div class="row" ng-repeat="encounter in encounters" class="small">
-					      <a href="#/encounter/{{encounter.uuid()}}/patient/{{patient.uuid()}}">
-					        <div class="col-md-3">{{encounter.encounterDate() | date:'dd-MM-yyyy'}} </div>
-					        <div class="col-md-5">{{encounter.encounterTypeName()}}</div>
-					        <div class="col-md-2">{{encounter.locationName()}}</div>
-					        <div class="col-md-2">{{encounter.providerName()}}</div>
-					      </a>
-
-
-					    </div>
+							<patient-encounters></patient-encounters>
 						</div>
 					</div>
 				</div>

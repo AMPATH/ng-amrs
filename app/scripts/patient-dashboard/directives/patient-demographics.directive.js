@@ -5,7 +5,7 @@ jshint -W003, -W026
 'use strict';
 
 angular
-        .module('ngAmrsApp')
+        .module('app.patientdashboard')
         .directive('patientDemographics', patientDemographics);
 
 function patientDemographics() {

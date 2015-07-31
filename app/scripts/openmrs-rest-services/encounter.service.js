@@ -41,8 +41,19 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
       });
     }
 
-    function getPatientEncounters(patientUuid, successCallback, errorCallback) {
-      Restangular.one('encounter').get({'patient':patientUuid, 'v':'default'}).then(function(data) {
+    function getPatientEncounters(params, successCallback, errorCallback) {
+      var objParams = {};
+      if(angular.isDefined(params) && typeof params === 'string'){
+        var patientUuid = params;
+        objParams = {'patient': patientUuid, 'v':'default'}
+      } else {
+        objParams = {
+          'patient': params.patientUuid,
+          'v': params.rep || 'default'
+        }
+      }
+
+      Restangular.one('encounter').get(objParams).then(function(data) {
         if(angular.isDefined(data.results)) data = data.results;
         _successCallbackHandler(successCallback, data);
       },
