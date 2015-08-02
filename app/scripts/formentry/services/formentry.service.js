@@ -48,10 +48,10 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
             });
         }
 
-        function getEncounter(uuid, formlySchema){
+        function getEncounter(encData, formlySchema){
           //cbce861a-790c-4b91-80e6-3d75e671a4de
-          console.log('Sample data from REST API')
-          console.log(uuid);
+          //console.log('Sample data from REST API')
+          //console.log(uuid);
           /*
           Expected Encounter object format
           {encounterDatetime: 'date',
@@ -65,7 +65,7 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
           */
 
           //Start by prefilling the encounter information
-          var encData = uuid;
+
           var obsData = _.filter(encData.obs,function(obs){
             if(obs.groupMembers === null) return obs
           })
@@ -80,17 +80,7 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
               console.log('Encounter Keys');
               console.log(field.key);
               key = field.key;
-              if(key === 'enc_patient')
-              {
-                //update the model property
-                field.model[key] = encData.patient.uuid;
-              }
-              else if(key === 'enc_encounterType')
-              {
-                //update the model property
-                field.model[key] = encData.encounterType.uuid;
-              }
-              else if(key === 'enc_encounterDatetime')
+              if(key === 'enc_encounterDatetime')
               {
                 //update the model property
                 field.model[key] = encData.encounterDatetime;
@@ -113,7 +103,7 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                 console.log('starting obs prefill');
                 key = field.key;
                 var val;
-                var multiArr = []; //for multiselect fiellds like checkboxes
+                var multiArr = []; //for multiselect fields like checkboxes
                 if(field.model.obsGroupUuid === '')
                 {
                   if(field.type === 'select' || field.type === 'radio')
@@ -122,8 +112,8 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                     val = _.find(obsData,function(obs){
                       if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
                     });
-                    console.log('matching obs concept id:');
-                    console.log(val);
+                    //console.log('matching obs concept id:');
+                    //console.log(val);
                     if (val !== undefined) field.model[key] = val.value.uuid;
                   }
                   else if(field.type === 'multiCheckbox')
@@ -132,8 +122,8 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                     val = _.filter(obsData,function(obs){
                       if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
                     });
-                    console.log('matching multiCheckbox:');
-                    console.log(val);
+                    //console.log('matching multiCheckbox:');
+                    //console.log(val);
                     if (val !== undefined) {
                       _.each(val, function(obs){
                         multiArr.push(obs.value.uuid);
@@ -193,6 +183,56 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                       field.model[key] = multiArr;
                     }
                   }
+                  else if(field.type === 'repeatSection')
+                  {
+                    //get the group member matching the current key
+                    var groupMember;
+                    _.each(obsGroupData, function(obs) {
+                      groupMember = _.filter(obs.groupMembers, function(item) {
+                        /*
+                        note that the repeatSection model does not have a property/key obsConceptUuid in its model
+                        we therefore expect this to be undefined
+                        The model for a repeatSection is an array of objects in a given row
+                        the expected format for a repeatSection is:
+                        {obsGroupUuid:value, key:[{concept:value, concept:value},{concept:value, concept:value}]}
+                        */
+                        if(obs.concept.uuid === field.model.obsGroupUuid && field.model.obsConceptUuid === undefined)
+                        {
+                          return item;
+                        }
+
+                      })
+                    });
+
+                    val = _.find(obsGroupData,function(obs){
+                      if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
+                    });
+
+                    console.log('matching repeatSection:');
+                    console.log(val);
+                    var rowVal;
+                    if (val !== undefined && groupMember !== undefined) {
+                      /*
+                      Loop field wise in the group to  create a row object
+                      */
+                      _.each(field.templateOptions.fields[0].fieldGroup, function(repField) {
+                        /*
+                        Create an object to represent a row in the repeatSection
+                        */
+                        rowVal[repField] = '';
+                      });
+                      _.each(groupMember, function(obs){
+                        var repVal = _.find(groupMember, function(obs){
+                          if(obs.concept.uuid === repField.key.split('_')[1])
+                          {
+                            return obs;
+                          }
+                        });
+                        multiArr.push(obs.value.uuid);
+                      });
+                      field.model[key] = multiArr;
+                    }
+                  }
                   else{
                     //get the group member matching the current key
                     var groupMember;
@@ -204,9 +244,7 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
 
                     val = _.find(obsGroupData,function(obs){
                       if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
-  /*
-jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
-*/                  });
+                 });
                       console.log('matching obs concept id: and autofilled model');
                       console.log(val);
                       console.log(field.model);
@@ -242,7 +280,7 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
 
         }
 
-        function getPayLoad(schema, patient, form)
+        function getPayLoad(schema, patient, form, uuid)
         {
           var payLoad = {};
           //generate encounter section of the payload
@@ -253,6 +291,14 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
             //console.log(field.model.encounter + '  ' + field.model[val] );
             payLoad.patient = patient.uuid();
             payLoad.encounterType = form.encounterType;
+            /*
+            include uuid in the payload for an existing
+            encounter
+            */
+            if(uuid !== undefined)
+            {
+              payLoad.uuid = uuid;
+            }
 
             if(field.model.encounter === 'enc_encounterDatetime' && field.model[val] !== undefined)
             {
@@ -284,21 +330,24 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
               /*
               Add all obs without obs groups
               */
-              if((field.model[val] !== undefined) && (field.type !== 'multiCheckbox') && (field.model.obsGroupUuid === '') )
+              if((field.model[val] !== undefined) && (field.model.obsGroupUuid === ''))
               {
-                //add property to obs
-                obs.push({concept:field.model.obsConceptUuid, value:field.model[val]});
-
-              }
-              else if((field.model[val] !== undefined) && (field.type === 'multiCheckbox') && (field.model.obsGroupUuid === '') )
-              {
-                //add property to obs
-                var items = [];
-                items = field.model[val];
-                 //console.log(items);
-                for (var l = 0; l < items.length; l++)
+                if(field.model[val] instanceof Array)        // multiCheckbox
                 {
-                  obs.push({concept:field.model.obsConceptUuid, value:items[l]});
+                  //add property to obs
+                  var items = [];
+                  items = field.model[val];
+                   //console.log(items);
+                  for (var l = 0; l < items.length; l++)
+                  {
+                    obs.push({concept:field.model.obsConceptUuid, value:items[l]});
+                  }
+                }
+                else {
+                  //all other inputs
+                  //add property to obs
+                  obs.push({concept:field.model.obsConceptUuid, value:field.model[val]});
+
                 }
               }
             }
@@ -366,6 +415,7 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
             //console.log('obsGroupFields...');
             //console.log(obsGroupFields);
             var groupMembers = [];
+            var repSec = false;
 
             _.each(obsGroupFields, function(field){
               /*
@@ -380,21 +430,25 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
               if(field.type !== 'repeatSection')
               {
                 var val = 'obs_' + field.model.obsConceptUuid;
-                if((field.model[val] !== undefined) && (field.type !== 'multiCheckbox'))
-                {
-                  //add property to obs
-                  groupMembers.push({concept:field.model.obsConceptUuid, value:field.model[val]});
 
-                }
-                else if((field.model[val] !== undefined) && (field.type === 'multiCheckbox'))
+                if(field.model[val] !== undefined)
                 {
-                  //add property to obs
-                  var items = [];
-                  items = field.model[val];
-                   //console.log(items);
-                  for (var l = 0; l < items.length; l++)
+
+                  if(field.model[val] instanceof Array)        // multiCheckbox
                   {
-                    groupMembers.push({concept:field.model.obsConceptUuid, value:items[l]});
+                    //add property to obs
+                    var items = [];
+                    items = field.model[val];
+                     //console.log(items);
+                    for (var l = 0; l < items.length; l++)
+                    {
+                      groupMembers.push({concept:field.model.obsConceptUuid, value:items[l]});
+                    }
+                  }
+                  else {
+                    //add property to obs
+                    groupMembers.push({concept:field.model.obsConceptUuid, value:field.model[val]});
+
                   }
                 }
               }
@@ -402,16 +456,17 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                 /*
                 Populate payload for repeating section on the form.
                 The repeating section uses field groups that has the details about the field
-                types.[field.templateOptions.fields.fieldGroup]
+                types.[field.templateOptions.fields[0].fieldGroup]
                 */
+                repSec = true;
                 var val = 'obs_' + field.model.obsGroupUuid;
                 if(field.model[val] !== undefined)
                 {
                   //add property to obs
                   /*
                   get all group members in the repeating section
-                  and build the obs payLoad for each field in the
-                  re{"encounterType":"", "type":"text", "labelName":"Encounter Type", "idName":"encounterType"},peating section
+                  and build the obs group payLoad for each row in the
+                  repeating section
                   */
                   //console.log('Testing repeating section output');
                   //console.log(field.templateOptions.fields[0].fieldGroup);
@@ -421,51 +476,49 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                   the repeating fields go in the fieldGroup section
                   and therefore we will have only array item
                   in the fields section
+                  NOTE: The model value for a repeating section is an array of each
+                  row object
                   */
-                  _.each(field.templateOptions.fields[0].fieldGroup, function(repeatField) {
-                    // body...
-                    var repVal = repeatField.key;
-                    //console.log('repeatField');
-                    //console.log(repVal);
-                    if(repeatField.type !== 'multiCheckbox')
-                    {
-                      //add property to obs
-                      //get the matching key value pair in the model array
-                      var result = _.filter(field.model[val], function(listItem) {
-                        if(listItem[repVal] !== undefined) return listItem;
-                      });
-                      //console.log('Testing repeating section output');
-                      //console.log(result);
-                      _.each(result,function(item){
-                        groupMembers.push({concept:repVal.split('_')[1], value:item[repVal]});
-                      })
-
-                    }
-                    else if(repeatField.type === 'multiCheckbox')
-                    {
-                      //add property to obs
-                      //get the matching key value pair in the model array
-                      var result = _.filter(field.model[val], function(listItem) {
-                        if(listItem[repVal] !== undefined) return listItem;
-                      });
-
-                      _.each(result,function(item){
-                        var items = [];
-                        items = item[repVal];
-                         //console.log(items);
-                        for (var l = 0; l < items.length; l++)
+                  _.each(field.model[val], function(modelVal, i){
+                      console.log('item '+i)
+                      console.log(modelVal);
+                      groupMembers = [];
+                      for (var colKey in modelVal)
+                      {
+                        if(!colKey.startsWith('$$hashKey')) // skip the hashKey in the object
                         {
-                          groupMembers.push({concept:repVal.split('_')[1], value:items[l]});
+                          if(modelVal[colKey] instanceof Array)        // multiCheckbox
+                          {
+                            //add property to obs
+                            var items = [];
+                            items = modelVal[colKey];
+                             //console.log(items);
+                            for (var l = 0; l < items.length; l++)
+                            {
+                              groupMembers.push({concept:colKey.split('_')[1], value:items[l]});
+
+                            }
+                          }
+                          else {
+                            //add property to obs
+                            groupMembers.push({concept:colKey.split('_')[1], value:modelVal[colKey]});
+
+                          }
                         }
-                      })
-                    }
-                  })
+
+                      }
+                      //add row to payload
+                      //add group items to the obs Array
+                      console.log('group member');
+                      console.log(groupMembers);
+                      obs.push({concept:key, groupMembers:groupMembers});
+                  });
                 }
               }
             });
 
             //add group items to the obs Array
-            obs.push({concept:key, groupMembers:groupMembers});
+            if(repSec === false) obs.push({concept:key, groupMembers:groupMembers});
 
           });
 
@@ -636,6 +689,7 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
             {
               var opts= [];
               //get the radio/select options/multicheckbox
+              //console.log(obs_Field);
               for(var l = 0; l<obs_Field.obsAnswerConceptUuids.length; l++)
               {
                  var item={
@@ -684,6 +738,8 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
           //add encounter details
           //console.log(encounterFields);
           //console.log(schema);
+
+          //{"encounterType":"", "type":"text", "labelName":"Encounter Type", "idName":"encounterType"},
 
           _.each (schema.encounter, function(encField) {
             //console.log(encField)
@@ -774,9 +830,6 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
             {
               var repeatingFields = [];
               //Get the fields in the repeating section
-              //get the number of cols
-              var n = obs_Field.cols.length;
-              var colsize=12/n;
 
               _.each(obs_Field.cols,function(curField){
                 // process the fields the normal way
