@@ -1,0 +1,23 @@
+<div ng-controller="EncounterCtrl as vm">
+    <accordion class="accordion" close-others="oneAtATime">
+        <accordion-group  ng-repeat="encounter in vm.encounterList" is-open="vm.status.isOpen[$index]" >
+            <accordion-heading>
+                {{encounter.encounterDatetime | date: 'dd-MM-yyyy'}} | 
+                {{encounter.encounterType.display}} | {{encounter.location.display}} <i class="fa chevron-icon" 
+                ng-class="{'fa-chevron-down': vm.status.isOpen[$index], 'fa-chevron-right': !vm.status.isOpen[$index]}"></i>
+            </accordion-heading>
+            <div>
+              <table class="table table-striped table-bordered table-condensed table-hover" cellspacing="0">
+                <tbody>
+                  <tr><td>Encounter Date</td> <td>{{encounter.encounterDatetime | date: dd-MM-yyyy}}</td></tr>
+                  <tr><td>Encounter Type</td><td>{{encounter.encounterType.display}}</td></tr>
+                  <tr><td>Location</td><td>{{encounter.location.display}}</td></tr>
+                  <tr><td>provider</td><td>{{encounter.provider.display}}</td></tr>
+                  <tr><td>RTC Date</td><td>{{encounter.visit}}</td></tr>
+                  </tr>
+                </tbody>  
+              </table>
+            </div>
+        </accordion-group>
+    </accordion>
+</div>
