@@ -873,6 +873,25 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                 }
               }
             }
+            else if ((obs_Field.type === 'groupSection') || (obs_Field.type === 'groupsection')){
+              var groupingFields = [];
+              //Get the fields in the group section
+
+              _.each(obs_Field.cols,function(curField){
+                // process the fields the normal way
+                var selField=createObsFormlyField(curField,'grouped');
+                selField['className'] = 'flex-1';
+                groupingFields.push(selField);
+              })
+
+              obsField = {
+                className: 'display-flex',
+                key:'obs_' + obs_Field.obsConceptGroupUuid,
+                model:{obsGroupUuid:obs_Field.obsConceptGroupUuid},
+                fieldGroup:groupingFields
+              }
+              formSchema.push({template: '<hr /><div><strong>'+obs_Field.sectionTitle +':</strong></div>'});
+            }
             else {
               obsField=createObsFormlyField(obs_Field);
             }
