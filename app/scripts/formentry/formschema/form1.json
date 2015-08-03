@@ -3,9 +3,8 @@
   "form":{"name":"form1", "uuid":"xxx"} ,
   "encounter":[
       {"encounterDatetime":"","type":"datepicker", "labelName":"Visit Date", "idName":"encounterDatetime"},
-      {"encounterType":"", "type":"text", "labelName":"Encounter Type", "idName":"encounterType"},
-      {"encounterProvider":"", "type":"provider-field", "labelName":"Encounter Provider", "idName":"EncounterProvider"},
-      {"encounterLocation":"","type":"location-field","labelName":"Facility Name", "idName":"encounterLocation"},
+      {"encounterProvider":"", "type":"provider-field", "labelName":"Encounter Provider", "idName":"encounterProvider"},
+      {"encounterLocation":"","type":"location-field","labelName":"Facility Name", "idName":"encounterLocation"}
     ],
     "obs":[
       {
@@ -1751,9 +1750,9 @@
         "obsConceptUuid":"a899e444-1350-11df-a1f1-0026b9348838",
         "id":"1111",
         "type":"select",
-        "obsAnswerConceptUuids":["a89c2f42-1350-11df-a1f1-0026b9348838",
-                                  "a89c301e-1350-11df-a1f1-0026b9348838",
-                                  "a89c301e-1350-11df-a1f1-0026b9348838"
+        "obsAnswerConceptUuids":["a899f51a-1350-11df-a1f1-0026b9348838",
+                                  "a897d1a4-1350-11df-a1f1-0026b9348838",
+                                  "a8a382ba-1350-11df-a1f1-0026b9348838"
                                   ],
         "obsAnswerLabels":["(RHZE)",
                             "(RHZ)",

@@ -1,5 +1,5 @@
 /*
-jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
+jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
 */
 (function () {
     'use strict';
@@ -13,13 +13,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
     function SearchDataService(ProviderResService, LocationResService,LocationModelFactory) {
         var service = {
             findProvider: ProviderResService.findProvider,
-            getProviderByUuid: ProviderResService.getProviderByUuid,
+            getProviderByUuid: ProviderResService.getProviderByPersonUuid,
             findLocation: findLocation,
             getLocationByUuid: getLocationByUuid
         };
-        
+
         return service;
-        
+
         function findLocation(searchText, onSuccess, onError){
             LocationResService.findLocation(searchText,
                 function(locations){
@@ -30,7 +30,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
                     onError(onError);
                 });
         }
-        
+
         function getLocationByUuid(uuid,  onSuccess, onError){
              LocationResService.getLocationByUuid(uuid,
                 function(location){
@@ -41,8 +41,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
                     onError(onError);
                 });
         }
-        
-        
+
+
         function wrapLocations(locations){
             var wrappedLocations = [];
             for(var i = 0; i < locations.length;i++){
@@ -50,7 +50,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
             }
             return wrappedLocations;
         }
-        
+
         function wrapLocation(location){
             return LocationModelFactory.toWrapper(location);
         }
