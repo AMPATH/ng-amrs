@@ -1,0 +1,18 @@
+<h3>HIV Care Summary</h3>
+<ul class="list-group">
+  <li class="list-group-item" 
+      style="font-size:large">Last Appt Date: {{hivSummary.encounter_datetime.substring(0,10)}} ({{hivSummary.encounter_type}})
+  </li>
+  <li class="list-group-item"
+      style="font-size:large">RTC Date: {{hivSummary.rtc_date.substring(0,10)}}
+  </li>
+  <li class="list-group-item" 
+      style="font-size:large">Last Viral Load: {{hivSummary.vl_1}} ({{hivSummary.vl_1_date.substring(0,10)}})
+  </li>
+  <li class="list-group-item" 
+      style="font-size:large">Last CD4 Count: {{hivSummary.cd4_1}} ({{hivSummary.cd4_1_date.substring(0,10)}})
+  </li>
+  <li class="list-group-item" 
+      style="font-size:large">Current ARV Regimen: {{hivSummary.cur_arv_meds}}
+  </li>
+</ul>
