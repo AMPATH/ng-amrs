@@ -156,7 +156,7 @@
       modelDefinition.openmrsModel = function(value) {
               return {names: NameModel.fromArrayOfWrappers(_names),
                       gender: _gender,
-                      uuId: _uuId,
+                      uuid: _uuId,
                       age: _age,
                       birthdate: _birthdate,
                       birthdateEstimated: _birthdateEstimated,
@@ -171,7 +171,7 @@
     }
 
     function toWrapper(openmrsModel){
-        return new person(openmrsModel.names, openmrsModel.gender, openmrsModel.uuId, openmrsModel.age,
+        return new person(openmrsModel.names, openmrsModel.gender, openmrsModel.uuid, openmrsModel.age,
           openmrsModel.birthdate, openmrsModel.birthdateEstimated, openmrsModel.dead, openmrsModel.deathDate,
           openmrsModel.causeOfDeath, openmrsModel.addresses, openmrsModel.attributes, openmrsModel.preferredName, openmrsModel.preferredAddress);
     }

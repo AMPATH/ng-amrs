@@ -22,7 +22,6 @@
 
       //initialize private members
       var _identifier = identifier_ ? identifier_ : '';
-      debugger;
       var _person = person_ ? PersonModel.toWrapper(person_) :undefined;
       var _uuId = uuId_ ? uuId_ : '';
       var _display = display_ ? display_  : '' ;
@@ -45,6 +44,11 @@
         else {
           return _person;
         }
+      };
+      
+     modelDefinition.personUuid = function(value) {
+         var ret = _person? _person.uuId():null;
+          return ret;
       };
 
       modelDefinition.identifier = function(value) {
