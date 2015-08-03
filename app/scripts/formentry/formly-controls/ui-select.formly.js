@@ -1,3 +1,6 @@
+/*
+jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
+*/
 (function () {
 
     'use strict';
@@ -51,7 +54,7 @@
                     }
                     return obj;
                 }
-                
+
                 function isBlank(str) {
 
                     if (str === null || str.length === 0 || str === " ") return true;

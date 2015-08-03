@@ -19,8 +19,18 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
 
     return service;
 
-    function getEncounterByUuid(uuid, successCallback, errorCallback) {
-      Restangular.one('encounter', uuid).get().then(function(data) {
+    function getEncounterByUuid(params, successCallback, errorCallback) {
+      var objParams = {};
+      if(angular.isDefined(params) && typeof params === 'string'){
+        var encounterUuid = params;
+        objParams = {'encounter': encounterUuid, 'v':'default'}
+      } else {
+        objParams = {
+          'encounter': params.uuid,
+          'v': params.rep || 'full'
+        }
+      }
+      Restangular.one('encounter',objParams.encounter).get({v:objParams.v}).then(function(data) {
         _successCallbackHandler(successCallback, data);
       },
       function(error) {

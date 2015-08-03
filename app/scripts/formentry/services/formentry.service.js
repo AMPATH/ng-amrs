@@ -64,15 +64,24 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
           uuid:'encounter-uuid'
           */
 
-          //Start by prefilling the encounter information
 
+          //geting obs data without obs groups
           var obsData = _.filter(encData.obs,function(obs){
             if(obs.groupMembers === null) return obs
           })
+
+          //geting obs data with obs groups
+          var obsGroupArr={};//store distinct obsgroup uuid
           var obsGroupData =  _.filter(encData.obs,function(obs){
-            if(obs.groupMembers !== null) return obs
+            if(obs.groupMembers !== null)
+            {
+              obsGroupArr['obs_' + obs.concept.uuid] = obs.concept.uuid;
+              return obs;
+            }
           })
           var key;
+
+          //Start by prefilling the encounter information
 
           _.each(formlySchema, function(field) {
             if(field.key.startsWith('enc_')) //using underscore.js and underscore.string.js Functions
@@ -131,15 +140,16 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                       field.model[key] = multiArr;
                     }
                   }
-                  else{
+                  else
+                  {
                     val = _.find(obsData,function(obs){
                       if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
                     });
-                      console.log('matching obs concept id: and autofilled model');
-                      console.log(val);
-                      console.log(field.model);
+                      //console.log('matching obs concept id: and autofilled model');
+                      //console.log(val);
+                      //console.log(field.model);
                       if (val !== undefined) field.model[key] = val.value;
-                      console.log(field.model);
+                      //console.log(field.model);
                   }
                 }
                 //obs with obs group uuids
@@ -157,8 +167,8 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                     val = _.find(obsGroupData,function(obs){
                       if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
                     });
-                    console.log('matching obs concept id:');
-                    console.log(val);
+                    //console.log('matching obs concept id:');
+                    //console.log(val);
                     if (val !== undefined && groupMember !== undefined) field.model[key] = groupMember.value.uuid;
                   }
                   else if(field.type === 'multiCheckbox')
@@ -174,8 +184,8 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                     val = _.find(obsGroupData,function(obs){
                       if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
                     });
-                    console.log('matching multiCheckbox:');
-                    console.log(val);
+                    //console.log('matching multiCheckbox:');
+                    //console.log(val);
                     if (val !== undefined && groupMember !== undefined) {
                       _.each(groupMember, function(obs){
                         multiArr.push(obs.value.uuid);
@@ -187,51 +197,61 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                   {
                     //get the group member matching the current key
                     var groupMember;
-                    _.each(obsGroupData, function(obs) {
-                      groupMember = _.filter(obs.groupMembers, function(item) {
-                        /*
-                        note that the repeatSection model does not have a property/key obsConceptUuid in its model
-                        we therefore expect this to be undefined
-                        The model for a repeatSection is an array of objects in a given row
-                        the expected format for a repeatSection is:
-                        {obsGroupUuid:value, key:[{concept:value, concept:value},{concept:value, concept:value}]}
-                        */
-                        if(obs.concept.uuid === field.model.obsGroupUuid && field.model.obsConceptUuid === undefined)
-                        {
-                          return item;
-                        }
+                    key = field.model.obsGroupUuid;
 
-                      })
-                    });
+                    for(var dictKey in obsGroupArr)
+                    {
+                      console.log('test dictionary')
+                      console.log(obsGroupArr[dictKey]);
+                    }
 
-                    val = _.find(obsGroupData,function(obs){
+                    val = _.filter(obsGroupData,function(obs){
+                      console.log(obs);
                       if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
                     });
 
                     console.log('matching repeatSection:');
                     console.log(val);
-                    var rowVal;
-                    if (val !== undefined && groupMember !== undefined) {
+                    var rowVal = {};
+                    if (val !== undefined) {
                       /*
                       Loop field wise in the group to  create a row object
                       */
-                      _.each(field.templateOptions.fields[0].fieldGroup, function(repField) {
-                        /*
-                        Create an object to represent a row in the repeatSection
-                        */
-                        rowVal[repField] = '';
-                      });
-                      _.each(groupMember, function(obs){
-                        var repVal = _.find(groupMember, function(obs){
-                          if(obs.concept.uuid === repField.key.split('_')[1])
+                      _.each(val,function(data,i){
+                        rowVal = {};
+                        console.log('Row ' + i + ' Data' );
+                        //console.log(data);
+
+                        _.each(data.groupMembers, function (rowData) {
+
+                          /*
+                          The expected model row data should be something like
                           {
-                            return obs;
+                          col1key:col1value,
+                          col2key:col2value,
+                          ---
+                          colnkey:colnvalue
                           }
+                          */
+                          console.log(rowData.concept.uuid);
+                          var colKey = 'obs_' + rowData.concept.uuid
+                          console.log('columns: '+colKey);
+                          if (rowData.value instanceof Object)
+                          {
+                            rowVal[colKey] = rowData.value.uuid
+                          }
+                          else {
+                            rowVal[colKey] = rowData.value
+                          }
+
                         });
-                        multiArr.push(obs.value.uuid);
+                        multiArr.push(rowVal);
+                        //console.log('Array Val Repeat');
+
+                        //console.log(multiArr);
                       });
-                      field.model[key] = multiArr;
                     }
+                    field.model['obs_'+key] = multiArr;
                   }
                   else{
                     //get the group member matching the current key
@@ -245,11 +265,11 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                     val = _.find(obsGroupData,function(obs){
                       if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
                  });
-                      console.log('matching obs concept id: and autofilled model');
-                      console.log(val);
-                      console.log(field.model);
+                      //console.log('matching obs concept id: and autofilled model');
+                      //console.log(val);
+                      //console.log(field.model);
                       if (val !== undefined && groupMember !== undefined) field.model[key] = groupMember.value;
-                      console.log(field.model);
+                      //console.log(field.model);
                   }
                 }
             }
@@ -778,7 +798,7 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                 templateOptions: {
                   type: 'text',
                   label: encField.labelName,
-                  valueProp: 'uuid',
+                  valueProp: 'personUuid',
                   labelProp:'display',
                   deferredFilterFunction: SearchDataService.findProvider,
                   getSelectedObjectFunction: SearchDataService.getProviderByUuid,
