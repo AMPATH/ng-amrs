@@ -22,6 +22,64 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
 
         return service;
 
+
+        function getFieldValidator(params)
+        {
+          console.log('Validation params');
+          console.log(params);
+
+          if ((params.type === 'date') && (params.allowFutureDates !== 'true'))
+          {
+            return {
+              expression: function(viewValue, modelValue) {
+                /*
+                using datejs library
+                */
+                var value = modelValue || viewValue;
+                var dateValue;
+                var curDate = Date.parse(Date.today(),'yyyy-M-d');
+                if(value !== undefined)
+                {
+                  dateValue = Date.parse(value,'yyyy-M-d');
+                }
+                if(dateValue !== undefined)
+                {
+                  console.log('Today: '+curDate);
+                  console.log('Date Entered: '+dateValue);
+                  console.log(dateValue.isAfter(curDate));
+                  return !dateValue.isAfter(curDate);
+                }
+
+              },
+              message: '"Should not be a future date!"'
+            };
+          }
+
+          if((params.type === 'date') && (params.allowFutureDates === 'true'))
+          {
+            return {
+              expression: function(viewValue, modelValue) {
+                /*
+                using datejs library
+                */
+                var value = modelValue || viewValue;
+                var dateValue;
+                var curDate = Date.today();
+                if(value !== undefined)
+                {
+                  dateValue = Date.parse(value);
+                }
+                if(dateValue !== undefined)
+                {
+                  if(dateValue.isBefore(curDate))return false;
+                }
+
+              },
+              message: '"Should be a future date!"'
+            };
+          }
+        }
+
         function getFormSchema(formName, callback) {
           var schema = {};
           // this should de dropped once we align all forms related issues
@@ -585,13 +643,14 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                   label: obs_Field.label,
                   datepickerPopup: 'dd-MMMM-yyyy',
                   required:required
+                },
+                validators: {
+                  dateValidator: getFieldValidator(obs_Field.validators)
                 }
-        //         ,
-        // validators: {
-        //   //ipAddress: validatorsArray['ipAddress']
-        // }
 
               }
+              console.log('returned validator');
+              console.log( getFieldValidator(obs_Field.validators));
             }
             else if ((obs_Field.type === 'text') || (obs_Field.type === 'number'))
             {
@@ -673,11 +732,11 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                   label: obs_Field.label,
                   datepickerPopup: 'dd-MMMM-yyyy',
                   required:required
-                }
-        //
-        // validators: {
-        //   //ipAddress: validatorsArray['ipAddress']
-        // }
+                },
+
+        validators: {
+          dateValidator: getFieldValidator(obs_Field.validators)
+        }
 
               }
             }
@@ -774,6 +833,9 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                   label: encField.labelName,
                   placeholder: encField.labelName,
                   datepickerPopup: 'dd-MMMM-yyyy'
+                },
+                validators: {
+                  dateValidator: getFieldValidator(encField.validators)
                 }
               }
             }

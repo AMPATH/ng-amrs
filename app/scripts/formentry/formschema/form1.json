@@ -2,7 +2,9 @@
   "schema":{
   "form":{"name":"form1", "uuid":"xxx"} ,
   "encounter":[
-      {"encounterDatetime":"","type":"datepicker", "labelName":"Visit Date", "idName":"encounterDatetime"},
+      {"encounterDatetime":"","type":"datepicker", "labelName":"Visit Date", "idName":"encounterDatetime",
+      "validators":{"type":"date"}
+      },
       {"encounterProvider":"", "type":"provider-field", "labelName":"Encounter Provider", "idName":"encounterProvider"},
       {"encounterLocation":"","type":"location-field","labelName":"Facility Name", "idName":"encounterLocation"}
     ],
@@ -37,7 +39,7 @@
         "obsConceptUuid":"dc1942b2-5e50-4adc-949d-ad6c905f054e","id":"7029",
         "type":"datepicker",
         "label":"7b. If Unscheduled, actual scheduled date",
-        "validators":{}
+        "validators":{"type":"date", "allowFutureDates":"true"}
       },
       {
         "obsConceptGroupUuid":"",
@@ -110,7 +112,7 @@
         "obsConceptUuid":"a89ff758-1350-11df-a1f1-0026b9348838","id":"1836",
         "type":"datepicker",
         "label":"12a. Females: LMP",
-        "validators":{}
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid":"",
@@ -213,7 +215,7 @@
         "obsConceptUuid":"a89d200a-1350-11df-a1f1-0026b9348838","id":"1499",
         "type":"datepicker",
         "label":"13c. If started since last visit record the date",
-        "validators":{}
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid":"",
@@ -329,7 +331,7 @@
         "id":"1113",
         "type":"datepicker",
         "label":"15b. Current tuberculosis: Start Date of TB:",
-        "validators":{}
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid":"b55a6d42-3189-4d4c-97bf-772dfe17b887",
@@ -1576,7 +1578,7 @@
         "id":"2041",
         "type":"datepicker",
         "label":"26b. If completed, date:",
-        "validators":{}
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid":"a8a078cc-1350-11df-a1f1-0026b9348838",
@@ -1715,7 +1717,7 @@
         "id":"1113",
         "type":"datepicker",
         "label":"26d. If on treatment: start date:",
-        "validators":{}
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid":"b55a6d42-3189-4d4c-97bf-772dfe17b887",
@@ -1949,7 +1951,7 @@
         "type":"datepicker",
         "label":"31. Return to clinic Date:",
         "required":"true",
-        "validators":{}
+        "validators":{"type":"date", "allowFutureDates":"true"}
       }
     ]
   }
