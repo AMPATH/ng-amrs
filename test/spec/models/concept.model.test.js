@@ -20,7 +20,7 @@ jshint -W030
 
     var testConceptNameOpenmrsObject;
 
-
+    var conceptClassOpenmrsObject;
 
     beforeEach(inject(function ($injector) {
       testConceptNameOpenmrsObject = {
@@ -29,11 +29,19 @@ jshint -W030
         name: 'name',
         conceptNameType: 'conceptNameType'
       };
+      
+      conceptClassOpenmrsObject = {
+          display: 'display',
+          uuid: 'uuid',
+          name: 'name',
+          description: 'description',
+          retired:false
+        };
 
       testConceptOpenmrsObject = {
         name: testConceptNameOpenmrsObject,
         uuid: '_uuId',
-        conceptClass: undefined
+        conceptClass: conceptClassOpenmrsObject
       };
 
     }));

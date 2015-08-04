@@ -7,9 +7,9 @@
         .module('models')
         .factory('ConceptModel', factory);
 
-  factory.$inject = ['ConceptNameModel'];
+  factory.$inject = ['ConceptNameModel', 'ConceptClassModel'];
 
-  function factory(ConceptNameModel) {
+  function factory(ConceptNameModel, ConceptClassModel) {
     var service = {
       concept: concept,
       toWrapper: toWrapper
@@ -23,7 +23,7 @@
       //initialize private members
       var _uuId = uuId_ ? uuId_ : '' ;
       var _name = name_ ? ConceptNameModel.toWrapper(name_) : undefined;
-      var _conceptClass = conceptClass_ ? undefined : undefined;
+      var _conceptClass = conceptClass_ ? ConceptClassModel.toWrapper(conceptClass_): undefined;
 
       modelDefinition.name = function(value) {
         if (angular.isDefined(value)) {
