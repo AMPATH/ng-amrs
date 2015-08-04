@@ -14,10 +14,26 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
             name: 'ui-select-extended',
             wrapper: ['bootstrapLabel'],
             template: '<ui-select ng-model="model[options.key]" theme="bootstrap" ng-required="{{to.required}}" ng-disabled="{{to.disabled}}" reset-search-input="false"> <ui-select-match placeholder="{{to.placeholder}}"> {{evaluateFunction($select.selected[to.labelProp || \'name\'])}} </ui-select-match> <ui-select-choices refresh="refreshItemSource($select.search)" group-by="to.groupBy" repeat="(evaluateFunction(option[to.valueProp || \'value\'])) as option in itemSource" > <div ng-bind-html="evaluateFunction(option[to.labelProp || \'name\']) | highlight: $select.search"></div> </ui-select-choices> </ui-select>',
+            link: function (scope, el, attrs, vm) {
+                //incase we need link function
+            },
             controller: function ($scope) {
+                var vm = this;
                 $scope.itemSource = [];
                 $scope.refreshItemSource = refreshItemSource;
                 $scope.evaluateFunction = evaluateFunction;
+                vm.getSelectedObject = getSelectedObject;
+                
+                $scope.$watch(
+                function(scope){
+                    return evaluateFunction(scope.model[scope.options.key]);
+                },
+                function (val) {
+                   //console.log('changed:' + val);
+                   if($scope.itemSource !== undefined && $scope.itemSource.length === 0){
+                       getSelectedObject();
+                   }
+                });
 
                 activate();
                 function activate() {
@@ -38,7 +54,7 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                 }
 
                 function refreshItemSource(value) {
-                    if(isBlank(value) === false)
+                    if (isBlank(value) === false)
                         $scope.to.deferredFilterFunction(value,
                             function (results) {
                                 $scope.itemSource = results;

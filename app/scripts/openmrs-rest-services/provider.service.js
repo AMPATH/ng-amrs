@@ -26,7 +26,7 @@
     }
 
     function getPersonResource() {
-      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'person/:uuid?v=default',
+      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'person/:uuid',
         { uuid: '@uuid' },
         { query: { method: 'GET', isArray: false } });
     }
@@ -53,7 +53,8 @@
       var resource = getPersonResource();
       return resource.get({ uuid: uuid }).$promise
         .then(function (response) {
-        successCallback(response);
+        var provider = {person:response, display:response.display };
+        successCallback(provider);
       })
         .catch(function (error) {
         failedCallback('Error processing request', error);
@@ -65,26 +66,7 @@
       var resource = searchResource();
       return resource.get({ search: searchText }).$promise
         .then(function (response) {
-          if(response.results)
-          {
-            var provList=[];
-            //console.log('testing provider result output');
-            _.each(response.results,function(data){
-
-              var provider = {
-                uuid:data.uuid,
-                display:data.display,
-                personUuid:data.person.uuid
-                };
-                //console.log(provider);
-                provList.push(provider);
-            })
-            successCallback(provList);
-          }
-          else {
-            successCallback(response);
-          }
-
+           successCallback(response.results? response.results: response);
       })
         .catch(function (error) {
         failedCallback('Error processing request', error);

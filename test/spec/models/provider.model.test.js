@@ -29,7 +29,7 @@ jshint -W030
                 testPersonOpenmrsObject = {
                       names: testNames,
                       gender: '_gender',
-                      uuId: '_uuId',
+                      uuid: '_uuId',
                       age: '_age',
                       birthdate: '_birthdate',
                       birthdateEstimated: '_birthdateEstimated',
