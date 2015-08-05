@@ -15,7 +15,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
         $scope.vm = {};
         $scope.vm.error = '';
         $scope.vm.patient = $rootScope.broadcastPatient;
-        $scope.vm.encounters = $rootScope.encounters;
+        //$scope.vm.encounters = $rootScope.encounters;
 
         $scope.vm.cancel = function ()
         {
@@ -49,7 +49,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
  /*
  Test logic to get either a blank form or form filled with existing data.
  */
- var params={uuid: '90f42598-5cdc-45e0-b1f5-1ad251c1d202'/*$stateParams.encuuid*/}; //drop after testing
+ var params={uuid: '90f42598-5cdc-45e0-b1f5-1ad251c1d202'/*'33158613-0f76-45a5-9c49-28f5928185aa'*//*$stateParams.encuuid*/}; //drop after testing
  var encData;
  $scope.vm.userFields = {};
 
@@ -61,8 +61,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
    console.log(selectedForm);
     FormentryService.getFormSchema(selectedForm, function(schema){
      formSchema = schema;
-     $scope.vm.formlyFields = FormentryService.createForm(formSchema);
-     $scope.vm.userFields = $scope.vm.formlyFields;
+     $scope.vm.userFields = FormentryService.createForm(formSchema);
+     //$scope.vm.userFields = $scope.vm.formlyFields;
    });
 
    console.log('testing encounter params')
@@ -75,13 +75,18 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
        encData = data;
        console.log('Rest Feeback')
        console.log(encData);
-       FormentryService.getEncounter(encData,$scope.vm.formlyFields);
+       if (data)
+       {
+         FormentryService.getEncounter(encData,$scope.vm.userFields);
+       }
+
       });
+
     }
-    $scope.vm.userFields = $scope.vm.formlyFields;
+
 
  },1000);
-
+$scope.vm.userFields = $scope.vm.formlyFields;
  console.log(JSON.stringify($scope.vm.userFields));
 }
 
