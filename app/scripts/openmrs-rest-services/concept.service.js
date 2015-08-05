@@ -19,7 +19,8 @@
       getConceptByUuid: getConceptByUuid,
       findConcept: findConcept,
       findConceptByConceptClassesUuid: findConceptByConceptClassesUuid,
-      filterResultsByConceptClassesUuid: filterResultsByConceptClassesUuid
+      filterResultsByConceptClassesUuid: filterResultsByConceptClassesUuid,
+      filterResultsByConceptClassesName:filterResultsByConceptClassesName
     };
     return serviceDefinition;
 
@@ -94,6 +95,15 @@
       var res = _.filter(results, function (result) {
         return _.find(conceptClassesUuidArray, function (uuid) {
           return result.conceptClass.uuid === uuid;
+        });
+      });
+      return res;
+    }
+
+    function filterResultsByConceptClassesName(results, conceptClassesNameArray) {
+      var res = _.filter(results, function (result) {
+        return _.find(conceptClassesNameArray, function (name) {
+          return result.conceptClass.name === name;
         });
       });
       return res;

@@ -32,7 +32,7 @@
         conceptClass: {
           display: 'display',
           uuid: 'uuid1',
-          name: 'name',
+          name: 'name1',
           description: 'description',
           retired: false
         }
@@ -43,7 +43,7 @@
         conceptClass: {
           display: 'display',
           uuid: 'uuid1',
-          name: 'name',
+          name: 'name1',
           description: 'description',
           retired: false
         }
@@ -54,7 +54,7 @@
         conceptClass: {
           display: 'display',
           uuid: 'uuid2',
-          name: 'name',
+          name: 'name2',
           description: 'description',
           retired: false
         }
@@ -65,7 +65,7 @@
         conceptClass: {
           display: 'display',
           uuid: 'uuid2',
-          name: 'name',
+          name: 'name2',
           description: 'description',
           retired: false
         }
@@ -237,7 +237,7 @@
           conceptClass: {
             display: 'display',
             uuid: 'uuid1',
-            name: 'name',
+            name: 'name1',
             description: 'description',
             retired: false
           }
@@ -248,7 +248,7 @@
           conceptClass: {
             display: 'display',
             uuid: 'uuid1',
-            name: 'name',
+            name: 'name1',
             description: 'description',
             retired: false
           }
@@ -260,6 +260,71 @@
       expect(filteredResults).to.deep.equal(expectedFilterResults);
 
       filteredResults = conceptService.filterResultsByConceptClassesUuid(testConcepts, []);
+
+      expect(filteredResults).to.deep.equal([]);
+
+    });
+
+    it('should filter by ConceptClassesName when filterResultsByConceptClassesNames is invoked with (results, conceptClassesNamesArray)', function () {
+      var expectedFilterResults = [
+        {
+          name: undefined,
+          uuid: '_uuId',
+          conceptClass: {
+            display: 'display',
+            uuid: 'uuid',
+            name: 'name',
+            description: 'description',
+            retired: false
+          }
+        }
+      ];
+
+      var filteredResults = conceptService.filterResultsByConceptClassesName(testConcepts, ['name']);
+
+      expect(filteredResults).to.deep.equal(expectedFilterResults);
+
+      expectedFilterResults = [
+        {
+          name: undefined,
+          uuid: '_uuId',
+          conceptClass: {
+            display: 'display',
+            uuid: 'uuid',
+            name: 'name',
+            description: 'description',
+            retired: false
+          }
+        },
+        {
+          name: undefined,
+          uuid: '_uuId',
+          conceptClass: {
+            display: 'display',
+            uuid: 'uuid1',
+            name: 'name1',
+            description: 'description',
+            retired: false
+          }
+        },
+        {
+          name: undefined,
+          uuid: '_uuId',
+          conceptClass: {
+            display: 'display',
+            uuid: 'uuid1',
+            name: 'name1',
+            description: 'description',
+            retired: false
+          }
+        }
+      ];
+
+      filteredResults = conceptService.filterResultsByConceptClassesName(testConcepts, ['name', 'name1']);
+
+      expect(filteredResults).to.deep.equal(expectedFilterResults);
+
+      filteredResults = conceptService.filterResultsByConceptClassesName(testConcepts, []);
 
       expect(filteredResults).to.deep.equal([]);
 
