@@ -320,7 +320,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           }
 
                         });
-                        multiArr.push(rowVal);
+                        if(Object.keys(rowVal).length>0)  multiArr.push(rowVal);
                         //console.log('Array Val Repeat');
 
                         //console.log(multiArr);
@@ -368,16 +368,17 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                             if(obsVal !== undefined)
                             {
-                              // console.log('test group sec obs value');
-                              // console.log(obsVal);
-                              // console.log('current key: '+ key);
-                              // console.log(field.model[key]);
-                              if(angular.isObject(obsVal.value))
+                              console.log('test group sec obs value');
+                              console.log(obsVal);
+                              console.log('Current field Key: ' + curField.key)
+                              console.log('current key: obs_'+ key);
+                              console.log(field.model['obs_' + key]);
+                              if(angular.isObject(obsVal.value) && field.model['obs_' + key] !== undefined)
                               {
-                                field.model['obs_'+key][curField.key] = obsVal.value.uuid;
+                                field.model['obs_'+ key][curField.key] = obsVal.value.uuid;
                               }
                               else {
-                                field.model['obs_'+key][curField.key] = obsVal.value;
+                                field.model['obs_'+ key][curField.key] = obsVal.value;
                               }
                             }
 
