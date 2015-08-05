@@ -1015,6 +1015,23 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               }
 
             }
+            else if(obs_Field.type === 'problem'){
+                obsField =  {
+                key: 'obs_' + obs_Field.obsConceptUuid,
+                type: 'ui-select-extended',
+                // model: {encounter:'obs_' + obs_Field.idName},
+                templateOptions: {
+                  type: 'text',
+                  label: obs_Field.label,
+                  valueProp: 'uuId',
+                  labelProp:'display',
+                  deferredFilterFunction: SearchDataService.findProblem,
+                  getSelectedObjectFunction: SearchDataService.getProblemByUuid,
+                  required:false,
+                  options:[]
+                }
+              };
+            }
             else if ((obs_Field.type === 'radio') || (obs_Field.type === 'select') || (obs_Field.type === 'multiCheckbox'))
             {
               var opts= [];

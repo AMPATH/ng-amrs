@@ -15,7 +15,7 @@ jshint -W030
 
       var testNames;
 
-      beforeEach(inject(function($injector) {
+      beforeEach(inject(function() {
 
         testNames = [{
           givenName:'_givenName',

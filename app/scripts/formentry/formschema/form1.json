@@ -1246,6 +1246,38 @@
         ]
       },
       {
+        "obsConceptGroupUuid": "a89c2d8a-1350-11df-a1f1-0026b9348838",
+        "id_g": "1284",
+        "type": "repeatSection",
+        "sectionTitle": "23.a Problem List (Added)",
+        "buttonLabel": "Add",
+        "cols": [
+          {
+            "obsConceptUuid": "a8ae835e-1350-11df-a1f1-0026b9348838",
+            "id": "6042",
+            "type": "problem",
+            "label": "Problem:",
+            "validators": {}
+          }
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "a89c2d8a-1350-11df-a1f1-0026b9348838",
+        "id_g": "1284",
+        "type": "repeatSection",
+        "sectionTitle": "23.b Problem List (Removed)",
+        "buttonLabel": "Add",
+        "cols": [
+          {
+            "obsConceptUuid": "a8af4aa0-1350-11df-a1f1-0026b9348838",
+            "id": "6097",
+            "type": "problem",
+            "label": "Problem:",
+            "validators": {}
+          }
+        ]
+      },
+      {
         "obsConceptGroupUuid":"",
         "obsConceptUuid":"a89b75d4-1350-11df-a1f1-0026b9348838",
         "id":"1255",

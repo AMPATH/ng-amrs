@@ -8,14 +8,19 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
         .module('app.formentry')
         .factory('SearchDataService', SearchDataService);
 
-    SearchDataService.$inject = ['ProviderResService', 'LocationResService', 'LocationModel', 'ProviderModel'];
+    SearchDataService.$inject = ['ProviderResService', 'LocationResService', 'LocationModel', 'ProviderModel', 'ConceptResService', 'ConceptModel'];
 
-    function SearchDataService(ProviderResService, LocationResService, LocationModelFactory, ProviderModelFactory) {
+    function SearchDataService(ProviderResService, LocationResService, LocationModelFactory, ProviderModelFactory, ConceptResService, ConceptModelFactory) {
+        
+        var problemConceptClassesArray = ['Diagnosis','Symptom','Symptom/Finding','Finding'];
+        
         var service = {
             findProvider: findProvider,
             getProviderByUuid: getProviderByPersonUuid,
             findLocation: findLocation,
-            getLocationByUuid: getLocationByUuid
+            getLocationByUuid: getLocationByUuid,
+            findProblem:findProblem,
+            getProblemByUuid:getProblemByUuid
         };
 
         return service;
@@ -35,6 +40,29 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
             LocationResService.getLocationByUuid(uuid,
                 function (location) {
                     var wrapped = wrapLocation(location);
+                    onSuccess(wrapped);
+                },
+                function (error) {
+                    onError(onError);
+                });
+        }
+
+        function findProblem(searchText, onSuccess, onError) {
+            ConceptResService.findConcept(searchText,
+                function (concepts) {
+                    var filteredConcepts = ConceptResService.filterResultsByConceptClassesName(concepts,problemConceptClassesArray);
+                    var wrapped = wrapConcepts(filteredConcepts);
+                    onSuccess(wrapped);
+                },
+                function (error) {
+                    onError(onError);
+                });
+        }
+
+        function getProblemByUuid(uuid, onSuccess, onError) {
+            ConceptResService.getConceptByUuid(uuid,
+                function (concept) {
+                    var wrapped = wrapConcept(concept);
                     onSuccess(wrapped);
                 },
                 function (error) {
@@ -86,6 +114,18 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
 
         function wrapLocation(location) {
             return LocationModelFactory.toWrapper(location);
+        }
+        
+        function wrapConcept(concept) {
+            return ConceptModelFactory.toWrapper(concept);
+        }
+        
+        function wrapConcepts(concepts) {
+            var wrappedObjects = [];
+            for (var i = 0; i < concepts.length; i++) {
+                wrappedObjects.push(wrapConcept(concepts[i]));
+            }
+            return wrappedObjects;
         }
     }
 

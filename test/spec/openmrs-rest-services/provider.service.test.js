@@ -19,7 +19,7 @@
       settingsService = $injector.get('OpenmrsSettings');
     }));
 
-    beforeEach(inject(function ($injector) {
+    beforeEach(inject(function() {
       callbacks = {
         onSuccessCalled: false,
         onFailedCalled: false,
