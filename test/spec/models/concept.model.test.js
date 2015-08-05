@@ -22,7 +22,7 @@ jshint -W030
 
     var conceptClassOpenmrsObject;
 
-    beforeEach(inject(function ($injector) {
+    beforeEach(inject(function() {
       testConceptNameOpenmrsObject = {
         display: 'display',
         uuid: 'uuid',

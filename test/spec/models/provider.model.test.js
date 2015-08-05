@@ -15,7 +15,7 @@ jshint -W030
       
       var testPersonOpenmrsObject;
 
-      beforeEach(inject(function ($injector) {
+      beforeEach(inject(function() {
         
         var testNames = [{
           givenName: '_givenName',
