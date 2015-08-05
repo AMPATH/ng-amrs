@@ -11,13 +11,13 @@ jshint -W030
 
     var locationModelFactory;
     var testLocations;
-    var testLocationOpenmrsObject
+    var testLocationOpenmrsObject;
 
     beforeEach(inject(function ($injector) {
       locationModelFactory = $injector.get('LocationModel');
     }));
 
-    beforeEach(inject(function ($injector) {
+    beforeEach(inject(function () {
 
       testLocations = [{name: '_name',
                       description: '_description',

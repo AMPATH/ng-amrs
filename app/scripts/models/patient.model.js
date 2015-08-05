@@ -184,10 +184,10 @@
       //   }
       // };
       modelDefinition.phoneNumber = function(value) {
-        if(_attributes.length>0){
+        if(_attributes.length>0) {
           for(var i in _attributes) {
             var attr = _attributes[i];
-            if(attr.attributeType.uuid == "72a759a8-1359-11df-a1f1-0026b9348838") {
+            if(attr.attributeType.uuid === '72a759a8-1359-11df-a1f1-0026b9348838') {
               return attr.value;
             }
           }
@@ -256,18 +256,14 @@
     //Other Util Functions
     function mapAddress(preferredAddress) {
       return preferredAddress ? {
-        "Address1": preferredAddress.address1,
-        "Address2": preferredAddress.address2,
-        "Address3": preferredAddress.address3,
-        "City Village": preferredAddress.cityVillage,
-        "State Province": preferredAddress.stateProvince
+        'Address1': preferredAddress.address1,
+        'Address2': preferredAddress.address2,
+        'Address3': preferredAddress.address3,
+        'City Village': preferredAddress.cityVillage,
+        'State Province': preferredAddress.stateProvince
 
         //Added the noAddress to aid in creating logic for hiding when the patient has no address
-      } : {noAddress:"None"};
+      } : {noAddress:'None'};
     }
-
-
-
-
   }
 })();
