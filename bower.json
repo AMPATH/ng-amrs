@@ -24,6 +24,7 @@
     "restangular": "~1.5.1",
     "angular-ui-select": "~0.12.1",
     "RWD-Table-Patterns": "~5.0.4",
+    "datejs": "~1.0.0-rc3",
     "angular-moment": "~0.10.2"
   },
   "devDependencies": {

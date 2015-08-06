@@ -10,8 +10,8 @@
 
   function EtlRestServicesSettings() {
     var serviceDefinition;
-    var restUrlBaseList = ['https://etl.ampath.or.ke:8002/etl/', 'https://etl1.ampath.or.ke:8002/etl/'];
-    var restUrlBase = restUrlBaseList[0];
+    var restUrlBaseList = ['https://etl.ampath.or.ke:8002/etl/', 'https://test1.ampath.or.ke:8002/etl/'];
+    var restUrlBase = restUrlBaseList[1];
 
     serviceDefinition = {
           getCurrentRestUrlBase: getCurrentRestUrlBase,

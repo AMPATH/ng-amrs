@@ -22,9 +22,18 @@
         { query: { method: 'GET', isArray: false } });
     }
 
-    function getHivSummary(uuid, successCallback, failedCallback) {
+    function getHivSummary(patientUuid, startIndex, limit, successCallback, failedCallback) {
       var resource = getResource('patient/:uuid/hiv-summary');
-      return resource.get({ uuid: uuid }).$promise
+      if(!startIndex) {
+        startIndex = 0;
+      }
+
+      if(!limit) {
+        limit = 20;
+      }
+
+      var params = {startIndex: startIndex, uuid: patientUuid, limit: limit};
+      return resource.get(params).$promise
         .then(function (response) {
         successCallback(response);
       })

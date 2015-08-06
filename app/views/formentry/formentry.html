@@ -2,7 +2,7 @@
   <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
 
-  <form name="vm.form">
+  <form name="vm.form" novalidate>
     <div class="breadcrumb">
       Patient Details: Identifier: {{vm.patient.identifierFormatted()}} | Name : {{vm.patient.fullNames()}}
       |{{vm.success}}
@@ -19,14 +19,14 @@
       </div>
 
       <div>
-         -->
+
         <h2>Fields</h2>
         <div ng-repeat="model in vm.userFields">
           {{model.model}}
         </div>
 
         </div>
-     
+-->
     </formly-form>
 
   </form>
@@ -34,7 +34,7 @@
       <script type="text/ng-template" id="my-messages.html">
         <formly-transclude></formly-transclude>
         <div class="my-messages" ng-messages="fc.$error" ng-if="options.formControl.$touched">
-          <div class="some-message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages">
+          <div class="some-message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages" style="color:red;">
             {{message(fc.$viewValue, fc.$modelValue, this)}}
           </div>
         </div>
@@ -49,7 +49,7 @@
             <script type="text/ng-template" id="repeatSection.html">
             <div class="panel panel-default">
             <div class="panel-heading">
-{{to.label}}
+            {{to.label}}
             </div>
             <div class="panel-body">
             <!--loop through each element in model array-->

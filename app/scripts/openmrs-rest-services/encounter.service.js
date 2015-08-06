@@ -1,5 +1,5 @@
 /*
-jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
+jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
 */
 (function() {
   'use strict';
@@ -41,14 +41,37 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
     }
 
     function saveEncounter(encounter, successCallback, errorCallback) {
-      Restangular.service('encounter').post(encounter).then(function(success) {
-        console.log('Encounter saved successfully');
-        if (typeof successCallback === 'function') successCallback(success);
-      },
-      function(error) {
-        console.log('Error saving encounter');
-        if (typeof errorCallback === 'function') errorCallback(error);
-      });
+
+      var _encounter =JSON.parse(encounter);
+      if(_encounter.uuid !== undefined)
+      {
+        var uuid = _encounter.uuid
+        delete _encounter['uuid'];
+        //Restangular.one('encounter',uuid).remove(); // void encounter
+
+        //_encounter['voided'] = false;
+        console.log('update json');
+        console.log(JSON.stringify(_encounter));
+        //updating an existing encounter
+        Restangular.one('encounter', uuid).customPOST(JSON.stringify(_encounter)).then(function(success) {
+          console.log('Encounter saved successfully');
+          if (typeof successCallback === 'function') successCallback(success);
+        },
+        function(error) {
+          console.log('Error saving encounter');
+          if (typeof errorCallback === 'function') errorCallback(error);
+        });
+      }
+      else {
+        Restangular.service('encounter').post(encounter).then(function(success) {
+          console.log('Encounter saved successfully');
+          if (typeof successCallback === 'function') successCallback(success);
+        },
+        function(error) {
+          console.log('Error saving encounter');
+          if (typeof errorCallback === 'function') errorCallback(error);
+        });
+      }
     }
 
     function getPatientEncounters(params, successCallback, errorCallback) {
