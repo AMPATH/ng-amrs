@@ -8,7 +8,8 @@
             'app.openmrsRestServices',
             'ngMessages',
             'ui.bootstrap',
-	          'ui.select'
+	          'ui.select',
+            'angularMoment'
         ])
 
     .run(function(formlyConfig, formlyValidationMessages, formlyApiCheck) {
