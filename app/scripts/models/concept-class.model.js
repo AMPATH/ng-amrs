@@ -10,13 +10,13 @@
 
     function factory() {
         var service = {
-            conceptClass: conceptClass,
+            conceptClass: ConceptClass,
             toWrapper:toWrapper
         };
 
         return service;
        
-        function conceptClass(display_, uuId_, name_, description_, retired_) {
+        function ConceptClass(display_, uuId_, name_, description_, retired_) {
             var modelDefinition = this;
 
             //initialize private members
@@ -73,12 +73,12 @@
                       name:_name,
                       description:_description,
                       retired: _retired
-              }
+              };
             };
         }
 
         function toWrapper(openmrsModel){
-            return new conceptClass(openmrsModel.display, openmrsModel.uuid, openmrsModel.name,
+            return new ConceptClass(openmrsModel.display, openmrsModel.uuid, openmrsModel.name,
               openmrsModel.description, openmrsModel.retired);
         }
 

@@ -1,6 +1,6 @@
 /* global afterEach */
 /*jshint -W026, -W030 */
-(function () {
+(function() {
   'use strict';
 
   describe('OpenMRS Concept Service Unit Tests', function () {
@@ -78,7 +78,7 @@
       settingsService = $injector.get('OpenmrsSettings');
     }));
 
-    beforeEach(inject(function ($injector) {
+    beforeEach(inject(function () {
       callbacks = {
         onSuccessCalled: false,
         onFailedCalled: false,

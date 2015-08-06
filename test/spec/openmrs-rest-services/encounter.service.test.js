@@ -22,22 +22,17 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
       }
 
       var dummyResponse = {
-        "results" :[
-                          {
-                            "uuid": "encounter-uuid-for-first-element",
-                            "display": "ADULTRETURN 01/02/2006",
-                          },
-                          {
-                            "uuid": "bf218490-1691-11df-97a5-7038c432aabf",
-                            "display": "ADULTRETURN 07/02/2006",
-                            "links": [
-                              {
-                                "uri": testRestUrl+"encounter/bf218490-1691-11df-97a5-7038c432aabf",
-                                "rel": "self"
-                              }
-                            ]
-                          }
-                      ]
+        'results' :[{
+              'uuid': 'encounter-uuid-for-first-element',
+              'display': 'ADULTRETURN 01/02/2006',
+            }, {
+              'uuid': 'bf218490-1691-11df-97a5-7038c432aabf',
+              'display': 'ADULTRETURN 07/02/2006',
+              'links': [{
+                  'uri': testRestUrl+'encounter/bf218490-1691-11df-97a5-7038c432aabf',
+                  'rel': 'self'
+                }]
+          }]
       }
 
       beforeEach(inject(function($injector) {

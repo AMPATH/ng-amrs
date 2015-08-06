@@ -45,6 +45,8 @@ module.exports = function(config) {
       'bower_components/restangular/dist/restangular.js',
       'bower_components/angular-ui-select/dist/select.js',
       'bower_components/RWD-Table-Patterns/dist/js/rwd-table.js',
+      'bower_components/moment/moment.js',
+      'bower_components/angular-moment/angular-moment.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.module.js',
