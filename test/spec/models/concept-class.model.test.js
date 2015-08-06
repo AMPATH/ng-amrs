@@ -17,7 +17,7 @@ jshint -W030
         conceptClassModelFactory = $injector.get('ConceptClassModel');
       }));
       
-      beforeEach(inject(function($injector) {
+      beforeEach(inject(function() {
         conceptClassOpenmrsObject = {
           display: 'display',
           uuid: 'uuid',
