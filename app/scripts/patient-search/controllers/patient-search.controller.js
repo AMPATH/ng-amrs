@@ -8,11 +8,13 @@ jshint -W003, -W098, -W117, -W109
         .module('app.patientsearch')
         .controller('PatientSearchCtrl', PatientSearchCtrl);
 
-  PatientSearchCtrl.$inject = ['OpenmrsRestService', '$scope', '$log', 'filterFilter'];
+  PatientSearchCtrl.$inject = ['OpenmrsRestService', '$scope', '$log', 'filterFilter', '$state'];
 
-  function PatientSearchCtrl(OpenmrsRestService, $scope, $log, filterFilter) {
+  function PatientSearchCtrl(OpenmrsRestService, $scope, $log, filterFilter, $state) {
     $scope.filter = "";
     $scope.patients = [];
+    
+    $scope.isBusy = false;
 
     // pagination controls
   	$scope.currentPage = 1;
@@ -23,8 +25,10 @@ jshint -W003, -W098, -W117, -W109
    $scope.$watch('searchString', function (searchString) {
      $scope.patients = [];
      if (searchString && searchString.length > 3) {
+       $scope.isBusy = true;
        OpenmrsRestService.getPatientService().getPatientQuery({q:searchString},
          function(data) {
+           $scope.isBusy = false;
            //if (data) data = data.results;
            //console.log(data);
            $scope.patients = data;
@@ -38,6 +42,10 @@ jshint -W003, -W098, -W117, -W109
        );
      }
    });
+   
+   $scope.loadPatient = function (patientUuid){
+     $state.go('patient', {uuid:patientUuid});
+   };
 
 
   //  $scope.currentPage = 1;
