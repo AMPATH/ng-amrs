@@ -12,17 +12,21 @@ function LoginCtrl($scope, OpenmrsRestService, $timeout) {
   $scope.CurrentUser = {username:'',
               password:''
   };
+  
+  $scope.isBusy = false;
 
 
   $timeout(function () {
     $scope.authenticate = function() {
       //to do authenticate
-      console.log('you clicked me');
+      //console.log('you clicked me');
+      $scope.isBusy = true;
       OpenmrsRestService.getAuthService().isAuthenticated($scope.CurrentUser, function(authenticated) {
         console.log(authenticated);
+        $scope.isBusy = false;
         if (!authenticated) // check if user is authenticated
         {
-          $scope.errors = 'Invalid user name or password. please try agian';
+          $scope.errors = 'Invalid user name or password. please try again';
         }
         else {
             OpenmrsRestService.getUserService().getUser({q:$scope.CurrentUser.username},function(data){
