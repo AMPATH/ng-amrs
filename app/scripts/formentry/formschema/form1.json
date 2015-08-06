@@ -2116,6 +2116,7 @@
         "obsConceptUuid":"a8a07386-1350-11df-a1f1-0026b9348838",
         "id":"1920",
         "type":"number",
+        "hide":"true",
         "label":"tabs/day",
         "validators":{}
         },

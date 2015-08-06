@@ -368,11 +368,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                             if(obsVal !== undefined)
                             {
-                              console.log('test group sec obs value');
-                              console.log(obsVal);
-                              console.log('Current field Key: ' + curField.key)
-                              console.log('current key: obs_'+ key);
-                              console.log(field.model['obs_' + key]);
+                              // console.log('test group sec obs value');
+                              // console.log(obsVal);
+                              // console.log('Current field Key: ' + curField.key)
+                              // console.log('current key: obs_'+ key);
+                              // console.log(field.model['obs_' + key]);
                               if(angular.isObject(obsVal.value) && field.model['obs_' + key] !== undefined)
                               {
                                 field.model['obs_'+ key][curField.key] = obsVal.value.uuid;
@@ -498,8 +498,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
 
           });
-          console.log('obs group data')
-          console.log(obsGroupData);
+          // console.log('obs group data')
+          // console.log(obsGroupData);
 
         }
 
@@ -952,8 +952,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         {
           var obsField = {};
           /*
-          Distinguish a whether a field belongs to a repeatSection
-          The repeatSection requires that we omit the model within
+          Distinguish a whether a field belongs to a repeatSection/Group Section
+          The repeatSection/Group section requires that we omit the model within
           the field definition while the normal or other fields we maintain
           the model property
           */
@@ -963,6 +963,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             assumming that all repeatSection fields will have wiil
             have some parameter value to Distinguish them
             */
+
             if((obs_Field.type === 'datepicker'))
             {
               var required=false;
@@ -992,6 +993,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             }
             else if ((obs_Field.type === 'text') || (obs_Field.type === 'number'))
             {
+              //console.log(obs_Field.label)
               var required=false;
               if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
 
@@ -1006,7 +1008,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 templateOptions: {
                   type: obs_Field.type,
                   label: obs_Field.label,
-                  required:required
+                  required:required,
+                  hide:obs_Field.hide
+                },
+                hideExpression:function($viewValue, $modelValue, scope) {
+                  //Require further research for succesful implementation
+
+                  return false;
                 }
         //         ,
         // validators: {
@@ -1069,7 +1077,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           else {
             /*
             All other fields that do belong
-            to the repeating section
+            to the repeating/group section
             */
             if((obs_Field.type === 'datepicker'))
             {
@@ -1157,15 +1165,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         }
 
         function createForm(schema) {
-          var validatorsArray = {};
-          validatorsArray['ipAddress'] = {
-            expression: function(viewValue, modelValue) {
-              var value = modelValue || viewValue;
-              //return !value || /(\d{1,3}\.){3}\d{1,3}/.test(value);
-              if (value>100) return false;
-            },
-            message: '$viewValue + " is above normal acceptable range!"'
-          };
+
           var formSchema=[];
           var field ={};
 
@@ -1271,6 +1271,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
               _.each(obs_Field.cols,function(curField){
                 // process the fields the normal way
+
                 var selField=createObsFormlyField(curField,'repeating');
                 selField['className'] = 'col-md-2';
                 repeatingFields.push(selField);
