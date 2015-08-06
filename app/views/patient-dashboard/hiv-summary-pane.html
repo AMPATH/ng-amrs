@@ -1,4 +1,6 @@
-<h3>HIV Care Summary</h3>
+<div ng-hide="hasSummary === true" class="bg-warning">
+  <p>No summary available</p>
+</div>
 <ul class="list-group">
   <li class="list-group-item" 
       style="font-size:large">Last Appt Date: {{hivSummary.encounterDatetime().substring(0,10)}} 
