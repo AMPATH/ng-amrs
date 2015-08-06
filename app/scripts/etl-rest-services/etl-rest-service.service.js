@@ -24,12 +24,14 @@
 
     function getHivSummary(patientUuid, startIndex, limit, successCallback, failedCallback) {
       var resource = getResource('patient/:uuid/hiv-summary');
-      if(!startIndex)
+      if(!startIndex) {
         startIndex = 0;
-        
-      if(!limit)
+      }
+
+      if(!limit) {
         limit = 20;
-        
+      }
+
       var params = {startIndex: startIndex, uuid: patientUuid, limit: limit};
       return resource.get(params).$promise
         .then(function (response) {
