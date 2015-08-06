@@ -15,7 +15,7 @@ jshint -W030
 
       var testNames;
 
-      beforeEach(inject(function($injector) {
+      beforeEach(inject(function() {
 
         testNames = [{
           givenName:'_givenName',
@@ -37,7 +37,7 @@ jshint -W030
         testPersonOpenmrsObject = {
                       names: testNames,
                       gender: '_gender',
-                      uuId: '_uuId',
+                      uuid: '_uuId',
                       age: '_age',
                       birthdate: '_birthdate',
                       birthdateEstimated: '_birthdateEstimated',
@@ -66,7 +66,7 @@ jshint -W030
 
         expect(model.openmrsModel().names).to.deep.equal(testPersonOpenmrsObject.names);
         expect(model.gender()).to.equal(testPersonOpenmrsObject.gender);
-        expect(model.uuId()).to.equal(testPersonOpenmrsObject.uuId);
+        expect(model.uuId()).to.equal(testPersonOpenmrsObject.uuid);
         expect(model.age()).to.equal(testPersonOpenmrsObject.age);
         expect(model.birthdate()).to.equal(testPersonOpenmrsObject.birthdate);
         expect(model.birthdateEstimated()).to.equal(testPersonOpenmrsObject.birthdateEstimated);

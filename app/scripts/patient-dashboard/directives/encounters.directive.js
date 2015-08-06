@@ -8,7 +8,7 @@
   function directive() {
     return {
       restrict: 'E',
-      templateUrl: '../../views/patient-dashboard/patient-encounters-template.html'
+      templateUrl: 'views/patient-dashboard/patient-encounters-template.html'
     }
   }
 })();

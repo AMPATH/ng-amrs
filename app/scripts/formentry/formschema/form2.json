@@ -1,0 +1,2438 @@
+{
+  "schema":{
+    "form":{"name":"form1", "uuid":"xxx"} ,
+    "encounter":[
+      {"encounterDatetime":"","type":"datepicker", "labelName":"Visit Date", "idName":"encounterDatetime"},
+      {"encounterType":"", "type":"text", "labelName":"Encounter Type", "idName":"encounterType"},
+      {"encounterProvider":"", "type":"select", "labelName":"Encounter Provider", "idName":"EncounterProvider"},
+      {"encounterLocation":"","type":"select","labelName":"Facility Name", "idName":"encounterLocation"},
+      {"patient":"","type":"text", "labelName":"Patient Name", "idName":"patient"}
+    ],
+    "obs":[
+      {
+        "obsConceptGroupUuid": "",
+        "id_a": "6815,1107",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "8b715fed-97f6-4e38-8f6a-c167a42f8923",
+          "a899e0ac-1350-11df-a1f1-0026b9348838"
+        ],
+        "label":"Patient covered by NHIF",
+        "id": "6266",
+        "obsConceptUuid": "a8b02524-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Yes",
+          "No"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "obsAnswerLabels": [
+          "Yes",
+          "No"
+        ],
+        "idHtml": "residencechange",
+        "style": "yes_no",
+        "id_a": "1065,1066",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838"
+        ],"label":"Has the patient changed their residence?",
+        "id": "8386",
+        "obsConceptUuid": "d9a414af-021b-459f-bcea-4c88b1382e39"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "type": "text",
+        "label": "BP:",
+        "id": "5085",
+        "obsConceptUuid": "a8a65d5a-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "id": "5086",
+        "type": "text",
+        "label": "XX",
+        "obsConceptUuid": "a8a65e36-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "type": "text",
+        "label": "RR",
+        "id": "5242",
+        "obsConceptUuid": "a8a6f71a-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "type": "text",
+        "label": "Wt",
+        "id": "5089",
+        "obsConceptUuid": "a8a660ca-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "type": "text",
+        "label": "Height",
+        "id": "5090",
+        "obsConceptUuid": "a8a6619c-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "type": "text",
+        "label": "Pulse",
+        "id": "5087",
+        "obsConceptUuid": "a8a65f12-1350-11df-a1f1-0026b9348838"
+      },{
+        "obsConceptGroupUuid": "",
+        "type": "text",
+        "label": "Temp(C)",
+        "id": "5088",
+        "obsConceptUuid": "a8a65fee-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "type": "text",
+        "label": "Head Circ",
+        "id": "5314",
+        "obsConceptUuid": "a8a77686-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "type": "text",
+        "label": "SpO2",
+        "id": "5092",
+        "obsConceptUuid": "a8a66354-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "0f8b7f4e-1656-46b7-bc93-d1fe4f193f5d",
+        "idHtml": "transferin",
+        "type": "radio",
+        "label": " Transfer in from other AMPATH clinic",
+        "obsAnswerConceptUuids": ["a89c2f42-1350-11df-a1f1-0026b9348838","a89c301e-1350-11df-a1f1-0026b9348838"],
+        "id": "7015",
+        "obsConceptUuid": "35ed8aad-d6fa-429e-961a-c877e1ad4953",
+        "obsAnswerLabels": [
+          "AMPATH",
+          " NON-AMPATH"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "0f8b7f4e-1656-46b7-bc93-d1fe4f193f5d",
+        "idHtml": "transferinSpecify",
+        "type": "text",
+        "label": "Specify",
+        "id": "1915",
+        "obsConceptUuid": "a8a06fc6-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "visittype",
+        "label": "4a. Visit type: ",
+        "id_a": "1246, 1837, 1838",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a89b6440-1350-11df-a1f1-0026b9348838",
+          "a89ff816-1350-11df-a1f1-0026b9348838",
+          "a89ff8de-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1839",
+        "obsConceptUuid": "a89ff9a6-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Scheduled visit",
+          " Unscheduled Visit Early",
+          " Unscheduled Visit Late"
+        ]
+      },
+      {
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"dc1942b2-5e50-4adc-949d-ad6c905f054e","id":"7029",
+        "type":"datepicker",
+        "label":"4b. If Unscheduled, actual scheduled date",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "motherDeceased",
+        "label":"5a. Mother Deceased",
+        "id_a": "1065,1066,1067",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838",
+          "a899b50a-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2000",
+        "obsConceptUuid": "a8a0b670-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Yes",
+          " No",
+          " Unknown"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "fatherDeceased",
+        "label":"5b. Father Deceased",
+        "id_a": "1065,1066,1067",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838",
+          "a899b50a-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2001",
+        "obsConceptUuid": "a8a0b788-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Yes",
+          " No",
+          " Unknown"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "a8a0798a-1350-11df-a1f1-0026b9348838",
+        "label":"6. Person Bringing Patient:",
+        "idHtml": "bringPatient",
+        "id_a": "970,971,972,2036, 1393,1392,978,2038,2037,2040,2039,5622",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a898c0dc-1350-11df-a1f1-0026b9348838",
+          "a898c1a4-1350-11df-a1f1-0026b9348838",
+          "a898c262-1350-11df-a1f1-0026b9348838",
+          "a8a171a0-1350-11df-a1f1-0026b9348838",
+          "a89c9f54-1350-11df-a1f1-0026b9348838",
+          "a89c9e3c-1350-11df-a1f1-0026b9348838",
+          "a898c6f4-1350-11df-a1f1-0026b9348838",
+          "a8a17470-1350-11df-a1f1-0026b9348838",
+          "a8a17394-1350-11df-a1f1-0026b9348838",
+          "a8a175f6-1350-11df-a1f1-0026b9348838",
+          "a8a1752e-1350-11df-a1f1-0026b9348838",
+          "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "969",
+        "obsConceptUuid": "a898c01e-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Mother",
+          " Father",
+          "Sibling",
+          "Children's home",
+          " Parternal grandparent",
+          " Maternal grandparent",
+          " Self",
+          " Parternal Auntie",
+          " Maternal Auntie",
+          " Parternal Uncle",
+          " Maternal Uncle",
+          " Other"
+        ]
+      }
+    ,
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "currentFeeding",
+        "label":"7a. Current feeding:(tick all that apply)",
+        "id_a": "1402,5254,1404,1405,968,1173,1403,1152,1401",
+        "type": "multiCheckbox",
+        "obsAnswerConceptUuids": [
+          "a89cca10-1350-11df-a1f1-0026b9348838",
+          "a8a70156-1350-11df-a1f1-0026b9348838",
+          "a89ccba0-1350-11df-a1f1-0026b9348838",
+          "a89cce98-1350-11df-a1f1-0026b9348838",
+          "a898bf56-1350-11df-a1f1-0026b9348838",
+          "a89ad1ec-1350-11df-a1f1-0026b9348838",
+          "a89ccad8-1350-11df-a1f1-0026b9348838",
+          "a89abfc2-1350-11df-a1f1-0026b9348838",
+          "a89cc934-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1151",
+        "obsConceptUuid": "a89abee6-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Breast",
+          " Formular",
+          " Water",
+          "Solid Food",
+          " Cow's/Animal Milk",
+          " Expressed breast milk",
+          " Other Liquids",
+          " Completely weaned",
+          " On Family diet"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"7b. If breastfeeding, is mother on ARVs",
+        "idHtml": "breastfeedArv",
+        "id_a": "1065,1066,1067",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838",
+          "a899b50a-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2003",
+        "obsConceptUuid": "a8a0baa8-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Yes",
+          " No",
+          " Unknown"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"8a.Are there Siblings less than 18months",
+        "idHtml": "sibless18",
+        "id_a": "1065,1066,1175",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838",
+          "a89ad3a4-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2004",
+        "obsConceptUuid": "a8a0bbde-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Yes",
+          " No",
+          " N/A"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"8b.If yes for siblings less than 18 monthsare they registered in Pediatric HIV clinic:",
+        "idHtml": "sibless18pedClinic",
+        "id_a": "1065,1066,1067",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838",
+          "a899b50a-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2005",
+        "obsConceptUuid": "a8a0bd00-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Yes",
+          " No",
+          " Unknown"
+        ]
+      }
+
+      ,{
+        "obsConceptGroupUuid": "a89c9658-1350-11df-a1f1-0026b9348838",
+        "label":"9a. Previous Immunizations:",
+        "idHtml": "previmmun",
+        "id_a": "1107,1267",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899e0ac-1350-11df-a1f1-0026b9348838",
+          "a89c1ef8-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1198",
+        "obsConceptUuid": "a89b20ca-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "None",
+          " Completed Schedule"
+        ]
+      },
+      {
+        "obsConceptUuid": "a89b20ca-1350-11df-a1f1-0026b9348838",
+        "label":"Immunization Options",
+        "type": "multiCheckbox",
+        "id_a": "886,2349,783,6465,783,36,6654",
+        "obsAnswerConceptUuids": [
+          "a89840bc-1350-11df-a1f1-0026b9348838",
+          "a8a48430-1350-11df-a1f1-0026b9348838",
+          "a897de60-1350-11df-a1f1-0026b9348838",
+          "22b92c90-026c-469c-9e63-786ecc1cd2fc",
+          "a897de60-1350-11df-a1f1-0026b9348838",
+          "a8909844-1350-11df-a1f1-0026b9348838",
+          "96ecae74-0704-475e-ade3-17cd6b080926"
+        ],
+        "obsAnswerLabels": [
+          "BCG",
+          "Vitamin A",
+          "Polio",
+          "Rotavirus",
+          "PCV",
+          "Measles",
+          "Penta"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "a89c9658-1350-11df-a1f1-0026b9348838",
+        "label":"Polio:(indicate previous dose administered i.e 0, 1, 2 or 3)",
+        "type":"text",
+        "idHtml": "dosePolio",
+        "id": "1196",
+        "obsConceptUuid": "a89b1efe-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a89c9658-1350-11df-a1f1-0026b9348838",
+        "label":"Rota virus:(indicate previous dose administered i.e 1 or 2)",
+        "type":"text",
+        "idHtml": "doseRota",
+        "id": "1196",
+        "obsConceptUuid": "a89b1efe-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a89c9658-1350-11df-a1f1-0026b9348838",
+        "label":"Pcv:( indicate previous dose administered i.e 1, 2 or 3)",
+        "type":"text",
+        "idHtml": "dosePcv",
+        "id": "1196",
+        "obsConceptUuid": "a89b1efe-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a89c9658-1350-11df-a1f1-0026b9348838",
+        "idHtml": "doseMeasles",
+        "label":"Measles:(indicate previous dose administered i.e 0 or 1)",
+        "type":"text",
+        "id": "1196",
+        "obsConceptUuid": "a89b1efe-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a89c9658-1350-11df-a1f1-0026b9348838",
+        "idHtml": "dosePenta",
+        "label":"Penta:( indicate previous dose administered i.e 1, 2 or 3)",
+        "type":"text",
+        "id": "1196",
+        "obsConceptUuid": "a89b1efe-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"9b.Immunizations confirmed from card:",
+        "idHtml": "immunizationsConfirmedCard",
+        "id_a": "1065,1066",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "6853",
+        "obsConceptUuid": "507d7df8-2da6-4ace-93b8-4271620f27c5",
+        "obsAnswerLabels": [
+          "Yes",
+          "No"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"10.Child's current HIV status:",
+        "idHtml": "hivStatus",
+        "id_a": "822,1169,664",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a897ff62-1350-11df-a1f1-0026b9348838",
+          "a89ace7c-1350-11df-a1f1-0026b9348838",
+          "a896d2cc-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "5303",
+        "obsConceptUuid": "a8a76cae-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "HIV exposed",
+          "status indeterminate",
+          "HIV infected",
+          "HIV Negative"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"11. If HIV+:Child aware of own status (disclosed)",
+        "idHtml": "disclosure",
+        "id_a": "1118,6595,1267,6594,1067,1175",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899ea48-1350-11df-a1f1-0026b9348838",
+          "40c4e9fa-0fc0-4ceb-89d6-1c8cfebb9bae",
+          "a89c1ef8-1350-11df-a1f1-0026b9348838",
+          "e30f9b6c-e4b2-4cd0-83be-8d0d487f57fe",
+          "a899b50a-1350-11df-a1f1-0026b9348838",
+          "a89ad3a4-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "6596",
+        "obsConceptUuid": "cd8ead74-96fc-4764-a9fa-c9ee059c59c5",
+        "obsAnswerLabels": [
+          "Not disclosed",
+          "Partially disclosed",
+          " Disclosure completed",
+          "Acceptance of diagnosis management ongoing",
+          "Unknown",
+          " N/A"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "a8a003a6-1350-11df-a1f1-0026b9348838",
+        "label":"12a. Has patient been hospitalized since last visit:",
+        "idHtml":"hospsinceLastvisit",
+        "id_a": "1065,1066",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "976",
+        "obsConceptUuid": "a898c56e-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Yes",
+          "No"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "a8a003a6-1350-11df-a1f1-0026b9348838",
+        "idHtml": "reasonForHospitalization",
+        "label":"12b. Reason:To Do Add REPEAT",
+        "type":"text",
+        "id": "1929",
+        "obsConceptUuid": "a8a07a48-1350-11df-a1f1-0026b9348838"
+      } ,
+      {
+        "obsConceptGroupUuid": "",
+        "label":"13a. ARVs use:",
+        "idHtml":"currmedArvs",
+        "id_a": "1065,1066",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1192",
+        "obsConceptUuid": "a89ae254-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Yes",
+          "No"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"13b. (If Yes then) Reason for ARV’s:",
+        "idHtml": "reasonarvuse",
+        "obsAnswerLabels": ["pMTCT","Clinical disease"],
+        "id_a": "1776,2006",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a89fbedc-1350-11df-a1f1-0026b9348838",
+          "a8a0be2c-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1251",
+        "obsConceptUuid": "a89b6ce2-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"13c.If started since last visit record the date",
+        "idHtml": "arvstartdatesincelast",
+        "id": "1499",
+        "obsConceptUuid": "a89d200a-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"13d.Treatment Categories:",
+        "idHtml": "currmedtreamentcate",
+        "id_a": "6693,6694,6695",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "034047bd-3fa1-4b2a-b0f0-2787e9b9f7b3",
+          "8f8a715d-e49a-4b2c-aa3a-83fa9d7a4254",
+          "a90ebdd2-351f-485a-b850-4938fcca2729"
+        ],
+        "id": "6744",
+        "obsConceptUuid": "04616f5d-b961-4f41-bbd7-bcc0dd235577",
+        "obsAnswerLabels": [
+          "First Regimen",
+          "Second Regimen",
+          "Third regimen"
+        ]
+      },
+      {
+        "obsConceptUuid": "a899cf5e-1350-11df-a1f1-0026b9348838",
+        "label":"13e. Current ARV drugs:",
+        "type": "multiCheckbox",
+        "id_a": "6679,792,794,796,630,792,794,6156,6467,630,795,6157,6467,6965,795,6159,631,1400,795,5811,633,6964,6160,5424,628,814,5622",
+        "obsAnswerConceptUuids": [
+          "b7735b8a-22f2-41d6-b450-65ec7588839c",
+          "a897e608-1350-11df-a1f1-0026b9348838",
+          "a897e7c0-1350-11df-a1f1-0026b9348838",
+          "a897e96e-1350-11df-a1f1-0026b9348838",
+          "a896758e-1350-11df-a1f1-0026b9348838",
+          "a897e608-1350-11df-a1f1-0026b9348838",
+          "a897e7c0-1350-11df-a1f1-0026b9348838",
+          "a8afbd64-1350-11df-a1f1-0026b9348838",
+          "6a73f32d-1870-4527-af6e-74443251ded2",
+          "a896758e-1350-11df-a1f1-0026b9348838",
+          "a897e89c-1350-11df-a1f1-0026b9348838",
+          "a8afbe22-1350-11df-a1f1-0026b9348838",
+          "6a73f32d-1870-4527-af6e-74443251ded2",
+          "3d587177-984e-4eeb-93f2-3223b6c1dd7c",
+          "a897e89c-1350-11df-a1f1-0026b9348838",
+          "a8afbf9e-1350-11df-a1f1-0026b9348838",
+          "a8967656-1350-11df-a1f1-0026b9348838",
+          "a89cc876-1350-11df-a1f1-0026b9348838",
+          "a897e89c-1350-11df-a1f1-0026b9348838",
+          "a8ac4904-1350-11df-a1f1-0026b9348838",
+          "a89677e6-1350-11df-a1f1-0026b9348838",
+          "1c4a75d0-cc91-4752-b0a5-4b833326ff7a",
+          "a8afc066-1350-11df-a1f1-0026b9348838",
+          "a8a87a86-1350-11df-a1f1-0026b9348838",
+          "a89673f4-1350-11df-a1f1-0026b9348838",
+          "a897f8a0-1350-11df-a1f1-0026b9348838",
+          "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+        ],
+        "obsAnswerLabels": [
+          "Abacavir60/Lamivudine30",
+          "d4T12/3TC60/NVP100)T-jr",
+          "Lopinavir/Ritonavir",
+          "Didanosine",
+          "Zidovudine60/Lamivudine30",
+          "d4T30/3TC150/NVP200",
+          "LPV200/RIT50",
+          "Raltegravir",
+          "ZDV60/3TC30/NVP50",
+          "ZDV300/3TC150",
+          "Ritonavir100mg",
+          "Darunavir",
+          "ZDV300/3TC150/NVP200",
+          "D4T30/3TC150",
+          "Rit(Norvir sec100)",
+          "atazanavir",
+          "Nevirapine",
+          "Tenofovir/Lamivudine",
+          "Rit(Norvir 80)",
+          "Unknown Name",
+          "Efavirenz",
+          "TDF300/3TC300/EFV600",
+          "Atazanavir300/ritonavir100",
+          "Other",
+          "Lamivudine",
+          "Abacavir",
+          "Other"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"XXXX Find Out what should be here",
+        "answerDrugs": "true",
+        "type":"text",
+        "id": "1088",
+        "obsConceptUuid": "a899cf5e-1350-11df-a1f1-0026b9348838",
+        "answerClasses": "drug",
+        "displayTemplate": "{{concept}} ({{doseStrength}} {{units}})"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"13f.Opportunistic Infection(OI) Prophylaxis:",
+        "idHtml": "oiprophcurr",
+        "id_a": "1107, 916, 92, 747",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899e0ac-1350-11df-a1f1-0026b9348838",
+          "a8989396-1350-11df-a1f1-0026b9348838",
+          "a890c9e0-1350-11df-a1f1-0026b9348838",
+          "a8971e12-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "6903",
+        "obsConceptUuid": "212fdebe-4745-4f60-aaa0-35f4193abaf8",
+        "obsAnswerLabels": [
+          "None",
+          " Septrin",
+          " Dapsone 100mg",
+          " Fluconazole(Diflucan)"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"13g.TB Prophylaxis",
+        "idHtml": "tbprophcurr",
+        "id_a": "1107, 656",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899e0ac-1350-11df-a1f1-0026b9348838",
+          "a896cc00-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1110",
+        "obsConceptUuid": "a899e35e-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "None",
+          " Isoniazid 300mg"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"13h.TB treatment:",
+        "idHtml": "ontbtreatment",
+        "id_a": "1107,1065",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899e0ac-1350-11df-a1f1-0026b9348838",
+          "a899b35c-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1111",
+        "obsConceptUuid": "a899e444-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "None",
+          "On treatment"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "type": "text",
+        "idHtml": "tbstartDate",
+        "label": "b Start Date of TB treatment",
+        "id": "1113",
+        "obsConceptUuid": "a899e5f2-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "tbcurrmedspickup",
+        "label": "i. Site of TB meds pick-up",
+        "id_a": "1286, 5622",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a89c2f42-1350-11df-a1f1-0026b9348838",
+          "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "8068",
+        "obsConceptUuid": "16db21cd-10cb-4c31-bb5a-b7619bfbea66",
+        "obsAnswerLabels": [
+          "This Ampath site",
+          " Other"
+        ]
+      },{
+        "obsConceptGroupUuid": "a8afdb8c-1350-11df-a1f1-0026b9348838",
+        "type": "text",
+        "idHtml": "tbCompletedDate",
+        "label": "Date:",
+        "id": "2041",
+        "obsConceptUuid": "a8a176b4-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptUuid": "a899e444-1350-11df-a1f1-0026b9348838",
+        "label": "TB Drugs:",
+        "type": "multiCheckbox",
+        "id_a": "1131,768,2231,1194,1108,745,656,2161,5829,6983,656,438,5622,1267",
+        "obsAnswerConceptUuids": [
+          "a899f51a-1350-11df-a1f1-0026b9348838",
+          "a897d1a4-1350-11df-a1f1-0026b9348838",
+          "a8a382ba-1350-11df-a1f1-0026b9348838",
+          "a89b1ca6-1350-11df-a1f1-0026b9348838",
+          "a899e19c-1350-11df-a1f1-0026b9348838",
+          "a8971c64-1350-11df-a1f1-0026b9348838",
+          "a896cc00-1350-11df-a1f1-0026b9348838",
+          "a8a3243c-1350-11df-a1f1-0026b9348838",
+          "a8ac5f2a-1350-11df-a1f1-0026b9348838",
+          "b8aa06ca-93c6-40ea-b144-c74f841926f4",
+          "a896cc00-1350-11df-a1f1-0026b9348838",
+          "a8952e4a-1350-11df-a1f1-0026b9348838",
+          "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+          "a89c1ef8-1350-11df-a1f1-0026b9348838"
+        ],
+        "obsAnswerLabels": [
+          "(RHZE)",
+          "(RHZ)",
+          "(RHE)",
+          "(RH)",
+          "(EH)",
+          "Ethambutol",
+          "INH",
+          "MDR drugs",
+          "Pyrazinamide",
+          "Rifabutin",
+          "Rifampicin",
+          "Streptomycin",
+          "Other",
+          "Completed"
+        ]
+      },{
+        "obsConceptGroupUuid":"",
+        "obsConceptUuid":"a8a176b4-1350-11df-a1f1-0026b9348838","id":"2041",
+        "type":"datepicker",
+        "label":"Date:",
+        "validators":{}
+      },
+      {
+        "obsConceptGroupUuid": "a8a072c8-1350-11df-a1f1-0026b9348838",
+        "idHtml": "reasonForHospitalization",
+        "label":"13i. Other current drugs:To Do Add REPEAT",
+        "type":"text",
+        "id": "1895",
+        "obsConceptUuid": "a8a060c6-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a8a1783a-1350-11df-a1f1-0026b9348838",
+        "label":"14a.Who has been giving the medicine to the patient (Please tick all that apply):",
+        "idHtml": "adherenceperson",
+        "type":"multiCheckbox",
+        "id": "979",
+        "obsConceptUuid": "a898c7b2-1350-11df-a1f1-0026b9348838",
+        "obsAnswerConceptUuids":["a898c0dc-1350-11df-a1f1-0026b9348838","a898c1a4-1350-11df-a1f1-0026b9348838","a898c262-1350-11df-a1f1-0026b9348838","a898c32a-1350-11df-a1f1-0026b9348838","a898c3e8-1350-11df-a1f1-0026b9348838","a898c4b0-1350-11df-a1f1-0026b9348838","a898c6f4-1350-11df-a1f1-0026b9348838","a898c6f4-1350-11df-a1f1-0026b9348838","a8a171a0-1350-11df-a1f1-0026b9348838","a8a17772-1350-11df-a1f1-0026b9348838","a8aaf234-1350-11df-a1f1-0026b9348838","a8aaf234-1350-11df-a1f1-0026b9348838","a8aaf3e2-1350-11df-a1f1-0026b9348838"],
+        "id_a":["970","971","972","973","974","975","978","978","2036","2042","5620","5620","5622"],
+        "obsAnswerLabels":["MOTHER","FATHER","SIBLING","GRANDPARENT","UNCLE","AUNT OR UNCLE","SELF","PATIENT","CHILDREN'S HOME","AUNT","OTHER FAMILY MEMBER","OTHER RELATIVE","OTHER NON-CODED"]
+
+      },{
+        "obsConceptGroupUuid": "",
+        "label": "14b.During the last month has the patient missed any medications",
+        "idHtml": "missmedlastmth",
+        "id_a": "1065,1066",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1156",
+        "obsConceptUuid": "a89ac346-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Yes",
+          " No"
+        ]
+      }
+
+    ,{
+        "obsConceptGroupUuid": "",
+        "label": "14c. Drugs missed",
+        "idHtml": "missmedlastmth",
+        "id_a": "1085,1157,1158,1159",
+        "type": "multiCheckbox",
+        "obsAnswerConceptUuids":["a899ccb6-1350-11df-a1f1-0026b9348838","a89ac422-1350-11df-a1f1-0026b9348838","a89ac4fe-1350-11df-a1f1-0026b9348838","a89ac5da-1350-11df-a1f1-0026b9348838"],
+        "id": "1156",
+        "obsConceptUuid": "a89ac346-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": ["ARS","PCP Prophylaxis","TB Prophylaxis","TB Treatment"]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"14d.Reason(s) Tick all that apply:",
+        "idHtml": "reasonForMissedDrugs",
+        "type":"multiCheckbox",
+        "id": "1668",
+        "obsConceptUuid": "a89ebbc2-1350-11df-a1f1-0026b9348838",
+        "obsAnswerConceptUuids":["2febe315-fe2c-4bad-a734-16d013cb2d9a","2febe315-fe2c-4bad-a734-16d013cb2d9a","7211031b-0685-44bc-a5e9-5a018d0173ea","98933740-e688-4b6e-b618-7b4030804728","98933740-e688-4b6e-b618-7b4030804728","a8935fde-1350-11df-a1f1-0026b9348838","a8935fde-1350-11df-a1f1-0026b9348838","a8935fde-1350-11df-a1f1-0026b9348838","a897fdaa-1350-11df-a1f1-0026b9348838","a89ced88-1350-11df-a1f1-0026b9348838","a89cefd6-1350-11df-a1f1-0026b9348838","a89cefd6-1350-11df-a1f1-0026b9348838","a89d25fa-1350-11df-a1f1-0026b9348838","a89d25fa-1350-11df-a1f1-0026b9348838","a89d25fa-1350-11df-a1f1-0026b9348838","a89de152-1350-11df-a1f1-0026b9348838","a89de152-1350-11df-a1f1-0026b9348838","a89de2d8-1350-11df-a1f1-0026b9348838","a89de2d8-1350-11df-a1f1-0026b9348838","a89de2d8-1350-11df-a1f1-0026b9348838","a89de2d8-1350-11df-a1f1-0026b9348838","a89de2d8-1350-11df-a1f1-0026b9348838","a89dee54-1350-11df-a1f1-0026b9348838","a89e3396-1350-11df-a1f1-0026b9348838","a89e5db2-1350-11df-a1f1-0026b9348838","a89e6ae6-1350-11df-a1f1-0026b9348838","a89e6ae6-1350-11df-a1f1-0026b9348838","a89eac04-1350-11df-a1f1-0026b9348838","a89eacc2-1350-11df-a1f1-0026b9348838","a89eb744-1350-11df-a1f1-0026b9348838","a89eb744-1350-11df-a1f1-0026b9348838","a89eb802-1350-11df-a1f1-0026b9348838","a89eb802-1350-11df-a1f1-0026b9348838","a89eb8c0-1350-11df-a1f1-0026b9348838","a89eb8c0-1350-11df-a1f1-0026b9348838","a89eb8c0-1350-11df-a1f1-0026b9348838","a89eb8c0-1350-11df-a1f1-0026b9348838","a89eb8c0-1350-11df-a1f1-0026b9348838","a89eb97e-1350-11df-a1f1-0026b9348838","a89eba46-1350-11df-a1f1-0026b9348838","a89ebb04-1350-11df-a1f1-0026b9348838","a89ec3f6-1350-11df-a1f1-0026b9348838","a89ee2e6-1350-11df-a1f1-0026b9348838","a8a08ff6-1350-11df-a1f1-0026b9348838","a8aaf3e2-1350-11df-a1f1-0026b9348838","a8ad3b02-1350-11df-a1f1-0026b9348838","a8ad3b02-1350-11df-a1f1-0026b9348838","a8af4cee-1350-11df-a1f1-0026b9348838","a8af4cee-1350-11df-a1f1-0026b9348838","a8b03af0-1350-11df-a1f1-0026b9348838","a8b03af0-1350-11df-a1f1-0026b9348838","c0c9eab3-46f6-453c-b29d-dc1c242317c5","ecafa614-49c5-4eba-84c7-b85b0d9e2c46","ecafa614-49c5-4eba-84c7-b85b0d9e2c46"],
+        "id_a":["8978","8978","7064","7414","7414","207","207","207","820","1445","1448","1448","1504","1504","1504","1546","1546","1548","1548","1548","1548","1548","1563","1587","1620","1624","1624","1647","1648","1662","1662","1663","1663","1664","1664","1664","1664","1664","1665","1666","1667","1679","1714","1958","5622","6006","6006","6100","6100","6295","6295","7043","7065","7065"],
+        "obsAnswerLabels":["INCORRECT DRUG DOSAGE","WRONG MEDICATION DOSE","SHARE MEDICATION WITH OTHER PEOPLE","CAREGIVER UNABLE","CARETAKER NOT ABLE ","DEPRESSION","DEPRESSIVE EPISODE","DEPRESSED","TRANSPORT PROBLEMS","ALCOHOLISM","MISSED APPOINTMENT","NO SHOW","PATIENT REFUSAL","PATIENT REFUSE","REFUSAL OF TREATMENT BY PATIENT","TRAVEL","TRAVELING","HEALTH ISSUES","TOO ILLED","TOO SICK","DISEASE","ILLNESS","NOT AT HOME","HEALED BY FAITH","DISLIKE TAKING MEDICINE","DO NOT KNOW","DON'T KNOW","FELT WELL AND DID NOT THINK TAKING MEDICINIE WAS NEEDED","FORGOT TO TAKE MEDICINE","COULD NOT GET MEDICINE","COULDN'T GET MEDICATION","MEDICINE NOT USEFUL","MEDICATION NOT USEFUL","SIDE EFFECTS FROM TAKING MEDICATIONS","ADVERSE EFFECTS FROM TAKING MEDICINE","ADVERSE DRUG EFFECT","ADVERSE DRUG REACTION","ADR","TIME FOR A BREAK","STIGMA","OTHER TREATMENT","STOPPED","DID NOT MISS ANY DOSES","REFUSAL","OTHER NON-CODED","CONFUSION","CONFUSED","RUN OUT OF MEDICATIONS","RUN OUT DRUGS","FINANCIAL BARRIER","MONEY BARRIER","FACILITY STOCKED OUT OF MEDICATION","PILL BURDEN","TOO MANY PILLS TO TAKE"]
+
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "adhlastwkArv",
+        "label":"14e. During the last seven days how many of his/her pills did the patient take:ARVs",
+        "id_a": "1107,1160,1161,1162,1163",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899e0ac-1350-11df-a1f1-0026b9348838",
+          "a89ac6b6-1350-11df-a1f1-0026b9348838",
+          "a89ac792-1350-11df-a1f1-0026b9348838",
+          "a89ac86e-1350-11df-a1f1-0026b9348838",
+          "a89ac94a-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1164",
+        "obsConceptUuid": "a89aca26-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "None",
+          " Few",
+          "Half",
+          "Most",
+          "All"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"OI Prophylaxis:",
+        "idHtml": "adhlastwkOi",
+        "id_a": "1107,1160,1161,1162,1163",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899e0ac-1350-11df-a1f1-0026b9348838",
+          "a89ac6b6-1350-11df-a1f1-0026b9348838",
+          "a89ac792-1350-11df-a1f1-0026b9348838",
+          "a89ac86e-1350-11df-a1f1-0026b9348838",
+          "a89ac94a-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "8387",
+        "obsConceptUuid": "768bfefe-9fd0-4065-a8b9-4de2a4475ee4",
+        "obsAnswerLabels": [
+          "None",
+          " Few",
+          "Half",
+          "Most",
+          "All"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"TB Prohylaxis:",
+        "idHtml": "adhlastwkTbproph",
+        "id_a": "1107,1160,1161,1162,1163",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899e0ac-1350-11df-a1f1-0026b9348838",
+          "a89ac6b6-1350-11df-a1f1-0026b9348838",
+          "a89ac792-1350-11df-a1f1-0026b9348838",
+          "a89ac86e-1350-11df-a1f1-0026b9348838",
+          "a89ac94a-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1165",
+        "obsConceptUuid": "a89acb02-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "None",
+          " Few",
+          "Half",
+          "Most",
+          "All"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"TB Treatment:",
+        "idHtml": "adhlastwkTbtx",
+        "id_a": "1107,1160,1161,1162,1163",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899e0ac-1350-11df-a1f1-0026b9348838",
+          "a89ac6b6-1350-11df-a1f1-0026b9348838",
+          "a89ac792-1350-11df-a1f1-0026b9348838",
+          "a89ac86e-1350-11df-a1f1-0026b9348838",
+          "a89ac94a-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "6077",
+        "obsConceptUuid": "a8af37a4-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "None",
+          " Few",
+          "Half",
+          "Most",
+          "All"
+        ]
+      }
+    ,
+      {
+        "obsConceptGroupUuid": "a8a0720a-1350-11df-a1f1-0026b9348838",
+        "idHtml": "missedmedicationinthelastsevendays",
+        "label":"Missed medication during the last seven days:To Do Add REPEAT",
+        "type":"text",
+        "id": "1916",
+        "obsConceptUuid": "a8a07084-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"14f.Side-effects/Toxicity: Any side effects attributable to any drug that the child is currently taking:",
+        "idHtml": "securr",
+        "id_a": "1065,1066",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "6836",
+        "obsConceptUuid": "30fc0cea-b6c7-48cc-bbfb-4eb53170ce41",
+        "obsAnswerLabels": [
+          "Yes",
+          "No"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "midd",
+        "label":"14g. If yes, drug(s):To Do Add REPEAT",
+        "type":"text",
+        "id": "6838",
+        "obsConceptUuid": "1682a920-c93d-4aad-b9cb-4a2b2c41ff1a"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"14h. If yes, tick all that apply:",
+        "idHtml": "sideffects",
+        "type":"multiCheckbox",
+        "id": "6967",
+        "obsAnswerConceptUuids":["520218d1-6e41-4653-8edf-2d702d0b9b8a","520218d1-6e41-4653-8edf-2d702d0b9b8a","520218d1-6e41-4653-8edf-2d702d0b9b8a","8e6db62d-2b91-43b2-9a2e-50c7eeb4437c","a877c7f6-1350-11df-a1f1-0026b9348838","a877c7f6-1350-11df-a1f1-0026b9348838","a877c7f6-1350-11df-a1f1-0026b9348838","a877c7f6-1350-11df-a1f1-0026b9348838","a877c7f6-1350-11df-a1f1-0026b9348838","a890861a-1350-11df-a1f1-0026b9348838","a890861a-1350-11df-a1f1-0026b9348838","a890861a-1350-11df-a1f1-0026b9348838","a8909060-1350-11df-a1f1-0026b9348838","a8909060-1350-11df-a1f1-0026b9348838","a890ba5e-1350-11df-a1f1-0026b9348838","a890ba5e-1350-11df-a1f1-0026b9348838","a890ba5e-1350-11df-a1f1-0026b9348838","a890ba5e-1350-11df-a1f1-0026b9348838","a8932f00-1350-11df-a1f1-0026b9348838","a8932f00-1350-11df-a1f1-0026b9348838","a8932f00-1350-11df-a1f1-0026b9348838","a89366a0-1350-11df-a1f1-0026b9348838","a89366a0-1350-11df-a1f1-0026b9348838","a895776a-1350-11df-a1f1-0026b9348838","a895776a-1350-11df-a1f1-0026b9348838","a897fe86-1350-11df-a1f1-0026b9348838","a897fe86-1350-11df-a1f1-0026b9348838","a897fe86-1350-11df-a1f1-0026b9348838","a8980dea-1350-11df-a1f1-0026b9348838","a8980dea-1350-11df-a1f1-0026b9348838","a89828c0-1350-11df-a1f1-0026b9348838","a8982eba-1350-11df-a1f1-0026b9348838","a8982eba-1350-11df-a1f1-0026b9348838","a8983ae0-1350-11df-a1f1-0026b9348838","a8983ae0-1350-11df-a1f1-0026b9348838","a8983ae0-1350-11df-a1f1-0026b9348838","a8983ae0-1350-11df-a1f1-0026b9348838","a898cfe6-1350-11df-a1f1-0026b9348838","a89cee50-1350-11df-a1f1-0026b9348838","a89cfce2-1350-11df-a1f1-0026b9348838","a89d0c0a-1350-11df-a1f1-0026b9348838","a89d0c0a-1350-11df-a1f1-0026b9348838","a8a01dfa-1350-11df-a1f1-0026b9348838","a8a16d0e-1350-11df-a1f1-0026b9348838","a8aaf3e2-1350-11df-a1f1-0026b9348838","a8ad09ca-1350-11df-a1f1-0026b9348838","a8ad09ca-1350-11df-a1f1-0026b9348838","a8ad09ca-1350-11df-a1f1-0026b9348838","a8ad21e4-1350-11df-a1f1-0026b9348838","a8ad21e4-1350-11df-a1f1-0026b9348838","a8ad239c-1350-11df-a1f1-0026b9348838","a8ad239c-1350-11df-a1f1-0026b9348838","a8ad47f0-1350-11df-a1f1-0026b9348838","a8ad47f0-1350-11df-a1f1-0026b9348838","a8ad47f0-1350-11df-a1f1-0026b9348838","c835b3c9-8fcd-4d12-91d5-6f85201f42eb","c835b3c9-8fcd-4d12-91d5-6f85201f42eb","de8adf9d-0d6d-4f81-817e-1ccef7e578d4","de8adf9d-0d6d-4f81-817e-1ccef7e578d4","fc110c04-079c-49d3-bf34-c36290e1b203","fc110c04-079c-49d3-bf34-c36290e1b203","fc110c04-079c-49d3-bf34-c36290e1b203","fc110c04-079c-49d3-bf34-c36290e1b203"],
+        "id_a":["7534","7534","7534","6636","3","3","3","3","3","16","16","16","29","29","80","80","80","80","151","151","151","215","215","512","512","821","821","821","839","839","861","868","868","879","879","879","879","983","1446","1465","1478","1478","1874","2030","5622","5953","5953","5953","5978","5978","5980","5980","6021","6021","6021","8295","8295","7892","7892","7535","7535","7535","7535"],
+        "obsAnswerLabels":["HIGH LEVEL OF URIC ACID","HYPERURICAEMIA","HYPERURICEMIA","NEUROPATHY","ANEMIA","ANAEMIA","ANEMIA NOS","MILD ANAEMIA","MILD ANEMIA","DIARRHEA","DIARRHEA NOS","DIARRHOEA","HEPATITIS","HEPATITIS NOS","JOINT PAIN","ARTHRALGIA","ATHRALGIA","RHEUMATISM","ABDOMINAL PAIN","ABDOMINAL DISCOMFORT","EPIGASTRIC PAIN","JAUNDICE","ICTERUS","RASH","SKIN RASH","PERIPHERAL NEUROPATHY","PEDAL NEUROPATHY","PERIPHERAL NEURITIS","THROMBOCYTOPENIA","THROMBOPENIA","HEARING DIFFICULTIES","ANOREXIA","LOSS OF APPETITE","PRURITIS","BODY ITCHING","ITCHING","PRURIT","WEIGHT CHANGE","LIPODYSTROPHY","NEUTROPENIA","IMMUNE RECONSTITUTION INFLAMMATORY SYNDROME","IRIS","LACTIC ACIDOSIS","STEVENS-JOHNSON SYNDROME","OTHER NON-CODED","VISION DIFFICULTIES","VISION DIFFICULTIES, NOS","VISION DIFFICULTIES","NAUSEA","NAUSEATED","VOMITING","EMESIS","OLIGURIA","DECREASED URINE OUTPUT","REDUCED URINE VOLUME","TINGLING","TINGLE SENSATION","DYSGEUSIA","DISTORTION OF THE SENSE OF TASTE","LEUCOPENIA","LEUKOPENIA","LEUKOCYTOPENIA","DECREASE IN NUMBER OF WHITE BLOOD CELLS"],
+        "obsConceptUuid": "c2ecd5f7-4b47-47ae-b706-3dc5ed98b4db"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"14i. Severity of the reaction:",
+        "idHtml": "severity",
+        "id_a": "1743,1744,1745,1067,5622",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a89efccc-1350-11df-a1f1-0026b9348838",
+          "a89efdee-1350-11df-a1f1-0026b9348838",
+          "a89eff1a-1350-11df-a1f1-0026b9348838",
+          "a899b50a-1350-11df-a1f1-0026b9348838",
+          "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "6968",
+        "obsConceptUuid": "6c1b293c-4d8c-470f-9991-93cdde1274ff",
+        "obsAnswerLabels": [
+          "Mild",
+          " Moderate",
+          " Severe",
+          " Unknown",
+          " Other"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"14j. Cause of the reaction/toxicity:",
+        "idHtml": "reaction",
+        "id_a": "6969,6970,6971,6972,6973,6974",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "45eb8953-dc14-4c2e-8ce6-12cdf7da280a",
+          "07e9e14e-a718-4a9e-9479-1de79e1f614a",
+          "260e6d24-1634-4467-a070-e8359f6827f7",
+          "66b46c63-7e75-4b1d-918a-1e17348c62f7",
+          "b1055e84-0e97-483a-ae8a-3f2dee84a623",
+          "80d03d9f-2510-4a95-b9d6-2613aaeebd21"
+        ],
+        "id": "6975",
+        "obsConceptUuid": "d0efbf5b-cbfc-48fc-a857-c0ca4d70f077",
+        "obsAnswerLabels": [
+          "Certain",
+          " Probable/Likely",
+          " Possible",
+          " Unlikely",
+          " Conditional/Unclassified",
+          "Unassessable/Unclassified"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "obsAnswerLabels": [
+          "Yes",
+          "No"
+        ],
+        "idHtml": "intervalComp",
+        "style": "yes_no",
+        "id_a": "1065,1066",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838"
+        ],"label":"15. Does the patient have any interval complaints If Yes,tick all that apply",
+        "id": "1154",
+        "obsConceptUuid": "a89ac184-1350-11df-a1f1-0026b9348838"
+      }  ,
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Diarrhea:",
+        "idHtml": "rosDiarr",
+        "id_a": "1072,1073",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b9c4-1350-11df-a1f1-0026b9348838",
+          "a899baaa-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "5984",
+        "obsConceptUuid": "a8ad270c-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Days",
+          " Weeks"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Abdominal Pain:",
+        "idHtml": "rosAbdominal",
+        "id_a": "1072,1073",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b9c4-1350-11df-a1f1-0026b9348838",
+          "a899baaa-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2007",
+        "obsConceptUuid": "a8a0bf58-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Days",
+          " Weeks"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Skin rash:",
+        "idHtml": "rosSkin",
+        "id_a": "1072,1073",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b9c4-1350-11df-a1f1-0026b9348838",
+          "a899baaa-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2010",
+        "obsConceptUuid": "a8a0c2dc-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Days",
+          " Weeks"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Sores:",
+        "idHtml": "rosSores",
+        "id_a": "1072,1073",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b9c4-1350-11df-a1f1-0026b9348838",
+          "a899baaa-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "8391",
+        "obsConceptUuid": "245edfef-d05b-48c1-9a72-e4de5d586a33",
+        "obsAnswerLabels": [
+          "Days",
+          " Weeks"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Sore throat:",
+        "idHtml": "rosSorethroat",
+        "id_a": "1072,1073",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b9c4-1350-11df-a1f1-0026b9348838",
+          "a899baaa-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2009",
+        "obsConceptUuid": "a8a0c1b0-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Days",
+          " Weeks"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Difficulty breathing:",
+        "idHtml": "rosDiffbreath",
+        "id_a": "1072,1073",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b9c4-1350-11df-a1f1-0026b9348838",
+          "a899baaa-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2008",
+        "obsConceptUuid": "a8a0c084-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Days",
+          " Weeks"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Vomiting:",
+        "idHtml": "rosVomiting",
+        "id_a": "1072,1073",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b9c4-1350-11df-a1f1-0026b9348838",
+          "a899baaa-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "5981",
+        "obsConceptUuid": "a8ad2478-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Days",
+          " Weeks"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Swelling:",
+        "idHtml": "rosSwelling",
+        "id_a": "1072,1073",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b9c4-1350-11df-a1f1-0026b9348838",
+          "a899baaa-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2013",
+        "obsConceptUuid": "a8a0c656-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Days",
+          " Weeks"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Cough:",
+        "idHtml": "rosCough",
+        "id_a": "1072,1073",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b9c4-1350-11df-a1f1-0026b9348838",
+          "a899baaa-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "5959",
+        "obsConceptUuid": "a8ad1190-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Days",
+          " Weeks"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Fever:",
+        "idHtml": "rosFever",
+        "id_a": "1072,1073",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b9c4-1350-11df-a1f1-0026b9348838",
+          "a899baaa-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2011",
+        "obsConceptUuid": "a8a0c408-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Days",
+          " Weeks"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Ear discharge:",
+        "idHtml": "rosEardis",
+        "id_a": "1072,1073",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b9c4-1350-11df-a1f1-0026b9348838",
+          "a899baaa-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2012",
+        "obsConceptUuid": "a8a0c534-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Days",
+          " Weeks"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Other:",
+        "idHtml": "rosOther",
+        "id_a": "1072,1073",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b9c4-1350-11df-a1f1-0026b9348838",
+          "a899baaa-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2016",
+        "obsConceptUuid": "a8a0c9da-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Days",
+          " Weeks"
+        ]
+      } ,
+      {
+        "obsConceptGroupUuid": "",
+        "label":"16a. Does the child have growth faltering (FTT):",
+        "idHtml": "growthFTT",
+        "style": "radio",
+        "id_a": "1065, 1066",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2187",
+        "obsConceptUuid": "a8a3614a-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Yes",
+          " No"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"16b. Is the child overweight",
+        "idHtml": "childoverweight",
+        "id_a": "1065, 1066",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "6604",
+        "obsConceptUuid": "f9eac97a-5759-40a8-8b69-3193589a99f4",
+        "obsAnswerLabels": [
+          "Yes",
+          " No"
+        ]
+      }  ,
+      {
+        "obsConceptGroupUuid": "",
+        "label":"16c. Does the child have a disability",
+        "idHtml": "childdisability",
+        "id_a": "1065, 1066",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1840",
+        "obsConceptUuid": "a89ffa64-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Yes",
+          " No"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "type": "text",
+        "idHtml": "disabilitytype",
+        "label": "16d.If Yes:",
+        "label": "Cerebral palsy CHECKBOX",
+        "obsAnswerConceptUuids": "a898ac14-1350-11df-a1f1-0026b9348838",
+        "id": "1840",
+        "type":"text",
+        "obsConceptUuid": "a89ffa64-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label": "Physical disability CHECKBOX",
+        "obsAnswerConceptUuids": "d2c75e8e-3c80-4851-8225-050adfa96226",
+        "id": "1840",
+        "type":"text",
+        "obsConceptUuid": "a89ffa64-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a89ffa64-1350-11df-a1f1-0026b9348838",
+        "label": "Specify physical disability",
+        "id": "7008",
+        "obsConceptUuid": "37e7f17b-d38c-4df0-8839-bf4f298a65e2",
+        "type": "text"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label": "Mental Diasability",
+        "obsAnswerConceptUuids": "a890b810-1350-11df-a1f1-0026b9348838",
+        "id": "1840",
+        "type": "text",
+        "obsConceptUuid": "a89ffa64-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a89ffa64-1350-11df-a1f1-0026b9348838",
+        "label": "Specify mental Diasability",
+        "id": "7009",
+        "obsConceptUuid": "c7963e68-467a-4649-8b88-e96c38b40180",
+
+        "type": "text"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"16d. Review of Systems: General",
+        "idHtml": "reviewofSystemsGeneral",
+        "id_a": "215,5245,161,460,5334,507,512,1210",
+        "type": "multiCheckbox",
+        "obsAnswerConceptUuids":["a89366a0-1350-11df-a1f1-0026b9348838","a8a6f9a4-1350-11df-a1f1-0026b9348838","a893378e-1350-11df-a1f1-0026b9348838","a89540f6-1350-11df-a1f1-0026b9348838","a8a8209a-1350-11df-a1f1-0026b9348838","a8957184-1350-11df-a1f1-0026b9348838","a895776a-1350-11df-a1f1-0026b9348838","a89b2b2e-1350-11df-a1f1-0026b9348838"],
+        "id": "1119",
+        "obsConceptUuid": "a899eb24-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Jaundice","Pale","Adenopathy","Edema","Thrush","Kaposi","Rash","Parotid enlargement"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"16d. Review of Systems: Rs",
+        "idHtml": "reviewofSystemsGeneral",
+        "id_a": "1115,1116",
+        "type": "radio",
+        "obsAnswerConceptUuids":["a899e7b4-1350-11df-a1f1-0026b9348838","a899e890-1350-11df-a1f1-0026b9348838"],
+        "id": "1123",
+        "obsConceptUuid": "a899eeb2-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": ["Normal","Abnormal"]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"16d. Review of Systems:CNS",
+        "idHtml": "reviewofSystemsGeneral",
+        "id_a": "1115,1116",
+        "type": "radio",
+        "obsAnswerConceptUuids":["a899e7b4-1350-11df-a1f1-0026b9348838","a899e890-1350-11df-a1f1-0026b9348838"],
+        "id": "1129",
+        "obsConceptUuid": "a899f380-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": ["Normal","Abnormal"]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"16d. Review of Systems:CVS",
+        "idHtml": "reviewofSystemsGeneral",
+        "id_a": "1115,1116",
+        "type": "radio",
+        "obsAnswerConceptUuids":["a899e7b4-1350-11df-a1f1-0026b9348838","a899e890-1350-11df-a1f1-0026b9348838"],
+        "id": "1124",
+        "obsConceptUuid": "a899ef84-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": ["Normal","Abnormal"]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"16d. Review of Systems:MS",
+        "idHtml": "reviewofSystemsGeneral",
+        "id_a": "1115,1116",
+        "type": "radio",
+        "obsAnswerConceptUuids":["a899e7b4-1350-11df-a1f1-0026b9348838","a899e890-1350-11df-a1f1-0026b9348838"],
+        "id": "1128",
+        "obsConceptUuid": "a899f2ae-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": ["Normal","Abnormal"]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"16d. Review of Systems:PA",
+        "idHtml": "reviewofSystemsGeneral",
+        "id_a": "1115,1116",
+        "type": "radio",
+        "obsAnswerConceptUuids":["a899e7b4-1350-11df-a1f1-0026b9348838","a899e890-1350-11df-a1f1-0026b9348838"],
+        "id": "1125",
+        "obsConceptUuid": "a899f04c-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": ["Normal","Abnormal"]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"16d. Review of Systems:HEENT",
+        "idHtml": "reviewofSystemsGeneral",
+        "id_a": "1115,1116",
+        "type": "radio",
+        "obsAnswerConceptUuids":["a899e7b4-1350-11df-a1f1-0026b9348838","a899e890-1350-11df-a1f1-0026b9348838"],
+        "id": "1122",
+        "obsConceptUuid": "a899edcc-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": ["Normal","Abnormal"]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "type": "text",
+        "idHtml": "examnotes",
+        "label": "Exam notes:",
+        "id": "2018",
+        "obsConceptUuid": "a8a0cc32-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "testresultplatelets",
+        "label":"Platelets/mm3",
+        "id": "729",
+        "type": "datepicker",
+        "obsConceptUuid": "a8970954-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "testresultWBC",
+        "label":"WBC/mm3",
+        "type": "datepicker",
+        "id": "678",
+        "obsConceptUuid": "a896dea2-1350-11df-a1f1-0026b9348838",
+        "showDate": "true",
+        "allowFutureDates": "false"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "testresultHGB",
+        "type": "datepicker",
+        "label":"Hgb g/dL",
+        "id": "21",
+        "obsConceptUuid": "a8908a16-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "testresultMCV",
+        "type": "datepicker",
+        "label":"MCV",
+        "id": "851",
+        "obsConceptUuid": "a898201e-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "testresultALC",
+        "type": "datepicker",
+        "label":"ALC/ mm3",
+        "id": "952",
+        "obsConceptUuid": "a898b20e-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "testresultCD4",
+        "type": "datepicker",
+        "label":"CD4*",
+        "id": "5497",
+        "obsConceptUuid": "a8a8bb18-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "testresultCD4P",
+        "type": "datepicker",
+        "label":"CD4%",
+        "id": "730",
+        "obsConceptUuid": "a8970a26-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Viral Load",
+        "idHtml": "testresultviralload",
+        "type": "datepicker",
+        "id": "856",
+        "obsConceptUuid": "a8982474-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "testresultcreatinine",
+        "type": "datepicker",
+        "id": "790",
+        "label":"Creatinine mmol/L",
+        "obsConceptUuid": "a897e450-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"SGPT(ALT) u/l*",
+        "type": "datepicker",
+        "idHtml": "testresultSGPT",
+        "id": "654",
+        "obsConceptUuid": "a896ca48-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"1st HIV DNA PCR*",
+        "idHtml": "testresultHIVDNAPCR",
+        "id": "1030",
+        "type": "datepicker",
+        "obsConceptUuid": "a898fe80-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"2nd HIV DNA PCR (Post Weaning)*",
+        "idHtml": "testresult2ndDNAPCR",
+        "id": "7031",
+        "type": "datepicker",
+        "obsConceptUuid": "c0dfc40c-9ab1-4d82-9916-560a0bba3afa",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"HIV Rapid Elisa *",
+        "idHtml": "testresultrapidelisa",
+        "id": "1040",
+        "type": "datepicker",
+        "obsConceptUuid": "a8999dfe-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"HIV Long ELISA*",
+        "type": "datepicker",
+        "idHtml": "testresultlongelisa",
+        "id": "299",
+        "obsConceptUuid": "a8945678-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"TST (Mantoux test)",
+        "idHtml": "testresultTST",
+        "id": "1506",
+        "type": "datepicker",
+        "obsConceptUuid": "a89d278a-1350-11df-a1f1-0026b9348838",
+        "showDate": "true",
+        "allowFutureDates": "false"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Sputum Gene xpert",
+        "type": "datepicker",
+        "idHtml": "testresultGENExpert",
+        "id": "8070",
+        "obsConceptUuid": "741517cf-8bac-4755-b289-8dd2a2df7962",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Sputum AFB Smear",
+        "type": "datepicker",
+        "idHtml": "testresultAFBsmear",
+        "id": "307",
+        "obsConceptUuid": "a8945d4e-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "testresultsputumculture",
+        "type": "datepicker",
+        "label":"Sputum Culture",
+        "id": "2311",
+        "obsConceptUuid": "a8a462a2-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "type": "datepicker",
+        "label":"CXR",
+        "idHtml": "testresultCXR",
+        "id": "12",
+        "obsConceptUuid": "a8908192-1350-11df-a1f1-0026b9348838",
+        "showDate": "true"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"Who Stage",
+        "id_a": "1220,1221,1222,1223",
+        "type": "radio",
+        "idHtml": "whostage",
+        "id": "1224",
+        "obsConceptUuid": "a89b3740-1350-11df-a1f1-0026b9348838",
+        "obsAnswerConceptUuids":["a89b33d0-1350-11df-a1f1-0026b9348838","a89b34ac-1350-11df-a1f1-0026b9348838","a89b3588-1350-11df-a1f1-0026b9348838","a89b3664-1350-11df-a1f1-0026b9348838"],
+        "obsAnswerLabels": ["1","2","3","4" ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "type": "text",
+        "idHtml": "whoCriteria",
+        "label": "Criteria SEARCH",
+        "id": "1208",
+        "obsConceptUuid": "a89b2976-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "obsAnswerLabels": [
+          "Yes",
+          "No"
+        ],
+        "idHtml": "intervalComp",
+        "style": "yes_no",
+        "label": "New stage",
+        "id_a": "1065,1066",
+        "type": "radio",
+        "obsAnswerConceptUuids": ["a899b35c-1350-11df-a1f1-0026b9348838","a899b42e-1350-11df-a1f1-0026b9348838"],
+        "id": "1943",
+        "obsConceptUuid": "a8a084ca-1350-11df-a1f1-0026b9348838"
+      },{
+        "obsConceptGroupUuid": "",
+        "label": "18.b Not applicable:",
+        "idHtml": "stagingaotapllicable",
+        "id_a": "664,822",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a896d2cc-1350-11df-a1f1-0026b9348838",
+          "a897ff62-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "2019",
+        "obsConceptUuid": "a8a0cd5e-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          " HIV negative (child to be seen 6 monthly till 5 yrs)",
+          " HIV Exposed"
+
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label": "Tb screening SEARCH",
+        "idHtml": "tbscreening",
+        "id_a": "1107, 6171, 8067, 8065, 5050, 8059, 8060, 6019, 5312, 8066",
+        "id": "6174",
+        "type":"text",
+        "obsConceptUuid": "a8afcafc-1350-11df-a1f1-0026b9348838"
+      } ,
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "investigations",
+        "id_a": "12,2026,2024",
+        "label": "19b. If patient diagnosed, TB Diagnosis done on basis of:Investigations:",
+        "type": "multiCheckbox",
+        "obsAnswerConceptUuids":["a8908192-1350-11df-a1f1-0026b9348838","a8a0d312-1350-11df-a1f1-0026b9348838","a8a0d196-1350-11df-a1f1-0026b9348838"],
+        "obsAnswerLabels": ["Suggestive CXR","AAFB positive","TST positive"],
+        "id": "2028",
+        "obsConceptUuid": "a8a0d498-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "Criteria",
+        "id_a": "7599,2027,2025,5622",
+        "label": "19b. If patient diagnosed, TB Diagnosis done on basis of:Criteria:",
+        "type": "multiCheckbox",
+        "obsAnswerConceptUuids":["42e03370-82be-4d62-9056-72bf56d158b9","a8a0d3d0-1350-11df-a1f1-0026b9348838","a8a0d254-1350-11df-a1f1-0026b9348838","a8aaf3e2-1350-11df-a1f1-0026b9348838"],
+        "obsAnswerLabels": ["New GOK (Year 2011)","Keith Jones score:","Edward Keith score:","Other specify:"],
+        "id": "2028",
+        "obsConceptUuid": "a8a0d498-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "referraloutcome",
+        "label": "Referral outcome:",
+        "id_a": "58, 1115",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a890a96a-1350-11df-a1f1-0026b9348838",
+          "a899e7b4-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "8388",
+        "obsConceptUuid": "55fc49a8-48c7-4f4b-b0da-15b68e63b0d7",
+        "obsAnswerLabels": [
+          "TB",
+          " No TB"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "arvPlan",
+        "label": "21a. ARV Plan:",
+        "id_a": "1107, 1256, 1849, 1257, 981, 1259, 1850, 1258, 1260",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899e0ac-1350-11df-a1f1-0026b9348838",
+          "a89b77aa-1350-11df-a1f1-0026b9348838",
+          "a8a00158-1350-11df-a1f1-0026b9348838",
+          "a89b7908-1350-11df-a1f1-0026b9348838",
+          "a898c938-1350-11df-a1f1-0026b9348838",
+          "a89b7c50-1350-11df-a1f1-0026b9348838",
+          "a8a00220-1350-11df-a1f1-0026b9348838",
+          "a89b7ae8-1350-11df-a1f1-0026b9348838",
+          "a89b7d36-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1255",
+        "obsConceptUuid": "a89b75d4-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Not on ARVS",
+          " Start ARVs",
+          " Drug substitution",
+          " continue regimen",
+          " change dose",
+          " change regimen",
+          " Restart",
+          " Change Formulation",
+          " Stop all"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "a8a07688-1350-11df-a1f1-0026b9348838",
+        "idHtml": "arvstopreason",
+        "label":"21b.Reason for stop/change/re-dose",
+        "id_a": "843,8296, 8297, 983, 1253, 7043, 8399, 102, 58, 1930, 5622",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a8981934-1350-11df-a1f1-0026b9348838",
+          "c6537e06-9fc2-47da-b679-e2a32824407f",
+          "93fe19e8-fec4-4e4b-85f1-239e1fabd761",
+          "a898cfe6-1350-11df-a1f1-0026b9348838",
+          "a89b72c8-1350-11df-a1f1-0026b9348838",
+          "c0c9eab3-46f6-453c-b29d-dc1c242317c5",
+          "0f8569b7-800c-4f6a-be1f-b8e052fc96cf",
+          "a890d1ba-1350-11df-a1f1-0026b9348838",
+          "a890a96a-1350-11df-a1f1-0026b9348838",
+          "a8a07b10-1350-11df-a1f1-0026b9348838",
+          "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1252",
+        "obsConceptUuid": "a89b7110-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Clinical treatment failure",
+          "Immunologic failure",
+          " Virologic failure",
+          "Weight change",
+          " Completed pMTCT",
+          " Drug out of stock",
+          " Dose escalation of Nevirapine",
+          " Toxicity",
+          " Due to new TB",
+          " New drug available",
+          " Other"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "a8a07688-1350-11df-a1f1-0026b9348838",
+        "label": " Toxicity cause :SEARCH",
+        "type": "text",
+        "idHtml": "arvstopreasonTox",
+        "id": "1879",
+        "obsConceptUuid": "a8a032fe-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a8a07688-1350-11df-a1f1-0026b9348838",
+        "type": "text",
+        "idHtml": "arvstopreasonSpecify",
+        "label": "Other Specify:",
+        "id": "1915",
+        "obsConceptUuid": "a8a06fc6-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a8a17a7e-1350-11df-a1f1-0026b9348838",
+        "idHtml": "arveligible",
+        "label":"21c. Eligible for ARVs but not started:",
+        "id_a": "5487, 1504, 1434, 5487,5622",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a8a8b26c-1350-11df-a1f1-0026b9348838",
+          "a89d25fa-1350-11df-a1f1-0026b9348838",
+          "a89ce50e-1350-11df-a1f1-0026b9348838",
+          "a8a8b26c-1350-11df-a1f1-0026b9348838",
+          "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1505",
+        "obsConceptUuid": "a89d26cc-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "OI/TB TX",
+          " Patient  Refused",
+          " Adherence Concerns",
+          " On TB Treatment",
+          " Other"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "a8a17a7e-1350-11df-a1f1-0026b9348838",
+        "type": "text",
+        "idHtml": "arveligibleSpecify",
+        "label": "Specify:",
+        "id": "1915",
+        "obsConceptUuid": "a8a06fc6-1350-11df-a1f1-0026b9348838"
+      },{
+        "obsConceptGroupUuid": "",
+        "label":"21d. Treatment categories",
+        "idHtml": "treatmentcategories",
+        "id_a": "6693, 6694, 6695",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "034047bd-3fa1-4b2a-b0f0-2787e9b9f7b3",
+          "8f8a715d-e49a-4b2c-aa3a-83fa9d7a4254",
+          "a90ebdd2-351f-485a-b850-4938fcca2729"
+        ],
+        "id": "6976",
+        "obsConceptUuid": "74e3b23f-b94f-49d9-a237-6baaee73f163",
+        "obsAnswerLabels": [
+          "First line",
+          " Second line(following viral failure)",
+          " Third line(salvage regimen)"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "a89fe56a-1350-11df-a1f1-0026b9348838",
+        "id":"1250",
+        "obsConceptUuid": "a89b6a62-1350-11df-a1f1-0026b9348838",
+        "label": "21e.ARV drugs:",
+        "type": "multiCheckbox",
+        "id_a": "6679,792,794,796,630,792,794,6156,6467,630,795,6157,6467,6965,795,6159,631,1400,795,5811,633,6964,6160,5424,628,814,5622,5622",
+        "obsAnswerConceptUuids": [
+          "b7735b8a-22f2-41d6-b450-65ec7588839c",
+          "a897e608-1350-11df-a1f1-0026b9348838",
+          "a897e7c0-1350-11df-a1f1-0026b9348838",
+          "a897e96e-1350-11df-a1f1-0026b9348838",
+          "a896758e-1350-11df-a1f1-0026b9348838",
+          "a897e608-1350-11df-a1f1-0026b9348838",
+          "a897e7c0-1350-11df-a1f1-0026b9348838",
+          "a8afbd64-1350-11df-a1f1-0026b9348838",
+          "6a73f32d-1870-4527-af6e-74443251ded2",
+          "a896758e-1350-11df-a1f1-0026b9348838",
+          "a897e89c-1350-11df-a1f1-0026b9348838",
+          "a8afbe22-1350-11df-a1f1-0026b9348838",
+          "6a73f32d-1870-4527-af6e-74443251ded2",
+          "3d587177-984e-4eeb-93f2-3223b6c1dd7c",
+          "a897e89c-1350-11df-a1f1-0026b9348838",
+          "a8afbf9e-1350-11df-a1f1-0026b9348838",
+          "a8967656-1350-11df-a1f1-0026b9348838",
+          "a89cc876-1350-11df-a1f1-0026b9348838",
+          "a897e89c-1350-11df-a1f1-0026b9348838",
+          "a8ac4904-1350-11df-a1f1-0026b9348838",
+          "a89677e6-1350-11df-a1f1-0026b9348838",
+          "1c4a75d0-cc91-4752-b0a5-4b833326ff7a",
+          "a8afc066-1350-11df-a1f1-0026b9348838",
+          "a8a87a86-1350-11df-a1f1-0026b9348838",
+          "a89673f4-1350-11df-a1f1-0026b9348838",
+          "a897f8a0-1350-11df-a1f1-0026b9348838",
+          "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+          "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+        ],
+        "obsAnswerLabels": [
+          "Abacavir60/Lamivudine30",
+          "d4T12/3TC60/NVP100)T-jr",
+          "Lopinavir/Ritonavir",
+          "Didanosine",
+          "Zidovudine60/Lamivudine30",
+          "d4T30/3TC150/NVP200",
+          "LPV200/RIT50",
+          "Raltegravir",
+          "ZDV60/3TC30/NVP50",
+          "ZDV300/3TC150",
+          "Ritonavir100mg",
+          "Darunavir",
+          "ZDV300/3TC150/NVP200",
+          "D4T30/3TC150",
+          "Rit(Norvir sec100)",
+          "atazanavir",
+          "Nevirapine",
+          "Tenofovir/Lamivudine",
+          "Rit(Norvir 80)",
+          "Unknown Name",
+          "Efavirenz",
+          "TDF300/3TC300/EFV600",
+          "Atazanavir300/ritonavir100",
+          "Other",
+          "Lamivudine",
+          "Abacavir",
+          "Other",
+          "Other"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "OIPlan",
+        "label": "21f. OI Prophylaxis:",
+        "id_a": "1107,1256, 1257, 1850, 1259, 981, 1260",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899e0ac-1350-11df-a1f1-0026b9348838",
+          "a89b77aa-1350-11df-a1f1-0026b9348838",
+          "a89b7908-1350-11df-a1f1-0026b9348838",
+          "a8a00220-1350-11df-a1f1-0026b9348838",
+          "a89b7c50-1350-11df-a1f1-0026b9348838",
+          "a898c938-1350-11df-a1f1-0026b9348838",
+          "a89b7d36-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "8344",
+        "obsConceptUuid": "8b181385-353a-4f51-9b81-1b5f7f267f5f",
+        "obsAnswerLabels": [
+          "None",
+          " Start",
+          " Continue Regimen",
+          " Re-start",
+          " Change regimen",
+          " Re-dore",
+          " Stop"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "OIstopreason",
+        "label": "21g. Reason for stop/change/re-dose:",
+        "id_a": "983, 102",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a898cfe6-1350-11df-a1f1-0026b9348838",
+          "a890d1ba-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "8345",
+        "obsConceptUuid": "7e82e662-6bda-4b6f-9080-7662d35c39ca",
+        "obsAnswerLabels": [
+          "Weight Change",
+          " Toxicity"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label": "Toxicity cause:SEARCH",
+        "type": "text",
+        "idHtml": "OItoxicity",
+        "id": "1879",
+        "obsConceptUuid": "a8a032fe-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label": "21h. Drugs",
+        "idHtml": "OIMed",
+        "id_a": "916,92",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a8989396-1350-11df-a1f1-0026b9348838",
+          "a890c9e0-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "8346",
+        "obsConceptUuid": "d8b8a6b7-17ba-4a2e-9455-5ad562155531",
+        "obsAnswerLabels": [
+          "Septrin",
+          " Dapsone"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label": "21i.TB Prophylaxis:",
+        "idHtml": "tbprophplan",
+        "id_a": "1107,1256, 1257, 981, 1850, 1260,",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899e0ac-1350-11df-a1f1-0026b9348838",
+          "a89b77aa-1350-11df-a1f1-0026b9348838",
+          "a89b7908-1350-11df-a1f1-0026b9348838",
+          "a898c938-1350-11df-a1f1-0026b9348838",
+          "a8a00220-1350-11df-a1f1-0026b9348838",
+          "a89b7d36-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1266",
+        "obsConceptUuid": "a89c1e12-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "None",
+          " Start INH",
+          " Continue INH",
+          " Re-dose",
+          " Re-start",
+          " Stop INH"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "a8a0780e-1350-11df-a1f1-0026b9348838",
+        "label": "21j. Reason for stop/change/re-dose",
+        "idHtml": "tbprophstopreason",
+        "id_a": "1267,58, 983, 102",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a89c1ef8-1350-11df-a1f1-0026b9348838",
+          "a890a96a-1350-11df-a1f1-0026b9348838",
+          "a898cfe6-1350-11df-a1f1-0026b9348838",
+          "a890d1ba-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1266",
+        "obsConceptUuid": "a89c1e12-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Completed",
+          " Active TB",
+          " Weight change",
+          " Toxicity"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "a8a0780e-1350-11df-a1f1-0026b9348838",
+        "label": "Toxicity cause :SEARCH",
+        "type": "text",
+        "idHtml": "tbprophstopreasontox",
+        "id": "1879",
+        "obsConceptUuid": "a8a032fe-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a8a0780e-1350-11df-a1f1-0026b9348838",
+        "label": "Other specifiy:CHECKBOX",
+        "type": "text",
+        "obsAnswerConceptUuids": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+        "id": "1266",
+        "obsConceptUuid": "a89c1e12-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a8a0780e-1350-11df-a1f1-0026b9348838",
+        "label": "Other specifiy:",
+        "idHtml": "tbprophstopreasonspecify",
+        "id": "1915",
+        "type": "text",
+        "obsConceptUuid": "a8a06fc6-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a89fe628-1350-11df-a1f1-0026b9348838",
+        "label": "21k. Drug dose:Checkbox",
+        "idHtml": "tbprophdrugs",
+        "type": "text",
+        "label": "INH mg/day",
+        "obsAnswerConceptUuids": "a896cc00-1350-11df-a1f1-0026b9348838",
+        "id": "1264",
+        "obsConceptUuid": "a89b83bc-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a89fe628-1350-11df-a1f1-0026b9348838",
+        "label": "mg/day TO VERIFY",
+        "id": "1921",
+        "obsConceptUuid": "a8a0744e-1350-11df-a1f1-0026b9348838",
+
+        "type": "text"
+      },
+      {
+        "obsConceptGroupUuid": "a89fe6f0-1350-11df-a1f1-0026b9348838",
+        "label": "21l. TB Treatment:",
+        "idHtml": "tbplan",
+        "id_a": "1107, 1256, 1259, 1257, 981, 1849, 1260, 8352",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899e0ac-1350-11df-a1f1-0026b9348838",
+          "a89b77aa-1350-11df-a1f1-0026b9348838",
+          "a89b7c50-1350-11df-a1f1-0026b9348838",
+          "a89b7908-1350-11df-a1f1-0026b9348838",
+          "a898c938-1350-11df-a1f1-0026b9348838",
+          "a8a00158-1350-11df-a1f1-0026b9348838",
+          "a89b7d36-1350-11df-a1f1-0026b9348838",
+          "dd01765f-7e26-4704-a790-5eb049670571"
+        ],
+        "id": "1268",
+        "obsConceptUuid": "a89c1fd4-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "None",
+          " Intensive/Initiation",
+          " Change to Continuation",
+          " Continue Regimen",
+          " Re-dose",
+          " Drug substitution",
+          " Stop",
+          " Continue picking meds at other site location"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label": "21m. Reason for start:",
+        "idHtml": "reasonForStart",
+        "id_a": "6977,6978,6979,6980,2161",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "769822b2-1f1f-4cbb-8371-0e3949e060cc",
+          "15316528-adb9-4c33-b21f-2817f0cad769",
+          "f6951199-560d-414a-bb5b-1150f07fcea7",
+          "18ac99bf-0805-4929-8d0b-924455850a00",
+          "a8a3243c-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "6981",
+        "obsConceptUuid": "749d07cb-4994-4ce9-a39c-8a655a487fdd",
+        "obsAnswerLabels": [
+          "New treatment 1st line",
+          " Defaulted (restart 1st line)",
+          " Regimen failure (start retreatment)",
+          " Relapse/re-infection (retreatment)",
+          " MDR TB regimen"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "a8a078cc-1350-11df-a1f1-0026b9348838",
+        "idHtml": "tbstopreason",
+        "label": "21n. Reason for stop/change/re-dose:",
+        "id_a": "1267, 983, 102",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a89c1ef8-1350-11df-a1f1-0026b9348838",
+          "a898cfe6-1350-11df-a1f1-0026b9348838",
+          "a890d1ba-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "1269",
+        "obsConceptUuid": "a89c20b0-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Completed",
+          " Weight change",
+          " Toxicity"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "a8a078cc-1350-11df-a1f1-0026b9348838",
+        "label": "Toxicity cause",
+        "idHtml": "tbstopreasontox",
+        "type": "text",
+        "id": "1879",
+        "obsConceptUuid": "a8a032fe-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a8a078cc-1350-11df-a1f1-0026b9348838",
+        "label": "Other specifiy:Checkbox",
+        "obsAnswerConceptUuids": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+        "id": "1269",
+        "type": "text",
+        "obsConceptUuid": "a89c20b0-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a8a078cc-1350-11df-a1f1-0026b9348838",
+        "idHtml": "tbstopreasonspecify",
+        "label": "Other specifiy",
+        "id": "1915",
+        "type": "text",
+        "obsConceptUuid": "a8a06fc6-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a89fe6f0-1350-11df-a1f1-0026b9348838",
+        "obsConceptUuid": "a89c218c-1350-11df-a1f1-0026b9348838",
+        "label":"21o. TB Meds:",
+        "type": "multiCheckbox",
+        "id_a": "1131,1194,6983,1108,5622,2231,438,5829,656,768,745,656,2161",
+        "obsAnswerConceptUuids": [
+          "a899f51a-1350-11df-a1f1-0026b9348838",
+          "a89b1ca6-1350-11df-a1f1-0026b9348838",
+          "b8aa06ca-93c6-40ea-b144-c74f841926f4",
+          "a899e19c-1350-11df-a1f1-0026b9348838",
+          "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+          "a8a382ba-1350-11df-a1f1-0026b9348838",
+          "a8952e4a-1350-11df-a1f1-0026b9348838",
+          "a8ac5f2a-1350-11df-a1f1-0026b9348838",
+          "a896cc00-1350-11df-a1f1-0026b9348838",
+          "a897d1a4-1350-11df-a1f1-0026b9348838",
+          "a8971c64-1350-11df-a1f1-0026b9348838",
+          "a896cc00-1350-11df-a1f1-0026b9348838",
+          "a8a3243c-1350-11df-a1f1-0026b9348838"
+        ],
+        "obsAnswerLabels": [
+          "Rifafour(RHZE)",
+          "Rifinah(RH)",
+          "Rifabutin",
+          "Ethizide(EH)",
+          "Other",
+          "3-FDC(RHE)",
+          "Streptomycin",
+          "Pyrazinamide",
+          "Rifampicin",
+          "Rifater(RHZ)",
+          "Ethambutol",
+          "INH",
+          "MDR drugs"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "contactinvestigation",
+        "label": "21p. Contact investigations initiated(invitation of household contacts of smear +ve)",
+        "id_a": "1065, 1066",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a899b35c-1350-11df-a1f1-0026b9348838",
+          "a899b42e-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "8390",
+        "obsConceptUuid": "a9cc70d0-051e-418a-84e7-bbf8009c204b",
+        "obsAnswerLabels": [
+          "Yes",
+          " No"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "a8a08588-1350-11df-a1f1-0026b9348838",
+        "idHtml": "bcg",
+        "label": "Immunizations ordered today: BCG XX",
+        "type": "text",
+        "obsAnswerConceptUuids": "a89840bc-1350-11df-a1f1-0026b9348838",
+        "id": "984",
+        "obsConceptUuid": "a898d0a4-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a8a08588-1350-11df-a1f1-0026b9348838",
+        "idHtml": "penta",
+        "label": "Penta XX",
+        "type": "text",
+        "obsAnswerConceptUuids": "96ecae74-0704-475e-ade3-17cd6b080926",
+        "id": "984",
+        "obsConceptUuid": "a898d0a4-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a8a08588-1350-11df-a1f1-0026b9348838",
+        "id": "1737",
+        "obsConceptUuid": "a89ef54c-1350-11df-a1f1-0026b9348838",
+        "type": "text"
+      },
+      {
+        "obsConceptGroupUuid": "a8a08588-1350-11df-a1f1-0026b9348838",
+        "idHtml": "polio XX",
+        "type": "text",
+        "obsAnswerConceptUuids": "a897de60-1350-11df-a1f1-0026b9348838",
+        "id": "984",
+        "obsConceptUuid": "a898d0a4-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a8a08588-1350-11df-a1f1-0026b9348838",
+        "id": "1737",
+        "obsConceptUuid": "a89ef54c-1350-11df-a1f1-0026b9348838",
+        "type": "text"
+      },
+      {
+        "obsConceptGroupUuid": "a8a08588-1350-11df-a1f1-0026b9348838",
+        "idHtml": "PCV",
+        "label": "PCV XX",
+        "obsAnswerConceptUuids": "f60456b4-2797-4f98-8fb5-41830f205427",
+        "id": "984",
+        "type": "text",
+        "obsConceptUuid": "a898d0a4-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a8a08588-1350-11df-a1f1-0026b9348838",
+        "id": "1737",
+        "obsConceptUuid": "a89ef54c-1350-11df-a1f1-0026b9348838",
+
+        "type": "text"
+      },
+      {
+        "obsConceptGroupUuid": "a8a08588-1350-11df-a1f1-0026b9348838",
+        "idHtml": "rotavirus",
+        "label": "Rotavirus XX",
+        "type": "text",
+        "obsAnswerConceptUuids": "22b92c90-026c-469c-9e63-786ecc1cd2fc",
+        "id": "984",
+        "obsConceptUuid": "a898d0a4-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a8a08588-1350-11df-a1f1-0026b9348838",
+        "id": "1737",
+        "obsConceptUuid": "a89ef54c-1350-11df-a1f1-0026b9348838",
+        "type": "text"
+      },
+      {
+        "obsConceptGroupUuid": "a8a08588-1350-11df-a1f1-0026b9348838",
+        "idHtml": "measles",
+        "label": "Measles XX",
+        "type": "text",
+        "obsAnswerConceptUuids": "a8909844-1350-11df-a1f1-0026b9348838",
+        "id": "984",
+        "obsConceptUuid": "a898d0a4-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "a8a08588-1350-11df-a1f1-0026b9348838",
+        "id": "1737",
+        "obsConceptUuid": "a89ef54c-1350-11df-a1f1-0026b9348838",
+        "type": "text"
+      },
+      {
+        "obsConceptGroupUuid": "a8a08588-1350-11df-a1f1-0026b9348838",
+        "idHtml": "vitaminA",
+        "label": "Vitamin A XX",
+        "type": "text",
+        "obsAnswerConceptUuids": "a8a48430-1350-11df-a1f1-0026b9348838",
+        "id": "984",
+        "obsConceptUuid": "a898d0a4-1350-11df-a1f1-0026b9348838"
+      }
+    ,
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "feedingplan",
+        "label":"21r. Feeding plan",
+        "id_a": "1402, 1173, 5254, 968, 1403, 1405, 6985, 1401",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a89cca10-1350-11df-a1f1-0026b9348838",
+          "a89ad1ec-1350-11df-a1f1-0026b9348838",
+          "a8a70156-1350-11df-a1f1-0026b9348838",
+          "a898bf56-1350-11df-a1f1-0026b9348838",
+          "a89ccad8-1350-11df-a1f1-0026b9348838",
+          "a89cce98-1350-11df-a1f1-0026b9348838",
+          "39213beb-4d3d-493a-ad5d-40db847a07c3",
+          "a89cc934-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "985",
+        "obsConceptUuid": "a898d16c-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Breastfeeding",
+          " Expressed Breast Milk",
+          " Formula",
+          " Cow's/Animal milk",
+          " Other liquids (uji",
+          " tea",
+          " soup",
+          " juice)",
+          " solid food(ugali",
+          " potatoes",
+          " bananas)",
+          " Initiate complementary feeding",
+          " On family diet(for older children)"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label":"21s. If this is a change, reason:",
+        "idHtml": "feedingPlanChangeReason",
+        "id_a": "989, 988, 987, 5622",
+        "type": "radio",
+        "obsAnswerConceptUuids": [
+          "a898d478-1350-11df-a1f1-0026b9348838",
+          "a898d3ba-1350-11df-a1f1-0026b9348838",
+          "a898d2f2-1350-11df-a1f1-0026b9348838",
+          "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+        ],
+        "id": "986",
+        "obsConceptUuid": "a898d234-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels": [
+          "Age",
+          " Affordability",
+          " Reaction",
+          " Other specify:"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "feedingplanreason",
+        "label":"Other specify",
+        "id": "1915",
+        "obsConceptUuid": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+        "type": "text"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "disclosureplan",
+        "label":"Disclosure Plan:22a. This child XXX",
+        "id": "6671",
+        "type": "text",
+        "obsConceptUuid": "7cad5b2e-867f-4f6e-9e15-4b205712bd31"
+      },
+      {
+        "obsConceptGroupUuid": "af46861e-597a-48a3-b3d4-a134d0b1c5fa",
+        "idHtml": "testordered",
+        "label":"Test Ordered:XX",
+        "type": "text",
+        "id": "1271",
+        "obsConceptUuid": "a89c2268-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "idHtml": "referralordered",
+        "type": "text",
+        "label":"Test Ordered:SEARCH",
+        "id": "1272",
+        "obsConceptUuid": "a89c2344-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label": "Inpatient Care/Hospitalisation XX",
+        "type": "text",
+        "obsAnswerConceptUuids": "057dae68-3d6f-4d79-926c-ed75a0ce7fd5",
+        "id": "1272",
+        "obsConceptUuid": "a89c2344-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptUuid": "a89c2420-1350-11df-a1f1-0026b9348838",
+        "label":"25. Referrals Ordered:",
+        "type": "multiCheckbox",
+        "id_a": "1274,1275,5622",
+        "obsAnswerConceptUuids": [
+          "a89c24fc-1350-11df-a1f1-0026b9348838",
+          "a89c25d8-1350-11df-a1f1-0026b9348838",
+          "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+        ],
+        "obsAnswerLabels": [
+          "MTRH",
+          "Health Centre",
+          "Other (specify):"
+        ]
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label": "specify:xxx",
+        "idHtml": "referralOrderedOtherText",
+        "type": "text",
+        "id": "1915",
+        "obsConceptUuid": "a8a06fc6-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "label": "26. Discontinued from HIV follow up, negative XX CHeckbox",
+        "type": "text",
+        "obsAnswerConceptUuids": "a899b35c-1350-11df-a1f1-0026b9348838",
+        "id": "1946",
+        "obsConceptUuid": "a8a08704-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptUuid": "a89c2e5c-1350-11df-a1f1-0026b9348838",
+        "label": "27. Transfer care to other centre:",
+        "id":"1285",
+        "type": "multiCheckbox",
+        "id_a": "1286,1287",
+        "obsAnswerConceptUuids": [
+          "a89c2f42-1350-11df-a1f1-0026b9348838",
+          "a89c301e-1350-11df-a1f1-0026b9348838"
+        ],
+        "obsAnswerLabels": [
+          "AMPATH",
+          "Non-Ampath"
+        ]
+      }
+    ,
+      {
+        "obsConceptGroupUuid": "",
+        "type": "text",
+        "label": "weeks",
+        "type": "text",
+        "id": "1893",
+        "obsConceptUuid": "a8a05f4a-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "type": "text",
+        "label": "Months",
+        "type": "text",
+        "id": "1894",
+        "obsConceptUuid": "a8a06008-1350-11df-a1f1-0026b9348838"
+      },
+      {
+        "obsConceptGroupUuid": "",
+        "type": "datepicker",
+        "idHtml": "returnClinicDate",
+        "label": "Return to clinic date:",
+        "allowFutureDate": "True",
+        "id": "5096",
+        "obsConceptUuid": "a8a666ba-1350-11df-a1f1-0026b9348838"
+      }
+
+    ]
+  }
+}

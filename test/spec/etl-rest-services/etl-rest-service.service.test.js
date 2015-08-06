@@ -19,8 +19,8 @@
       etlRestService = $injector.get('EtlRestService');
       settingsService = $injector.get('EtlRestServicesSettings');
     }));
-	
-	beforeEach(inject(function ($injector) {
+
+	beforeEach(inject(function () {
       callbacks = {
         onSuccessCalled: false,
         onFailedCalled: false,

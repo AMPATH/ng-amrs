@@ -1,3 +1,6 @@
+/*
+jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
+*/
 (function() {
   'use strict'
 
@@ -17,26 +20,21 @@
           uuid: 'test-patient-uuid'
         }
       }
-      
+
       var dummyResponse = {
-        "results" :[
-                          {
-                            "uuid": "encounter-uuid-for-first-element",
-                            "display": "ADULTRETURN 01/02/2006",
-                          },
-                          {
-                            "uuid": "bf218490-1691-11df-97a5-7038c432aabf",
-                            "display": "ADULTRETURN 07/02/2006",
-                            "links": [
-                              {
-                                "uri": testRestUrl+"encounter/bf218490-1691-11df-97a5-7038c432aabf",
-                                "rel": "self"
-                              }
-                            ]
-                          }
-                      ]
+        'results' :[{
+              'uuid': 'encounter-uuid-for-first-element',
+              'display': 'ADULTRETURN 01/02/2006',
+            }, {
+              'uuid': 'bf218490-1691-11df-97a5-7038c432aabf',
+              'display': 'ADULTRETURN 07/02/2006',
+              'links': [{
+                  'uri': testRestUrl+'encounter/bf218490-1691-11df-97a5-7038c432aabf',
+                  'rel': 'self'
+                }]
+          }]
       }
-      
+
       beforeEach(inject(function($injector) {
         httpBackend = $injector.get('$httpBackend');
         encounterResService = $injector.get('EncounterResService');
@@ -59,7 +57,7 @@
       it('Should call the appropriate rest end point when getEncounter is called', function() {
         //undo once you figure out the error
         //Trying to solve the karma problem so that travis can run perfectly well
-        httpBackend.expectGET(testRestUrl + 'encounter/encounter-test-uuid').respond(dummyEncounter);
+        httpBackend.expectGET(testRestUrl + 'encounter/encounter-test-uuid?v=default').respond(dummyEncounter);
         encounterResService.getEncounterByUuid('encounter-test-uuid', function(data){
           expect(data.uuid).to.equal(dummyEncounter.uuid);
         });
@@ -77,7 +75,7 @@
           },function(error){console.log('Error')});
           httpBackend.flush();
       });
-      
+
       it('getPatientEncounters should accept a params list object', function (){
         var params = { patientUuid : 'patient-uuid', rep: 'ref'};
         httpBackend.expectGET(testRestUrl + 'encounter?patient=patient-uuid&v=ref').respond(dummyResponse);

@@ -35,7 +35,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
             var form = FormsMetaData.getForm($stateParams.formuuid);
             console.log('Selected Form');
             console.log(form);
-            var payLoad = FormentryService.getPayLoad($scope.vm.userFields,$scope.vm.patient, form);
+            var payLoad = FormentryService.getPayLoad($scope.vm.userFields,$scope.vm.patient, form, params.uuid);
             EncounterResService.saveEncounter(payLoad,function (data) {
               // body...
               console.log(data);
@@ -46,19 +46,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
 
  var formSchema;
 
-
-
-//trying to get broadcasted data
-$scope.$on('patientData', function(event, data) {
-    // do something useful here;
-    $scope.vm.patient = data;
-    console.log('broadcasted Patient data', $scope.vm.patient);
-});
-
  /*
  Test logic to get either a blank form or form filled with existing data.
  */
- var params={uuid: $stateParams.encuuid}; //drop after testing
+ //8a79e511-edb1-4b9d-a94e-ab51e4f6528c
+ //var params={uuid: $stateParams.encuuid }; 
+ var params = {uuid: '18a1f142-f2c6-4419-a5db-5f875020b887'};
  var encData;
  $scope.vm.userFields = {};
 
@@ -77,13 +70,13 @@ $scope.$on('patientData', function(event, data) {
    console.log('testing encounter params')
    console.log(params);
    console.log($stateParams);
-   if (params.uuid !== undefined)
+   if ((params.uuid !== undefined) && (params.uuid !== ''))
    {
-     EncounterResService.getEncounter(params,
+     EncounterResService.getEncounterByUuid(params,
        function(data){
        encData = data;
-       //console.log('Rest Feeback')
-       //console.log(encData);
+       console.log('Rest Feeback')
+       console.log(encData);
        FormentryService.getEncounter(encData,$scope.vm.formlyFields);
       });
     }
