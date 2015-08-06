@@ -40,6 +40,9 @@
 				<li>
 					<a data-target="#tab3" data-toggle="tab">Forms</a>
 				</li>
+				<li>
+					<a data-target="#tab4" data-toggle="tab">HIV Summary</a>
+				</li>
 			</ul>
 			<div class="tab-content col-md-10">
 				<div class="tab-pane active" id="tab1">
@@ -71,6 +74,17 @@
 						<p><a href="#/form/form2/patient/{{patient.uuid()}}">test form 2</a></p>
 						<p><a href="#/form/form3/patient/{{patient.uuid()}}">test form 3</a></p>
 
+					</div>
+				</div>
+				<div class="tab-pane" id="tab4">
+					<div class="page-header" style="margin-top:-20px;">
+						<h3>HIV Care Summary:
+							<small>Summary</small>
+						</h3>
+					</div>
+					<div class="page-content">
+						<hiv-summary patient-uuid="{{patient.uuid()}}">
+					    </hiv-summary>
 					</div>
 				</div>
 			</div>

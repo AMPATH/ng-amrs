@@ -81,6 +81,9 @@
     <script src="bower_components/angular-ui-select/dist/select.js"></script>
     <script src="bower_components/RWD-Table-Patterns/dist/js/rwd-table.js"></script>
     <script src="bower_components/datejs/build/production/date.min.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-moment/angular-moment.js"></script>
+
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -93,6 +96,7 @@
         <script src="scripts/openmrs-rest-services/openmrs-rest-services.module.js"></script>
         <script src="scripts/patient-dashboard/patient-dashboard.module.js"></script>
         <script src="scripts/formentry/formentry.module.js"></script>
+        <script src="scripts/etl-rest-services/etl-rest-services.module.js"></script>
 
         <!-- Services -->
         <script src="scripts/openmrs-rest-services/openmrs-settings.service.js"></script>
@@ -107,6 +111,8 @@
         <script src="scripts/openmrs-rest-services/openmrs-rest.service.js"></script>
         <script src="scripts/formentry/services/formsmetadata.service.js"></script>
         <script src="scripts/formentry/services/search-data.service.js"></script>
+        <script src="scripts/etl-rest-services/etl-rest-service.service.js"></script>
+        <script src="scripts/etl-rest-services/etl-rest-services-settings.service.js"></script>
         <script src="scripts/openmrs-rest-services/concept.service.js"></script>
 
         <!-- models -->
@@ -121,14 +127,16 @@
         <script src="scripts/models/concept-name.model.js"></script>
         <script src="scripts/models/concept-class.model.js"></script>
         <script src="scripts/models/concept.model.js"></script>
-        
+
         <!-- etl models -->
         <script src="scripts/models/hiv-summary.etl.model.js"></script>
-        
+
         <!-- directives -->
         <script src="scripts/main/directives/main-navigation.directive.js"></script>
         <script src="scripts/patient-dashboard/directives/patient-demographics.directive.js"></script>
+        <script src="scripts/patient-dashboard/directives/hiv-summary.directive.js"></script>
         <script src="scripts/patient-dashboard/directives/encounters.directive.js"></script>
+
 
         <!-- Controllers -->
         <script src="scripts/patient-dashboard/controllers/patient-dashboard.controller.js"></script>

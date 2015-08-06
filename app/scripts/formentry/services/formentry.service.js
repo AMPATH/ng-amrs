@@ -8,9 +8,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         .module('app.formentry')
         .factory('FormentryService', FormentryService);
 
-    FormentryService.$inject = ['$http', 'SearchDataService'];
+    FormentryService.$inject = ['$http', 'SearchDataService', 'moment'];
 
-    function FormentryService($http, SearchDataService) {
+    function FormentryService($http, SearchDataService, moment) {
         var service = {
             createForm: createForm,
             getPayLoad: getPayLoad,
@@ -551,7 +551,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             if(field.model.encounter === 'enc_encounterDatetime' && field.model[val] !== undefined)
             {
               //add property to the payload
-              payLoad.encounterDatetime = field.model[val];
+              payLoad.encounterDatetime = getFormattedValue(field.model[val]);
             }
             else if(field.model.encounter === 'enc_encounterLocation' && field.model[val] !== undefined)
             {
@@ -592,13 +592,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                    //console.log(items);
                   for (var l = 0; l < items.length; l++)
                   {
-                    obs.push({concept:field.model.obsConceptUuid, value:items[l]});
+                    obs.push({concept:field.model.obsConceptUuid, value:getFormattedValue(items[l])});
                   }
                 }
                 else {
                   //all other inputs
                   //add property to obs
-                  obs.push({concept:field.model.obsConceptUuid, value:field.model[val]});
+                  obs.push({concept:field.model.obsConceptUuid, value:getFormattedValue(field.model[val])});
 
                 }
               }
@@ -858,12 +858,12 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                      //console.log(items);
                     for (var l = 0; l < items.length; l++)
                     {
-                      groupMembers.push({concept:field.model.obsConceptUuid, value:items[l]});
+                      groupMembers.push({concept:field.model.obsConceptUuid,  value:getFormattedValue(items[l])});
                     }
                   }
                   else {
                     //add property to obs
-                    groupMembers.push({concept:field.model.obsConceptUuid, value:field.model[val]});
+                    groupMembers.push({concept:field.model.obsConceptUuid, value: getFormattedValue(field.model[val])});
 
                   }
                 }
@@ -911,13 +911,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                              //console.log(items);
                             for (var l = 0; l < items.length; l++)
                             {
-                              groupMembers.push({concept:colKey.split('_')[1], value:items[l]});
+                              groupMembers.push({concept:colKey.split('_')[1], value: getFormattedValue(items[l])});
 
                             }
                           }
                           else {
                             //add property to obs
-                            groupMembers.push({concept:colKey.split('_')[1], value:modelVal[colKey]});
+                            groupMembers.push({concept:colKey.split('_')[1], value:getFormattedValue(modelVal[colKey])});
 
                           }
                         }
@@ -1342,6 +1342,24 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
           return formSchema;
 
+        }
+        
+        function getFormattedValue(value){
+            if(!value) return value;
+            
+            if(Object.prototype.toString.call(value) === '[object Date]'){
+               value = moment(value).format('YYYY-MM-DDTHH:mm:ssZ');
+            }
+            
+            //moment().utc();
+            var isDateValid = moment(value, 'YYYY-MM-DDTHH:mm:ssZ').isValid();
+            if(isDateValid)
+            {
+              var localTime = moment(value).format('YYYY-MM-DDTHH:mm:ss.SSSZZ');
+              return localTime;
+            }
+                
+            return value; 
         }
 
     }

@@ -3,6 +3,7 @@
 
     angular
         .module('app.patientdashboard', [
-            'app.openmrsRestServices'
+            'app.openmrsRestServices',
+            'app.etlRestServices'
         ]);
 })();

@@ -1,0 +1,20 @@
+<div ng-hide="hasSummary === true" class="bg-warning">
+  <p>No summary available</p>
+</div>
+<ul class="list-group">
+  <li class="list-group-item" 
+      style="font-size:large">Last Appt Date: {{hivSummary.encounterDatetime().substring(0,10)}} 
+  </li>
+  <li class="list-group-item"
+      style="font-size:large">RTC Date: {{hivSummary.rtcDate().substring(0,10)}}
+  </li>
+  <li class="list-group-item" 
+      style="font-size:large">Last Viral Load: {{hivSummary.vl_1()}} ({{hivSummary.vl_1Date().substring(0,10)}})
+  </li>
+  <li class="list-group-item" 
+      style="font-size:large">Last CD4 Count: {{hivSummary.cd4_1()}} ({{hivSummary.cd4_1Date().substring(0,10)}})
+  </li>
+  <li class="list-group-item" 
+      style="font-size:large">Current ARV Regimen: {{hivSummary.curArvMeds()}}
+  </li>
+</ul>

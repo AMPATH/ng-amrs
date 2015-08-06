@@ -49,8 +49,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
  /*
  Test logic to get either a blank form or form filled with existing data.
  */
-
- var params={uuid: '8a79e511-edb1-4b9d-a94e-ab51e4f6528c'/*'33158613-0f76-45a5-9c49-28f5928185aa'*//*$stateParams.encuuid*/}; //drop after testing
+ var params={uuid: $stateParams.encuuid };
 
  var encData;
  $scope.vm.userFields = {};
