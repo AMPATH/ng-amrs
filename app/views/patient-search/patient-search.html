@@ -7,7 +7,7 @@
   previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination> -->
   <div>
     <label>Enter the Patient Name:</label>
-    <input type="text" ng-model="searchString" ng-model-options="{ debounce: 500 }" placeholder="Patient Search..." /> <img ng-show="isBusy" src="images/ajax-loader.gif"/>
+    <input type="text" ng-model="searchString" ng-model-options="{ debounce: 500 }" placeholder="Patient Search..." /> <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
   </div> 
   <fieldset ng-show="patients.length > 0">
     <legend>Patients</legend>
