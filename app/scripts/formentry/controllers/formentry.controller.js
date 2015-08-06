@@ -66,18 +66,27 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
  //var params = {uuid: '18a1f142-f2c6-4419-a5db-5f875020b887'};
   var encData;
  $scope.vm.userFields = {};
+ var selectedForm = $stateParams.formuuid;
+ console.log('testing selected Form')
+ console.log(selectedForm);
+
 
  $timeout(function () {
 
+
    // get form schema data
-   var selectedForm = $stateParams.formuuid;
-   console.log('testing selected Form')
-   console.log(selectedForm);
-    FormentryService.getFormSchema(selectedForm, function(schema){
-     formSchema = schema;
-     $scope.vm.userFields = FormentryService.createForm(formSchema);
-     //$scope.vm.userFields = $scope.vm.formlyFields;
-   });
+  //  var selectedForm = $stateParams.formuuid;
+  //  console.log('testing selected Form')
+  FormentryService.getFormSchema(selectedForm, function(schema){
+   formSchema = schema;
+   //$scope.vm.userFields = $scope.vm.formlyFields;
+   if (Object.keys(formSchema).length>0)
+   {
+     FormentryService.createForm(formSchema, function(formlySchema){
+       $scope.vm.userFields = formlySchema;
+     });
+   }
+  });
 
    console.log('testing encounter params')
    console.log(params);
@@ -99,8 +108,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
     }
 
 
- },1000);
-$scope.vm.userFields = $scope.vm.formlyFields;
+},1000);
+//$scope.vm.userFields = $scope.vm.formlyFields;
  //console.log(JSON.stringify($scope.vm.userFields));
 }
 
