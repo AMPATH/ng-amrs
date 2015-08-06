@@ -1,8 +1,8 @@
 {
   "schema":{
-    "form":{"name":"form1", "uuid":"xxx"} ,
+    "form":{"name":"form2", "uuid":"form2"} ,
     "encounter":[
-      {"encounterDatetime":"","type":"datepicker", "labelName":"Visit Date", "idName":"encounterDatetime"},
+      {"encounterDatetime":"","type":"datepicker", "labelName":"Visit Date", "idName":"encounterDatetime","validators":{"type":"date"}},
       {"encounterType":"", "type":"text", "labelName":"Encounter Type", "idName":"encounterType"},
       {"encounterProvider":"", "type":"select", "labelName":"Encounter Provider", "idName":"EncounterProvider"},
       {"encounterLocation":"","type":"select","labelName":"Facility Name", "idName":"encounterLocation"},
@@ -149,7 +149,7 @@
         "obsConceptUuid":"dc1942b2-5e50-4adc-949d-ad6c905f054e","id":"7029",
         "type":"datepicker",
         "label":"4b. If Unscheduled, actual scheduled date",
-        "validators":{}
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -316,7 +316,7 @@
         ]
       }
 
-      ,{
+    ,{
         "obsConceptGroupUuid": "a89c9658-1350-11df-a1f1-0026b9348838",
         "label":"9a. Previous Immunizations:",
         "idHtml": "previmmun",
@@ -519,8 +519,10 @@
         "obsConceptGroupUuid": "",
         "label":"13c.If started since last visit record the date",
         "idHtml": "arvstartdatesincelast",
+        "type":"datepicker",
         "id": "1499",
-        "obsConceptUuid": "a89d200a-1350-11df-a1f1-0026b9348838"
+        "obsConceptUuid": "a89d200a-1350-11df-a1f1-0026b9348838",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -744,7 +746,7 @@
         "obsConceptUuid":"a8a176b4-1350-11df-a1f1-0026b9348838","id":"2041",
         "type":"datepicker",
         "label":"Date:",
-        "validators":{}
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "a8a072c8-1350-11df-a1f1-0026b9348838",
@@ -1400,7 +1402,8 @@
         "id": "729",
         "type": "datepicker",
         "obsConceptUuid": "a8970954-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1410,7 +1413,8 @@
         "id": "678",
         "obsConceptUuid": "a896dea2-1350-11df-a1f1-0026b9348838",
         "showDate": "true",
-        "allowFutureDates": "false"
+        "allowFutureDates": "false",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1419,7 +1423,8 @@
         "label":"Hgb g/dL",
         "id": "21",
         "obsConceptUuid": "a8908a16-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1428,7 +1433,8 @@
         "label":"MCV",
         "id": "851",
         "obsConceptUuid": "a898201e-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1437,7 +1443,8 @@
         "label":"ALC/ mm3",
         "id": "952",
         "obsConceptUuid": "a898b20e-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1446,7 +1453,8 @@
         "label":"CD4*",
         "id": "5497",
         "obsConceptUuid": "a8a8bb18-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1455,7 +1463,8 @@
         "label":"CD4%",
         "id": "730",
         "obsConceptUuid": "a8970a26-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1464,7 +1473,8 @@
         "type": "datepicker",
         "id": "856",
         "obsConceptUuid": "a8982474-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1473,7 +1483,8 @@
         "id": "790",
         "label":"Creatinine mmol/L",
         "obsConceptUuid": "a897e450-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1482,7 +1493,8 @@
         "idHtml": "testresultSGPT",
         "id": "654",
         "obsConceptUuid": "a896ca48-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1491,7 +1503,8 @@
         "id": "1030",
         "type": "datepicker",
         "obsConceptUuid": "a898fe80-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1500,7 +1513,8 @@
         "id": "7031",
         "type": "datepicker",
         "obsConceptUuid": "c0dfc40c-9ab1-4d82-9916-560a0bba3afa",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1509,7 +1523,8 @@
         "id": "1040",
         "type": "datepicker",
         "obsConceptUuid": "a8999dfe-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1518,7 +1533,8 @@
         "idHtml": "testresultlongelisa",
         "id": "299",
         "obsConceptUuid": "a8945678-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1528,7 +1544,8 @@
         "type": "datepicker",
         "obsConceptUuid": "a89d278a-1350-11df-a1f1-0026b9348838",
         "showDate": "true",
-        "allowFutureDates": "false"
+        "allowFutureDates": "false",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1537,7 +1554,8 @@
         "idHtml": "testresultGENExpert",
         "id": "8070",
         "obsConceptUuid": "741517cf-8bac-4755-b289-8dd2a2df7962",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1546,7 +1564,8 @@
         "idHtml": "testresultAFBsmear",
         "id": "307",
         "obsConceptUuid": "a8945d4e-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1555,7 +1574,8 @@
         "label":"Sputum Culture",
         "id": "2311",
         "obsConceptUuid": "a8a462a2-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -1564,7 +1584,8 @@
         "idHtml": "testresultCXR",
         "id": "12",
         "obsConceptUuid": "a8908192-1350-11df-a1f1-0026b9348838",
-        "showDate": "true"
+        "showDate": "true",
+        "validators":{"type":"date"}
       },
       {
         "obsConceptGroupUuid": "",
@@ -2430,7 +2451,8 @@
         "label": "Return to clinic date:",
         "allowFutureDate": "True",
         "id": "5096",
-        "obsConceptUuid": "a8a666ba-1350-11df-a1f1-0026b9348838"
+        "obsConceptUuid": "a8a666ba-1350-11df-a1f1-0026b9348838",
+        "validators":{"type":"date"}
       }
 
     ]

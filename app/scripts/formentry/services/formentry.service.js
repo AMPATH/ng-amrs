@@ -532,7 +532,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             {
               return; //skip current iteration
             }
-
             var val= field.model.encounter;
             //console.log('encounter log');
             //console.log(val);
@@ -1343,14 +1342,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           return formSchema;
 
         }
-        
+
         function getFormattedValue(value){
             if(!value) return value;
-            
+
             if(Object.prototype.toString.call(value) === '[object Date]'){
                value = moment(value).format('YYYY-MM-DDTHH:mm:ssZ');
             }
-            
+
             //moment().utc();
             var isDateValid = moment(value, 'YYYY-MM-DDTHH:mm:ssZ').isValid();
             if(isDateValid)
@@ -1358,8 +1357,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               var localTime = moment(value).format('YYYY-MM-DDTHH:mm:ss.SSSZZ');
               return localTime;
             }
-                
-            return value; 
+
+            return value;
         }
 
     }
