@@ -3,8 +3,9 @@
         <accordion-group  ng-repeat="encounter in vm.encounterList" is-open="vm.status.isOpen[$index]" >
             <accordion-heading>
                 {{encounter.encounterDatetime | date: 'dd-MM-yyyy'}} | 
-                {{encounter.encounterType.display}} | {{encounter.location.display}} <i class="fa chevron-icon" 
-                ng-class="{'fa-chevron-down': vm.status.isOpen[$index], 'fa-chevron-right': !vm.status.isOpen[$index]}"></i>
+                {{encounter.encounterType.display}} | {{encounter.location.display}}
+                 <i class="fa chevron-icon" ng-class="{'fa-chevron-down': vm.status.isOpen[$index], 
+                 'fa-chevron-right': !vm.status.isOpen[$index]}"></i>
             </accordion-heading>
             <div>
               <table class="table table-striped table-bordered table-condensed table-hover" cellspacing="0">
@@ -17,6 +18,21 @@
                   </tr>
                 </tbody>  
               </table>
+                <table class="table table-striped table-bordered table-condensed table-hover" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <td>Observations Item(s)</td>
+                      <td>Value</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <tr ng-repeat="obs in encounter.obs">
+                          <td>{{obs.concept.display}}</td>
+                          <td>{{obs.value.display || obs.value}}</td>
+                      </tr>
+                  </tbody>
+                </table>
+                </legend>
             </div>
         </accordion-group>
     </accordion>
