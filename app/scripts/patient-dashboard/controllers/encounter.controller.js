@@ -5,7 +5,7 @@
     .module('app.patientdashboard')
     .controller('EncounterCtrl', EncounterCtrl)
 
-    EncounterCtrl.$inject = [
+  EncounterCtrl.$inject = [
                         '$scope',
                         '$stateParams',
                         '$timeout',
@@ -22,7 +22,11 @@
     }
 
     $timeout(function(){
-      EncounterResService.getPatientEncounters($stateParams.uuid, function(data) {
+      var params = {
+        patientUuid: $stateParams.uuid,
+        rep: 'full'
+      }
+      EncounterResService.getPatientEncounters(params, function(data) {
         vm.encounterList = data;
         vm.status = {
           isOpen: new Array(vm.encounterList.length)
