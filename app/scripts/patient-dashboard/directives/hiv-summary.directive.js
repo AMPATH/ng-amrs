@@ -20,22 +20,22 @@ jshint -W003, -W026
         return directive;
     }
     
-    hivSummaryController.$inject = ['$scope', 'EtlRestService'];
+    hivSummaryController.$inject = ['$scope', 'EtlRestService', 'HivSummaryModel'];
     
-    function hivSummaryController(scope, EtlRestService) {
+    function hivSummaryController(scope, EtlRestService, HivSummaryModel) {
         var vm = this;
-        scope.hivSummary = [];
+        scope.hivSummary = {};
         
         vm.fetchHivSummary = function(patientUuid) {
             EtlRestService.getHivSummary(patientUuid, undefined, undefined, onFetchHivSummarySuccess, onFetchHivSummaryFailed);
         }
         
         function onFetchHivSummarySuccess(hivData) {
-            scope.hivSummary = hivData.result[0];
+            scope.hivSummary = new HivSummaryModel.hivSummary(hivData.result[0]);
         }
         
         function onFetchHivSummaryFailed(error) {
-           scope.hivSummary = [];
+           scope.hivSummary = {};
         }
     }
 
