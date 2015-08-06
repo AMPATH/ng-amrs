@@ -1,6 +1,6 @@
 {
   "schema":{
-    "form":{"name":"form1", "uuid":"xxx"} ,
+    "form":{"name":"form2", "uuid":"xxx"} ,
     "encounter":[
       {"encounterDatetime":"","type":"datepicker", "labelName":"Visit Date", "idName":"encounterDatetime"},
       {"encounterType":"", "type":"text", "labelName":"Encounter Type", "idName":"encounterType"},
@@ -316,7 +316,7 @@
         ]
       }
 
-      ,{
+    ,{
         "obsConceptGroupUuid": "a89c9658-1350-11df-a1f1-0026b9348838",
         "label":"9a. Previous Immunizations:",
         "idHtml": "previmmun",
@@ -519,6 +519,7 @@
         "obsConceptGroupUuid": "",
         "label":"13c.If started since last visit record the date",
         "idHtml": "arvstartdatesincelast",
+        "type":"datepicker",
         "id": "1499",
         "obsConceptUuid": "a89d200a-1350-11df-a1f1-0026b9348838"
       },

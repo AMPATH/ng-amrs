@@ -1,6 +1,6 @@
 {
   "schema":{
-    "form":{"name":"form1", "uuid":"xxx"} ,
+    "form":{"name":"form3", "uuid":"xxx"} ,
     "encounter":[
       {"encounterDatetime":"","type":"datepicker", "labelName":"Visit Date", "idName":"encounterDatetime"},
       {"encounterProvider":"", "type":"provider-field", "labelName":"Encounter Provider", "idName":"encounterProvider"},
@@ -134,9 +134,14 @@
       {"obsConceptGroupUuid":"a89a94ca-1350-11df-a1f1-0026b9348838","id_g":"1146",
         "idHtml":"delType",
         "id":"1846",
-
+        "type":"radio",
+        "label":"LAST PREGNANCY OUTCOME LL",
         "obsConceptUuid":"a89fff0a-1350-11df-a1f1-0026b9348838",
-        "answerconceptIds":"48,6648,6782",
+        "obsAnswerConceptUuids":[
+          "a890a1b8-1350-11df-a1f1-0026b9348838",
+          "e8074110-b989-45e3-b89c-d6092d1a2fd7",
+          "bdde6796-fc68-4a84-b569-56cbeb7e5101"
+        ],
         "obsAnswerLabels":["Abortion(Loss prior to 28weeks)","Preterm(28-36weeks)","Term(>37weeks)"]
       },
       {"obsConceptGroupUuid":"a89a94ca-1350-11df-a1f1-0026b9348838","id_g":"1146",
@@ -267,25 +272,25 @@
         "obsConceptUuid":"a8a0b42c-1350-11df-a1f1-0026b9348838"
       },
       {
-      "obsConceptUuid":"a89abee6-1350-11df-a1f1-0026b9348838",
-      "label":"11. Infant Feeding(Tick all that apply)",
-      "type":"multiCheckbox",
-      "id":"1151",
+        "obsConceptUuid":"a89abee6-1350-11df-a1f1-0026b9348838",
+        "label":"11. Infant Feeding(Tick all that apply)",
+        "type":"multiCheckbox",
+        "id":"1151",
         "id_a":"6985,1152,5526,5254,6046",
-      "obsAnswerConceptUuids":[
-        "39213beb-4d3d-493a-ad5d-40db847a07c3",
-        "a89abfc2-1350-11df-a1f1-0026b9348838",
-        "a8a8d9b8-1350-11df-a1f1-0026b9348838",
-        "a8a70156-1350-11df-a1f1-0026b9348838",
-        "a8ae86e2-1350-11df-a1f1-0026b9348838"],
-      "obsAnswerLabels":[
-        "11a.Complimentary Feeding",
-        "Completed Weaning",
-        "Exclusive Breastfeeding",
-        "Formula Feeding",
-        "Mixed Feeding (Infant 6months old)(Provide Additional Lactational Counselling)"
+        "obsAnswerConceptUuids":[
+          "39213beb-4d3d-493a-ad5d-40db847a07c3",
+          "a89abfc2-1350-11df-a1f1-0026b9348838",
+          "a8a8d9b8-1350-11df-a1f1-0026b9348838",
+          "a8a70156-1350-11df-a1f1-0026b9348838",
+          "a8ae86e2-1350-11df-a1f1-0026b9348838"],
+        "obsAnswerLabels":[
+          "11a.Complimentary Feeding",
+          "Completed Weaning",
+          "Exclusive Breastfeeding",
+          "Formula Feeding",
+          "Mixed Feeding (Infant 6months old)(Provide Additional Lactational Counselling)"
         ]
-    },
+      },
       {"obsConceptGroupUuid":"",
         "type":"text",
         "idHtml":"inffeedDuration",
@@ -373,7 +378,7 @@
         "idHtml":"currmedtreamentCate",
         "label":"13d. Treatment Categories",
         "id_a":"6693,6694,6695",
-       "type":"radio",
+        "type":"radio",
         "obsAnswerConceptUuids":[
           "034047bd-3fa1-4b2a-b0f0-2787e9b9f7b3",
           "8f8a715d-e49a-4b2c-aa3a-83fa9d7a4254",
@@ -478,7 +483,7 @@
       },
       {"obsConceptGroupUuid":"",
         "type":"datepicker",
-         "idHtml":"tbstartDate",
+        "idHtml":"tbstartDate",
         "label":"Start Date of TB treatment",
         "id":"1113",
         "obsConceptUuid":"a899e5f2-1350-11df-a1f1-0026b9348838",
@@ -507,37 +512,37 @@
             "id":"1111",
             "type":"select",
             "obsAnswerConceptUuids":[
-            "a899f51a-1350-11df-a1f1-0026b9348838",
-            "a897d1a4-1350-11df-a1f1-0026b9348838",
-            "a8a382ba-1350-11df-a1f1-0026b9348838",
-            "a89b1ca6-1350-11df-a1f1-0026b9348838",
-            "a899e19c-1350-11df-a1f1-0026b9348838",
-            "a8971c64-1350-11df-a1f1-0026b9348838",
-            "a896cc00-1350-11df-a1f1-0026b9348838",
-            "a8a3243c-1350-11df-a1f1-0026b9348838",
-            "a8ac5f2a-1350-11df-a1f1-0026b9348838",
-            "b8aa06ca-93c6-40ea-b144-c74f841926f4",
-            "a896cc00-1350-11df-a1f1-0026b9348838",
-            "a8952e4a-1350-11df-a1f1-0026b9348838",
-            "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-            "a89c1ef8-1350-11df-a1f1-0026b9348838"
+              "a899f51a-1350-11df-a1f1-0026b9348838",
+              "a897d1a4-1350-11df-a1f1-0026b9348838",
+              "a8a382ba-1350-11df-a1f1-0026b9348838",
+              "a89b1ca6-1350-11df-a1f1-0026b9348838",
+              "a899e19c-1350-11df-a1f1-0026b9348838",
+              "a8971c64-1350-11df-a1f1-0026b9348838",
+              "a896cc00-1350-11df-a1f1-0026b9348838",
+              "a8a3243c-1350-11df-a1f1-0026b9348838",
+              "a8ac5f2a-1350-11df-a1f1-0026b9348838",
+              "b8aa06ca-93c6-40ea-b144-c74f841926f4",
+              "a896cc00-1350-11df-a1f1-0026b9348838",
+              "a8952e4a-1350-11df-a1f1-0026b9348838",
+              "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+              "a89c1ef8-1350-11df-a1f1-0026b9348838"
             ],
 
             "obsAnswerLabels":[
-            "(RHZE)",
-            "(RHZ)",
-            "(RHE)",
-            "(RH)",
-            "(EH)",
-            "Ethambutol",
-            "INH",
-            "MDR drugs ",
-            "Pyrazinamide",
-            "Rifabutin",
-            "Rifampicin",
-            "Streptomycin",
-            "Other",
-            "Completed"
+              "(RHZE)",
+              "(RHZ)",
+              "(RHE)",
+              "(RH)",
+              "(EH)",
+              "Ethambutol",
+              "INH",
+              "MDR drugs ",
+              "Pyrazinamide",
+              "Rifabutin",
+              "Rifampicin",
+              "Streptomycin",
+              "Other",
+              "Completed"
             ],
             "id_a":"1131,768,2231,1194,1108,745,656,2161,5829,6983,656,438,5622,1267",
             "label":"TB Regimen:",
@@ -885,12 +890,12 @@
         "obsAnswerLabels":["HIGH LEVEL OF URIC ACID","HYPERURICAEMIA","HYPERURICEMIA","NEUROPATHY","ANEMIA","ANAEMIA","ANEMIA NOS","MILD ANAEMIA","MILD ANEMIA","DIARRHEA","DIARRHEA NOS","DIARRHOEA","HEPATITIS","HEPATITIS NOS","JOINT PAIN","ARTHRALGIA","ATHRALGIA","RHEUMATISM","ABDOMINAL PAIN","ABDOMINAL DISCOMFORT","EPIGASTRIC PAIN","JAUNDICE","ICTERUS","RASH","SKIN RASH","PERIPHERAL NEUROPATHY","PEDAL NEUROPATHY","PERIPHERAL NEURITIS","THROMBOCYTOPENIA","THROMBOPENIA","HEARING DIFFICULTIES","ANOREXIA","LOSS OF APPETITE","PRURITIS","BODY ITCHING","ITCHING","PRURIT","WEIGHT CHANGE","LIPODYSTROPHY","NEUTROPENIA","IMMUNE RECONSTITUTION INFLAMMATORY SYNDROME","IRIS","LACTIC ACIDOSIS","STEVENS-JOHNSON SYNDROME","OTHER NON-CODED","VISION DIFFICULTIES","VISION DIFFICULTIES, NOS","VISION DIFFICULTIES","NAUSEA","NAUSEATED","VOMITING","EMESIS","OLIGURIA","DECREASED URINE OUTPUT","REDUCED URINE VOLUME","TINGLING","TINGLE SENSATION","DYSGEUSIA","DISTORTION OF THE SENSE OF TASTE","LEUCOPENIA","LEUKOPENIA","LEUKOCYTOPENIA","DECREASE IN NUMBER OF WHITE BLOOD CELLS"],
         "obsConceptUuid": "c2ecd5f7-4b47-47ae-b706-3dc5ed98b4db"
       },
-       { "obsConceptGroupUuid": "",
-         "obsConceptUuid":"c2ecd5f7-4b47-47ae-b706-3dc5ed98b4db",
+      { "obsConceptGroupUuid": "",
+        "obsConceptUuid":"c2ecd5f7-4b47-47ae-b706-3dc5ed98b4db",
         "label":"16c. If yes, tick all that apply:",
         "type":"multiCheckbox",
         "id":"6967",
-         "id_a":"3,16,29,1478,1874,1446,821,5890,512,2030,5622",
+        "id_a":"3,16,29,1478,1874,1446,821,5890,512,2030,5622",
         "obsAnswerConceptUuids":["a877c7f6-1350-11df-a1f1-0026b9348838","a890861a-1350-11df-a1f1-0026b9348838","a8909060-1350-11df-a1f1-0026b9348838","a89d0c0a-1350-11df-a1f1-0026b9348838","a8a01dfa-1350-11df-a1f1-0026b9348838","a89cee50-1350-11df-a1f1-0026b9348838","a897fe86-1350-11df-a1f1-0026b9348838","a8accbf4-1350-11df-a1f1-0026b9348838","a895776a-1350-11df-a1f1-0026b9348838","a8a16d0e-1350-11df-a1f1-0026b9348838","a8aaf3e2-1350-11df-a1f1-0026b9348838"],
         "obsAnswerLabels":["Anemia","Diarrhea","Hepatitis","IRIS","Lactic Acidosis","Lipo-dystrophy","Neuropathy","Persistent Vomiting","Rash","Steven-Johnson","Other"]
       },
@@ -923,6 +928,7 @@
       },{"obsConceptGroupUuid":"",
         "id":"5086",
         "label": "/:",
+        "type":"text",
         "obsConceptUuid":"a8a65e36-1350-11df-a1f1-0026b9348838",
         "validators":{}
       },
@@ -1246,15 +1252,15 @@
         "obsAnswerLabels":["Discordant couple"," CD4 less than 500"," WHO stage 3"," WHO stage 4"]
       },
       {"obsConceptGroupUuid":"a8a07688-1350-11df-a1f1-0026b9348838","id_g":"1924",
-      "idHtml":"arvstopreason",
-      "id_a":"1434,843,58,7043,6419,8296,5240,1930,1504,5622,6295,8308,7061,102,44,8297",
-      "label":"22c.Reason for stopping/change/substitution/interruption",
-       "type":"radio",
-      "obsAnswerConceptUuids":["a89ce50e-1350-11df-a1f1-0026b9348838","a8981934-1350-11df-a1f1-0026b9348838","a890a96a-1350-11df-a1f1-0026b9348838","c0c9eab3-46f6-453c-b29d-dc1c242317c5","057dae68-3d6f-4d79-926c-ed75a0ce7fd5","c6537e06-9fc2-47da-b679-e2a32824407f","a8a6f56c-1350-11df-a1f1-0026b9348838","a8a07b10-1350-11df-a1f1-0026b9348838","a89d25fa-1350-11df-a1f1-0026b9348838","a8aaf3e2-1350-11df-a1f1-0026b9348838","a8b03af0-1350-11df-a1f1-0026b9348838","abe0cbb6-8d08-487a-b18e-7af873945fcc","e38b3e51-8a27-4bf6-b0c8-e0b285e4bb2f","a890d1ba-1350-11df-a1f1-0026b9348838","a8909e8e-1350-11df-a1f1-0026b9348838","93fe19e8-fec4-4e4b-85f1-239e1fabd761"],
-      "id":"1252",
-      "obsConceptUuid":"a89b7110-1350-11df-a1f1-0026b9348838",
-      "obsAnswerLabels":["Adherence concerns","Clinical treatment failure","Due to new TB","Drug out of stock","Hospitalization","Illness","Immunologic failure","Lost to follow-up","New drug available","Other patient décisions"," Other","Patient lacks finances","Planned Rx interruption","Risk of Pregnancy","Toxicity","Pregnancy","Virologic failure"]
-    },
+        "idHtml":"arvstopreason",
+        "id_a":"1434,843,58,7043,6419,8296,5240,1930,1504,5622,6295,8308,7061,102,44,8297",
+        "label":"22c.Reason for stopping/change/substitution/interruption",
+        "type":"radio",
+        "obsAnswerConceptUuids":["a89ce50e-1350-11df-a1f1-0026b9348838","a8981934-1350-11df-a1f1-0026b9348838","a890a96a-1350-11df-a1f1-0026b9348838","c0c9eab3-46f6-453c-b29d-dc1c242317c5","057dae68-3d6f-4d79-926c-ed75a0ce7fd5","c6537e06-9fc2-47da-b679-e2a32824407f","a8a6f56c-1350-11df-a1f1-0026b9348838","a8a07b10-1350-11df-a1f1-0026b9348838","a89d25fa-1350-11df-a1f1-0026b9348838","a8aaf3e2-1350-11df-a1f1-0026b9348838","a8b03af0-1350-11df-a1f1-0026b9348838","abe0cbb6-8d08-487a-b18e-7af873945fcc","e38b3e51-8a27-4bf6-b0c8-e0b285e4bb2f","a890d1ba-1350-11df-a1f1-0026b9348838","a8909e8e-1350-11df-a1f1-0026b9348838","93fe19e8-fec4-4e4b-85f1-239e1fabd761"],
+        "id":"1252",
+        "obsConceptUuid":"a89b7110-1350-11df-a1f1-0026b9348838",
+        "obsAnswerLabels":["Adherence concerns","Clinical treatment failure","Due to new TB","Drug out of stock","Hospitalization","Illness","Immunologic failure","Lost to follow-up","New drug available","Other patient décisions"," Other","Patient lacks finances","Planned Rx interruption","Risk of Pregnancy","Toxicity","Pregnancy","Virologic failure"]
+      },
       {"obsConceptGroupUuid":"a8a07688-1350-11df-a1f1-0026b9348838",
         "id_g":"1924","label":"Toxicity cause",
         "type":"text",
@@ -1482,47 +1488,73 @@
         "validators":{}
       },
       {
-      "type":"repeatSection",
-      "sectionTitle":"Medication Plan:",
-      "buttonLabel":"22p. New drugs:",
-      "cols":[
-      {"obsConceptGroupUuid":"a89fe6f0-1350-11df-a1f1-0026b9348838","id_g":"1825",
-        "obsConceptUuid":"a89c218c-1350-11df-a1f1-0026b9348838",
-        "label":"22p. New drugs:",
-        "type":"select",
-        "id":"1270",
-        "obsAnswerConceptUuids":["a899f51a-1350-11df-a1f1-0026b9348838","a897d1a4-1350-11df-a1f1-0026b9348838","a8a382ba-1350-11df-a1f1-0026b9348838","a89b1ca6-1350-11df-a1f1-0026b9348838","a899e19c-1350-11df-a1f1-0026b9348838","a8971c64-1350-11df-a1f1-0026b9348838","a896cc00-1350-11df-a1f1-0026b9348838","a8a3243c-1350-11df-a1f1-0026b9348838","a8ac5f2a-1350-11df-a1f1-0026b9348838","b8aa06ca-93c6-40ea-b144-c74f841926f4","a896cc00-1350-11df-a1f1-0026b9348838","a8952e4a-1350-11df-a1f1-0026b9348838","a8aaf3e2-1350-11df-a1f1-0026b9348838"],
-        "obsAnswerLabels":["(RHZE)","(RHZ)","(RHE)","(RH)","(EH)","Ethambutol","INH","MDR drugs","Pyrazinamide","Rifabutin","Rifampicin","Streptomycin","Other"]
-      },
-      {"obsConceptGroupUuid":"a89fe6f0-1350-11df-a1f1-0026b9348838","id_g":"1825",
-        "id":"1898",
-        "type":"number",
-        "label":"tabs",
-        "obsConceptUuid":"a8a0630a-1350-11df-a1f1-0026b9348838",
-        "validators":{}
-      },
-      {"obsConceptGroupUuid":"a89fe6f0-1350-11df-a1f1-0026b9348838","id_g":"1825",
-        "id":"1899",
-        "type":"number",
-        "label":"mg",
-        "obsConceptUuid":"a8a063c8-1350-11df-a1f1-0026b9348838",
-        "validators":{}
-      },
-      {"obsConceptGroupUuid":"a89fe6f0-1350-11df-a1f1-0026b9348838","id_g":"1825",
-        "obsConceptUuid":"a8a07386-1350-11df-a1f1-0026b9348838",
-        "id":"1920",
-        "type":"number",
-        "label":"tabs/day",
-        "validators":{}
-      },
-      {
-        "obsConceptGroupUuid":"a89fe6f0-1350-11df-a1f1-0026b9348838","id_g":"1825",
-        "id":"1921",
-        "type":"number",
-        "label":"mg/day",
-        "obsConceptUuid":"a8a0744e-1350-11df-a1f1-0026b9348838",
-        "validators":{}
-      }]},
+        "type":"repeatSection",
+        "sectionTitle":"Medication Plan:",
+        "buttonLabel":"22p. New drugs:",
+        "cols":[
+          {"obsConceptGroupUuid":"a89fe6f0-1350-11df-a1f1-0026b9348838","id_g":"1825",
+            "obsConceptUuid":"a89c218c-1350-11df-a1f1-0026b9348838",
+            "label":"22p. New drugs:",
+            "type":"select",
+            "id":"1270",
+            "obsAnswerConceptUuids":[
+              "a899f51a-1350-11df-a1f1-0026b9348838",
+              "a897d1a4-1350-11df-a1f1-0026b9348838",
+              "a8a382ba-1350-11df-a1f1-0026b9348838",
+              "a89b1ca6-1350-11df-a1f1-0026b9348838",
+              "a899e19c-1350-11df-a1f1-0026b9348838",
+              "a8971c64-1350-11df-a1f1-0026b9348838",
+              "a896cc00-1350-11df-a1f1-0026b9348838",
+              "a8a3243c-1350-11df-a1f1-0026b9348838",
+              "a8ac5f2a-1350-11df-a1f1-0026b9348838",
+              "b8aa06ca-93c6-40ea-b144-c74f841926f4",
+              "a896cc00-1350-11df-a1f1-0026b9348838",
+              "a8952e4a-1350-11df-a1f1-0026b9348838",
+              "a8aaf3e2-1350-11df-a1f1-0026b9348838"],
+            "obsAnswerLabels":[
+              "(RHZE)",
+              "(RHZ)",
+              "(RHE)",
+              "(RH)",
+              "(EH)",
+              "Ethambutol",
+              "INH",
+              "MDR drugs",
+              "Pyrazinamide",
+              "Rifabutin",
+              "Rifampicin",
+              "Streptomycin",
+              "Other"]
+          },
+          {"obsConceptGroupUuid":"a89fe6f0-1350-11df-a1f1-0026b9348838","id_g":"1825",
+            "id":"1898",
+            "type":"number",
+            "label":"tabs",
+            "obsConceptUuid":"a8a0630a-1350-11df-a1f1-0026b9348838",
+            "validators":{}
+          },
+          {"obsConceptGroupUuid":"a89fe6f0-1350-11df-a1f1-0026b9348838","id_g":"1825",
+            "id":"1899",
+            "type":"number",
+            "label":"mg",
+            "obsConceptUuid":"a8a063c8-1350-11df-a1f1-0026b9348838",
+            "validators":{}
+          },
+          {"obsConceptGroupUuid":"a89fe6f0-1350-11df-a1f1-0026b9348838","id_g":"1825",
+            "obsConceptUuid":"a8a07386-1350-11df-a1f1-0026b9348838",
+            "id":"1920",
+            "type":"number",
+            "label":"tabs/day",
+            "validators":{}
+          },
+          {
+            "obsConceptGroupUuid":"a89fe6f0-1350-11df-a1f1-0026b9348838","id_g":"1825",
+            "id":"1921",
+            "type":"number",
+            "label":"mg/day",
+            "obsConceptUuid":"a8a0744e-1350-11df-a1f1-0026b9348838",
+            "validators":{}
+          }]},
       {"obsConceptGroupUuid":"",
         "id_a":"1107, 1256, 1257, 1260",
         "label":"22q. Cryptococcus Tx:","type":"radio",
@@ -1651,24 +1683,36 @@
         "id":"1915",
         "obsConceptUuid":"a8a06fc6-1350-11df-a1f1-0026b9348838",
         "validators":{}
-      },
-      {"obsConceptGroupUuid":"",
-        "type":"text",
-        "idHtml":"wks",
-        "label":"weeks",
-        "type":"text",
-        "id":"1893",
-        "obsConceptUuid":"a8a05f4a-1350-11df-a1f1-0026b9348838",
-        "validators":{}
-      },
-      {"obsConceptGroupUuid":"",
-        "idHtml":"mths",
-        "label":"Months",
-        "type":"text",
-        "id":"1894",
-        "obsConceptUuid":"a8a06008-1350-11df-a1f1-0026b9348838",
-        "validators":{}
-      },
+      }
+
+    ,
+
+      {
+      "label":"WWWWWWWWWWWWWWWW GROUPED",
+        "cols":
+      [
+        {
+          "obsConceptGroupUuid": "",
+          "type": "text",
+          "idHtml": "wks",
+          "label": "weeks",
+          "type": "text",
+          "id": "1893",
+          "obsConceptUuid": "a8a05f4a-1350-11df-a1f1-0026b9348838",
+          "validators": {}
+        },
+        {
+          "obsConceptGroupUuid": "",
+          "idHtml": "mths",
+          "label": "Months",
+          "type": "text",
+          "id": "1894",
+          "obsConceptUuid": "a8a06008-1350-11df-a1f1-0026b9348838",
+          "validators": {}
+        }
+      ]
+      }
+      ,
       {"obsConceptGroupUuid":"",
         "idHtml":"rtc",
         "label":"Return to clinic date:",
