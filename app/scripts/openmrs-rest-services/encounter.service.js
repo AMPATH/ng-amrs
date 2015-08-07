@@ -88,7 +88,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
 
       Restangular.one('encounter').get(objParams).then(function(data) {
         if(angular.isDefined(data.results)) data = data.results;
-        _successCallbackHandler(successCallback, data);
+        _successCallbackHandler(successCallback, data.reverse());
       },
       function(error) {
         console.log('An error occured while attempting to fetch encounter ' +

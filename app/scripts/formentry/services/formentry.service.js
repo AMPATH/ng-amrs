@@ -95,10 +95,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
           $http.get('scripts/formentry/formschema/'+formName)
             .success(function(response) {
+
               //console.log('testing json files');
               //console.log(response.schema);
-              schema = response.schema;
-              callback(schema);
+              //schema = response.schema;
+              callback(response.schema);
               })
               .error(function(data, status, headers, config) {
                 //console.log(data);
@@ -106,6 +107,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 if (status === 404) {alert('Form Resource not Available');}
 
             });
+
+
         }
 
         function getEncounter(encData, formlySchema){
@@ -1163,7 +1166,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           return obsField;
         }
 
-        function createForm(schema) {
+        function createForm(schema, callback) {
 
           var formSchema=[];
           var field ={};
@@ -1339,7 +1342,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           console.log('sample form');
           console.log(formSchema);
 
-          return formSchema;
+          callback(formSchema);
 
         }
 
