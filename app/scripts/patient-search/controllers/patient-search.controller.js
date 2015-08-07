@@ -8,12 +8,12 @@ jshint -W003, -W098, -W117, -W109
         .module('app.patientsearch')
         .controller('PatientSearchCtrl', PatientSearchCtrl);
 
-  PatientSearchCtrl.$inject = ['OpenmrsRestService', '$scope', '$log', 'filterFilter', '$state'];
+  PatientSearchCtrl.$inject = ['$rootScope', 'OpenmrsRestService', '$scope', '$log', 'filterFilter', '$state'];
 
-  function PatientSearchCtrl(OpenmrsRestService, $scope, $log, filterFilter, $state) {
+  function PatientSearchCtrl($rootScope, OpenmrsRestService, $scope, $log, filterFilter, $state) {
     $scope.filter = "";
     $scope.patients = [];
-    
+
     $scope.isBusy = false;
 
     // pagination controls
@@ -42,8 +42,17 @@ jshint -W003, -W098, -W117, -W109
        );
      }
    });
-   
+
+
    $scope.loadPatient = function (patientUuid){
+     /*
+     Get the selected patient and save the details in the root scope
+     so that we don't do another round trip to get the patient details
+     */
+     $rootScope.broadcastPatient = _.find($scope.patients, function(patient){
+       if(patient.uuid() === patientUuid)
+       {return patient;}
+     });
      $state.go('patient', {uuid:patientUuid});
    };
 

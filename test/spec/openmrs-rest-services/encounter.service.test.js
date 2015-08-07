@@ -71,7 +71,8 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
       it('Should make a call to retrieve a list of encounters for a patient', function (){
           httpBackend.expectGET(testRestUrl + 'encounter?patient=patient-uuid&v=default').respond(dummyResponse);
           encounterResService.getPatientEncounters('patient-uuid',function(data){
-            expect(data[0].uuid).to.equal('encounter-uuid-for-first-element');
+            console.log(data);
+            expect(data[1].uuid).to.equal('encounter-uuid-for-first-element');
           },function(error){console.log('Error')});
           httpBackend.flush();
       });
@@ -80,7 +81,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
         var params = { patientUuid : 'patient-uuid', rep: 'ref'};
         httpBackend.expectGET(testRestUrl + 'encounter?patient=patient-uuid&v=ref').respond(dummyResponse);
         encounterResService.getPatientEncounters(params,function(data){
-          expect(data[0].uuid).to.equal('encounter-uuid-for-first-element');
+          expect(data[1].uuid).to.equal('encounter-uuid-for-first-element');
         },function(error){console.log('Error')});
           httpBackend.flush();
       });

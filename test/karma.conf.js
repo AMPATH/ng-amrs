@@ -48,6 +48,9 @@ module.exports = function(config) {
       'bower_components/datejs/build/production/date.min.js',
       'bower_components/moment/moment.js',
       'bower_components/angular-moment/angular-moment.js',
+      'bower_components/angular-translate/angular-translate.js',
+      'bower_components/angular-dialog-service/dist/dialogs.min.js',
+      'bower_components/angular-dialog-service/dist/dialogs-default-translations.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.module.js',

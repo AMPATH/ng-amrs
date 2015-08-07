@@ -8,9 +8,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
         .module('app.formentry')
         .controller('FormentryCtrl', FormentryCtrl);
 
-    FormentryCtrl.$inject = ['$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'EncounterResService', '$timeout', 'FormsMetaData'];
+    FormentryCtrl.$inject = ['$translate', 'dialogs', '$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'EncounterResService', '$timeout', 'FormsMetaData'];
 
-    function FormentryCtrl($location, $rootScope, $stateParams, $state, $scope, FormentryService, EncounterResService, $timeout, FormsMetaData) {
+    function FormentryCtrl($translate, dialogs, $location, $rootScope, $stateParams, $state, $scope, FormentryService, EncounterResService, $timeout, FormsMetaData) {
 
         $scope.vm = {};
         $scope.vm.error = '';
@@ -20,7 +20,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
         $scope.vm.cancel = function ()
         {
           console.log($state);
-          $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
+          var dlg = dialogs.confirm('Close Form', 'Do you want to close this form?');
+					dlg.result.then(function(btn){
+						$location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
+					},function(btn){
+						//$scope.vm.confirmed = 'You confirmed "No."';
+					});
+
         }
 
         $scope.vm.submit = function() {
@@ -38,8 +44,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
             var payLoad = FormentryService.getPayLoad($scope.vm.userFields,$scope.vm.patient, form, params.uuid);
             EncounterResService.saveEncounter(payLoad,function (data) {
               // body...
-              console.log(data);
+              //console.log(data);
               $scope.vm.success = 'Form Submitted successfully'
+              if(data)
+              {
+                var dlg=dialogs.notify('Success', $scope.vm.success);
+                $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
+              }
             })
 
         }
@@ -55,18 +66,27 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
  //var params = {uuid: '18a1f142-f2c6-4419-a5db-5f875020b887'};
   var encData;
  $scope.vm.userFields = {};
+ var selectedForm = $stateParams.formuuid;
+ console.log('testing selected Form')
+ console.log(selectedForm);
+
 
  $timeout(function () {
 
+
    // get form schema data
-   var selectedForm = $stateParams.formuuid;
-   console.log('testing selected Form')
-   console.log(selectedForm);
-    FormentryService.getFormSchema(selectedForm, function(schema){
-     formSchema = schema;
-     $scope.vm.userFields = FormentryService.createForm(formSchema);
-     //$scope.vm.userFields = $scope.vm.formlyFields;
-   });
+  //  var selectedForm = $stateParams.formuuid;
+  //  console.log('testing selected Form')
+  FormentryService.getFormSchema(selectedForm, function(schema){
+   formSchema = schema;
+   //$scope.vm.userFields = $scope.vm.formlyFields;
+   if (Object.keys(formSchema).length>0)
+   {
+     FormentryService.createForm(formSchema, function(formlySchema){
+       $scope.vm.userFields = formlySchema;
+     });
+   }
+  });
 
    console.log('testing encounter params')
    console.log(params);
@@ -76,8 +96,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
      EncounterResService.getEncounterByUuid(params,
        function(data){
        encData = data;
-       console.log('Rest Feeback')
-       console.log(encData);
+       //console.log('Rest Feeback')
+       //console.log(encData);
        if (data)
        {
          FormentryService.getEncounter(encData,$scope.vm.userFields);
@@ -88,9 +108,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
     }
 
 
- },1000);
-$scope.vm.userFields = $scope.vm.formlyFields;
- console.log(JSON.stringify($scope.vm.userFields));
+},1000);
+//$scope.vm.userFields = $scope.vm.formlyFields;
+ //console.log(JSON.stringify($scope.vm.userFields));
 }
 
 })();
