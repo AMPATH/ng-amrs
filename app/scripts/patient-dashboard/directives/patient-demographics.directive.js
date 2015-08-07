@@ -1,5 +1,5 @@
 /*
-jshint -W003, -W026
+jshint -W003, -W026, -W033, -W098
 */
 (function() {
 'use strict';
@@ -21,16 +21,23 @@ function patientDemographics() {
       return patientDemographicsDefinition;
     }
 
-PatientDemographicsCtrl.$inject = ['$scope', '$stateParams', 'OpenmrsRestService'];
+PatientDemographicsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'OpenmrsRestService'];
 
-function PatientDemographicsCtrl(scope, $stateParams,  OpenmrsRestService) {
-     var patient=OpenmrsRestService.getPatientService().getPatientByUuid({uuid:$stateParams.uuid},function (data) {
-       scope.patient = data;
-       scope.personAttributes=data.getPersonAttributes();
+function PatientDemographicsCtrl($rootScope, scope, $stateParams,  OpenmrsRestService) {
+    /*
+    Avoid the round trip and use the rootScope patient selected during
+    search process
+    */
+    //  var patient=OpenmrsRestService.getPatientService().getPatientByUuid({uuid:$stateParams.uuid},function (data) {
+    //    scope.patient = data;
+    //    scope.personAttributes=data.getPersonAttributes();
+    //
+    //  }
+    //
+    // ) ;
 
-     }
-
-    ) ;
+    scope.patient = $rootScope.broadcastPatient;
+    scope.personAttributes= scope.patient.getPersonAttributes();
 
 
 }
