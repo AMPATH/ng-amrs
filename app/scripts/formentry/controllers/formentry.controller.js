@@ -17,7 +17,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117
         $scope.vm.patient = $rootScope.broadcastPatient;
         //$scope.vm.encounters = $rootScope.encounters;
 
-        $scope.vm.cancel = function ()
+        $scope.vm.cancel = function()
         {
           console.log($state);
           var dlg = dialogs.confirm('Close Form', 'Do you want to close this form?');

@@ -16,7 +16,7 @@
 
   function PatientDashboardCtrl($rootScope, $scope, $stateParams, $timeout, OpenmrsRestService) {
     $scope.patient = {};
-    //$scope.patient = $rootScope.broadcastPatient;
+    $scope.patient = $rootScope.broadcastPatient;
     $scope.p = null;
     $scope.encounters = [];
 
@@ -28,7 +28,7 @@
     //       $rootScope.broadcastPatient = $scope.patient; // trying to broadcast
     //     });
     //
-    // },1000);
+    // }, 1000);
 
 
     // $rootScope.encounters = $scope.encounters; //trying to this available throughout the app
