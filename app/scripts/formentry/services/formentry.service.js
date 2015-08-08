@@ -953,6 +953,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         function createObsFormlyField(obs_Field, f_type)
         {
           var obsField = {};
+
           /*
           Distinguish a whether a field belongs to a repeatSection/Group Section
           The repeatSection/Group section requires that we omit the model within
@@ -969,16 +970,18 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             if((obs_Field.type === 'datepicker'))
             {
               var required=false;
+              var desiredKey
               if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
 
+              desiredKey = '@obs_' + obs_Field.obsConceptGroupUuid;
               obsField = {
-                key: 'obs_' + obs_Field.obsConceptUuid,
+                key: 'obs_' + obs_Field.obsConceptUuid + desiredKey,
                 type: 'datepicker',
-                /*
-                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+
+                data: {obsConceptUuid:obs_Field.obsConceptUuid,
                   obsGroupUuid:obs_Field.obsConceptGroupUuid,
                   answerValue:''},
-                  */
+
                 templateOptions: {
                   type: 'text',
                   label: obs_Field.label,
@@ -997,16 +1000,18 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             {
               //console.log(obs_Field.label)
               var required=false;
+              var desiredKey;
+              desiredKey = '@obs_' + obs_Field.obsConceptGroupUuid;
               if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
 
               obsField = {
-                key: 'obs_' + obs_Field.obsConceptUuid,
+                key: 'obs_' + obs_Field.obsConceptUuid + desiredKey,
                 type: 'input',
-                /*
-                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+
+                data: {obsConceptUuid:obs_Field.obsConceptUuid,
                   obsGroupUuid:obs_Field.obsConceptGroupUuid,
                   answerValue:''},
-                  */
+
                 templateOptions: {
                   type: obs_Field.type,
                   label: obs_Field.label,
@@ -1027,10 +1032,12 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
             }
             else if(obs_Field.type === 'problem'){
+              var desiredKey;
+              desiredKey  = '@obs_' + obs_Field.obsConceptGroupUuid;
                 obsField =  {
-                key: 'obs_' + obs_Field.obsConceptUuid,
+                key: 'obs_' + obs_Field.obsConceptUuid  + desiredKey,
                 type: 'ui-select-extended',
-                // model: {encounter:'obs_' + obs_Field.idName},
+                data: {encounter:'obs_' + obs_Field.idName},
                 templateOptions: {
                   type: 'text',
                   label: obs_Field.label,
@@ -1056,16 +1063,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                  opts.push(item);
               }
               var required=false;
+              var desiredKey;
               if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
-
+              desiredKey = '@obs_' + obs_Field.obsConceptGroupUuid;
               obsField = {
-                key: 'obs_' + obs_Field.obsConceptUuid,
+                key: 'obs_' + obs_Field.obsConceptUuid  + desiredKey,
                 type: obs_Field.type,
-                /*
-                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+                data: {obsConceptUuid:obs_Field.obsConceptUuid,
                   obsGroupUuid:obs_Field.obsConceptGroupUuid,
                   answerValue:''},
-                  */
+
                 templateOptions: {
                   type: obs_Field.type,
                   label: obs_Field.label,
@@ -1078,23 +1085,25 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           }
           else {
             /*
-            All other fields that do belong
+            All other fields that do not belong
             to the repeating/group section
             */
             if((obs_Field.type === 'datepicker'))
             {
               var required=false;
+              var desiredKey;
               if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
-
+              desiredKey = obs_Field.obsConceptGroupUuid? '-obs_' + obs_Field.obsConceptGroupUuid : '';
               obsField = {
-                key: 'obs_' + obs_Field.obsConceptUuid,
+                key: 'obs_' + obs_Field.obsConceptUuid + desiredKey,
                 type: 'datepicker',
-                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+                data: {obsConceptUuid:obs_Field.obsConceptUuid,
                   obsGroupUuid:obs_Field.obsConceptGroupUuid,
                   answerValue:''},
                 templateOptions: {
                   type: 'text',
                   label: obs_Field.label,
+                  page:obs_Field.page? obs_Field.page: 'page1',
                   datepickerPopup: 'dd-MMMM-yyyy',
                   required:required
                 },
@@ -1108,17 +1117,20 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             else if ((obs_Field.type === 'text') || (obs_Field.type === 'number'))
             {
               var required=false;
-              if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
+              var desiredKey;
 
+              if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
+              desiredKey = obs_Field.obsConceptGroupUuid? '@obs_' + obs_Field.obsConceptGroupUuid : '';
               obsField = {
-                key: 'obs_' + obs_Field.obsConceptUuid,
+                key: 'obs_' + obs_Field.obsConceptUuid + desiredKey,
                 type: 'input',
-                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+                data: {obsConceptUuid:obs_Field.obsConceptUuid,
                   obsGroupUuid:obs_Field.obsConceptGroupUuid,
                   answerValue:''},
                 templateOptions: {
                   type: obs_Field.type,
                   label: obs_Field.label,
+                  page:obs_Field.page? obs_Field.page: 'page1',
                   required:required
                 }
         //         ,
@@ -1143,18 +1155,20 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                  opts.push(item);
               }
               var required=false;
+              var desiredKey;
               if (obs_Field.required !== undefined) required=Boolean(obs_Field.required);
-
+              desiredKey = obs_Field.obsConceptGroupUuid? '@obs_' + obs_Field.obsConceptGroupUuid : '';
               obsField = {
-                key: 'obs_' + obs_Field.obsConceptUuid,
+                key: 'obs_' + obs_Field.obsConceptUuid + desiredKey,
                 type: obs_Field.type,
-                model: {obsConceptUuid:obs_Field.obsConceptUuid,
+                data: {obsConceptUuid:obs_Field.obsConceptUuid,
                   obsGroupUuid:obs_Field.obsConceptGroupUuid,
                   answerValue:''},
 
                 templateOptions: {
                   type: obs_Field.type,
                   label: obs_Field.label,
+                  page:obs_Field.page? obs_Field.page: 'page1',
                   required:required,
                   options:opts
                 }
@@ -1164,6 +1178,48 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           }
 
           return obsField;
+        }
+
+        function createTabs(formlySchema)
+        {
+          var pages={};
+          //get available number of pages
+          _.each(formlySchema, function(field){
+              //console.log(field);
+              if(field.templateOptions === undefined) return;
+              if(field.templateOptions.page !== undefined)
+              {
+                  pages[field.templateOptions.page] = 'Page ' + field.templateOptions.page;
+              }
+          });
+
+          var tabs=[];
+
+          _.each(Object.keys(pages), function(page){
+            var fields = _.filter(formlySchema, function(field){
+              //console.log(field);
+              if(field.templateOptions === undefined) return;
+                if (field.templateOptions.page === page) return field;
+            });
+
+            var tab =
+            {
+              title: pages[page],
+              active: page === '1' ? true: false,
+              form:{
+                options:{},
+                fields:fields
+              }
+            }
+            // if(page === 1)
+            // {
+            //   tab['active'] = true;
+            //   console.log('Active page set')
+            // }
+            tabs.push(tab);
+          });
+
+          return tabs;
         }
 
         function createForm(schema, callback) {
@@ -1184,10 +1240,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               field = {
                 key: 'enc_' + encField.idName,
                 type: 'datepicker',
-                model: {encounter:'enc_' + encField.idName},
+                data: {encounter:'enc_' + encField.idName},
                 templateOptions: {
                   type: 'text',
                   label: encField.labelName,
+                  page:encField.page? encField.page: 'page1',
                   placeholder: encField.labelName,
                   datepickerPopup: 'dd-MMMM-yyyy'
                 },
@@ -1201,10 +1258,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               field = {
                 key: 'enc_' + encField.idName,
                 type: 'input',
-                model: {encounter:'enc_' + encField.idName},
+                data: {encounter:'enc_' + encField.idName},
                 templateOptions: {
                   type: 'text',
                   label: encField.labelName,
+                  page:encField.page? encField.page: 'page1',
                   placeholder: encField.labelName
                 }
               }
@@ -1213,10 +1271,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               field = {
                 key: 'enc_' + encField.idName,
                 type: 'ui-select-extended',
-                model: {encounter:'enc_' + encField.idName},
+                data: {encounter:'enc_' + encField.idName},
                 templateOptions: {
                   type: 'text',
                   label: encField.labelName,
+                  page:encField.page? encField.page: 'page1',
                   valueProp: 'personUuid',
                   labelProp:'display',
                   deferredFilterFunction: SearchDataService.findProvider,
@@ -1230,10 +1289,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               field = {
                 key: 'enc_' + encField.idName,
                 type: 'ui-select-extended',
-                model: {encounter:'enc_' + encField.idName},
+                data: {encounter:'enc_' + encField.idName},
                 templateOptions: {
                   type: 'text',
                   label: encField.labelName,
+                  page:encField.page? encField.page: 'page1',
                   valueProp: 'uuId',
                   labelProp:'display',
                   deferredFilterFunction: SearchDataService.findLocation,
@@ -1247,10 +1307,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               field = {
                 key: 'enc_' + encField.idName,
                 type: encField.type,
-                model: {encounter:'enc_' + encField.idName},
+                data: {encounter:'enc_' + encField.idName},
                 templateOptions: {
                   type: 'text',
                   label: encField.labelName,
+                  page:encField.page? encField.page: 'page1',
                   placeholder: encField.labelName,
                   options:[]
                 }
@@ -1261,11 +1322,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           });
 
 
-          var gpSectionRnd = 0 ;
+          var gpSectionRnd = 0 ; //this a random number for grp sections without an obs group
           _.each(schema.obs, function(obs_Field) {
             //console.log(obs_Field)
             var obsField ={};
-             //this a random number for grp sections without an obs group
+
             if ((obs_Field.type === 'repeatSection') || (obs_Field.type === 'repeatsection'))
             {
               var repeatingFields = [];
@@ -1281,8 +1342,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               obsField = {
                 key:'obs_' + obs_Field.obsConceptGroupUuid,
                 type: 'repeatSection',
-                model:{obsGroupUuid:obs_Field.obsConceptGroupUuid},
+                //model:{obsGroupUuid:obs_Field.obsConceptGroupUuid},
                 templateOptions: {
+                  page:obs_Field.page? obs_Field.page: 'page1',
                   label:obs_Field.sectionTitle,
                   btnText:'Add ' + obs_Field.buttonLabel,
                   fields:[
@@ -1312,6 +1374,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     templateOptions: {
                       type: 'text',
                       label: 'Date',
+                      page:obs_Field.page? obs_Field.page: 'page1',
                       datepickerPopup: 'dd-MMMM-yyyy'
                     },
                     validators: {
@@ -1326,7 +1389,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               obsField = {
                 className: 'row',
                 key:'obs_'+sectionKey,
-                model:{obsGroupUuid:sectionKey},
+                //model:{obsGroupUuid:sectionKey},
                 fieldGroup:groupingFields
               }
               formSchema.push({template: '<hr /><p><strong>'+obs_Field.sectionTitle +'</strong></p>'});
@@ -1342,7 +1405,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           console.log('sample form');
           console.log(formSchema);
 
-          callback(formSchema);
+          callback(createTabs(formSchema));
 
         }
 

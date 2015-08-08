@@ -65,6 +65,13 @@ templateUrl: 'views/formentry/formentry.html',
 controller: 'FormentryCtrl',
 data: { requireLogin: true}
 })
+.state('tabs', {
+url: '/form/tabs',
+templateUrl: 'views/formentry/tab.html',
+controller: 'tabCtrl',
+data: { requireLogin: true}
+})
+
 .state('login', {
   url: '/login',
   templateUrl: 'views/authentication/login.html',
