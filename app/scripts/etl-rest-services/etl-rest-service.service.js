@@ -12,7 +12,8 @@
     var serviceDefinition;
     serviceDefinition = {
       getResource: getResource,
-      getHivSummary: getHivSummary
+      getHivSummary: getHivSummary,
+      getVitals:getVitals
     };
     return serviceDefinition;
 
@@ -24,23 +25,44 @@
 
     function getHivSummary(patientUuid, startIndex, limit, successCallback, failedCallback) {
       var resource = getResource('patient/:uuid/hiv-summary');
-      if(!startIndex) {
+      if (!startIndex) {
         startIndex = 0;
       }
 
-      if(!limit) {
+      if (!limit) {
         limit = 20;
       }
 
-      var params = {startIndex: startIndex, uuid: patientUuid, limit: limit};
+      var params = { startIndex: startIndex, uuid: patientUuid, limit: limit };
       return resource.get(params).$promise
         .then(function (response) {
-        successCallback(response);
-      })
+          successCallback(response);
+        })
         .catch(function (error) {
-        failedCallback('Error processing request', error);
-        console.error(error);
-      });
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+    }
+
+    function getVitals(patientUuid, startIndex, limit, successCallback, failedCallback) {
+      var resource = getResource('patient/:uuid/vitals');
+      if (!startIndex) {
+        startIndex = 0;
+      }
+
+      if (!limit) {
+        limit = 20;
+      }
+
+      var params = { startIndex: startIndex, uuid: patientUuid, limit: limit };
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
     }
   }
 })();
