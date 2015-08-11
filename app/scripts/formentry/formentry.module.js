@@ -68,7 +68,7 @@
 		});
 
 		$translateProvider.preferredLanguage('en-US');
-	}])
+	}]);
 
 
 })();
