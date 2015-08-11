@@ -39,7 +39,7 @@
       var _gender = openmrsPatient.person.gender||'';
       var _address =mapAddress(openmrsPatient.person.preferredAddress)||[];
       var _dead = openmrsPatient.person.dead||'';
-      var _deathDate = openmrsPatient.person.deathDate||'';
+      var _deathDate = formatDate(openmrsPatient.person.deathDate)||'';
       var _attributes = openmrsPatient.person.attributes||[];
       //var _causeOfDeath = openmrsPatient.causeOfDeath||'';
       /*
@@ -184,14 +184,23 @@
       //   }
       // };
       modelDefinition.phoneNumber = function(value) {
-        if(_attributes.length>0) {
-          for(var i in _attributes) {
-            var attr = _attributes[i];
-            if(attr.attributeType.uuid === '72a759a8-1359-11df-a1f1-0026b9348838') {
-              return attr.value;
-            }
-          }
+        var phoneNumberPersonAttributeTypeUuid='72a759a8-1359-11df-a1f1-0026b9348838';
+        return getPersonAttribute(phoneNumberPersonAttributeTypeUuid);
+      };
+      modelDefinition.healthCenter = function(value) {
+        var healthCenterPersonAttributeTypeUuid='8d87236c-c2cc-11de-8d13-0010c6dffd0f';
+        return getPersonAttribute(healthCenterPersonAttributeTypeUuid);
+      };
+      modelDefinition.isTestorFakePatient = function(value) {
+        var testPatientPersonAttributeTypeUuid='1e38f1ca-4257-4a03-ad5d-f4d972074e69';
+        var isTestPatient=getPersonAttribute(testPatientPersonAttributeTypeUuid);
+        if(isTestPatient==='true'){
+          return 'Test Patient';
         }
+        else{
+          return '';
+        }
+
       };
       var _convertedAttributes = [];
       modelDefinition.getPersonAttributes = function(value) {
@@ -250,6 +259,18 @@
         };
       };
 
+      // get the person attribute value from a list of attributes using the person attribute type uuid
+      function getPersonAttribute(personAttributeTypeUuid){
+        if(_attributes.length>0) {
+          for(var i in _attributes) {
+            var attr = _attributes[i];
+            if(attr.attributeType.uuid === personAttributeTypeUuid) {
+              return attr.value;
+            }
+          }
+        }
+
+      }
 
     }
 
@@ -265,5 +286,27 @@
         //Added the noAddress to aid in creating logic for hiding when the patient has no address
       } : {noAddress:'None'};
     }
+
+    //format dates
+    function formatDate(dateString){
+      var formattedDate='';
+      if(dateString!==null) {
+          var date = new Date(dateString);
+          var day = date.getDate();
+          var monthIndex = date.getMonth() + 1;
+          var year = date.getFullYear();
+
+          if (10 > monthIndex) {
+            monthIndex = '0' + monthIndex;
+          }
+          if (10 > day) {
+            day = '0' + day;
+          }
+          formattedDate = day + '-' + monthIndex + '-' +year ;
+      }
+
+      return formattedDate;
+    }
+
   }
 })();
