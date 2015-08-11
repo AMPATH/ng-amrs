@@ -3,13 +3,10 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-3">
-					<h5>{{patient.fullNames()}}
-						</h5>
+					<h5>{{patient.fullNames()}}</h5>
 				</div>
 				<div class="col-md-3">
-					<h5>
-							Identifier: {{patient.identifierFormatted()}}
-					</h5>
+					<h5>Identifier: {{patient.identifierFormatted()}}</h5>
 				</div>
 			</div>
 			<div class="row">
@@ -17,14 +14,11 @@
 					<h5>{{patient.genderFull()}} {{patient.age()}} ({{patient.birthdate()| date:'dd-MM-yyyy'}})</h5>
 				</div>
 				<div class="col-md-3">
-					<h5>
-					Health Center: Location-10</h5>
+					<h5>Health Center: Location-10</h5>
 				</div>
-        <div class="col-md-3">
-          <h5>
-            Phone Number: {{patient.phoneNumber()}}
-          </h5>
-        </div>
+				<div class="col-md-3">
+					<h5>Phone Number: {{patient.phoneNumber()}}</h5>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -41,7 +35,7 @@
 					<a data-target="#tab3" data-toggle="tab">Forms</a>
 				</li>
 				<li>
-					<a data-target="#tab4" data-toggle="tab">HIV Summary</a>
+					<a data-target="#tab4" data-toggle="tab">Vitals</a>
 				</li>
 			</ul>
 			<div class="tab-content col-md-10">
@@ -50,7 +44,10 @@
 						<h3>Demographics:
 							<small>The Patient</small>
 						</h3>
-            <patient-demographics></patient-demographics>
+					</div>
+					<div class="page-content">
+						<patient-demographics></patient-demographics>
+						<hiv-summary patient-uuid="{{patient.uuid()}}"></hiv-summary>
 					</div>
 				</div>
 				<div class="tab-pane" id="tab2">
@@ -70,21 +67,24 @@
 						</h3>
 					</div>
 					<div class="page-content">
-						<p><a href="#/form/form1/patient/{{patient.uuid()}}">AMPATH Adult Return Encounter Form</a></p>
-						<p><a href="#/form/form2/patient/{{patient.uuid()}}">AMPATH Pediatric Return Encounter Form</a></p>
-						<p><a href="#/form/form3/patient/{{patient.uuid()}}">AMPATH PMTCT Postnatal Care Encounter Form</a></p>
-
+						<p>
+							<a href="#/form/form1/patient/{{patient.uuid()}}">AMPATH Adult Return Encounter Form</a>
+						</p>
+						<p>
+							<a href="#/form/form2/patient/{{patient.uuid()}}">AMPATH Pediatric Return Encounter Form</a>
+						</p>
+						<p>
+							<a href="#/form/form3/patient/{{patient.uuid()}}">AMPATH PMTCT Postnatal Care Encounter Form</a>
+						</p>
 					</div>
 				</div>
 				<div class="tab-pane" id="tab4">
 					<div class="page-header" style="margin-top:-20px;">
-						<h3>HIV Care Summary:
-							<small>Summary</small>
+						<h3>Vitals
 						</h3>
 					</div>
 					<div class="page-content">
-						<hiv-summary patient-uuid="{{patient.uuid()}}">
-					    </hiv-summary>
+						<vitals patient-uuid="{{patient.uuid()}}"></vitals>
 					</div>
 				</div>
 			</div>
