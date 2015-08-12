@@ -22,6 +22,7 @@ jshint -W003, -W026
     vitalsController.$inject = ['$scope', 'EtlRestService', 'VitalModel'];
 
     function vitalsController($scope, EtlRestService, vitalModel) {
+        $scope.injectedEtlRestService = EtlRestService;
         $scope.encounters = [];
         $scope.isBusy = false;
         $scope.nextStartIndex = 0;
@@ -42,6 +43,7 @@ jshint -W003, -W026
         function onFetchVitalsSuccess(vitalsData) {
             $scope.nextStartIndex = +vitalsData.startIndex + vitalsData.size;
             for (var e in vitalsData.result) {
+                debugger;
                 $scope.encounters.push(new vitalModel.vital(vitalsData.result[e]));
             }
             if (vitalsData.size !== 0) {

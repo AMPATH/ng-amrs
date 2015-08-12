@@ -2,7 +2,8 @@
   "name": "ngamrs",
   "version": "0.0.0",
   "dependencies": {
-    "api-check": "^7.5.0"
+    "api-check": "^7.5.0",
+    "karma-html2js-preprocessor": "^0.1.0"
   },
   "repository": {},
   "devDependencies": {
@@ -36,6 +37,7 @@
     "karma-jasmine": "*",
     "karma-mocha": "^0.2.0",
     "karma-mocha-reporter": "^1.0.2",
+    "karma-ng-html2js-preprocessor": "^0.1.2",
     "karma-phantomjs-launcher": "*",
     "karma-sinon": "^1.0.4",
     "load-grunt-tasks": "^3.1.0",
