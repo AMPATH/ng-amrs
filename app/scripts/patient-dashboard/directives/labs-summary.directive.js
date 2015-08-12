@@ -7,58 +7,58 @@ jshint -W003, -W026
 
     angular
         .module('app.patientdashboard')
-        .directive('vitals', vitals);
+        .directive('labsSummary', labsSummary);
 
-    function vitals() {
+    function labsSummary() {
         return {
             restict: "E",
             scope: { patientUuid: "@" },
-            controller: vitalsController,
-            link:vitalsLink,
-            templateUrl: "views/patient-dashboard/vitalsPane.html"
+            controller: labsSummaryController,
+            link: labsSummaryLink,
+            templateUrl: "views/patient-dashboard/labs-summary-pane.html"
         };
     }
 
-    vitalsController.$inject = ['$scope', 'EtlRestService', 'VitalModel'];
+    labsSummaryController.$inject = ['$scope', 'EtlRestService', 'PatientTestModel'];
 
-    function vitalsController($scope, EtlRestService, vitalModel) {
+    function labsSummaryController($scope, EtlRestService, patientTestModel) {
         $scope.injectedEtlRestService = EtlRestService;
         $scope.encounters = [];
         $scope.isBusy = false;
         $scope.nextStartIndex = 0;
-        $scope.loadMoreVitals = loadMoreVitals;
+        $scope.loadMoreLabs = loadMoreLabs;
         $scope.allDataLoaded = false;
         $scope.experiencedLoadingError = false;
 
-        function loadMoreVitals() {
+        function loadMoreLabs() {
             if ($scope.isBusy === true) return;
 
             $scope.isBusy = true;
             $scope.experiencedLoadingError = false;
 
             if ($scope.patientUuid && $scope.patientUuid !== '')
-                EtlRestService.getVitals($scope.patientUuid, $scope.nextStartIndex, 10, onFetchVitalsSuccess, onFetchVitalsFailed);
+                EtlRestService.getPatientTests($scope.patientUuid, $scope.nextStartIndex, 10, onFetchPatientTestsSuccess, onFetchPatientTestsFailed);
         }
 
-        function onFetchVitalsSuccess(vitalsData) {
-            $scope.nextStartIndex = +vitalsData.startIndex + vitalsData.size;
-            for (var e in vitalsData.result) {
-                $scope.encounters.push(new vitalModel.vital(vitalsData.result[e]));
+        function onFetchPatientTestsSuccess(patientTestsData) {
+            $scope.nextStartIndex = +patientTestsData.startIndex + patientTestsData.size;
+            for (var e in patientTestsData.result) {
+                $scope.encounters.push(new patientTestModel.patientTest(patientTestsData.result[e]));
             }
-            if (vitalsData.size !== 0) {
+            if (patientTestsData.size !== 0) {
                 $scope.isBusy = false;
             }
             else
                 $scope.allDataLoaded = true;
         }
 
-        function onFetchVitalsFailed(error) {
+        function onFetchPatientTestsFailed(error) {
             $scope.experiencedLoadingError = true;
             $scope.isBusy = false;
         }
     }
 
-    function vitalsLink(scope, element, attrs, vm) {
+    function labsSummaryLink(scope, element, attrs, vm) {
         attrs.$observe('patientUuid', onPatientUuidChanged);
 
         function onPatientUuidChanged(newVal, oldVal) {
@@ -67,7 +67,7 @@ jshint -W003, -W026
                 scope.allDataLoaded = false;
                 scope.nextStartIndex = 0;
                 scope.encounters = [];
-                scope.loadMoreVitals();
+                scope.loadMoreLabs();
             }
         }
     }

@@ -1,15 +1,17 @@
 <div ng-disabled="isBusy">
   <table class='table table-hover table-striped'>
-    <tr>
-      <td>Date</td>
-      <td>BP</td>
-      <td>Pulse</td>
-      <td>Temperature</td>
-      <td>Oxygen Sat</td>
-      <td>Height</td>
-      <td>Weight</td>
-    </tr>
-    <tr ng-repeat="encounter in encounters" ng-click="showEncounter(encounter.uuid,encounter.form.uuid)">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>BP</th>
+        <th>Pulse</th>
+        <th>Temperature</th>
+        <th>Oxygen Sat</th>
+        <th>Height</th>
+        <th>Weight</th>
+      </tr>
+    </thead>
+    <tr ng-repeat="encounter in encounters">
       <td>{{encounter.encounterDatetime().substring(0,10)}}</td>
       <td>{{encounter.systolicBp()}} / {{encounter.diastolicBp()}}</td>
       <td>{{encounter.pulse()}}</td>
@@ -21,7 +23,8 @@
   </table>
   <div ng-show='experiencedLoadingError'>
     <p class="bg-danger" style="padding:4px;">
-      <b> <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span> An error occured while loading. Please try again.</b>
+      <b>
+        <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
       <p>
   </div>
   <div ng-show='!isBusy && !allDataLoaded'>
@@ -34,7 +37,8 @@
   </div>
   <div ng-show='allDataLoaded'>
     <p class="bg-info" style="padding:4px;">
-      <b><span style="color:green;" class="glyphicon glyphicon-ok" /> All vitals loaded {{'[ ' + encounters.length + ' ]'}}</b>
+      <b>
+        <span style="color:green;" class="glyphicon glyphicon-ok" />All vitals loaded {{'[ ' + encounters.length + ' ]'}}</b>
       <p>
   </div>
 </div>
