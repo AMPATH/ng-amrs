@@ -24,7 +24,7 @@
 	</div>
 	<div class="panel-body" style="height:100%;">
 		<div class="container-fluid tabbing">
-			<ul class="nav nav-pills nav-stacked col-md-2">
+			<ul class="nav nav-pills nav-stacked col-md-2 ">
 				<li class="active">
 					<a data-target="#tab1" data-toggle="tab">Demographics</a>
 				</li>
@@ -38,16 +38,27 @@
 					<a data-target="#tab4" data-toggle="tab">Vitals</a>
 				</li>
 			</ul>
-			<div class="tab-content col-md-10">
+			<div class="tab-content col-md-10 panel panel-primary">
 				<div class="tab-pane active" id="tab1">
 					<div class="page-header" style="margin-top:-20px;">
-						<h3>Demographics:
-							<small>The Patient</small>
-						</h3>
-					</div>
+          </div>
 					<div class="page-content">
-						<patient-demographics></patient-demographics>
-						<hiv-summary patient-uuid="{{patient.uuid()}}"></hiv-summary>
+            <div class="panel" ng-class="{'panel-success':!patient.deathDate(), 'panel-danger':patient.deathDate()}">
+              <div class="panel-heading">
+                Patient Demographics
+              </div>
+              <div class="panel-body">
+                <patient-demographics></patient-demographics>
+              </div>
+            </div>
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                HIV Summary
+              </div>
+              <div class="panel-body">
+                <hiv-summary patient-uuid="{{patient.uuid()}}"></hiv-summary>
+              </div>
+            </div>
 					</div>
 				</div>
 				<div class="tab-pane" id="tab2">
