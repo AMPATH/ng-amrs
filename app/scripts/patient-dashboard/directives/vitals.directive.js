@@ -15,7 +15,7 @@ jshint -W003, -W026
             scope: { patientUuid: "@" },
             controller: vitalsController,
             link:vitalsLink,
-            templateUrl: "views/patient-dashboard/vitalsPane.html"
+            templateUrl: "views/patient-dashboard/vitals-pane.html"
         };
     }
 
