@@ -22,60 +22,55 @@
 			</div>
 		</div>
 	</div>
-	<div class="panel-body" style="height:100%;">
-		<div class="container-fluid tabbing">
-			<ul class="nav nav-pills nav-stacked col-md-2 ">
-				<li class="active">
-					<a data-target="#tab1" data-toggle="tab">Demographics</a>
-				</li>
-				<li>
-					<a data-target="#tab2" data-toggle="tab">Encounters</a>
-				</li>
-				<li>
-					<a data-target="#tab3" data-toggle="tab">Forms</a>
-				</li>
-				<li>
-					<a data-target="#tab4" data-toggle="tab">Vitals</a>
-				</li>
-			</ul>
-			<div class="tab-content col-md-10 panel panel-primary">
-				<div class="tab-pane active" id="tab1">
-					<div class="page-header" style="margin-top:-20px;">
-          </div>
+	<div class="panel-body" style="height:97%; margin-top: 4px; margin-bottom:4px;>
+		<div class="container-fluid tabbing" >
+			<div class="col-md-2 " style="padding-left:13px; padding-right:13px; padding-top:4px; padding-bottom:4px;">
+				<ul class="nav nav-pills nav-stacked ">
+					<li class="active">
+						<a data-target="#tab1" data-toggle="tab">Demographics</a>
+					</li>
+					<li>
+						<a data-target="#tab2" data-toggle="tab">Encounters</a>
+					</li>
+					<li>
+						<a data-target="#tab3" data-toggle="tab">Forms</a>
+					</li>
+					<li>
+						<a data-target="#tab4" data-toggle="tab">Vitals</a>
+					</li>
+					<li>
+						<a data-target="#tab5" data-toggle="tab">Lab Data Summary</a>
+					</li>
+				</ul>
+			</div>
+			<div class="tab-content col-md-10 " >
+				<div class="tab-pane active panel panel-default  " style="padding:4px;" id="tab1">
 					<div class="page-content">
-            <div class="panel" ng-class="{'panel-success':!patient.deathDate(), 'panel-danger':patient.deathDate()}">
-              <div class="panel-heading">
-                Patient Demographics
-              </div>
-              <div class="panel-body">
-                <patient-demographics></patient-demographics>
-              </div>
-            </div>
-            <div class="panel panel-warning">
-              <div class="panel-heading">
-                HIV Summary
-              </div>
-              <div class="panel-body">
-                <hiv-summary patient-uuid="{{patient.uuid()}}"></hiv-summary>
-              </div>
-            </div>
+						<div class="panel" ng-class="{'panel-success':!patient.deathDate(), 'panel-danger':patient.deathDate()}">
+							<div class="panel-heading">Patient Demographics</div>
+							<div class="panel-body">
+								<patient-demographics></patient-demographics>
+							</div>
+						</div>
+						<div class="panel panel-warning">
+							<div class="panel-heading">HIV Summary</div>
+							<div class="panel-body">
+								<hiv-summary patient-uuid="{{patient.uuid()}}"></hiv-summary>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="tab-pane" id="tab2">
-					<div class="page-header" style="margin-top:-20px;">
-						<h3>Encounters:
-							<small>List of Encounters</small>
-						</h3>
+				<div class="tab-pane panel panel-default  " style="padding:4px;" id="tab2">
+					<div class="page-header" style="margin-top:-10px;">
+						<h3>Encounters</h3>
 						<div class="page-content">
 							<patient-encounters></patient-encounters>
 						</div>
 					</div>
 				</div>
-				<div class="tab-pane" id="tab3">
+				<div class="tab-pane panel panel-default  " style="padding:4px;" id="tab3">
 					<div class="page-header" style="margin-top:-20px;">
-						<h3>Forms:
-							<small>Available Forms</small>
-						</h3>
+						<h3>Forms</h3>
 					</div>
 					<div class="page-content">
 						<p>
@@ -89,13 +84,20 @@
 						</p>
 					</div>
 				</div>
-				<div class="tab-pane" id="tab4">
-					<div class="page-header" style="margin-top:-20px;">
-						<h3>Vitals
-						</h3>
+				<div class="tab-pane panel panel-default  " style="padding:4px;" id="tab4">
+					<div class="page-header" style="margin-top:-10px;">
+						<h3>Vitals</h3>
 					</div>
 					<div class="page-content">
 						<vitals patient-uuid="{{patient.uuid()}}"></vitals>
+					</div>
+				</div>
+				<div class="tab-pane panel panel-default  " style="padding:4px;" id="tab5">
+					<div class="page-header" style="margin-top:-10px;">
+						<h3>Lab Data Summary</h3>
+					</div>
+					<div class="page-content">
+						<labs-summary patient-uuid="{{patient.uuid()}}"></labs-summary>
 					</div>
 				</div>
 			</div>
