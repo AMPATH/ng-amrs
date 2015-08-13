@@ -22,10 +22,27 @@
 			</div>
 		</div>
 	</div>
-	<div class="panel-body" style="height:97%; margin-top: 4px; margin-bottom:4px;>
-		<div class="container-fluid tabbing" >
-			<div class="col-md-2 " style="padding-left:13px; padding-right:13px; padding-top:4px; padding-bottom:4px;">
-				<ul class="nav nav-pills nav-stacked ">
+	<div class="panel-body" style="height:97%; margin-top: 4px; margin-bottom:4px;">
+		<div class="container-fluid tabbing">
+			<div class="col-lg-2 " style="padding-left:13px; padding-right:13px; padding-top:4px; padding-bottom:4px;">
+				<ul class="nav nav-pills nav-stacked hidden-sm hidden-md">
+					<li class="active">
+						<a data-target="#tab1" data-toggle="tab"><span class="icon-i-administration" aria-hidden="true"></span>&nbsp;Demographics</a>
+					</li>
+					<li>
+						<a data-target="#tab2" data-toggle="tab"><span class="icon-i-registration" aria-hidden="true"></span>&nbsp;Encounters</a>
+					</li>
+					<li>
+						<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Forms</a>
+					</li>
+					<li>
+						<a data-target="#tab4" data-toggle="tab"><span class="icon-i-cardiology" aria-hidden="true"></span>&nbsp;Vitals</a>
+					</li>
+					<li>
+						<a data-target="#tab5" data-toggle="tab"><span class="icon-i-laboratory" aria-hidden="true"></span>&nbsp;Lab Data Summary</a>
+					</li>
+				</ul>
+				<ul class="nav nav-tabs hidden-xs hidden-lg hidden-xl ">
 					<li class="active">
 						<a data-target="#tab1" data-toggle="tab"><span class="icon-i-administration" aria-hidden="true"></span>&nbsp;Demographics</a>
 					</li>
@@ -43,7 +60,7 @@
 					</li>
 				</ul>
 			</div>
-			<div class="tab-content col-md-10 " >
+			<div class="tab-content col-lg-10 ">
 				<div class="tab-pane fade in active panel panel-default  " style="padding:4px;" id="tab1">
 					<div class="page-content">
 						<div class="panel" ng-class="{'panel-success':!patient.deathDate(), 'panel-danger':patient.deathDate()}">
