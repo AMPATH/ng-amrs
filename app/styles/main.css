@@ -83,6 +83,15 @@ html, body {
     border-color: red;
     border-width: 2px;
   }
+  
+  .fade {
+opacity: 0;
+-webkit-transition: opacity 1s linear;
+  -moz-transition: opacity 1s linear;
+   -ms-transition: opacity 1s linear;
+	-o-transition: opacity 1s linear;
+	   transition: opacity 1s linear;
+}
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
