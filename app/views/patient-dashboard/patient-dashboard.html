@@ -27,42 +27,42 @@ id="patient-dashboard">
 		<div class="row">
 			<div class="col-lg-2 " style="padding-left:13px; padding-right:13px; padding-top:4px; padding-bottom:4px;">
 				<ul class="nav nav-pills nav-stacked hidden-sm hidden-md">
-					<li class="active">
+					<li active-tab-sync index="1" ng-click="activeList(this, 1)" ng-class="{active: activeListId === 1}">
 						<a data-target="#tab1" data-toggle="tab"><span class="icon-i-administration" aria-hidden="true"></span>&nbsp;Patient Info</a>
 					</li>
-					<li>
+					<li active-tab-sync index="2" ng-click="activeList(this, 2)" ng-class="{active: activeListId === 2}">
 						<a data-target="#tab2" data-toggle="tab"><span class="icon-i-registration" aria-hidden="true"></span>&nbsp;Encounters</a>
 					</li>
-					<li>
+					<li active-tab-sync index="3" ng-click="activeList(this, 3)" ng-class="{active: activeListId === 3}">
 						<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Forms</a>
 					</li>
-					<li>
+					<li active-tab-sync index="4" ng-click="activeList(this, 4)" ng-class="{active: activeListId === 4}">
 						<a data-target="#tab4" data-toggle="tab"><span class="icon-i-cardiology" aria-hidden="true"></span>&nbsp;Vitals</a>
 					</li>
-					<li>
+					<li active-tab-sync index="5" ng-click="activeList(this, 5)" ng-class="{active: activeListId === 5}">
 						<a data-target="#tab5" data-toggle="tab"><span class="icon-i-laboratory" aria-hidden="true"></span>&nbsp;Lab Data Summary</a>
 					</li>
 				</ul>
 				<ul class="nav nav-tabs hidden-xs hidden-lg hidden-xl ">
-					<li class="active">
+					<li active-tab-sync index="1" ng-click="activeList(this, 1)" ng-class="{active: activeListId === 1}">
 						<a data-target="#tab1" data-toggle="tab"><span class="icon-i-administration" aria-hidden="true"></span>&nbsp;Patient Info</a>
 					</li>
-					<li>
+					<li active-tab-sync index="2" ng-click="activeList(this, 2)" ng-class="{active: activeListId === 2}">
 						<a data-target="#tab2" data-toggle="tab"><span class="icon-i-registration" aria-hidden="true"></span>&nbsp;Encounters</a>
 					</li>
-					<li>
+					<li active-tab-sync index="3" ng-click="activeList(this, 3)" ng-class="{active: activeListId === 3}">
 						<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Forms</a>
 					</li>
-					<li>
+					<li active-tab-sync index="4" ng-click="activeList(this, 4)" ng-class="{active: activeListId === 4}">
 						<a data-target="#tab4" data-toggle="tab"><span class="icon-i-cardiology" aria-hidden="true"></span>&nbsp;Vitals</a>
 					</li>
-					<li>
+					<li active-tab-sync index="5" ng-click="activeList(this, 5)" ng-class="{active: activeListId === 5}">
 						<a data-target="#tab5" data-toggle="tab"><span class="icon-i-laboratory" aria-hidden="true"></span>&nbsp;Lab Data Summary</a>
 					</li>
 				</ul>
 			</div>
 			<div class="tab-content col-lg-10 ">
-				<div class="tab-pane fade in active panel panel-default  " style="padding:4px;" id="tab1">
+				<div class="tab-pane fade in active panel panel-default" style="padding:4px;" id="tab1">
 					<div class="panel  panel-info">
 						<div class="panel-heading">Demographics</div>
 						<div class="panel-body">
