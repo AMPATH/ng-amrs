@@ -37,6 +37,10 @@ jshint -W098, -W117, -W030
         expect(scope).to.have.property(patient);
       });
 
+      it('Should get the form schema with encounter and obs property', function(){
+
+      });
+
 
     });
 

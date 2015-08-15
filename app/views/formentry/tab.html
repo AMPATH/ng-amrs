@@ -11,11 +11,13 @@
            <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options">
            </formly-form>
          </tab>
+
          <tab heading="Submit">
            <button type="submit" class="btn btn-primary submit-button" ng-click="vm.onSubmit()">Submit</button>
            <button type="button" class="btn btn-default" ng-click="vm.resetAllForms()">Reset</button>
          </tab>
        </tabset>
+
      </form>
      <hr />
      <h2>Model Value</h2>
@@ -65,6 +67,23 @@
                  <button type="button" class="btn btn-primary" ng-click="addNew()" >{{to.btnText}}</button>
                </p>
                </div>
+
+               </div>
+               </script>
+               <!-- sections test -->
+               <script type="text/ng-template" id="section.html">
+               <div class="panel panel-default">
+               <div class="panel-heading">
+               {{to.label}}
+               </div>
+               <div class="panel-body">
+               <!--loop through each element in model array-->
+                   <div class="section" ng-repeat="element in to.fields" ng-init="fields = copyFields(to.fields)">
+                     <formly-form fields="fields"
+                                  model="model[options.key]"
+                                  bind-name="'formly_ng_repeat' + index + $parent.$index">
+                     </formly-form>
+                  </div>
 
                </div>
                </script>

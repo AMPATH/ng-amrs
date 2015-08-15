@@ -1,0 +1,196 @@
+{
+"name": "test poc form",
+"uuid": "xxxx",
+"processor": "postEncounterForm",
+"pages": [
+  {
+    "label": "Page 1",
+    "sections": [
+      {
+        "label": "Encounter Details",
+        "questions": [
+          {
+            "label": "Visit Date",
+            "type": "encounterDate",
+            "required": "true"
+          },
+          {
+            "type": "encounterProvider",
+            "label": "Provider",
+            "required": "true"
+          },
+          {
+            "type": "encounterLocation",
+            "label": "Facility Name",
+            "required": "true"
+          }
+        ]
+      },
+      {
+        "label": "Visit Type",
+        "questions": [
+          {
+            "concept": "a89ff9a6-1350-11df-a1f1-0026b9348838",
+            "label": "7a. Visit Type",
+            "type": "select",
+            "validators": [],
+            "answers":[
+              {"concept": "a89b6440-1350-11df-a1f1-0026b9348838", "label": "Scheduled visit"},
+              {"concept": "a89ff816-1350-11df-a1f1-0026b9348838", "label": "Unscheduled Visit Early"},
+              {"concept": "a89ff8de-1350-11df-a1f1-0026b9348838", "label": "Unscheduled Visit Late"}
+            ]
+          },
+          {
+            "concept": "dc1942b2-5e50-4adc-949d-ad6c905f054e",
+            "type": "date",
+            "validators": [ {"type": "date", "allowFutureDates": "true"} ],
+            "label": "7b. If Unscheduled, actual scheduled date"
+          }
+        ]
+      },
+      {
+        "label": "Current Tuberculosis",
+        "questions": [
+          {
+            "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",
+            "type": "group",
+            "questions": [
+              {
+                "concept": "16db21cd-10cb-4c31-bb5a-b7619bfbea66",
+                "label": "c. Site of TB meds pick-up",
+                "type": "select",
+                "answers":[
+                  {"concept": "a89c2f42-1350-11df-a1f1-0026b9348838", "label": "This Ampath site"},
+                  {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other" }
+                ]
+              },
+              {
+                "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                "label": "Other Site (Specify)",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
+            "type": "group_repeating",
+            "label":"Current TB Regimen",
+            "questions": [
+              {
+                "concept": "a899e444-1350-11df-a1f1-0026b9348838",
+                "label": "d. Current TB Regimen",
+                "type": "select",
+                "validators": [],
+                "answers":[
+                  {"concept": "a899f51a-1350-11df-a1f1-0026b9348838", "label": "RHZE"},
+                  {"concept": "a897d1a4-1350-11df-a1f1-0026b9348838", "label": "RHZ"},
+                  {"concept": "a8a382ba-1350-11df-a1f1-0026b9348838", "label": "RHE"},
+                  {"concept": "a899e19c-1350-11df-a1f1-0026b9348838", "label": "EH"},
+                  {"concept": "a8971c64-1350-11df-a1f1-0026b9348838", "label": "Ethambutol"},
+                  {"concept": "a8a3243c-1350-11df-a1f1-0026b9348838", "label": "MDR drugs"},
+                  {"concept": "a896cc00-1350-11df-a1f1-0026b9348838", "label": "INH"},
+                  {"concept": "a8ac5f2a-1350-11df-a1f1-0026b9348838", "label": "Pyrazinamide"},
+                  {"concept": "a8952e4a-1350-11df-a1f1-0026b9348838", "label": "Streptomycin"},
+                  {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other"},
+                  {"concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4", "label": "Rifabutin"}
+                ]
+              },
+              {
+                "concept": "a8a07386-1350-11df-a1f1-0026b9348838", "label": "tabs/day", "type": "number"
+              },
+              {
+                "concept": "a8a063c8-1350-11df-a1f1-0026b9348838", "label": "mg", "type": "number"
+              },
+              {
+                "concept": "a8a0744e-1350-11df-a1f1-0026b9348838", "label": "mg/day", "type": "number"
+              },
+              {
+                "concept": "a8a0744e-1350-11df-a1f1-0026b9348838", "label": "tabs", "type": "number"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label":"Page 2",
+    "sections":[
+      {
+        "label":"Problem List",
+        "questions":[
+          {
+            "concept": "a89c2d8a-1350-11df-a1f1-0026b9348838",
+            "type": "group_repeating",
+            "label": "23a. Problem Added",
+            "questions":[
+              {
+                "concept": "a8ae835e-1350-11df-a1f1-0026b9348838",
+                "label": "Problem Added",
+                "type": "problem",
+                "validators": []
+              }
+            ]
+          },
+          {
+            "concept": "a89c2d8a-1350-11df-a1f1-0026b9348838",
+            "type": "group_repeating",
+            "label": "23b. Problem Resolved",
+            "questions":[
+              {
+                "concept": "a8af4aa0-1350-11df-a1f1-0026b9348838",
+                "label": "Problem Resolved",
+                "type": "problem",
+                "validators": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Page 3",
+    "sections":[
+      {
+        "label":"22. Tests Results and Test Date (Please Record date sample was drawn, rather than date test was run)",
+        "questions":[
+          {
+            "type":"group",
+            "questions":[
+              {
+                "concept": "a896dea2-1350-11df-a1f1-0026b9348838",
+                "label": "WBC/mm3",
+                "type": "number",
+                "showDate":"true",
+                "validators": []
+              },
+              {
+                "concept": "a8908a16-1350-11df-a1f1-0026b9348838",
+                "label": "Hgb g/dL",
+                "type": "number",
+                "showDate":"true",
+                "validators": []
+              },
+              {
+                "concept": "a898201e-1350-11df-a1f1-0026b9348838",
+                "label": "MCV",
+                "type": "number",
+                "showDate":"true",
+                "validators": []
+              },
+              {
+                "concept": "a898b20e-1350-11df-a1f1-0026b9348838",
+                "label": "ALC/ mm3",
+                "type": "number",
+                "showDate":"true",
+                "validators": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
+}
