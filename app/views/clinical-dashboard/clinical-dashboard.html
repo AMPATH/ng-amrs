@@ -1,15 +1,27 @@
 <div class="panel panel-default" style="padding: 4px;">
 	<h2 style="margin-top:2px;">&nbsp;
-		<span class="icon-care-staff-area" aria-hidden="true"></span> Cinical Dashboard</h2>
-	<hr/>
+		<span class="icon-care-staff-area" aria-hidden="true"></span>Cinical Dashboard</h2>
+	<hr style="margin: -4px;" />
+	<div class="form-group" style="margin-top:16px; margin-bottom:8px;">
+		<div class="input-group">
+			<div class="input-group-addon">
+				<span class="text-danger">
+					<img ng-show="isBusy" src="images/ajax-loader.gif" />
+				</span>
+				<span ng-hide="isBusy" class="glyphicon glyphicon-map-marker"></span>
+			</div>
+			<input type="text" id="search-textbox" class="form-control" ng-model="searchString" ng-model-options="{ debounce: 500 }"
+			placeholder="Enter location" autofocus>
+		</div>
+	</div>
 	<ul class="nav nav-pills">
-		<li class="active">
+		<li class="active" style="cursor: pointer;">
 			<a data-target="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;Daily Appointments</a>
 		</li>
-		<li>
+		<li style="cursor: pointer;">
 			<a data-target="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;Monthly Appointments</a>
 		</li>
-		<li>
+		<li style="cursor: pointer;">
 			<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;Defaulters List</a>
 		</li>
 	</ul>
