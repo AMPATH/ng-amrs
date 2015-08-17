@@ -22,31 +22,29 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
           console.log('New Form Schema');
           console.log(formSchema);
 
-          //$scope.vm.userFields = $scope.vm.formlyFields;
-          if (Object.keys(formSchema).length>0)
-          {
-            FormentryService.createForm(formSchema, function(formlySchema){
-              $scope.vm.formlyFields = formlySchema;
-              // var test = [];
-              // test.push(formlySchema);
-              // console.log('Fields in the controller');
-              // console.log($scope.vm.formlyFields);
-              // $scope.vm.tabs =[
-              //   {
-              //     title: 'Page 1',
-              //     active: true,
-              //     form:{
-              //       options:{},
-              //       fields:test
-              //     }
-              //   }
-              // ];
-              $scope.vm.tabs = $scope.vm.formlyFields;
-              angular.forEach($scope.vm.tabs, function(tab){
-                tab.form['model']=$scope.vm.model;
-              })
+          FormentryService.createForm(formSchema, function(formlySchema){
+            $scope.vm.formlyFields = formlySchema;
+            $scope.vm.tabs = $scope.vm.formlyFields;
+
+            angular.forEach($scope.vm.tabs, function(tab){
+              console.log('Tab Structure');
+              console.log(tab);
+              tab.form['model']=$scope.vm.model;
             });
-          }
+            ///FormentryService.getEncounter('encData', formlySchema)
+            var params = {uuid:'33158613-0f76-45a5-9c49-28f5928185aa'};
+            EncounterResService.getEncounterByUuid(params,
+              function(data){
+              var encData = data;
+              console.log('Rest Feeback')
+              console.log(encData);
+              if (data)
+              {
+                FormentryService.getEncounter(encData,formlySchema);
+              }
+
+             });
+          });
          });
 
        },1000);

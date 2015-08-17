@@ -141,6 +141,77 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         }
 
+        function getEncounterRevised(enc_data, formlySchema)
+        {
+          /*
+          Each page/tab has various sections
+          each section has a set of various questions/data elements
+          The model is simply aware of sections only
+
+          */
+          //looping thro' individual pages
+          _.each(formlySchema, function(page){
+            //looping thro each section in the page and updating the model
+            //console.log('Model test 1', model);
+
+            var model = page.form.model;
+
+            console.log('Page Test Model ');
+            console.log(model)
+            _.each(page.form.fields, function(_section){
+              if (_section.type === 'section')
+              {
+                //console.log('Section: ' + _section.key);
+                /*
+                Updating the section keys in the model;
+                It is important that we update the model with the section key
+                because for some reason formly does not see the keys
+                even though when you log the page keys you see them
+                */
+                var sec_key = _section.key;
+                var sec_data = model[sec_key] = {};
+
+                //loop through the individual fields in the section and update accordingly
+                _.each(_section.templateOptions.fields[0].fieldGroup, function(_field){
+                  //console.log('Fields Available...')
+                  //console.log(_field)
+
+                  if(_field.key === 'encounterDate')
+                  {
+                    sec_data['encounterDate'] = enc_data.encounterDatetime;
+                    _field.data['init_val'] = enc_data.encounterDatetime;
+
+                    //console.log('test Model');
+                    //console.log(model);
+                  }
+                  else if(_field.key === 'encounterProvider')
+                  {
+
+                    sec_data['encounterProvider'] = enc_data.provider.uuid;
+                    _field.data['init_val'] = enc_data.provider.uuid;
+                    //console.log('test Model');
+                    //console.log(model);
+                  }
+                  else if(_field.key === 'encounterLocation')
+                  {
+                    sec_data['encounterLocation'] = enc_data.location.uuid;
+                    _field.data['init_val'] = enc_data.location.uuid;
+                    //console.log('test Model');
+                    //console.log(model);
+                  }
+                  else if(_field.type === 'select' || _field.type === 'radio')
+                  {
+
+                  }
+                  console.log('Updated Fields Available...')
+                  console.log(_field)
+                });
+              }
+            });
+
+          });
+        }
+
 
         function getEncounter(encData, formlySchema){
           //cbce861a-790c-4b91-80e6-3d75e671a4de
@@ -158,380 +229,381 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           uuid:'encounter-uuid'
           */
 
+          getEncounterRevised(encData, formlySchema);
 
-          //geting obs data without obs groups
-          var obsData = _.filter(encData.obs,function(obs){
-            if(obs.groupMembers === null) return obs
-          })
-
-          //geting obs data with obs groups
-          var obsGroupArr={};//store distinct obsgroup uuid
-          var obsGroupData =  _.filter(encData.obs,function(obs){
-            if(obs.groupMembers !== null)
-            {
-              obsGroupArr['obs_' + obs.concept.uuid] = obs.concept.uuid;
-              return obs;
-            }
-          })
-          var key;
-
-          //Start by prefilling the encounter information
-
-          _.each(formlySchema, function(field, x) {
-            //console.log('field No: ' + x + ' Field Key: '+ field.key);
-            if(angular.isNumber(field.key) || field.key == undefined)
-            {
-              return; //skip current iteration
-            }
-            else if(field.key.startsWith('enc_')) //using underscore.js and underscore.string.js Functions
-            {
-              console.log('Encounter Keys');
-              console.log(field.key);
-              key = field.key;
-              if(key === 'enc_encounterDatetime')
-              {
-                //update the model property
-                field.model[key] = encData.encounterDatetime;
-              }
-              else if(key === 'enc_encounterLocation')
-              {
-                //update the model property
-                if(encData.location !== null) field.model[key] = encData.location.uuid;
-              }
-              else if(key === 'enc_encounterProvider')
-              {
-                //update the model property
-                if(encData.provider !== null) field.model[key] = encData.provider.uuid;
-              }
-              //field.model[key] = encData.encounterDatetime;
-            }
-            else if(field.key.startsWith('obs_')) //using underscore.js and underscore.string.js Functions
-            {
-                //get obs fields without groups
-                console.log('starting obs prefill');
-                key = field.key;
-                //console.log('Selected Key: '+ key + 'type: '+ field.type);
-                var val;
-                var multiArr = []; //for multiselect fields like checkboxes
-                if(field.model.obsGroupUuid === '')
-                {
-                  if(field.type === 'select' || field.type === 'radio')
-                  {
-
-                    val = _.find(obsData,function(obs){
-                      if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
-                    });
-                    //console.log('matching obs concept id:');
-                    //console.log(val);
-                    if (val !== undefined) field.model[key] = val.value.uuid;
-                  }
-                  else if(field.type === 'multiCheckbox')
-                  {
-
-                    val = _.filter(obsData,function(obs){
-                      if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
-                    });
-                    //console.log('matching multiCheckbox:');
-                    //console.log(val);
-                    if (val !== undefined) {
-                      _.each(val, function(obs){
-                        multiArr.push(obs.value.uuid);
-                      });
-                      field.model[key] = multiArr;
-                    }
-                  }
-                  else
-                  {
-                    val = _.find(obsData,function(obs){
-                      if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
-                    });
-                      //console.log('matching obs concept id: and autofilled model');
-                      //console.log(val);
-                      //console.log(field.model);
-                      if (val !== undefined) field.model[key] = val.value;
-                      //console.log(field.model);
-                  }
-                }
-                //obs with obs group uuids
-                else if(field.model.obsGroupUuid !== '')
-                {
-                  if(field.type === 'select' || field.type === 'radio')
-                  {
-                    //get the group member matching the current key
-                    var groupMember;
-                    _.each(obsGroupData, function(obs) {
-                      groupMember = _.find(obs.groupMembers, function(item) {
-                        if(obs.concept.uuid === field.model.obsGroupUuid && item.concept.uuid === field.model.obsConceptUuid) return item;
-                      })
-                    })
-                    val = _.find(obsGroupData,function(obs){
-                      if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
-                    });
-                    //console.log('matching obs concept id:');
-                    //console.log(val);
-                    if (val !== undefined && groupMember !== undefined) field.model[key] = groupMember.value.uuid;
-                  }
-                  else if(field.type === 'multiCheckbox')
-                  {
-                    //get the group member matching the current key
-                    var groupMember;
-                    _.each(obsGroupData, function(obs) {
-                      groupMember = _.filter(obs.groupMembers, function(item) {
-                        if(obs.concept.uuid === field.model.obsGroupUuid && item.concept.uuid === field.model.obsConceptUuid) return item;
-                      })
-                    });
-
-                    val = _.find(obsGroupData,function(obs){
-                      if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
-                    });
-                    //console.log('matching multiCheckbox:');
-                    //console.log(val);
-                    if (val !== undefined && groupMember !== undefined) {
-                      _.each(groupMember, function(obs){
-                        multiArr.push(obs.value.uuid);
-                      });
-                      field.model[key] = multiArr;
-                    }
-                  }
-                  else if(field.type === 'repeatSection')
-                  {
-                    //get the group member matching the current key
-                    var groupMember;
-                    key = field.model.obsGroupUuid;
-
-                    for(var dictKey in obsGroupArr)
-                    {
-                      // console.log('test dictionary')
-                      // console.log(obsGroupArr[dictKey]);
-                    }
-
-                    val = _.filter(obsGroupData,function(obs){
-                      //console.log(obs);
-                      if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
-                    });
-
-                    console.log('matching repeatSection:');
-                    console.log(field);
-                    var rowVal = {};
-                    if (val !== undefined) {
-                      /*
-                      Loop field wise in the group to  create a row object
-                      */
-                      var selgrup;
-                      var fieldKeys=[];
-                      _.each(field.templateOptions.fields[0].fieldGroup, function(curField){
-                         fieldKeys.push(curField.key.split('_')[1]);
-                      })
-                      multiArr = [];
-                      _.each(val,function(data,i){
-                        rowVal = {};
-                        console.log('Row ' + i + ' Data' );
-                        //console.log(data);
-
-                        _.each(data.groupMembers, function (rowData) {
-
-                          /*
-                          The expected model row data should be something like
-                          {
-                          col1key:col1value,
-                          col2key:col2value,
-                          ---
-                          colnkey:colnvalue
-                          }
-                          */
-                          if(fieldKeys.indexOf(rowData.concept.uuid)>=0)
-                          {
-                            console.log(rowData.concept.uuid);
-                            var colKey = 'obs_' + rowData.concept.uuid
-                            console.log('columns: '+colKey);
-                            if (angular.isObject(rowData.value))
-                            {
-                              rowVal[colKey] = rowData.value.uuid
-                            }
-                            else {
-                              rowVal[colKey] = rowData.value
-                            }
-                          }
-
-                        });
-                        if(Object.keys(rowVal).length>0)  multiArr.push(rowVal);
-                        //console.log('Array Val Repeat');
-
-                        //console.log(multiArr);
-                      });
-                    }
-                    field.model['obs_'+key] = multiArr;
-                  }
-                  else if(field.type === undefined)
-                  {
-                    console.log('testing groupSection')
-                    /*
-                    groupSection should have undefined type since
-                    we don't have type in its object definition
-                    */
-                    var groupMember;
-                    key = field.model.obsGroupUuid;
-                    if(_.contains(key,'unamed'))
-                    {
-                      //no valid obs group uuid
-                      //console.log('field groups')
-                      //console.log(field.fieldGroup);
-                    _.each(field.fieldGroup, function(curField){
-                        if(curField.type !== 'multiCheckbox')
-                        {
-                          if(_.contains(curField.key, 'obsDate_'))
-                          {
-                            var obsVal = _.find(obsData, function(data){
-                              if(data.concept.uuid === curField.key.split('_')[1])
-                              {
-                                return data;
-                              }
-                            });
-                            if(obsVal !== undefined)
-                            {
-                              field.model['obs_'+key][curField.key] = obsVal.obsDatetime;
-                            }
-                          }
-                          else {
-                            var obsVal = _.find(obsData, function(data){
-                              if(data.concept.uuid === curField.key.split('_')[1])
-                              {
-                                return data;
-                              }
-                            });
-
-                            if(obsVal !== undefined)
-                            {
-                              // console.log('test group sec obs value');
-                              // console.log(obsVal);
-                              // console.log('Current field Key: ' + curField.key)
-                              // console.log('current key: obs_'+ key);
-                              // console.log(field.model['obs_' + key]);
-                              if(angular.isObject(obsVal.value) && field.model['obs_' + key] !== undefined)
-                              {
-                                field.model['obs_'+ key][curField.key] = obsVal.value.uuid;
-                              }
-                              else {
-                                field.model['obs_'+ key][curField.key] = obsVal.value;
-                              }
-                            }
-
-                          }
-                        }
-                        else {
-                          //if the field group section field is a multi select
-                          var obsVal = _.filter(obsData, function(data){
-                            if(data.concept.uuid === curField.key.split('_')[1])
-                            {
-                              return data;
-                            }
-                          });
-                          multiArr = [];
-
-                          if(obsVal !== undefined)
-                          {
-                            _.each(obsVal, function(data){
-                              multiArr.push(data.value.uuid);
-                            });
-                            field.model['obs_'+key][curField.key] = multiArr;
-                          }
-                        }
-                    });
-                    }
-                    else {
-                      //has valid obs group uuid
-                      var obsGpSecData = _.find(obsGroupData, function(data){
-                        if(data.concept.uuid === key.split('_')[1])
-                        {
-                          return data;
-                        }
-                      });
-                      _.each(field.fieldGroup, function(curField){
-                          if(curField.type !== 'multiCheckbox')
-                          {
-                            if(_.contains(curField.key, 'obsDate_'))
-                            {
-                              var obsVal = _.find(obsGpSecData.groupMembers, function(data){
-                                if(data.concept.uuid === curField.key.split('_')[1])
-                                {
-                                  return data;
-                                }
-                              });
-
-                              if(obsVal !== undefined)
-                              {
-                                field.model['obs_'+key][curField.key] = obsVal.obsDatetime;
-                              }
-                            }
-                            else {
-                              var obsVal = _.find(obsGpSecData.groupMembers, function(data){
-                                if(data.concept.uuid === curField.key.split('_')[1])
-                                {
-                                  return data;
-                                }
-                              });
-
-                              if(obsVal !== undefined)
-                              {
-                                // console.log('test group sec obs value');
-                                // console.log(obsVal);
-                                // console.log('current key: '+ key);
-                                // console.log(field.model[key]);
-                                if(angular.isObject(obsVal.value))
-                                {
-                                  field.model['obs_'+key][curField.key] = obsVal.value.uuid;
-                                }
-                                else {
-                                  field.model['obs_'+key][curField.key] = obsVal.value;
-                                }
-                              }
-
-                            }
-                          }
-                          else {
-                            //if the field group section field is a multi select
-                            var obsVal = _.filter(obsGpSecData.groupMembers, function(data){
-                              if(data.concept.uuid === curField.key.split('_')[1])
-                              {
-                                return data;
-                              }
-                            });
-                            multiArr = [];
-
-                            if(obsVal !== undefined)
-                            {
-                              _.each(obsVal, function(data){
-                                multiArr.push(data.value.uuid);
-                              });
-                              field.model['obs_'+key][curField.key] = multiArr;
-                            }
-                          }
-                      });
-                    }
-                  }
-                  else{
-                    //get the group member matching the current key
-                    var groupMember;
-                    _.each(obsGroupData, function(obs) {
-                      groupMember = _.find(obs.groupMembers, function(item) {
-                        if(obs.concept.uuid === field.model.obsGroupUuid && item.concept.uuid === field.model.obsConceptUuid) return item;
-                      })
-                    });
-
-                    val = _.find(obsGroupData,function(obs){
-                      if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
-                 });
-                      //console.log('matching obs concept id: and autofilled model');
-                      //console.log(val);
-                      //console.log(field.model);
-                      if (val !== undefined && groupMember !== undefined) field.model[key] = groupMember.value;
-                      //console.log(field.model);
-                  }
-                }
-            }
-
-
-          });
+          // //geting obs data without obs groups
+          // var obsData = _.filter(encData.obs,function(obs){
+          //   if(obs.groupMembers === null) return obs
+          // })
+          //
+          // //geting obs data with obs groups
+          // var obsGroupArr={};//store distinct obsgroup uuid
+          // var obsGroupData =  _.filter(encData.obs,function(obs){
+          //   if(obs.groupMembers !== null)
+          //   {
+          //     obsGroupArr['obs_' + obs.concept.uuid] = obs.concept.uuid;
+          //     return obs;
+          //   }
+          // })
+          // var key;
+          //
+          // //Start by prefilling the encounter information
+          //
+          // _.each(formlySchema, function(field, x) {
+          //   //console.log('field No: ' + x + ' Field Key: '+ field.key);
+          //   if(angular.isNumber(field.key) || field.key == undefined)
+          //   {
+          //     return; //skip current iteration
+          //   }
+          //   else if(field.key.startsWith('enc_')) //using underscore.js and underscore.string.js Functions
+          //   {
+          //     console.log('Encounter Keys');
+          //     console.log(field.key);
+          //     key = field.key;
+          //     if(key === 'enc_encounterDatetime')
+          //     {
+          //       //update the model property
+          //       field.model[key] = encData.encounterDatetime;
+          //     }
+          //     else if(key === 'enc_encounterLocation')
+          //     {
+          //       //update the model property
+          //       if(encData.location !== null) field.model[key] = encData.location.uuid;
+          //     }
+          //     else if(key === 'enc_encounterProvider')
+          //     {
+          //       //update the model property
+          //       if(encData.provider !== null) field.model[key] = encData.provider.uuid;
+          //     }
+          //     //field.model[key] = encData.encounterDatetime;
+          //   }
+          //   else if(field.key.startsWith('obs_')) //using underscore.js and underscore.string.js Functions
+          //   {
+          //       //get obs fields without groups
+          //       console.log('starting obs prefill');
+          //       key = field.key;
+          //       //console.log('Selected Key: '+ key + 'type: '+ field.type);
+          //       var val;
+          //       var multiArr = []; //for multiselect fields like checkboxes
+          //       if(field.model.obsGroupUuid === '')
+          //       {
+          //         if(field.type === 'select' || field.type === 'radio')
+          //         {
+          //
+          //           val = _.find(obsData,function(obs){
+          //             if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
+          //           });
+          //           //console.log('matching obs concept id:');
+          //           //console.log(val);
+          //           if (val !== undefined) field.model[key] = val.value.uuid;
+          //         }
+          //         else if(field.type === 'multiCheckbox')
+          //         {
+          //
+          //           val = _.filter(obsData,function(obs){
+          //             if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
+          //           });
+          //           //console.log('matching multiCheckbox:');
+          //           //console.log(val);
+          //           if (val !== undefined) {
+          //             _.each(val, function(obs){
+          //               multiArr.push(obs.value.uuid);
+          //             });
+          //             field.model[key] = multiArr;
+          //           }
+          //         }
+          //         else
+          //         {
+          //           val = _.find(obsData,function(obs){
+          //             if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
+          //           });
+          //             //console.log('matching obs concept id: and autofilled model');
+          //             //console.log(val);
+          //             //console.log(field.model);
+          //             if (val !== undefined) field.model[key] = val.value;
+          //             //console.log(field.model);
+          //         }
+          //       }
+          //       //obs with obs group uuids
+          //       else if(field.model.obsGroupUuid !== '')
+          //       {
+          //         if(field.type === 'select' || field.type === 'radio')
+          //         {
+          //           //get the group member matching the current key
+          //           var groupMember;
+          //           _.each(obsGroupData, function(obs) {
+          //             groupMember = _.find(obs.groupMembers, function(item) {
+          //               if(obs.concept.uuid === field.model.obsGroupUuid && item.concept.uuid === field.model.obsConceptUuid) return item;
+          //             })
+          //           })
+          //           val = _.find(obsGroupData,function(obs){
+          //             if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
+          //           });
+          //           //console.log('matching obs concept id:');
+          //           //console.log(val);
+          //           if (val !== undefined && groupMember !== undefined) field.model[key] = groupMember.value.uuid;
+          //         }
+          //         else if(field.type === 'multiCheckbox')
+          //         {
+          //           //get the group member matching the current key
+          //           var groupMember;
+          //           _.each(obsGroupData, function(obs) {
+          //             groupMember = _.filter(obs.groupMembers, function(item) {
+          //               if(obs.concept.uuid === field.model.obsGroupUuid && item.concept.uuid === field.model.obsConceptUuid) return item;
+          //             })
+          //           });
+          //
+          //           val = _.find(obsGroupData,function(obs){
+          //             if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
+          //           });
+          //           //console.log('matching multiCheckbox:');
+          //           //console.log(val);
+          //           if (val !== undefined && groupMember !== undefined) {
+          //             _.each(groupMember, function(obs){
+          //               multiArr.push(obs.value.uuid);
+          //             });
+          //             field.model[key] = multiArr;
+          //           }
+          //         }
+          //         else if(field.type === 'repeatSection')
+          //         {
+          //           //get the group member matching the current key
+          //           var groupMember;
+          //           key = field.model.obsGroupUuid;
+          //
+          //           for(var dictKey in obsGroupArr)
+          //           {
+          //             // console.log('test dictionary')
+          //             // console.log(obsGroupArr[dictKey]);
+          //           }
+          //
+          //           val = _.filter(obsGroupData,function(obs){
+          //             //console.log(obs);
+          //             if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
+          //           });
+          //
+          //           console.log('matching repeatSection:');
+          //           console.log(field);
+          //           var rowVal = {};
+          //           if (val !== undefined) {
+          //             /*
+          //             Loop field wise in the group to  create a row object
+          //             */
+          //             var selgrup;
+          //             var fieldKeys=[];
+          //             _.each(field.templateOptions.fields[0].fieldGroup, function(curField){
+          //                fieldKeys.push(curField.key.split('_')[1]);
+          //             })
+          //             multiArr = [];
+          //             _.each(val,function(data,i){
+          //               rowVal = {};
+          //               console.log('Row ' + i + ' Data' );
+          //               //console.log(data);
+          //
+          //               _.each(data.groupMembers, function (rowData) {
+          //
+          //                 /*
+          //                 The expected model row data should be something like
+          //                 {
+          //                 col1key:col1value,
+          //                 col2key:col2value,
+          //                 ---
+          //                 colnkey:colnvalue
+          //                 }
+          //                 */
+          //                 if(fieldKeys.indexOf(rowData.concept.uuid)>=0)
+          //                 {
+          //                   console.log(rowData.concept.uuid);
+          //                   var colKey = 'obs_' + rowData.concept.uuid
+          //                   console.log('columns: '+colKey);
+          //                   if (angular.isObject(rowData.value))
+          //                   {
+          //                     rowVal[colKey] = rowData.value.uuid
+          //                   }
+          //                   else {
+          //                     rowVal[colKey] = rowData.value
+          //                   }
+          //                 }
+          //
+          //               });
+          //               if(Object.keys(rowVal).length>0)  multiArr.push(rowVal);
+          //               //console.log('Array Val Repeat');
+          //
+          //               //console.log(multiArr);
+          //             });
+          //           }
+          //           field.model['obs_'+key] = multiArr;
+          //         }
+          //         else if(field.type === undefined)
+          //         {
+          //           console.log('testing groupSection')
+          //           /*
+          //           groupSection should have undefined type since
+          //           we don't have type in its object definition
+          //           */
+          //           var groupMember;
+          //           key = field.model.obsGroupUuid;
+          //           if(_.contains(key,'unamed'))
+          //           {
+          //             //no valid obs group uuid
+          //             //console.log('field groups')
+          //             //console.log(field.fieldGroup);
+          //           _.each(field.fieldGroup, function(curField){
+          //               if(curField.type !== 'multiCheckbox')
+          //               {
+          //                 if(_.contains(curField.key, 'obsDate_'))
+          //                 {
+          //                   var obsVal = _.find(obsData, function(data){
+          //                     if(data.concept.uuid === curField.key.split('_')[1])
+          //                     {
+          //                       return data;
+          //                     }
+          //                   });
+          //                   if(obsVal !== undefined)
+          //                   {
+          //                     field.model['obs_'+key][curField.key] = obsVal.obsDatetime;
+          //                   }
+          //                 }
+          //                 else {
+          //                   var obsVal = _.find(obsData, function(data){
+          //                     if(data.concept.uuid === curField.key.split('_')[1])
+          //                     {
+          //                       return data;
+          //                     }
+          //                   });
+          //
+          //                   if(obsVal !== undefined)
+          //                   {
+          //                     // console.log('test group sec obs value');
+          //                     // console.log(obsVal);
+          //                     // console.log('Current field Key: ' + curField.key)
+          //                     // console.log('current key: obs_'+ key);
+          //                     // console.log(field.model['obs_' + key]);
+          //                     if(angular.isObject(obsVal.value) && field.model['obs_' + key] !== undefined)
+          //                     {
+          //                       field.model['obs_'+ key][curField.key] = obsVal.value.uuid;
+          //                     }
+          //                     else {
+          //                       field.model['obs_'+ key][curField.key] = obsVal.value;
+          //                     }
+          //                   }
+          //
+          //                 }
+          //               }
+          //               else {
+          //                 //if the field group section field is a multi select
+          //                 var obsVal = _.filter(obsData, function(data){
+          //                   if(data.concept.uuid === curField.key.split('_')[1])
+          //                   {
+          //                     return data;
+          //                   }
+          //                 });
+          //                 multiArr = [];
+          //
+          //                 if(obsVal !== undefined)
+          //                 {
+          //                   _.each(obsVal, function(data){
+          //                     multiArr.push(data.value.uuid);
+          //                   });
+          //                   field.model['obs_'+key][curField.key] = multiArr;
+          //                 }
+          //               }
+          //           });
+          //           }
+          //           else {
+          //             //has valid obs group uuid
+          //             var obsGpSecData = _.find(obsGroupData, function(data){
+          //               if(data.concept.uuid === key.split('_')[1])
+          //               {
+          //                 return data;
+          //               }
+          //             });
+          //             _.each(field.fieldGroup, function(curField){
+          //                 if(curField.type !== 'multiCheckbox')
+          //                 {
+          //                   if(_.contains(curField.key, 'obsDate_'))
+          //                   {
+          //                     var obsVal = _.find(obsGpSecData.groupMembers, function(data){
+          //                       if(data.concept.uuid === curField.key.split('_')[1])
+          //                       {
+          //                         return data;
+          //                       }
+          //                     });
+          //
+          //                     if(obsVal !== undefined)
+          //                     {
+          //                       field.model['obs_'+key][curField.key] = obsVal.obsDatetime;
+          //                     }
+          //                   }
+          //                   else {
+          //                     var obsVal = _.find(obsGpSecData.groupMembers, function(data){
+          //                       if(data.concept.uuid === curField.key.split('_')[1])
+          //                       {
+          //                         return data;
+          //                       }
+          //                     });
+          //
+          //                     if(obsVal !== undefined)
+          //                     {
+          //                       // console.log('test group sec obs value');
+          //                       // console.log(obsVal);
+          //                       // console.log('current key: '+ key);
+          //                       // console.log(field.model[key]);
+          //                       if(angular.isObject(obsVal.value))
+          //                       {
+          //                         field.model['obs_'+key][curField.key] = obsVal.value.uuid;
+          //                       }
+          //                       else {
+          //                         field.model['obs_'+key][curField.key] = obsVal.value;
+          //                       }
+          //                     }
+          //
+          //                   }
+          //                 }
+          //                 else {
+          //                   //if the field group section field is a multi select
+          //                   var obsVal = _.filter(obsGpSecData.groupMembers, function(data){
+          //                     if(data.concept.uuid === curField.key.split('_')[1])
+          //                     {
+          //                       return data;
+          //                     }
+          //                   });
+          //                   multiArr = [];
+          //
+          //                   if(obsVal !== undefined)
+          //                   {
+          //                     _.each(obsVal, function(data){
+          //                       multiArr.push(data.value.uuid);
+          //                     });
+          //                     field.model['obs_'+key][curField.key] = multiArr;
+          //                   }
+          //                 }
+          //             });
+          //           }
+          //         }
+          //         else{
+          //           //get the group member matching the current key
+          //           var groupMember;
+          //           _.each(obsGroupData, function(obs) {
+          //             groupMember = _.find(obs.groupMembers, function(item) {
+          //               if(obs.concept.uuid === field.model.obsGroupUuid && item.concept.uuid === field.model.obsConceptUuid) return item;
+          //             })
+          //           });
+          //
+          //           val = _.find(obsGroupData,function(obs){
+          //             if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
+          //        });
+          //             //console.log('matching obs concept id: and autofilled model');
+          //             //console.log(val);
+          //             //console.log(field.model);
+          //             if (val !== undefined && groupMember !== undefined) field.model[key] = groupMember.value;
+          //             //console.log(field.model);
+          //         }
+          //       }
+          //   }
+          //
+          //
+          // });
           // console.log('obs group data')
           // console.log(obsGroupData);
 
