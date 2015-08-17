@@ -35,7 +35,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
       },
       function(error) {
         console.log('An error occured while attempting to fetch encounter ' +
-                    'with uuid ' + uuid);
+                    'with uuid ' + params.patientUuid);
         if (typeof errorCallback === 'function') errorCallback(error);
       });
     }
@@ -92,7 +92,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
       },
       function(error) {
         console.log('An error occured while attempting to fetch encounter ' +
-                    'with uuid ' + uuid);
+                    'with uuid ' + params.patientUuid);
         if (typeof errorCallback === 'function') errorCallback(error);
       });
     }

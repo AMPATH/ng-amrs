@@ -19,6 +19,8 @@
     //$scope.patient = $rootScope.broadcastPatient;
     $scope.p = null;
     $scope.encounters = [];
+    
+    
 
     $timeout(function () {
       OpenmrsRestService.getPatientService().getPatientByUuid({uuid:$stateParams.uuid},

@@ -35,7 +35,7 @@
   "appPath": "app",
   "moduleName": "ngAmrsApp",
   "resolutions": {
-    "angular": "1.4.3",
-    "angular-bootstrap": "~0.13.0"
+    "angular":"1.3.17",
+    "angular-bootstrap": "~0.13.3"
   }
 }

@@ -26,22 +26,31 @@ jshint -W003, -W026
         var vm = this;
         scope.hivSummary = {};
         
-        scope.hasSummary = false;
+        scope.hasSummary = true;
+        scope.experiencedLoadingError = false;
+        scope.isBusy = false;
         
-        vm.fetchHivSummary = function(patientUuid) {
-            scope.hasSummary = false;
+        scope.fetchHivSummary = function(patientUuid) {
+            scope.hasSummary = true;
+            scope.experiencedLoadingError = false;
+            scope.isBusy = true;
             EtlRestService.getHivSummary(patientUuid, undefined, undefined, onFetchHivSummarySuccess, onFetchHivSummaryFailed);
         }
         
         function onFetchHivSummarySuccess(hivData) {
             if(hivData.result[0])
                 scope.hasSummary = true;
+            else
+                scope.hasSummary = false;
                 
+            scope.isBusy = false;   
             scope.hivSummary = new HivSummaryModel.hivSummary(hivData.result[0]);
         }
         
         function onFetchHivSummaryFailed(error) {
-            scope.hasSummary = false;
+            scope.hasSummary = true;
+            scope.experiencedLoadingError = true;
+            scope.isBusy = false;
             scope.hivSummary = {};
         }
     }
@@ -51,7 +60,7 @@ jshint -W003, -W026
 
         function onPatientUuidChanged(newVal, oldVal) {
             if (newVal && newVal != "") {
-                vm.fetchHivSummary(newVal);
+                scope.fetchHivSummary(newVal);
             }
         }
     }

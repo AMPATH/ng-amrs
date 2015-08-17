@@ -1,121 +1,107 @@
-<div class="panel panel-info" id="patient-dashboard">
+<div class="panel" ng-class="{'panel-info':!patient.deathDate(), 'panel-danger':patient.deathDate()}" style="padding: 0px;">
 	<div class="panel-heading ">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-sm-4">
 					<h5>{{patient.fullNames()}}</h5>
 				</div>
-				<div class="col-md-3">
+				<div class="col-sm-4">
 					<h5>Identifier: {{patient.identifierFormatted()}}</h5>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-sm-4">
 					<h5>{{patient.genderFull()}} {{patient.age()}} ({{patient.birthdate()| date:'dd-MM-yyyy'}})</h5>
 				</div>
-				<div class="col-md-3">
+				<div class="col-sm-4">
 					<h5>Health Center: Location-10</h5>
 				</div>
-				<div class="col-md-3">
+				<div class="col-sm-4">
 					<h5>Phone Number: {{patient.phoneNumber()}}</h5>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="panel-body" style="height:97%; margin-top: 4px; margin-bottom:4px;">
-		<div class="container-fluid tabbing">
-			<div class="col-lg-2 " style="padding-left:13px; padding-right:13px; padding-top:4px; padding-bottom:4px;">
-				<ul class="nav nav-pills nav-stacked hidden-sm hidden-md">
-					<li class="active">
-						<a data-target="#tab1" data-toggle="tab"><span class="icon-i-administration" aria-hidden="true"></span>&nbsp;Demographics</a>
-					</li>
-					<li>
-						<a data-target="#tab2" data-toggle="tab"><span class="icon-i-registration" aria-hidden="true"></span>&nbsp;Encounters</a>
-					</li>
-					<li>
-						<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Forms</a>
-					</li>
-					<li>
-						<a data-target="#tab4" data-toggle="tab"><span class="icon-i-cardiology" aria-hidden="true"></span>&nbsp;Vitals</a>
-					</li>
-					<li>
-						<a data-target="#tab5" data-toggle="tab"><span class="icon-i-laboratory" aria-hidden="true"></span>&nbsp;Lab Data Summary</a>
-					</li>
-				</ul>
-				<ul class="nav nav-tabs hidden-xs hidden-lg hidden-xl ">
-					<li class="active">
-						<a data-target="#tab1" data-toggle="tab"><span class="icon-i-administration" aria-hidden="true"></span>&nbsp;Demographics</a>
-					</li>
-					<li>
-						<a data-target="#tab2" data-toggle="tab"><span class="icon-i-registration" aria-hidden="true"></span>&nbsp;Encounters</a>
-					</li>
-					<li>
-						<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Forms</a>
-					</li>
-					<li>
-						<a data-target="#tab4" data-toggle="tab"><span class="icon-i-cardiology" aria-hidden="true"></span>&nbsp;Vitals</a>
-					</li>
-					<li>
-						<a data-target="#tab5" data-toggle="tab"><span class="icon-i-laboratory" aria-hidden="true"></span>&nbsp;Lab Data Summary</a>
-					</li>
-				</ul>
+</div>
+<div class="panel" style="margin-top: 4px; margin-bottom:4px;">
+	<div class="row">
+		<div class="col-lg-2 " style="padding-left:13px; padding-right:13px; padding-top:4px; padding-bottom:4px;">
+			<ul class="nav nav-pills nav-stacked hidden-sm hidden-md">
+				<li active-tab-sync index="1" ng-click="activeList(this, 1)" ng-class="{active: activeListId === 1}">
+					<a data-target="#tab1" data-toggle="tab"><span class="icon-i-administration" aria-hidden="true"></span>&nbsp;Patient Info</a>
+				</li>
+				<li active-tab-sync index="2" ng-click="activeList(this, 2)" ng-class="{active: activeListId === 2}">
+					<a data-target="#tab2" data-toggle="tab"><span class="icon-i-registration" aria-hidden="true"></span>&nbsp;Encounters</a>
+				</li>
+				<li active-tab-sync index="3" ng-click="activeList(this, 3)" ng-class="{active: activeListId === 3}">
+					<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Forms</a>
+				</li>
+				<li active-tab-sync index="4" ng-click="activeList(this, 4)" ng-class="{active: activeListId === 4}">
+					<a data-target="#tab4" data-toggle="tab"><span class="icon-i-cardiology" aria-hidden="true"></span>&nbsp;Vitals</a>
+				</li>
+				<li active-tab-sync index="5" ng-click="activeList(this, 5)" ng-class="{active: activeListId === 5}">
+					<a data-target="#tab5" data-toggle="tab"><span class="icon-i-laboratory" aria-hidden="true"></span>&nbsp;Lab Data Summary</a>
+				</li>
+			</ul>
+			<ul class="nav nav-tabs hidden-xs hidden-lg hidden-xl ">
+				<li active-tab-sync index="1" ng-click="activeList(this, 1)" ng-class="{active: activeListId === 1}">
+					<a data-target="#tab1" data-toggle="tab"><span class="icon-i-administration" aria-hidden="true"></span>&nbsp;Patient Info</a>
+				</li>
+				<li active-tab-sync index="2" ng-click="activeList(this, 2)" ng-class="{active: activeListId === 2}">
+					<a data-target="#tab2" data-toggle="tab"><span class="icon-i-registration" aria-hidden="true"></span>&nbsp;Encounters</a>
+				</li>
+				<li active-tab-sync index="3" ng-click="activeList(this, 3)" ng-class="{active: activeListId === 3}">
+					<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Forms</a>
+				</li>
+				<li active-tab-sync index="4" ng-click="activeList(this, 4)" ng-class="{active: activeListId === 4}">
+					<a data-target="#tab4" data-toggle="tab"><span class="icon-i-cardiology" aria-hidden="true"></span>&nbsp;Vitals</a>
+				</li>
+				<li active-tab-sync index="5" ng-click="activeList(this, 5)" ng-class="{active: activeListId === 5}">
+					<a data-target="#tab5" data-toggle="tab"><span class="icon-i-laboratory" aria-hidden="true"></span>&nbsp;Lab Data Summary</a>
+				</li>
+			</ul>
+		</div>
+		<div class="tab-content col-lg-10 ">
+			<div class="tab-pane fade in active panel panel-default" style="padding:4px;" id="tab1">
+				<div class="panel  panel-info" style="margin-bottom: 0px;">
+					<div class="panel-heading">Demographics</div>
+				</div>
+				<div class="panel" style="margin-top: 2px;">
+					<patient-demographics></patient-demographics>
+				</div>
+				<div class="panel panel-info" style="margin-bottom: 0px;">
+					<div class="panel-heading">HIV Summary</div>
+				</div>
+				<div class="panel"  style="margin-top: 2px; padding:2px;">
+					<hiv-summary patient-uuid="{{patient.uuid()}}"></hiv-summary>
+				</div>
 			</div>
-			<div class="tab-content col-lg-10 ">
-				<div class="tab-pane fade in active panel panel-default  " style="padding:4px;" id="tab1">
-					<div class="page-content">
-						<div class="panel" ng-class="{'panel-success':!patient.deathDate(), 'panel-danger':patient.deathDate()}">
-							<div class="panel-heading">Patient Demographics</div>
-							<div class="panel-body">
-								<patient-demographics></patient-demographics>
-							</div>
-						</div>
-						<div class="panel panel-warning">
-							<div class="panel-heading">HIV Summary</div>
-							<div class="panel-body">
-								<hiv-summary patient-uuid="{{patient.uuid()}}"></hiv-summary>
-							</div>
-						</div>
-					</div>
+			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab2">
+				<div class="page-content">
+					<patient-encounters></patient-encounters>
 				</div>
-				<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab2">
-					<div class="page-header" style="margin-top:-10px;">
-						<h3>Encounters</h3>
-						<div class="page-content">
-							<patient-encounters></patient-encounters>
-						</div>
-					</div>
+			</div>
+			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab3">
+				<div class="page-content">
+					<p>
+						<a href="#/form/form1/patient/{{patient.uuid()}}">AMPATH Adult Return Encounter Form</a>
+					</p>
+					<p>
+						<a href="#/form/form2/patient/{{patient.uuid()}}">AMPATH Pediatric Return Encounter Form</a>
+					</p>
+					<p>
+						<a href="#/form/form3/patient/{{patient.uuid()}}">AMPATH PMTCT Postnatal Care Encounter Form</a>
+					</p>
 				</div>
-				<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab3">
-					<div class="page-header" style="margin-top:-20px;">
-						<h3>Forms</h3>
-					</div>
-					<div class="page-content">
-						<p>
-							<a href="#/form/form1/patient/{{patient.uuid()}}">AMPATH Adult Return Encounter Form</a>
-						</p>
-						<p>
-							<a href="#/form/form2/patient/{{patient.uuid()}}">AMPATH Pediatric Return Encounter Form</a>
-						</p>
-						<p>
-							<a href="#/form/form3/patient/{{patient.uuid()}}">AMPATH PMTCT Postnatal Care Encounter Form</a>
-						</p>
-					</div>
+			</div>
+			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab4">
+				<div class="page-content">
+					<vitals patient-uuid="{{patient.uuid()}}"></vitals>
 				</div>
-				<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab4">
-					<div class="page-header" style="margin-top:-10px;">
-						<h3>Vitals</h3>
-					</div>
-					<div class="page-content">
-						<vitals patient-uuid="{{patient.uuid()}}"></vitals>
-					</div>
-				</div>
-				<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab5">
-					<div class="page-header" style="margin-top:-10px;">
-						<h3>Lab Data Summary</h3>
-					</div>
-					<div class="page-content">
-						<labs-summary patient-uuid="{{patient.uuid()}}"></labs-summary>
-					</div>
+			</div>
+			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab5">
+				<div class="page-content">
+					<labs-summary patient-uuid="{{patient.uuid()}}"></labs-summary>
 				</div>
 			</div>
 		</div>

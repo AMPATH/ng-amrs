@@ -17,6 +17,7 @@
     vm.encounterList = [];
     vm.status = {};
     vm.selectedEncounter = null;
+    vm.experiencedLoadingError = false;
     vm.setSelected = function(encounter) {
       vm.selectedEncounter = encounter;
     }
@@ -26,6 +27,7 @@
         patientUuid: $stateParams.uuid,
         rep: 'full'
       }
+      vm.experiencedLoadingError = false;
       EncounterResService.getPatientEncounters(params, function(data) {
         vm.encounterList = data;
         vm.status = {
@@ -36,6 +38,7 @@
           vm.status.isOpen[i] = (i === 0);
         }
       }, function(error) {
+          vm.experiencedLoadingError = true; 
           console.error('An error ' + error +' occured');
       })
     }, 1000);
