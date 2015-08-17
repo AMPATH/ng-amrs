@@ -15,7 +15,7 @@
         </a>
       </div>
       <div class="navbar-collapse" ng-class="{collapse: isCollapsed}">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav"  style="cursor: pointer;">
           <!--<li ui-sref-active="active" ui-sref="home"><a href="#/"><span class="text-primary"><b style="font-size:20px;"> P.O.C  </b><small>v0.1.0</small></span></a></li>-->
           <li ui-sref-active="active" ui-sref="patientsearch" ng-click="isCollapsed = true">
             <a href="#/patientsearch"><span class="glyphicon glyphicon-search "  aria-hidden="true"></span><span >&nbsp;Patient Search</span></a>
@@ -24,7 +24,7 @@
             <a href="#/clinical-dashboard/test"><span><span class="icon-i-care-staff-area" aria-hidden="true"></span>&nbsp;Clinical Dashboard</span></a>
           </li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
+        <ul  style="cursor: pointer;" class="nav navbar-nav navbar-right">
           <li ui-sref-active="active" ui-sref="admin" ng-click="isCollapsed = true">
             <a href="#/Admin">
             <b><span class="glyphicon glyphicon-cog"></span></b>
