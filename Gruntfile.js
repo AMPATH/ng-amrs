@@ -205,7 +205,7 @@ module.exports = function (grunt) {
         src: [
           '<%= yeoman.dist %>/scripts/{,*/}*.js',
           '<%= yeoman.dist %>/styles/{,*/}*.css',
-          '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+          // '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
           '<%= yeoman.dist %>/styles/fonts/*'
         ]
       }
@@ -343,9 +343,17 @@ module.exports = function (grunt) {
             '*.html',
             'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
-            'styles/fonts/{,*/}*.*'
+            'styles/fonts/{,*/}*.*',
+            'styles/medical-icons/{,*/}*.*',
+            '!styles/medical-icons/fonts/*'
           ]
         }, {
+          // FIXME: Very specific section for medical fonts, may need to refactor
+          expand: true,
+          cwd: '<%= yeoman.app %>/styles/medical-icons',
+          dest: '<%= yeoman.dist %>/styles',
+          src: ['fonts/*']
+        },  {
           expand: true,
           cwd: '.tmp/images',
           dest: '<%= yeoman.dist %>/images',
@@ -428,7 +436,7 @@ module.exports = function (grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
-    'cdnify',
+    // 'cdnify',
     'cssmin',
     'uglify',
     'filerev',
