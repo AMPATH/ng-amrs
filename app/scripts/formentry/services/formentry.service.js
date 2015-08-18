@@ -152,7 +152,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         function getObsGroupValue(key, obs)
         {
-
+          var val = _.filter(obs, function(obs_){
+          //console.log(obs);
+            if(obs_.concept.uuid === key.split('_')[1]) return obs_;
+          });
         }
 
         function getEncounterHandler(enc_data, formlySchema)
@@ -224,7 +227,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     //console.log('test Model');
                     //console.log(model);
                   }
-                  else if(_field.type === 'select' || _field.type === 'radio')
+                  else if(_field.type === 'select' || _field.type === 'radio' || _field.type === 'ui-select-extended')
                   {
                     field_key = _field.key;
                     var val = getObsValue(field_key, obs_data);
@@ -256,9 +259,86 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         _field.data['uuid'] = multi_uuid; //obs uuid
                     }
                   }
+                  else if (_field.type === undefined) {
+                    // for grouped non repeating fields
+                    field_key = _field.key;
+                    var group_data = getObsGroupValue(field_key, obs_group_data);
+                    field_key = _field.key;
+                  }
                   else if(_field.type === 'repeatSection')
                   {
+                    //groupped fields
+                    var repeating_fields
+                    field_key = _field.key;
+                    var group_data = getObsGroupValue(field_key, obs_group_data);
+                    var field_keys = {};
+                    var multiArr = [];
 
+                    if (group_data !== undefined)
+                    {
+                      _.each(_field.templateOptions.fields[0].fieldGroup, function (_repeating_field) {
+                        // body...
+                        /*
+                        this should be the best approach to handle a repeatSection that contains a multicheckbox
+                        Am yet to think very carefully how I should load the data
+                        */
+                        field_keys[_repeating_field.key.split('_')[1]] = {key:_repeating_field.key.split('_')[1], type:_repeating_field.type};
+                      });
+
+                      _.each(group_data, function(_data){
+                        var rowVal = {};
+                        var arr = [];
+                        var arr_uuid = [];
+                        _.each(_data.groupMembers,function(obs){
+                          //assumed row data
+                          if(field_keys[obs.concept.uuid])
+                          {
+                             console.log(obs.concept.uuid);
+                             var colKey = 'obs_' + obs.concept.uuid
+
+
+                             console.log('columns: '+colKey);
+
+                             if(field_keys[obs.concept.uuid].type === 'multiCheckbox')
+                             {
+                               _repeating_field.data['uuid'] = obs.uuid; //obs uuid (Not well done yet)
+                               if (angular.isObject(obs.value))
+                               {
+                                 arr.push(obs.value.uuid);
+                                 //rowVal[colKey] = obs.value.uuid
+                                 //_repeating_field.data['init_val'] = obs.value.uuid;
+                               }
+                               else {
+                                 arr.push(obs.value);
+                                 //rowVal[colKey] = obs.value
+                                 //_repeating_field.data['init_val'] = obs.value;
+                               }
+                               if (arr.length>0)
+                               {
+                                 rowVal[colKey] = arr;
+                                 _repeating_field.data['init_val'] = arr;
+                               }
+
+                             }
+                             else {
+                               _repeating_field.data['uuid'] = obs.uuid; //obs uuid
+                               if (angular.isObject(obs.value))
+                               {
+                                 rowVal[colKey] = obs.value.uuid
+                                 _repeating_field.data['init_val'] = obs.value.uuid;
+                               }
+                               else {
+                                 rowVal[colKey] = obs.value
+                                 _repeating_field.data['init_val'] = obs.value;
+                               }
+                             }
+
+                          }
+                        });
+                        if(Object.keys(rowVal).length>0)  multiArr.push(rowVal);
+                      });
+                    }
+                    sec_data[field_key] = multiArr;
                   }
                   else
                   {
