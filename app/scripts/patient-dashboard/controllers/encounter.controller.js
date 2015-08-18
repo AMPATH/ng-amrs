@@ -3,14 +3,14 @@
 
   angular
     .module('app.patientdashboard')
-    .controller('EncounterCtrl', EncounterCtrl)
+    .controller('EncounterCtrl', EncounterCtrl);
 
   EncounterCtrl.$inject = [
                         '$scope',
                         '$stateParams',
                         '$timeout',
                         'EncounterResService'
-                      ]
+                      ];
 
   function EncounterCtrl($scope, $stateParams, $timeout, EncounterResService) {
     var vm = this;
@@ -43,4 +43,4 @@
       })
     }, 1000);
   }
-})()
+})();
