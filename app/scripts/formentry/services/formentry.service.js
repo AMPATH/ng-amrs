@@ -141,7 +141,21 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         }
 
-        function getEncounterRevised(enc_data, formlySchema)
+        function getObsValue(key, obs)
+        {
+          var val = _.find(obs,function(obs_){
+            if(obs_.concept.uuid === key.split('_')[1]) return obs_;
+          });
+
+          return val;
+        }
+
+        function getObsGroupValue(key, obs)
+        {
+
+        }
+
+        function getEncounterHandler(enc_data, formlySchema)
         {
           /*
           Each page/tab has various sections
@@ -149,6 +163,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           The model is simply aware of sections only
 
           */
+          //geting obs data without obs groups
+          var obs_data = _.filter(enc_data.obs,function(obs){
+            if(obs.groupMembers === null) return obs
+          });
+
+          //geting obs data with obs groups
+          var obs_group_data =  _.filter(enc_data.obs,function(obs){
+            if(obs.groupMembers !== null)return obs;
+          });
+
           //looping thro' individual pages
           _.each(formlySchema, function(page){
             //looping thro each section in the page and updating the model
@@ -175,6 +199,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 _.each(_section.templateOptions.fields[0].fieldGroup, function(_field){
                   //console.log('Fields Available...')
                   //console.log(_field)
+                  var field_key;
 
                   if(_field.key === 'encounterDate')
                   {
@@ -201,7 +226,50 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   }
                   else if(_field.type === 'select' || _field.type === 'radio')
                   {
+                    field_key = _field.key;
+                    var val = getObsValue(field_key, obs_data);
+                    if (val !== undefined)
+                    {
+                      sec_data[field_key] = val.value.uuid;
+                      _field.data['init_val'] = val.value.uuid;
+                      _field.data['uuid'] = val.uuid; //obs uuid
+                    }
+                  }
+                  else if(field.type === 'multiCheckbox')
+                  {
+                    field_key = _field.key;
+                    var multiArr = [];
+                    var multi_uuid = [];
+                    var val = _.filter(obs_data,function(obs){
+                      if(obs.concept.uuid === field_key.split('_')[1]) return obs;
+                    });
+                    //console.log('matching multiCheckbox:');
+                    //console.log(val);
+                    if (val !== undefined) {
+                      _.each(val, function(obs){
+                        multiArr.push(obs.value.uuid);
+                        multi_uuid.push(obs.uuid);
+                        });
+                        field.model[key] = multiArr;
+                        sec_data[field_key] = multiArr;
+                        _field.data['init_val'] = multiArr;
+                        _field.data['uuid'] = multi_uuid; //obs uuid
+                    }
+                  }
+                  else if(_field.type === 'repeatSection')
+                  {
 
+                  }
+                  else
+                  {
+                    field_key = _field.key;
+                    var val = getObsValue(field_key, obs_data);
+                    if (val !== undefined)
+                    {
+                      sec_data[field_key] = val.value;
+                      _field.data['init_val'] = val.value;
+                      _field.data['uuid'] = val.uuid; //obs uuid
+                    }
                   }
                   console.log('Updated Fields Available...')
                   console.log(_field)
@@ -229,7 +297,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           uuid:'encounter-uuid'
           */
 
-          getEncounterRevised(encData, formlySchema);
+          getEncounterHandler(encData, formlySchema);
 
           // //geting obs data without obs groups
           // var obsData = _.filter(encData.obs,function(obs){
