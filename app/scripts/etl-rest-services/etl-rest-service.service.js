@@ -14,7 +14,8 @@
       getResource: getResource,
       getHivSummary: getHivSummary,
       getVitals: getVitals,
-      getPatientTests:getPatientTests
+      getPatientTests: getPatientTests,
+      getAppointmentSchedule: getAppointmentSchedule
     };
     return serviceDefinition;
 
@@ -86,5 +87,32 @@
           console.error(error);
         });
     }
+
+    function getAppointmentSchedule(locationUuid, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
+      var resource = getResource('location/:uuid/appointment-schedule');
+      
+      var params = { endDate: endDate, startDate: startDate, uuid: locationUuid };
+      
+      if(startIndex !== undefined)
+        params['startIndex'] = startIndex;
+        
+      if(limit !== undefined)
+        params['limit'] = limit;
+        
+        console.log(params);
+        console.log(startIndex);
+          
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+
+    }
+
+
   }
 })();
