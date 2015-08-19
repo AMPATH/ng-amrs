@@ -12,16 +12,28 @@ jshint -W003,-W109, -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W11
 
   function LocationResService(OpenmrsSettings, $resource) {
     var serviceDefinition;
+    
+    var cachedLocations = [];
+    
     serviceDefinition = {
       getResource: getResource,
       searchResource: searchResource,
+      getListResource: getListResource,
+      getLocations: getLocations,
       getLocationByUuid: getLocationByUuid,
-      findLocation: findLocation
+      findLocation: findLocation,
+      cachedLocations: cachedLocations
     };
     return serviceDefinition;
 
     function getResource() {
       return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'location/:uuid',
+        { uuid: '@uuid' },
+        { query: { method: "GET", isArray: false } });
+    }
+
+    function getListResource() {
+      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'location?v=default',
         { uuid: '@uuid' },
         { query: { method: "GET", isArray: false } });
     }
@@ -36,24 +48,43 @@ jshint -W003,-W109, -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W11
       var resource = getResource();
       return resource.get({ uuid: uuid }).$promise
         .then(function (response) {
-        successCallback(response);
-      })
+          successCallback(response);
+        })
         .catch(function (error) {
-        failedCallback('Error processing request', error);
-        console.error(error);
-      });
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
     }
 
     function findLocation(searchText, successCallback, failedCallback) {
       var resource = searchResource();
       return resource.get({ search: searchText }).$promise
         .then(function (response) {
-        successCallback(response.results? response.results: response);
-      })
+          successCallback(response.results ? response.results : response);
+        })
         .catch(function (error) {
-        failedCallback('Error processing request', error);
-        console.error(error);
-      });
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+    }
+    
+    function getLocations(successCallback, failedCallback, refreshCache) {
+      var resource = getListResource();
+      //console.log(serviceDefinition.cachedLocations);
+      if(refreshCache === false && serviceDefinition.cachedLocations.length !== 0){
+        successCallback(serviceDefinition.cachedLocations);
+        return { results: serviceDefinition.cachedLocations };
+      }
+      
+      return resource.get().$promise
+        .then(function (response) {
+          serviceDefinition.cachedLocations = response.results ? response.results : response;
+          successCallback(response.results ? response.results : response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
     }
   }
 })();
