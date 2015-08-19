@@ -16,6 +16,7 @@ jshint -W003,-W109, -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W11
     var cachedLocations = [];
     
     serviceDefinition = {
+      initialize:initialize,
       getResource: getResource,
       searchResource: searchResource,
       getListResource: getListResource,
@@ -24,7 +25,13 @@ jshint -W003,-W109, -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W11
       findLocation: findLocation,
       cachedLocations: cachedLocations
     };
+    
     return serviceDefinition;
+    
+    function initialize(){
+      getLocations(function() {},function() {});
+    }
+    
 
     function getResource() {
       return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'location/:uuid',
