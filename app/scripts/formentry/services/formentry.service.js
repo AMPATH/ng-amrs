@@ -18,7 +18,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             getEncounter:getEncounter,
             getFormSchema: getFormSchema,
             getCompiledFormSchema: getCompiledFormSchema,
-            generateFormPayLoad: generateFormPayLoad
+            generateFormPayLoad: generateFormPayLoad,
+            updateFormPayLoad: updateFormPayLoad
         };
 
         return service;
@@ -141,6 +142,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         }
 
+        /*
+        private method to obs without obs groups
+        */
         function getObsValue(key, obs)
         {
           var val = _.find(obs,function(obs_){
@@ -150,14 +154,23 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           return val;
         }
 
+
+        /*
+        Private method to get obs group data
+        */
+
         function getObsGroupValue(key, obs)
         {
           var val = _.filter(obs, function(obs_){
           //console.log(obs);
             if(obs_.concept.uuid === key.split('_')[1]) return obs_;
           });
+          return val;
         }
 
+        /*
+        Method to auto/prefill the form with existing data from OpenMRS
+        */
         function getEncounterHandler(enc_data, formlySchema)
         {
           /*
@@ -183,8 +196,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
             var model = page.form.model;
 
-            console.log('Page Test Model ');
-            console.log(model)
+            // console.log('Page Test Model ');
+            // console.log(model)
             _.each(page.form.fields, function(_section){
               if (_section.type === 'section')
               {
@@ -238,7 +251,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       _field.data['uuid'] = val.uuid; //obs uuid
                     }
                   }
-                  else if(field.type === 'multiCheckbox')
+                  else if(_field.type === 'multiCheckbox')
                   {
                     field_key = _field.key;
                     var multiArr = [];
@@ -253,7 +266,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         multiArr.push(obs.value.uuid);
                         multi_uuid.push(obs.uuid);
                         });
-                        field.model[key] = multiArr;
+
                         sec_data[field_key] = multiArr;
                         _field.data['init_val'] = multiArr;
                         _field.data['uuid'] = multi_uuid; //obs uuid
@@ -261,9 +274,160 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   }
                   else if (_field.type === undefined) {
                     // for grouped non repeating fields
+                    console.log('Field Data')
+                    console.log(_field)
                     field_key = _field.key;
                     var group_data = getObsGroupValue(field_key, obs_group_data);
                     field_key = _field.key;
+
+                    var group_val = {};
+                    _.each(_field.fieldGroup, function (_group_field) {
+                      // body...
+                      if(_.contains(field_key, 'unamed')) // using the grouping fields
+                      {
+                        if(_group_field.type !== 'multiCheckbox')
+                        {
+                          if(_.contains(_group_field.key, 'obsDate_'))
+                          {
+                            var val = getObsValue(_group_field.key, obs_data);
+                            if(val !== undefined)
+                            {
+                              group_val[_group_field.key] = val.obsDatetime;
+                              _group_field.data['init_val'] = val.obsDatetime;
+                              _group_field.data['uuid'] = val.uuid; //obs uuid
+                            }
+                          }
+                          else {
+                            var val = getObsValue(_group_field.key, obs_data);
+
+                            if(val !== undefined)
+                            {
+                              if(typeof val.value === 'object')
+                              {
+                                group_val[_group_field.key] = val.value.uuid;
+                                _group_field.data['init_val'] = val.value.uuid;
+                                _group_field.data['uuid'] = val.uuid; //obs uuid
+                              }
+                              else {
+                                group_val[_group_field.key] = val.value;
+                                _group_field.data['init_val'] = val.value;
+                                _group_field.data['uuid'] = val.uuid; //obs uuid
+                              }
+                            }
+
+                          }
+                        }
+                        else {
+                          var multiArr = [];
+                          var multi_uuid = [];
+                          var val = _.filter(obs_data,function(obs){
+                            if(obs.concept.uuid === field_key.split('_')[1]) return obs;
+                          });
+                          //console.log('matching multiCheckbox:');
+                          //console.log(val);
+                          if (val !== undefined) {
+                            _.each(val, function(obs){
+                              multiArr.push(obs.value.uuid);
+                              multi_uuid.push(obs.uuid);
+                              });
+
+                              group_val[_group_field.key] = multiArr;
+                              _group_field.data['init_val'] = multiArr;
+                              _group_field.data['uuid'] = multi_uuid; //obs uuid
+                          }
+                        }
+                        if(typeof group_val === 'object')
+                        {
+                          sec_data[field_key] = group_val;
+                        }
+
+                      }
+                      else {
+                        //valid group uuids
+                        var group_data = getObsGroupValue(field_key, obs_group_data);
+                        // console.log('NON REPEATING SEC DATA TEST');
+                        //console.log(group_data)
+                        if(group_data !== undefined)
+                        {
+                          if(_group_field.type !== 'multiCheckbox')
+                          {
+                             if(_.contains(_group_field.key, 'obsDate_'))
+                             {
+                               var val = _.find(group_data[0].groupMembers, function(obs){
+                                 if(obs.concept.uuid === _group_field.key.split('_')[1]) return obs;
+                               });
+
+                               _.each(group_data, function(_data){
+
+                               })
+
+                               if(val !== undefined)
+                               {
+                                 group_val[_group_field.key] = val.obsDatetime;
+                                 _group_field.data['init_val'] = val.obsDatetime;
+                                 _group_field.data['uuid'] = val.uuid; //obs uuid
+                               }
+                             }
+                             else {
+                              //  console.log(group_data)
+                              //  console.log(group_data[0].groupMembers)
+
+                               var val = _.find(group_data[0].groupMembers, function(obs){
+                                 //console.log(obs)
+                                 if(obs.concept.uuid === _group_field.key.split('_')[1]) return obs;
+                               });
+
+                              //  console.log(val)
+                              //  console.log('Key: ', _group_field.key.split('_')[1])
+                               if(val !== undefined)
+                               {
+                                 // console.log('current key: '+ key);
+                                 // console.log(field.model[key]);
+                                 if(typeof val.value === 'object')
+                                 {
+                                   group_val[_group_field.key] = val.value.uuid;
+                                   _group_field.data['init_val'] = val.value.uuid;
+                                   _group_field.data['uuid'] = val.uuid; //obs uuid
+                                 }
+                                 else {
+                                   group_val[_group_field.key] = val.value;
+                                   _group_field.data['init_val'] = val.value;
+                                   _group_field.data['uuid'] = val.uuid; //obs uuid
+                                 }
+                               }
+                             }
+                           }
+                           else {
+                             //if the field group section field is a multi select
+                             var val = _.filter(group_data[0].groupMembers, function(obs){
+                               if(obs.concept.uuid === _group_field.key.split('_')[1]) return obs;
+                             });
+                             var multiArr = [];
+                             var multi_uuid = [];
+                             if(val !== undefined)
+                             {
+                               _.each(val, function(data){
+                                 multiArr.push(data.value.uuid);
+                                 multi_uuid.push(obs.uuid);
+                               });
+                               group_val[_group_field.key] = multiArr;
+                               _group_field.data['init_val'] = multiArr;
+                               _group_field.data['uuid'] = multi_uuid; //obs uuid
+                             }
+                           }
+                          //  console.log('Group Value');
+                          //  console.log(group_val)
+                           if(typeof group_val==='object')
+                           {
+                             if(!_.isEmpty(group_val))
+                             {
+                                sec_data[field_key] = group_val;
+                             }
+                           }
+                        }
+                      }
+
+                    });
                   }
                   else if(_field.type === 'repeatSection')
                   {
@@ -273,36 +437,61 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     var group_data = getObsGroupValue(field_key, obs_group_data);
                     var field_keys = {};
                     var multiArr = [];
+                    // console.log('REPEATING SEC DATA TEST');
+                    // console.log(group_data)
 
                     if (group_data !== undefined)
                     {
                       _.each(_field.templateOptions.fields[0].fieldGroup, function (_repeating_field) {
                         // body...
-                        /*
-                        this should be the best approach to handle a repeatSection that contains a multicheckbox
-                        Am yet to think very carefully how I should load the data
-                        */
-                        field_keys[_repeating_field.key.split('_')[1]] = {key:_repeating_field.key.split('_')[1], type:_repeating_field.type};
+
+                        field_keys[_repeating_field.key.split('_')[1]] = {key:_repeating_field.key, type:_repeating_field.type};
+                        // update fields with existing data
+                        var arr = [];
+                        var arr_uuid = [];
+                        _.each(group_data, function(_data){
+                          _.each(_data.groupMembers, function(obs){
+                            if(obs.concept.uuid === _repeating_field.key.split('_')[1]){
+                              if (typeof obs.value === 'object')
+                              {
+                                arr.push(obs.value.uuid);
+                                arr_uuid.push(obs.uuid);
+                              }
+                              else {
+                                arr.push(obs.value);
+                                arr_uuid.push(obs.uuid);
+                              }
+                            }
+                          });
+                        });
+
+                        if(arr.length>0)
+                        {
+                          _repeating_field.data['init_val'] = arr;
+                          _repeating_field.data['uuid'] = arr_uuid;
+                          //initialize the array for the next iteration
+                          arr = [];
+                          arr_uuid = [];
+                        }
                       });
 
                       _.each(group_data, function(_data){
                         var rowVal = {};
                         var arr = [];
                         var arr_uuid = [];
-                        _.each(_data.groupMembers,function(obs){
+                        _.each(_data.groupMembers, function(obs){
                           //assumed row data
                           if(field_keys[obs.concept.uuid])
                           {
-                             console.log(obs.concept.uuid);
+                             //console.log(obs.concept.uuid);
                              var colKey = 'obs_' + obs.concept.uuid
 
-
-                             console.log('columns: '+colKey);
+                             //console.log('columns: '+colKey);
 
                              if(field_keys[obs.concept.uuid].type === 'multiCheckbox')
                              {
-                               _repeating_field.data['uuid'] = obs.uuid; //obs uuid (Not well done yet)
-                               if (angular.isObject(obs.value))
+                               //_repeating_field.data['uuid'] = obs.uuid; //obs uuid (Not well done yet)
+                               if (typeof obs.value === 'object')
                                {
                                  arr.push(obs.value.uuid);
                                  //rowVal[colKey] = obs.value.uuid
@@ -316,28 +505,34 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                if (arr.length>0)
                                {
                                  rowVal[colKey] = arr;
-                                 _repeating_field.data['init_val'] = arr;
+                                 //_repeating_field.data['init_val'] = arr;
                                }
 
                              }
                              else {
-                               _repeating_field.data['uuid'] = obs.uuid; //obs uuid
-                               if (angular.isObject(obs.value))
+                               //_repeating_field.data['uuid'] = obs.uuid; //obs uuid
+                               if (typeof obs.value === 'object')
                                {
                                  rowVal[colKey] = obs.value.uuid
-                                 _repeating_field.data['init_val'] = obs.value.uuid;
+                                 //_repeating_field.data['init_val'] = obs.value.uuid;
                                }
                                else {
                                  rowVal[colKey] = obs.value
-                                 _repeating_field.data['init_val'] = obs.value;
+                                 //_repeating_field.data['init_val'] = obs.value;
                                }
                              }
 
                           }
                         });
-                        if(Object.keys(rowVal).length>0)  multiArr.push(rowVal);
+                        if(typeof rowVal==='object')
+                        {
+                          if(!_.isEmpty(rowVal))multiArr.push(rowVal);
+                        }
+
                       });
                     }
+                    console.log('repeating values test');
+                    console.log(multiArr)
                     sec_data[field_key] = multiArr;
                   }
                   else
@@ -378,383 +573,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           */
 
           getEncounterHandler(encData, formlySchema);
-
-          // //geting obs data without obs groups
-          // var obsData = _.filter(encData.obs,function(obs){
-          //   if(obs.groupMembers === null) return obs
-          // })
-          //
-          // //geting obs data with obs groups
-          // var obsGroupArr={};//store distinct obsgroup uuid
-          // var obsGroupData =  _.filter(encData.obs,function(obs){
-          //   if(obs.groupMembers !== null)
-          //   {
-          //     obsGroupArr['obs_' + obs.concept.uuid] = obs.concept.uuid;
-          //     return obs;
-          //   }
-          // })
-          // var key;
-          //
-          // //Start by prefilling the encounter information
-          //
-          // _.each(formlySchema, function(field, x) {
-          //   //console.log('field No: ' + x + ' Field Key: '+ field.key);
-          //   if(angular.isNumber(field.key) || field.key == undefined)
-          //   {
-          //     return; //skip current iteration
-          //   }
-          //   else if(field.key.startsWith('enc_')) //using underscore.js and underscore.string.js Functions
-          //   {
-          //     console.log('Encounter Keys');
-          //     console.log(field.key);
-          //     key = field.key;
-          //     if(key === 'enc_encounterDatetime')
-          //     {
-          //       //update the model property
-          //       field.model[key] = encData.encounterDatetime;
-          //     }
-          //     else if(key === 'enc_encounterLocation')
-          //     {
-          //       //update the model property
-          //       if(encData.location !== null) field.model[key] = encData.location.uuid;
-          //     }
-          //     else if(key === 'enc_encounterProvider')
-          //     {
-          //       //update the model property
-          //       if(encData.provider !== null) field.model[key] = encData.provider.uuid;
-          //     }
-          //     //field.model[key] = encData.encounterDatetime;
-          //   }
-          //   else if(field.key.startsWith('obs_')) //using underscore.js and underscore.string.js Functions
-          //   {
-          //       //get obs fields without groups
-          //       console.log('starting obs prefill');
-          //       key = field.key;
-          //       //console.log('Selected Key: '+ key + 'type: '+ field.type);
-          //       var val;
-          //       var multiArr = []; //for multiselect fields like checkboxes
-          //       if(field.model.obsGroupUuid === '')
-          //       {
-          //         if(field.type === 'select' || field.type === 'radio')
-          //         {
-          //
-          //           val = _.find(obsData,function(obs){
-          //             if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
-          //           });
-          //           //console.log('matching obs concept id:');
-          //           //console.log(val);
-          //           if (val !== undefined) field.model[key] = val.value.uuid;
-          //         }
-          //         else if(field.type === 'multiCheckbox')
-          //         {
-          //
-          //           val = _.filter(obsData,function(obs){
-          //             if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
-          //           });
-          //           //console.log('matching multiCheckbox:');
-          //           //console.log(val);
-          //           if (val !== undefined) {
-          //             _.each(val, function(obs){
-          //               multiArr.push(obs.value.uuid);
-          //             });
-          //             field.model[key] = multiArr;
-          //           }
-          //         }
-          //         else
-          //         {
-          //           val = _.find(obsData,function(obs){
-          //             if(obs.concept.uuid === field.model.obsConceptUuid) return obs;
-          //           });
-          //             //console.log('matching obs concept id: and autofilled model');
-          //             //console.log(val);
-          //             //console.log(field.model);
-          //             if (val !== undefined) field.model[key] = val.value;
-          //             //console.log(field.model);
-          //         }
-          //       }
-          //       //obs with obs group uuids
-          //       else if(field.model.obsGroupUuid !== '')
-          //       {
-          //         if(field.type === 'select' || field.type === 'radio')
-          //         {
-          //           //get the group member matching the current key
-          //           var groupMember;
-          //           _.each(obsGroupData, function(obs) {
-          //             groupMember = _.find(obs.groupMembers, function(item) {
-          //               if(obs.concept.uuid === field.model.obsGroupUuid && item.concept.uuid === field.model.obsConceptUuid) return item;
-          //             })
-          //           })
-          //           val = _.find(obsGroupData,function(obs){
-          //             if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
-          //           });
-          //           //console.log('matching obs concept id:');
-          //           //console.log(val);
-          //           if (val !== undefined && groupMember !== undefined) field.model[key] = groupMember.value.uuid;
-          //         }
-          //         else if(field.type === 'multiCheckbox')
-          //         {
-          //           //get the group member matching the current key
-          //           var groupMember;
-          //           _.each(obsGroupData, function(obs) {
-          //             groupMember = _.filter(obs.groupMembers, function(item) {
-          //               if(obs.concept.uuid === field.model.obsGroupUuid && item.concept.uuid === field.model.obsConceptUuid) return item;
-          //             })
-          //           });
-          //
-          //           val = _.find(obsGroupData,function(obs){
-          //             if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
-          //           });
-          //           //console.log('matching multiCheckbox:');
-          //           //console.log(val);
-          //           if (val !== undefined && groupMember !== undefined) {
-          //             _.each(groupMember, function(obs){
-          //               multiArr.push(obs.value.uuid);
-          //             });
-          //             field.model[key] = multiArr;
-          //           }
-          //         }
-          //         else if(field.type === 'repeatSection')
-          //         {
-          //           //get the group member matching the current key
-          //           var groupMember;
-          //           key = field.model.obsGroupUuid;
-          //
-          //           for(var dictKey in obsGroupArr)
-          //           {
-          //             // console.log('test dictionary')
-          //             // console.log(obsGroupArr[dictKey]);
-          //           }
-          //
-          //           val = _.filter(obsGroupData,function(obs){
-          //             //console.log(obs);
-          //             if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
-          //           });
-          //
-          //           console.log('matching repeatSection:');
-          //           console.log(field);
-          //           var rowVal = {};
-          //           if (val !== undefined) {
-          //             /*
-          //             Loop field wise in the group to  create a row object
-          //             */
-          //             var selgrup;
-          //             var fieldKeys=[];
-          //             _.each(field.templateOptions.fields[0].fieldGroup, function(curField){
-          //                fieldKeys.push(curField.key.split('_')[1]);
-          //             })
-          //             multiArr = [];
-          //             _.each(val,function(data,i){
-          //               rowVal = {};
-          //               console.log('Row ' + i + ' Data' );
-          //               //console.log(data);
-          //
-          //               _.each(data.groupMembers, function (rowData) {
-          //
-          //                 /*
-          //                 The expected model row data should be something like
-          //                 {
-          //                 col1key:col1value,
-          //                 col2key:col2value,
-          //                 ---
-          //                 colnkey:colnvalue
-          //                 }
-          //                 */
-          //                 if(fieldKeys.indexOf(rowData.concept.uuid)>=0)
-          //                 {
-          //                   console.log(rowData.concept.uuid);
-          //                   var colKey = 'obs_' + rowData.concept.uuid
-          //                   console.log('columns: '+colKey);
-          //                   if (angular.isObject(rowData.value))
-          //                   {
-          //                     rowVal[colKey] = rowData.value.uuid
-          //                   }
-          //                   else {
-          //                     rowVal[colKey] = rowData.value
-          //                   }
-          //                 }
-          //
-          //               });
-          //               if(Object.keys(rowVal).length>0)  multiArr.push(rowVal);
-          //               //console.log('Array Val Repeat');
-          //
-          //               //console.log(multiArr);
-          //             });
-          //           }
-          //           field.model['obs_'+key] = multiArr;
-          //         }
-          //         else if(field.type === undefined)
-          //         {
-          //           console.log('testing groupSection')
-          //           /*
-          //           groupSection should have undefined type since
-          //           we don't have type in its object definition
-          //           */
-          //           var groupMember;
-          //           key = field.model.obsGroupUuid;
-          //           if(_.contains(key,'unamed'))
-          //           {
-          //             //no valid obs group uuid
-          //             //console.log('field groups')
-          //             //console.log(field.fieldGroup);
-          //           _.each(field.fieldGroup, function(curField){
-          //               if(curField.type !== 'multiCheckbox')
-          //               {
-          //                 if(_.contains(curField.key, 'obsDate_'))
-          //                 {
-          //                   var obsVal = _.find(obsData, function(data){
-          //                     if(data.concept.uuid === curField.key.split('_')[1])
-          //                     {
-          //                       return data;
-          //                     }
-          //                   });
-          //                   if(obsVal !== undefined)
-          //                   {
-          //                     field.model['obs_'+key][curField.key] = obsVal.obsDatetime;
-          //                   }
-          //                 }
-          //                 else {
-          //                   var obsVal = _.find(obsData, function(data){
-          //                     if(data.concept.uuid === curField.key.split('_')[1])
-          //                     {
-          //                       return data;
-          //                     }
-          //                   });
-          //
-          //                   if(obsVal !== undefined)
-          //                   {
-          //                     // console.log('test group sec obs value');
-          //                     // console.log(obsVal);
-          //                     // console.log('Current field Key: ' + curField.key)
-          //                     // console.log('current key: obs_'+ key);
-          //                     // console.log(field.model['obs_' + key]);
-          //                     if(angular.isObject(obsVal.value) && field.model['obs_' + key] !== undefined)
-          //                     {
-          //                       field.model['obs_'+ key][curField.key] = obsVal.value.uuid;
-          //                     }
-          //                     else {
-          //                       field.model['obs_'+ key][curField.key] = obsVal.value;
-          //                     }
-          //                   }
-          //
-          //                 }
-          //               }
-          //               else {
-          //                 //if the field group section field is a multi select
-          //                 var obsVal = _.filter(obsData, function(data){
-          //                   if(data.concept.uuid === curField.key.split('_')[1])
-          //                   {
-          //                     return data;
-          //                   }
-          //                 });
-          //                 multiArr = [];
-          //
-          //                 if(obsVal !== undefined)
-          //                 {
-          //                   _.each(obsVal, function(data){
-          //                     multiArr.push(data.value.uuid);
-          //                   });
-          //                   field.model['obs_'+key][curField.key] = multiArr;
-          //                 }
-          //               }
-          //           });
-          //           }
-          //           else {
-          //             //has valid obs group uuid
-          //             var obsGpSecData = _.find(obsGroupData, function(data){
-          //               if(data.concept.uuid === key.split('_')[1])
-          //               {
-          //                 return data;
-          //               }
-          //             });
-          //             _.each(field.fieldGroup, function(curField){
-          //                 if(curField.type !== 'multiCheckbox')
-          //                 {
-          //                   if(_.contains(curField.key, 'obsDate_'))
-          //                   {
-          //                     var obsVal = _.find(obsGpSecData.groupMembers, function(data){
-          //                       if(data.concept.uuid === curField.key.split('_')[1])
-          //                       {
-          //                         return data;
-          //                       }
-          //                     });
-          //
-          //                     if(obsVal !== undefined)
-          //                     {
-          //                       field.model['obs_'+key][curField.key] = obsVal.obsDatetime;
-          //                     }
-          //                   }
-          //                   else {
-          //                     var obsVal = _.find(obsGpSecData.groupMembers, function(data){
-          //                       if(data.concept.uuid === curField.key.split('_')[1])
-          //                       {
-          //                         return data;
-          //                       }
-          //                     });
-          //
-          //                     if(obsVal !== undefined)
-          //                     {
-          //                       // console.log('test group sec obs value');
-          //                       // console.log(obsVal);
-          //                       // console.log('current key: '+ key);
-          //                       // console.log(field.model[key]);
-          //                       if(angular.isObject(obsVal.value))
-          //                       {
-          //                         field.model['obs_'+key][curField.key] = obsVal.value.uuid;
-          //                       }
-          //                       else {
-          //                         field.model['obs_'+key][curField.key] = obsVal.value;
-          //                       }
-          //                     }
-          //
-          //                   }
-          //                 }
-          //                 else {
-          //                   //if the field group section field is a multi select
-          //                   var obsVal = _.filter(obsGpSecData.groupMembers, function(data){
-          //                     if(data.concept.uuid === curField.key.split('_')[1])
-          //                     {
-          //                       return data;
-          //                     }
-          //                   });
-          //                   multiArr = [];
-          //
-          //                   if(obsVal !== undefined)
-          //                   {
-          //                     _.each(obsVal, function(data){
-          //                       multiArr.push(data.value.uuid);
-          //                     });
-          //                     field.model['obs_'+key][curField.key] = multiArr;
-          //                   }
-          //                 }
-          //             });
-          //           }
-          //         }
-          //         else{
-          //           //get the group member matching the current key
-          //           var groupMember;
-          //           _.each(obsGroupData, function(obs) {
-          //             groupMember = _.find(obs.groupMembers, function(item) {
-          //               if(obs.concept.uuid === field.model.obsGroupUuid && item.concept.uuid === field.model.obsConceptUuid) return item;
-          //             })
-          //           });
-          //
-          //           val = _.find(obsGroupData,function(obs){
-          //             if(obs.concept.uuid === field.model.obsGroupUuid) return obs;
-          //        });
-          //             //console.log('matching obs concept id: and autofilled model');
-          //             //console.log(val);
-          //             //console.log(field.model);
-          //             if (val !== undefined && groupMember !== undefined) field.model[key] = groupMember.value;
-          //             //console.log(field.model);
-          //         }
-          //       }
-          //   }
-          //
-          //
-          // });
-          // console.log('obs group data')
-          // console.log(obsGroupData);
-
         }
 
         function validateForm(schema)
@@ -777,27 +595,245 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         }
 
         /*
+        Methdod to get all the sections in a schema
+        */
+        function getFormSections (formly_schema)
+        {
+          var sections = [];
+          _.each(formly_schema, function(page){
+            _.each(page.form.fields, function(section){
+              sections.push(section);
+            });
+          });
+          return sections;
+        }
+
+        /*
+        Private method to get the initial value of a given field
+        */
+        function getInitialFieldValue(_field_key, _section){
+
+          var data =_.find(_section.templateOptions.fields[0].fieldGroup, function(_field){
+            if(_field.type !== 'section' || _field.type !== 'group' || _field.type !== 'repeatSection')
+            {
+              if (_field_key === _field.key) return _field
+            }
+            else if (_field.type === 'repeatSection'){
+              var selVal = _.find(_field.templateOptions.fields[0].fieldGroup, function(_field_){
+                if(_field_.key === _field_key) return _field_;
+              });
+              return selVal;
+            }
+            else {
+              var selVal = _.find(_field.fieldGroup, function(_field_){
+                if(_field_.key === _field_key) return _field_;
+              });
+              return selVal;
+            }
+          });
+          if(!_.isEmpty(data)) return data.data;
+          return data;
+        }
+
+
+        /*
+        Method to update the payload for existing encounter
+        */
+        function updateFormPayLoad(model, formly_schema)
+        {
+          /*
+          The objective of this method is to create a payload with only updated
+          changes
+          */
+          var sections = getFormSections(formly_schema);
+
+          // var section = _.find(sections, function(sec){
+          //   if(sec.key === 'section_1') return sec;
+          // });
+          //
+          // var init_data = getInitialFieldValue('encounterDate', section);
+          // console.log('Got VALUE');
+          // console.log(init_data);
+
+          var formPayLoad = {};
+          var obs = [];
+          var val;
+          var init_data;
+          var section;
+
+          // console.log('Test sample model');
+          // console.log(model)
+          _.each (Object.keys(model), function(obj){
+            val = model[obj];
+            //console.log('Section: '+ obj + 'No of Keys: '+ Object.keys(val).length);
+
+            //check if the current key is an object
+            if(typeof val === 'object')
+            {
+              //This should be a section
+              if(obj.startsWith('section')){
+
+                _.each(Object.keys(val), function(key){
+                  //console.log('item Key: '+ key);
+
+                  //get section
+                  section = _.find(sections, function(sec){
+                    if(sec.key === obj) return sec;
+                  });
+
+                  //Handling special keys related to encounter
+                  if (key === 'encounterProvider' && val[key] !== undefined)
+                  {
+                    //get previous value
+                    init_data = getInitialFieldValue(key, section);
+                    if (typeof init_data === 'object')
+                    {
+                      if (init_data.init_val !== val[key])
+                      {
+                        //add property to the payload
+                        formPayLoad.provider = val[key];
+                      }
+                    }
+                  }
+                  else if (key === 'encounterDate' && val[key] !== undefined)
+                  {
+                    //get previous value
+                    init_data = getInitialFieldValue(key, section);
+                    if (typeof init_data === 'object')
+                    {
+                      if (init_data.init_val !== getFormattedValue(val[key]))
+                      {
+                        //add property to the payload
+                        formPayLoad.encounterDatetime = getFormattedValue(val[key]);
+                      }
+                    }
+                  }
+                  else if (key === 'encounterLocation' && val[key] !== undefined) {
+                    //get previous value
+                    init_data = getInitialFieldValue(key, section);
+                    if (typeof init_data === 'object')
+                    {
+                      if (init_data.init_val !== val[key])
+                      {
+                        //add property to the payload
+                        formPayLoad.location = val[key];
+                      }
+                    }
+                  }
+                  else if (val[key] !== undefined) {
+                    if (typeof val[key] === 'object') {
+                      //this is the case when we have obs groups that are not repeating
+
+                      var groupValues = val[key];
+                      var groupMembers = [];
+                      // console.log('OBJECT TYPES')
+                      // console.log(key);
+                      // console.log(groupValues);
+                      if(_.contains(key, 'unamed')) // having valid obs group concept uuid
+                      {
+                        _.each(Object.keys(groupValues), function(group_member){
+                          //console.log(groupValues[group_member])
+                          if (groupValues[group_member] !== undefined)
+                          {
+                            if (group_member.startsWith('obsDate_'))
+                            {
+                              obs.push({obsDatetime:getFormattedValue(groupValues[group_member]),concept:group_member.split('_')[1], value:getFormattedValue(groupValues['obs_'+group_member.split('_')[1]])});
+                            }
+                          }
+                        });
+
+                      }
+                      else if (typeof groupValues === 'object')
+                      {
+                        if(Object.keys(groupValues).length>0)
+                        {
+                          groupMembers = [];
+                          _.each(Object.keys(groupValues), function(group_member){
+
+                            if (groupValues[group_member] !== undefined)
+                            {
+                              if(typeof groupValues[group_member] === 'object')// array object
+                              {
+                                // console.log('OBJECT TYPE')
+                                // console.log('Testing Object Vals');
+                                // console.log('ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
+                                var ArrayVal = groupValues[group_member]
+                                groupMembers = [];
+                                _.each(Object.keys(ArrayVal), function(arrKey){
+                                  if(!arrKey.startsWith('$$'))
+                                  {
+                                    groupMembers.push({concept:arrKey.split('_')[1],
+                                                value:getFormattedValue(ArrayVal[arrKey])});
+                                  }
+
+                                });
+                                if (groupMembers.length>0)
+                                {
+                                    obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
+                                }
+                                groupMembers = [];
+                              }
+                              else {
+                                  // console.log('NONE OBJECT TYPE')
+                                  // console.log('Testing Object Vals');
+                                  // console.log('ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
+                                groupMembers.push({concept:group_member.split('_')[1],
+                                            value:getFormattedValue(groupValues[group_member])});
+                              }
+                            }
+                          });
+                          if (groupMembers.length>0)
+                          {
+                              obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
+                          }
+                        }
+                        else {
+                          // value pair are strings or values
+                          // console.log('Complex Object Key pairs');
+                          // console.log('type of: ', typeof(val[key]), 'Keys: ', Object.keys(val[key]));
+                          // console.log('Payload Value ', getFormattedValue(val[key]))
+                          if(!_.isEmpty(getFormattedValue(val[key])))
+                          obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                        }
+                      }
+                    }
+                    else {
+                      // value pair are strings or values
+                      //console.log('Normal Key pairs');
+                      obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                    }
+                  }
+                });
+              }
+            }
+          });
+
+          formPayLoad.obs = obs;
+          return formPayLoad;
+
+        }
+
+        /*
         Method/function to create to create Form payLoad given the model
         */
         function generateFormPayLoad(model/*, patient, form, uuid*/){
           var formPayLoad = {};
           var obs = [];
           var val;
-          console.log('Test sample model');
-          console.log(model)
+          // console.log('Test sample model');
+          // console.log(model)
           _.each (Object.keys(model), function(obj){
-
             val = model[obj];
-            console.log('Section: '+ obj + 'No of Keys: '+ Object.keys(val).length);
+            //console.log('Section: '+ obj + 'No of Keys: '+ Object.keys(val).length);
 
             //check if the current key is an object
-            if(Object.keys(val).length > 0)
+            if(typeof val === 'object')
             {
               //This could be a section or just and independent group outside the section
               if(obj.startsWith('section')){
 
                 _.each(Object.keys(val), function(key){
-                  console.log('Section Key: '+ key);
+                  //console.log('item Key: '+ key);
                   //Handling special keys related to encounter
                   if (key === 'encounterProvider' && val[key] !== undefined)
                   {
@@ -813,13 +849,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     formPayLoad.location = val[key];
                   }
                   else if (val[key] !== undefined) {
-                    if (Object.keys(val[key]).length > 0) {
+                    if (typeof val[key] === 'object') {
                       //this is the case when we have obs groups that are not repeating
 
                       var groupValues = val[key];
                       var groupMembers = [];
-                      //console.log(key);
-                      //console.log(groupValues);
+                      // console.log('OBJECT TYPES')
+                      // console.log(key);
+                      // console.log(groupValues);
                       if(_.contains(key, 'unamed')) // having valid obs group concept uuid
                       {
                         _.each(Object.keys(groupValues), function(group_member){
@@ -834,86 +871,69 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         });
 
                       }
-                      else if (Object.keys(groupValues).length > 0)
+                      else if (typeof groupValues === 'object')
                       {
-                        _.each(Object.keys(groupValues), function(group_member){
-                          console.log('Testing Array');
-                          console.log(groupValues[group_member])
-                          if (groupValues[group_member] !== undefined)
-                          {
-                            var ArrayVal = groupValues[group_member]
-                            groupMembers = [];
-                            _.each(Object.keys(ArrayVal), function(arrKey){
-                              if(!arrKey.startsWith('$$'))
-                              {
-                                groupMembers.push({concept:arrKey.split('_')[1],
-                                            value:getFormattedValue(ArrayVal[arrKey])});
-                              }
-
-                            });
-                            if (groupMembers.length>0)
-                            {
-                                obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
-                            }
-                          }
-                        });
-
-                      }
-                    }
-                    else if (angular.isArray(val[key])) {
-
-                      //this is the case when we have obs groups that repeating
-                      var groupValues = val[key];
-                      var groupMembers = [];
-                      //groupArray Values should an array of various objects
-                      //Each objec shoubld be saved as in independent obsgroup
-                      _.each(groupValues, function(group_member){
-                        groupMembers = [];
-                        if (Object.keys(group_member).length > 0)
+                        if(Object.keys(groupValues).length>0)
                         {
-                          _.each(Object.keys(group_member), function (arg) {
-                            // body...
-                            groupMembers.push({concept:arg.split('_')[1],
-                                        value:getFormattedValue(group_member[arg])});
+                          groupMembers = [];
+                          _.each(Object.keys(groupValues), function(group_member){
+
+                            if (groupValues[group_member] !== undefined)
+                            {
+                              if(typeof groupValues[group_member] === 'object')// array object
+                              {
+                                // console.log('OBJECT TYPE')
+                                // console.log('Testing Object Vals');
+                                // console.log('ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
+                                var ArrayVal = groupValues[group_member]
+                                groupMembers = [];
+                                _.each(Object.keys(ArrayVal), function(arrKey){
+                                  if(!arrKey.startsWith('$$'))
+                                  {
+                                    groupMembers.push({concept:arrKey.split('_')[1],
+                                                value:getFormattedValue(ArrayVal[arrKey])});
+                                  }
+
+                                });
+                                if (groupMembers.length>0)
+                                {
+                                    obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
+                                }
+                                groupMembers = [];
+                              }
+                              else {
+                                  // console.log('NONE OBJECT TYPE')
+                                  // console.log('Testing Object Vals');
+                                  // console.log('ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
+                                groupMembers.push({concept:group_member.split('_')[1],
+                                            value:getFormattedValue(groupValues[group_member])});
+                              }
+                            }
                           });
                           if (groupMembers.length>0)
                           {
                               obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
                           }
-
                         }
-                      });
+                        else {
+                          // value pair are strings or values
+                          // console.log('Complex Object Key pairs');
+                          // console.log('type of: ', typeof(val[key]), 'Keys: ', Object.keys(val[key]));
+                          // console.log('Payload Value ', getFormattedValue(val[key]))
+                          if(!_.isEmpty(getFormattedValue(val[key])))
+                          obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                        }
+                      }
                     }
-                    // else {
-                    //   // value pair are strings or values
-                    //   obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
-                    // }
-
+                    else {
+                      // value pair are strings or values
+                      //console.log('Normal Key pairs');
+                      obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                    }
                   }
                 });
               }
-              else {
-                // if we have an independent group then we should assume that
-                // their is some grouping. Though this will not always be true
-                _each(Object.keys(val), function(key){
-
-                });
-              }
             }
-            else if (angular.isArray(val)){
-              //add property to obs
-              var items = [];
-              items = val;
-               //console.log(items);
-              for (var l = 0; l < items.length; l++)
-              {
-                obs.push({concept:obj.split('_')[1], value:getFormattedValue(items[l])});
-              }
-            }
-            // else {
-            //   //The object here shoud be a simple string value
-            //   obs.push({concept:obj.split('_')[1], value:getFormattedValue(val)});
-            // }
           });
 
           formPayLoad.obs = obs;
@@ -1043,6 +1063,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               //className: 'col-md-2',
               key: 'obsDate_' + curField.concept,
               type: 'datepicker',
+              data: {concept:curField.concept,
+                answer_value:''},
               templateOptions: {
                 type: 'text',
                 label: 'Date',

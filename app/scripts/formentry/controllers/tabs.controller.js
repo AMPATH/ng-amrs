@@ -32,7 +32,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
               tab.form['model']=$scope.vm.model;
             });
             ///FormentryService.getEncounter('encData', formlySchema)
-            var params = {uuid:'33158613-0f76-45a5-9c49-28f5928185aa'};
+            var params = {uuid:'cf3f041c-9c37-44c5-983a-d02507ffe279'};
             EncounterResService.getEncounterByUuid(params,
               function(data){
               var encData = data;
@@ -56,7 +56,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
             console.log('testing submit button');
             var payLoad = FormentryService.generateFormPayLoad($scope.vm.model);
 
-            //alert(JSON.stringify($scope.vm.model), null, 2);
+            console.log(JSON.stringify(payLoad));
+            var updatedPayLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.tabs);
+            console.log('Updated payLoad');
+            console.log(JSON.stringify(updatedPayLoad));
           }
 
 
