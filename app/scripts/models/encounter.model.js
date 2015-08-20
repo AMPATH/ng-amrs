@@ -117,21 +117,23 @@
       };        
 
       modelDefinition.openmrsModel = function() {
-          return {
-              "uuid" : _uuid,
-              "encounterDatetime" : _encounterDate,
-              "encounterType" : _encounterTypeUuid,
-              "provider" : _providerUuid,
-              "location" : _locationUuid,
-              "form" : _formUuid
-          };
+        /* jshint ignore:start */
+        return {
+            "uuid" : _uuid,
+            "encounterDatetime" : _encounterDate,
+            "encounterType" : _encounterTypeUuid,
+            "provider" : _providerUuid,
+            "location" : _locationUuid,
+            "form" : _formUuid
+        };
+        /* jshint ignore:end */
       };
     }
     
     function toArrayOfModels(encounterArray) {
       var modelArray = [];
       for(var i=0; i<encounterArray.length; i++) {
-        modelArray.push(new EncounterModel(encounterArray[i]));
+        modelArray.push(new Encounter(encounterArray[i]));
       }
       return modelArray;
     }

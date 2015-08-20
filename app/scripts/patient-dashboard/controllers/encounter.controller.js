@@ -9,10 +9,12 @@
                         '$scope',
                         '$stateParams',
                         '$timeout',
-                        'EncounterResService'
+                        'EncounterResService',
+                        'EncounterModel'
                       ];
 
-  function EncounterCtrl($scope, $stateParams, $timeout, EncounterResService) {
+  function EncounterCtrl($scope, $stateParams, $timeout, EncounterResService,
+                         EncounterModel) {
     var vm = this;
     vm.encounterList = [];
     vm.status = {};
@@ -24,19 +26,11 @@
 
     $timeout(function(){
       var params = {
-        patientUuid: $stateParams.uuid,
-        rep: 'full'
+        patientUuid: $stateParams.uuid
       }
       vm.experiencedLoadingError = false;
       EncounterResService.getPatientEncounters(params, function(data) {
-        vm.encounterList = data;
-        vm.status = {
-          isOpen: new Array(vm.encounterList.length)
-        }
-
-        for (var i = 0; i < vm.status.isOpen.length; i++) {
-          vm.status.isOpen[i] = (i === 0);
-        }
+        vm.encounterList = EncounterModel.toArrayOfModels(data);
       }, function(error) {
           vm.experiencedLoadingError = true; 
           console.error('An error ' + error +' occured');
