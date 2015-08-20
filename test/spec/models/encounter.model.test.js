@@ -98,5 +98,24 @@ jshint -W030
                     testOpenmrsEncounterJson.provider.display); 
       expect(model.openmrsModel()).to.deep.equal(expectedOpenmrsModel);
     });
+    
+    it('toArrayOfModels should generate an array of models from array of ' +
+       'openmrs models', function(){
+      var encounterArray = [{
+          "uuid": "encounter-uuid-1"
+        }, {
+          "uuid": "encounter-uuid-2"
+        }, {
+          "uuid": "encounter-uuid-3"
+        }
+      ];
+        
+      var modelArray = EncounterModelFactory.toArrayOfModels(encounterArray);
+      
+      expect(modelArray).to.be.an('array');
+      assert(modelArray[0], EncounterModelFactory.encounter, 'Should be ' +
+            'instance of EncounterModel array');
+      expect(modelArray.length).to.equal(encounterArray.length);    
+    });
   });
 })();

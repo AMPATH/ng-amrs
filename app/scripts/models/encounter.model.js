@@ -10,14 +10,21 @@
 
   function EncounterModel() {
     var service = {
-      encounter: EncounterModel
+      encounter: EncounterModel,
+      toArrayOfModels: toArrayOfModels
     };
 
     return service;
 
     function EncounterModel(openmrsModel) {
       var modelDefinition = this;
-
+      
+      //Evaluate the passed models for non-existent propertis.
+      openmrsModel.encounterType = openmrsModel.encounterType || {};
+      openmrsModel.provider = openmrsModel.provider || {};
+      openmrsModel.location = openmrsModel.location || {};
+      openmrsModel.form = openmrsModel.form || {};
+      
       //initialize private members
       var _uuid = openmrsModel.uuid || '' ;
       var _encounterTypeName = openmrsModel.encounterType.display ||'';
@@ -119,6 +126,14 @@
               "form" : _formUuid
           };
       };
+    }
+    
+    function toArrayOfModels(encounterArray) {
+      var modelArray = [];
+      for(var i=0; i<encounterArray.length; i++) {
+        modelArray.push(new EncounterModel(encounterArray[i]));
+      }
+      return modelArray;
     }
   }
 })();
