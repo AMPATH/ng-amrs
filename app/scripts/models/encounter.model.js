@@ -10,24 +10,24 @@
 
   function EncounterModel() {
     var service = {
-      encounter: encounter
+      encounter: EncounterModel
     };
 
     return service;
 
-    function encounter(uuid_, encounterTypeName_, encounterTypeUuid_, formUuid_, providerName_, providerUuid_, encounterDate_, locationName_, locationUuid_) {
+    function EncounterModel(openmrsModel) {
       var modelDefinition = this;
 
       //initialize private members
-      var _uuid = uuid_ ? uuid_ : '' ;
-      var _encounterTypeName = encounterTypeName_ ? encounterTypeName_ : '' ;
-      var _encounterTypeUuid = encounterTypeUuid_ ? encounterTypeUuid_ : '' ;
-      var _providerName = providerName_ ? providerName_ : '' ;
-      var _providerUuid = providerUuid_ ? providerUuid_ : '' ;
-      var _encounterDate = encounterDate_ ? encounterDate_ : '' ;
-      var _locationName = locationName_ ? locationName_ : '' ;
-      var _locationUuid = locationUuid_ ? locationUuid_ : '' ;
-      var _formUuid = formUuid_ ? formUuid_ : '' ;
+      var _uuid = openmrsModel.uuid || '' ;
+      var _encounterTypeName = openmrsModel.encounterType.display ||'';
+      var _encounterTypeUuid = openmrsModel.encounterType.uuid || '';
+      var _providerName = openmrsModel.provider.display || '';
+      var _providerUuid = openmrsModel.provider.uuid || '';
+      var _encounterDate = openmrsModel.encounterDatetime || '';
+      var _locationName = openmrsModel.location.display || '';
+      var _locationUuid = openmrsModel.location.uuid || '';
+      var _formUuid = openmrsModel.form.uuid || '' ;
 
       modelDefinition.uuid = function(value) {
         if (angular.isDefined(value)) {
@@ -109,17 +109,16 @@
                         }
               };
 
-      modelDefinition.openmrsModel = function(value) {
-              return {uuid: _uuid,
-                      encounterTypeName: _encounterTypeName,
-                      encounterTypeUuid: _encounterTypeUuid,
-                      providerName: _providerName,
-                      providerUuid: _providerUuid,
-                      encounterDate: _encounterDate,
-                      locationName: _locationName,
-                      locationUuid: _locationUuid,
-                      formUuid: _formUuid};
-            };
+      modelDefinition.openmrsModel = function() {
+          return {
+              "uuid" : _uuid,
+              "encounterDatetime" : _encounterDate,
+              "encounterType" : _encounterTypeUuid,
+              "provider" : _providerUuid,
+              "location" : _locationUuid,
+              "form" : _formUuid
+          };
+      };
     }
   }
 })();
