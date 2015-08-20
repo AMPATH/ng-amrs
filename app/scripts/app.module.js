@@ -56,7 +56,7 @@
         })
         .state('clinical-dashboard', {
           url: '/clinical-dashboard/:locationuuid',
-          templateUrl: 'views/clinical-dashboard/clinical-dashboard.html',
+          templateUrl: 'views/clinic-dashboard/clinic-dashboard.html',
           controller: 'ClinicDashboardCtrl',
           data: { requireLogin: true }
         })

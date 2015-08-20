@@ -1,0 +1,42 @@
+<div class="form-group" style="margin-top:6px; margin-bottom:8px;" ng-show="selectedLocation.selected === undefined">
+	<div class="input-group">
+		<div class="input-group-addon">
+			<span class="text-danger">
+				<img ng-show="isBusy" src="images/ajax-loader.gif" />
+			</span>
+			<span ng-hide="isBusy" class="glyphicon glyphicon-map-marker"></span>
+		</div>
+		<ui-select ng-model="selectedLocation.selected" theme="bootstrap" ng-disabled="isBusy">
+			<ui-select-match placeholder="Select a location or type to search">{{$select.selected.name()}}</ui-select-match>
+			<ui-select-choices repeat="location in locations | propsFilter: {name: $select.search, description: $select.search} ">
+				<div ng-bind-html="location.name() | highlight: $select.search"></div>
+				<small ng-bind-html="location.description() | highlight: $select.search"></small>
+			</ui-select-choices>
+		</ui-select>
+	</div>
+</div>
+<hr style="margin: -4px;" />
+<div style="padding: 4px;" ng-hide="selectedLocation.selected === undefined">
+	<h2 style="margin-top:2px;">&nbsp;
+		<!--<span class="icon-care-staff-area" aria-hidden="true"></span>-->
+		Cinic Dashboard: {{selectedLocation.selected.name()}}</h2>
+	<hr style="margin: -4px;" />
+</div>
+<ul class="nav nav-pills" style="margin-top:16px;" ng-hide="selectedLocation.selected === undefined">
+	<li class="active" style="cursor: pointer;">
+		<a data-target="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;Appointment Schedule</a>
+	</li>
+	<li style="cursor: pointer;">
+		<a data-target="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;Monthly Schedule</a>
+	</li>
+	<li style="cursor: pointer;">
+		<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;Defaulters List</a>
+	</li>
+</ul>
+<div class="tab-content panel panel-primary" style="margin-top:2px; margin-bottom: 0px; padding:2px;" ng-hide="selectedLocation.selected === undefined">
+	<div class="tab-pane fade in active" id="tab1">
+		<appointment-schedule location-uuid="{{selectedLocation.selected.uuId()}}" />
+	</div>
+	<div class="tab-pane fade in" id="tab2"></div>
+	<div class="tab-pane fade in" id="tab3"></div>
+</div>
