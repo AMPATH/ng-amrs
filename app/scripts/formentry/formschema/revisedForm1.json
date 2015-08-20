@@ -1,5 +1,5 @@
 {
-  "name": "test poc form",
+  "name": "AMPATH Adult Return Encounter Form 6.09",
   "uuid": "xxxx",
   "processor": "postEncounterForm",
   "pages": [
@@ -25,12 +25,21 @@
               "required": "true"
             },
             {
+              "concept":"a8b02524-1350-11df-a1f1-0026b9348838",
+              "label":"4. Patient covered by NHIF:",
+              "type":"radio",
+              "answers":[
+                {"concept":"8b715fed-97f6-4e38-8f6a-c167a42f8923","label":"Yes"},
+                {"concept":"a899e0ac-1350-11df-a1f1-0026b9348838","label":"No"}
+              ],
+              "validators":{}
+            },
+            {
               "concept": "0f8b7f4e-1656-46b7-bc93-d1fe4f193f5d",
               "type": "group",
               "questions": [
                 {
-                  "obsConceptGroupUuid":"0f8b7f4e-1656-46b7-bc93-d1fe4f193f5d",
-                  "obsConceptUuid":"a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label":"6. Transfer in from other clinic (specify):",
                   "type":"text",
                   "validators":[]
@@ -1423,7 +1432,6 @@
                   "type": "group",
                   "questions": [
                     {
-                      "obsConceptGroupUuid": "null",
                       "concept": "741517cf-8bac-4755-b289-8dd2a2df7962",
                       "label": "Sputum Gene xpert MTB:",
                       "answers": [
@@ -1449,7 +1457,6 @@
                       "validators": "[:]"
                     },
                     {
-                      "obsConceptGroupUuid": "null",
                       "concept": "a8945d4e-1350-11df-a1f1-0026b9348838",
                       "label": "Sputum AFB Smear:",
                       "answers": [
@@ -1487,7 +1494,6 @@
                       "validators": "[:]"
                     },
                     {
-                      "obsConceptGroupUuid": "null",
                       "concept": "a8a462a2-1350-11df-a1f1-0026b9348838",
                       "label": "Sputum Culture:",
                       "answers": [
@@ -1517,7 +1523,6 @@
                       "validators": "[:]"
                     },
                     {
-                      "obsConceptGroupUuid": "null",
                       "concept": "a8908192-1350-11df-a1f1-0026b9348838",
                       "label": "CXR Code:",
                       "answers": [
