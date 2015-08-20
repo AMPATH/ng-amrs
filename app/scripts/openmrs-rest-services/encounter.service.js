@@ -18,16 +18,21 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
     }
 
     return service;
-
+                    
     function getEncounterByUuid(params, successCallback, errorCallback) {
       var objParams = {};
+      var _customDefaultRep = 'custom:(uuid,encounterDatetime,' +
+                      'patient:(uuid,uuid),form:(uuid,name),' +
+                      'location:ref,encounterType:ref,provider:ref,' +
+                      'obs:(uuid,concept:(uuid,uuid),value:ref,groupMembers))';
+                      
       if(angular.isDefined(params) && typeof params === 'string'){
         var encounterUuid = params;
-        objParams = {'encounter': encounterUuid, 'v':'default'}
+        objParams = {'encounter': encounterUuid, 'v': _customDefaultRep}
       } else {
         objParams = {
           'encounter': params.uuid,
-          'v': params.rep || 'full'
+          'v': params.rep || _customDefaultRep
         }
       }
       Restangular.one('encounter',objParams.encounter).get({v:objParams.v}).then(function(data) {
@@ -76,13 +81,19 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
 
     function getPatientEncounters(params, successCallback, errorCallback) {
       var objParams = {};
+      
+      // Don't include obs by default
+      var _customDefaultRep = 'custom:(uuid,encounterDatetime,' +
+                      'patient:(uuid,uuid),form:(uuid,name),' +
+                      'location:ref,encounterType:ref,provider:ref)';
+                      
       if(angular.isDefined(params) && typeof params === 'string'){
         var patientUuid = params;
-        objParams = {'patient': patientUuid, 'v':'default'}
+        objParams = {'patient': patientUuid, 'v':_customDefaultRep}
       } else {
         objParams = {
           'patient': params.patientUuid,
-          'v': params.rep || 'default'
+          'v': params.rep || _customDefaultRep
         }
       }
 
@@ -91,8 +102,8 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
         _successCallbackHandler(successCallback, data.reverse());
       },
       function(error) {
-        console.log('An error occured while attempting to fetch encounter ' +
-                    'with uuid ' + params.patientUuid);
+        console.log('An error occured while attempting to fetch encounters ' +
+                    'for patient with uuid ' + params.patientUuid);
         if (typeof errorCallback === 'function') errorCallback(error);
       });
     }
