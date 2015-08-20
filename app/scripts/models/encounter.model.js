@@ -10,13 +10,13 @@
 
   function EncounterModel() {
     var service = {
-      encounter: EncounterModel,
+      encounter: Encounter,
       toArrayOfModels: toArrayOfModels
     };
 
     return service;
 
-    function EncounterModel(openmrsModel) {
+    function Encounter(openmrsModel) {
       var modelDefinition = this;
       
       //Evaluate the passed models for non-existent propertis.
@@ -34,87 +34,87 @@
       var _encounterDate = openmrsModel.encounterDatetime || '';
       var _locationName = openmrsModel.location.display || '';
       var _locationUuid = openmrsModel.location.uuid || '';
-      var _formUuid = openmrsModel.form.uuid || '' ;
+      var _formUuid = openmrsModel.form.uuid || '';
+      var _formName = openmrsModel.form.name || '';
 
       modelDefinition.uuid = function(value) {
         if (angular.isDefined(value)) {
           _uuid = value;
-        }
-        else {
+        } else {
           return _uuid;
         }
       };
 
       modelDefinition.encounterTypeName = function(value) {
-              if (angular.isDefined(value)) {
-                _encounterTypeName = value;
-              }
-              else {
-                return _encounterTypeName;
-              }
-            };
+        if (angular.isDefined(value)) {
+          _encounterTypeName = value;
+        } else {
+          return _encounterTypeName;
+        }
+      };
 
       modelDefinition.encounterTypeUuid = function(value) {
-              if (angular.isDefined(value)) {
-                      _encounterTypeUuid = value;
-                    }
-              else {
-                      return _encounterTypeUuid;
-                    }
-                  };
+        if (angular.isDefined(value)) {
+          _encounterTypeUuid = value;
+        } else {
+          return _encounterTypeUuid;
+        }
+      };
 
       modelDefinition.providerName = function(value) {
-              if (angular.isDefined(value)) {
-                _providerName = value;
-              }
-              else {
-                return _providerName;
-              }
-            };
+        if (angular.isDefined(value)) {
+          _providerName = value;
+        } else {
+          return _providerName;
+        }
+      };
 
       modelDefinition.providerUuid = function(value) {
-              if (angular.isDefined(value)) {
-                _providerUuid = value;
-              }
-              else {
-                return _providerUuid;
-              }
-            };
+        if (angular.isDefined(value)) {
+          _providerUuid = value;
+        } else {
+          return _providerUuid;
+        }
+      };
 
       modelDefinition.encounterDate = function(value) {
-              if (angular.isDefined(value)) {
-                _encounterDate = value;
-              }
-              else {
-                return _encounterDate;
-              }
-            };
+        if (angular.isDefined(value)) {
+          _encounterDate = value;
+        } else {
+          return _encounterDate;
+        }
+      };
 
       modelDefinition.locationName = function(value) {
-                    if (angular.isDefined(value)) {
-                      _locationName = value;
-                    }
-                    else {
-                      return _locationName;
-                    }
-                  };
+        if (angular.isDefined(value)) {
+          _locationName = value;
+        } else {
+          return _locationName;
+        }
+      };
       modelDefinition.locationUuid = function(value) {
-                  if (angular.isDefined(value)) {
-                                  _locationUuid = value;
-                              }
-                  else {
-                                  return _locationUuid;
-                                }
-                              };
+        if (angular.isDefined(value)) {
+          _locationUuid = value;
+        } else {
+          return _locationUuid;
+        }
+      };
 
       modelDefinition.formUuid = function(value) {
-                  if (angular.isDefined(value)) {
-                      _formUuid = value;
-                      }
-                  else {
-                        return _formUuid;
-                        }
-              };
+        if (angular.isDefined(value)) {
+            _formUuid = value;
+        } else {
+          return _formUuid;
+        }
+      };
+      
+      modelDefinition.formName = function(value) {
+        if(angular.isDefined(value)) {
+          _formName = value;
+        } else {
+          return _formName;
+        }
+      };        
 
       modelDefinition.openmrsModel = function() {
           return {
