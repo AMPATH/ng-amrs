@@ -23,11 +23,19 @@
 		$scope.locations = [];
 		
 		$scope.isBusy = false;
+		
+		$scope.onLocationSelection = onLocationSelection;
+		
+		$scope.locationSelectionEnabled = true;
 
 		activate();
 
 		function activate() {
 			fetchLocations();
+		}
+		
+		function onLocationSelection($event) {
+			$scope.locationSelectionEnabled = false;
 		}
 
 		function fetchLocations() {

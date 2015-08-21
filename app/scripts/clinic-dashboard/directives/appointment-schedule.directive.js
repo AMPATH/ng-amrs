@@ -24,6 +24,7 @@ jshint -W003, -W026
     function appointmentScheduleController($scope, EtlRestService, AppointmentScheduleModel) {
         $scope.patients = [];
         $scope.isBusy = false;
+        
         $scope.loadSchedule = loadSchedule;
         $scope.experiencedLoadingError = false;
         $scope.startDate = new Date();
@@ -72,6 +73,7 @@ jshint -W003, -W026
 
     function appointmentScheduleLink(scope, element, attrs, vm) {
         attrs.$observe('locationUuid', onLocationUuidChanged);
+        
 
         function onLocationUuidChanged(newVal, oldVal) {
             if (newVal && newVal != "") {
