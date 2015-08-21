@@ -621,56 +621,31 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         Private method to get the initial value of a given field
         */
         function getInitialFieldValue(_field_key, _section){
-
-          var data_2;
-          var data_3;
-          var data =  _.find(_section.templateOptions.fields[0].fieldGroup, function(_field){
+          //Running this function mannually since find method was not doing a good/perfect job
+          var data;
+          _.each(_section.templateOptions.fields[0].fieldGroup, function(_field){
             if(_field.type !== 'section' && _field.type !== 'group' && _field.type !== 'repeatSection' && _field.type !== undefined)
             {
               // console.log('testing selected key_first opt ', _field)
-              return (_field_key === _field.key);
+              if (_field_key === _field.key) data =_field;
 
             }
             else if (_field.type === 'repeatSection'){
-
-              data_2 = simpleFind(_field_key, _field.templateOptions.fields[0].fieldGroup);
-              // _.each(_field.templateOptions.fields[0].fieldGroup, function(_field_){
-                console.log('testing selected second opt Result: ', data_2);
-              //   console.log('second opt_Field Key: ',_field_.key);
-              //   console.log('second opt_Field Key arg: ',_field_key);
-              //
-              //   if(_field_.key === _field_key)
-              //   {
-              //     data =_field_
-              //     console.log('second opt_Field Results',data);
-              //     return data.data;
-              //   }
-              // });
-
-              //return selVal;
+              _.each(_field.templateOptions.fields[0].fieldGroup, function(_field_){
+                if(_field_.key === _field_key) data =_field_;
+              });
             }
             else {
-              data_3 = simpleFind(_field_key, _field.fieldGroup);
-              // _.each(_field.fieldGroup, function(_field_){
-                console.log('testing selected last opt_Result ', data_3);
-                //console.log('testing selected key_last opt ')
-              //   console.log('last opt_Field Key: ',_field_.key);
-              //   console.log('last opt_Field Key arg: ',_field_key);
-              //   if( _field_.key === _field_key)
-              //   {
-              //     data = _field_
-              //     console.log('Last opt_Field Results',data);
-              //     return data.data;
-              //   }
-              // });
-              //return selVal;
+              _.each(_field.fieldGroup, function(_field_){
+                if( _field_.key === _field_key) data = _field_
+              });
             }
           });
 
-          // console.log('Outer opt_Field Results',data_3);
+          console.log('Testing the revised code with new behavihoour: ');
+          console.log(data);
+
           if(!_.isEmpty(data)) return data.data;
-          else if(!_.isEmpty(data_2)) return data_2.data;
-          else if(!_.isEmpty(data_3)) return data_3.data;
           else return data;
         }
 
@@ -817,6 +792,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         if(Object.keys(groupValues).length>0)
                         {
                           groupMembers = [];
+                          var traversed_objects = [];
                           _.each(Object.keys(groupValues), function(group_member){
 
                             if (groupValues[group_member] !== undefined)
@@ -831,14 +807,15 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                 _.each(Object.keys(ArrayVal), function(arrKey){
                                   if(!arrKey.startsWith('$$'))
                                   {
+
                                     // groupMembers.push({concept:arrKey.split('_')[1],
                                     //             value:getFormattedValue(ArrayVal[arrKey])});
-
-                                    init_data = getInitialFieldValue(arrKey, section);
                                     console.log('ARRAY Section_id: ', obj);
                                     console.log('Testing grouped values');
                                     console.log('ARRAY KEY');
                                     console.log(arrKey)
+                                    init_data = getInitialFieldValue(arrKey, section);
+
                                     console.log('INIT DATA');
                                     console.log(init_data);
 
@@ -852,18 +829,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                                     if (obs_val !== undefined)
                                     {
+                                      traversed_objects.push(getFormattedValue(ArrayVal[arrKey]));
                                       if(obs_val !== getFormattedValue(ArrayVal[arrKey]))
                                       {
-                                          //check if the value is dropped so that we can void it
-                                          if(ArrayVal[arrKey] === undefined)
-                                          {
-                                            groupMembers.push({uuid:init_data.uuid[obs_index], voided:true, concept:arrKey.split('_')[1],
-                                                        value:getFormattedValue(ArrayVal[arrKey])});
-                                          }
-                                          else {
-                                            groupMembers.push({uuid:init_data.uuid[obs_index], concept:arrKey.split('_')[1],
-                                                        value:getFormattedValue(ArrayVal[arrKey])});
-                                          }
+                                          groupMembers.push({uuid:init_data.uuid[obs_index], concept:arrKey.split('_')[1],
+                                                      value:getFormattedValue(ArrayVal[arrKey])});
                                       }
                                     }
                                     else {
@@ -875,6 +845,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                   }
 
                                 });
+
                                 if (groupMembers.length>0)
                                 {
                                     obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
@@ -888,12 +859,12 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                 // groupMembers.push({concept:group_member.split('_')[1],
                                 //             value:getFormattedValue(groupValues[group_member])});
                                 init_data = getInitialFieldValue(group_member, section);
-                                console.log('NON ARRAY Section_id: ', obj);
-                                console.log('Testing grouped values Special ');
-                                console.log('GROUP KEY');
-                                console.log(group_member)
-                                console.log('INIT DATA');
-                                console.log(init_data);
+                                // console.log('NON ARRAY Section_id: ', obj);
+                                // console.log('Testing grouped values Special ');
+                                // console.log('GROUP KEY');
+                                // console.log(group_member)
+                                // console.log('INIT DATA');
+                                // console.log(init_data);
                                 var obs_val;
                                 if (typeof init_data === 'object')
                                 {
@@ -903,16 +874,15 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                 {
                                   if(obs_val !== getFormattedValue(groupValues[group_member]))
                                   {
+                                    groupMembers.push({uuid:init_data.uuid, concept:group_member.split('_')[1],
+                                                value:getFormattedValue(groupValues[group_member])});
                                     //check if the value is dropped so that we can void it
-                                    if(groupValues[group_member] === undefined)
-                                    {
-                                      groupMembers.push({uuid:init_data.uuid, voided:true, concept:group_member.split('_')[1],
-                                                  value:getFormattedValue(groupValues[group_member])});
-                                    }
-                                    else {
-                                      groupMembers.push({uuid:init_data.uuid, concept:group_member.split('_')[1],
-                                                  value:getFormattedValue(groupValues[group_member])});
-                                    }
+                                    //will require further review
+                                    // if(groupValues[group_member] === undefined)
+                                    // {
+                                    //   groupMembers.push({uuid:init_data.uuid, voided:true, concept:group_member.split('_')[1],
+                                    //               value:getFormattedValue(groupValues[group_member])});
+                                    // }
                                   }
                                 }
                                 else {
@@ -924,6 +894,22 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                               }
                             }
                           });
+                          console.log('Traversed Items,',traversed_objects);
+                          console.log('All Items', init_data.init_val)
+                          //Droping items in the list array that left out
+                          if(traversed_objects.length>0)
+                          {
+                            if(!_.isEmpty(init_data))
+                            {
+                              _.each(init_data.init_val, function(item){
+                                if(traversed_objects.indexOf(item) === -1)
+                                {
+                                  var obs_index = init_data.init_val.indexOf(item);
+                                  obs.push({voided:true, uuid:init_data.uuid[obs_index]});
+                                }
+                              });
+                            }
+                          }
                           if (groupMembers.length>0)
                           {
                               obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
