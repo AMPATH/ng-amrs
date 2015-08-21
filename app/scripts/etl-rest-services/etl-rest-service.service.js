@@ -93,11 +93,13 @@
       
       var params = { endDate: endDate, startDate: startDate, uuid: locationUuid };
       
-      if(startIndex !== undefined)
-        params['startIndex'] = startIndex;
+      if(startIndex !== undefined){
+        params.startIndex = startIndex;
+      }
         
-      if(limit !== undefined)
-        params['limit'] = limit;
+      if(limit !== undefined){
+        params.limit = limit;
+      }
         
         console.log(params);
         console.log(startIndex);
