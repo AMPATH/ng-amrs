@@ -59,7 +59,7 @@ jshint -W003, -W026
         function onFetchAppointmentsScheduleSuccess(appointmentSchedule) {
             $scope.nextStartIndex = +appointmentSchedule.startIndex + appointmentSchedule.size;
             for (var e in appointmentSchedule.result) {
-                $scope.encounters.push(new AppointmentScheduleModel.appointmentSchedule(appointmentSchedule.result[e]));
+                $scope.patients.push(new AppointmentScheduleModel.appointmentSchedule(appointmentSchedule.result[e]));
             }
             $scope.isBusy = false;
         }
