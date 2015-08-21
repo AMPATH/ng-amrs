@@ -17,3 +17,10 @@ branches:
 branches:
   only:
     - master
+    
+notifications:
+  webhooks:
+    urls:
+      - http://test1.ampath.or.ke/rebuild.php
+    on_failure: never
+    on_start: never
