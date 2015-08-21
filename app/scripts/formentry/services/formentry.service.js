@@ -768,9 +768,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                 if(date_val !== getFormattedValue(groupValues[group_member]) || obs_val !== getFormattedValue(groupValues['obs_'+group_member.split('_')[1]]))
                                 {
                                   //check if the value is dropped so that we can void it
-                                  if(groupValues[group_member]=== undefined || groupValues['obs_'+group_member.split('_')[1]] === undefined)
+                                  if(groupValues[group_member]=== null || groupValues['obs_'+group_member.split('_')[1]] === null || groupValues[group_member]=== '' || groupValues['obs_'+group_member.split('_')[1]] === '' || groupValues[group_member] === 'null' || groupValues['obs_'+group_member.split('_')[1]] === 'null')
                                   {
-                                    obs.push({uuid:init_data.uuid, voided:true, obsDatetime:getFormattedValue(groupValues[group_member]),concept:group_member.split('_')[1], value:getFormattedValue(groupValues['obs_'+group_member.split('_')[1]])});
+                                    obs.push({uuid:init_data.uuid, voided:true});
                                   }
                                   else {
                                     obs.push({uuid:init_data.uuid, obsDatetime:getFormattedValue(groupValues[group_member]),concept:group_member.split('_')[1], value:getFormattedValue(groupValues['obs_'+group_member.split('_')[1]])});
@@ -813,7 +813,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                     console.log('ARRAY Section_id: ', obj);
                                     console.log('Testing grouped values');
                                     console.log('ARRAY KEY');
-                                    console.log(arrKey)
+                                    console.log(arrKey);
+                                    console.log('Value: ', getFormattedValue(ArrayVal[arrKey]));
                                     init_data = getInitialFieldValue(arrKey, section);
 
                                     console.log('INIT DATA');
@@ -823,8 +824,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                     var obs_val;
                                     if (typeof init_data === 'object')
                                     {
-                                      obs_index = init_data.init_val.indexOf(getFormattedValue(ArrayVal[arrKey]));
-                                      obs_val = init_data.init_val[obs_index];
+                                      if (init_data.init_val !== undefined)
+                                      {
+                                        obs_index = init_data.init_val.indexOf(getFormattedValue(ArrayVal[arrKey]));
+                                        obs_val = init_data.init_val[obs_index];
+                                      }
                                     }
 
                                     if (obs_val !== undefined)
@@ -832,13 +836,20 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                       traversed_objects.push(getFormattedValue(ArrayVal[arrKey]));
                                       if(obs_val !== getFormattedValue(ArrayVal[arrKey]))
                                       {
-                                          groupMembers.push({uuid:init_data.uuid[obs_index], concept:arrKey.split('_')[1],
-                                                      value:getFormattedValue(ArrayVal[arrKey])});
+                                          if(getFormattedValue(ArrayVal[arrKey]) ==='null' || getFormattedValue(ArrayVal[arrKey]) === null || getFormattedValue(ArrayVal[arrKey]) ==='')
+                                          {
+                                            obs.push({uuid:init_data.uuid, voided:true});
+                                          }
+                                          else {
+                                            groupMembers.push({uuid:init_data.uuid[obs_index], concept:arrKey.split('_')[1],
+                                                        value:getFormattedValue(ArrayVal[arrKey])});
+                                          }
                                       }
                                     }
                                     else {
                                           //new val being added
-                                          if(!_.isEmpty(getFormattedValue(ArrayVal[arrKey])))
+                                          console.log('Getting Here', getFormattedValue(ArrayVal[arrKey]))
+                                          if(getFormattedValue(ArrayVal[arrKey]) !== '' && getFormattedValue(ArrayVal[arrKey]) !== null && getFormattedValue(ArrayVal[arrKey]) !=='null')
                                             groupMembers.push({concept:arrKey.split('_')[1],
                                                         value:getFormattedValue(ArrayVal[arrKey])});
                                     }
@@ -874,8 +885,15 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                 {
                                   if(obs_val !== getFormattedValue(groupValues[group_member]))
                                   {
-                                    groupMembers.push({uuid:init_data.uuid, concept:group_member.split('_')[1],
-                                                value:getFormattedValue(groupValues[group_member])});
+                                    if(getFormattedValue(groupValues[group_member])==='null' || getFormattedValue(groupValues[group_member]) === null || getFormattedValue(groupValues[group_member]) ==='')
+                                    {
+                                      groupMembers.push({uuid:init_data.uuid, voided:true});
+                                    }
+                                    else {
+                                      obs.push({uuid:init_data.uuid, concept:group_member.split('_')[1],
+                                                  value:getFormattedValue(groupValues[group_member])});
+                                    }
+
                                     //check if the value is dropped so that we can void it
                                     //will require further review
                                     // if(groupValues[group_member] === undefined)
@@ -931,9 +949,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                             if(obs_val !== getFormattedValue(val[key]))
                             {
                               //check if the value is dropped so that we can void it
-                              if(val[key] === undefined)
+                              if(val[key] ==='null' || val[key]  === null || val[key]  ==='')
                               {
-                                obs.push({uuid:init_data.uuid, voided:true, concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                                obs.push({uuid:init_data.uuid, voided:true});
                               }
                               else {
                                 obs.push({uuid:init_data.uuid, concept:key.split('_')[1], value:getFormattedValue(val[key])});
@@ -962,12 +980,12 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         if(obs_val !== getFormattedValue(val[key]))
                         {
                           //check if the value is dropped so that we can void it
-                          if(val[key] === undefined)
+                          if(val[key] ==='null' || val[key]  === null || val[key]  ==='')
                           {
-                            obs.push({uuid:init_data.uuid, voided:true, concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                            obs.push({uuid:init_data.uuid, voided:true});
                           }
                           else {
-                            obs.push({uuid:init_data.uuid, concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                            obs.push({uuid:init_data.uuid,concept:key.split('_')[1], value:getFormattedValue(val[key])});
                           }
                         }
                       }
