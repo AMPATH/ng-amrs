@@ -274,8 +274,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   }
                   else if (_field.type === undefined) {
                     // for grouped non repeating fields
-                    console.log('Field Data')
-                    console.log(_field)
+                    // console.log('Field Data')
+                    // console.log(_field)
                     field_key = _field.key;
                     var group_data = getObsGroupValue(field_key, obs_group_data);
                     field_key = _field.key;
@@ -531,8 +531,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                       });
                     }
-                    console.log('repeating values test');
-                    console.log(multiArr)
+                    // console.log('repeating values test');
+                    // console.log(multiArr)
                     sec_data[field_key] = multiArr;
                   }
                   else
@@ -546,8 +546,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       _field.data['uuid'] = val.uuid; //obs uuid
                     }
                   }
-                  console.log('Updated Fields Available...')
-                  console.log(_field)
+                  // console.log('Updated Fields Available...')
+                  // console.log(_field)
                 });
               }
             });
@@ -660,8 +660,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             }
           });
 
-          console.log('Testing the revised code with new behavihoour: ');
-          console.log(data);
+          // console.log('Testing the revised code with new behavihoour: ');
+          // console.log(data);
 
           if(!_.isEmpty(data)) return data.data;
           else return data;
@@ -815,10 +815,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         */
                         if(angular.isArray(groupValues) && groupValues.length===0)
                         {
-                          console.log('Track blank Array: ',groupValues);
-                          console.log('Group Key: ',key);
+                          // console.log('Track blank Array: ',groupValues);
+                          // console.log('Group Key: ',key);
                           var blanksToVoid = findValuesToVoid(key, section);
-                          console.log(blanksToVoid)
+                          // console.log(blanksToVoid)
                           if(blanksToVoid !== undefined)
                           {
                             _.each(blanksToVoid,function(_toVoid){
@@ -850,15 +850,15 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                                     // groupMembers.push({concept:arrKey.split('_')[1],
                                     //             value:getFormattedValue(ArrayVal[arrKey])});
-                                    console.log('ARRAY Section_id: ', obj);
-                                    console.log('Testing grouped values');
-                                    console.log('ARRAY KEY');
-                                    console.log(arrKey);
-                                    console.log('Value: ', getFormattedValue(ArrayVal[arrKey]));
+                                    // console.log('ARRAY Section_id: ', obj);
+                                    // console.log('Testing grouped values');
+                                    // console.log('ARRAY KEY');
+                                    // console.log(arrKey);
+                                    // console.log('Value: ', getFormattedValue(ArrayVal[arrKey]));
                                     init_data = getInitialFieldValue(arrKey, section);
 
-                                    console.log('INIT DATA');
-                                    console.log(init_data);
+                                    // console.log('INIT DATA');
+                                    // console.log(init_data);
 
                                     var obs_index;
                                     var obs_val;
@@ -888,7 +888,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                     }
                                     else {
                                           //new val being added
-                                          console.log('Getting Here', getFormattedValue(ArrayVal[arrKey]))
+                                          // console.log('Getting Here', getFormattedValue(ArrayVal[arrKey]))
                                           if(getFormattedValue(ArrayVal[arrKey]) !== '' && getFormattedValue(ArrayVal[arrKey]) !== null && getFormattedValue(ArrayVal[arrKey]) !=='null')
                                             groupMembers.push({concept:arrKey.split('_')[1],
                                                         value:getFormattedValue(ArrayVal[arrKey])});
@@ -944,9 +944,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                               }
                             }
                           });
-                          console.log('Traversed Items,',traversed_objects);
-                          console.log('All Items', init_data.init_val)
-                          //Droping items in the list array that left out
+                          // console.log('Traversed Items,',traversed_objects);
+                          // console.log('All Items', init_data.init_val)
+                          // //Droping items in the list array that left out
                           if(traversed_objects.length>0)
                           {
                             if(!_.isEmpty(init_data))
@@ -1064,7 +1064,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           formPayLoad.obs = obs;
           if(!_.isEmpty(obs))
           {
-            console.log('Patient Selected', patient.uuid())
+            // console.log('Patient Selected', patient.uuid())
             formPayLoad['patient'] = patient.uuid();
             formPayLoad['encounterType'] = form.encounterType;
             if(uuid !== undefined)
@@ -1201,8 +1201,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           });
 
           formPayLoad.obs = obs;
-          console.log('Sample payLoad');
-          console.log(formPayLoad)
+          // console.log('Sample payLoad');
+          // console.log(formPayLoad)
           return formPayLoad;
         }
 
@@ -1256,6 +1256,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           else if ((obs_field.type === 'radio') || (obs_field.type === 'select') || (obs_field.type === 'multiCheckbox'))
           {
             var opts= [];
+            //Adding unselect option
+            opts.push({name:'', value:'null'});
             //get the radio/select options/multicheckbox
             //console.log(obs_Field);
             _.each(obs_field.answers, function (answer) {
@@ -1347,9 +1349,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             key:'obs' + gpSectionRnd + '_' + sectionKey,
             fieldGroup:groupingFields
           }
-          //({template: '<hr /><p><strong>'+obs_Field.sectionTitle +'</strong></p>'});
-
-
           return obsField;
         }
 
@@ -1500,7 +1499,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           });
 
           //return tabs;
-          console.log(JSON.stringify(tabs))
+          // console.log(JSON.stringify(tabs))
           callback(tabs);
         }
 

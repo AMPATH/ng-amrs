@@ -44,9 +44,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
             $scope.vm.formlyFields = formlySchema;
             $scope.vm.tabs = $scope.vm.formlyFields;
 
+            var i = 0;
             angular.forEach($scope.vm.tabs, function(tab){
-              console.log('Tab Structure');
-              console.log(tab);
+              // console.log('Tab Structure');
+              // console.log(tab);
+              if (i===0) {tab.active = true;}
+              i++;
               tab.form['model']=$scope.vm.model;
             });
             ///FormentryService.getEncounter('encData', formlySchema)
@@ -56,8 +59,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
               OpenmrsRestService.getEncounterResService().getEncounterByUuid(params,
                 function(data){
                 var encData = data;
-                console.log('Rest Feeback')
-                console.log(encData);
+                // console.log('Rest Feeback')
+                // console.log(encData);
                 if (data)
                 {
                   $scope.vm.submitLabel = 'Update'
@@ -149,6 +152,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
                   var dlg=dialogs.notify('Success', $scope.vm.success);
                   $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
                 }
+            }
+            else {
+                var dlg=dialogs.notify('Error', 'No data to be Submitted. Please fill the form first....');
             }
 
 
