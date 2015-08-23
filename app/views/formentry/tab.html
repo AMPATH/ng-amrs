@@ -3,6 +3,11 @@
   <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
   <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">
   <form name="vm.form" novalidate>
+    <div class="breadcrumb">
+      Patient Details: Identifier: {{vm.patient.identifierFormatted()}} | Name : {{vm.patient.fullNames()}}
+      |{{vm.success}}
+    </div>
+    <div>{{vm.error}}</div>
        <tabset>
          <tab ng-repeat="tab in vm.tabs"
               heading="{{tab.title}}"
@@ -13,8 +18,8 @@
          </tab>
 
          <tab heading="Submit">
-           <button type="submit" class="btn btn-primary submit-button" ng-click="vm.onSubmit()">Submit</button>
-           <button type="button" class="btn btn-default" ng-click="vm.resetAllForms()">Reset</button>
+           <button type="submit" class="btn btn-primary submit-button" ng-click="vm.onSubmit()">{{vm.submitLabel}}</button>
+           <button type="button" class="btn btn-default" ng-click="vm.resetAllForms()">Cancel</button>
          </tab>
        </tabset>
 

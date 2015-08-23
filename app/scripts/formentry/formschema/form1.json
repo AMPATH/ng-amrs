@@ -1,233 +1,196 @@
 {
-"schema":{
-  "form":{"name":"form1", "uuid":"xxx"} ,
-  "encounter":{
-    "section_title":"Encounter details",
-    "type":"section",
-    "section_data":[
-        {"encounter_datetime":"","type":"datepicker", "label_name":"Visit Date", "id_name":"encounterDatetime",
-        "validators":{"type":"date"}, "required":"true"
-        },
-        {"encounter_provider":"", "type":"provider-field", "label_name":"Provider", "id_name":"encounterProvider",
-           "required":"true"},
-        {"encounter_location":"","type":"location-field","label_name":"Facility Name", "id_name":"encounterLocation",
-          "required":"true"}
-      ]
-  },
-  "questions_list":[
-    {
-      "page1":{
-      "title":"Page 2",
-      "data":[
-        {
-        "question":{"concept_uuid":"a8b02524-1350-11df-a1f1-0026b9348838",
-                    "label":"Patient covered by NHIF",  "concept_id":"6266", "type":"select","validators":{}},
-        "answers":[{"concept_uuid":"8b715fed-97f6-4e38-8f6a-c167a42f8923", "label":"Yes", "concept_id":"6815"},
-                    {"concept_uuid":"a899e0ac-1350-11df-a1f1-0026b9348838", "label":"No", "concept_id":"1107"}]
-        },
-        {
-        "group":{
-          "group_uuid":"0f8b7f4e-1656-46b7-bc93-d1fe4f193f5d",
-          "concept_id":"7016",
-          "questions":[
-            {"question":{"concept_uuid":"a8a06fc6-1350-11df-a1f1-0026b9348838",
-                        "label":"6. Transfer in from other clinic (specify):",  "concept_id":"1915",
-                        "type":"text",
-                        "validators":{}
-                      }
-            }
-          ]
-        }
-        },
-        {
-          "section":{
-          "title":"Visit Type",
-          "section_data":[
-            {
-            "question":{"concept_uuid":"a89ff9a6-1350-11df-a1f1-0026b9348838",
-                        "label":"7a. Visit Type",  "concept_id":"1839","type":"select",
-                        "validators":{}},
-            "answers":[{"concept_uuid":"a89b6440-1350-11df-a1f1-0026b9348838", "label":"Scheduled visit", "concept_id":"1246"},
-                        {"concept_uuid":"a89ff816-1350-11df-a1f1-0026b9348838", "label":"Unscheduled Visit Early", "concept_id":"1837"},
-                        {"concept_uuid":"a89ff8de-1350-11df-a1f1-0026b9348838", "label":"Unscheduled Visit Late", "concept_id":"1838"}]
-            },
-            {
-            "question":{"concept_uuid":"dc1942b2-5e50-4adc-949d-ad6c905f054e","type":"datepicker",
-            "validators":{"type":"date", "allowFutureDates":"true"},
-                        "label":"7b. If Unscheduled, actual scheduled date",  "concept_id":"7029"}
-            }
-            ]
-          }
-        }
-    ]
-    },
-    "page2":{
-    "title":"xxxx"
-    },
-    "page3":{
-      "title":"Page 3",
-      "data":[
-        {
-          "section":{
-              "title":"15. Current Tuberculosis",
-              "section_data":[
-                {
-                "question":{
-                  "concept_uuid":"a899e444-1350-11df-a1f1-0026b9348838",
-                  "concept_id":"1111",
-                  "label":"a. TB treatment",
-                  "type":"select"
-                  },
-                "answers":[
-                  {
-                    "concept_uuid":"a899e0ac-1350-11df-a1f1-0026b9348838",
-                    "label":"None",
-                    "concept_id":"1107"
-                  },
-                  {
-                    "concept_uuid":"a899b35c-1350-11df-a1f1-0026b9348838", "concept_id":"1065",
-                    "label":"On treatment"
-                  }
-                  ]
-                },
-                {
-                "question":{
-                  "concept_uuid":"a899e5f2-1350-11df-a1f1-0026b9348838",
-                  "type":"datepicker",
-                  "validators":{"type":"date"},
-                  "label":"b. Start Date of TB",
-                  "concept_id":"1113"
-                  }
-                },
-                {
-                "group":{
-                  "group_uuid":"b55a6d42-3189-4d4c-97bf-772dfe17b887",
-                  "concept_id":"8069",
-                  "render_type":"groupSection",
-                  "questions":[
-                    {
-                      "question":{
-                        "concept_uuid":"16db21cd-10cb-4c31-bb5a-b7619bfbea66", "concept_id":"8068",
-                        "label":"c. Site of TB meds pick-up",
-                        "type":"select"
-                        },
-                      "answers":[
-                        {
-                          "concept_uuid":"a89c2f42-1350-11df-a1f1-0026b9348838", "label":"This Ampath site", "concept_id":"1286"
-                        },
-                        {
-                          "concept_uuid":"a8aaf3e2-1350-11df-a1f1-0026b9348838", "concept_id":"5622", "label":"Other"
-                        }
-                        ]
-                    },
-                    {
-                      "question":{
-                        "concept_uuid":"a8a06fc6-1350-11df-a1f1-0026b9348838", "concept_id":"1915",
-                        "label":"Other Site (Specify)",
-                        "type":"text"
-                        }
-                    }
-                  ]
-                  }
-                },
-                {
-                "group":{
-                  "group_uuid":"a8afdb8c-1350-11df-a1f1-0026b9348838",
-                  "concept_id":"6196",
-                  "render_type":"repeatSection",
-                  "buttonLabel": "TB Regimen",
-                  "questions":[
-                    {"question":{
-                        "concept_uuid":"a899e444-1350-11df-a1f1-0026b9348838",
-                        "label":"d. Current TB Regimen",
-                        "concept_id":"1111",
-                        "type":"select",
-                        "validators":{}
-                        },
-                      "answers":[
-                          {"concept_uuid":"a899f51a-1350-11df-a1f1-0026b9348838","label":"RHZE", "concept_id":"1131"},
-                          {"concept_uuid":"a897d1a4-1350-11df-a1f1-0026b9348838","label":"RHZ", "concept_id":"768"},
-                          {"concept_uuid":"a8a382ba-1350-11df-a1f1-0026b9348838", "label":"RHE", "concept_id":"2231"},
-                          {"concept_id":"a899e19c-1350-11df-a1f1-0026b9348838", "label":"EH","concept_id":"1108"},
-                          {"concept_id":"a8971c64-1350-11df-a1f1-0026b9348838", "label":"Ethambutol", "concept_id":"745"},
-                          {"concept_uuid":"a8a3243c-1350-11df-a1f1-0026b9348838","label":"MDR drugs", "concept_id":"2161"},
-                          {"concept_uuid":"a896cc00-1350-11df-a1f1-0026b9348838", "label":"INH", "concept_id":"656"},
-                          {"concept_uuid":"a8ac5f2a-1350-11df-a1f1-0026b9348838", "label":"Pyrazinamide", "concept_id":"5829"},
-                          {"concept_id":"a8952e4a-1350-11df-a1f1-0026b9348838", "label":"Streptomycin", "concept_id":"438"},
-                          {"concept_uuid":"a8aaf3e2-1350-11df-a1f1-0026b9348838", "label":"Other", "concept_id":"5622"},
-                          {"concept_uuid":"b8aa06ca-93c6-40ea-b144-c74f841926f4", "label":"Rifabutin", "concept_id":"6983"}
-                          ]
-                      },
-                      {"question":{
-                        "concept_uuid":"a8a07386-1350-11df-a1f1-0026b9348838", "label":"tabs/day", "type":"number", "concept_id":"1920"}
-                      },
-                      {"question":
-                        {"concept_uuid":"a8a063c8-1350-11df-a1f1-0026b9348838", "label":"mg", "type":"number", "concept_id":"1899"}
-                      },
-                      {"question":{
-                        "concept_uuid":"a8a0744e-1350-11df-a1f1-0026b9348838", "label":"mg/day", "type":"number", "concept_id":"1921"}
-                      },
-                      {"question":{
-                        "concept_uuid":"a8a0744e-1350-11df-a1f1-0026b9348838", "label":"tabs", "type":"number", "concept_id":"1898"}
-                      }
-                    ]
-                  }
-                }
-              ]
-          }
-        }
-      ]
-    },
-    "page4":{
-      "title":"xxxx"
-    },
-    "page5":{
-      "title":"Page 5",
-      "data":[
-        {
-        "section_title":"Problem List",
-        "type":"section",
-        "section_data":[
+"name": "test poc form",
+"uuid": "xxxx",
+"processor": "postEncounterForm",
+"pages": [
+  {
+    "label": "Page 1",
+    "sections": [
+      {
+        "label": "Encounter Details",
+        "questions": [
           {
-            "group":{
-              "group_uuid":"a89c2d8a-1350-11df-a1f1-0026b9348838",
-              "concept_id":"1284",
-              "render_type":"repeatSection",
-              "buttonLabel": "Problem",
-              "questions":[
-                {"question":{
-                  "concept_uuid":"a8ae835e-1350-11df-a1f1-0026b9348838",
-                  "label":"23.a Problem List (Added)",
-                  "concept_id":"6042",
-                  "type":"problem",
-                  "validators":{}
-                  }
-                }
-              ]
-            }
+            "label": "Visit Date",
+            "type": "encounterDate",
+            "required": "true"
           },
           {
-            "group":{
-              "group_uuid":"a89c2d8a-1350-11df-a1f1-0026b9348838",
-              "concept_id":"1284",
-              "render_type":"repeatSection",
-              "buttonLabel": "Problem Removed",
-              "questions":[
-                {"question":{
-                  "concept_uuid":"a8ae835e-1350-11df-a1f1-0026b9348838",
-                  "label":"23.b Problem List (Removed)",
-                  "concept_id":"6042","type":"problem",
-                  "validators":{}
-                  }
-                }
-              ]
-            }
+            "type": "encounterProvider",
+            "label": "Provider",
+            "required": "true"
+          },
+          {
+            "type": "encounterLocation",
+            "label": "Facility Name",
+            "required": "true"
+          }
+        ]
+      },
+      {
+        "label": "Visit Type",
+        "questions": [
+          {
+            "concept": "a89ff9a6-1350-11df-a1f1-0026b9348838",
+            "label": "7a. Visit Type",
+            "type": "select",
+            "validators": [],
+            "answers":[
+              {"concept": "a89b6440-1350-11df-a1f1-0026b9348838", "label": "Scheduled visit"},
+              {"concept": "a89ff816-1350-11df-a1f1-0026b9348838", "label": "Unscheduled Visit Early"},
+              {"concept": "a89ff8de-1350-11df-a1f1-0026b9348838", "label": "Unscheduled Visit Late"}
+            ]
+          },
+          {
+            "concept": "dc1942b2-5e50-4adc-949d-ad6c905f054e",
+            "type": "date",
+            "validators": [ {"type": "date", "allowFutureDates": "true"} ],
+            "label": "7b. If Unscheduled, actual scheduled date"
+          }
+        ]
+      },
+      {
+        "label": "Current Tuberculosis",
+        "questions": [
+          {
+            "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",
+            "type": "group",
+            "questions": [
+              {
+                "concept": "16db21cd-10cb-4c31-bb5a-b7619bfbea66",
+                "label": "c. Site of TB meds pick-up",
+                "type": "select",
+                "answers":[
+                  {"concept": "a89c2f42-1350-11df-a1f1-0026b9348838", "label": "This Ampath site"},
+                  {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other" }
+                ]
+              },
+              {
+                "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                "label": "Other Site (Specify)",
+                "type": "text"
+              }
+            ]
+          },
+          {
+            "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
+            "type": "group_repeating",
+            "label":"Current TB Regimen",
+            "questions": [
+              {
+                "concept": "a899e444-1350-11df-a1f1-0026b9348838",
+                "label": "d. Current TB Regimen",
+                "type": "select",
+                "validators": [],
+                "answers":[
+                  {"concept": "a899f51a-1350-11df-a1f1-0026b9348838", "label": "RHZE"},
+                  {"concept": "a897d1a4-1350-11df-a1f1-0026b9348838", "label": "RHZ"},
+                  {"concept": "a8a382ba-1350-11df-a1f1-0026b9348838", "label": "RHE"},
+                  {"concept": "a899e19c-1350-11df-a1f1-0026b9348838", "label": "EH"},
+                  {"concept": "a8971c64-1350-11df-a1f1-0026b9348838", "label": "Ethambutol"},
+                  {"concept": "a8a3243c-1350-11df-a1f1-0026b9348838", "label": "MDR drugs"},
+                  {"concept": "a896cc00-1350-11df-a1f1-0026b9348838", "label": "INH"},
+                  {"concept": "a8ac5f2a-1350-11df-a1f1-0026b9348838", "label": "Pyrazinamide"},
+                  {"concept": "a8952e4a-1350-11df-a1f1-0026b9348838", "label": "Streptomycin"},
+                  {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other"},
+                  {"concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4", "label": "Rifabutin"}
+                ]
+              },
+              {
+                "concept": "a8a07386-1350-11df-a1f1-0026b9348838", "label": "tabs/day", "type": "number"
+              },
+              {
+                "concept": "a8a063c8-1350-11df-a1f1-0026b9348838", "label": "mg", "type": "number"
+              },
+              {
+                "concept": "a8a0744e-1350-11df-a1f1-0026b9348838", "label": "mg/day", "type": "number"
+              },
+              {
+                "concept": "a8a0744e-1350-11df-a1f1-0026b9348838", "label": "tabs", "type": "number"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label":"Page 2",
+    "sections":[
+      {
+        "label":"Problem List",
+        "questions":[
+          {
+            "concept": "a89c2d8a-1350-11df-a1f1-0026b9348838",
+            "type": "group_repeating",
+            "label": "23a. Problem Added",
+            "questions":[
+              {
+                "concept": "a8ae835e-1350-11df-a1f1-0026b9348838",
+                "label": "Problem Added",
+                "type": "problem",
+                "validators": []
+              }
+            ]
+          },
+          {
+            "concept": "a89c2d8a-1350-11df-a1f1-0026b9348838",
+            "type": "group_repeating",
+            "label": "23b. Problem Resolved",
+            "questions":[
+              {
+                "concept": "a8af4aa0-1350-11df-a1f1-0026b9348838",
+                "label": "Problem Resolved",
+                "type": "problem",
+                "validators": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "Page 3",
+    "sections":[
+      {
+        "label":"22. Tests Results and Test Date (Please Record date sample was drawn, rather than date test was run)",
+        "questions":[
+          {
+            "type":"group",
+            "questions":[
+              {
+                "concept": "a896dea2-1350-11df-a1f1-0026b9348838",
+                "label": "WBC/mm3",
+                "type": "number",
+                "showDate":"true",
+                "validators": []
+              },
+              {
+                "concept": "a8908a16-1350-11df-a1f1-0026b9348838",
+                "label": "Hgb g/dL",
+                "type": "number",
+                "showDate":"true",
+                "validators": []
+              },
+              {
+                "concept": "a898201e-1350-11df-a1f1-0026b9348838",
+                "label": "MCV",
+                "type": "number",
+                "showDate":"true",
+                "validators": []
+              },
+              {
+                "concept": "a898b20e-1350-11df-a1f1-0026b9348838",
+                "label": "ALC/ mm3",
+                "type": "number",
+                "showDate":"true",
+                "validators": []
+              }
+            ]
           }
         ]
       }
     ]
   }
-  }
-  ]
-}
+]
 }

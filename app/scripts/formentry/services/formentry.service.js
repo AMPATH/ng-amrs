@@ -608,6 +608,24 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           return sections;
         }
 
+        /*
+        Simple private method to get all preloaded values for
+        for fields that have been deleted from the model
+        This method is important for editing an existing form
+        */
+        function findValuesToVoid(key, searchSpace)
+        {
+          var data=[];
+          _.each(searchSpace.templateOptions.fields[0].fieldGroup, function(field){
+            if(field.type === 'repeatSection' && key === field.key)
+            {
+              _.each(field.templateOptions.fields[0].fieldGroup, function(_field){
+                data.push(_field.data);
+              });
+            }
+          });
+          return data;
+        }
         function simpleFind(key, searchSpace)
         {
           var data = angular.copy(searchSpace);
@@ -653,7 +671,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         /*
         Method to update the payload for existing encounter
         */
-        function updateFormPayLoad(model, formly_schema)
+        function updateFormPayLoad(model, formly_schema, patient, form, uuid)
         {
           /*
           The objective of this method is to create a payload with only updated
@@ -789,6 +807,28 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       }
                       else if (typeof groupValues === 'object')
                       {
+                        /*
+                        Check if this blank field is an array and has any preloaded data.
+                        If field has some data then mark it as voided
+                        void.
+                        This may be important for repeating sections
+                        */
+                        if(angular.isArray(groupValues) && groupValues.length===0)
+                        {
+                          console.log('Track blank Array: ',groupValues);
+                          console.log('Group Key: ',key);
+                          var blanksToVoid = findValuesToVoid(key, section);
+                          console.log(blanksToVoid)
+                          if(blanksToVoid !== undefined)
+                          {
+                            _.each(blanksToVoid,function(_toVoid){
+                              _.each(_toVoid.uuid, function (uuid) {
+                                // body...
+                                obs.push({uuid:uuid, voided:true});
+                              });
+                            });
+                          }
+                        }
                         if(Object.keys(groupValues).length>0)
                         {
                           groupMembers = [];
@@ -836,7 +876,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                       traversed_objects.push(getFormattedValue(ArrayVal[arrKey]));
                                       if(obs_val !== getFormattedValue(ArrayVal[arrKey]))
                                       {
-                                          if(getFormattedValue(ArrayVal[arrKey]) ==='null' || getFormattedValue(ArrayVal[arrKey]) === null || getFormattedValue(ArrayVal[arrKey]) ==='')
+                                          if(getFormattedValue(ArrayVal[arrKey]) ==='null' && getFormattedValue(ArrayVal[arrKey]) === null && getFormattedValue(ArrayVal[arrKey]) ==='')
                                           {
                                             obs.push({uuid:init_data.uuid, voided:true});
                                           }
@@ -887,25 +927,17 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                   {
                                     if(getFormattedValue(groupValues[group_member])==='null' || getFormattedValue(groupValues[group_member]) === null || getFormattedValue(groupValues[group_member]) ==='')
                                     {
-                                      groupMembers.push({uuid:init_data.uuid, voided:true});
+                                      obs.push({uuid:init_data.uuid, voided:true});
                                     }
                                     else {
                                       obs.push({uuid:init_data.uuid, concept:group_member.split('_')[1],
                                                   value:getFormattedValue(groupValues[group_member])});
                                     }
-
-                                    //check if the value is dropped so that we can void it
-                                    //will require further review
-                                    // if(groupValues[group_member] === undefined)
-                                    // {
-                                    //   groupMembers.push({uuid:init_data.uuid, voided:true, concept:group_member.split('_')[1],
-                                    //               value:getFormattedValue(groupValues[group_member])});
-                                    // }
                                   }
                                 }
                                 else {
                                       //new val being added
-                                      if(!_.isEmpty(getFormattedValue(val[key])))
+                                      if(getFormattedValue(groupValues[group_member])!==null && getFormattedValue(groupValues[group_member])!=='null' && getFormattedValue(groupValues[group_member])!=='')
                                         groupMembers.push({concept:group_member.split('_')[1],
                                                     value:getFormattedValue(groupValues[group_member])});
                                 }
@@ -960,8 +992,23 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           }
                           else {
                             //new val being added
-                            if(!_.isEmpty(getFormattedValue(val[key])))
-                            obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                            if(typeof val[key] === 'object')
+                            {
+                              //console.log('Line 957',val[key])
+                              /*
+                              The assumption is that no Object will get to this
+                              point unless it is a date or blank object
+                              */
+                              if(Object.prototype.toString.call(val[key]) === '[object Date]')
+                                obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                              else
+                                console.log('Ingoring Empty Object',val[key]);
+
+                            }
+                            else {
+                              if(getFormattedValue(val[key]) !=='null' && getFormattedValue(val[key]) !==null && getFormattedValue(val[key]) !=='')
+                                obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                            }
                           }
                         }
                       }
@@ -991,8 +1038,21 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       }
                       else {
                         //new val being added
-                        if(!_.isEmpty(getFormattedValue(val[key])))
-                        obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                        if(typeof val[key] === 'object')
+                        {
+                          /*
+                          The assumption is that no Object will get to this
+                          point unless it is a date or blank object
+                          */
+                          if(Object.prototype.toString.call(val[key]) === '[object Date]')
+                            obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                          else
+                            console.log('Ingoring Empty Object',val[key]);
+                        }
+                        else {
+                          if(getFormattedValue(val[key])!==null && getFormattedValue(val[key])!=='null' && getFormattedValue(val[key])!=='')
+                          obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                        }
                       }
                     }
                   }
@@ -1002,6 +1062,17 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           });
 
           formPayLoad.obs = obs;
+          if(!_.isEmpty(obs))
+          {
+            console.log('Patient Selected', patient.uuid())
+            formPayLoad['patient'] = patient.uuid();
+            formPayLoad['encounterType'] = form.encounterType;
+            if(uuid !== undefined)
+            {
+              //encounter uuid for existing encounter
+              formPayLoad['uuid'] = uuid;
+            }
+          }
           return formPayLoad;
 
         }
@@ -1113,7 +1184,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           // console.log('Complex Object Key pairs');
                           // console.log('type of: ', typeof(val[key]), 'Keys: ', Object.keys(val[key]));
                           // console.log('Payload Value ', getFormattedValue(val[key]))
-                          if(!_.isEmpty(getFormattedValue(val[key])))
+                          if(getFormattedValue(val[key])!==null||  getFormattedValue(val[key])!=='null' || getFormattedValue(val[key])!=='')
                           obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
                         }
                       }
