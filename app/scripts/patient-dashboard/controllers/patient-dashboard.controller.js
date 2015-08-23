@@ -30,7 +30,6 @@
     //
     // }, 1000);
 
-
     // $rootScope.encounters = $scope.encounters; //trying to this available throughout the app
     // $rootScope.patient = $scope.patient; //trying to this available throughout the app
 

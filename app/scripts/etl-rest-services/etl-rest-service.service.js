@@ -12,7 +12,10 @@
     var serviceDefinition;
     serviceDefinition = {
       getResource: getResource,
-      getHivSummary: getHivSummary
+      getHivSummary: getHivSummary,
+      getVitals: getVitals,
+      getPatientTests: getPatientTests,
+      getAppointmentSchedule: getAppointmentSchedule
     };
     return serviceDefinition;
 
@@ -24,23 +27,92 @@
 
     function getHivSummary(patientUuid, startIndex, limit, successCallback, failedCallback) {
       var resource = getResource('patient/:uuid/hiv-summary');
-      if(!startIndex) {
+      if (!startIndex) {
         startIndex = 0;
       }
 
-      if(!limit) {
+      if (!limit) {
         limit = 20;
       }
 
-      var params = {startIndex: startIndex, uuid: patientUuid, limit: limit};
+      var params = { startIndex: startIndex, uuid: patientUuid, limit: limit };
       return resource.get(params).$promise
         .then(function (response) {
-        successCallback(response);
-      })
+          successCallback(response);
+        })
         .catch(function (error) {
-        failedCallback('Error processing request', error);
-        console.error(error);
-      });
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
     }
+
+    function getVitals(patientUuid, startIndex, limit, successCallback, failedCallback) {
+      var resource = getResource('patient/:uuid/vitals');
+      if (!startIndex) {
+        startIndex = 0;
+      }
+
+      if (!limit) {
+        limit = 20;
+      }
+
+      var params = { startIndex: startIndex, uuid: patientUuid, limit: limit };
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+    }
+
+    function getPatientTests(patientUuid, startIndex, limit, successCallback, failedCallback) {
+      var resource = getResource('patient/:uuid/data');
+      if (!startIndex) {
+        startIndex = 0;
+      }
+
+      if (!limit) {
+        limit = 20;
+      }
+
+      var params = { startIndex: startIndex, uuid: patientUuid, limit: limit };
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+    }
+
+    function getAppointmentSchedule(locationUuid, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
+      var resource = getResource('location/:uuid/appointment-schedule');
+      
+      var params = { endDate: endDate, startDate: startDate, uuid: locationUuid };
+      
+      if(startIndex !== undefined)
+        params['startIndex'] = startIndex;
+        
+      if(limit !== undefined)
+        params['limit'] = limit;
+        
+        console.log(params);
+        console.log(startIndex);
+          
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+
+    }
+
+
   }
 })();

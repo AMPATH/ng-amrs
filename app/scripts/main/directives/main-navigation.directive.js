@@ -34,6 +34,8 @@
         var authenticationService = OpenmrsRestService.getAuthService();
 
         $scope.showNavigationBar = false;
+        
+        $scope.isCollapsed = true;
 
         $scope.isUserLoggedIn = false;
 

@@ -2,48 +2,54 @@
   <nav class="navbar navbar-default navbar-fixed-top navbar-inverted" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
-
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+        <button type="button" class="navbar-toggle collapsed" ng-click="isCollapsed = !isCollapsed">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-
         <a class="navbar-brand" href="#/" rel="home" title="point of care">
-          <img style="max-width:100px; margin-top: -10px; padding-bottom: 2px;"
-               src="images/logo.png" alt="P.O.C">
+          <!--<img style="max-width:100px; margin-top: -10px; padding-bottom: 2px;"
+               src="images/ampathLogo.png" alt="P.O.C">-->
+               <img src="images/Logo-large.png" style="max-height:40px; margin-top: -10px;" alt="P.O.C">
         </a>
       </div>
-
-      <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-        <ul class="nav navbar-nav">
-          <li ui-sref-active="active" ui-sref="home"><a href="#/">Home</a></li>
-          <li ui-sref-active="active" ui-sref="patientsearch"><a href="#/patientsearch">Patient Search</a></li>
-          <li ui-sref-active="active" ui-sref="reports"><a href="#/about">Reports</a></li>
-          <li ui-sref-active="active" ui-sref="admin"><a href="#/Admin">Admin</a></li>
-
-
+      <div class="navbar-collapse" ng-class="{collapse: isCollapsed}">
+        <ul class="nav navbar-nav"  style="cursor: pointer;">
+          <!--<li ui-sref-active="active" ui-sref="home"><a href="#/"><span class="text-primary"><b style="font-size:20px;"> P.O.C  </b><small>v0.1.0</small></span></a></li>-->
+          <li ui-sref-active="active" ui-sref="patientsearch" ng-click="isCollapsed = true">
+            <a href="#/patientsearch"><span class="glyphicon glyphicon-search "  aria-hidden="true"></span><span >&nbsp;Patient Search</span></a>
+          </li>
+          <li ui-sref-active="active" ui-sref="clinical-dashboard" ng-click="isCollapsed = true">
+            <a href="#/clinical-dashboard/test"><span><span class="icon-i-care-staff-area" aria-hidden="true"></span>&nbsp;Clinical Dashboard</span></a>
+          </li>
         </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-
-          <li ng-hide="isUserLoggedIn" ui-sref-active="active"><a ui-sref="login" ng-href="#/dashboard">Sign In</a></li>
-          <li ui-sref-active="active" class="dropdown" ng-show="isUserLoggedIn">
-            <a data-toggle="dropdown" class="dropdown-toggle" >
-              {{username}} <span class="glyphicon glyphicon-user"></span></a>
+        <ul  style="cursor: pointer;" class="nav navbar-nav navbar-right">
+          <li ui-sref-active="active" ui-sref="admin" ng-click="isCollapsed = true">
+            <a href="#/Admin">
+            <b><span class="glyphicon glyphicon-cog"></span></b>
+            <span style="font-size:9px;">P.O.C v0.1.0</span>
+          </a>
+          </li>
+          <li ng-hide="isUserLoggedIn" ui-sref-active="active" ng-click="isCollapsed = true">
+            <a ui-sref="login" ng-href="#/dashboard">Sign In</a>
+          </li>
+          <li ui-sref-active="active" class="dropdown" ng-show="isUserLoggedIn" ng-class="{ open : dd1 }" ng-init="dd1 = false" ng-click="dd1 = !dd1">
+            <a data-toggle="dropdown" class="dropdown-toggle">
+              <span class="glyphicon glyphicon-user"></span> {{username}} 
+               </a>
             <ul role="menu" class="dropdown-menu">
-              <li >
-                 <a><span>  Location: {{location}} <br/>  Role: {{role}}</span></a>
+              <li>
+                <a><span>  Location: {{location}} <br/>  Role: {{role}}</span></a>
               </li>
               <li class="divider"></li>
-              <li  ui-sref-active="active">
+              <li ui-sref-active="active" ng-click="isCollapsed = true">
                 <a ui-sref="login" ng-href="#/dashboard">
                   <span class="glyphicon glyphicon-log-out"></span> Logout
+                  
                 </a>
               </li>
-           </ul>
+            </ul>
           </li>
         </ul>
       </div>

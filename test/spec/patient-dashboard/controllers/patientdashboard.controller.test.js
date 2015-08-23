@@ -43,7 +43,7 @@ jshint -W098, -W117, -W030
 
     it('patient Object should be created successfully in the Scope', function() {
       //debugger;
-      console.log(scope);
+      //console.log(scope);
       expect(scope).to.have.property('patient');
     });
 

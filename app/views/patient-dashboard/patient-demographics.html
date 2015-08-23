@@ -1,15 +1,9 @@
-<div ng-if="personAttributes[0]">
-   <h4><b>Person Attributes</b></h4>
-     <div ng-repeat="attribute in personAttributes">
-            <small>{{ attribute.name }}:{{ attribute.value }}</small>
-      </div>
-  </div>
-
-  <div ng-if="patient.address().noAddress!='None'">
-    <h5><b>Person Address</b></h5>
-       <div ng-repeat="(key,value) in patient.address()">
-         <div ng-if="value">
-                  <small>{{key}} :  {{value}}</small>
-          <div>
-       </div>
-    </div>
+<ul class="list-group">
+    <li class="list-group-item" style="font-size:large" ng-if="patient.fullNames()">Name: {{patient.fullNames()}}</li>
+    <li class="list-group-item" style="font-size:large" ng-if="patient.healthCenter()">Health Center: {{patient.healthCenter()}}</li>
+    <li class="list-group-item" style="font-size:large" ng-if="patient.isTestorFakePatient()">Test Patient</li>
+    <li class="list-group-item markDeceased" style="font-size:large" ng-if="patient.deathDate()">Death Date: {{patient.deathDate()}}</li>
+    <li class="list-group-item" style="font-size:large" ng-if="patient.phoneNumber()">Phone Number: {{patient.phoneNumber()}}</li>
+    <li ng-if="patient.address().noAddress!='None'" ng-repeat="(key,value) in patient.address()"
+    ng-if="value" class="list-group-item" style="font-size:large">{{key}} : {{value}}</li>
+</ul>
