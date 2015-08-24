@@ -31,7 +31,7 @@
       it('should make an api call to the obs resource when getObsByUuid is called with a uuid', function () {
         httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'obs?v='+v).respond(mockData.getMockObs());
         obsService.getObsByUuid('passed-uuid', function (data){
-          expect(data.uuid).to.equal('passed-uuid')
+          expect(data.uuid).to.equal('passed-uuid');
          });
         httpBackend.flush();
       });
