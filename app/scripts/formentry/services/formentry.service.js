@@ -1257,7 +1257,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           {
             var opts= [];
             //Adding unselect option
-            opts.push({name:'', value:'null'});
+            if (obs_field.type !== 'multiCheckbox')
+              opts.push({name:'', value:'null'});
             //get the radio/select options/multicheckbox
             //console.log(obs_Field);
             _.each(obs_field.answers, function (answer) {

@@ -19,6 +19,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
         $scope.vm.submitLabel = 'Save'
         var formSchema;
         $scope.vm.formlyFields;
+        $scope.vm.tabs = [];
         //$scope.vm.encounters = $rootScope.encounters;
 
         /*
