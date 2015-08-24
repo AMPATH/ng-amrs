@@ -9,27 +9,25 @@
     </div>
     <div>{{vm.error}}</div>
 
-    <formly-form fields="vm.userFields">
-      <button type="submit" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
-      <button type="submit" class="btn btn-default" ng-click="vm.submit(vm.user)">Submit</button>
-       <!--
-       <div>
-        <h2>form data </h2>
-        {{vm.userFields}}
-      </div>
+    <tabset>
+      <tab ng-repeat="tab in vm.tabs"
+           heading="{{tab.title}}"
+           active="tab.active"
+           disable="tab.disabled">
+        <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options">
+        </formly-form>
+      </tab>
 
-      <div>
-
-        <h2>Fields</h2>
-        <div ng-repeat="model in vm.userFields">
-          {{model.model}}
-        </div>
-
-        </div>
--->
-    </formly-form>
-
+      <tab heading="Submit">
+        <button type="submit" class="btn btn-primary submit-button" ng-click="vm.submit()">{{vm.submitLabel}}</button>
+        <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
+      </tab>
+    </tabset>
   </form>
+  <!-- <hr />
+  <h2>Model Value</h2>
+  <pre>{{vm.model | json}}</pre> -->
+
   <!-- Put custom templates here -->
       <script type="text/ng-template" id="my-messages.html">
         <formly-transclude></formly-transclude>
@@ -73,4 +71,24 @@
 
             </div>
             </script>
+
+            <!-- Oage sections template -->
+            <script type="text/ng-template" id="section.html">
+            <div class="panel panel-default">
+            <div class="panel-heading">
+            {{to.label}}
+            </div>
+            <div class="panel-body">
+            <!--loop through each element in model array-->
+                <div class="section" ng-repeat="element in to.fields" ng-init="fields = copyFields(to.fields)">
+                  <formly-form fields="fields"
+                               model="model[options.key]"
+                               bind-name="'formly_ng_repeat' + index + $parent.$index">
+                  </formly-form>
+               </div>
+
+            </div>
+            </script>
+
+
 </div>

@@ -24,6 +24,7 @@
       'app.authentication',
       'app.patientsearch',
       'app.patientdashboard',
+      'app.clinicDashboard',
       'app.formentry'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
@@ -55,7 +56,8 @@
         })
         .state('clinical-dashboard', {
           url: '/clinical-dashboard/:locationuuid',
-          templateUrl: 'views/clinical-dashboard/clinical-dashboard.html',
+          templateUrl: 'views/clinic-dashboard/clinic-dashboard.html',
+          controller: 'ClinicDashboardCtrl',
           data: { requireLogin: true }
         })
         .state('encounter', {
@@ -69,6 +71,12 @@
           templateUrl: 'views/formentry/formentry.html',
           controller: 'FormentryCtrl',
           data: { requireLogin: true }
+        })
+        .state('tabs', {
+        url: '/form/tabs',
+        templateUrl: 'views/formentry/tab.html',
+        controller: 'tabCtrl',
+        data: { requireLogin: true}
         })
         .state('login', {
           url: '/login',
