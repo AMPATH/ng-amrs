@@ -1,0 +1,2027 @@
+{
+  "name": "AMPATH PMTCT Antenatal Care Encounter Form v0.08",
+  "uuid": "xxxx",
+  "processor": "postEncounterForm",
+  "pages": [
+    {
+      "label": "Page 1",
+      "sections": [
+        {
+          "label": "Encounter Details",
+          "questions": [
+            {
+              "label": "Visit Date",
+              "type": "encounterDate",
+              "required": "true"
+            },
+            {
+              "type": "encounterProvider",
+              "label": "Provider",
+              "required": "true"
+            },
+            {
+              "type": "encounterLocation",
+              "label": "Facility Name",
+              "required": "true"
+            },
+            {
+              "concept": "a8b02524-1350-11df-a1f1-0026b9348838",
+              "label": "4. Patient covered by NHIF:",
+              "type": "select",
+              "answers": [
+                {
+                  "concept": "8b715fed-97f6-4e38-8f6a-c167a42f8923",
+                  "label": "Yes"
+                },
+                {
+                  "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                  "label": "No"
+                }
+              ],
+              "validators": {}
+            },
+            {
+              "concept": "0f8b7f4e-1656-46b7-bc93-d1fe4f193f5d",
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label": "6. Transfer in from other clinic (specify):",
+                  "type": "text",
+                  "validators": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Page 2",
+      "sections": [
+        {
+          "label": "Patient Demographics",
+          "questions": [
+            {
+              "concept": "0f8b7f4e-1656-46b7-bc93-d1fe4f193f5d",
+              "type": "group",
+              "questions":[
+                {
+                  "concept":"35ed8aad-d6fa-429e-961a-c877e1ad4953",
+                  "label":"2. Transfer in care from other centre",
+                  "answers":[
+                    {"concept": "a89c2f42-1350-11df-a1f1-0026b9348838", "label": "AMPATH"},
+                    {"concept": "a89c301e-1350-11df-a1f1-0026b9348838", "label": " NON-AMPATH"}
+                  ],
+                  "type":"select",
+                  "validators":"null"
+                }
+              ]
+            },
+            {
+              "concept":"a8af49d8-1350-11df-a1f1-0026b9348838",
+              "label":"3.a.Discordant couples?",
+              "answers":[
+                {"concept": "a899b35c-1350-11df-a1f1-0026b9348838", "label": "Yes"},
+                {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"},
+                {"concept": "a899b50a-1350-11df-a1f1-0026b9348838", "label": "Unknown"}
+              ],
+              "type":"select",
+              "validators":"[:]"
+            },
+            {
+              "concept":"a899a9f2-1350-11df-a1f1-0026b9348838",
+              "label":"3.b.Marital status",
+              "answers":[
+                {"concept": "a899af10-1350-11df-a1f1-0026b9348838", "label": "Cohabiting"},
+                {"concept": "a899af10-1350-11df-a1f1-0026b9348838", "label": "Divorced"},
+                {"concept": "a8aa76b0-1350-11df-a1f1-0026b9348838", "label": "Married monogamous"},
+                {"concept": "a8b03712-1350-11df-a1f1-0026b9348838", "label": "Married polygamous"},
+                {"concept": "a899aba0-1350-11df-a1f1-0026b9348838", "label": "Separated"},
+                {"concept": "a899ac7c-1350-11df-a1f1-0026b9348838", "label": "Single"},
+                {"concept": "a899ae34-1350-11df-a1f1-0026b9348838", "label": "Widowed"}
+              ],
+              "type":"select",
+              "validators":"[:]"
+            },
+            {
+              "concept":"a89ac184-1350-11df-a1f1-0026b9348838",
+              "label":"5.Does the patient have any interval complaints?:",
+              "answers":[
+                {"concept": "a899b35c-1350-11df-a1f1-0026b9348838", "label": "Yes"},
+                {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },
+            {
+              "concept":"a8afcafc-1350-11df-a1f1-0026b9348838",
+              "label":"6.Since last visit have you had any of the following?(Tick all that apply)",
+              "answers":[
+                {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "None"},
+                {"concept": "a8ad1276-1350-11df-a1f1-0026b9348838", "label": "Breathlessness"},
+                {"concept": "a892e4b4-1350-11df-a1f1-0026b9348838", "label": "Chest pain"},
+                {"concept": "a8afc8b8-1350-11df-a1f1-0026b9348838", "label": "Cough = 2 weeks"},
+                {"concept": "d7adae14-c386-49cc-8f7c-765d8ceec566", "label": "Fever for = 2 weeks"},
+                {"concept": "3f57aafc-7162-41da-a51b-6a804cb6f5e8", "label": "New exposure to household contact with TB"},
+                {"concept": "a89807f0-1350-11df-a1f1-0026b9348838", "label": "Noticeable Weight loss"},
+                {"concept": "e1862fef-68ed-4df4-90dd-a00152f719aa", "label": "Night sweats = 2 weeks"},
+                {"concept": "a8ad462e-1350-11df-a1f1-0026b9348838", "label": "Abdomen"},
+                {"concept": "f218c60e-4b54-475a-a4fa-facab9216da8", "label": "Groin"},
+                {"concept": "a8a774b0-1350-11df-a1f1-0026b9348838", "label": "Joints"},
+                {"concept": "4639388c-ee31-4dcf-abb4-ad71253493bb", "label": "Neck"}
+              ],
+              "type":"multiCheckbox",
+              "validators":"[:]"
+            },
+            {
+              "concept": "a8a003a6-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions":[
+                {
+                  "concept":"a898c56e-1350-11df-a1f1-0026b9348838",
+                  "label":"7a. Has patient been Hospitalized since last visit:",
+                  "answers":[
+                    {"concept": "a899b35c-1350-11df-a1f1-0026b9348838", "label": "Yes"},
+                    {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
+                  ],
+                  "type":"select",
+                  "validators":"[:]"
+                },
+                {
+                  "type": "group_repeating",
+                  "label": "7b. Diagnosis:",
+                  "questions": [
+                    {
+                      "concept": "a8a07a48-1350-11df-a1f1-0026b9348838",
+                      "label": "Diagnosis",
+                      "type": "problem",
+                      "validators": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Delivery(FILL OUT ONLY ON FIRST POSTNATAL VISIT)",
+          "questions": [
+            {
+              "concept": "a89a94ca-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions":[
+                {
+                  "concept":"a8aae050-1350-11df-a1f1-0026b9348838",
+                  "label":"8a. Date of delivery",
+                  "type":"text",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a8a492d6-1350-11df-a1f1-0026b9348838",
+                  "label":"8g.Location of delivery",
+                  "type":"text",
+                  "validators":"null"
+                },
+                {
+                  "concept":"a89fff0a-1350-11df-a1f1-0026b9348838",
+                  "label":"LAST PREGNANCY OUTCOME LL",
+                  "answers":[
+                    {"concept": "a890a1b8-1350-11df-a1f1-0026b9348838", "label": "Abortion(Loss prior to 28weeks)"},
+                    {"concept": "e8074110-b989-45e3-b89c-d6092d1a2fd7", "label": "Preterm(28-36weeks)"},
+                    {"concept": "bdde6796-fc68-4a84-b569-56cbeb7e5101", "label": "Term(>37weeks)"}
+                  ],
+                  "type":"select",
+                  "validators":"null"
+                },
+                {
+                  "concept":"f37148bb-4e1a-41e9-82d0-040370bf2259",
+                  "label":"8b.Was the infant born alive?",
+                  "answers":[
+                    {"concept": "a899b35c-1350-11df-a1f1-0026b9348838", "label": "Yes"},
+                    {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
+                  ],
+                  "type":"select",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"98d9d2d6-6af3-4f48-8e63-81964035f490",
+                  "label":"8e.Lacerations/Episiotomy",
+                  "answers":[
+                    {"concept": "a899b35c-1350-11df-a1f1-0026b9348838", "label": "Yes"},
+                    {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
+                  ],
+                  "type":"select",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"207a9412-7fd0-4c1b-81e5-3b82b55fc46f",
+                  "label":"8h.Who helped to deliver the baby?",
+                  "answers":[
+                    {"concept": "a898c6f4-1350-11df-a1f1-0026b9348838", "label": "No one/Self"},
+                    {"concept": "a8b02f92-1350-11df-a1f1-0026b9348838", "label": "Nurse/Midwife"},
+                    {"concept": "a89cd352-1350-11df-a1f1-0026b9348838", "label": "Neighbor"},
+                    {"concept": "a89d1c68-1350-11df-a1f1-0026b9348838", "label": "Doctor"},
+                    {"concept": "a89f0280-1350-11df-a1f1-0026b9348838", "label": "Relative"},
+                    {"concept": "a8aaf07c-1350-11df-a1f1-0026b9348838", "label": "Friend"},
+                    {"concept": "a8b02ed4-1350-11df-a1f1-0026b9348838", "label": "Traditional Birth Attendants"}
+                  ],
+                  "type":"select",
+                  "validators":"null"
+                },
+                {
+                  "concept":"06634c7b-2007-4b7b-b374-c4facc9167db",
+                  "label":"8c.Is the infant still alive?",
+                  "answers":[
+                    {"concept": "a899b35c-1350-11df-a1f1-0026b9348838", "label": "Yes"},
+                    {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
+                  ],
+                  "type":"select",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a8aace62-1350-11df-a1f1-0026b9348838",
+                  "label":"8f.Duration of Ruptured membranes >4hrs",
+                  "answers":[
+                    {"concept": "a899b35c-1350-11df-a1f1-0026b9348838", "label": "Yes"},
+                    {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
+                  ],
+                  "type":"select",
+                  "validators":"[:]"
+                }
+              ]
+            }
+
+          ]
+        },
+        {
+          "label": "Maternal Review of symptoms(FILL ONLY ON FIRST POSTNATAL VISIT)(Tick all that apply)",
+          "questions": [
+            {
+              "concept":"a8b00562-1350-11df-a1f1-0026b9348838",
+              "label":"9:Maternal Review of symptoms(FILL ONLY ON FIRST POSTNATAL VISIT)(Tick all that apply)",
+              "answers":[
+                {"concept": "c7356bfe-e9a8-422b-9a6a-6e42490d308e", "label": "Breast Pain"},
+                {"concept": "a8935fde-1350-11df-a1f1-0026b9348838", "label": "Depression"},
+                {"concept": "a8ad0038-1350-11df-a1f1-0026b9348838", "label": "Fever"},
+                {"concept": "a8a49a74-1350-11df-a1f1-0026b9348838", "label": "Foul Lochia"},
+                {"concept": "41b217e2-9d41-4c2c-a4e5-a7be2fefa0e7", "label": "Incision pain/Discharge"},
+                {"concept": "d4abb20f-fde4-453b-b7e8-ac35debe83c2", "label": "Pelvic Pain"},
+                {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other(Specify):"}
+              ],
+              "type":"multiCheckbox",
+              "validators":"[:]"
+            },
+            {
+              "concept":"a8a0b42c-1350-11df-a1f1-0026b9348838",
+              "label":"10.Baby enrolled in Peds HIV Clinic?:",
+              "answers":[
+                {"concept": "a899b35c-1350-11df-a1f1-0026b9348838", "label": "Yes"},
+                {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
+              ],
+              "type":"select",
+              "validators":"null"
+            }
+          ]
+        },
+        {
+          "label": "Infant Feeding(Tick all that apply)",
+          "questions": [
+            {
+              "concept":"a89abee6-1350-11df-a1f1-0026b9348838",
+              "label":"11. Infant Feeding(Tick all that apply)",
+              "answers":[
+                {"concept": "39213beb-4d3d-493a-ad5d-40db847a07c3", "label": "11a.Complimentary Feeding"},
+                {"concept": "a89abfc2-1350-11df-a1f1-0026b9348838", "label": "Completed Weaning"},
+                {"concept": "a8a8d9b8-1350-11df-a1f1-0026b9348838", "label": "Exclusive Breastfeeding"},
+                {"concept": "a8a70156-1350-11df-a1f1-0026b9348838", "label": "Formula Feeding"},
+                {"concept": "a8ae86e2-1350-11df-a1f1-0026b9348838", "label": "Mixed Feeding (Infant 6months old)(Provide Additional Lactational Counselling)"}
+              ],
+              "type":"multiCheckbox",
+              "validators":"null"
+            },
+            {
+              "concept":"97236fff-6cfd-4c38-a65f-84e14449ee19",
+              "label":"11b.Duration in Months",
+              "type":"number",
+              "validators":"[:]"
+            },
+            {
+              "concept":"97236fff-6cfd-4c38-a65f-84e14449ee19",
+              "label":"problems XXX Same concept as Months????",
+              "type":"number",
+              "validators":"[:]"
+            }
+          ]
+        },
+        {
+          "label": "Infant PMTCT Outcome",
+          "questions": [
+            {
+              "concept":"7635b689-452b-4d57-9b9f-b351280b0cb7",
+              "label":"Infant PMTCT Outcome",
+              "answers":[
+                {"concept": "edf7b24f-79dd-4dd4-a9b7-0381d9c30b57", "label": "Alive and not yet tested for HIV"},
+                {"concept": "26697891-5551-4c02-9d02-db23153f0bae", "label": "Alive and tested HIV Positive on DNA PCR"},
+                {"concept": "25a86172-0274-4c36-94bf-0dcad8da283c", "label": "Alive and tested HIV Negative on DNA PCR"},
+                {"concept": "2fb708d7-597c-496a-9217-bf16fdf5cdbf", "label": "Alive and tested Negative on ELISA antibody test"},
+                {"concept": "a8af50f4-1350-11df-a1f1-0026b9348838", "label": "Dicontinued"},
+                {"concept": "a89e39f4-1350-11df-a1f1-0026b9348838", "label": "Died"},
+                {"concept": "a8a6f56c-1350-11df-a1f1-0026b9348838", "label": "Defaulted"},
+                {"concept": "20ca1a1c-6699-48a2-9bfd-26abd0417151", "label": "HIV DNA PCR Test result pending"},
+                {"concept": "a89e3ad0-1350-11df-a1f1-0026b9348838", "label": "Transferred Out"}
+              ],
+              "type":"select",
+              "validators":"null"
+            }
+          ]
+        },
+        {
+          "label": "Current Medications",
+          "questions": [
+            {
+              "concept":"a89ae254-1350-11df-a1f1-0026b9348838",
+              "label":"13a. ARVS:",
+              "answers":[
+                {"concept": "a899b35c-1350-11df-a1f1-0026b9348838", "label": "Yes"},
+                {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
+              ],
+              "type":"select",
+              "validators":"[:]"
+            },
+            {
+              "concept":"a8a0b54e-1350-11df-a1f1-0026b9348838",
+              "label":"13b. Has this patient ever changed drug for any reason",
+              "answers":[
+                {"concept": "a899b35c-1350-11df-a1f1-0026b9348838", "label": "Yes"},
+                {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
+              ],
+              "type":"select",
+              "validators":"[:]"
+            },
+            {
+              "concept":"a89d200a-1350-11df-a1f1-0026b9348838",
+              "label":"13c. If started since last visit record the date",
+              "type": "datepicker",
+              "validators": [
+                {
+                  "type": "date",
+                  "allowFutureDates": "true"
+                }
+              ]
+            }
+            },
+            {
+              "concept":"04616f5d-b961-4f41-bbd7-bcc0dd235577",
+              "label":"13d. Treatment Categories",
+              "answers":[
+                {"concept": "034047bd-3fa1-4b2a-b0f0-2787e9b9f7b3", "label": "First Regimen"},
+                {"concept": "8f8a715d-e49a-4b2c-aa3a-83fa9d7a4254", "label": "Second Regimen"},
+                {"concept": "a90ebdd2-351f-485a-b850-4938fcca2729", "label": "Third regimen"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },
+            {
+              "concept": "a8a08344-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions":[
+                {
+                  "concept":"a899cf5e-1350-11df-a1f1-0026b9348838",
+                  "label":"13e. Medication:",
+                  "answers":[
+                    {"concept": "6a73f32d-1870-4527-af6e-74443251ded2", "label": "NVP200/ZDV300/3TC150"},
+                    {"concept": "1c4a75d0-cc91-4752-b0a5-4b833326ff7a", "label": "TDF300mg/3TC300mg/EFV600mg"},
+                    {"concept": "a89cc876-1350-11df-a1f1-0026b9348838", "label": "3TC300mg/TDF300mg"},
+                    {"concept": "3d587177-984e-4eeb-93f2-3223b6c1dd7c", "label": "3TC150mg/D4T30mg"},
+                    {"concept": "a896758e-1350-11df-a1f1-0026b9348838", "label": "3TC150mg/ZDV300mg"},
+                    {"concept": "a897e608-1350-11df-a1f1-0026b9348838", "label": "NVP200/D4T30/3TC150"},
+                    {"concept": "a8afcf84-1350-11df-a1f1-0026b9348838", "label": "Emtri200mg/TDF300(Truvada)"},
+                    {"concept": "a897e7c0-1350-11df-a1f1-0026b9348838", "label": "Aluvia(Kaletra)200mg/LPV50mg"},
+                    {"concept": "a8afc066-1350-11df-a1f1-0026b9348838", "label": "Atazanavir300/Ritonavir100"},
+                    {"concept": "a897f8a0-1350-11df-a1f1-0026b9348838", "label": "Abacavir300mg"},
+                    {"concept": "a89677e6-1350-11df-a1f1-0026b9348838", "label": "Efavirenz600mg"},
+                    {"concept": "a89673f4-1350-11df-a1f1-0026b9348838", "label": "Lamivudine150mg"},
+                    {"concept": "a8967656-1350-11df-a1f1-0026b9348838", "label": "Nevirapine200mg"},
+                    {"concept": "a8afbd64-1350-11df-a1f1-0026b9348838", "label": "Raltegravir"},
+                    {"concept": "a897ea4a-1350-11df-a1f1-0026b9348838", "label": "Zidovudine300mg"},
+                    {"concept": "a8a87a86-1350-11df-a1f1-0026b9348838", "label": "Other"}
+                  ],
+                  "type":"multiCheckbox",
+                  "validators":"[:]"
+                }
+              ]
+            },
+            {
+              "concept":"fd3ee44d-4c4c-497f-a869-ef145cde01df",
+              "label":"13f. Postnatal Medication:",
+              "answers":[
+                {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "None"},
+                {"concept": "7904214f-a3a5-4017-98c8-52af36f44d7b", "label": "Antenatal Vitamins"},
+                {"concept": "a8939418-1350-11df-a1f1-0026b9348838", "label": "Folic Acid"},
+                {"concept": "a8a48ef8-1350-11df-a1f1-0026b9348838", "label": "Iron"}
+              ],
+              "type":"multiCheckbox",
+              "validators":"[:]"
+            },
+            {
+              "concept":"a899e282-1350-11df-a1f1-0026b9348838",
+              "label":"13g. PCP Prophylaxis:",
+              "answers":[
+                {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "None"},
+                {"concept": "a8989396-1350-11df-a1f1-0026b9348838", "label": "Septrin"},
+                {"concept": "a890c9e0-1350-11df-a1f1-0026b9348838", "label": "Dapsone 100mg"}
+              ],
+              "type":"select",
+              "validators":"[:]"
+            },
+            {
+              "concept":"a899e35e-1350-11df-a1f1-0026b9348838",
+              "label":"13h. TB Prophylaxis:",
+              "answers":[
+                {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "None"},
+                {"concept": "a896cc00-1350-11df-a1f1-0026b9348838", "label": "Isoniazid 300mg"}
+              ],
+              "type":"select",
+              "validators":"[:]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Page 3",
+      "sections": [
+        {
+          "label": "TB Treatment:",
+          "questions": [
+            {
+              "concept": "a899e444-1350-11df-a1f1-0026b9348838",
+              "label": "13i.TB treatment:",
+              "answers": [
+                {
+                  "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                  "label": "None"
+                },
+                {
+                  "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                  "label": "On treatment"
+                }
+              ],
+              "type": "select",
+              "validators": "null"
+            },
+            {
+              "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
+              "label": "Start Date of TB treatment",
+              "type": "text",
+              "validators": "null"
+            },
+            {
+              "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "16db21cd-10cb-4c31-bb5a-b7619bfbea66",
+                  "label": "13j. Site of TB meds pick-up:",
+                  "answers": [
+                    {
+                      "concept": "a89c2f42-1350-11df-a1f1-0026b9348838",
+                      "label": "This Ampath site"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    }
+                  ],
+                  "type": "select",
+                  "validators": []
+                },
+                {
+                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label": "Other Specify:",
+                  "type": "text",
+                  "validators": "null"
+                }
+              ]
+            },
+            {
+              "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
+              "type": "group_repeating",
+              "label": "TB Drugs",
+              "questions": [
+                {
+                  "concept": "a899e444-1350-11df-a1f1-0026b9348838",
+                  "label": "13k",
+                  "type": "select",
+                  "validators": [],
+                  "answers": [
+                    {
+                      "concept": "a899f51a-1350-11df-a1f1-0026b9348838",
+                      "label": "RHZE"
+                    },
+                    {
+                      "concept": "a897d1a4-1350-11df-a1f1-0026b9348838",
+                      "label": "RHZ"
+                    },
+                    {
+                      "concept": "a8a382ba-1350-11df-a1f1-0026b9348838",
+                      "label": "RHE"
+                    },
+                    {
+                      "concept": "a899e19c-1350-11df-a1f1-0026b9348838",
+                      "label": "EH"
+                    },
+                    {
+                      "concept": "a8971c64-1350-11df-a1f1-0026b9348838",
+                      "label": "Ethambutol"
+                    },
+                    {
+                      "concept": "a896cc00-1350-11df-a1f1-0026b9348838",
+                      "label": "INH"
+                    },
+                    {
+                      "concept": "a8a3243c-1350-11df-a1f1-0026b9348838",
+                      "label": "MDR drugs"
+                    },
+                    {
+                      "concept": "a8ac5f2a-1350-11df-a1f1-0026b9348838",
+                      "label": "Pyrazinamide"
+                    },
+                    {
+                      "concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4",
+                      "label": "Rifabutin"
+                    },
+                    {
+                      "concept": "a897d0be-1350-11df-a1f1-0026b9348838",
+                      "label": "Rifampicin XXXXXX"
+                    },
+                    {
+                      "concept": "a8952e4a-1350-11df-a1f1-0026b9348838",
+                      "label": "Streptomycin"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    },
+                    {
+                      "concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4",
+                      "label": "Rifabutin"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
+                  "label": "tabs/day",
+                  "type": "number"
+                },
+                {
+                  "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
+                  "label": "mg",
+                  "type": "number"
+                },
+                {
+                  "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
+                  "label": "mg/day",
+                  "type": "number"
+                },
+                {
+                  "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
+                  "label": "tabs",
+                  "type": "number"
+                }
+              ]
+            },
+            {
+              "concept": "a899e516-1350-11df-a1f1-0026b9348838",
+              "label": "l.  Cryptococcus Tx:",
+              "answers": [
+                {
+                  "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                  "label": "None"
+                },
+                {
+                  "concept": "a8971e12-1350-11df-a1f1-0026b9348838",
+                  "label": " Fluconazole 200mg"
+                }
+              ],
+              "type": "select",
+              "validators": "null"
+            }
+          ]
+        },
+        {
+          "label": "Other Drugs:",
+          "questions": [
+            {
+              "concept": "a8a072c8-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "a8a060c6-1350-11df-a1f1-0026b9348838",
+                  "label": "m. Other drugs:To Do Add REPEAT",
+                  "type": "text",
+                  "validators": "null"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": " Family Planning:",
+          "questions": [
+            {
+              "concept": "695f3648-1dce-4bba-a56c-2864f3f2859a",
+              "label": "14a. Family Planning:",
+              "answers": [
+                {
+                  "concept": "a8af5018-1350-11df-a1f1-0026b9348838",
+                  "label": "Continue"
+                },
+                {
+                  "concept": "29b25c26-f947-4d72-9e4a-54b9e936be7a",
+                  "label": "Initiation"
+                },
+                {
+                  "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                  "label": "No"
+                },
+                {
+                  "concept": "a89ec3f6-1350-11df-a1f1-0026b9348838",
+                  "label": "Stopped"
+                },
+                {
+                  "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                  "label": "Yes"
+                }
+              ],
+              "type": "select",
+              "validators": "null"
+            },
+            {
+              "concept": "a894b1cc-1350-11df-a1f1-0026b9348838",
+              "label": "14b.If Yes,Method (If yes fill out FP form)XX",
+              "type": "text",
+              "validators": "[:]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Page 4",
+      "sections": [
+        {
+          "label": "Adherence: During the last seven days how many of his/her pills did the patient take?",
+          "questions": [
+            {
+              "concept": "bc3834dd-ef07-4027-be30-729baa069291",
+              "type": "group",
+              "questions":[
+                {
+                  "concept":"2c363a0e-7cf9-42cd-9778-1301b09c4484",
+                  "label":"15a. Adherence ARVS:",
+                  "answers":[
+                    {"concept": "a8b0f882-1350-11df-a1f1-0026b9348838", "label": "Good"},
+                    {"concept": "a73d20b3-d721-4763-a362-14a0c41a6b5e", "label": "Fair"},
+                    {"concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b", "label": "Poor"}
+                  ],
+                  "type":"select",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a89ebbc2-1350-11df-a1f1-0026b9348838",
+                  "label":"15a. Adherence (ARVS): Reason for Poor/Fair:",
+                  "answers":[
+                    {"concept": "a89ced88-1350-11df-a1f1-0026b9348838", "label": "Alcohol"},
+                    {"concept": "a8935fde-1350-11df-a1f1-0026b9348838", "label": "Depression"},
+                    {"concept": "a89eac04-1350-11df-a1f1-0026b9348838", "label": "Felt well"},
+                    {"concept": "a89eacc2-1350-11df-a1f1-0026b9348838", "label": "Forgot"},
+                    {"concept": "7211031b-0685-44bc-a5e9-5a018d0173ea", "label": "Gave away"},
+                    {"concept": "a8af4cee-1350-11df-a1f1-0026b9348838", "label": "Lost/Ran out of pills"},
+                    {"concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46", "label": "Pill Burden"},
+                    {"concept": "a89eb8c0-1350-11df-a1f1-0026b9348838", "label": "Side Effects"},
+                    {"concept": "a89eba46-1350-11df-a1f1-0026b9348838", "label": "Stigma"},
+                    {"concept": "c0c9eab3-46f6-453c-b29d-dc1c242317c5", "label": "Stock out"},
+                    {"concept": "a89de2d8-1350-11df-a1f1-0026b9348838", "label": "Too ill"},
+                    {"concept": "a897fdaa-1350-11df-a1f1-0026b9348838", "label": "Travel Problems"},
+                    {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other"}
+                  ],
+                  "type":"multiCheckbox",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label":"15a. Adherence (ARVS): Other (specify):",
+                  "type":"text",
+                  "validators":"[:]"
+                }
+              ]
+            },
+            {
+              "concept": "275eee16-c358-4f3a-ac16-e8f24659df87",
+              "type": "group",
+              "questions":[
+                {
+                  "concept":"115c744a-cf54-469f-bd5f-820352ffe9be",
+                  "label":"15b. PCP Prophylaxis:",
+                  "answers":[
+                    {"concept": "a8b0f882-1350-11df-a1f1-0026b9348838", "label": "Good"},
+                    {"concept": "a73d20b3-d721-4763-a362-14a0c41a6b5e", "label": "Fair"},
+                    {"concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b", "label": "Poor"}
+                  ],
+                  "type":"select",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a89ebbc2-1350-11df-a1f1-0026b9348838",
+                  "label":"15b. Adherence (PCP):-Reason for Poor/Fair:",
+                  "answers":[
+                    {"concept": "a89ced88-1350-11df-a1f1-0026b9348838", "label": "Alcohol"},
+                    {"concept": "a8935fde-1350-11df-a1f1-0026b9348838", "label": "Depression"},
+                    {"concept": "a89eac04-1350-11df-a1f1-0026b9348838", "label": "Felt well"},
+                    {"concept": "a89eacc2-1350-11df-a1f1-0026b9348838", "label": "Forgot"},
+                    {"concept": "7211031b-0685-44bc-a5e9-5a018d0173ea", "label": "Gave away"},
+                    {"concept": "a8af4cee-1350-11df-a1f1-0026b9348838", "label": "Lost/Ran out of pills"},
+                    {"concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46", "label": "Pill Burden"},
+                    {"concept": "a89eb8c0-1350-11df-a1f1-0026b9348838", "label": "Side Effects"},
+                    {"concept": "a89eba46-1350-11df-a1f1-0026b9348838", "label": "Stigma"},
+                    {"concept": "c0c9eab3-46f6-453c-b29d-dc1c242317c5", "label": "Stock out"},
+                    {"concept": "a89de2d8-1350-11df-a1f1-0026b9348838", "label": "Too ill"},
+                    {"concept": "a897fdaa-1350-11df-a1f1-0026b9348838", "label": "Travel Problems"},
+                    {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other"}
+                  ],
+                  "type":"multiCheckbox",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label":"15b. Adherence (PCP): Other (specify):",
+                  "type":"text",
+                  "validators":"[:]"
+                }
+              ]
+            },
+            {
+              "concept": "3a69cfcf-f129-4702-a8dd-d061d2a16b9d",
+              "type": "group",
+              "questions":[
+                {
+                  "concept":"ebfdb93a-9292-4245-9a27-0faf49545720",
+                  "label":"15c. TB Prophylaxis:",
+                  "answers":[
+                    {"concept": "a8b0f882-1350-11df-a1f1-0026b9348838", "label": "Good"},
+                    {"concept": "a73d20b3-d721-4763-a362-14a0c41a6b5e", "label": "Fair"},
+                    {"concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b", "label": "Poor"}
+                  ],
+                  "type":"select",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a89ebbc2-1350-11df-a1f1-0026b9348838",
+                  "label":"15c. Adherence (TB Prophylaxis) Reason for Poor/Fair:",
+                  "answers":[
+                    {"concept": "a89ced88-1350-11df-a1f1-0026b9348838", "label": "Alcohol"},
+                    {"concept": "a8935fde-1350-11df-a1f1-0026b9348838", "label": "Depression"},
+                    {"concept": "a89eac04-1350-11df-a1f1-0026b9348838", "label": "Felt well"},
+                    {"concept": "a89eacc2-1350-11df-a1f1-0026b9348838", "label": "Forgot"},
+                    {"concept": "7211031b-0685-44bc-a5e9-5a018d0173ea", "label": "Gave away"},
+                    {"concept": "a8af4cee-1350-11df-a1f1-0026b9348838", "label": "Lost/Ran out of pills"},
+                    {"concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46", "label": "Pill Burden"},
+                    {"concept": "a89eb8c0-1350-11df-a1f1-0026b9348838", "label": "Side Effects"},
+                    {"concept": "a89eba46-1350-11df-a1f1-0026b9348838", "label": "Stigma"},
+                    {"concept": "c0c9eab3-46f6-453c-b29d-dc1c242317c5", "label": "Stock out"},
+                    {"concept": "a89de2d8-1350-11df-a1f1-0026b9348838", "label": "Too ill"},
+                    {"concept": "a897fdaa-1350-11df-a1f1-0026b9348838", "label": "Travel Problems"},
+                    {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other"}
+                  ],
+                  "type":"multiCheckbox",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label":"15c. Adherence (TB Prophylaxis): Other (specify):",
+                  "type":"text",
+                  "validators":"[:]"
+                }
+              ]
+            },
+            {
+              "concept": "2a4b87dd-977d-4ce8-a321-1f13df4a31b2",
+              "type": "group",
+              "questions":[
+
+                {
+                  "concept":"479decbd-e964-41c3-9576-98b39089ebd3",
+                  "label":"15d. TB Treatment:",
+                  "answers":[
+                    {"concept": "a8b0f882-1350-11df-a1f1-0026b9348838", "label": "Good"},
+                    {"concept": "a73d20b3-d721-4763-a362-14a0c41a6b5e", "label": "Fair"},
+                    {"concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b", "label": "Poor"}
+                  ],
+                  "type":"select",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a89ebbc2-1350-11df-a1f1-0026b9348838",
+                  "label":"15d. Adherence (TB Treatment):-Reason for Poor/Fair:",
+                  "answers":[
+                  ],
+                  "type":"multiCheckbox",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label":"15d. Adherence (TB Treatment): Other reason (specify):",
+                  "type":"text",
+                  "validators":"[:]"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Side Effects XXXX Which section?",
+          "questions": [
+            {
+              "concept":"30fc0cea-b6c7-48cc-bbfb-4eb53170ce41",
+              "label":"16a. Side effects/toxicity: Any side effects attributable to any drug that the patient is currently taking?",
+              "answers":[
+                {"concept": "a899b35c-1350-11df-a1f1-0026b9348838", "label": "Yes"},
+                {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
+              ],
+              "type":"select",
+              "validators":"[:]"
+            },
+            {
+              "concept":"c2ecd5f7-4b47-47ae-b706-3dc5ed98b4db",
+              "label":"16b. If yes, tick all that apply:XXX Add repeat",
+              "answers":[
+                {"concept": "520218d1-6e41-4653-8edf-2d702d0b9b8a", "label": "HIGH LEVEL OF URIC ACID"},
+                {"concept": "520218d1-6e41-4653-8edf-2d702d0b9b8a", "label": "HYPERURICAEMIA"},
+                {"concept": "520218d1-6e41-4653-8edf-2d702d0b9b8a", "label": "HYPERURICEMIA"},
+                {"concept": "8e6db62d-2b91-43b2-9a2e-50c7eeb4437c", "label": "NEUROPATHY"},
+                {"concept": "a877c7f6-1350-11df-a1f1-0026b9348838", "label": "ANEMIA"},
+                {"concept": "a877c7f6-1350-11df-a1f1-0026b9348838", "label": "ANAEMIA"},
+                {"concept": "a877c7f6-1350-11df-a1f1-0026b9348838", "label": "ANEMIA NOS"},
+                {"concept": "a877c7f6-1350-11df-a1f1-0026b9348838", "label": "MILD ANAEMIA"},
+                {"concept": "a877c7f6-1350-11df-a1f1-0026b9348838", "label": "MILD ANEMIA"},
+                {"concept": "a890861a-1350-11df-a1f1-0026b9348838", "label": "DIARRHEA"},
+                {"concept": "a890861a-1350-11df-a1f1-0026b9348838", "label": "DIARRHEA NOS"},
+                {"concept": "a890861a-1350-11df-a1f1-0026b9348838", "label": "DIARRHOEA"},
+                {"concept": "a8909060-1350-11df-a1f1-0026b9348838", "label": "HEPATITIS"},
+                {"concept": "a8909060-1350-11df-a1f1-0026b9348838", "label": "HEPATITIS NOS"},
+                {"concept": "a890ba5e-1350-11df-a1f1-0026b9348838", "label": "JOINT PAIN"},
+                {"concept": "a890ba5e-1350-11df-a1f1-0026b9348838", "label": "ARTHRALGIA"},
+                {"concept": "a890ba5e-1350-11df-a1f1-0026b9348838", "label": "ATHRALGIA"},
+                {"concept": "a890ba5e-1350-11df-a1f1-0026b9348838", "label": "RHEUMATISM"},
+                {"concept": "a8932f00-1350-11df-a1f1-0026b9348838", "label": "ABDOMINAL PAIN"},
+                {"concept": "a8932f00-1350-11df-a1f1-0026b9348838", "label": "ABDOMINAL DISCOMFORT"},
+                {"concept": "a8932f00-1350-11df-a1f1-0026b9348838", "label": "EPIGASTRIC PAIN"},
+                {"concept": "a89366a0-1350-11df-a1f1-0026b9348838", "label": "JAUNDICE"},
+                {"concept": "a89366a0-1350-11df-a1f1-0026b9348838", "label": "ICTERUS"},
+                {"concept": "a895776a-1350-11df-a1f1-0026b9348838", "label": "RASH"},
+                {"concept": "a895776a-1350-11df-a1f1-0026b9348838", "label": "SKIN RASH"},
+                {"concept": "a897fe86-1350-11df-a1f1-0026b9348838", "label": "PERIPHERAL NEUROPATHY"},
+                {"concept": "a897fe86-1350-11df-a1f1-0026b9348838", "label": "PEDAL NEUROPATHY"},
+                {"concept": "a897fe86-1350-11df-a1f1-0026b9348838", "label": "PERIPHERAL NEURITIS"},
+                {"concept": "a8980dea-1350-11df-a1f1-0026b9348838", "label": "THROMBOCYTOPENIA"},
+                {"concept": "a8980dea-1350-11df-a1f1-0026b9348838", "label": "THROMBOPENIA"},
+                {"concept": "a89828c0-1350-11df-a1f1-0026b9348838", "label": "HEARING DIFFICULTIES"},
+                {"concept": "a8982eba-1350-11df-a1f1-0026b9348838", "label": "ANOREXIA"},
+                {"concept": "a8982eba-1350-11df-a1f1-0026b9348838", "label": "LOSS OF APPETITE"},
+                {"concept": "a8983ae0-1350-11df-a1f1-0026b9348838", "label": "PRURITIS"},
+                {"concept": "a8983ae0-1350-11df-a1f1-0026b9348838", "label": "BODY ITCHING"},
+                {"concept": "a8983ae0-1350-11df-a1f1-0026b9348838", "label": "ITCHING"},
+                {"concept": "a8983ae0-1350-11df-a1f1-0026b9348838", "label": "PRURIT"},
+                {"concept": "a898cfe6-1350-11df-a1f1-0026b9348838", "label": "WEIGHT CHANGE"},
+                {"concept": "a89cee50-1350-11df-a1f1-0026b9348838", "label": "LIPODYSTROPHY"},
+                {"concept": "a89cfce2-1350-11df-a1f1-0026b9348838", "label": "NEUTROPENIA"},
+                {"concept": "a89d0c0a-1350-11df-a1f1-0026b9348838", "label": "IMMUNE RECONSTITUTION INFLAMMATORY SYNDROME"},
+                {"concept": "a89d0c0a-1350-11df-a1f1-0026b9348838", "label": "IRIS"},
+                {"concept": "a8a01dfa-1350-11df-a1f1-0026b9348838", "label": "LACTIC ACIDOSIS"},
+                {"concept": "a8a16d0e-1350-11df-a1f1-0026b9348838", "label": "STEVENS-JOHNSON SYNDROME"},
+                {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "OTHER NON-CODED"},
+                {"concept": "a8ad09ca-1350-11df-a1f1-0026b9348838", "label": "VISION DIFFICULTIES"},
+                {"concept": "a8ad09ca-1350-11df-a1f1-0026b9348838", "label": "VISION DIFFICULTIES, NOS"},
+                {"concept": "a8ad09ca-1350-11df-a1f1-0026b9348838", "label": "VISION DIFFICULTIES"},
+                {"concept": "a8ad21e4-1350-11df-a1f1-0026b9348838", "label": "NAUSEA"},
+                {"concept": "a8ad21e4-1350-11df-a1f1-0026b9348838", "label": "NAUSEATED"},
+                {"concept": "a8ad239c-1350-11df-a1f1-0026b9348838", "label": "VOMITING"},
+                {"concept": "a8ad239c-1350-11df-a1f1-0026b9348838", "label": "EMESIS"},
+                {"concept": "a8ad47f0-1350-11df-a1f1-0026b9348838", "label": "OLIGURIA"},
+                {"concept": "a8ad47f0-1350-11df-a1f1-0026b9348838", "label": "DECREASED URINE OUTPUT"},
+                {"concept": "a8ad47f0-1350-11df-a1f1-0026b9348838", "label": "REDUCED URINE VOLUME"},
+                {"concept": "c835b3c9-8fcd-4d12-91d5-6f85201f42eb", "label": "TINGLING"},
+                {"concept": "c835b3c9-8fcd-4d12-91d5-6f85201f42eb", "label": "TINGLE SENSATION"},
+                {"concept": "de8adf9d-0d6d-4f81-817e-1ccef7e578d4", "label": "DYSGEUSIA"},
+                {"concept": "de8adf9d-0d6d-4f81-817e-1ccef7e578d4", "label": "DISTORTION OF THE SENSE OF TASTE"},
+                {"concept": "fc110c04-079c-49d3-bf34-c36290e1b203", "label": "LEUCOPENIA"},
+                {"concept": "fc110c04-079c-49d3-bf34-c36290e1b203", "label": "LEUKOPENIA"},
+                {"concept": "fc110c04-079c-49d3-bf34-c36290e1b203", "label": "LEUKOCYTOPENIA"},
+                {"concept": "fc110c04-079c-49d3-bf34-c36290e1b203", "label": "DECREASE IN NUMBER OF WHITE BLOOD CELLS"}
+              ],
+              "type":"multiCheckbox",
+              "validators":"null"
+            },
+            {
+              "concept":"c2ecd5f7-4b47-47ae-b706-3dc5ed98b4db",
+              "label":"16c. If yes, tick all that apply:",
+              "answers":[
+                {"concept": "a877c7f6-1350-11df-a1f1-0026b9348838", "label": "Anemia"},
+                {"concept": "a890861a-1350-11df-a1f1-0026b9348838", "label": "Diarrhea"},
+                {"concept": "a8909060-1350-11df-a1f1-0026b9348838", "label": "Hepatitis"},
+                {"concept": "a89d0c0a-1350-11df-a1f1-0026b9348838", "label": "IRIS"},
+                {"concept": "a8a01dfa-1350-11df-a1f1-0026b9348838", "label": "Lactic Acidosis"},
+                {"concept": "a89cee50-1350-11df-a1f1-0026b9348838", "label": "Lipo-dystrophy"},
+                {"concept": "a897fe86-1350-11df-a1f1-0026b9348838", "label": "Neuropathy"},
+                {"concept": "a8accbf4-1350-11df-a1f1-0026b9348838", "label": "Persistent Vomiting"},
+                {"concept": "a895776a-1350-11df-a1f1-0026b9348838", "label": "Rash"},
+                {"concept": "a8a16d0e-1350-11df-a1f1-0026b9348838", "label": "Steven-Johnson"},
+                {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other"}
+              ],
+              "type":"multiCheckbox",
+              "validators":"null"
+            },
+            {
+              "concept":"6c1b293c-4d8c-470f-9991-93cdde1274ff",
+              "label":"16d. Severity of the reaction: ",
+              "answers":[
+                {"concept": "a89efccc-1350-11df-a1f1-0026b9348838", "label": "Mild"},
+                {"concept": "a89efdee-1350-11df-a1f1-0026b9348838", "label": " Moderate"},
+                {"concept": "a89eff1a-1350-11df-a1f1-0026b9348838", "label": " Severe"},
+                {"concept": "53864e20-4cca-4daf-8fb5-943514467033", "label": " Fatal"},
+                {"concept": "a899b50a-1350-11df-a1f1-0026b9348838", "label": " Unknown"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },
+            {
+              "concept":"d0efbf5b-cbfc-48fc-a857-c0ca4d70f077",
+              "label":"16e. Cause of the reaction/Toxicity:",
+              "answers":[
+                {"concept": "45eb8953-dc14-4c2e-8ce6-12cdf7da280a", "label": "Certain"},
+                {"concept": "07e9e14e-a718-4a9e-9479-1de79e1f614a", "label": " Probable/Likely"},
+                {"concept": "260e6d24-1634-4467-a070-e8359f6827f7", "label": " Possible"},
+                {"concept": "66b46c63-7e75-4b1d-918a-1e17348c62f7", "label": " Unlikely"},
+                {"concept": "b1055e84-0e97-483a-ae8a-3f2dee84a623", "label": " Conditional/Unclassified"},
+                {"concept": "80d03d9f-2510-4a95-b9d6-2613aaeebd21", "label": " Unassessable/Unclassified"}
+              ],
+              "type":"select",
+              "validators":"null"
+            }
+          ]
+        },
+        {
+          "label": "17a. Physical Exam",
+          "questions": [
+            {
+              "concept": "a8a65d5a-1350-11df-a1f1-0026b9348838",
+              "label": "BP:Systolic:",
+              "type": "number",
+              "validators": []
+            },
+            {
+              "concept": "a8a65e36-1350-11df-a1f1-0026b9348838",
+              "label": "BP:Diastolic:",
+              "type": "number",
+              "validators": []
+            },
+            {
+              "concept": "a8a660ca-1350-11df-a1f1-0026b9348838",
+              "label": "Weight(Kg):",
+              "type": "number",
+              "validators": []
+            },
+            {
+              "concept": "a8a6619c-1350-11df-a1f1-0026b9348838",
+              "label": "Height(CM):",
+              "type": "number",
+              "validators": []
+            },
+            {
+              "concept": "a8a65f12-1350-11df-a1f1-0026b9348838",
+              "label": "Pulse(Rate/Min):",
+              "type": "number",
+              "validators": []
+            },
+            {
+              "concept": "a8a65fee-1350-11df-a1f1-0026b9348838",
+              "label": "Temp(C):",
+              "type": "number",
+              "validators": []
+            },
+            {
+              "concept": "a8a66354-1350-11df-a1f1-0026b9348838",
+              "label": "Sp02 %:",
+              "type": "number",
+              "validators": []
+            },
+            {
+              "concept": "a89c60c0-1350-11df-a1f1-0026b9348838",
+              "label": "BMI:",
+              "type": "number",
+              "validators": []
+            }
+          ]
+        },
+        {
+          "label": "Physical Exam B",
+          "questions": [
+            {
+              "concept":"b4e02ea8-9c08-407b-b65a-d0aa002a7f0b",
+              "label":"17b. Perineum",
+              "answers":[
+                {"concept": "a899ea48-1350-11df-a1f1-0026b9348838", "label": "Not done"},
+                {"concept": "a899e7b4-1350-11df-a1f1-0026b9348838", "label": " Normal"},
+                {"concept": "a899e890-1350-11df-a1f1-0026b9348838", "label": " Abnormal"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },
+            {
+              "concept":"a8b017dc-1350-11df-a1f1-0026b9348838",
+              "label":"17c. Breast exam",
+              "answers":[
+                {"concept": "a899ea48-1350-11df-a1f1-0026b9348838", "label": "Not done"},
+                {"concept": "a899e7b4-1350-11df-a1f1-0026b9348838", "label": " Normal"},
+                {"concept": "a899e890-1350-11df-a1f1-0026b9348838", "label": " Abnormal"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },
+            {
+              "concept":"a8b00562-1350-11df-a1f1-0026b9348838",
+              "label":"Genital ulcers Yes",
+              "answers":[
+              ],
+              "type":"text",
+              "validators":"null"
+            },
+            {
+              "concept":"a8b00684-1350-11df-a1f1-0026b9348838",
+              "label":"Genital ulcers No",
+              "answers":[
+              ],
+              "type":"text",
+              "validators":"null"
+            },
+            {
+              "concept":"a8b00562-1350-11df-a1f1-0026b9348838",
+              "label":"Urethral Discharge Yes",
+              "answers":[
+              ],
+              "type":"text",
+              "validators":"null"
+            },
+            {
+              "concept":"a8b00684-1350-11df-a1f1-0026b9348838",
+              "label":"Urethral Discharge No",
+              "answers":[
+              ],
+              "type":"text",
+              "validators":"null"
+            },
+            {
+              "concept":"a8b00562-1350-11df-a1f1-0026b9348838",
+              "label":"Vaginal Discharge Yes",
+              "answers":[
+              ],
+              "type":"text",
+              "validators":"null"
+            },
+            {
+              "concept":"a8b00684-1350-11df-a1f1-0026b9348838",
+              "label":"Vaginal Discharge No",
+              "answers":[
+              ],
+              "type":"text",
+              "validators":"null"
+            }
+
+          ]
+        },
+        {
+          "label": "WHO stage",
+          "questions": [
+            {
+              "concept":"a8a8331e-1350-11df-a1f1-0026b9348838",
+              "label":"19. WHO stage",
+              "answers":[
+                {"concept": "a89b2606-1350-11df-a1f1-0026b9348838", "label": "1"},
+                {"concept": "a89b26d8-1350-11df-a1f1-0026b9348838", "label": " 2"},
+                {"concept": "a89b27be-1350-11df-a1f1-0026b9348838", "label": " 3"},
+                {"concept": "a89b289a-1350-11df-a1f1-0026b9348838", "label": " 4"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },
+            {
+              "concept":"a8ae88a4-1350-11df-a1f1-0026b9348838",
+              "label":"Criteria: Search",
+              "type":"text",
+              "validators":"null"
+            },
+            {
+              "concept":"a89b67d8-1350-11df-a1f1-0026b9348838",
+              "label":"New stage:",
+              "answers":[
+                {"concept": "a899b35c-1350-11df-a1f1-0026b9348838", "label": "Yes"},
+                {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
+              ],
+              "type":"select",
+              "validators":"null"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Page 5" ,
+      "sections": [
+        {
+          "label": "16 d. Tests Results and Test Date (Please Record date sample was drawn, rather than date test was run)",
+          "questions": [
+            {
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "a8970954-1350-11df-a1f1-0026b9348838",
+                  "label": "Platelets/mm3",
+                  "type": "number",
+                  "showDate": "true",
+                  "validators": []
+                },
+                {
+                  "concept": "a896dea2-1350-11df-a1f1-0026b9348838",
+                  "label": "WBC/mm3",
+                  "type": "number",
+                  "showDate": "true",
+                  "validators": []
+                },
+                {
+                  "concept": "a8908a16-1350-11df-a1f1-0026b9348838",
+                  "label": "Hgb g/dL",
+                  "type": "number",
+                  "showDate": "true",
+                  "validators": []
+                },
+                {
+                  "concept": "a898201e-1350-11df-a1f1-0026b9348838",
+                  "label": "MCV",
+                  "type": "number",
+                  "showDate": "true",
+                  "validators": []
+                },
+                {
+                  "concept": "a898b20e-1350-11df-a1f1-0026b9348838",
+                  "label": "ALC/ mm3",
+                  "type": "number",
+                  "showDate": "true",
+                  "validators": []
+                },
+                {
+                  "concept": "a8a8bb18-1350-11df-a1f1-0026b9348838",
+                  "type": "number",
+                  "label": "CD4*:",
+                  "showDate": "true",
+                  "validators": []
+                },
+                {
+                  "concept": "a8970a26-1350-11df-a1f1-0026b9348838",
+                  "type": "number",
+                  "label": "CD4%:",
+                  "showDate": "true",
+                  "validators": {}
+                },
+                {
+                  "concept": "a8982474-1350-11df-a1f1-0026b9348838",
+                  "type": "number",
+                  "label": "Viral Load:",
+                  "showDate": "true",
+                  "validators": {}
+                },
+                {
+                  "concept": "a897e450-1350-11df-a1f1-0026b9348838",
+                  "type": "number",
+                  "label": "Creatinine mmol/L:",
+                  "showDate": "true",
+                  "validators": {}
+                },
+                {
+                  "concept": "a896ca48-1350-11df-a1f1-0026b9348838",
+                  "type": "number",
+                  "label": "SGPT(ALT):",
+                  "showDate": "true",
+                  "validators": {}
+                }
+              ]
+            },
+            {
+              "concept": "a898fe80-1350-11df-a1f1-0026b9348838",
+              "label": "1st HIV DNA PCR",
+              "answers": [
+                {
+                  "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                  "label": "Negative"
+                },
+                {
+                  "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                  "label": "Positive"
+                },
+                {
+                  "concept": "a89c3d8e-1350-11df-a1f1-0026b9348838",
+                  "label": "Poor Sample Quality"
+                },
+                {
+                  "concept": "a899ea48-1350-11df-a1f1-0026b9348838",
+                  "label": "Not Done"
+                }
+              ],
+              "type": "select",
+              "showDate": "true",
+              "validators": "null"
+            },
+            {
+              "concept": "c0dfc40c-9ab1-4d82-9916-560a0bba3afa",
+              "label": "2nd HIV DNA PCR (Post Weaning)*",
+              "answers": [
+                {
+                  "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                  "label": "Negative"
+                },
+                {
+                  "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                  "label": "Positive"
+                },
+                {
+                  "concept": "a89c3d8e-1350-11df-a1f1-0026b9348838",
+                  "label": "Poor Sample Quality"
+                },
+                {
+                  "concept": "a899ea48-1350-11df-a1f1-0026b9348838",
+                  "label": "Not Done"
+                }
+              ],
+              "type": "select",
+              "showDate": "true",
+              "validators": "null"
+            },
+            {
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "741517cf-8bac-4755-b289-8dd2a2df7962",
+                  "label": "Sputum Gene xpert MTB:",
+                  "answers": [
+                    {
+                      "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                      "label": "Positive"
+                    },
+                    {
+                      "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                      "label": "Negative"
+                    },
+                    {
+                      "concept": "a89a7ae4-1350-11df-a1f1-0026b9348838",
+                      "label": "Indeterminate"
+                    },
+                    {
+                      "concept": "a89c3d8e-1350-11df-a1f1-0026b9348838",
+                      "label": "Poor sample quality"
+                    }
+                  ],
+                  "showDate": "true",
+                  "type": "select",
+                  "validators": "[:]"
+                },
+                {
+                  "concept": "a8945d4e-1350-11df-a1f1-0026b9348838",
+                  "label": "Sputum AFB Smear:",
+                  "answers": [
+                    {
+                      "concept": "a8a45ab4-1350-11df-a1f1-0026b9348838",
+                      "label": "1+"
+                    },
+                    {
+                      "concept": "a8a45bd6-1350-11df-a1f1-0026b9348838",
+                      "label": "2+"
+                    },
+                    {
+                      "concept": "a8a45ca8-1350-11df-a1f1-0026b9348838",
+                      "label": "3+"
+                    },
+                    {
+                      "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                      "label": "Positive"
+                    },
+                    {
+                      "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                      "label": "Negative"
+                    },
+                    {
+                      "concept": "a89a7ae4-1350-11df-a1f1-0026b9348838",
+                      "label": "Indeterminate"
+                    },
+                    {
+                      "concept": "a89c3d8e-1350-11df-a1f1-0026b9348838",
+                      "label": "Poor sample quality"
+                    }
+                  ],
+                  "showDate": "true",
+                  "type": "select",
+                  "validators": "[:]"
+                },
+                {
+                  "concept": "a8a462a2-1350-11df-a1f1-0026b9348838",
+                  "label": "Sputum Culture:",
+                  "answers": [
+                    {
+                      "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                      "label": "Positive"
+                    },
+                    {
+                      "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                      "label": "Negative"
+                    },
+                    {
+                      "concept": "a89c3d8e-1350-11df-a1f1-0026b9348838",
+                      "label": "Poor sample quality"
+                    },
+                    {
+                      "concept": "0b4e9aa1-e470-46d1-9d2d-0d8a475561b9",
+                      "label": "Mycobacterium tuberculosis"
+                    },
+                    {
+                      "concept": "a01149c4-7f0e-4d27-8f42-dc019e3330ec",
+                      "label": "NonTuberculosis mycobacteria"
+                    }
+                  ],
+                  "type": "select",
+                  "showDate": "true",
+                  "validators": "[:]"
+                },
+                {
+                  "concept": "a8908192-1350-11df-a1f1-0026b9348838",
+                  "label": "CXR Code:",
+                  "answers": [
+                    {
+                      "concept": "a899e7b4-1350-11df-a1f1-0026b9348838",
+                      "label": "Normal"
+                    },
+                    {
+                      "concept": "a8a6aa3a-1350-11df-a1f1-0026b9348838",
+                      "label": "Cardiomegaly"
+                    },
+                    {
+                      "concept": "a8ae8c1e-1350-11df-a1f1-0026b9348838",
+                      "label": "Cavitary"
+                    },
+                    {
+                      "concept": "a8ae8a66-1350-11df-a1f1-0026b9348838",
+                      "label": "Diffuse abn/non-miliary"
+                    },
+                    {
+                      "concept": "a8ae8980-1350-11df-a1f1-0026b9348838",
+                      "label": "Infiltrate"
+                    },
+                    {
+                      "concept": "a89a77ce-1350-11df-a1f1-0026b9348838",
+                      "label": "Milliary"
+                    },
+                    {
+                      "concept": "a89a76fc-1350-11df-a1f1-0026b9348838",
+                      "label": "PI Effusion"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    }
+                  ],
+                  "showDate": "true",
+                  "type": "select",
+                  "validators": "[:]"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Problem list",
+          "questions": [
+            {
+              "label": "Problem List",
+              "questions": [
+                {
+                  "concept": "a89c2d8a-1350-11df-a1f1-0026b9348838",
+                  "type": "group_repeating",
+                  "label": "21a. Problem Added",
+                  "questions": [
+                    {
+                      "concept": "a8ae835e-1350-11df-a1f1-0026b9348838",
+                      "label": "Problem Added",
+                      "type": "problem",
+                      "validators": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "concept": "a89c2d8a-1350-11df-a1f1-0026b9348838",
+              "type": "group_repeating",
+              "label": "21b. Problem Ongoing",
+              "questions": [
+                {
+                  "concept": "a8a1701a-1350-11df-a1f1-0026b9348838",
+                  "label": "Problem Resolved",
+                  "type": "problem",
+                  "validators": []
+                }
+              ]
+            },
+            {
+              "concept": "a89c2d8a-1350-11df-a1f1-0026b9348838",
+              "type": "group_repeating",
+              "label":"21c. Problem Resolved",
+              "questions": [
+                {
+                  "concept": "a8af4aa0-1350-11df-a1f1-0026b9348838",
+                  "label": "Problem Resolved",
+                  "type": "problem",
+                  "validators": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Page 6",
+      "sections": [
+        {
+          "label": "Medication Plan",
+          "questions": [
+            {
+              "concept":"a89b75d4-1350-11df-a1f1-0026b9348838",
+              "label":"22a.ARVs Plan",
+              "answers":[
+                {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "Not on ARVS"},
+                {"concept": "a89b77aa-1350-11df-a1f1-0026b9348838", "label": " Start ARVs"},
+                {"concept": "a8a00158-1350-11df-a1f1-0026b9348838", "label": " Drug substitution"},
+                {"concept": "a89b7908-1350-11df-a1f1-0026b9348838", "label": " continue regimen"},
+                {"concept": "a898c938-1350-11df-a1f1-0026b9348838", "label": " change dose"},
+                {"concept": "a89b7c50-1350-11df-a1f1-0026b9348838", "label": " change regimen"},
+                {"concept": "a8a00220-1350-11df-a1f1-0026b9348838", "label": " Restart"},
+                {"concept": "a89b7ae8-1350-11df-a1f1-0026b9348838", "label": " Change Formulation"},
+                {"concept": "a89b7d36-1350-11df-a1f1-0026b9348838", "label": " Stop all"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },
+            {
+              "concept":"a89b6ce2-1350-11df-a1f1-0026b9348838",
+              "label":"22b.Reason to Start ARVs",
+              "answers":[
+                {"concept": "a8af49d8-1350-11df-a1f1-0026b9348838", "label": "Discordant couple"},
+                {"concept": "fd5e4ebe-b3ae-48d9-93a8-556173bb5dd9", "label": " CD4 less than 500"},
+                {"concept": "a89b27be-1350-11df-a1f1-0026b9348838", "label": " WHO stage 3"},
+                {"concept": "a89b289a-1350-11df-a1f1-0026b9348838", "label": " WHO stage 4"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },
+            {
+              "concept": "a8a07688-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions":[
+                {
+                  "concept":"a89b7110-1350-11df-a1f1-0026b9348838",
+                  "label":"22c.Reason for stopping/change/substitution/interruption",
+                  "answers":[
+                  ],
+                  "type":"select",
+                  "validators":"null"
+                },
+                {
+                  "concept":"a8a032fe-1350-11df-a1f1-0026b9348838",
+                  "label":"Toxicity cause",
+                  "type":"text",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label":"Specify",
+                  "type":"text",
+                  "validators":"[:]"
+                }]
+            },
+            {
+              "concept": "a8a17a7e-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions":[
+                {
+                  "concept":"a89d26cc-1350-11df-a1f1-0026b9348838",
+                  "label":"22d. Eligible for ARVs but not started:",
+                  "answers":[
+                    {"concept": "a89d25fa-1350-11df-a1f1-0026b9348838", "label": "Patient  Refused"},
+                    {"concept": "a89ce50e-1350-11df-a1f1-0026b9348838", "label": " Adherence Concerns"},
+                    {"concept": "a8a8b26c-1350-11df-a1f1-0026b9348838", "label": " On TB Treatment"},
+                    {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": " Other"}
+                  ],
+                  "type":"select",
+                  "validators":"null"
+                },
+                {
+                  "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label":"Specify",
+                  "type":"text",
+                  "validators":"[:]"
+                }
+              ]},
+            {
+              "concept":"04616f5d-b961-4f41-bbd7-bcc0dd235577",
+              "label":"22e. Treatment Categories",
+              "answers":[
+                {"concept": "034047bd-3fa1-4b2a-b0f0-2787e9b9f7b3", "label": "First Regimen"},
+                {"concept": "8f8a715d-e49a-4b2c-aa3a-83fa9d7a4254", "label": " Second Regimen (following viral failure)"},
+                {"concept": "a90ebdd2-351f-485a-b850-4938fcca2729", "label": " Third (Salvage) Regimen"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },{
+              "concept":"a89b6a62-1350-11df-a1f1-0026b9348838",
+              "label":"22f.If patient on ARVS, choose regimen below:",
+              "answers":[
+                {"concept": "a89cc876-1350-11df-a1f1-0026b9348838", "label": "3TC300mg/TDF300mg"},
+                {"concept": "3d587177-984e-4eeb-93f2-3223b6c1dd7c", "label": "3TC150mg/D4T30mg"},
+                {"concept": "a896758e-1350-11df-a1f1-0026b9348838", "label": "3TC150mg/ZDV300mg"},
+                {"concept": "6a73f32d-1870-4527-af6e-74443251ded2", "label": "NVP200mg/ZDV300mg/3TC150mg"},
+                {"concept": "a897e608-1350-11df-a1f1-0026b9348838", "label": "NVP200/D4T30/3TC150"},
+                {"concept": "1c4a75d0-cc91-4752-b0a5-4b833326ff7a", "label": "TDF300mg/3TC300mg/EFV600mg"},
+                {"concept": "a897e7c0-1350-11df-a1f1-0026b9348838", "label": "Aluvia(Kaletra)200mgLPV"},
+                {"concept": "a8afc066-1350-11df-a1f1-0026b9348838", "label": "Atazanavir300/Ritonavir100"},
+                {"concept": "a8afcf84-1350-11df-a1f1-0026b9348838", "label": "Truvada(Emtri200mg/TDF300)"},
+                {"concept": "a897f8a0-1350-11df-a1f1-0026b9348838", "label": "Abacavir300mg"},
+                {"concept": "a89677e6-1350-11df-a1f1-0026b9348838", "label": "Efavirenz600mg"},
+                {"concept": "a89673f4-1350-11df-a1f1-0026b9348838", "label": "Lamivudine150mg"},
+                {"concept": "a8967656-1350-11df-a1f1-0026b9348838", "label": "Nevirapine200mg"},
+                {"concept": "a8afbd64-1350-11df-a1f1-0026b9348838", "label": "Raltergravir400mg"},
+                {"concept": "a8a87a86-1350-11df-a1f1-0026b9348838", "label": "Other:"},
+                {"concept": "a897ea4a-1350-11df-a1f1-0026b9348838", "label": "Zidovudine 300mg"}
+              ],
+              "type":"multiCheckbox",
+              "validators":"null"
+            },
+            {
+              "concept":"a162b237-51a4-4652-9fe7-2ab868edccf6",
+              "label":"22g. Postnatal medications:",
+              "answers":[
+                {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "None"},
+                {"concept": "a8a48ef8-1350-11df-a1f1-0026b9348838", "label": " Iron"},
+                {"concept": "a8939418-1350-11df-a1f1-0026b9348838", "label": " Folic acid"},
+                {"concept": "7904214f-a3a5-4017-98c8-52af36f44d7b", "label": " Antenatal vitamins"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },
+            {
+              "concept":"a89b7e12-1350-11df-a1f1-0026b9348838",
+              "label":"22h. PCP Prophylaxis:",
+              "answers":[
+                {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "None"},
+                {"concept": "a89b77aa-1350-11df-a1f1-0026b9348838", "label": " Start"},
+                {"concept": "a89b7908-1350-11df-a1f1-0026b9348838", "label": " Continue"},
+                {"concept": "a89b7d36-1350-11df-a1f1-0026b9348838", "label": " Stop"},
+                {"concept": "a89b7c50-1350-11df-a1f1-0026b9348838", "label": " Change Regimen"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },
+            {
+              "concept": "a89fe4a2-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions":[
+                {
+                  "concept":"a89b82cc-1350-11df-a1f1-0026b9348838",
+                  "label":"22i. New Drugs:Septrin",
+                  "answers":[
+                  ],
+                  "type":"text",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a8a07386-1350-11df-a1f1-0026b9348838",
+                  "label":"tabs/day",
+                  "type":"text",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a89b82cc-1350-11df-a1f1-0026b9348838",
+                  "label":"22i. New Drugs:Dapsone",
+                  "answers":[
+                  ],
+                  "type":"text",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a8a07386-1350-11df-a1f1-0026b9348838",
+                  "label":"tabs/day",
+                  "type":"text",
+                  "validators":"null"
+                }]
+            },
+            {
+              "concept": "a8a07750-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions":[
+                {
+                  "concept":"a89b7eee-1350-11df-a1f1-0026b9348838",
+                  "label":"22j. Reason for stop:",
+                  "answers":[
+                    {"concept": "a890d1ba-1350-11df-a1f1-0026b9348838", "label": "Toxicity"},
+                    {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": " Other"}
+                  ],
+                  "type":"select",
+                  "validators":"null"
+                },
+                {
+                  "concept":"a8a032fe-1350-11df-a1f1-0026b9348838",
+                  "label":"Toxicity Cause:XXXX",
+                  "type":"text",
+                  "validators":"[:]"
+                }]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Page 7",
+      "sections": [
+        {
+          "label": "Medication Plan",
+          "questions": [
+            {
+              "concept":"a89c1cfa-1350-11df-a1f1-0026b9348838",
+              "label":"22k.TB Prophylaxis Plan:",
+              "answers":[
+                {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "None"},
+                {"concept": "a89b77aa-1350-11df-a1f1-0026b9348838", "label": " Start INH"},
+                {"concept": "a89b7908-1350-11df-a1f1-0026b9348838", "label": " Continue INH"},
+                {"concept": "a898c938-1350-11df-a1f1-0026b9348838", "label": " Re-Dose"},
+                {"concept": "a8a00220-1350-11df-a1f1-0026b9348838", "label": " Re-start"},
+                {"concept": "a89b7d36-1350-11df-a1f1-0026b9348838", "label": " Stop INH"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },
+            {
+              "concept": "a8a0780e-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions":[
+                {
+                  "concept":"a89c1e12-1350-11df-a1f1-0026b9348838",
+                  "label":"22l. Reason for stop:",
+                  "answers":[
+                    {"concept": "a89c1ef8-1350-11df-a1f1-0026b9348838", "label": "Completed"},
+                    {"concept": "a890a96a-1350-11df-a1f1-0026b9348838", "label": " Active TB"},
+                    {"concept": "a890d1ba-1350-11df-a1f1-0026b9348838", "label": " Toxicity"},
+                    {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": " Other"}
+                  ],
+                  "type":"select",
+                  "validators":"null"
+                },
+                {
+                  "concept":"a8a032fe-1350-11df-a1f1-0026b9348838",
+                  "label":"22l. Reason for stop:SEARCH",
+                  "type":"text",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label":"Other Specify",
+                  "type":"text",
+                  "validators":"[:]"
+                }
+              ]
+            },
+            {
+              "concept":"a89c1fd4-1350-11df-a1f1-0026b9348838",
+              "label":"22m.TB Treatment:",
+              "answers":[
+                {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "None"},
+                {"concept": "a89b77aa-1350-11df-a1f1-0026b9348838", "label": " Start Induction"},
+                {"concept": "a89b7c50-1350-11df-a1f1-0026b9348838", "label": " Change to Continuation"},
+                {"concept": "a89b7908-1350-11df-a1f1-0026b9348838", "label": " Continue Regimen"},
+                {"concept": "a8a00158-1350-11df-a1f1-0026b9348838", "label": " Substitution"},
+                {"concept": "a898c938-1350-11df-a1f1-0026b9348838", "label": " Re-dose"},
+                {"concept": "a89b7d36-1350-11df-a1f1-0026b9348838", "label": " Stop"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },
+            {
+              "concept":"749d07cb-4994-4ce9-a39c-8a655a487fdd",
+              "label":"22n. Reason for start:",
+              "answers":[
+                {"concept": "769822b2-1f1f-4cbb-8371-0e3949e060cc", "label": "New treatment"},
+                {"concept": "15316528-adb9-4c33-b21f-2817f0cad769", "label": " Defaulted-restart 1st line"},
+                {"concept": "f6951199-560d-414a-bb5b-1150f07fcea7", "label": " Regiment failure-start retreatment"},
+                {"concept": "a8a3243c-1350-11df-a1f1-0026b9348838", "label": " MDR TB regimen"},
+                {"concept": "18ac99bf-0805-4929-8d0b-924455850a00", "label": " Relapse/re-infection-Retreatment"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },
+            {
+              "concept": "a8a078cc-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions":[
+                {
+                  "concept":"a89c1fd4-1350-11df-a1f1-0026b9348838",
+                  "label":"22o. Reason for stop/change/re-dose:",
+                  "answers":[
+                    {"concept": "a89c1ef8-1350-11df-a1f1-0026b9348838", "label": "Completed"},
+                    {"concept": "a890d1ba-1350-11df-a1f1-0026b9348838", "label": "Toxicity"},
+                    {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": " Other"}
+                  ],
+                  "type":"select",
+                  "validators":"null"
+                },
+                {
+                  "concept":"a8a032fe-1350-11df-a1f1-0026b9348838",
+                  "label":"Toxicity Cause:",
+                  "type":"text",
+                  "validators":"[:]"
+                },
+                {
+                  "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label":"Specify",
+                  "type":"text",
+                  "validators":"[:]"
+                }
+              ]
+            },
+            {
+              "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
+              "type": "group_repeating",
+              "label": "New TB drugs",
+              "questions": [
+                {
+                  "concept": "a89c218c-1350-11df-a1f1-0026b9348838",
+                  "label": "22p. New drugs:",
+                  "type": "select",
+                  "validators": [],
+                  "answers": [
+                    {
+                      "concept": "a899f51a-1350-11df-a1f1-0026b9348838",
+                      "label": "RHZE"
+                    },
+                    {
+                      "concept": "a897d1a4-1350-11df-a1f1-0026b9348838",
+                      "label": "RHZ"
+                    },
+                    {
+                      "concept": "a8a382ba-1350-11df-a1f1-0026b9348838",
+                      "label": "RHE"
+                    },
+                    {
+                      "concept": "a899e19c-1350-11df-a1f1-0026b9348838",
+                      "label": "EH"
+                    },
+                    {
+                      "concept": "a8971c64-1350-11df-a1f1-0026b9348838",
+                      "label": "Ethambutol"
+                    },
+                    {
+                      "concept": "a896cc00-1350-11df-a1f1-0026b9348838",
+                      "label": "INH"
+                    },
+                    {
+                      "concept": "a8a3243c-1350-11df-a1f1-0026b9348838",
+                      "label": "MDR drugs"
+                    },
+                    {
+                      "concept": "a8ac5f2a-1350-11df-a1f1-0026b9348838",
+                      "label": "Pyrazinamide"
+                    },
+                    {
+                      "concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4",
+                      "label": "Rifabutin"
+                    },
+                    {
+                      "concept": "a897d0be-1350-11df-a1f1-0026b9348838",
+                      "label": "Rifampicin XXXXXX"
+                    },
+                    {
+                      "concept": "a8952e4a-1350-11df-a1f1-0026b9348838",
+                      "label": "Streptomycin"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    },
+                    {
+                      "concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4",
+                      "label": "Rifabutin"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
+                  "label": "tabs/day",
+                  "type": "number"
+                },
+                {
+                  "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
+                  "label": "mg",
+                  "type": "number"
+                },
+                {
+                  "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
+                  "label": "mg/day",
+                  "type": "number"
+                },
+                {
+                  "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
+                  "label": "tabs",
+                  "type": "number"
+                }
+              ]
+            },
+            {
+              "concept":"a89c2790-1350-11df-a1f1-0026b9348838",
+              "label":"22q. Cryptococcus Tx:",
+              "answers":[
+                {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "None"},
+                {"concept": "a89b77aa-1350-11df-a1f1-0026b9348838", "label": " Start Fluconazole"},
+                {"concept": "a89b7908-1350-11df-a1f1-0026b9348838", "label": " Continue Fluconazole"},
+                {"concept": "a89b7d36-1350-11df-a1f1-0026b9348838", "label": " Stop Fluconazole"}
+              ],
+              "type":"select",
+              "validators":"null"
+            },
+            {
+              "concept": "a8a0654e-1350-11df-a1f1-0026b9348838",
+              "type": "group_repeating",
+              "questions": [
+                {
+                  "concept": "a8a060c6-1350-11df-a1f1-0026b9348838",
+                  "label": "Additional drugs: XXXX",
+                  "type": "text"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Page 8",
+      "sections": [
+        {
+          "label": "Test Ordered",
+          "questions": [
+            {
+              "concept": "af46861e-597a-48a3-b3d4-a134d0b1c5fa",
+              "type": "group",
+              "questions":[
+                {
+                  "concept":"a89c2268-1350-11df-a1f1-0026b9348838",
+                  "label":"24. Tests:",
+                  "answers":[
+                    {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "None"},
+                    {"concept": "a898f50c-1350-11df-a1f1-0026b9348838", "label": "Full Haemogram"},
+                    {"concept": "a8908a16-1350-11df-a1f1-0026b9348838", "label": "Hb"},
+                    {"concept": "a896cce6-1350-11df-a1f1-0026b9348838", "label": "CD4 Panel"},
+                    {"concept": "a8982474-1350-11df-a1f1-0026b9348838", "label": "Viral Load "},
+                    {"concept": "a897e450-1350-11df-a1f1-0026b9348838", "label": "Creatinine"},
+                    {"concept": "a896ca48-1350-11df-a1f1-0026b9348838", "label": "SGPT"},
+                    {"concept": "a8908192-1350-11df-a1f1-0026b9348838", "label": "CXR"},
+                    {"concept": "a8945d4e-1350-11df-a1f1-0026b9348838", "label": "AFB Smear"},
+                    {"concept": "9364c765-eeec-4b03-b938-ea7874560d88", "label": "Gene Xpert "},
+                    {"concept": "a8a462a2-1350-11df-a1f1-0026b9348838", "label": "TB Culture"},
+                    {"concept": "312810e7-03b4-481d-bbdd-24919478dbb5", "label": "selectlogy test"},
+                    {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other (specify):"}
+                  ],
+                  "type":"multiCheckbox",
+                  "validators":"null"
+                },
+                {
+                  "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label":"Specify",
+                  "type":"text",
+                  "validators":"[:]"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "Referrals",
+          "questions": [
+            {
+              "concept":"a89c2344-1350-11df-a1f1-0026b9348838",
+              "label":"25.what referrals were made to the patient:",
+              "answers":[
+                {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "None"},
+                {"concept": "a8a8b352-1350-11df-a1f1-0026b9348838", "label": "Adherence Counseling"},
+                {"concept": "a89c30f0-1350-11df-a1f1-0026b9348838", "label": "Alcohol counseling/ support groups"},
+                {"concept": "a2187952-59e0-449b-895f-5102b7aed49c", "label": "Cardiology"},
+                {"concept": "0d516ea7-218f-43d4-b5c0-58d126529271", "label": "Dermatology"},
+                {"concept": "0fa18f9a-95c8-4ab3-81ed-a1bac69063fa", "label": "Diabetes"},
+                {"concept": "a89accc4-1350-11df-a1f1-0026b9348838", "label": "Disclosure Counseling"},
+                {"concept": "a8a8aefc-1350-11df-a1f1-0026b9348838", "label": "Family Planning services"},
+                {"concept": "a89fbbd0-1350-11df-a1f1-0026b9348838", "label": "Express care"},
+                {"concept": "a8a8b42e-1350-11df-a1f1-0026b9348838", "label": "Mental  Health Services"},
+                {"concept": "a8a8afd8-1350-11df-a1f1-0026b9348838", "label": "Nutritional support"},
+                {"concept": "073ea366-834b-49bd-b4db-ce4e6c61bbc3", "label": "Oncology "},
+                {"concept": "a8a8b190-1350-11df-a1f1-0026b9348838", "label": "Social Work Service"},
+                {"concept": "a8a8b26c-1350-11df-a1f1-0026b9348838", "label": "TB treatment/DOT program"},
+                {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other (specify):"}
+              ],
+              "type":"multiCheckbox",
+              "validators":"null"
+            },
+            {
+              "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
+              "label":"Specify XXX Group?",
+              "type":"text",
+              "validators":"[:]"
+            },
+            {
+              "concept":"a89c2420-1350-11df-a1f1-0026b9348838",
+              "label":"26a.Hospitalization",
+              "answers":[
+                {"concept": "a89c25d8-1350-11df-a1f1-0026b9348838", "label": "Local Health Centre/Hospital"},
+                {"concept": "a89c24fc-1350-11df-a1f1-0026b9348838", "label": "Mtrh"},
+                {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other"}
+              ],
+              "type":"select",
+              "validators":"[:]"
+            },
+            {
+              "concept": "a8a003a6-1350-11df-a1f1-0026b9348838",
+              "type": "group_repeating",
+              "questions": [
+                {
+                  "concept": "a8a07a48-1350-11df-a1f1-0026b9348838",
+                  "label": "26b. Reason to refer for hospitalization:",
+                  "type": "problem"
+                }
+              ]
+            },
+            {
+              "concept":"a89c2e5c-1350-11df-a1f1-0026b9348838",
+              "label":"27. Transfer care to other centre",
+              "answers":[
+                {"concept": "a89c2f42-1350-11df-a1f1-0026b9348838", "label": "AMPATH"},
+                {"concept": "a89c301e-1350-11df-a1f1-0026b9348838", "label": "Non-Ampath"}
+              ],
+              "type":"multiCheckbox",
+              "validators":"null"
+            },
+            {
+              "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
+              "label":"Specify XXX Group?",
+              "type":"text",
+              "validators":"[:]"
+            }
+
+          ]
+        },
+        {
+          "label": "28. Return to clinic",
+          "questions": [
+            {
+              "concept":"a8a05f4a-1350-11df-a1f1-0026b9348838",
+              "label":"Weeks",
+              "type":"number",
+              "validators":"[:]"
+            },
+            {
+              "concept":"a8a06008-1350-11df-a1f1-0026b9348838",
+              "label":"Months",
+              "type":"number",
+              "validators":"[:]"
+            },
+            {
+              "concept":"a8a666ba-1350-11df-a1f1-0026b9348838",
+              "label":"Return to clinic date:",
+              "type": "datepicker",
+              "validators": [
+                {
+                  "type": "date",
+                  "allowFutureDates": "true"
+                }
+              ]
+            }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

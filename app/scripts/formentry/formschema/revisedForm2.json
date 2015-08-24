@@ -587,12 +587,18 @@
                   ],
                   "type": "radio",
                   "validators": "null"
-                },
+                }
+
+              ]
+            },
+            {
+              "concept": "a8a003a6-1350-11df-a1f1-0026b9348838",
+              "type": "group_repeating",
+              "questions": [
                 {
                   "concept": "a8a07a48-1350-11df-a1f1-0026b9348838",
-                  "label": "12b. Reason:To Do Add REPEAT",
-                  "type": "text",
-                  "validators": "null"
+                  "label": "12b. Reason to refer for hospitalization:",
+                  "type": "problem"
                 }
               ]
             }
@@ -854,79 +860,124 @@
             },
             {
               "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
-              "label": "b Start Date of TB treatment",
+              "label": "Start Date of TB treatment",
               "type": "text",
               "validators": "null"
             },
             {
-              "concept": "a899e444-1350-11df-a1f1-0026b9348838",
-              "label": "TB Drugs:",
-              "answers": [
+              "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",
+              "type": "group",
+              "questions": [
                 {
-                  "concept": "a899f51a-1350-11df-a1f1-0026b9348838",
-                  "label": "(RHZE)"
+                  "concept": "16db21cd-10cb-4c31-bb5a-b7619bfbea66",
+                  "label": "13i. Site of TB meds pick-up:",
+                  "answers": [
+                    {
+                      "concept": "a89c2f42-1350-11df-a1f1-0026b9348838",
+                      "label": "This Ampath site"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    }
+                  ],
+                  "type": "radio",
+                  "validators": []
                 },
                 {
-                  "concept": "a897d1a4-1350-11df-a1f1-0026b9348838",
-                  "label": "(RHZ)"
-                },
-                {
-                  "concept": "a8a382ba-1350-11df-a1f1-0026b9348838",
-                  "label": "(RHE)"
-                },
-                {
-                  "concept": "a89b1ca6-1350-11df-a1f1-0026b9348838",
-                  "label": "(RH)"
-                },
-                {
-                  "concept": "a899e19c-1350-11df-a1f1-0026b9348838",
-                  "label": "(EH)"
-                },
-                {
-                  "concept": "a8971c64-1350-11df-a1f1-0026b9348838",
-                  "label": "Ethambutol"
-                },
-                {
-                  "concept": "a896cc00-1350-11df-a1f1-0026b9348838",
-                  "label": "INH"
-                },
-                {
-                  "concept": "a8a3243c-1350-11df-a1f1-0026b9348838",
-                  "label": "MDR drugs"
-                },
-                {
-                  "concept": "a8ac5f2a-1350-11df-a1f1-0026b9348838",
-                  "label": "Pyrazinamide"
-                },
-                {
-                  "concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4",
-                  "label": "Rifabutin"
-                },
-                {
-                  "concept": "a896cc00-1350-11df-a1f1-0026b9348838",
-                  "label": "Rifampicin"
-                },
-                {
-                  "concept": "a8952e4a-1350-11df-a1f1-0026b9348838",
-                  "label": "Streptomycin"
-                },
-                {
-                  "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                  "label": "Other"
-                },
-                {
-                  "concept": "a89c1ef8-1350-11df-a1f1-0026b9348838",
-                  "label": "Completed"
+                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label": "Other Specify:",
+                  "type": "text",
+                  "validators": "null"
                 }
-              ],
-              "type": "multiCheckbox",
-              "validators": "null"
+              ]
             },
             {
-              "concept": "a8a176b4-1350-11df-a1f1-0026b9348838",
-              "label": "Date:",
-              "type": "datepicker",
-              "validators": "[type:date]"
+              "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
+              "type": "group_repeating",
+              "label": "Current TB Regimen",
+              "questions": [
+                {
+                  "concept": "a899e444-1350-11df-a1f1-0026b9348838",
+                  "label": "f. Current TB Regimen",
+                  "type": "select",
+                  "validators": [],
+                  "answers": [
+                    {
+                      "concept": "a899f51a-1350-11df-a1f1-0026b9348838",
+                      "label": "RHZE"
+                    },
+                    {
+                      "concept": "a897d1a4-1350-11df-a1f1-0026b9348838",
+                      "label": "RHZ"
+                    },
+                    {
+                      "concept": "a8a382ba-1350-11df-a1f1-0026b9348838",
+                      "label": "RHE"
+                    },
+                    {
+                      "concept": "a899e19c-1350-11df-a1f1-0026b9348838",
+                      "label": "EH"
+                    },
+                    {
+                      "concept": "a8971c64-1350-11df-a1f1-0026b9348838",
+                      "label": "Ethambutol"
+                    },
+                    {
+                      "concept": "a896cc00-1350-11df-a1f1-0026b9348838",
+                      "label": "INH"
+                    },
+                    {
+                      "concept": "a8a3243c-1350-11df-a1f1-0026b9348838",
+                      "label": "MDR drugs"
+                    },
+                    {
+                      "concept": "a8ac5f2a-1350-11df-a1f1-0026b9348838",
+                      "label": "Pyrazinamide"
+                    },
+                    {
+                      "concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4",
+                      "label": "Rifabutin"
+                    },
+                    {
+                      "concept": "a897d0be-1350-11df-a1f1-0026b9348838",
+                      "label": "Rifampicin XXXXXX"
+                    },
+                    {
+                      "concept": "a8952e4a-1350-11df-a1f1-0026b9348838",
+                      "label": "Streptomycin"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    },
+                    {
+                      "concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4",
+                      "label": "Rifabutin"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
+                  "label": "tabs/day",
+                  "type": "number"
+                },
+                {
+                  "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
+                  "label": "mg",
+                  "type": "number"
+                },
+                {
+                  "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
+                  "label": "mg/day",
+                  "type": "number"
+                },
+                {
+                  "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
+                  "label": "tabs",
+                  "type": "number"
+                }
+              ]
             }
           ]
         },
