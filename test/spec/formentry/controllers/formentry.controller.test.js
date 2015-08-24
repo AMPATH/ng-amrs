@@ -83,8 +83,13 @@ jshint -W098, -W117, -W030
           expect(scope.vm).to.have.property('patient');
         });
 
-        it('Should get the form schema with encounter and obs property', function(){
-
+        it('Should have submit and cancel methods within the controller', function(){
+          expect(scope.vm.submit).to.exist;
+          expect(scope.vm.submit).to.be.an('function');
+          expect(scope.vm).to.have.property('submit');
+          expect(scope.vm.cancel).to.exist;
+          expect(scope.vm.cancel).to.be.an('function');
+          expect(scope.vm).to.have.property('cancel');
         });
       });
 

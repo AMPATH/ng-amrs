@@ -30,7 +30,6 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
         var params={uuid: $stateParams.encuuid };
         //var params = {uuid: '18a1f142-f2c6-4419-a5db-5f875020b887'};
         var encData;
-        $scope.vm.userFields = {};
         var selectedForm = $stateParams.formuuid;
         console.log('testing selected Form')
         console.log(selectedForm);
