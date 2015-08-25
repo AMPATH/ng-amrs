@@ -166,8 +166,8 @@
       etlRestService.getAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z', function () { }, function () { });
       httpBackend.flush();
     });
-    
-     it('should make an api call to the appointment schedule etl rest endpoint when getAppointmentSchedule is called with a location uuid, date range and paging parameters', function () {
+
+    it('should make an api call to the appointment schedule etl rest endpoint when getAppointmentSchedule is called with a location uuid, date range and paging parameters', function () {
       //case startIndex and limit are defined
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/appointment-schedule?endDate=2015-09-05T21:00:00.000Z&limit=10&startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
       etlRestService.getAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z', function () { }, function () { }, 0, 10);
@@ -184,7 +184,7 @@
       etlRestService.getAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z', function () { }, function () { }, undefined, 10);
       httpBackend.flush();
     });
-    
+
     it('should call the onSuccess callback getAppointmentSchedule request successfully returns', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/appointment-schedule?endDate=2015-09-05T21:00:00.000Z&startDate=2014-08-05T21:00:00.000Z').respond({});
       etlRestService.getAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z', callbacks.onSuccess, callbacks.onFailure);
@@ -203,6 +203,50 @@
       expect(callbacks.message.trim()).not.to.equal('');
     });
     
+    
+    //getMonthlyAppointmentSchedule method unit tests
+    it('should make an api call to the monthly appointment schedule etl rest endpoint when getMonthlyAppointmentSchedule is called with a location uuid and a date', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/monthly-appointment-schedule?startDate=2014-08-05T21:00:00.000Z').respond({});
+      etlRestService.getMonthlyAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', function () { }, function () { });
+      httpBackend.flush();
+    });
+
+    it('should make an api call to the monthly appointment schedule etl rest endpoint when getMonthlyAppointmentSchedule is called with a location uuid, date and paging parameters', function () {
+      //case startIndex and limit are defined
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/monthly-appointment-schedule?limit=10&startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
+      etlRestService.getMonthlyAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', function () { }, function () { }, 0, 10);
+      httpBackend.flush();
+      
+      
+      //case startIndex defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/monthly-appointment-schedule?startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
+      etlRestService.getMonthlyAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', function () { }, function () { }, 0, undefined);
+      httpBackend.flush();
+      
+      //case limit defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/monthly-appointment-schedule?limit=10&startDate=2014-08-05T21:00:00.000Z').respond({});
+      etlRestService.getMonthlyAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', function () { }, function () { }, undefined, 10);
+      httpBackend.flush();
+    });
+
+    it('should call the onSuccess callback getMonthlyAppointmentSchedule request successfully returns', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/monthly-appointment-schedule?startDate=2014-08-05T21:00:00.000Z').respond({});
+      etlRestService.getMonthlyAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', callbacks.onSuccess, callbacks.onFailure);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(true);
+      expect(callbacks.onFailedCalled).to.equal(false);
+    });
+
+    it('should call the onFailed callback when getMonthlyAppointmentSchedule request is not successfull', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/monthly-appointment-schedule?startDate=2014-08-05T21:00:00.000Z').respond(500);
+      etlRestService.getMonthlyAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', callbacks.onSuccess, callbacks.onFailure);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(false);
+      expect(callbacks.onFailedCalled).to.equal(true);
+      expect(callbacks.message).to.exist;
+      expect(callbacks.message.trim()).not.to.equal('');
+    });
+
 
 
   });
