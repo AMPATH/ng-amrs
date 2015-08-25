@@ -32,7 +32,7 @@
                 {"concept":"8b715fed-97f6-4e38-8f6a-c167a42f8923","label":"Yes"},
                 {"concept":"a899e0ac-1350-11df-a1f1-0026b9348838","label":"No"}
               ],
-              "validators":{}
+              "validators":[]
             },
             {
               "concept": "0f8b7f4e-1656-46b7-bc93-d1fe4f193f5d",
@@ -80,7 +80,7 @@
             {
               "concept": "dc1942b2-5e50-4adc-949d-ad6c905f054e",
               "label": "7b. If Unscheduled, actual scheduled date",
-              "type": "datepicker",
+              "type": "date",
               "validators": [
                 {
                   "type": "date",
@@ -261,8 +261,8 @@
             {
               "concept": "a89ff758-1350-11df-a1f1-0026b9348838",
               "label": "12a. Females: LMP",
-              "type": "datepicker",
-              "validators": "[type:date]"
+              "type": "date",
+              "validators": "[{type:date}]"
             },
             {
               "concept": "6b4f1d00-0a27-41dd-a299-fb7dc730819c",
@@ -429,7 +429,7 @@
             {
               "concept": "a89d200a-1350-11df-a1f1-0026b9348838",
               "label": "13c. If started since last visit record the date",
-              "type": "datepicker",
+              "type": "date",
               "validators": "[type:date]"
             },
             {
@@ -1578,20 +1578,15 @@
           "label": "Problem list",
           "questions": [
             {
-              "label": "Problem List",
+              "concept": "a89c2d8a-1350-11df-a1f1-0026b9348838",
+              "type": "group_repeating",
+              "label": "23a. Problem Added",
               "questions": [
                 {
-                  "concept": "a89c2d8a-1350-11df-a1f1-0026b9348838",
-                  "type": "group_repeating",
-                  "label": "23a. Problem Added",
-                  "questions": [
-                    {
-                      "concept": "a8ae835e-1350-11df-a1f1-0026b9348838",
-                      "label": "Problem Added",
-                      "type": "problem",
-                      "validators": []
-                    }
-                  ]
+                  "concept": "a8ae835e-1350-11df-a1f1-0026b9348838",
+                  "label": "Problem Added",
+                  "type": "problem",
+                  "validators": []
                 }
               ]
             },
@@ -2121,7 +2116,7 @@
                 {
                   "concept": "a8a176b4-1350-11df-a1f1-0026b9348838",
                   "label": "26b. If completed, date:",
-                  "type": "datepicker",
+                  "type": "date",
                   "validators": "[type:date]"
                 },
                 {
@@ -2170,7 +2165,7 @@
             {
               "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
               "label": "26d. If on treatment: start date:",
-              "type": "datepicker",
+              "type": "date",
               "validators": "[type:date]"
             },
             {
@@ -2512,7 +2507,7 @@
             {
               "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
               "label": "31. Return to clinic Date:",
-              "type": "datepicker",
+              "type": "date",
               "validators": [
                 {
                   "type": "date",
@@ -2526,7 +2521,3 @@
     }
   ]
 }
-
-
-
-

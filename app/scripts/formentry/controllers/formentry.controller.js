@@ -34,6 +34,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
         console.log('testing selected Form')
         console.log(selectedForm);
 
+
         $timeout(function () {
           // get form schema data
          //  var selectedForm = $stateParams.formuuid;
@@ -95,9 +96,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
               $scope.vm.error = '';
             }
             var form = FormsMetaData.getForm($stateParams.formuuid);
+            console.log($stateParams.formuuid)
             console.log('Selected Form');
             console.log(form);
-            var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.tabs, $scope.vm.patient,form);
+            var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.tabs, $scope.vm.patient,form,params.uuid);
             if (!_.isEmpty(payLoad.obs))
             {
                 /*
@@ -111,7 +113,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
                       var dlg=dialogs.notify('Success', $scope.vm.success);
                       if($scope.vm.submitLabel === 'Update')
                       {
-                        var obsToVoid = _.where(updatedPayLoad.obs,{voided:true});
+                        var obsToVoid = _.where(payLoad.obs,{voided:true});
                         console.log('Obs to Void: ', obsToVoid);
                         if(obsToVoid !== undefined)
                         {
@@ -125,7 +127,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
                           })
                         }
                       }
-
+                      console.log('Previous State')
+                      console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
                       $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
                     }
                   });

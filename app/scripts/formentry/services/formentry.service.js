@@ -163,6 +163,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         {
           var val = _.filter(obs, function(obs_){
           //console.log(obs);
+          if(key !== undefined)
             if(obs_.concept.uuid === key.split('_')[1]) return obs_;
           });
           return val;
@@ -228,17 +229,23 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   else if(_field.key === 'encounterProvider')
                   {
 
-                    sec_data['encounterProvider'] = enc_data.provider.uuid;
-                    _field.data['init_val'] = enc_data.provider.uuid;
-                    //console.log('test Model');
-                    //console.log(model);
+                    if (enc_data.provider !== undefined)
+                    {
+                      sec_data['encounterProvider'] = enc_data.provider.uuid;
+                      _field.data['init_val'] = enc_data.provider.uuid;
+                      //console.log('test Model');
+                      //console.log(model);
+                    }
                   }
                   else if(_field.key === 'encounterLocation')
                   {
-                    sec_data['encounterLocation'] = enc_data.location.uuid;
-                    _field.data['init_val'] = enc_data.location.uuid;
-                    //console.log('test Model');
-                    //console.log(model);
+                    if (enc_data.location !== undefined)
+                    {
+                      sec_data['encounterLocation'] = enc_data.location.uuid;
+                      _field.data['init_val'] = enc_data.location.uuid;
+                      //console.log('test Model');
+                      //console.log(model);
+                    }
                   }
                   else if(_field.type === 'select' || _field.type === 'radio' || _field.type === 'ui-select-extended')
                   {
@@ -369,13 +376,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                }
                              }
                              else {
-                              //  console.log(group_data)
+                                console.log(group_data)
                               //  console.log(group_data[0].groupMembers)
-
-                               var val = _.find(group_data[0].groupMembers, function(obs){
-                                 //console.log(obs)
-                                 if(obs.concept.uuid === _group_field.key.split('_')[1]) return obs;
-                               });
+                              var val;
+                               if(group_data.length>0)
+                               {
+                                 val = _.find(group_data[0].groupMembers, function(obs){
+                                   //console.log(obs)
+                                   if(obs.concept.uuid === _group_field.key.split('_')[1]) return obs;
+                                 });
+                               }
 
                               //  console.log(val)
                               //  console.log('Key: ', _group_field.key.split('_')[1])
@@ -398,10 +408,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                              }
                            }
                            else {
+                             var val;
                              //if the field group section field is a multi select
-                             var val = _.filter(group_data[0].groupMembers, function(obs){
-                               if(obs.concept.uuid === _group_field.key.split('_')[1]) return obs;
-                             });
+                             if(group_data.length>0)
+                             {
+                               val = _.filter(group_data[0].groupMembers, function(obs){
+                                 if(obs.concept.uuid === _group_field.key.split('_')[1]) return obs;
+                               });
+                             }
                              var multiArr = [];
                              var multi_uuid = [];
                              if(val !== undefined)
@@ -419,7 +433,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           //  console.log(group_val)
                            if(typeof group_val==='object')
                            {
-                             if(!_.isEmpty(group_val))
+                             if(group_val!==null || group_val !== '' || group_val !== '')
                              {
                                 sec_data[field_key] = group_val;
                              }
