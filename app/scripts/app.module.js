@@ -20,7 +20,6 @@
       'ngTouch',
       'ui.router',
       'ui.bootstrap',
-    //'app.context',
       'app.authentication',
       'app.patientsearch',
       'app.patientdashboard',
