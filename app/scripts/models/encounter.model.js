@@ -10,116 +10,143 @@
 
   function EncounterModel() {
     var service = {
-      encounter: encounter
+      model: Model,
+      toArrayOfModels: toArrayOfModels
     };
 
     return service;
 
-    function encounter(uuid_, encounterTypeName_, encounterTypeUuid_, formUuid_, providerName_, providerUuid_, encounterDate_, locationName_, locationUuid_) {
+    function Model(openmrsModel) {
       var modelDefinition = this;
-
+      
+      //Evaluate the passed models for non-existent propertis.
+      openmrsModel.encounterType = openmrsModel.encounterType || {};
+      openmrsModel.patient = openmrsModel.patient || {};
+      openmrsModel.provider = openmrsModel.provider || {};
+      openmrsModel.location = openmrsModel.location || {};
+      openmrsModel.form = openmrsModel.form || {};
+      
       //initialize private members
-      var _uuid = uuid_ ? uuid_ : '' ;
-      var _encounterTypeName = encounterTypeName_ ? encounterTypeName_ : '' ;
-      var _encounterTypeUuid = encounterTypeUuid_ ? encounterTypeUuid_ : '' ;
-      var _providerName = providerName_ ? providerName_ : '' ;
-      var _providerUuid = providerUuid_ ? providerUuid_ : '' ;
-      var _encounterDate = encounterDate_ ? encounterDate_ : '' ;
-      var _locationName = locationName_ ? locationName_ : '' ;
-      var _locationUuid = locationUuid_ ? locationUuid_ : '' ;
-      var _formUuid = formUuid_ ? formUuid_ : '' ;
+      var _uuid = openmrsModel.uuid || '' ;
+      var _patientUuid = openmrsModel.patient.uuid || '';
+      var _encounterTypeName = openmrsModel.encounterType.display ||'';
+      var _encounterTypeUuid = openmrsModel.encounterType.uuid || '';
+      var _providerName = openmrsModel.provider.display || '';
+      var _providerUuid = openmrsModel.provider.uuid || '';
+      var _encounterDate = openmrsModel.encounterDatetime || '';
+      var _locationName = openmrsModel.location.display || '';
+      var _locationUuid = openmrsModel.location.uuid || '';
+      var _formUuid = openmrsModel.form.uuid || '';
+      var _formName = openmrsModel.form.name || '';
 
       modelDefinition.uuid = function(value) {
         if (angular.isDefined(value)) {
           _uuid = value;
-        }
-        else {
+        } else {
           return _uuid;
         }
       };
-
+      
+      modelDefinition.patientUuid = function(value) {
+        if(angular.isDefined(value)) {
+          _patientUuid = value;
+        } else {
+          return _patientUuid;
+        }
+      };
+      
       modelDefinition.encounterTypeName = function(value) {
-              if (angular.isDefined(value)) {
-                _encounterTypeName = value;
-              }
-              else {
-                return _encounterTypeName;
-              }
-            };
+        if (angular.isDefined(value)) {
+          _encounterTypeName = value;
+        } else {
+          return _encounterTypeName;
+        }
+      };
 
       modelDefinition.encounterTypeUuid = function(value) {
-              if (angular.isDefined(value)) {
-                      _encounterTypeUuid = value;
-                    }
-              else {
-                      return _encounterTypeUuid;
-                    }
-                  };
+        if (angular.isDefined(value)) {
+          _encounterTypeUuid = value;
+        } else {
+          return _encounterTypeUuid;
+        }
+      };
 
       modelDefinition.providerName = function(value) {
-              if (angular.isDefined(value)) {
-                _providerName = value;
-              }
-              else {
-                return _providerName;
-              }
-            };
+        if (angular.isDefined(value)) {
+          _providerName = value;
+        } else {
+          return _providerName;
+        }
+      };
 
       modelDefinition.providerUuid = function(value) {
-              if (angular.isDefined(value)) {
-                _providerUuid = value;
-              }
-              else {
-                return _providerUuid;
-              }
-            };
+        if (angular.isDefined(value)) {
+          _providerUuid = value;
+        } else {
+          return _providerUuid;
+        }
+      };
 
       modelDefinition.encounterDate = function(value) {
-              if (angular.isDefined(value)) {
-                _encounterDate = value;
-              }
-              else {
-                return _encounterDate;
-              }
-            };
+        if (angular.isDefined(value)) {
+          _encounterDate = value;
+        } else {
+          return _encounterDate;
+        }
+      };
 
       modelDefinition.locationName = function(value) {
-                    if (angular.isDefined(value)) {
-                      _locationName = value;
-                    }
-                    else {
-                      return _locationName;
-                    }
-                  };
+        if (angular.isDefined(value)) {
+          _locationName = value;
+        } else {
+          return _locationName;
+        }
+      };
       modelDefinition.locationUuid = function(value) {
-                  if (angular.isDefined(value)) {
-                                  _locationUuid = value;
-                              }
-                  else {
-                                  return _locationUuid;
-                                }
-                              };
+        if (angular.isDefined(value)) {
+          _locationUuid = value;
+        } else {
+          return _locationUuid;
+        }
+      };
 
       modelDefinition.formUuid = function(value) {
-                  if (angular.isDefined(value)) {
-                      _formUuid = value;
-                      }
-                  else {
-                        return _formUuid;
-                        }
-              };
+        if (angular.isDefined(value)) {
+            _formUuid = value;
+        } else {
+          return _formUuid;
+        }
+      };
+      
+      modelDefinition.formName = function(value) {
+        if(angular.isDefined(value)) {
+          _formName = value;
+        } else {
+          return _formName;
+        }
+      };        
 
-      modelDefinition.openmrsModel = function(value) {
-              return {uuid: _uuid,
-                      encounterTypeName: _encounterTypeName,
-                      encounterTypeUuid: _encounterTypeUuid,
-                      providerName: _providerName,
-                      providerUuid: _providerUuid,
-                      encounterDate: _encounterDate,
-                      locationName: _locationName,
-                      locationUuid: _locationUuid,
-                      formUuid: _formUuid};
-            };
+      modelDefinition.openmrsModel = function() {
+        /* jshint ignore:start */
+        return {
+            "uuid" : _uuid,
+            "patient" : _patientUuid,
+            "encounterDatetime" : _encounterDate,
+            "encounterType" : _encounterTypeUuid,
+            "provider" : _providerUuid,
+            "location" : _locationUuid,
+            "form" : _formUuid
+        };
+        /* jshint ignore:end */
+      };
+    }
+    
+    function toArrayOfModels(encounterArray) {
+      var modelArray = [];
+      for(var i=0; i<encounterArray.length; i++) {
+        modelArray.push(new Model(encounterArray[i]));
+      }
+      return modelArray;
     }
   }
 })();
