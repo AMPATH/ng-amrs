@@ -10,23 +10,25 @@
 
   function EncounterModel() {
     var service = {
-      encounter: Encounter,
+      model: Model,
       toArrayOfModels: toArrayOfModels
     };
 
     return service;
 
-    function Encounter(openmrsModel) {
+    function Model(openmrsModel) {
       var modelDefinition = this;
       
       //Evaluate the passed models for non-existent propertis.
       openmrsModel.encounterType = openmrsModel.encounterType || {};
+      openmrsModel.patient = openmrsModel.patient || {};
       openmrsModel.provider = openmrsModel.provider || {};
       openmrsModel.location = openmrsModel.location || {};
       openmrsModel.form = openmrsModel.form || {};
       
       //initialize private members
       var _uuid = openmrsModel.uuid || '' ;
+      var _patientUuid = openmrsModel.patient.uuid || '';
       var _encounterTypeName = openmrsModel.encounterType.display ||'';
       var _encounterTypeUuid = openmrsModel.encounterType.uuid || '';
       var _providerName = openmrsModel.provider.display || '';
@@ -44,7 +46,15 @@
           return _uuid;
         }
       };
-
+      
+      modelDefinition.patientUuid = function(value) {
+        if(angular.isDefined(value)) {
+          _patientUuid = value;
+        } else {
+          return _patientUuid;
+        }
+      };
+      
       modelDefinition.encounterTypeName = function(value) {
         if (angular.isDefined(value)) {
           _encounterTypeName = value;
@@ -120,6 +130,7 @@
         /* jshint ignore:start */
         return {
             "uuid" : _uuid,
+            "patient" : _patientUuid,
             "encounterDatetime" : _encounterDate,
             "encounterType" : _encounterTypeUuid,
             "provider" : _providerUuid,
@@ -133,7 +144,7 @@
     function toArrayOfModels(encounterArray) {
       var modelArray = [];
       for(var i=0; i<encounterArray.length; i++) {
-        modelArray.push(new Encounter(encounterArray[i]));
+        modelArray.push(new Model(encounterArray[i]));
       }
       return modelArray;
     }

@@ -6,35 +6,54 @@
     .controller('EncounterCtrl', EncounterCtrl);
 
   EncounterCtrl.$inject = [
-                        '$scope',
                         '$stateParams',
                         '$timeout',
                         'EncounterResService',
-                        'EncounterModel'
+                        'EncounterModel',
+                        '$location'
                       ];
 
-  function EncounterCtrl($scope, $stateParams, $timeout, EncounterResService,
-                         EncounterModel) {
+  function EncounterCtrl($stateParams, $timeout, EncounterResService,
+                         EncounterModel, $location) {
     var vm = this;
     vm.encounterList = [];
-    vm.status = {};
     vm.selectedEncounter = null;
     vm.experiencedLoadingError = false;
+    vm.isBusy = true;
+    vm.hasEncounters = false;
     vm.setSelected = function(encounter) {
       vm.selectedEncounter = encounter;
     }
-
+    
+    vm.loadEncounterForm = function(EncounterModel) {
+        $location.path('/encounter/' + EncounterModel.uuid() + '/patient/' +
+          EncounterModel.patientUuid());
+    }
+    
+    vm.showNoEncounters = function() {
+      return !vm.isBusy && !vm.experiencedLoadingError && !hasEncounters;
+    }
+    
     $timeout(function(){
       var params = {
         patientUuid: $stateParams.uuid
       }
       vm.experiencedLoadingError = false;
-      EncounterResService.getPatientEncounters(params, function(data) {
-        vm.encounterList = EncounterModel.toArrayOfModels(data);
-      }, function(error) {
-          vm.experiencedLoadingError = true; 
-          console.error('An error ' + error +' occured');
-      })
+      EncounterResService.getPatientEncounters(params, onLoadEncountersSuccess,
+        onLoadEncountersError);
     }, 1000);
+    
+    function onLoadEncountersSuccess(data) {
+      vm.isBusy = false;
+      vm.encounterList = EncounterModel.toArrayOfModels(data);
+      vm.hasEncounters = vm.encounterList.length > 0 ? true : false;
+    }
+    
+    function onLoadEncountersError(error) {
+      vm.isBusy = false;
+      vm.experiencedLoadingError = true;
+      console.error('Error: EncounterController An error' + error + 
+                    'occured while loading');
+    }
   }
 })();

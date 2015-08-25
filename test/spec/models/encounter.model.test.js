@@ -1,11 +1,11 @@
-/*
-jshint -W030
-*/
+/* jshint -W030 */
+/* jshint -W117 */
 (function () {
   'use strict';
 
   describe('EncounterModel Factory Unit Tests', function () {
     var EncounterModelFactory;
+    /* jshint ignore:start */
     var testOpenmrsEncounterJson = {
       "uuid": "encounter-test-uuid",
       "encounterDatetime": "2010-05-07T00:00:00.000+0300",
@@ -47,6 +47,7 @@ jshint -W030
         ]
       }
     };
+    /* jshint ignore:end */
     
     beforeEach(function () {
       module('models');
@@ -61,16 +62,18 @@ jshint -W030
     });
 
     it('It should create encounter model with correct values', function() {
-      var model = new EncounterModelFactory.encounter(testOpenmrsEncounterJson);
+      var model = new EncounterModelFactory.model(testOpenmrsEncounterJson);
+      /* jshint ignore:start */
       var expectedOpenmrsModel = {
         "uuid" : testOpenmrsEncounterJson.uuid,
+        "patient" : testOpenmrsEncounterJson.patient.uuid,
         "encounterDatetime" : testOpenmrsEncounterJson.encounterDatetime,
         "encounterType" : testOpenmrsEncounterJson.encounterType.uuid,
         "provider" : testOpenmrsEncounterJson.provider.uuid,
         "location" : testOpenmrsEncounterJson.location.uuid,
         "form" : testOpenmrsEncounterJson.form.uuid
       };
-      
+      /* jshint ignore:end */
       expect(model.uuid).to.exist;
       expect(model.encounterTypeName).to.exist;
       expect(model.encounterTypeUuid).to.exist;
@@ -101,6 +104,7 @@ jshint -W030
     
     it('toArrayOfModels should generate an array of models from array of ' +
        'openmrs models', function(){
+      /* jshint ignore:start */
       var encounterArray = [{
           "uuid": "encounter-uuid-1"
         }, {
@@ -109,7 +113,7 @@ jshint -W030
           "uuid": "encounter-uuid-3"
         }
       ];
-        
+      /* jshint ignore:end */  
       var modelArray = EncounterModelFactory.toArrayOfModels(encounterArray);
       
       expect(modelArray).to.be.an('array');
