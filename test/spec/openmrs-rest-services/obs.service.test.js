@@ -36,5 +36,26 @@
         httpBackend.flush();
       });
 
+      it('should make an api call to the obs resource when voidObs is called with a uuid', function () {
+        httpBackend.expectDELETE(settingsService.getCurrentRestUrlBase() + 'obs?v='+v).respond(mockData.getMockObs());
+        obsService.voidObs('passed-uuid', function (data){
+          expect(data.uuid).to.equal('passed-uuid');
+         });
+        httpBackend.flush();
+      });
+
+      it('ObsService should have getObsByUuid method', function () {
+        expect(obsService.getObsByUuid).to.be.an('function');
+      });
+
+      it('ObsService should have voidObs method', function () {
+        expect(obsService.voidObs).to.be.an('function');
+      });
+
+      it('ObsService should have saveUpdateObs method', function () {
+        expect(obsService.saveUpdateObs).to.be.an('function');
+      });
+
+
     });
 })();

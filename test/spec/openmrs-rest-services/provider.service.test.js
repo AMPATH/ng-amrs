@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  describe('Open MRS Location Service Unit Tests', function () {
+  describe('Open MRS Provider Service Unit Tests', function () {
     beforeEach(function () {
       module('app.openmrsRestServices');
     });
@@ -74,7 +74,7 @@
       expect(callbacks.message).to.exist;
       expect(callbacks.message.trim()).not.to.equal('');
     });
-    
+
     it('should call the onSuccess callback findProvider request successfully returns', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'provider?q=passed-text&v=default').respond({});
       providerService.findProvider('passed-text',callbacks.onSuccess, callbacks.onFailure);
