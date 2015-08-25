@@ -694,15 +694,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           var section;
 
           // console.log('Test sample model');
-          // console.log(model)
+          console.log(model)
           _.each (Object.keys(model), function(obj){
             val = model[obj];
-            //console.log('Section: '+ obj + 'No of Keys: '+ Object.keys(val).length);
+            console.log('Section: '+ obj + ' No of Keys: '+ Object.keys(val).length);
 
             //check if the current key is an object
             if(typeof val === 'object')
             {
               //This should be a section
+              console.log(obj);
               if(obj.startsWith('section')){
 
                 _.each(Object.keys(val), function(key){

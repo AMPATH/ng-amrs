@@ -13,10 +13,45 @@
       var mock_data = {
               getMockSchema: getMockSchema,
               getMockStates: getMockStates,
-              getMockObs: getMockObs
+              getMockObs: getMockObs,
+              getMockModel: getMockModel,
+              getMockPatient: getMockPatient
           };
 
           return mock_data;
+
+          function getMockPatient(){
+            return {
+              identifiers:['test-patient'],
+            person:{
+              age: 63,
+              birthdate: '1951-12-09T00:00:00.000+0245',
+              dead: false,
+              deathDate: null,
+              gender: 'F',
+              preferredName:{
+                familyName: 'Testty',
+                givenName: 'Testty',
+                middleName: 'Testty'
+              },
+              preferredAddress: {
+                address1: null,
+                address2: null,
+                address3: null,
+                address4: 'AINABKOI',
+                address5: 'KIPKURERE',
+                address6: 'TIMBOROA',
+                cityVillage: 'KAHUHO A',
+                country: null,
+                countyDistrict: 'ELDORET EAST',
+                postalCode: null,
+                preferred: true,
+                stateProvince: null},
+              attributes: '_attributes'
+            },
+            uuid: 'xxxx',
+            };
+          }
 
           function getMockObs()
           {
@@ -49,22 +84,86 @@
 
           function getMockSchema() {
               return {
-                'schema':{
-                  'form':{'name':'form1', 'uuid':'xxx'},
-                  'encounter':[{'encounterDatetime':'', 'type':'datepicker'},
-                              {'encounterProvider':'','type':'provider-field'},
-                              {'encounterLocation':'','type':'location-field'}],
-                  'obs':[
-                    {'obsConceptGroupUuid':'1234567',
-                    'obsConceptUuid':'12345', 'type':'number',
-                    'label':'Weight(Kg)'}
+                "name": "test-form",
+                "uuid": "xxxx",
+                "processor": "postEncounterForm",
+                "pages": [
+                  {
+                    "label":"page 1",
+                    "sections":[
+                      {
+                        "label":"Encounter Details",
+                        "questions":[
+                          {
+                            "label": "Visit Date",
+                            "type": "encounterDate",
+                            "required": "true"
+                          },
+                          {
+                            "type": "encounterProvider",
+                            "label": "Provider",
+                            "required": "true"
+                          },
+                          {
+                            "type": "encounterLocation",
+                            "label": "Facility Name",
+                            "required": "true"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "label":"Page 2",
+                    "sections":[
+                      {
+                        "label": "Visit Type",
+                        "questions": [
+                          {
+                            "concept": "a89ff9a6-1350-11df-a1f1-0026b9348838",
+                            "label": "7a. Visit Type",
+                            "type": "select",
+                            "validators": [],
+                            "answers":[
+                              {"concept": "a89b6440-1350-11df-a1f1-0026b9348838", "label": "Scheduled visit"},
+                              {"concept": "a89ff816-1350-11df-a1f1-0026b9348838", "label": "Unscheduled Visit Early"},
+                              {"concept": "a89ff8de-1350-11df-a1f1-0026b9348838", "label": "Unscheduled Visit Late"}
+                            ]
+                          },
+                          {
+                            "concept": "dc1942b2-5e50-4adc-949d-ad6c905f054e",
+                            "type": "date",
+                            "validators": [ {"type": "date", "allowFutureDates": "true"} ],
+                            "label": "7b. If Unscheduled, actual scheduled date"
+                          }
+                        ]
+                      },
+                      {
+                        "label":"Problem List",
+                        "questions":[
+                          {
+                            "concept": "a89c2d8a-1350-11df-a1f1-0026b9348838",
+                            "type": "group_repeating",
+                            "label": "23a. Problem Added",
+                            "questions":[
+                              {
+                                "concept": "a8ae835e-1350-11df-a1f1-0026b9348838",
+                                "label": "Problem Added",
+                                "type": "problem",
+                                "validators": []
+                              }
+                            ]
+                          }
+                    ]
+                  }
                   ]
                 }
+                ]
               };
           }
 
-          function getMockModel()
-          {
+      function getMockModel()
+      {
             return {
         "section_1": {
           "encounterDate": "2015-08-18T00:00:00.000+0300",
@@ -76,22 +175,14 @@
           "obs_dc1942b2-5e50-4adc-949d-ad6c905f054e": "2015-08-04T00:00:00.000+0300"
         },
         "section_3": {
-          "obs2_a8afdb8c-1350-11df-a1f1-0026b9348838": [
-            {
-              "obs_a8a07386-1350-11df-a1f1-0026b9348838": "44",
-              "obs_a899e444-1350-11df-a1f1-0026b9348838": "a897d1a4-1350-11df-a1f1-0026b9348838"
-            }
-          ]
-        },
-        "section_4": {
           "obs4_a89c2d8a-1350-11df-a1f1-0026b9348838": [
             {
-              "obs_a8af4aa0-1350-11df-a1f1-0026b9348838": "a890e4b6-1350-11df-a1f1-0026b9348838"
+              "obs_a8ae835e-1350-11df-a1f1-0026b9348838": "a890e4b6-1350-11df-a1f1-0026b9348838"
             }
           ]
         }
       };
-        }
+    }
 
 
     }
