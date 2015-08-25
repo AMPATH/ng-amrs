@@ -268,7 +268,7 @@
               "concept": "a89ff758-1350-11df-a1f1-0026b9348838",
               "label": "12a. Females: LMP",
               "type": "date",
-              "validators": "[{type:date}]"
+              "validators": [{"type":"date"}]
             },
             {
               "concept": "6b4f1d00-0a27-41dd-a299-fb7dc730819c",
@@ -436,7 +436,7 @@
               "concept": "a89d200a-1350-11df-a1f1-0026b9348838",
               "label": "13c. If started since last visit record the date",
               "type": "date",
-              "validators": "[type:date]"
+              "validators": [{"type":"date"}]
             },
             {
               "concept": "04616f5d-b961-4f41-bbd7-bcc0dd235577",
@@ -1376,63 +1376,63 @@
                       "label": "WBC/mm3",
                       "type": "number",
                       "showDate": "true",
-                      "validators": []
+                      "validators": [{"type":"date"}]
                     },
                     {
                       "concept": "a8908a16-1350-11df-a1f1-0026b9348838",
                       "label": "Hgb g/dL",
                       "type": "number",
                       "showDate": "true",
-                      "validators": []
+                      "validators": [{"type":"date"}]
                     },
                     {
                       "concept": "a898201e-1350-11df-a1f1-0026b9348838",
                       "label": "MCV",
                       "type": "number",
                       "showDate": "true",
-                      "validators": []
+                      "validators": [{"type":"date"}]
                     },
                     {
                       "concept": "a898b20e-1350-11df-a1f1-0026b9348838",
                       "label": "ALC/ mm3",
                       "type": "number",
                       "showDate": "true",
-                      "validators": []
+                      "validators": [{"type":"date"}]
                     },
                     {
                       "concept": "a8a8bb18-1350-11df-a1f1-0026b9348838",
                       "type": "number",
                       "label": "CD4:",
                       "showDate": "true",
-                      "validators": []
+                      "validators": [{"type":"date"}]
                     },
                     {
                       "concept": "a8970a26-1350-11df-a1f1-0026b9348838",
                       "type": "number",
                       "label": "CD4%:",
                       "showDate": "true",
-                      "validators": {}
+                      "validators": [{"type":"date"}]
                     },
                     {
                       "concept": "a8982474-1350-11df-a1f1-0026b9348838",
                       "type": "number",
                       "label": "Viral Load:",
                       "showDate": "true",
-                      "validators": {}
+                      "validators": [{"type":"date"}]
                     },
                     {
                       "concept": "a897e450-1350-11df-a1f1-0026b9348838",
                       "type": "number",
                       "label": "Creatinine mmol/L:",
                       "showDate": "true",
-                      "validators": {}
+                      "validators": [{"type":"date"}]
                     },
                     {
                       "concept": "a896ca48-1350-11df-a1f1-0026b9348838",
                       "type": "number",
                       "label": "SGPT(ALT):",
                       "showDate": "true",
-                      "validators": {}
+                      "validators": [{"type":"date"}]
                     }
                   ]
                 },
@@ -1462,7 +1462,7 @@
                       ],
                       "showDate": "true",
                       "type": "select",
-                      "validators": "[:]"
+                      "validators": [{"type":"date"}]
                     },
                     {
                       "concept": "a8945d4e-1350-11df-a1f1-0026b9348838",
@@ -1499,7 +1499,7 @@
                       ],
                       "showDate": "true",
                       "type": "select",
-                      "validators": "[:]"
+                      "validators": [{"type":"date"}]
                     },
                     {
                       "concept": "a8a462a2-1350-11df-a1f1-0026b9348838",
@@ -1528,7 +1528,7 @@
                       ],
                       "showDate": "true",
                       "type": "select",
-                      "validators": "[:]"
+                      "validators": [{"type":"date"}]
                     },
                     {
                       "concept": "a8908192-1350-11df-a1f1-0026b9348838",
@@ -1569,7 +1569,7 @@
                       ],
                       "showDate": "true",
                       "type": "select",
-                      "validators": "[:]"
+                      "validators": [{"type":"date"}]
                     }
                   ]
                 }
@@ -2123,7 +2123,7 @@
                   "concept": "a8a176b4-1350-11df-a1f1-0026b9348838",
                   "label": "26b. If completed, date:",
                   "type": "date",
-                  "validators": "[type:date]"
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
@@ -2172,7 +2172,7 @@
               "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
               "label": "26d. If on treatment: start date:",
               "type": "date",
-              "validators": "[type:date]"
+              "validators":[{"type":"date"}]
             },
             {
               "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",

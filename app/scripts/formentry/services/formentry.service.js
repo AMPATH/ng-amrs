@@ -1243,7 +1243,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 required:required
               },
               validators: {
-                dateValidator: getFieldValidator(sec_field.validators[0]) //this  will require refactoring as we move forward
+                dateValidator: getFieldValidator(obs_field.validators[0]) //this  will require refactoring as we move forward
               }
             }
           }
@@ -1373,7 +1373,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 datepickerPopup: 'dd-MMMM-yyyy'
                 },
               validators: {
-                dateValidator: getFieldValidator(sec_field.validators[0]) //this  will require refactoring as we move forward
+                dateValidator: getFieldValidator(curField.validators[0]) //this  will require refactoring as we move forward
                 }
               }
               groupingFields.push(dateField);
