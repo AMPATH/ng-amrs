@@ -33,8 +33,8 @@
             <td>{{encounterModel.encounterDate() | date: 'MMM dd, yyyy'}}</td>
             <td>{{encounterModel.encounterTypeName()}}</td>
             <td>{{encounterModel.formName()}}</td>
-            <td>{{encounterModel.locationName()}}</td>
-            <td>{{encounterModel.providerName()}}</td>
+            <td>{{encounterModel.locationName() | titlecase}}</td>
+            <td>{{encounterModel.providerName() | titlecase}}</td>
             <td>
               <a href="#/encounter/{{encounterModel.uuid()}}/patient/{{encounterModel.patientUuid()}}"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
             </td>
