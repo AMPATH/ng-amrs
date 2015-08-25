@@ -31,7 +31,7 @@
     }
     
     vm.showNoEncounters = function() {
-      return !vm.isBusy && !vm.experiencedLoadingError && !hasEncounters;
+      return !vm.isBusy && !vm.experiencedLoadingError && !vm.hasEncounters;
     }
     
     $timeout(function(){

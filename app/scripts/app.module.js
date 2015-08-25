@@ -24,7 +24,8 @@
       'app.patientsearch',
       'app.patientdashboard',
       'app.clinicDashboard',
-      'app.formentry'
+      'app.formentry',
+      'app.utils'
     ])
     .config(function ($stateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');
