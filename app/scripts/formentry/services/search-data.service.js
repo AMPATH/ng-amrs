@@ -8,19 +8,23 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
         .module('app.formentry')
         .factory('SearchDataService', SearchDataService);
 
-    SearchDataService.$inject = ['ProviderResService', 'LocationResService', 'LocationModel', 'ProviderModel', 'ConceptResService', 'ConceptModel'];
+    SearchDataService.$inject = ['ProviderResService', 'LocationResService', 'LocationModel', 'ProviderModel','ConceptResService', 'ConceptModel','DrugResService','DrugModel'];
 
-    function SearchDataService(ProviderResService, LocationResService, LocationModelFactory, ProviderModelFactory, ConceptResService, ConceptModelFactory) {
-        
+    function SearchDataService(ProviderResService, LocationResService, LocationModelFactory, ProviderModelFactory, ConceptResService, ConceptModelFactory, DrugResService, DrugModelFactory) {
+
         var problemConceptClassesArray = ['Diagnosis','Symptom','Symptom/Finding','Finding'];
-        
+        var drugConceptClassesArray=['Drug'];
         var service = {
             findProvider: findProvider,
             getProviderByUuid: getProviderByPersonUuid,
             findLocation: findLocation,
             getLocationByUuid: getLocationByUuid,
             findProblem:findProblem,
-            getProblemByUuid:getProblemByUuid
+            getProblemByUuid:getProblemByUuid,
+            findDrugConcepts:findDrugConcepts,
+            getDrugConceptByUuid:getDrugConceptByUuid,
+            findDrugs:findDrugs,
+            findDrugByUuid:findDrugByUuid
         };
 
         return service;
@@ -92,6 +96,63 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
                 });
         }
 
+        function findDrugConcepts(searchText, onSuccess, onError) {
+          ConceptResService.findConcept(searchText,
+            function (concepts) {
+              var filteredConcepts = ConceptResService.filterResultsByConceptClassesName(concepts,drugConceptClassesArray);
+              var wrapped = wrapConcepts(filteredConcepts);
+              onSuccess(wrapped);
+            },
+            function (error) {
+              onError(onError);
+            });
+        }
+
+        function getDrugConceptByUuid(uuid, onSuccess, onError) {
+          ConceptResService.getConceptByUuid(uuid,
+            function (concept) {
+              var wrapped = wrapConcept(concept);
+              onSuccess(wrapped);
+            },
+            function (error) {
+              onError(onError);
+            });
+        }
+
+        function findDrugs(searchText, onSuccess, onError) {
+          DrugResService.findDrugs(searchText,
+            function (drugs) {
+              var wrapped = wrapDrugs(drugs);
+              onSuccess(wrapped);
+            },
+            function (error) {
+              onError(onError);
+            });
+        }
+
+        function findDrugByUuid(uuid, onSuccess, onError) {
+          DrugResService.findDrugByUuid(uuid,
+            function (drug) {
+              var wrapped = wrapDrug(drug);
+              onSuccess(wrapped);
+            },
+            function (error) {
+              onError(onError);
+            });
+        }
+
+        function wrapDrug(drug) {
+          return DrugModelFactory.toWrapper(drug);
+        }
+
+        function wrapDrugs(drugs) {
+          var wrappedDrugs = [];
+          for (var i = 0; i < drugs.length; i++) {
+            wrappedDrugs.push(wrapDrug(drugs[i]));
+          }
+          return wrappedDrugs;
+        }
+
         function wrapProvider(provider) {
             return ProviderModelFactory.toWrapper(provider);
         }
@@ -115,11 +176,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
         function wrapLocation(location) {
             return LocationModelFactory.toWrapper(location);
         }
-        
+
         function wrapConcept(concept) {
             return ConceptModelFactory.toWrapper(concept);
         }
-        
+
         function wrapConcepts(concepts) {
             var wrappedObjects = [];
             for (var i = 0; i < concepts.length; i++) {

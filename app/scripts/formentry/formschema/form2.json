@@ -3183,6 +3183,18 @@
               ]
             },
             {
+              "type": "group_repeating",
+              "label": "23 Additional Drugs",
+              "questions": [
+                {
+                  "concept": "a8af4aa0-1350-11df-a1f1-0026b9348838",
+                  "label": "Drug",
+                  "type": "drug",
+                  "validators": []
+                }
+              ]
+            },
+            {
               "concept": "a89fe628-1350-11df-a1f1-0026b9348838",
               "type": "group",
               "questions": [

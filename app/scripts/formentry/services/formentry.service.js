@@ -1306,6 +1306,26 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               }
             };
           }
+          else if(obs_field.type === 'drug'){
+            var required=false;
+            if (obs_field.required !== undefined) required=Boolean(obs_field.required);
+            obsField = {
+              key: 'obs_' + obs_field.concept,
+              type: 'ui-select-extended',
+              data: {concept:obs_field.concept,
+                answer_value:''},
+              templateOptions: {
+                type: 'text',
+                label: obs_field.label,
+                valueProp: 'uuId',
+                labelProp:'display',
+                deferredFilterFunction: SearchDataService.findDrugConcepts,
+                getSelectedObjectFunction: SearchDataService.getDrugConceptByUuid,
+                required:required,
+                options:[]
+              }
+            };
+          }
           return obsField;
         }
 
