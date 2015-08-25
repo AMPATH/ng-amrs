@@ -22,6 +22,7 @@ jshint -W098, -W117, -W030
         module('ngAmrsApp');
         module('app.openmrsRestServices');
         module('app.formentry');
+        module('models');
         module('mock.data');
 
       });

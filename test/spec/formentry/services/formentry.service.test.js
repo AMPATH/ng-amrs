@@ -5,6 +5,7 @@
       beforeEach(function(){
           module('app.formentry');
           module('mock.data');
+          module('models');
       });
 
       var searchDataService;
@@ -12,6 +13,7 @@
       var mockData;
       var moment;
       var formentryService;
+      var patientModel;
 
       beforeEach(inject(function ($injector) {
         moment = $injector.get('moment');
@@ -19,6 +21,28 @@
         searchDataService = $injector.get('SearchDataService');
         mockData = $injector.get('mockData');
         formentryService = $injector.get('FormentryService');
+        patientModel = $injector.get('PatientModel');
+
+        /*
+        Apperently underscore.string is not loading in thr headless browser during the tests
+        this library has specific classes for handling string comparison.
+        To solve this problem am adding simple hack to able to load following two functions
+        when running the tests.
+        NB: as pointed out in the comments ECMAScript 2015 (ES6) introduces startsWith,
+        however, at the time of writing this update (2015) browser-support is
+        far from complete.
+        */
+        if (typeof String.prototype.startsWith !== 'function') {
+          String.prototype.startsWith = function (str){
+            return this.slice(0, str.length) === str;
+          };
+
+        if (typeof String.prototype.endsWith !== 'function') {
+            String.prototype.endsWith = function (str){
+              return this.slice(-str.length) === str;
+            };
+  }
+}
       }));
 
       afterEach(function() {
@@ -121,16 +145,18 @@
         var formly_schema;
         var form = {encounterType:'xx1234'};
         var payLoad;
-        var patient = {uuid:'xxxx'};
+        var patient;        
         beforeEach(function(){
           schema = mockData.getMockSchema();
           model = mockData.getMockModel();
-          console.log(model);
+          patient = new patientModel.patient(mockData.getMockPatient());
+
+          //console.log(model);
           formentryService.createForm(schema, function(data){
             formly_schema = data;
-            console.log('FORMLY SCHEMAS');
-            console.log(formly_schema);
-            payLoad = formentryService.updateFormPayLoad(model,formly_schema, patient, form);
+            // console.log('FORMLY SCHEMAS');
+            // console.log(formly_schema);
+            payLoad = formentryService.updateFormPayLoad(model,formly_schema,patient,form);
           });
 
         });

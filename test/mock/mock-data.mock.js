@@ -14,10 +14,44 @@
               getMockSchema: getMockSchema,
               getMockStates: getMockStates,
               getMockObs: getMockObs,
-              getMockModel: getMockModel
+              getMockModel: getMockModel,
+              getMockPatient: getMockPatient
           };
 
           return mock_data;
+
+          function getMockPatient(){
+            return {
+              identifiers:['test-patient'],
+            person:{
+              age: 63,
+              birthdate: '1951-12-09T00:00:00.000+0245',
+              dead: false,
+              deathDate: null,
+              gender: 'F',
+              preferredName:{
+                familyName: 'Testty',
+                givenName: 'Testty',
+                middleName: 'Testty'
+              },
+              preferredAddress: {
+                address1: null,
+                address2: null,
+                address3: null,
+                address4: 'AINABKOI',
+                address5: 'KIPKURERE',
+                address6: 'TIMBOROA',
+                cityVillage: 'KAHUHO A',
+                country: null,
+                countyDistrict: 'ELDORET EAST',
+                postalCode: null,
+                preferred: true,
+                stateProvince: null},
+              attributes: '_attributes'
+            },
+            uuid: 'xxxx',
+            };
+          }
 
           function getMockObs()
           {
@@ -148,7 +182,7 @@
           ]
         }
       };
-        }
+    }
 
 
     }
