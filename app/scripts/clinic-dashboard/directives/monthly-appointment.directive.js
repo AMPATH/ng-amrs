@@ -19,10 +19,42 @@ jshint -W003, -W026
         };
     }
 
-    monthlyAppointmentController.$inject = ['$scope', 'EtlRestService', 'AppointmentScheduleModel', 'moment'];
+    monthlyAppointmentController.$inject = ['$scope', 'EtlRestService', 'MonthlyAppointmentModel', 'moment'];
 
-    function monthlyAppointmentController($scope, EtlRestService, AppointmentScheduleModel, moment) {
-        this.moment = moment;
+    function monthlyAppointmentController($scope, EtlRestService, MonthlyAppointmentModel, moment) {
+        var vm = this;
+        vm.moment = moment;
+
+        vm.loadSchedule = loadSchedule;
+        
+        vm.selectedMonth = new Date();
+        
+        vm.loadSchedule = loadSchedule;
+
+        function loadSchedule() {
+            if ($scope.isBusy === true) return;
+
+            $scope.isBusy = true;
+            $scope.experiencedLoadingError = false;
+            
+            $scope.appointments = [];
+
+            if ($scope.locationUuid && $scope.locationUuid !== '')
+                EtlRestService.getMonthlyAppointmentSchedule($scope.locationUuid, this.selectedMonth, onFetchAppointmentsScheduleSuccess, onFetchAppointmentScheduleFailed);
+        }
+
+        function onFetchAppointmentsScheduleSuccess(appointmentSchedule) {
+            $scope.nextStartIndex = +appointmentSchedule.startIndex + appointmentSchedule.size;
+            for (var e in appointmentSchedule.result) {
+                $scope.appointments.push(new MonthlyAppointmentModel.monthlyAppointment(appointmentSchedule.result[e]));
+            }
+            $scope.isBusy = false;
+        }
+        
+        function onFetchAppointmentScheduleFailed(error) {
+            $scope.experiencedLoadingError = true;
+            $scope.isBusy = false;
+        }
     }
 
     function monthlyAppointmentLink(scope, element, attrs, vm) {
@@ -31,11 +63,44 @@ jshint -W003, -W026
 
         function onLocationUuidChanged(newVal, oldVal) {
             if (newVal && newVal != '') {
-
+                vm.loadSchedule();
             }
         }
 		
-		
+        //date selection 
+        scope.status = {
+            startOpened: false
+        };
+
+        scope.startOpen = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            scope.status.startOpened = true;
+        };
+
+        scope.appointments = [];
+
+
+
+        
+
+        scope.selectedMonth = function (value) {
+            if (value) {
+                vm.selectedMonth = value; 
+                //console.log(value);
+                vm.loadSchedule();
+                scope.bringCurrentMonthIntoView(new vm.moment(value));
+            }
+            else {
+                return vm.selectedMonth;
+            }
+        };
+        
+        
+        
+        
+        
+        
         //calender view
         scope.selected = _removeTime(scope.selected || vm.moment());
         scope.month = scope.selected.clone();
@@ -70,8 +135,8 @@ jshint -W003, -W026
         }
 
         scope.bringCurrentMonthIntoView = function (day) {
-            
-            scope.selected = _removeTime(vm.moment("1995-12-25"));
+
+            scope.selected = day;
             scope.month = scope.selected.clone();
 
             var start = scope.selected.clone();
