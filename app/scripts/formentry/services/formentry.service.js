@@ -1243,7 +1243,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 required:required
               },
               validators: {
-                //dateValidator: getFieldValidator(obs_field.question.validators)
+                dateValidator: getFieldValidator(sec_field.validators[0]) //this  will require refactoring as we move forward
               }
             }
           }
@@ -1353,7 +1353,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 datepickerPopup: 'dd-MMMM-yyyy'
                 },
               validators: {
-                //dateValidator: getFieldValidator({type:'date'})
+                dateValidator: getFieldValidator(sec_field.validators[0]) //this  will require refactoring as we move forward
                 }
               }
               groupingFields.push(dateField);
@@ -1420,6 +1420,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               _.each(section.questions, function(sec_field){
                 if(sec_field.type === 'encounterDate')
                 {
+                  var required=false;
+                  if (sec_field.required !== undefined) required=Boolean(sec_field.required);
+
                   field = {
                     key: sec_field.type,
                     type: 'datepicker',
@@ -1427,15 +1430,19 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     templateOptions: {
                       type: 'text',
                       label: sec_field.label,
-                      datepickerPopup: 'dd-MMMM-yyyy'
+                      datepickerPopup: 'dd-MMMM-yyyy',
+                      required:required
                     },
                     validators: {
-                      //dateValidator: getFieldValidator(encField.validators)
+                      dateValidator: getFieldValidator(sec_field.validators[0]) //this  will require refactoring as we move forward
                     }
                   }
                 }
                 else if(sec_field.type === 'encounterProvider')
                 {
+                  var required=false;
+                  if (sec_field.required !== undefined) required=Boolean(sec_field.required);
+
                   field = {
                     key: sec_field.type,
                     type: 'ui-select-extended',
@@ -1447,13 +1454,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       labelProp:'display',
                       deferredFilterFunction: SearchDataService.findProvider,
                       getSelectedObjectFunction: SearchDataService.getProviderByUuid,
-                      required:false,
+                      required:required,
                       options:[]
                     }
                   }
                 }
                 else if(sec_field.type === 'encounterLocation')
                 {
+                  var required=false;
+                  if (sec_field.required !== undefined) required=Boolean(sec_field.required);
+
                   field = {
                     key: sec_field.type,
                     type: 'ui-select-extended',
@@ -1465,7 +1475,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       labelProp:'display',
                       deferredFilterFunction: SearchDataService.findLocation,
                       getSelectedObjectFunction: SearchDataService.getLocationByUuid,
-                      required:false,
+                      required:required,
                       options:[]
                     }
                   }
