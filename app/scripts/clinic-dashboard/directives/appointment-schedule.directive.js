@@ -33,10 +33,8 @@ jshint -W003, -W026
         $scope.loadSchedule = loadSchedule;
         $scope.experiencedLoadingError = false;
         $scope.startDate = new Date();
-        $scope.endDate = new Date();
 
         $scope.status = {
-            endOpened: false,
             startOpened: false
         };
 
@@ -44,12 +42,6 @@ jshint -W003, -W026
             $event.preventDefault();
             $event.stopPropagation();
             $scope.status.startOpened = true;
-        };
-
-        $scope.endOpen = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            $scope.status.endOpened = true;
         };
 
         function loadSchedule() {
@@ -60,7 +52,7 @@ jshint -W003, -W026
             $scope.experiencedLoadingError = false;
 
             if ($scope.locationUuid && $scope.locationUuid !== '')
-                EtlRestService.getAppointmentSchedule($scope.locationUuid, moment($scope.startDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), moment($scope.endDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), onFetchAppointmentsScheduleSuccess, onFetchAppointmentScheduleFailed);
+                EtlRestService.getAppointmentSchedule($scope.locationUuid, moment($scope.startDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), moment($scope.startDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), onFetchAppointmentsScheduleSuccess, onFetchAppointmentScheduleFailed);
         }
 
         function onFetchAppointmentsScheduleSuccess(appointmentSchedule) {
