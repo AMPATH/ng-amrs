@@ -19,9 +19,9 @@ jshint -W003, -W026
         };
     }
 
-    appointmentScheduleController.$inject = ['$scope', 'EtlRestService', 'AppointmentScheduleModel', 'moment'];
+    appointmentScheduleController.$inject = ['$scope', '$rootScope', 'EtlRestService', 'AppointmentScheduleModel', 'moment', '$state'];
 
-    function appointmentScheduleController($scope, EtlRestService, AppointmentScheduleModel, moment) {
+    function appointmentScheduleController($scope, $rootScope, EtlRestService, AppointmentScheduleModel, moment, $state) {
         $scope.patients = [];
         $scope.isBusy = false;
 
@@ -53,12 +53,24 @@ jshint -W003, -W026
 
         $scope.selectedDate = function (value) {
             if (value) {
-               $scope.startDate  = value; 
+                $scope.startDate = value;
                 loadSchedule();
             }
             else {
-                return $scope.startDate ;
+                return $scope.startDate;
             }
+        };
+
+        $scope.loadPatient = function (patientUuid) {
+            /*
+            Get the selected patient and save the details in the root scope
+            so that we don't do another round trip to get the patient details
+            */
+            $rootScope.broadcastPatient = _.find($scope.patients, function (patient) {
+                if (patient.uuid() === patientUuid)
+                { return patient; }
+            });
+            $state.go('patient', { uuid: patientUuid });
         };
 
 
