@@ -19,24 +19,30 @@ jshint -W003, -W026
         };
     }
 
-    monthlyAppointmentController.$inject = ['$scope', 'EtlRestService', 'MonthlyAppointmentModel', 'moment'];
+    monthlyAppointmentController.$inject = ['$scope', '$rootScope', 'EtlRestService', 'MonthlyAppointmentModel', 'moment'];
 
-    function monthlyAppointmentController($scope, EtlRestService, MonthlyAppointmentModel, moment) {
+    function monthlyAppointmentController($scope, $rootScope, EtlRestService, MonthlyAppointmentModel, moment) {
         var vm = this;
         vm.moment = moment;
 
         vm.loadSchedule = loadSchedule;
-        
+
         vm.selectedMonth = new Date();
-        
+
         vm.loadSchedule = loadSchedule;
+
+        vm.viewDaysAppointments = viewDaysAppointments;
+
+        function viewDaysAppointments(day) {
+            $rootScope.$broadcast('viewDayAppointments', day);
+        }
 
         function loadSchedule() {
             if ($scope.isBusy === true) return;
 
             $scope.isBusy = true;
             $scope.experiencedLoadingError = false;
-            
+
             $scope.appointments = [];
 
             if ($scope.locationUuid && $scope.locationUuid !== '')
@@ -50,7 +56,7 @@ jshint -W003, -W026
             }
             $scope.isBusy = false;
         }
-        
+
         function onFetchAppointmentScheduleFailed(error) {
             $scope.experiencedLoadingError = true;
             $scope.isBusy = false;
@@ -80,9 +86,12 @@ jshint -W003, -W026
 
         scope.appointments = [];
 
+        scope.viewDaysAppointments = function (day) {
+            scope.$parent.switchTabByIndex(1);
+            vm.viewDaysAppointments(day.date.format());
+        };
 
 
-        
 
         scope.selectedMonth = function (value) {
             if (value) {

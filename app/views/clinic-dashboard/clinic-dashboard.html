@@ -1,4 +1,4 @@
-<div class="form-group animate-hide " style="margin-top:6px; margin-bottom:8px;" ng-show="locationSelectionEnabled">
+<div class="form-group animate-show " style="margin-top:6px; margin-bottom:8px;" ng-show="locationSelectionEnabled">
 	<div class="input-group">
 		<div class="input-group-addon">
 			<span class="text-danger">
@@ -26,22 +26,22 @@
 	<hr style="margin: -4px;" />
 </div>
 <ul class="nav nav-pills" style="margin-top:16px;" ng-hide="selectedLocation.selected === undefined">
-	<li class="active" style="cursor: pointer;">
+	<li ng-class="{active: activeTabId === 1}" style="cursor: pointer;" data-ng-click="switchTabByIndex(1)" >
 		<a data-target="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;Appointment Schedule</a>
 	</li>
-	<li style="cursor: pointer;">
+	<li ng-class="{active: activeTabId === 2}" style="cursor: pointer;" data-ng-click="switchTabByIndex(2)" >
 		<a data-target="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;Monthly Schedule</a>
 	</li>
-	<li style="cursor: pointer;">
+	<li ng-class="{active: activeTabId === 3}" style="cursor: pointer;" data-ng-click="switchTabByIndex(3)" >
 		<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;Defaulters List</a>
 	</li>
 </ul>
-<div class="tab-content panel panel-primary" style="margin-top:2px; margin-bottom: 0px; padding:2px;" ng-hide="selectedLocation.selected === undefined">
-	<div class="tab-pane fade in active" id="tab1">
-		<appointment-schedule location-uuid="{{selectedLocation.selected.uuId()}}" />
+<div class="tab-content panel panel-default" style="margin-top:2px; margin-bottom: 0px; padding:2px;" ng-hide="selectedLocation.selected === undefined">
+	<div class="tab-pane " id="tab1" ng-class="{active: activeTabId === 1}">
+		<appointment-schedule location-uuid="{{selectedLocation.selected.uuId()}}"  />
 	</div>
-	<div class="tab-pane fade in" id="tab2">
+	<div class="tab-pane " id="tab2" ng-class="{active: activeTabId === 2}">
 		<monthly-appointment location-uuid="{{selectedLocation.selected.uuId()}}" selected="selected"></monthly-appointment>
 	</div>
-	<div class="tab-pane fade in" id="tab3"></div>
+	<div class="tab-pane " id="tab3" ng-class="{active: activeTabId === 3}"></div>
 </div>

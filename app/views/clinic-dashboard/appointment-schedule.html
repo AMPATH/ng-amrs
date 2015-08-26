@@ -6,7 +6,7 @@
 				<label for="start-date">Select Date</label>
 				<div>
 					<p class="input-group">
-						<input type="text" id="start-date" class="form-control" datepicker-popup="mediumDate" ng-model="startDate" is-open="status.startOpened"
+						<input type="text" id="start-date" class="form-control" datepicker-popup="mediumDate" ng-model="selectedDate" ng-model-options="{getterSetter: true}" is-open="status.startOpened"
 						/>
 						<span class="input-group-btn">
 							<button type="button" class="btn btn-default" ng-click="startOpen($event)">

@@ -24,15 +24,21 @@ jshint -W003, -W026
     function appointmentScheduleController($scope, EtlRestService, AppointmentScheduleModel, moment) {
         $scope.patients = [];
         $scope.isBusy = false;
-        
-        $scope.moment = function day(date){
+
+        $scope.moment = function day(date) {
             var day = new moment(date).format();;
             return day;
         };
-        
+
         $scope.loadSchedule = loadSchedule;
         $scope.experiencedLoadingError = false;
         $scope.startDate = new Date();
+
+
+        $scope.$on('viewDayAppointments', function (event, arg) {
+            //console.log('view date:' + arg);
+            $scope.selectedDate(arg);
+        });
 
         $scope.status = {
             startOpened: false
@@ -44,7 +50,22 @@ jshint -W003, -W026
             $scope.status.startOpened = true;
         };
 
+
+        $scope.selectedDate = function (value) {
+            if (value) {
+               $scope.startDate  = value; 
+                loadSchedule();
+            }
+            else {
+                return $scope.startDate ;
+            }
+        };
+
+
+
         function loadSchedule() {
+
+
             if ($scope.isBusy === true) return;
 
             $scope.isBusy = true;
@@ -71,7 +92,7 @@ jshint -W003, -W026
 
     function appointmentScheduleLink(scope, element, attrs, vm) {
         attrs.$observe('locationUuid', onLocationUuidChanged);
-        
+
 
         function onLocationUuidChanged(newVal, oldVal) {
             if (newVal && newVal != "") {

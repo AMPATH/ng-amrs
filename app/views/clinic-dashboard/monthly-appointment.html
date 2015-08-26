@@ -31,8 +31,10 @@
 		<div class="day col-xs-1">Sat</div>
 	</div>
 	<div class="week row" ng-repeat="week in weeks" style="min-height: 20px;">
-		<div class="day" style="padding: 2px; margin-bottom: 2px; cursor: pointer;" ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected), 'col-xs-1': $index === 0 || $index === 6, 'col-xs-2' : $index !== 0 && $index !== 6 }"
-		ng-click="select(day)" ng-repeat="day in week.days">
+		<div class="day" ng-click="viewDaysAppointments(day)" 
+			style="padding: 2px; margin-bottom: 2px; cursor: pointer;" 
+			ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected), 'col-xs-1': $index === 0 || $index === 6, 'col-xs-2' : $index !== 0 && $index !== 6 }"
+			ng-repeat="day in week.days">
 			<div class="panel panel-default" style="padding: 1px; horizontal-alignment: center;">
 				{{day.number}}
 				<div>
