@@ -42,6 +42,12 @@
         { query: { method: 'GET', isArray: false } });
     }
 
+    function getConceptWithAnswersResource() {
+      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + '/:uuid?v=custom:(uuid,name,answers)',
+        { q: '@q' },
+        { query: { method: 'GET', isArray: false } });
+    }
+
     function getConceptClasses(successCallback, failedCallback) {
       var resource = getConceptClassResource();
       return resource.get({ v: 'default' }).$promise
@@ -56,6 +62,18 @@
 
     function getConceptByUuid(uuid, successCallback, failedCallback) {
       var resource = getResource();
+      return resource.get({ uuid: uuid }).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+    }
+
+    function getConceptAnswers(uuid, successCallback, failedCallback) {
+      var resource = getConceptWithAnswersResource();
       return resource.get({ uuid: uuid }).$promise
         .then(function (response) {
           successCallback(response);
@@ -104,6 +122,15 @@
       var res = _.filter(results, function (result) {
         return _.find(conceptClassesNameArray, function (name) {
           return result.conceptClass.name === name;
+        });
+      });
+      return res;
+    }
+
+    function filterConceptAnswersByConcept(results, conceptUuid) {
+      var res = _.filter(results, function (result) {
+        return _.find(conceptUuid, function (name) {
+          return result.uuid === name;
         });
       });
       return res;
