@@ -82,6 +82,27 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               message: '"Should be a future date!"'
             };
           }
+
+          if(params.field !== undefined && params.value !== undefined)
+          {
+            var result;
+            var results;
+            if(params.value.length>0)
+            {
+              var i = 0;
+              _.each(params.value, function(val){
+                result = 'model.' + 'obs_' + params.field.toString() + ' !== ' +
+                '"' + val + '"';
+                if(i === 0) results = result;
+                else results = results + ' && ' + result;
+                i=i+1;
+              });
+            }
+
+            console.log('Test Field Hiding')
+            console.log(results);
+            return "'" + results + "'";
+          }
         }
 
         function getFormSchema(formName, callback) {
@@ -1225,6 +1246,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         Private method to create  formly fields without group
         */
         function createFormlyField(obs_field){
+          var hideExpression_;
+          if(obs_field.hide !== undefined)
+          {
+            hideExpression_= getFieldValidator(obs_field.hide[0]);
+          }
+          else {
+            hideExpression_ = '';
+          }
           var obsField = {};
           if(obs_field.type === 'date')
           {
@@ -1242,6 +1271,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 datepickerPopup: 'dd-MMMM-yyyy',
                 required:required
               },
+              hideExpression:hideExpression_,
               validators: {
                 dateValidator: getFieldValidator(obs_field.validators[0]) //this  will require refactoring as we move forward
               }
@@ -1261,7 +1291,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 type: obs_field.type,
                 label: obs_field.label,
                 required:required
-              }
+              },
+              hideExpression:hideExpression_
               //         ,
               // validators: {
               //   //ipAddress: validatorsArray['ipAddress']
@@ -1298,7 +1329,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 label: obs_field.label,
                 required:required,
                 options:opts
-              }
+              },
+              hideExpression:hideExpression_
             }
           }
           else if(obs_field.type === 'problem'){
@@ -1318,7 +1350,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 getSelectedObjectFunction: SearchDataService.getProblemByUuid,
                 required:required,
                 options:[]
-              }
+              },
+              hideExpression:hideExpression_
             };
           }
           else if(obs_field.type === 'drug'){
@@ -1349,6 +1382,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         */
         function createGroupFormlyField(obs_field, gpSectionRnd)
         {
+          var hideExpression_;
+          var hideExpression_;
+          if(obs_field.hide !== undefined)
+          {
+            hideExpression_= getFieldValidator(obs_field.hide[0]);
+          }
+          else {
+            hideExpression_ = '';
+          }
+
           var obsField = {};
           var groupingFields = [];
           //gpSectionRnd = gpSectionRnd + 1;
@@ -1372,6 +1415,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 label: 'Date',
                 datepickerPopup: 'dd-MMMM-yyyy'
                 },
+                hideExpression:hideExpression_,
               validators: {
                 dateValidator: getFieldValidator(curField.validators[0]) //this  will require refactoring as we move forward
                 }
