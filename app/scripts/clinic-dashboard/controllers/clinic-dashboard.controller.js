@@ -27,11 +27,19 @@
 		$scope.onLocationSelection = onLocationSelection;
 		
 		$scope.locationSelectionEnabled = true;
+		
+		$scope.switchTabByIndex = switchTabByIndex;
 
 		activate();
+		
 
 		function activate() {
 			fetchLocations();
+		}
+		
+		function switchTabByIndex(index){
+			//console.log("Switched to tab:" + index);
+			$scope.activeTabId = index;
 		}
 		
 		function onLocationSelection($event) {
