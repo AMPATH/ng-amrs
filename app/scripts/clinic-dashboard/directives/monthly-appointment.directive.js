@@ -30,6 +30,8 @@ jshint -W003, -W026
         vm.selectedMonth = new Date();
 
         vm.loadSchedule = loadSchedule;
+        
+        $scope.loadSchedule = loadSchedule;
 
         vm.viewDaysAppointments = viewDaysAppointments;
 

@@ -15,8 +15,24 @@
 			</div>
 		</div>
 	</div>
+	<div ng-show='!isBusy && experiencedLoadingError'>
+		<button class="btn btn-info" ng-click="loadSchedule()">
+			<span class="glyphicon glyphicon-refresh"></span>
+			<span>Reload</span>
+		</button>
+	</div>
+	<div ng-show='isBusy'>
+		<img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+		<b>Loading data...</b>
+	</div>
 </div>
 <h3>Monthly Appointments</h3>
+<div ng-show='experiencedLoadingError'>
+	<p class="bg-danger" style="padding:4px;">
+		<b>
+			<span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
+		<p>
+</div>
 <div class="container-fluid" style="border: 1px solid blue;">
 	<div class="header row bg-primary" style="min-height:30px;">
 		<span class="col-xs-12" style="text-align: center;">{{month.format("MMMM, YYYY")}}</span>
@@ -31,14 +47,13 @@
 		<div class="day col-xs-1">Sat</div>
 	</div>
 	<div class="week row" ng-repeat="week in weeks" style="min-height: 20px;">
-		<div class="day" ng-click="viewDaysAppointments(day)" 
-			style="padding: 2px; margin-bottom: 2px; cursor: pointer;" 
-			ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected), 'col-xs-1': $index === 0 || $index === 6, 'col-xs-2' : $index !== 0 && $index !== 6 }"
-			ng-repeat="day in week.days">
-			<div class="panel panel-default" style="padding: 1px; horizontal-alignment: center;">
-				{{day.number}}
+		<div class="day" ng-click="viewDaysAppointments(day)" style="padding: 2px; margin-bottom: 2px; cursor: pointer;" ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected), 'col-xs-1': $index === 0 || $index === 6, 'col-xs-2' : $index !== 0 && $index !== 6 }"
+		ng-repeat="day in week.days">
+			<div class="panel panel-default" style="padding: 1px; horizontal-alignment: center;">{{day.number}}
 				<div>
-					<span class="label" ng-class="{'label-primary':((appointments | datesFilter: day) !== 0) }" >{{appointments | datesFilter: day}} <span class="glyphicon glyphicon-list-alt hidden-xs"></span></span>
+					<span class="label" ng-class="{'label-primary':((appointments | datesFilter: day) !== 0) }">{{appointments | datesFilter: day}}
+						<span class="glyphicon glyphicon-list-alt hidden-xs"></span>
+					</span>
 				</div>
 			</div>
 		</div>
