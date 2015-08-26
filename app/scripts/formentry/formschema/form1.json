@@ -636,7 +636,7 @@
               "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
               "label": "b. Start Date of TB treatment:",
               "type": "date",
-              "validators": "[type:date]"
+              "validators": [{"type":"date"}]
             },
             {
               "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",
@@ -1435,63 +1435,63 @@
                   "label": "WBC/mm3",
                   "type": "number",
                   "showDate": "true",
-                  "validators": []
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8908a16-1350-11df-a1f1-0026b9348838",
                   "label": "Hgb g/dL",
                   "type": "number",
                   "showDate": "true",
-                  "validators": []
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a898201e-1350-11df-a1f1-0026b9348838",
                   "label": "MCV",
                   "type": "number",
                   "showDate": "true",
-                  "validators": []
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a898b20e-1350-11df-a1f1-0026b9348838",
                   "label": "ALC/ mm3",
                   "type": "number",
                   "showDate": "true",
-                  "validators": []
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8a8bb18-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "CD4:",
                   "showDate": "true",
-                  "validators": []
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8970a26-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "CD4%:",
                   "showDate": "true",
-                  "validators": {}
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8982474-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "Viral Load:",
                   "showDate": "true",
-                  "validators": {}
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a897e450-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "Creatinine mmol/L:",
                   "showDate": "true",
-                  "validators": {}
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a896ca48-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "SGPT(ALT):",
                   "showDate": "true",
-                  "validators": {}
+                  "validators": [{"type":"date"}]
                 }
               ]
             },
@@ -1521,7 +1521,7 @@
                   ],
                   "showDate": "true",
                   "type": "select",
-                  "validators": "[:]"
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8945d4e-1350-11df-a1f1-0026b9348838",
@@ -1558,7 +1558,7 @@
                   ],
                   "showDate": "true",
                   "type": "select",
-                  "validators": "[:]"
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8a462a2-1350-11df-a1f1-0026b9348838",
@@ -1587,7 +1587,7 @@
                   ],
                   "showDate": "true",
                   "type": "select",
-                  "validators": "[:]"
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8908192-1350-11df-a1f1-0026b9348838",
@@ -1628,7 +1628,7 @@
                   ],
                   "showDate": "true",
                   "type": "select",
-                  "validators": "[:]"
+                  "validators": [{"type":"date"}]
                 }
               ]
             }
@@ -2201,43 +2201,43 @@
               ]
             },
             {
-              "concept": "749d07cb-4994-4ce9-a39c-8a655a487fdd",
-              "label": "26c. If re/starting, reason:",
-              "answers": [
-                {
-                  "concept": "15316528-adb9-4c33-b21f-2817f0cad769",
-                  "label": "Defaulted"
-                },
-                {
-                  "concept": "f6951199-560d-414a-bb5b-1150f07fcea7",
-                  "label": "Failure"
-                },
-                {
-                  "concept": "a8a3243c-1350-11df-a1f1-0026b9348838",
-                  "label": "MDR TB regimen"
-                },
-                {
-                  "concept": "769822b2-1f1f-4cbb-8371-0e3949e060cc",
-                  "label": "New treatment"
-                },
-                {
-                  "concept": "18ac99bf-0805-4929-8d0b-924455850a00",
-                  "label": "Relapse/re-infection"
-                }
-              ],
-              "type": "select",
-              "validators": []
-            },
-            {
-              "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
-              "label": "26d. If on treatment: start date:",
-              "type": "date",
-              "validators":[{"type":"date"}]
-            },
-            {
               "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",
               "type": "group",
               "questions": [
+                {
+                  "concept": "749d07cb-4994-4ce9-a39c-8a655a487fdd",
+                  "label": "26c. If re/starting, reason:",
+                  "answers": [
+                    {
+                      "concept": "15316528-adb9-4c33-b21f-2817f0cad769",
+                      "label": "Defaulted"
+                    },
+                    {
+                      "concept": "f6951199-560d-414a-bb5b-1150f07fcea7",
+                      "label": "Failure"
+                    },
+                    {
+                      "concept": "a8a3243c-1350-11df-a1f1-0026b9348838",
+                      "label": "MDR TB regimen"
+                    },
+                    {
+                      "concept": "769822b2-1f1f-4cbb-8371-0e3949e060cc",
+                      "label": "New treatment"
+                    },
+                    {
+                      "concept": "18ac99bf-0805-4929-8d0b-924455850a00",
+                      "label": "Relapse/re-infection"
+                    }
+                  ],
+                  "type": "select",
+                  "validators": []
+                },
+                {
+                  "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
+                  "label": "26d. If on treatment: start date:",
+                  "type": "date",
+                  "validators":[{"type":"date"}]
+                },
                 {
                   "concept": "16db21cd-10cb-4c31-bb5a-b7619bfbea66",
                   "label": "26e. Site of TB meds pick-up:",

@@ -51,6 +51,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   console.log(dateValue.isAfter(curDate));
                   return !dateValue.isAfter(curDate);
                 }
+                if (value === undefined) return true;
 
               },
               message: '"Should not be a future date!"'
@@ -100,8 +101,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             }
 
             console.log('Test Field Hiding')
-            console.log(results);
-            return "'" + results + "'";
+            console.log("'" + results.toString() + "'");
+            return  "'" + results.toString() + "'";
           }
         }
 
@@ -610,18 +611,55 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           getEncounterHandler(encData, formlySchema);
         }
 
-        function validateForm(schema)
+        function validateForm()
         {
-          _.each(schema, function(field) {
-            // body...
-            if(field.model.obsConceptUuid === '')
+
+        }
+
+        function validateFieldFormat(sel_field)
+        {
+          //validate the field to see if it is in the right format before creating the formly equavalent
+          var pass = true;
+          if(sel_field.type === 'date')
+          {
+            //check it has validator provided
+            if(sel_field.validators.length>0)
             {
-              return field.templateOptions.label + 'Missing Concept uuid';
+              if(!sel_field.validators[0].hasOwnProperty('type'))
+              {
+                pass = false;
+                console.log('This field is a Date type field and you must provide validators', sel_field);
+                console.log('Add this: "validators":[{"type":"date"}]')
+              }
             }
             else {
-              return '';
+              pass = false;
+              console.log('This field a Date type field and must provide validators', sel_field);
+              console.log('Add this: "validators":[{"type":"date"}]')
             }
-          })
+
+          }
+          else if(sel_field.showDate === 'true')
+          {
+            //check it has validator provided
+            if(sel_field.validators.length>0)
+            {
+              if(!sel_field.validators[0].hasOwnProperty('type'))
+              {
+                pass = false;
+                console.log('This field is a Date type field and you must provide validators', sel_field);
+                console.log('Add this: "validators":[{"type":"date"}]')
+              }
+            }
+            else {
+              pass = false;
+              console.log('This field a Date type field and must provide validators', sel_field);
+              console.log('Add this: "validators":[{"type":"date"}]')
+            }
+
+          }
+
+          return pass;
         }
 
         function getConceptUuid()
@@ -1246,6 +1284,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         Private method to create  formly fields without group
         */
         function createFormlyField(obs_field){
+          //console.log(obs_field)
+
           var hideExpression_;
           if(obs_field.hide !== undefined)
           {
@@ -1255,6 +1295,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             hideExpression_ = '';
           }
           var obsField = {};
+          if (validateFieldFormat(obs_field) !== true)
+          {
+            console.log('Something Went Wrong While creating this field', obs_field)
+          }
           if(obs_field.type === 'date')
           {
             var required=false;

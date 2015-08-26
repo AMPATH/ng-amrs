@@ -15,8 +15,7 @@
               "required": "true",
               "validators": [
                 {
-                  "type": "date",
-                  "allowFutureDates": "true"
+                  "type": "date"
                 }
               ]
             },

@@ -88,6 +88,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
 
         $scope.vm.submit = function() {
           //  $scope.vm.error = FormentryService.validateForm($scope.vm.userFields);
+            // console.log('Checking form Validity')
+            // console.log($scope.vm.form.$valid);
+            // console.log($scope.vm.form)
             if ($scope.vm.error === '')
             {
               //FormentryService.getPayLoad($scope.vm.userFields);
