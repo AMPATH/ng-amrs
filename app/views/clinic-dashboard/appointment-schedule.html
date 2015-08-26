@@ -58,7 +58,7 @@
 		<tr ng-repeat="patient in patients">
 			<td>{{patient.identifiers()}}</td>
 			<td>{{patient.givenName() + ' ' + patient.familyName() + ' ' + patient.middleName()}}</td>
-			<td>{{patient.rtcDate().substring(0,10)}}</td>
+			<td>{{moment(patient.rtcDate())}}</td>
 		</tr>
 	</table>
 </div>
