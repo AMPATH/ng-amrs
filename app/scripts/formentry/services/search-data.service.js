@@ -24,7 +24,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
             findDrugConcepts:findDrugConcepts,
             getDrugConceptByUuid:getDrugConceptByUuid,
             findDrugs:findDrugs,
-            findDrugByUuid:findDrugByUuid
+            findDrugByUuid:findDrugByUuid,
+            getConceptAnswers:getConceptAnswers
         };
 
         return service;
@@ -134,6 +135,29 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
           DrugResService.findDrugByUuid(uuid,
             function (drug) {
               var wrapped = wrapDrug(drug);
+              onSuccess(wrapped);
+            },
+            function (error) {
+              onError(onError);
+            });
+        }
+
+        function getConceptAnswers(searchText, onSuccess, onError) {
+          ConceptResService.findConcept(searchText,
+            function (concepts) {
+              var filteredConcepts = ConceptResService.filterResultsByConceptClassesName(concepts,problemConceptClassesArray);
+              var wrapped = wrapConcepts(filteredConcepts);
+              onSuccess(wrapped);
+            },
+            function (error) {
+              onError(onError);
+            });
+        }
+
+        function getConceptAnswers(uuid, onSuccess, onError) {
+          ConceptResService.getConceptAnswers(uuid,
+            function (concept) {
+              var wrapped = wrapConcepts(concept.amswers);
               onSuccess(wrapped);
             },
             function (error) {

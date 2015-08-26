@@ -22,7 +22,7 @@
             {
               "concept": "a8b02524-1350-11df-a1f1-0026b9348838",
               "label": "Patient covered by NHIF:",
-              "type": "radio",
+              "type": "select",
               "answers": [
                 {
                   "concept": "8b715fed-97f6-4e38-8f6a-c167a42f8923",
@@ -53,7 +53,7 @@
                   "label": "No"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             }
           ]
@@ -175,13 +175,13 @@
                   "label": "Unscheduled Visit Late"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": []
             },
             {
               "concept": "dc1942b2-5e50-4adc-949d-ad6c905f054e",
               "label": "4b. If Unscheduled, actual scheduled date",
-              "type": "datepicker",
+              "type": " date",
               "validators": [
                 {
                   "type": "date",
@@ -211,7 +211,7 @@
                   "label": " Unknown"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -231,7 +231,7 @@
                   "label": " Unknown"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -291,7 +291,7 @@
                       "label": " Other"
                     }
                   ],
-                  "type": "radio",
+                  "type": "select",
                   "validators": "null"
                 }
               ]
@@ -367,7 +367,7 @@
                   "label": "Unknown"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -387,7 +387,7 @@
                   "label": " N/A"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -407,7 +407,7 @@
                   "label": " Unknown"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             }
           ]
@@ -432,7 +432,7 @@
                       "label": " Completed Schedule"
                     }
                   ],
-                  "type": "radio",
+                  "type": "select",
                   "validators": "null"
                 },
                 {
@@ -516,7 +516,7 @@
                   "label": "No"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             }
           ]
@@ -528,7 +528,7 @@
               "concept": "a8a76cae-1350-11df-a1f1-0026b9348838",
               "label": "10.Child's current HIV status:",
               "answers": [],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -560,7 +560,7 @@
                   "label": " N/A"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             }
           ]
@@ -585,7 +585,7 @@
                       "label": "No"
                     }
                   ],
-                  "type": "radio",
+                  "type": "select",
                   "validators": "null"
                 }
 
@@ -625,7 +625,7 @@
                   "label": "No"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -641,13 +641,13 @@
                   "label": "Clinical disease"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
               "concept": "a89d200a-1350-11df-a1f1-0026b9348838",
               "label": "13c.If started since last visit record the date",
-              "type": "datepicker",
+              "type": " date",
               "validators": "[type:date]"
             },
             {
@@ -667,7 +667,7 @@
                   "label": "Third regimen"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -818,7 +818,7 @@
                   "label": " Fluconazole(Diflucan)"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -834,7 +834,7 @@
                   "label": " Isoniazid 300mg"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             }
           ]
@@ -855,7 +855,7 @@
                   "label": "On treatment"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -881,7 +881,7 @@
                       "label": "Other"
                     }
                   ],
-                  "type": "radio",
+                  "type": "select",
                   "validators": []
                 },
                 {
@@ -1085,7 +1085,7 @@
                   "label": " No"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1361,7 +1361,7 @@
                   "label": "All"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1389,7 +1389,7 @@
                   "label": "All"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1417,7 +1417,7 @@
                   "label": "All"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1457,7 +1457,7 @@
                   "label": "All"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             }
           ]
@@ -1478,7 +1478,7 @@
                   "label": "No"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1772,7 +1772,7 @@
                   "label": " Other"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1804,7 +1804,7 @@
                   "label": "Unassessable/Unclassified"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             }
           ]
@@ -1825,7 +1825,7 @@
                   "label": "No"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1841,7 +1841,7 @@
                   "label": " Weeks"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1857,7 +1857,7 @@
                   "label": " Weeks"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1873,7 +1873,7 @@
                   "label": " Weeks"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1889,7 +1889,7 @@
                   "label": " Weeks"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1905,7 +1905,7 @@
                   "label": " Weeks"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1921,7 +1921,7 @@
                   "label": " Weeks"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1937,7 +1937,7 @@
                   "label": " Weeks"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1953,7 +1953,7 @@
                   "label": " Weeks"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1969,7 +1969,7 @@
                   "label": " Weeks"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -1985,7 +1985,7 @@
                   "label": " Weeks"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -2001,7 +2001,7 @@
                   "label": " Weeks"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -2017,7 +2017,7 @@
                   "label": " Weeks"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             }
           ]
@@ -2043,7 +2043,7 @@
                   "label": " No"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -2059,7 +2059,7 @@
                   "label": " No"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -2075,7 +2075,7 @@
                   "label": " No"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -2166,7 +2166,7 @@
                   "label": "Abnormal"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -2182,7 +2182,7 @@
                   "label": "Abnormal"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -2198,7 +2198,7 @@
                   "label": "Abnormal"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -2214,7 +2214,7 @@
                   "label": "Abnormal"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -2230,7 +2230,7 @@
                   "label": "Abnormal"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -2246,7 +2246,7 @@
                   "label": "Abnormal"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -2356,7 +2356,7 @@
                   "label": "Not Done"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "showDate": "true",
               "validators": "null"
             },
@@ -2381,7 +2381,7 @@
                   "label": "Not Done"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "showDate": "true",
               "validators": "null"
             },
@@ -2548,7 +2548,7 @@
                   "label": "4"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -2570,7 +2570,7 @@
                   "label": "No"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -2586,7 +2586,7 @@
                   "label": " HIV Exposed"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             }
           ]
@@ -2662,7 +2662,7 @@
                   "label": " No TB"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             }
           ]
@@ -2757,7 +2757,7 @@
                   "label": " Stop all"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -2813,7 +2813,7 @@
                       "label": " Other"
                     }
                   ],
-                  "type": "radio",
+                  "type": "select",
                   "validators": "null"
                 }
               ]
@@ -2865,7 +2865,7 @@
                       "label": " Other"
                     }
                   ],
-                  "type": "radio",
+                  "type": "select",
                   "validators": "null"
                 },
                 {
@@ -2893,7 +2893,7 @@
                   "label": " Third line(salvage regimen)"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -3060,7 +3060,7 @@
                   "label": " Stop"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -3076,7 +3076,7 @@
                   "label": " Toxicity"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -3098,7 +3098,7 @@
                   "label": " Dapsone"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -3130,7 +3130,7 @@
                   "label": " Stop INH"
                 }
               ],
-              "type": "radio",
+              "type": "select",
               "validators": "null"
             },
             {
@@ -3158,7 +3158,7 @@
                       "label": " Toxicity"
                     }
                   ],
-                  "type": "radio",
+                  "type": "select",
                   "validators": "null"
                 },
                 {
@@ -3257,7 +3257,7 @@
                           "label": " Continue picking meds at other site location"
                         }
                       ],
-                      "type": "radio",
+                      "type": "select",
                       "validators": "null"
                     }
                   ]
@@ -3287,7 +3287,7 @@
                       "label": " MDR TB regimen"
                     }
                   ],
-                  "type": "radio",
+                  "type": "select",
                   "validators": "null"
                 },
                 {
@@ -3311,7 +3311,7 @@
                           "label": " Toxicity"
                         }
                       ],
-                      "type": "radio",
+                      "type": "select",
                       "validators": "null"
                     },
                     {
@@ -3435,7 +3435,7 @@
                       "label": " No"
                     }
                   ],
-                  "type": "radio",
+                  "type": "select",
                   "validators": "null"
                 }
               ]
@@ -3542,7 +3542,7 @@
                   "concept": "a898d16c-1350-11df-a1f1-0026b9348838",
                   "label": "21r. Feeding plan",
                   "answers": [],
-                  "type": "radio",
+                  "type": "select",
                   "validators": "null"
                 },
                 {
@@ -3566,7 +3566,7 @@
                       "label": " Other specify:"
                     }
                   ],
-                  "type": "radio",
+                  "type": "select",
                   "validators": "null"
                 }
               ]
@@ -3619,7 +3619,7 @@
                       "label": "Other (specify):"
                     }
                   ],
-                  "type": "radio",
+                  "type": "select",
                   "validators": "null"
                 },
                 {
@@ -3670,7 +3670,7 @@
                 {
                   "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
                   "label": "Return to clinic date:",
-                  "type": "datepicker",
+                  "type": " date",
                   "validators": "[type:date]"
                 }
               ]

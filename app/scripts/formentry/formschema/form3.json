@@ -362,7 +362,7 @@
             {
               "concept":"a89d200a-1350-11df-a1f1-0026b9348838",
               "label":"13c. If started since last visit record the date",
-              "type": "datepicker",
+              "type": " date",
               "validators": [
                 {
                   "type": "date",
@@ -370,7 +370,7 @@
                 }
               ]
             }
-            ,
+          ,
             {
               "concept":"04616f5d-b961-4f41-bbd7-bcc0dd235577",
               "label":"13d. Treatment Categories",
@@ -2009,7 +2009,7 @@
             {
               "concept":"a8a666ba-1350-11df-a1f1-0026b9348838",
               "label":"Return to clinic date:",
-              "type": "datepicker",
+              "type": " date",
               "validators": [
                 {
                   "type": "date",
