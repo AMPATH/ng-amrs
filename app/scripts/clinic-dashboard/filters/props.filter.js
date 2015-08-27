@@ -23,7 +23,17 @@
 						for (var i = 0; i < keys.length; i++) {
 							var prop = keys[i];
 							var text = props[prop].toLowerCase();
-							if (item[prop]().toString().toLowerCase().indexOf(text) !== -1) {
+							
+							var val;
+							if(typeof item[prop] === 'function'){
+								val = item[prop]();
+							}
+							else{
+								val = item[prop];
+							}
+							
+							
+							if (val.toString().toLowerCase().indexOf(text) !== -1) {
 								itemMatches = true;
 								break;
 							}

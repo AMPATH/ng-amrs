@@ -1,6 +1,6 @@
 (function () {
 	'use strict'
-	describe('filter: titlecase', function () {
+	describe('filter: daysFilter for Monthly Appointments View', function () {
 		var datesFilter;
 		var dailyAppointments;
 		var monthlyAppointmentModelFactory;
