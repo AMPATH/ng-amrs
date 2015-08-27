@@ -15,7 +15,8 @@
       getHivSummary: getHivSummary,
       getVitals: getVitals,
       getPatientTests: getPatientTests,
-      getAppointmentSchedule: getAppointmentSchedule
+      getAppointmentSchedule: getAppointmentSchedule,
+      getMonthlyAppointmentSchedule: getMonthlyAppointmentSchedule
     };
     return serviceDefinition;
 
@@ -90,20 +91,47 @@
 
     function getAppointmentSchedule(locationUuid, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
       var resource = getResource('location/:uuid/appointment-schedule');
-      
+
       var params = { endDate: endDate, startDate: startDate, uuid: locationUuid };
-      
-      if(startIndex !== undefined){
+
+      if (startIndex !== undefined) {
         params.startIndex = startIndex;
       }
-        
-      if(limit !== undefined){
+
+      if (limit !== undefined) {
         params.limit = limit;
       }
-        
-        console.log(params);
-        console.log(startIndex);
-          
+
+      console.log(params);
+      console.log(startIndex);
+
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+
+    }
+
+    function getMonthlyAppointmentSchedule(locationUuid, monthDate, successCallback, failedCallback, startIndex, limit) {
+      var resource = getResource('location/:uuid/monthly-appointment-schedule');
+
+      var params = { startDate: monthDate, uuid: locationUuid };
+
+      if (startIndex !== undefined) {
+        params.startIndex = startIndex;
+      }
+
+      if (limit !== undefined) {
+        params.limit = limit;
+      }
+
+      console.log(params);
+      console.log(startIndex);
+
       return resource.get(params).$promise
         .then(function (response) {
           successCallback(response);
