@@ -7,7 +7,7 @@
       Patient Details: Identifier: {{vm.patient.identifierFormatted()}} | Name : {{vm.patient.fullNames()}}
       |{{vm.success}}
     </div>
-    <div>{{vm.error}}</div>
+    <div style="color:red;">{{vm.error}}</div>
 
     <tabset>
       <tab ng-repeat="tab in vm.tabs"

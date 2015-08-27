@@ -41,14 +41,16 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069
         function getForm(uuid) {
           //console.log('Available forms');
           //console.log(forms);
+
         var result =  _.find(forms,function(form) {
             //console.log(form)
             if (form.uuid === uuid) return form;
             else if (form.encounterType === uuid) return form;
             else if (form.name === uuid) return form;
-          });
 
-          return result;
+          });
+          if (result === undefined) return forms['form1']; //should be refactored once everything is well structured
+          else return result;
         }
     }
 })();

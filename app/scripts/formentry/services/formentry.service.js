@@ -51,6 +51,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   console.log(dateValue.isAfter(curDate));
                   return !dateValue.isAfter(curDate);
                 }
+                if (value === undefined) return true;
 
               },
               message: '"Should not be a future date!"'
@@ -81,6 +82,27 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               },
               message: '"Should be a future date!"'
             };
+          }
+
+          if(params.field !== undefined && params.value !== undefined)
+          {
+            var result;
+            var results;
+            if(params.value.length>0)
+            {
+              var i = 0;
+              _.each(params.value, function(val){
+                result = 'model.' + 'obs_' + params.field.toString() + ' !== ' +
+                '"' + val + '"';
+                if(i === 0) results = result;
+                else results = results + ' && ' + result;
+                i=i+1;
+              });
+            }
+
+            console.log('Test Field Hiding')
+            console.log("'" + results.toString() + "'");
+            return  "'" + results.toString() + "'";
           }
         }
 
@@ -163,6 +185,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         {
           var val = _.filter(obs, function(obs_){
           //console.log(obs);
+          if(key !== undefined)
             if(obs_.concept.uuid === key.split('_')[1]) return obs_;
           });
           return val;
@@ -228,17 +251,23 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   else if(_field.key === 'encounterProvider')
                   {
 
-                    sec_data['encounterProvider'] = enc_data.provider.uuid;
-                    _field.data['init_val'] = enc_data.provider.uuid;
-                    //console.log('test Model');
-                    //console.log(model);
+                    if (enc_data.provider !== undefined)
+                    {
+                      sec_data['encounterProvider'] = enc_data.provider.uuid;
+                      _field.data['init_val'] = enc_data.provider.uuid;
+                      //console.log('test Model');
+                      //console.log(model);
+                    }
                   }
                   else if(_field.key === 'encounterLocation')
                   {
-                    sec_data['encounterLocation'] = enc_data.location.uuid;
-                    _field.data['init_val'] = enc_data.location.uuid;
-                    //console.log('test Model');
-                    //console.log(model);
+                    if (enc_data.location !== undefined)
+                    {
+                      sec_data['encounterLocation'] = enc_data.location.uuid;
+                      _field.data['init_val'] = enc_data.location.uuid;
+                      //console.log('test Model');
+                      //console.log(model);
+                    }
                   }
                   else if(_field.type === 'select' || _field.type === 'radio' || _field.type === 'ui-select-extended')
                   {
@@ -369,13 +398,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                }
                              }
                              else {
-                              //  console.log(group_data)
+                                console.log(group_data)
                               //  console.log(group_data[0].groupMembers)
-
-                               var val = _.find(group_data[0].groupMembers, function(obs){
-                                 //console.log(obs)
-                                 if(obs.concept.uuid === _group_field.key.split('_')[1]) return obs;
-                               });
+                              var val;
+                               if(group_data.length>0)
+                               {
+                                 val = _.find(group_data[0].groupMembers, function(obs){
+                                   //console.log(obs)
+                                   if(obs.concept.uuid === _group_field.key.split('_')[1]) return obs;
+                                 });
+                               }
 
                               //  console.log(val)
                               //  console.log('Key: ', _group_field.key.split('_')[1])
@@ -398,10 +430,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                              }
                            }
                            else {
+                             var val;
                              //if the field group section field is a multi select
-                             var val = _.filter(group_data[0].groupMembers, function(obs){
-                               if(obs.concept.uuid === _group_field.key.split('_')[1]) return obs;
-                             });
+                             if(group_data.length>0)
+                             {
+                               val = _.filter(group_data[0].groupMembers, function(obs){
+                                 if(obs.concept.uuid === _group_field.key.split('_')[1]) return obs;
+                               });
+                             }
                              var multiArr = [];
                              var multi_uuid = [];
                              if(val !== undefined)
@@ -419,7 +455,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           //  console.log(group_val)
                            if(typeof group_val==='object')
                            {
-                             if(!_.isEmpty(group_val))
+                             if(group_val!==null || group_val !== '' || group_val !== '')
                              {
                                 sec_data[field_key] = group_val;
                              }
@@ -575,18 +611,55 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           getEncounterHandler(encData, formlySchema);
         }
 
-        function validateForm(schema)
+        function validateForm()
         {
-          _.each(schema, function(field) {
-            // body...
-            if(field.model.obsConceptUuid === '')
+
+        }
+
+        function validateFieldFormat(sel_field)
+        {
+          //validate the field to see if it is in the right format before creating the formly equavalent
+          var pass = true;
+          if(sel_field.type === 'date')
+          {
+            //check it has validator provided
+            if(sel_field.validators.length>0)
             {
-              return field.templateOptions.label + 'Missing Concept uuid';
+              if(!sel_field.validators[0].hasOwnProperty('type'))
+              {
+                pass = false;
+                console.log('This field is a Date type field and you must provide validators', sel_field);
+                console.log('Add this: "validators":[{"type":"date"}]')
+              }
             }
             else {
-              return '';
+              pass = false;
+              console.log('This field a Date type field and must provide validators', sel_field);
+              console.log('Add this: "validators":[{"type":"date"}]')
             }
-          })
+
+          }
+          else if(sel_field.showDate === 'true')
+          {
+            //check it has validator provided
+            if(sel_field.validators.length>0)
+            {
+              if(!sel_field.validators[0].hasOwnProperty('type'))
+              {
+                pass = false;
+                console.log('This field is a Date type field and you must provide validators', sel_field);
+                console.log('Add this: "validators":[{"type":"date"}]')
+              }
+            }
+            else {
+              pass = false;
+              console.log('This field a Date type field and must provide validators', sel_field);
+              console.log('Add this: "validators":[{"type":"date"}]')
+            }
+
+          }
+
+          return pass;
         }
 
         function getConceptUuid()
@@ -1211,7 +1284,21 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         Private method to create  formly fields without group
         */
         function createFormlyField(obs_field){
+          //console.log(obs_field)
+
+          var hideExpression_;
+          if(obs_field.hide !== undefined)
+          {
+            hideExpression_= getFieldValidator(obs_field.hide[0]);
+          }
+          else {
+            hideExpression_ = '';
+          }
           var obsField = {};
+          if (validateFieldFormat(obs_field) !== true)
+          {
+            console.log('Something Went Wrong While creating this field', obs_field)
+          }
           if(obs_field.type === 'date')
           {
             var required=false;
@@ -1228,8 +1315,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 datepickerPopup: 'dd-MMMM-yyyy',
                 required:required
               },
+              hideExpression:hideExpression_,
               validators: {
-                //dateValidator: getFieldValidator(obs_field.question.validators)
+                dateValidator: getFieldValidator(obs_field.validators[0]) //this  will require refactoring as we move forward
               }
             }
           }
@@ -1247,7 +1335,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 type: obs_field.type,
                 label: obs_field.label,
                 required:required
-              }
+              },
+              hideExpression:hideExpression_
               //         ,
               // validators: {
               //   //ipAddress: validatorsArray['ipAddress']
@@ -1284,7 +1373,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 label: obs_field.label,
                 required:required,
                 options:opts
-              }
+              },
+              hideExpression:hideExpression_
             }
           }
           else if(obs_field.type === 'problem'){
@@ -1304,7 +1394,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 getSelectedObjectFunction: SearchDataService.getProblemByUuid,
                 required:required,
                 options:[]
-              }
+              },
+              hideExpression:hideExpression_
             };
           }
           else if(obs_field.type === 'drug'){
@@ -1355,6 +1446,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         */
         function createGroupFormlyField(obs_field, gpSectionRnd)
         {
+          var hideExpression_;
+          var hideExpression_;
+          if(obs_field.hide !== undefined)
+          {
+            hideExpression_= getFieldValidator(obs_field.hide[0]);
+          }
+          else {
+            hideExpression_ = '';
+          }
+
           var obsField = {};
           var groupingFields = [];
           //gpSectionRnd = gpSectionRnd + 1;
@@ -1378,8 +1479,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 label: 'Date',
                 datepickerPopup: 'dd-MMMM-yyyy'
                 },
+                hideExpression:hideExpression_,
               validators: {
-                //dateValidator: getFieldValidator({type:'date'})
+                dateValidator: getFieldValidator(curField.validators[0]) //this  will require refactoring as we move forward
                 }
               }
               groupingFields.push(dateField);
@@ -1446,6 +1548,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               _.each(section.questions, function(sec_field){
                 if(sec_field.type === 'encounterDate')
                 {
+                  var required=false;
+                  if (sec_field.required !== undefined) required=Boolean(sec_field.required);
+
                   field = {
                     key: sec_field.type,
                     type: 'datepicker',
@@ -1453,15 +1558,19 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     templateOptions: {
                       type: 'text',
                       label: sec_field.label,
-                      datepickerPopup: 'dd-MMMM-yyyy'
+                      datepickerPopup: 'dd-MMMM-yyyy',
+                      required:required
                     },
                     validators: {
-                      //dateValidator: getFieldValidator(encField.validators)
+                      dateValidator: getFieldValidator(sec_field.validators[0]) //this  will require refactoring as we move forward
                     }
                   }
                 }
                 else if(sec_field.type === 'encounterProvider')
                 {
+                  var required=false;
+                  if (sec_field.required !== undefined) required=Boolean(sec_field.required);
+
                   field = {
                     key: sec_field.type,
                     type: 'ui-select-extended',
@@ -1473,13 +1582,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       labelProp:'display',
                       deferredFilterFunction: SearchDataService.findProvider,
                       getSelectedObjectFunction: SearchDataService.getProviderByUuid,
-                      required:false,
+                      required:required,
                       options:[]
                     }
                   }
                 }
                 else if(sec_field.type === 'encounterLocation')
                 {
+                  var required=false;
+                  if (sec_field.required !== undefined) required=Boolean(sec_field.required);
+
                   field = {
                     key: sec_field.type,
                     type: 'ui-select-extended',
@@ -1491,7 +1603,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       labelProp:'display',
                       deferredFilterFunction: SearchDataService.findLocation,
                       getSelectedObjectFunction: SearchDataService.getLocationByUuid,
-                      required:false,
+                      required:required,
                       options:[]
                     }
                   }
