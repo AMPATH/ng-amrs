@@ -168,7 +168,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                   var i = 0;
                   _.each(error_required.$error.required, function(error_field){
                     if (i === 0) {
-                      $scope.vm.error= 'required field: '+ error_field.$name
+                      $scope.vm.error= 'required field: '+ error_field.$name;
                     }
                     i = i + 1;
                   });
@@ -181,7 +181,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 var i = 0;
                 _.each(error_date.$error.dateValidator, function(error_field){
                   if (i === 0) {
-                    $scope.vm.error= 'One of the date fields is invalid'
+                    $scope.vm.error= 'One of the date fields is invalid';
                   }
                   i = i + 1;
                 });
