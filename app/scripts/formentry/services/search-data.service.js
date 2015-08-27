@@ -142,22 +142,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
             });
         }
 
-        function getConceptAnswers(searchText, onSuccess, onError) {
-          ConceptResService.findConcept(searchText,
-            function (concepts) {
-              var filteredConcepts = ConceptResService.filterResultsByConceptClassesName(concepts,problemConceptClassesArray);
-              var wrapped = wrapConcepts(filteredConcepts);
-              onSuccess(wrapped);
-            },
-            function (error) {
-              onError(onError);
-            });
-        }
-
         function getConceptAnswers(uuid, onSuccess, onError) {
           ConceptResService.getConceptAnswers(uuid,
             function (concept) {
-              var wrapped = wrapConcepts(concept.amswers);
+              var wrapped = wrapConceptsWithLabels(wrapConcepts(concept.answers));
               onSuccess(wrapped);
             },
             function (error) {
@@ -212,6 +200,19 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
             }
             return wrappedObjects;
         }
+
+        function wrapConceptsWithLabels(concepts) {
+          var wrappedObjects = [];
+          for (var i = 0; i < concepts.length; i++) {
+                var concept={
+                  "concept": concepts[i].uuId,
+                  "label": concepts[i].name
+                }
+            wrappedObjects.push(concept);
+          }
+          return wrappedObjects;
+        }
+
     }
 
 })();

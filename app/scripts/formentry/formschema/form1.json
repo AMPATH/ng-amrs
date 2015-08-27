@@ -13,11 +13,7 @@
               "label": "Visit Date",
               "type": "encounterDate",
               "required": "true",
-              "validators": [
-                {
-                  "type": "date"
-                }
-              ]
+              "validators":[{"type":"date"}]
             },
             {
               "type": "encounterProvider",
@@ -42,7 +38,7 @@
             },
             {
               "type": "encounterLocation",
-              "label": "5. Facility Name",
+              "label": "5. Facility name (site/satellite clinic required):",
               "required": "true"
             },
             {
@@ -51,7 +47,7 @@
               "questions": [
                 {
                   "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
-                  "label":"6. Transfer in from other clinic (specify):",
+                  "label":"6 Transfer in from other AMPATH clinic (specify):",
                   "type":"text",
                   "validators":[]
                 }
@@ -617,26 +613,32 @@
           "label": "Current Tuberculosis",
           "questions": [
             {
-              "concept": "a899e444-1350-11df-a1f1-0026b9348838",
-              "label": "15 a.On TB treatment:",
-              "answers": [
+              "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions": [
                 {
-                  "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "None"
+                  "concept": "a899e444-1350-11df-a1f1-0026b9348838",
+                  "label": "15 a.On TB treatment:",
+                  "answers": [
+                    {
+                      "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                      "label": "None"
+                    },
+                    {
+                      "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                      "label": "On treatment"
+                    }
+                  ],
+                  "type": "select",
+                  "validators": []
                 },
                 {
-                  "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
-                  "label": "On treatment"
+                  "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
+                  "label": "b. Start Date of TB treatment:",
+                  "type": "date",
+                  "validators": [{"type":"date"}]
                 }
-              ],
-              "type": "select",
-              "validators": "null"
-            },
-            {
-              "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
-              "label": "b. Start Date of TB treatment:",
-              "type": "date",
-              "validators": [{"type":"date"}]
+              ]
             },
             {
               "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",
@@ -866,7 +868,7 @@
                 },
                 {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
-                  "label": "16b. Adherence (PCP) for Poor/Fair:",
+                  "label": "16b. Adherence (PCP) Reasons for Poor/Fair:",
                   "answers": [
                     {
                       "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
@@ -958,7 +960,7 @@
                 },
                 {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
-                  "label": "16c. Adherence (TB Prophylaxis) for Poor/Fair:",
+                  "label": "16c. Adherence (TB Prophylaxis) Reasons for Poor/Fair:",
                   "answers": [
                     {
                       "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
@@ -1050,10 +1052,65 @@
                 },
                 {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
-                  "label": "16d. Adherence (TB Treatment) for Poor/Fair:",
-                  "answers": [],
+                  "label": "16d. Adherence (TB Treatment) Reasons for Poor/Fair:",
+                  "answers": [
+                    {
+                      "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
+                      "label": "Alcohol"
+                    },
+                    {
+                      "concept": "a8935fde-1350-11df-a1f1-0026b9348838",
+                      "label": "Depression"
+                    },
+                    {
+                      "concept": "a89eac04-1350-11df-a1f1-0026b9348838",
+                      "label": "Felt well"
+                    },
+                    {
+                      "concept": "a89eacc2-1350-11df-a1f1-0026b9348838",
+                      "label": "Forgot"
+                    },
+                    {
+                      "concept": "7211031b-0685-44bc-a5e9-5a018d0173ea",
+                      "label": "Gave away"
+                    },
+                    {
+                      "concept": "a8af4cee-1350-11df-a1f1-0026b9348838",
+                      "label": "Lost/Ran out of pills"
+                    },
+                    {
+                      "concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46",
+                      "label": "Pill Burden"
+                    },
+                    {
+                      "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
+                      "label": "Side Effects"
+                    },
+                    {
+                      "concept": "a89eba46-1350-11df-a1f1-0026b9348838",
+                      "label": "Stigma"
+                    },
+                    {
+                      "concept": "c0c9eab3-46f6-453c-b29d-dc1c242317c5",
+                      "label": "Stock out"
+                    },
+                    {
+                      "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
+                      "label": "Too ill"
+                    },
+                    {
+                      "concept": "a897fdaa-1350-11df-a1f1-0026b9348838",
+                      "label": "Travel Problems"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    }
+                  ],
                   "type": "multiCheckbox",
-                  "validators": []
+                  "validators": [
+
+                  ]
                 },
                 {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
@@ -1074,23 +1131,30 @@
           "label": "Side effects/toxicity",
           "questions": [
             {
-              "concept": "30fc0cea-b6c7-48cc-bbfb-4eb53170ce41",
-              "label": "17a. Any side effects attributable to any drug that the patient is currently taking:",
-              "answers": [
+              "concept": "a8a072c8-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions": [
                 {
-                  "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
-                  "label": "Yes"
-                },
-                {
-                  "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                  "label": "No"
+                  "concept": "30fc0cea-b6c7-48cc-bbfb-4eb53170ce41",
+                  "label": "17a. Any side effects attributable to any drug that the patient is currently taking:",
+                  "answers": [
+                    {
+                      "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                      "label": "Yes"
+                    },
+                    {
+                      "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                      "label": "No"
+                    }
+                  ],
+                  "type": "select",
+                  "validators": []
                 }
-              ],
-              "type": "select",
-              "validators": []
+              ]
             },
             {
               "type": "group_repeating",
+              "concept": "a8a072c8-1350-11df-a1f1-0026b9348838",
               "label": "17b If yes, drug(s): Side effect Drug",
               "questions": [
                 {
@@ -2156,7 +2220,7 @@
               "validators": []
             },
             {
-              "concept": "a8a078cc-1350-11df-a1f1-0026b9348838f",
+              "concept": "a8a078cc-1350-11df-a1f1-0026b9348838",
               "type": "group",
               "questions": [
                 {
@@ -2239,6 +2303,24 @@
                   "validators":[{"type":"date"}]
                 },
                 {
+                  "concept": "18ac99bf-0805-4929-8d0b-924455850a00",
+                  "label": "Relapse/re-infection"
+                }
+              ],
+              "type": "select",
+              "validators": []
+            },
+            {
+              "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
+              "label": "26d. If on treatment: start date:",
+              "type": "date",
+              "validators": [{"type":"date"}]
+            },
+            {
+              "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",
+              "type": "group",
+              "questions": [
+                {
                   "concept": "16db21cd-10cb-4c31-bb5a-b7619bfbea66",
                   "label": "26e. Site of TB meds pick-up:",
                   "answers": [
@@ -2258,7 +2340,7 @@
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "Other Specify:",
                   "type": "text",
-                  "validators": "null"
+                  "validators": []
                 }
               ]
             },

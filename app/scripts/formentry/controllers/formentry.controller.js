@@ -1,5 +1,5 @@
 /*
-jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
+jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 */
 (function() {
     'use strict';
@@ -88,81 +88,106 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
 
         $scope.vm.submit = function() {
           //  $scope.vm.error = FormentryService.validateForm($scope.vm.userFields);
-            // console.log('Checking form Validity')
-            // console.log($scope.vm.form.$valid);
-            // console.log($scope.vm.form)
-            if ($scope.vm.error === '')
-            {
-              //FormentryService.getPayLoad($scope.vm.userFields);
-            }
-            else {
-              $scope.vm.error = '';
-            }
-            var form = FormsMetaData.getForm($stateParams.formuuid);
-            // console.log($stateParams.formuuid)
-            // console.log('Selected Form');
-            // console.log(form);
-            var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.tabs, $scope.vm.patient,form,params.uuid);
-            if (!_.isEmpty(payLoad.obs))
-            {
-                /*
-                submit only if we have some obs
-                */
-                if(payLoad.encounterType !== undefined){
-                  OpenmrsRestService.getEncounterResService().saveEncounter(JSON.stringify(payLoad), function(data){
-                    if (data)
-                    {
-                      $scope.vm.success = 'Form Submitted successfully'
-                      var dlg=dialogs.notify('Success', $scope.vm.success);
-                      if($scope.vm.submitLabel === 'Update')
-                      {
-                        var obsToVoid = _.where(payLoad.obs,{voided:true});
-                        // console.log('Obs to Void: ', obsToVoid);
-                        if(obsToVoid !== undefined)
-                        {
-                          _.each(obsToVoid, function(obs){
-                            OpenmrsRestService.getObsResService().voidObs(obs, function(data){
-                              if (data)
-                              {
-                                console.log('Voided Obs uuid: ', obs.uuid);
-                              }
-                            });
-                          })
-                        }
-                      }
-                      // console.log('Previous State')
-                      // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
-                      $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
-                    }
-                  });
-                }
-                else {
-                  //void obs only
-                  if($scope.vm.submitLabel === 'Update')
-                  {
-                    var obsToVoid = _.where(updatedPayLoad.obs,{voided:true});
-                    //console.log('Obs to Void: ', obsToVoid);
-                    if(obsToVoid !== undefined)
-                    {
-                      _.each(obsToVoid, function(obs){
-                        OpenmrsRestService.getObsResService().voidObs(obs, function(data){
-                          if (data)
-                          {
-                            console.log('Voided Obs uuid: ', obs.uuid);
-                          }
-                        });
-                      })
-                    }
-                  }
-                  $scope.vm.success = 'Form Submitted successfully'
-                  var dlg=dialogs.notify('Success', $scope.vm.success);
-                  $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
-                }
-            }
-            else {
-                var dlg=dialogs.notify('Error', 'No data to be Submitted. Please fill the form first....');
-            }
+            console.log('Checking form Validity')
+            console.log($scope.vm.form.$valid);
+            console.log($scope.vm.form)
 
+            if ($scope.vm.form.$valid)
+            {
+              var form = FormsMetaData.getForm($stateParams.formuuid);
+              // console.log($stateParams.formuuid)
+              // console.log('Selected Form');
+              // console.log(form);
+              var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.tabs, $scope.vm.patient,form,params.uuid);
+              if (!_.isEmpty(payLoad.obs))
+              {
+                  /*
+                  submit only if we have some obs
+                  */
+                  if(payLoad.encounterType !== undefined){
+                    OpenmrsRestService.getEncounterResService().saveEncounter(JSON.stringify(payLoad), function(data){
+                      if (data)
+                      {
+                        $scope.vm.success = 'Form Submitted successfully'
+                        var dlg=dialogs.notify('Success', $scope.vm.success);
+                        if($scope.vm.submitLabel === 'Update')
+                        {
+                          var obsToVoid = _.where(payLoad.obs,{voided:true});
+                          // console.log('Obs to Void: ', obsToVoid);
+                          if(obsToVoid !== undefined)
+                          {
+                            _.each(obsToVoid, function(obs){
+                              OpenmrsRestService.getObsResService().voidObs(obs, function(data){
+                                if (data)
+                                {
+                                  console.log('Voided Obs uuid: ', obs.uuid);
+                                }
+                              });
+                            })
+                          }
+                        }
+                        // console.log('Previous State')
+                        // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
+                        $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
+                      }
+                    });
+                  }
+                  else {
+                    //void obs only
+                    if($scope.vm.submitLabel === 'Update')
+                    {
+                      var obsToVoid = _.where(updatedPayLoad.obs,{voided:true});
+                      //console.log('Obs to Void: ', obsToVoid);
+                      if(obsToVoid !== undefined)
+                      {
+                        _.each(obsToVoid, function(obs){
+                          OpenmrsRestService.getObsResService().voidObs(obs, function(data){
+                            if (data)
+                            {
+                              console.log('Voided Obs uuid: ', obs.uuid);
+                            }
+                          });
+                        })
+                      }
+                    }
+                    $scope.vm.success = 'Form Submitted successfully'
+                    var dlg=dialogs.notify('Success', $scope.vm.success);
+                    $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
+                  }
+              }
+              else {
+                  var dlg=dialogs.notify('Error', 'No data to be Submitted. Please fill the form first....');
+              }
+
+            }
+            else {
+              var error_required = $scope.vm.form.$error.required[0];
+              var error_date = $scope.vm.form.$error.dateValidator[0];
+              if(error_required !== undefined)
+              {
+                  var i = 0;
+                  _.each(error_required.$error.required, function(error_field){
+                    if (i === 0) {
+                      $scope.vm.error= 'required field: '+ error_field.$name
+                    }
+                    i = i + 1;
+                  });
+                  return;
+
+              }
+
+              if(error_date !== undefined)
+              {
+                var i = 0;
+                _.each(error_date.$error.dateValidator, function(error_field){
+                  if (i === 0) {
+                    $scope.vm.error= 'One of the date fields is invalid'
+                  }
+                  i = i + 1;
+                });
+                return;
+              }
+            }
 
         }
 

@@ -7,7 +7,7 @@
       Patient Details: Identifier: {{vm.patient.identifierFormatted()}} | Name : {{vm.patient.fullNames()}}
       |{{vm.success}}
     </div>
-    <div>{{vm.error}}</div>
+    <div style="color:red;">{{vm.error}}</div>
 
     <tabset>
       <tab ng-repeat="tab in vm.tabs"
@@ -19,7 +19,7 @@
       </tab>
 
       <tab heading="Submit">
-        <button type="submit" class="btn btn-primary submit-button" ng-click="vm.submit()" ng-disabled="vm.form.$invalid">{{vm.submitLabel}}</button>
+        <button type="submit" class="btn btn-primary submit-button" ng-click="vm.submit()">{{vm.submitLabel}}</button>
         <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
       </tab>
     </tabset>
