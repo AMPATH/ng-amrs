@@ -97,7 +97,8 @@
                           {
                             "label": "Visit Date",
                             "type": "encounterDate",
-                            "required": "true"
+                            "required": "true",
+                            "validators":[{"type":"date"}]
                           },
                           {
                             "type": "encounterProvider",
