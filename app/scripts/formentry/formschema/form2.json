@@ -15,6 +15,12 @@
               "required": "true"
             },
             {
+              "personAttributeType":"72a759a8-1359-11df-a1f1-0026b9348838",
+              "label":"Indicate patients contact phone number only if is changed since last visit:",
+              "type":"text",
+              "validators":[]
+            },
+            {
               "type": "encounterProvider",
               "label": "Provider",
               "required": "true"
@@ -34,6 +40,12 @@
                 }
               ],
               "validators": {}
+            },
+            {
+              "personAttributeType":"72a759a8-1359-11df-a1f1-0026b9348838",
+              "label":"Patient Relationship:",
+              "type":"text",
+              "validators":[]
             }
           ]
         },
@@ -78,7 +90,7 @@
           "questions": [
             {
               "concept": "a8a65d5a-1350-11df-a1f1-0026b9348838",
-              "label": "2. Vital Signs: BP:Systolic:",
+              "label": "2. BP:Systolic:",
               "type": "number",
               "validators": []
             },
@@ -129,12 +141,6 @@
               "label": "Sp02 %:",
               "type": "number",
               "validators": []
-            },
-            {
-              "concept": "a89c60c0-1350-11df-a1f1-0026b9348838",
-              "label": "BMI:",
-              "type": "number",
-              "validators": []
             }
           ]
         },
@@ -181,7 +187,7 @@
             {
               "concept": "dc1942b2-5e50-4adc-949d-ad6c905f054e",
               "label": "4b. If Unscheduled, actual scheduled date",
-              "type": " date",
+              "type": "date",
               "validators": [
                 {
                   "type": "date",
@@ -526,8 +532,23 @@
           "questions": [
             {
               "concept": "a8a76cae-1350-11df-a1f1-0026b9348838",
-              "label": "10.Child's current HIV status:",
-              "answers": [],
+              "answers": [
+                {
+                "concept": "a897ff62-1350-11df-a1f1-0026b9348838",
+                "label": "HIV exposed"
+                 },
+                {
+                  "concept": "a89a7ae4-1350-11df-a1f1-0026b9348838",
+                  "label": "status indeterminate"
+                },
+                {
+                  "concept": "a89ace7c-1350-11df-a1f1-0026b9348838",
+                  "label": "HIV infected"
+                },
+                {
+                  "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                  "label": "HIV Negative"
+                }],
               "type": "select",
               "validators": "null"
             },
@@ -557,7 +578,7 @@
                 },
                 {
                   "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
-                  "label": " N/A"
+                  "label": "N/A"
                 }
               ],
               "type": "select",
@@ -647,7 +668,7 @@
             {
               "concept": "a89d200a-1350-11df-a1f1-0026b9348838",
               "label": "13c.If started since last visit record the date",
-              "type": " date",
+              "type": "date",
               "validators": "[type:date]"
             },
             {
@@ -861,7 +882,7 @@
             {
               "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
               "label": "Start Date of TB treatment",
-              "type": "text",
+              "type": "date",
               "validators": "null"
             },
             {
@@ -1422,12 +1443,13 @@
             },
             {
               "concept": "a8a0720a-1350-11df-a1f1-0026b9348838",
-              "type": "group",
+              "type": "group_repeating",
+              "label": "Missed medication during the last seven days:",
               "questions": [
                 {
                   "concept": "a8a07084-1350-11df-a1f1-0026b9348838",
-                  "label": "Missed medication during the last seven days:To Do Add REPEAT",
-                  "type": "text",
+                  "label": "Missed medication during the last seven days:",
+                  "type": "drug",
                   "validators": "null"
                 }
               ]
@@ -1482,10 +1504,16 @@
               "validators": "null"
             },
             {
-              "concept": "1682a920-c93d-4aad-b9cb-4a2b2c41ff1a",
-              "label": "14g. If yes, drug(s):To Do Add REPEAT",
-              "type": "text",
-              "validators": "null"
+              "type": "group_repeating",
+              "label": "14g. If yes, drug(s)",
+              "questions": [
+                {
+                  "concept": "1682a920-c93d-4aad-b9cb-4a2b2c41ff1a",
+                  "label": "Drug",
+                  "type": "drug",
+                  "validators": []
+                }
+              ]
             },
             {
               "concept": "c2ecd5f7-4b47-47ae-b706-3dc5ed98b4db",
@@ -3670,7 +3698,7 @@
                 {
                   "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
                   "label": "Return to clinic date:",
-                  "type": " date",
+                  "type": "date",
                   "validators": "[type:date]"
                 }
               ]
