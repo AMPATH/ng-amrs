@@ -99,6 +99,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               // console.log('Selected Form');
               // console.log(form);
               var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.tabs, $scope.vm.patient,form,params.uuid);
+              console.log(payLoad);
               if (!_.isEmpty(payLoad.obs))
               {
                   /*
@@ -161,12 +162,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             }
             else {
-              var error_required = $scope.vm.form.$error.required[0];
-              var error_date = $scope.vm.form.$error.dateValidator[0];
+              var error_required = $scope.vm.form.$error;
+              var error_date = $scope.vm.form.$error;
               if(error_required !== undefined)
               {
                   var i = 0;
-                  _.each(error_required.$error.required, function(error_field){
+                  _.each(error_required.required[0].$error.required, function(error_field){
                     if (i === 0) {
                       $scope.vm.error= 'required field: '+ error_field.$name;
                     }
@@ -179,7 +180,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               if(error_date !== undefined)
               {
                 var i = 0;
-                _.each(error_date.$error.dateValidator, function(error_field){
+                _.each(error_date.dateValidator[0].$error.dateValidator, function(error_field){
                   if (i === 0) {
                     $scope.vm.error= 'One of the date fields is invalid';
                   }
