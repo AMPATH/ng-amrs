@@ -22,35 +22,21 @@ jshint -W003, -W026
     appointmentScheduleController.$inject = ['$scope', '$rootScope', 'EtlRestService', 'AppointmentScheduleModel', 'moment', '$state'];
 
     function appointmentScheduleController($scope, $rootScope, EtlRestService, AppointmentScheduleModel, moment, $state) {
+        
+        //scope members region
         $scope.patients = [];
-        $scope.isBusy = false;
 
-        $scope.moment = function day(date) {
-            var day = new moment(date).format();;
-            return day;
-        };
+        $scope.isBusy = false;
+        $scope.experiencedLoadingError = false;
 
         $scope.loadSchedule = loadSchedule;
-        $scope.experiencedLoadingError = false;
+        $scope.loadPatient = loadPatient;
+        $scope.$on('viewDayAppointments',onViewDayAppointmentBroadcast);
+
+
+        $scope.utcDateToLocal = utcDateToLocal;
+        
         $scope.startDate = new Date();
-
-
-        $scope.$on('viewDayAppointments', function (event, arg) {
-            //console.log('view date:' + arg);
-            $scope.selectedDate(arg);
-        });
-
-        $scope.status = {
-            startOpened: false
-        };
-
-        $scope.startOpen = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            $scope.status.startOpened = true;
-        };
-
-
         $scope.selectedDate = function (value) {
             if (value) {
                 $scope.startDate = value;
@@ -60,8 +46,36 @@ jshint -W003, -W026
                 return $scope.startDate;
             }
         };
+        
+        $scope.openDatePopup = openDatePopup; 
+        $scope.dateControlStatus = {
+            startOpened: false
+        };
 
-        $scope.loadPatient = function (patientUuid) {
+        //end scope members region
+        
+        function onViewDayAppointmentBroadcast(event, arg) {
+            $scope.selectedDate(arg);
+        }
+        
+        
+        function openDatePopup ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.dateControlStatus.startOpened = true;
+        };
+
+
+
+        function utcDateToLocal(date) {
+            var day = new moment(date).format();;
+            return day;
+        }
+
+
+
+
+        function loadPatient(patientUuid) {
             /*
             Get the selected patient and save the details in the root scope
             so that we don't do another round trip to get the patient details
@@ -71,7 +85,7 @@ jshint -W003, -W026
                 { return patient; }
             });
             $state.go('patient', { uuid: patientUuid });
-        };
+        }
 
 
 
