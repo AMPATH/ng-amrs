@@ -2639,6 +2639,7 @@
             {
               "type": "group_repeating",
               "label": "20. New Problem Added",
+              "concept":"e6aafb67-3e12-439a-9132-c62569e76ab0",
               "questions": [
                 {
                   "concept": "a8ae835e-1350-11df-a1f1-0026b9348838",
@@ -2651,6 +2652,7 @@
             {
               "type": "group_repeating",
               "label": "Ongoing Problem",
+              "concept":"a37af1ff-6d5c-4fb7-bfdc-852377196830",
               "questions": [
                 {
                   "concept": "a8a1701a-1350-11df-a1f1-0026b9348838",
@@ -2663,6 +2665,7 @@
             {
               "type": "group_repeating",
               "label": "Resolved Problem",
+              "concept":"e6aafb67-3e12-439a-9132-c62569e76ab0",
               "questions": [
                 {
                   "concept": "a8af4aa0-1350-11df-a1f1-0026b9348838",
@@ -3686,7 +3689,7 @@
                   "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
                   "label": "Return to clinic date:",
                   "type": "date",
-                  "validators": [{"type":"date"}]
+                  "validators": [{"type":"date", "allowFutureDates":"true"}]
                 }
               ]
             }
@@ -3694,5 +3697,3 @@
         }
       ]
     }
-
-

@@ -16,11 +16,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         $scope.vm.error = '';
         $scope.vm.model = {};
         $scope.vm.patient = $rootScope.broadcastPatient;
-        $scope.vm.submitLabel = 'Save'
+        $scope.vm.submitLabel = 'Save';
+        $scope.vm.encounterType;
         var formSchema;
         $scope.vm.formlyFields;
         $scope.vm.tabs = [];
-        //$scope.vm.encounters = $rootScope.encounters;
+        $scope.vm.encounter = $rootScope.activeEncounter;
+        console.log('ACTIVE ENCOUNTER', $scope.vm.encounter);
 
         /*
         Test logic to get either a blank form or form filled with existing data.
@@ -31,6 +33,18 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         //var params = {uuid: '18a1f142-f2c6-4419-a5db-5f875020b887'};
         var encData;
         var selectedForm = $stateParams.formuuid;
+        if(params.uuid !== undefined)
+        {
+          var encForm = FormsMetaData.getForm($scope.vm.encounter.encounterTypeUuid());
+          selectedForm = encForm.name;
+          $scope.vm.encounterType = $scope.vm.encounter.encounterTypeName();
+        }
+        else {
+          selectedForm = $stateParams.formuuid;
+          var encForm = FormsMetaData.getForm($stateParams.formuuid);
+          $scope.vm.encounterType = encForm.encounterTypeName
+        }
+
         // console.log('testing selected Form')
         // console.log(selectedForm);
 
@@ -169,7 +183,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                   var i = 0;
                   _.each(error_required.required[0].$error.required, function(error_field){
                     if (i === 0) {
-                      $scope.vm.error= 'required field: '+ error_field.$name
+                      $scope.vm.error= 'required field: '+ error_field.$name;
                     }
                     i = i + 1;
                   });
@@ -182,7 +196,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 var i = 0;
                 _.each(error_date.dateValidator[0].$error.dateValidator, function(error_field){
                   if (i === 0) {
-                    $scope.vm.error= 'One of the date fields is invalid'
+                    $scope.vm.error= 'One of the date fields is invalid';
                   }
                   i = i + 1;
                 });

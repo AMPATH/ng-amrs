@@ -16,19 +16,22 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069
         forms['form1'] = {
           name: 'form1',
           uuid: 'form1',
-          encounterType:'8d5b2be0-c2cc-11de-8d13-0010c6dffd0f'
+          encounterType:'8d5b2be0-c2cc-11de-8d13-0010c6dffd0f',
+          encounterTypeName:'ADULT RETURN'
         };
 
         forms['form2'] = {
           name: 'form2',
           uuid: 'form2',
-          encounterType:'8d5b3108-c2cc-11de-8d13-0010c6dffd0f'
+          encounterType:'8d5b3108-c2cc-11de-8d13-0010c6dffd0f',
+          encounterTypeName:'PEADS RETURN'
         };
 
         forms['form3'] = {
           name: 'form3',
           uuid: 'form3',
-          encounterType:'b1e9ed0f-5222-4d47-98f7-5678b8a21ebd'
+          encounterType:'b1e9ed0f-5222-4d47-98f7-5678b8a21ebd',
+          encounterTypeName:'POST ANTENATAL'
         };
 
         var service = {

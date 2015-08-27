@@ -18,14 +18,14 @@
 
     function Model(openmrsModel) {
       var modelDefinition = this;
-      
+
       //Evaluate the passed models for non-existent propertis.
       openmrsModel.encounterType = openmrsModel.encounterType || {};
       openmrsModel.patient = openmrsModel.patient || {};
       openmrsModel.provider = openmrsModel.provider || {};
       openmrsModel.location = openmrsModel.location || {};
       openmrsModel.form = openmrsModel.form || {};
-      
+
       //initialize private members
       var _uuid = openmrsModel.uuid || '' ;
       var _patientUuid = openmrsModel.patient.uuid || '';
@@ -46,7 +46,7 @@
           return _uuid;
         }
       };
-      
+
       modelDefinition.patientUuid = function(value) {
         if(angular.isDefined(value)) {
           _patientUuid = value;
@@ -54,7 +54,7 @@
           return _patientUuid;
         }
       };
-      
+
       modelDefinition.encounterTypeName = function(value) {
         if (angular.isDefined(value)) {
           _encounterTypeName = value;
@@ -117,14 +117,14 @@
           return _formUuid;
         }
       };
-      
+
       modelDefinition.formName = function(value) {
         if(angular.isDefined(value)) {
           _formName = value;
         } else {
           return _formName;
         }
-      };        
+      };
 
       modelDefinition.openmrsModel = function() {
         /* jshint ignore:start */
@@ -140,7 +140,7 @@
         /* jshint ignore:end */
       };
     }
-    
+
     function toArrayOfModels(encounterArray) {
       var modelArray = [];
       for(var i=0; i<encounterArray.length; i++) {

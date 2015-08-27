@@ -5,7 +5,7 @@
   <form name="vm.form" novalidate>
     <div class="breadcrumb">
       Patient Details: Identifier: {{vm.patient.identifierFormatted()}} | Name : {{vm.patient.fullNames()}}
-      |{{vm.success}}
+      |{{vm.encounterType}} | {{vm.success}}
     </div>
     <div style="color:red;">{{vm.error}}</div>
 
@@ -24,9 +24,9 @@
       </tab>
     </tabset>
   </form>
-  <!-- <hr />
+  <hr />
   <h2>Model Value</h2>
-  <pre>{{vm.model | json}}</pre>-->
+  <pre>{{vm.model | json}}</pre>
 
   <!-- Put custom templates here -->
       <script type="text/ng-template" id="my-messages.html">

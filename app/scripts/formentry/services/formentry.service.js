@@ -885,7 +885,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         Check if this blank field is an array and has any preloaded data.
                         If field has some data then mark it as voided
                         void.
-                        This may be important for repeating sections
                         */
                         if(angular.isArray(groupValues) && groupValues.length===0)
                         {
@@ -907,15 +906,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         {
                           groupMembers = [];
                           var traversed_objects = [];
+                          console.log('group val', groupValues);
                           _.each(Object.keys(groupValues), function(group_member){
 
                             if (groupValues[group_member] !== undefined)
                             {
                               if(typeof groupValues[group_member] === 'object')// array object
                               {
-                                // console.log('OBJECT TYPE')
+                                 console.log('OBJECT TYPE')
                                 // console.log('Testing Object Vals');
-                                // console.log('ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
+                                console.log('ValKey: '+ group_member,'  Value: ', groupValues[group_member])
                                 var ArrayVal = groupValues[group_member]
                                 groupMembers = [];
                                 _.each(Object.keys(ArrayVal), function(arrKey){
@@ -929,91 +929,192 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                     // console.log('ARRAY KEY');
                                     // console.log(arrKey);
                                     // console.log('Value: ', getFormattedValue(ArrayVal[arrKey]));
-                                    init_data = getInitialFieldValue(arrKey, section);
-
-                                    // console.log('INIT DATA');
-                                    // console.log(init_data);
-
                                     var obs_index;
                                     var obs_val;
-                                    if (typeof init_data === 'object')
-                                    {
-                                      if (init_data.init_val !== undefined)
-                                      {
-                                        obs_index = init_data.init_val.indexOf(getFormattedValue(ArrayVal[arrKey]));
-                                        obs_val = init_data.init_val[obs_index];
-                                      }
-                                    }
 
-                                    if (obs_val !== undefined)
+                                    if(!arrKey.startsWith('obs_'))
                                     {
-                                      traversed_objects.push(getFormattedValue(ArrayVal[arrKey]));
-                                      if(obs_val !== getFormattedValue(ArrayVal[arrKey]))
+                                      //multiCheckbox field
+                                      console.log('Multi ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
+                                      init_data = getInitialFieldValue(group_member, section);
+
+                                      if(typeof init_data === 'object')
                                       {
-                                          if(getFormattedValue(ArrayVal[arrKey]) ==='null' && getFormattedValue(ArrayVal[arrKey]) === null && getFormattedValue(ArrayVal[arrKey]) ==='')
+                                        if (init_data.init_val !== undefined)
+                                        {
+                                          obs_index = init_data.init_val.indexOf(getFormattedValue(ArrayVal[arrKey]));
+                                          obs_val = init_data.init_val[obs_index];
+                                        }
+
+                                      }
+                                      if (obs_val !== undefined)
+                                      {
+                                        traversed_objects.push(getFormattedValue(ArrayVal[arrKey]));
+                                        if(obs_val !== getFormattedValue(ArrayVal[arrKey]))
+                                        {
+                                          if(getFormattedValue(ArrayVal[arrKey])==='null' || getFormattedValue(ArrayVal[arrKey]) === null || getFormattedValue(ArrayVal[arrKey]) ==='')
                                           {
-                                            obs.push({uuid:init_data.uuid, voided:true});
+                                            obs.push({uuid:init_data.uuid[obs_index], voided:true});
                                           }
                                           else {
-                                            groupMembers.push({uuid:init_data.uuid[obs_index], concept:arrKey.split('_')[1],
+                                            groupMembers.push({uuid:init_data.uuid[obs_index], concept:group_member.split('_')[1],
                                                         value:getFormattedValue(ArrayVal[arrKey])});
                                           }
+                                        }
+                                      }
+                                      else {
+                                        groupMembers.push({concept:group_member.split('_')[1],
+                                                    value:getFormattedValue(ArrayVal[arrKey])});
                                       }
                                     }
                                     else {
-                                          //new val being added
-                                          // console.log('Getting Here', getFormattedValue(ArrayVal[arrKey]))
-                                          if(getFormattedValue(ArrayVal[arrKey]) !== '' && getFormattedValue(ArrayVal[arrKey]) !== null && getFormattedValue(ArrayVal[arrKey]) !=='null')
-                                            groupMembers.push({concept:arrKey.split('_')[1],
-                                                        value:getFormattedValue(ArrayVal[arrKey])});
+                                      init_data = getInitialFieldValue(arrKey, section);
+
+                                      // console.log('INIT DATA');
+                                      // console.log(init_data);
+
+
+                                      if (typeof init_data === 'object')
+                                      {
+                                        if (init_data.init_val !== undefined)
+                                        {
+                                          obs_index = init_data.init_val.indexOf(getFormattedValue(ArrayVal[arrKey]));
+                                          obs_val = init_data.init_val[obs_index];
+                                        }
+                                      }
+
+                                      if (obs_val !== undefined)
+                                      {
+                                        traversed_objects.push(getFormattedValue(ArrayVal[arrKey]));
+                                        if(obs_val !== getFormattedValue(ArrayVal[arrKey]))
+                                        {
+                                            if(getFormattedValue(ArrayVal[arrKey]) ==='null' && getFormattedValue(ArrayVal[arrKey]) === null && getFormattedValue(ArrayVal[arrKey]) ==='')
+                                            {
+                                              obs.push({uuid:init_data.uuid[obs_index], voided:true});
+                                            }
+                                            else {
+                                              groupMembers.push({uuid:init_data.uuid[obs_index], concept:arrKey.split('_')[1],
+                                                          value:getFormattedValue(ArrayVal[arrKey])});
+                                            }
+                                        }
+                                      }
+                                      else {
+                                            //new val being added
+                                            // console.log('Getting Here', getFormattedValue(ArrayVal[arrKey]))
+                                            if(getFormattedValue(ArrayVal[arrKey]) !== '' && getFormattedValue(ArrayVal[arrKey]) !== null && getFormattedValue(ArrayVal[arrKey]) !=='null')
+                                              groupMembers.push({concept:arrKey.split('_')[1],
+                                                          value:getFormattedValue(ArrayVal[arrKey])});
+                                      }
                                     }
                                   }
 
                                 });
+                                if(traversed_objects.length>0)
+                                {
+                                  if(!_.isEmpty(init_data))
+                                  {
+                                    _.each(init_data.init_val, function(item){
+                                      if(traversed_objects.indexOf(item) === -1)
+                                      {
+                                        var obs_index = init_data.init_val.indexOf(item);
+                                        obs.push({voided:true, uuid:init_data.uuid[obs_index]});
+                                      }
+                                    });
+                                  }
+                                }
 
                                 if (groupMembers.length>0)
                                 {
-                                    obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
+                                  console.log('Group key',group_member);
+                                  console.log('Main Key', key);
+                                    //obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
+                                    if(group_member.startsWith('obs_'))
+                                      {obs.push({concept:group_member.split('_')[1], groupMembers:groupMembers});}
+                                    else {
+                                      obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
+                                    }
                                 }
                                 groupMembers = [];
+                                traversed_objects = [];
                               }
                               else {
-                                  // console.log('NONE OBJECT TYPE')
+                                   console.log('NONE OBJECT TYPE')
                                   // console.log('Testing Object Vals');
-                                  // console.log('ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
+                                  console.log('ValKey: ', group_member,'  Value: ', groupValues[group_member])
+                                  console.log(typeof group_member);
                                 // groupMembers.push({concept:group_member.split('_')[1],
                                 //             value:getFormattedValue(groupValues[group_member])});
-                                init_data = getInitialFieldValue(group_member, section);
-                                // console.log('NON ARRAY Section_id: ', obj);
-                                // console.log('Testing grouped values Special ');
-                                // console.log('GROUP KEY');
-                                // console.log(group_member)
-                                // console.log('INIT DATA');
-                                // console.log(init_data);
+
                                 var obs_val;
-                                if (typeof init_data === 'object')
+                                var obs_index;
+                                if(!group_member.startsWith('obs_'))
                                 {
-                                  obs_val = init_data.init_val;
-                                }
-                                if (obs_val !== undefined)
-                                {
-                                  if(obs_val !== getFormattedValue(groupValues[group_member]))
+                                  //multiCheckbox field
+                                  console.log('Multi ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
+                                  init_data = getInitialFieldValue(key, section);
+
+                                  if(typeof init_data === 'object')
                                   {
-                                    if(getFormattedValue(groupValues[group_member])==='null' || getFormattedValue(groupValues[group_member]) === null || getFormattedValue(groupValues[group_member]) ==='')
+                                    if (init_data.init_val !== undefined)
                                     {
-                                      obs.push({uuid:init_data.uuid, voided:true});
+                                      obs_index = init_data.init_val.indexOf(getFormattedValue(groupValues[group_member]));
+                                      obs_val = init_data.init_val[obs_index];
                                     }
-                                    else {
-                                      obs.push({uuid:init_data.uuid, concept:group_member.split('_')[1],
-                                                  value:getFormattedValue(groupValues[group_member])});
+
+                                  }
+                                  if (obs_val !== undefined)
+                                  {
+                                    traversed_objects.push(getFormattedValue(groupValues[group_member]));
+                                    if(obs_val !== getFormattedValue(groupValues[group_member]))
+                                    {
+                                      if(getFormattedValue(groupValues[group_member])==='null' || getFormattedValue(groupValues[group_member]) === null || getFormattedValue(groupValues[group_member]) ==='')
+                                      {
+                                        obs.push({uuid:init_data.uuid[obs_index], voided:true});
+                                      }
+                                      else {
+                                        obs.push({uuid:init_data.uuid[obs_index], concept:key.split('_')[1],
+                                                    value:getFormattedValue(groupValues[group_member])});
+                                      }
                                     }
+                                  }
+                                  else {
+                                    obs.push({concept:key.split('_')[1],
+                                                value:getFormattedValue(groupValues[group_member])});
                                   }
                                 }
                                 else {
-                                      //new val being added
-                                      if(getFormattedValue(groupValues[group_member])!==null && getFormattedValue(groupValues[group_member])!=='null' && getFormattedValue(groupValues[group_member])!=='')
-                                        groupMembers.push({concept:group_member.split('_')[1],
+                                  init_data = getInitialFieldValue(group_member, section);
+                                  // console.log('NON ARRAY Section_id: ', obj);
+                                  // console.log('Testing grouped values Special ');
+                                  // console.log('GROUP KEY');
+                                  // console.log(group_member)
+                                  // console.log('INIT DATA');
+                                  // console.log(init_data);
+
+                                  if (typeof init_data === 'object')
+                                  {
+                                    obs_val = init_data.init_val;
+                                  }
+                                  if (obs_val !== undefined)
+                                  {
+                                    if(obs_val !== getFormattedValue(groupValues[group_member]))
+                                    {
+                                      if(getFormattedValue(groupValues[group_member])==='null' || getFormattedValue(groupValues[group_member]) === null || getFormattedValue(groupValues[group_member]) ==='')
+                                      {
+                                        obs.push({uuid:init_data.uuid, voided:true});
+                                      }
+                                      else {
+                                        obs.push({uuid:init_data.uuid, concept:group_member.split('_')[1],
                                                     value:getFormattedValue(groupValues[group_member])});
+                                      }
+                                    }
+                                  }
+                                  else {
+                                        //new val being added
+                                        if(getFormattedValue(groupValues[group_member])!==null && getFormattedValue(groupValues[group_member])!=='null' && getFormattedValue(groupValues[group_member])!=='')
+                                          groupMembers.push({concept:group_member.split('_')[1],
+                                                      value:getFormattedValue(groupValues[group_member])});
+                                  }
                                 }
                               }
                             }
@@ -1432,7 +1533,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 valueProp: 'uuId',
                 labelProp:'display',
                 deferredFilterFunction: SearchDataService.findDrugConcepts,
-                getSelectedObjectFunction: SearchDataService.getConceptByUuid,
+                getSelectedObjectFunction: SearchDataService.getDrugConceptByUuid,
                 required:required,
                 options:[]
               }

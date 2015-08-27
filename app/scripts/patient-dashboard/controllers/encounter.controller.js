@@ -10,11 +10,12 @@
                         '$timeout',
                         'EncounterResService',
                         'EncounterModel',
-                        '$location'
+                        '$location',
+                        '$rootScope'
                       ];
 
   function EncounterCtrl($stateParams, $timeout, EncounterResService,
-                         EncounterModel, $location) {
+                         EncounterModel, $location, $rootScope) {
     var vm = this;
     vm.encounterList = [];
     vm.selectedEncounter = null;
@@ -23,9 +24,11 @@
     vm.hasEncounters = false;
     vm.setSelected = function(encounter) {
       vm.selectedEncounter = encounter;
+
     }
 
     vm.loadEncounterForm = function(EncounterModel) {
+        $rootScope.activeEncounter = EncounterModel;
         $location.path('/encounter/' + EncounterModel.uuid() + '/patient/' +
           EncounterModel.patientUuid());
     }
