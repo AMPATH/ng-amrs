@@ -12,7 +12,8 @@
             {
               "label": "Visit Date",
               "type": "encounterDate",
-              "required": "true"
+              "required": "true",
+              "validators":[{"type": "date"}]
             },
             {
               "type": "encounterProvider",
@@ -38,7 +39,7 @@
                   "label": "No"
                 }
               ],
-              "validators": {}
+              "validators":[]
             },
             {
               "concept": "0f8b7f4e-1656-46b7-bc93-d1fe4f193f5d",
@@ -74,7 +75,7 @@
                     {"concept": "a89c301e-1350-11df-a1f1-0026b9348838", "label": " NON-AMPATH"}
                   ],
                   "type":"select",
-                  "validators":"null"
+                  "validators":[]
                 }
               ]
             },
@@ -87,7 +88,7 @@
                 {"concept": "a899b50a-1350-11df-a1f1-0026b9348838", "label": "Unknown"}
               ],
               "type":"select",
-              "validators":"[:]"
+              "validators":[]
             },
             {
               "concept":"a899a9f2-1350-11df-a1f1-0026b9348838",
@@ -102,7 +103,7 @@
                 {"concept": "a899ae34-1350-11df-a1f1-0026b9348838", "label": "Widowed"}
               ],
               "type":"select",
-              "validators":"[:]"
+              "validators":[]
             },
             {
               "concept":"a89ac184-1350-11df-a1f1-0026b9348838",
@@ -112,7 +113,7 @@
                 {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"a8afcafc-1350-11df-a1f1-0026b9348838",
@@ -132,7 +133,7 @@
                 {"concept": "4639388c-ee31-4dcf-abb4-ad71253493bb", "label": "Neck"}
               ],
               "type":"multiCheckbox",
-              "validators":"[:]"
+              "validators":[]
             },
             {
               "concept": "a8a003a6-1350-11df-a1f1-0026b9348838",
@@ -146,19 +147,21 @@
                     {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
                   ],
                   "type":"select",
-                  "validators":"[:]"
-                },
+                  "validators":[]
+                }
+
+              ]
+            },
+            {
+              "type": "group_repeating",
+              "concept":"a8a003a6-1350-11df-a1f1-0026b9348838",
+              "label": "7b. Diagnosis:",
+              "questions": [
                 {
-                  "type": "group_repeating",
-                  "label": "7b. Diagnosis:",
-                  "questions": [
-                    {
-                      "concept": "a8a07a48-1350-11df-a1f1-0026b9348838",
-                      "label": "Diagnosis",
-                      "type": "problem",
-                      "validators": []
-                    }
-                  ]
+                  "concept": "a8a07a48-1350-11df-a1f1-0026b9348838",
+                  "label": "Diagnosis",
+                  "type": "problem",
+                  "validators": []
                 }
               ]
             }
@@ -175,13 +178,13 @@
                   "concept":"a8aae050-1350-11df-a1f1-0026b9348838",
                   "label":"8a. Date of delivery",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a492d6-1350-11df-a1f1-0026b9348838",
                   "label":"8g.Location of delivery",
                   "type":"text",
-                  "validators":"null"
+                  "validators":[]
                 },
                 {
                   "concept":"a89fff0a-1350-11df-a1f1-0026b9348838",
@@ -192,7 +195,7 @@
                     {"concept": "bdde6796-fc68-4a84-b569-56cbeb7e5101", "label": "Term(>37weeks)"}
                   ],
                   "type":"select",
-                  "validators":"null"
+                  "validators":[]
                 },
                 {
                   "concept":"f37148bb-4e1a-41e9-82d0-040370bf2259",
@@ -202,7 +205,7 @@
                     {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
                   ],
                   "type":"select",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"98d9d2d6-6af3-4f48-8e63-81964035f490",
@@ -212,7 +215,7 @@
                     {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
                   ],
                   "type":"select",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"207a9412-7fd0-4c1b-81e5-3b82b55fc46f",
@@ -227,7 +230,7 @@
                     {"concept": "a8b02ed4-1350-11df-a1f1-0026b9348838", "label": "Traditional Birth Attendants"}
                   ],
                   "type":"select",
-                  "validators":"null"
+                  "validators":[]
                 },
                 {
                   "concept":"06634c7b-2007-4b7b-b374-c4facc9167db",
@@ -237,7 +240,7 @@
                     {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
                   ],
                   "type":"select",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a8aace62-1350-11df-a1f1-0026b9348838",
@@ -247,7 +250,7 @@
                     {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
                   ],
                   "type":"select",
-                  "validators":"[:]"
+                  "validators":[]
                 }
               ]
             }
@@ -270,7 +273,7 @@
                 {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other(Specify):"}
               ],
               "type":"multiCheckbox",
-              "validators":"[:]"
+              "validators":[]
             },
             {
               "concept":"a8a0b42c-1350-11df-a1f1-0026b9348838",
@@ -280,7 +283,7 @@
                 {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             }
           ]
         },
@@ -298,19 +301,19 @@
                 {"concept": "a8ae86e2-1350-11df-a1f1-0026b9348838", "label": "Mixed Feeding (Infant 6months old)(Provide Additional Lactational Counselling)"}
               ],
               "type":"multiCheckbox",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"97236fff-6cfd-4c38-a65f-84e14449ee19",
               "label":"11b.Duration in Months",
               "type":"number",
-              "validators":"[:]"
+              "validators":[]
             },
             {
               "concept":"97236fff-6cfd-4c38-a65f-84e14449ee19",
               "label":"problems XXX Same concept as Months????",
               "type":"number",
-              "validators":"[:]"
+              "validators":[]
             }
           ]
         },
@@ -332,7 +335,7 @@
                 {"concept": "a89e3ad0-1350-11df-a1f1-0026b9348838", "label": "Transferred Out"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             }
           ]
         },
@@ -347,7 +350,7 @@
                 {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
               ],
               "type":"select",
-              "validators":"[:]"
+              "validators":[]
             },
             {
               "concept":"a8a0b54e-1350-11df-a1f1-0026b9348838",
@@ -357,12 +360,12 @@
                 {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
               ],
               "type":"select",
-              "validators":"[:]"
+              "validators":[]
             },
             {
               "concept":"a89d200a-1350-11df-a1f1-0026b9348838",
               "label":"13c. If started since last visit record the date",
-              "type": " date",
+              "type": "date",
               "validators": [
                 {
                   "type": "date",
@@ -380,7 +383,7 @@
                 {"concept": "a90ebdd2-351f-485a-b850-4938fcca2729", "label": "Third regimen"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept": "a8a08344-1350-11df-a1f1-0026b9348838",
@@ -408,7 +411,7 @@
                     {"concept": "a8a87a86-1350-11df-a1f1-0026b9348838", "label": "Other"}
                   ],
                   "type":"multiCheckbox",
-                  "validators":"[:]"
+                  "validators":[]
                 }
               ]
             },
@@ -422,7 +425,7 @@
                 {"concept": "a8a48ef8-1350-11df-a1f1-0026b9348838", "label": "Iron"}
               ],
               "type":"multiCheckbox",
-              "validators":"[:]"
+              "validators":[]
             },
             {
               "concept":"a899e282-1350-11df-a1f1-0026b9348838",
@@ -433,7 +436,7 @@
                 {"concept": "a890c9e0-1350-11df-a1f1-0026b9348838", "label": "Dapsone 100mg"}
               ],
               "type":"select",
-              "validators":"[:]"
+              "validators":[]
             },
             {
               "concept":"a899e35e-1350-11df-a1f1-0026b9348838",
@@ -443,7 +446,7 @@
                 {"concept": "a896cc00-1350-11df-a1f1-0026b9348838", "label": "Isoniazid 300mg"}
               ],
               "type":"select",
-              "validators":"[:]"
+              "validators":[]
             }
           ]
         }
@@ -662,7 +665,7 @@
               "concept": "a894b1cc-1350-11df-a1f1-0026b9348838",
               "label": "14b.If Yes,Method (If yes fill out FP form)XX",
               "type": "text",
-              "validators": "[:]"
+              "validators": []
             }
           ]
         }
@@ -687,7 +690,7 @@
                     {"concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b", "label": "Poor"}
                   ],
                   "type":"select",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a89ebbc2-1350-11df-a1f1-0026b9348838",
@@ -708,13 +711,13 @@
                     {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other"}
                   ],
                   "type":"multiCheckbox",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label":"15a. Adherence (ARVS): Other (specify):",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 }
               ]
             },
@@ -731,7 +734,7 @@
                     {"concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b", "label": "Poor"}
                   ],
                   "type":"select",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a89ebbc2-1350-11df-a1f1-0026b9348838",
@@ -752,13 +755,13 @@
                     {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other"}
                   ],
                   "type":"multiCheckbox",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label":"15b. Adherence (PCP): Other (specify):",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 }
               ]
             },
@@ -775,7 +778,7 @@
                     {"concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b", "label": "Poor"}
                   ],
                   "type":"select",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a89ebbc2-1350-11df-a1f1-0026b9348838",
@@ -796,13 +799,13 @@
                     {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other"}
                   ],
                   "type":"multiCheckbox",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label":"15c. Adherence (TB Prophylaxis): Other (specify):",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 }
               ]
             },
@@ -820,7 +823,7 @@
                     {"concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b", "label": "Poor"}
                   ],
                   "type":"select",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a89ebbc2-1350-11df-a1f1-0026b9348838",
@@ -828,13 +831,13 @@
                   "answers":[
                   ],
                   "type":"multiCheckbox",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label":"15d. Adherence (TB Treatment): Other reason (specify):",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 }
               ]
             }
@@ -851,7 +854,7 @@
                 {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
               ],
               "type":"select",
-              "validators":"[:]"
+              "validators":[]
             },
             {
               "concept":"c2ecd5f7-4b47-47ae-b706-3dc5ed98b4db",
@@ -922,7 +925,7 @@
                 {"concept": "fc110c04-079c-49d3-bf34-c36290e1b203", "label": "DECREASE IN NUMBER OF WHITE BLOOD CELLS"}
               ],
               "type":"multiCheckbox",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"c2ecd5f7-4b47-47ae-b706-3dc5ed98b4db",
@@ -941,7 +944,7 @@
                 {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other"}
               ],
               "type":"multiCheckbox",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"6c1b293c-4d8c-470f-9991-93cdde1274ff",
@@ -954,7 +957,7 @@
                 {"concept": "a899b50a-1350-11df-a1f1-0026b9348838", "label": " Unknown"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"d0efbf5b-cbfc-48fc-a857-c0ca4d70f077",
@@ -968,7 +971,7 @@
                 {"concept": "80d03d9f-2510-4a95-b9d6-2613aaeebd21", "label": " Unassessable/Unclassified"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             }
           ]
         },
@@ -1037,7 +1040,7 @@
                 {"concept": "a899e890-1350-11df-a1f1-0026b9348838", "label": " Abnormal"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"a8b017dc-1350-11df-a1f1-0026b9348838",
@@ -1048,7 +1051,7 @@
                 {"concept": "a899e890-1350-11df-a1f1-0026b9348838", "label": " Abnormal"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"a8b00562-1350-11df-a1f1-0026b9348838",
@@ -1056,7 +1059,7 @@
               "answers":[
               ],
               "type":"text",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"a8b00684-1350-11df-a1f1-0026b9348838",
@@ -1064,7 +1067,7 @@
               "answers":[
               ],
               "type":"text",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"a8b00562-1350-11df-a1f1-0026b9348838",
@@ -1072,7 +1075,7 @@
               "answers":[
               ],
               "type":"text",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"a8b00684-1350-11df-a1f1-0026b9348838",
@@ -1080,7 +1083,7 @@
               "answers":[
               ],
               "type":"text",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"a8b00562-1350-11df-a1f1-0026b9348838",
@@ -1088,7 +1091,7 @@
               "answers":[
               ],
               "type":"text",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"a8b00684-1350-11df-a1f1-0026b9348838",
@@ -1096,7 +1099,7 @@
               "answers":[
               ],
               "type":"text",
-              "validators":"null"
+              "validators":[]
             }
 
           ]
@@ -1114,13 +1117,13 @@
                 {"concept": "a89b289a-1350-11df-a1f1-0026b9348838", "label": " 4"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"a8ae88a4-1350-11df-a1f1-0026b9348838",
               "label":"Criteria: Search",
               "type":"text",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"a89b67d8-1350-11df-a1f1-0026b9348838",
@@ -1130,12 +1133,12 @@
                 {"concept": "a899b42e-1350-11df-a1f1-0026b9348838", "label": "No"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             }
           ]
         }
       ]
-    },
+    } ,
     {
       "label": "Page 5" ,
       "sections": [
@@ -1150,70 +1153,70 @@
                   "label": "Platelets/mm3",
                   "type": "number",
                   "showDate": "true",
-                  "validators": []
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a896dea2-1350-11df-a1f1-0026b9348838",
                   "label": "WBC/mm3",
                   "type": "number",
                   "showDate": "true",
-                  "validators": []
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8908a16-1350-11df-a1f1-0026b9348838",
                   "label": "Hgb g/dL",
                   "type": "number",
                   "showDate": "true",
-                  "validators": []
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a898201e-1350-11df-a1f1-0026b9348838",
                   "label": "MCV",
                   "type": "number",
                   "showDate": "true",
-                  "validators": []
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a898b20e-1350-11df-a1f1-0026b9348838",
                   "label": "ALC/ mm3",
                   "type": "number",
                   "showDate": "true",
-                  "validators": []
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8a8bb18-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "CD4*:",
                   "showDate": "true",
-                  "validators": []
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8970a26-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "CD4%:",
                   "showDate": "true",
-                  "validators": {}
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8982474-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "Viral Load:",
                   "showDate": "true",
-                  "validators": {}
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a897e450-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "Creatinine mmol/L:",
                   "showDate": "true",
-                  "validators": {}
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a896ca48-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "SGPT(ALT):",
                   "showDate": "true",
-                  "validators": {}
+                  "validators": [{"type":"date"}]
                 }
               ]
             },
@@ -1240,7 +1243,7 @@
               ],
               "type": "select",
               "showDate": "true",
-              "validators": "null"
+              "validators": [{"type":"date"}]
             },
             {
               "concept": "c0dfc40c-9ab1-4d82-9916-560a0bba3afa",
@@ -1265,7 +1268,7 @@
               ],
               "type": "select",
               "showDate": "true",
-              "validators": "null"
+              "validators": [{"type":"date"}]
             },
             {
               "type": "group",
@@ -1291,9 +1294,9 @@
                       "label": "Poor sample quality"
                     }
                   ],
-                  "showDate": "true",
                   "type": "select",
-                  "validators": "[:]"
+                  "showDate": "true",
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8945d4e-1350-11df-a1f1-0026b9348838",
@@ -1330,7 +1333,7 @@
                   ],
                   "showDate": "true",
                   "type": "select",
-                  "validators": "[:]"
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8a462a2-1350-11df-a1f1-0026b9348838",
@@ -1359,7 +1362,7 @@
                   ],
                   "type": "select",
                   "showDate": "true",
-                  "validators": "[:]"
+                  "validators": [{"type":"date"}]
                 },
                 {
                   "concept": "a8908192-1350-11df-a1f1-0026b9348838",
@@ -1400,7 +1403,7 @@
                   ],
                   "showDate": "true",
                   "type": "select",
-                  "validators": "[:]"
+                  "validators": [{"type":"date"}]
                 }
               ]
             }
@@ -1410,20 +1413,15 @@
           "label": "Problem list",
           "questions": [
             {
-              "label": "Problem List",
+              "concept": "a89c2d8a-1350-11df-a1f1-0026b9348838",
+              "type": "group_repeating",
+              "label": "21a. Problem Added",
               "questions": [
                 {
-                  "concept": "a89c2d8a-1350-11df-a1f1-0026b9348838",
-                  "type": "group_repeating",
-                  "label": "21a. Problem Added",
-                  "questions": [
-                    {
-                      "concept": "a8ae835e-1350-11df-a1f1-0026b9348838",
-                      "label": "Problem Added",
-                      "type": "problem",
-                      "validators": []
-                    }
-                  ]
+                  "concept": "a8ae835e-1350-11df-a1f1-0026b9348838",
+                  "label": "Problem Added",
+                  "type": "problem",
+                  "validators": []
                 }
               ]
             },
@@ -1478,7 +1476,7 @@
                 {"concept": "a89b7d36-1350-11df-a1f1-0026b9348838", "label": " Stop all"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"a89b6ce2-1350-11df-a1f1-0026b9348838",
@@ -1490,7 +1488,7 @@
                 {"concept": "a89b289a-1350-11df-a1f1-0026b9348838", "label": " WHO stage 4"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept": "a8a07688-1350-11df-a1f1-0026b9348838",
@@ -1502,19 +1500,19 @@
                   "answers":[
                   ],
                   "type":"select",
-                  "validators":"null"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label":"Toxicity cause",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label":"Specify",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 }]
             },
             {
@@ -1531,13 +1529,13 @@
                     {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": " Other"}
                   ],
                   "type":"select",
-                  "validators":"null"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label":"Specify",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 }
               ]},
             {
@@ -1549,7 +1547,7 @@
                 {"concept": "a90ebdd2-351f-485a-b850-4938fcca2729", "label": " Third (Salvage) Regimen"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },{
               "concept":"a89b6a62-1350-11df-a1f1-0026b9348838",
               "label":"22f.If patient on ARVS, choose regimen below:",
@@ -1572,7 +1570,7 @@
                 {"concept": "a897ea4a-1350-11df-a1f1-0026b9348838", "label": "Zidovudine 300mg"}
               ],
               "type":"multiCheckbox",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"a162b237-51a4-4652-9fe7-2ab868edccf6",
@@ -1584,7 +1582,7 @@
                 {"concept": "7904214f-a3a5-4017-98c8-52af36f44d7b", "label": " Antenatal vitamins"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"a89b7e12-1350-11df-a1f1-0026b9348838",
@@ -1597,7 +1595,7 @@
                 {"concept": "a89b7c50-1350-11df-a1f1-0026b9348838", "label": " Change Regimen"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept": "a89fe4a2-1350-11df-a1f1-0026b9348838",
@@ -1609,13 +1607,13 @@
                   "answers":[
                   ],
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a07386-1350-11df-a1f1-0026b9348838",
                   "label":"tabs/day",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a89b82cc-1350-11df-a1f1-0026b9348838",
@@ -1623,13 +1621,13 @@
                   "answers":[
                   ],
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a07386-1350-11df-a1f1-0026b9348838",
                   "label":"tabs/day",
                   "type":"text",
-                  "validators":"null"
+                  "validators":[]
                 }]
             },
             {
@@ -1644,13 +1642,13 @@
                     {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": " Other"}
                   ],
                   "type":"select",
-                  "validators":"null"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label":"Toxicity Cause:XXXX",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 }]
             }
           ]
@@ -1675,7 +1673,7 @@
                 {"concept": "a89b7d36-1350-11df-a1f1-0026b9348838", "label": " Stop INH"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept": "a8a0780e-1350-11df-a1f1-0026b9348838",
@@ -1691,19 +1689,19 @@
                     {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": " Other"}
                   ],
                   "type":"select",
-                  "validators":"null"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label":"22l. Reason for stop:SEARCH",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label":"Other Specify",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 }
               ]
             },
@@ -1720,7 +1718,7 @@
                 {"concept": "a89b7d36-1350-11df-a1f1-0026b9348838", "label": " Stop"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept":"749d07cb-4994-4ce9-a39c-8a655a487fdd",
@@ -1733,7 +1731,7 @@
                 {"concept": "18ac99bf-0805-4929-8d0b-924455850a00", "label": " Relapse/re-infection-Retreatment"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept": "a8a078cc-1350-11df-a1f1-0026b9348838",
@@ -1748,19 +1746,19 @@
                     {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": " Other"}
                   ],
                   "type":"select",
-                  "validators":"null"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label":"Toxicity Cause:",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label":"Specify",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 }
               ]
             },
@@ -1861,7 +1859,7 @@
                 {"concept": "a89b7d36-1350-11df-a1f1-0026b9348838", "label": " Stop Fluconazole"}
               ],
               "type":"select",
-              "validators":"null"
+              "validators":[]
             },
             {
               "concept": "a8a0654e-1350-11df-a1f1-0026b9348838",
@@ -1907,87 +1905,156 @@
                     {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other (specify):"}
                   ],
                   "type":"multiCheckbox",
-                  "validators":"null"
+                  "validators":[]
                 },
                 {
                   "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label":"Specify",
                   "type":"text",
-                  "validators":"[:]"
+                  "validators":[]
                 }
               ]
             }
           ]
         },
         {
-          "label": "Referrals",
+          "label": "25 Referrals",
           "questions": [
             {
-              "concept":"a89c2344-1350-11df-a1f1-0026b9348838",
-              "label":"25.what referrals were made to the patient:",
-              "answers":[
-                {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "None"},
-                {"concept": "a8a8b352-1350-11df-a1f1-0026b9348838", "label": "Adherence Counseling"},
-                {"concept": "a89c30f0-1350-11df-a1f1-0026b9348838", "label": "Alcohol counseling/ support groups"},
-                {"concept": "a2187952-59e0-449b-895f-5102b7aed49c", "label": "Cardiology"},
-                {"concept": "0d516ea7-218f-43d4-b5c0-58d126529271", "label": "Dermatology"},
-                {"concept": "0fa18f9a-95c8-4ab3-81ed-a1bac69063fa", "label": "Diabetes"},
-                {"concept": "a89accc4-1350-11df-a1f1-0026b9348838", "label": "Disclosure Counseling"},
-                {"concept": "a8a8aefc-1350-11df-a1f1-0026b9348838", "label": "Family Planning services"},
-                {"concept": "a89fbbd0-1350-11df-a1f1-0026b9348838", "label": "Express care"},
-                {"concept": "a8a8b42e-1350-11df-a1f1-0026b9348838", "label": "Mental  Health Services"},
-                {"concept": "a8a8afd8-1350-11df-a1f1-0026b9348838", "label": "Nutritional support"},
-                {"concept": "073ea366-834b-49bd-b4db-ce4e6c61bbc3", "label": "Oncology "},
-                {"concept": "a8a8b190-1350-11df-a1f1-0026b9348838", "label": "Social Work Service"},
-                {"concept": "a8a8b26c-1350-11df-a1f1-0026b9348838", "label": "TB treatment/DOT program"},
-                {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other (specify):"}
-              ],
-              "type":"multiCheckbox",
-              "validators":"null"
+              "concept": "a8a07c8c-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "a89c2344-1350-11df-a1f1-0026b9348838",
+                  "label": "25a. What referrals were made to the patient:",
+                  "answers": [
+                    {
+                      "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                      "label": "NONE"
+                    },
+                    {
+                      "concept": "a89c30f0-1350-11df-a1f1-0026b9348838",
+                      "label": "Alcohol counselling/support groups"
+                    },
+                    {
+                      "concept": "a8a8b352-1350-11df-a1f1-0026b9348838",
+                      "label": "Cardiology"
+                    },
+                    {
+                      "concept": "a2187952-59e0-449b-895f-5102b7aed49c",
+                      "label": "Adherence counselling"
+                    },
+                    {
+                      "concept": "0fa18f9a-95c8-4ab3-81ed-a1bac69063fa",
+                      "label": "Diabetes"
+                    },
+                    {
+                      "concept": "a89accc4-1350-11df-a1f1-0026b9348838",
+                      "label": "Disclosure counselling"
+                    },
+                    {
+                      "concept": "a8a8aefc-1350-11df-a1f1-0026b9348838",
+                      "label": "Family Planning services"
+                    },
+                    {
+                      "concept": "073ea366-834b-49bd-b4db-ce4e6c61bbc3",
+                      "label": "Oncology"
+                    },
+                    {
+                      "concept": "a8a8b42e-1350-11df-a1f1-0026b9348838",
+                      "label": "Mental Health Services"
+                    },
+                    {
+                      "concept": "a8a8afd8-1350-11df-a1f1-0026b9348838",
+                      "label": "Nutritional support"
+                    },
+                    {
+                      "concept": "a89e2df6-1350-11df-a1f1-0026b9348838",
+                      "label": "Psychosocial support"
+                    },
+                    {
+                      "concept": "a89fbedc-1350-11df-a1f1-0026b9348838",
+                      "label": "pMTCT"
+                    },
+                    {
+                      "concept": "a8a8b26c-1350-11df-a1f1-0026b9348838",
+                      "label": "TB/DOT Program"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    }
+                  ],
+                  "type": "multiCheckbox",
+                  "validators": []
+                },
+                {
+                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label": "25a.referrals were made to the patient: Other (specify):",
+                  "type": "text",
+                  "validators": []
+                }
+              ]
             },
             {
-              "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
-              "label":"Specify XXX Group?",
-              "type":"text",
-              "validators":"[:]"
-            },
-            {
-              "concept":"a89c2420-1350-11df-a1f1-0026b9348838",
-              "label":"26a.Hospitalization",
-              "answers":[
-                {"concept": "a89c25d8-1350-11df-a1f1-0026b9348838", "label": "Local Health Centre/Hospital"},
-                {"concept": "a89c24fc-1350-11df-a1f1-0026b9348838", "label": "Mtrh"},
-                {"concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838", "label": "Other"}
+              "concept": "a89c2420-1350-11df-a1f1-0026b9348838",
+              "label": "26a.If referred for hospitalization, choose location:",
+              "answers": [
+                {
+                  "concept": "a89c25d8-1350-11df-a1f1-0026b9348838",
+                  "label": "Local Health Centre/Hospital"
+                },
+                {
+                  "concept": "a89c24fc-1350-11df-a1f1-0026b9348838",
+                  "label": "MTRH"
+                },
+                {
+                  "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                  "label": "Other"
+                }
               ],
-              "type":"select",
-              "validators":"[:]"
+              "type": "select",
+              "validators": []
             },
             {
               "concept": "a8a003a6-1350-11df-a1f1-0026b9348838",
+              "label": "26b. Reason  for hospitalization:",
               "type": "group_repeating",
               "questions": [
                 {
                   "concept": "a8a07a48-1350-11df-a1f1-0026b9348838",
-                  "label": "26b. Reason to refer for hospitalization:",
+                  "label": "Reason for hospitalization:",
                   "type": "problem"
                 }
               ]
             },
             {
-              "concept":"a89c2e5c-1350-11df-a1f1-0026b9348838",
-              "label":"27. Transfer care to other centre",
-              "answers":[
-                {"concept": "a89c2f42-1350-11df-a1f1-0026b9348838", "label": "AMPATH"},
-                {"concept": "a89c301e-1350-11df-a1f1-0026b9348838", "label": "Non-Ampath"}
-              ],
-              "type":"multiCheckbox",
-              "validators":"null"
-            },
-            {
-              "concept":"a8a06fc6-1350-11df-a1f1-0026b9348838",
-              "label":"Specify XXX Group?",
-              "type":"text",
-              "validators":"[:]"
+              "concept": "a8a170e2-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "a89c2e5c-1350-11df-a1f1-0026b9348838",
+                  "label": "27.Transfer care to other centre:",
+                  "answers": [
+                    {
+                      "concept": "a89c2f42-1350-11df-a1f1-0026b9348838",
+                      "label": "Ampath"
+                    },
+                    {
+                      "concept": "a89c301e-1350-11df-a1f1-0026b9348838",
+                      "label": "Non-Ampath"
+                    }
+                  ],
+                  "type": "multiCheckbox",
+                  "validators": []
+                },
+                {
+                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label": "27.Transfer care to other centre: specify Name:",
+                  "type": "text",
+                  "validators": []
+                }
+              ]
             }
           ]
         },
@@ -1998,18 +2065,18 @@
               "concept":"a8a05f4a-1350-11df-a1f1-0026b9348838",
               "label":"Weeks",
               "type":"number",
-              "validators":"[:]"
+              "validators":[]
             },
             {
               "concept":"a8a06008-1350-11df-a1f1-0026b9348838",
               "label":"Months",
               "type":"number",
-              "validators":"[:]"
+              "validators":[]
             },
             {
               "concept":"a8a666ba-1350-11df-a1f1-0026b9348838",
               "label":"Return to clinic date:",
-              "type": " date",
+              "type": "date",
               "validators": [
                 {
                   "type": "date",

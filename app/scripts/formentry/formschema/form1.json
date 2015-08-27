@@ -21,12 +21,6 @@
               "required": "true"
             },
             {
-              "personAttributeType":"72a759a8-1359-11df-a1f1-0026b9348838",
-              "label":"3. Indicate patients contact phone number only if is changed since last visit:",
-              "type":"text",
-              "validators":[]
-            },
-            {
               "concept":"a8b02524-1350-11df-a1f1-0026b9348838",
               "label":"4. Patient covered by NHIF:",
               "type":"select",
@@ -1482,12 +1476,7 @@
               "validators": []
             }
           ]
-        }
-      ]
-    },
-    {
-      "label": "Page 4",
-      "sections": [
+        },
         {
           "label": "22. Tests Results and Test Date (Please Record date sample was drawn, rather than date test was run)",
           "questions": [
@@ -1885,7 +1874,48 @@
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label": "24c.If toxicity, please provide cause:",
-                  "answers": [],
+                  "answers": [
+                    {
+                      "concept": "a877c7f6-1350-11df-a1f1-0026b9348838",
+                      "label": "Anaemia"
+                    },
+                    {
+                      "concept": "a8909060-1350-11df-a1f1-0026b9348838",
+                      "label": "Hepatitis"
+                    },
+                    {
+                      "concept": "a89d0c0a-1350-11df-a1f1-0026b9348838",
+                      "label": "IRIS"
+                    },
+                    {
+                      "concept": "a8a01dfa-1350-11df-a1f1-0026b9348838",
+                      "label": "Lactic Acidosis"
+                    },
+                    {
+                      "concept": "a89cee50-1350-11df-a1f1-0026b9348838",
+                      "label": "Lipo-dystrophy"
+                    },
+                    {
+                      "concept": "a897fe86-1350-11df-a1f1-0026b9348838",
+                      "label": "Neuropathy"
+                    },
+                    {
+                      "concept": "a8ad239c-1350-11df-a1f1-0026b9348838",
+                      "label": "Persistent Vomiting"
+                    },
+                    {
+                      "concept": "a895776a-1350-11df-a1f1-0026b9348838",
+                      "label": "Rash"
+                    },
+                    {
+                      "concept": "a8a16d0e-1350-11df-a1f1-0026b9348838",
+                      "label": "Steven-Johnson syndrome"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    }
+                  ],
                   "type": "select",
                   "validators": []
                 },
@@ -2059,7 +2089,46 @@
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label": "25b. If toxicity, please provide cause:",
-                  "answers": [],
+                  "answers": [{
+                    "concept": "a877c7f6-1350-11df-a1f1-0026b9348838",
+                    "label": "Anaemia"
+                  },
+                    {
+                      "concept": "a8909060-1350-11df-a1f1-0026b9348838",
+                      "label": "Hepatitis"
+                    },
+                    {
+                      "concept": "a89d0c0a-1350-11df-a1f1-0026b9348838",
+                      "label": "IRIS"
+                    },
+                    {
+                      "concept": "a8a01dfa-1350-11df-a1f1-0026b9348838",
+                      "label": "Lactic Acidosis"
+                    },
+                    {
+                      "concept": "a89cee50-1350-11df-a1f1-0026b9348838",
+                      "label": "Lipo-dystrophy"
+                    },
+                    {
+                      "concept": "a897fe86-1350-11df-a1f1-0026b9348838",
+                      "label": "Neuropathy"
+                    },
+                    {
+                      "concept": "a8ad239c-1350-11df-a1f1-0026b9348838",
+                      "label": "Persistent Vomiting"
+                    },
+                    {
+                      "concept": "a895776a-1350-11df-a1f1-0026b9348838",
+                      "label": "Rash"
+                    },
+                    {
+                      "concept": "a8a16d0e-1350-11df-a1f1-0026b9348838",
+                      "label": "Steven-Johnson syndrome"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    }],
                   "type": "select",
                   "validators": []
                 },
@@ -2146,7 +2215,46 @@
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label": "25e. If toxicity, please provide cause:",
-                  "answers": [],
+                  "answers": [{
+                    "concept": "a877c7f6-1350-11df-a1f1-0026b9348838",
+                    "label": "Anaemia"
+                  },
+                    {
+                      "concept": "a8909060-1350-11df-a1f1-0026b9348838",
+                      "label": "Hepatitis"
+                    },
+                    {
+                      "concept": "a89d0c0a-1350-11df-a1f1-0026b9348838",
+                      "label": "IRIS"
+                    },
+                    {
+                      "concept": "a8a01dfa-1350-11df-a1f1-0026b9348838",
+                      "label": "Lactic Acidosis"
+                    },
+                    {
+                      "concept": "a89cee50-1350-11df-a1f1-0026b9348838",
+                      "label": "Lipo-dystrophy"
+                    },
+                    {
+                      "concept": "a897fe86-1350-11df-a1f1-0026b9348838",
+                      "label": "Neuropathy"
+                    },
+                    {
+                      "concept": "a8ad239c-1350-11df-a1f1-0026b9348838",
+                      "label": "Persistent Vomiting"
+                    },
+                    {
+                      "concept": "a895776a-1350-11df-a1f1-0026b9348838",
+                      "label": "Rash"
+                    },
+                    {
+                      "concept": "a8a16d0e-1350-11df-a1f1-0026b9348838",
+                      "label": "Steven-Johnson syndrome"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    }],
                   "type": "select",
                   "validators": []
                 },
@@ -2252,7 +2360,46 @@
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label": "26b. If toxicity, please provide cause:",
-                  "answers": [],
+                  "answers": [{
+                    "concept": "a877c7f6-1350-11df-a1f1-0026b9348838",
+                    "label": "Anaemia"
+                  },
+                    {
+                      "concept": "a8909060-1350-11df-a1f1-0026b9348838",
+                      "label": "Hepatitis"
+                    },
+                    {
+                      "concept": "a89d0c0a-1350-11df-a1f1-0026b9348838",
+                      "label": "IRIS"
+                    },
+                    {
+                      "concept": "a8a01dfa-1350-11df-a1f1-0026b9348838",
+                      "label": "Lactic Acidosis"
+                    },
+                    {
+                      "concept": "a89cee50-1350-11df-a1f1-0026b9348838",
+                      "label": "Lipo-dystrophy"
+                    },
+                    {
+                      "concept": "a897fe86-1350-11df-a1f1-0026b9348838",
+                      "label": "Neuropathy"
+                    },
+                    {
+                      "concept": "a8ad239c-1350-11df-a1f1-0026b9348838",
+                      "label": "Persistent Vomiting"
+                    },
+                    {
+                      "concept": "a895776a-1350-11df-a1f1-0026b9348838",
+                      "label": "Rash"
+                    },
+                    {
+                      "concept": "a8a16d0e-1350-11df-a1f1-0026b9348838",
+                      "label": "Steven-Johnson syndrome"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    }],
                   "type": "select",
                   "validators": []
                 },
@@ -2425,7 +2572,7 @@
                   "type": "number"
                 },
                 {
-                  "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
+                  "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                   "label": "tabs",
                   "type": "number"
                 }
