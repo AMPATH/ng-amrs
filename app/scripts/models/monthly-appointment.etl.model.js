@@ -12,7 +12,8 @@
 
 	function factory() {
 		var service = {
-			monthlyAppointment: monthlyAppointment
+			monthlyAppointment: monthlyAppointment,
+			toArrayOfModels : toArrayOfModels
 		};
 
 		return service;
@@ -53,6 +54,16 @@
 				}
 			};
 			
+		}
+		
+		function toArrayOfModels(unwrappedObjects){
+			var wrappedObjects = [];
+			
+			for(var i = 0; i < unwrappedObjects.length; i++){
+				wrappedObjects.push(new monthlyAppointment(unwrappedObjects[i]));
+			}
+			
+			return wrappedObjects;
 		}
 
 	}
