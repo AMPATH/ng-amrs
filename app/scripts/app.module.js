@@ -105,7 +105,8 @@
       $rootScope.currentState;
       $rootScope.currentStateParams;
       $rootScope.broadcastPatient;
-      $rootScope.selectedEncounter;
+      $rootScope.activeEncounter;
+
       $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
         $rootScope.previousState = from.name;
         $rootScope.currentState = to.name;

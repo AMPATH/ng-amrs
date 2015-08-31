@@ -22,7 +22,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         $scope.vm.formlyFields;
         $scope.vm.tabs = [];
         $scope.vm.encounter = $rootScope.activeEncounter;
-        console.log('ACTIVE ENCOUNTER', $scope.vm.encounter);
+        //console.log('ACTIVE ENCOUNTER', $scope.vm.encounter);
 
         /*
         Test logic to get either a blank form or form filled with existing data.
