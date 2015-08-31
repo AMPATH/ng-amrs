@@ -246,6 +246,49 @@
       expect(callbacks.message).to.exist;
       expect(callbacks.message.trim()).not.to.equal('');
     });
+    
+    //getDefaultersList method unit tests
+    it('should make an api call to the defaulters etl rest endpoint when getDefaultersList is called with a location uuid and numberOfDaysDefaulted', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/defaulter-list?defaulterPeriod=30').respond({});
+      etlRestService.getDefaultersList('passed-uuid', 30, function () { }, function () { });
+      httpBackend.flush();
+    });
+
+    it('should make an api call to the defaulters etl rest endpoint when getDefaultersList is called with a location uuid, numberOfDaysDefaulted and paging parameters', function () {
+      //case startIndex and limit are defined
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/defaulter-list?defaulterPeriod=30&limit=10&startIndex=0').respond({});
+      etlRestService.getDefaultersList('passed-uuid', 30, function () { }, function () { }, 0, 10);
+      httpBackend.flush();
+      
+      
+      //case startIndex defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/defaulter-list?defaulterPeriod=30&startIndex=0').respond({});
+      etlRestService.getDefaultersList('passed-uuid', 30, function () { }, function () { }, 0, undefined);
+      httpBackend.flush();
+      
+      //case limit defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/defaulter-list?defaulterPeriod=30&limit=10').respond({});
+      etlRestService.getDefaultersList('passed-uuid', 30, function () { }, function () { }, undefined, 10);
+      httpBackend.flush();
+    });
+
+    it('should call the onSuccess callback getMonthlyAppointmentSchedule request successfully returns', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/defaulter-list?defaulterPeriod=30').respond({});
+      etlRestService.getDefaultersList('passed-uuid', 30, callbacks.onSuccess, callbacks.onFailure);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(true);
+      expect(callbacks.onFailedCalled).to.equal(false);
+    });
+
+    it('should call the onFailed callback when getMonthlyAppointmentSchedule request is not successfull', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/defaulter-list?defaulterPeriod=30').respond(500);
+      etlRestService.getDefaultersList('passed-uuid', 30, callbacks.onSuccess, callbacks.onFailure);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(false);
+      expect(callbacks.onFailedCalled).to.equal(true);
+      expect(callbacks.message).to.exist;
+      expect(callbacks.message.trim()).not.to.equal('');
+    });
 
 
 
