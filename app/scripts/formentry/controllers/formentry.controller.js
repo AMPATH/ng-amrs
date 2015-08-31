@@ -61,8 +61,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             var i = 0;
             angular.forEach($scope.vm.tabs, function(tab){
-              // console.log('Tab Structure');
-              // console.log(tab);
+              console.log('Tab Structure');
+              console.log(tab);
               if (i===0) {tab.active = true;}
               i++;
               tab.form['model']=$scope.vm.model;

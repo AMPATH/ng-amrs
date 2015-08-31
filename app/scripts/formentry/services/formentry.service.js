@@ -1611,7 +1611,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             // process the fields the normal way
 
             var selField=createFormlyField(curField);
-            selField['className'] = 'col-md-2';
+            //selField['className'] = 'col-md-2';
             //selfField['key'] = selfField['key']
             repeatingFields.push(selField);
           })

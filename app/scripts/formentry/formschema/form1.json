@@ -2418,6 +2418,7 @@
                 {
                   "concept": "749d07cb-4994-4ce9-a39c-8a655a487fdd",
                   "label": "26c. If re/starting, reason:",
+                  "type": "select",
                   "answers": [
                     {
                       "concept": "15316528-adb9-4c33-b21f-2817f0cad769",
@@ -2440,7 +2441,6 @@
                       "label": "Relapse/re-infection"
                     }
                   ],
-                  "type": "select",
                   "validators": []
                 },
                 {
@@ -2448,14 +2448,8 @@
                   "label": "26d. If on treatment: start date:",
                   "type": "date",
                   "validators":[{"type":"date"}]
-                },
-                {
-                  "concept": "18ac99bf-0805-4929-8d0b-924455850a00",
-                  "label": "Relapse/re-infection"
                 }
-              ],
-              "type": "select",
-              "validators": []
+              ]
             },
             {
               "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
