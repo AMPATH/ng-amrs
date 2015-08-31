@@ -92,8 +92,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             {
               var i = 0;
               _.each(params.value, function(val){
-                result = 'model.' + 'obs_' + params.field.toString() + ' !== ' +
-                '"' + val + '"';
+                //result = 'model.' + 'obs_' + createFieldKey(params.field) + ' !== ' +
+                // result = 'scope.model.' + 'obs_' + createFieldKey(params.field) + ' === ' +
+                // '"' + val + '"';
+                result = val;
                 if(i === 0) results = result;
                 else results = results + ' && ' + result;
                 i=i+1;
@@ -101,8 +103,35 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             }
 
             console.log('Test Field Hiding')
-            console.log("'" + results.toString() + "'");
-            return  "'" + results.toString() + "'";
+            //console.log("'" + results.toString() + "'");
+            //return  "'" + results.toString() + "'";
+
+            return (function($viewValue, $modelValue, scope) {
+              var i = 0;
+              _.each(params.value, function(val){
+                result = scope.model['obs_' + createFieldKey(params.field)] !== val
+                if(i === 0) results = result;
+                else results = results  && result;
+                i = i+1;
+              });
+
+              //clear the modelValue
+              _.each(Object.keys(scope.model), function(key){
+                if(key !== 'obs_' + createFieldKey(params.field) && !key.startsWith('$$'))
+                {
+                  // console.log('view Value', $viewValue);
+                  // console.log('model Value', $modelValue);
+                  // console.log('Current Scope', scope);
+                  // console.log('Current Value',scope.model[key]);
+                  if($modelValue !== scope.model[key] && ($modelValue !== null || $modelValue !== '' || $modelValue !== undefined) )
+                    delete scope.model[key];
+                }
+              });
+              console.log('Hide Expression test - model n expr')
+              console.log(results)
+              console.log(scope.model)
+              return results;
+            });
           }
         }
 
@@ -1382,6 +1411,19 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         }
 
         /*
+        Private method to create valid keys
+        */
+        function createFieldKey(key)
+        {
+          return key.replace(/-/gi,'n'); // $$ Inserts a "$".
+        }
+
+        function convertKey_to_uuid(key)
+        {
+          return key.replace(/n/gi,'-');
+        }
+
+        /*
         Private method to create  formly fields without group
         */
         function createFormlyField(obs_field){
@@ -1406,7 +1448,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
 
             obsField = {
-              key: 'obs_' + obs_field.concept,
+              key: 'obs_' + createFieldKey(obs_field.concept),
               type: 'datepicker',
               data: {concept:obs_field.concept,
                 answer_value:''},
@@ -1428,7 +1470,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
 
             obsField = {
-              key: 'obs_' + obs_field.concept,
+              key: 'obs_' + createFieldKey(obs_field.concept),
               type: 'input',
               data: {concept:obs_field.concept,
                 answer_value:''},
@@ -1465,7 +1507,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
 
             obsField = {
-              key: 'obs_' + obs_field.concept,
+              key: 'obs_' + createFieldKey(obs_field.concept),
               type: obs_field.type,
               data: {concept:obs_field.concept,
                 answer_value:''},
@@ -1482,7 +1524,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             var required=false;
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
             obsField = {
-              key: 'obs_' + obs_field.concept,
+              key: 'obs_' + createFieldKey(obs_field.concept),
               type: 'ui-select-extended',
               data: {concept:obs_field.concept,
                 answer_value:''},
@@ -1503,7 +1545,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             var required=false;
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
             obsField = {
-              key: 'obs_' + obs_field.concept,
+              key: 'obs_' + createFieldKey(obs_field.concept),
               type: 'ui-select-extended',
               data: {concept:obs_field.concept,
                 answer_value:''},
@@ -1523,7 +1565,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             var required=false;
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
             obsField = {
-              key: 'obs_' + obs_field.concept,
+              key: 'obs_' + createFieldKey(obs_field.concept),
               type: 'ui-select-extended',
               data: {concept:obs_field.concept,
                 answer_value:''},
@@ -1571,7 +1613,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             {
               var dateField = {
               //className: 'col-md-2',
-              key: 'obsDate_' + curField.concept,
+              key: 'obsDate_' + createFieldKey(curField.concept),
               type: 'datepicker',
               data: {concept:curField.concept,
                 answer_value:''},
@@ -1591,7 +1633,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
           obsField = {
             className: 'row',
-            key:'obs' + gpSectionRnd + '_' + sectionKey,
+            key:'obs' + gpSectionRnd + '_' + createFieldKey(sectionKey),
             fieldGroup:groupingFields
           }
           return obsField;
@@ -1614,9 +1656,29 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             //selField['className'] = 'col-md-2';
             //selfField['key'] = selfField['key']
             repeatingFields.push(selField);
+            if(curField.showDate === 'true')
+            {
+              var dateField = {
+              //className: 'col-md-2',
+              key: 'obsDate_' + createFieldKey(curField.concept),
+              type: 'datepicker',
+              data: {concept:curField.concept,
+                answer_value:''},
+              templateOptions: {
+                type: 'text',
+                label: 'Date',
+                datepickerPopup: 'dd-MMMM-yyyy'
+                },
+                hideExpression:hideExpression_,
+              validators: {
+                dateValidator: getFieldValidator(curField.validators[0]) //this  will require refactoring as we move forward
+                }
+              }
+              repeatingFields.push(dateField);
+            }
           })
           var obsField = {
-            key:'obs' + gpSectionRnd + '_' + obs_field.concept,
+            key:'obs' + gpSectionRnd + '_' + createFieldKey(obs_field.concept),
             type: 'repeatSection',
             templateOptions: {
               label:obs_field.label,
