@@ -12,7 +12,8 @@
 
   function factory() {
     var service = {
-      defaulter: defaulter
+      defaulter: defaulter,
+      toArrayOfModels: toArrayOfModels
     };
 
     return service;
@@ -155,6 +156,16 @@
       };
 
     }
+    
+    function toArrayOfModels(unwrappedObjects){
+			var wrappedObjects = [];
+			
+			for(var i = 0; i < unwrappedObjects.length; i++){
+				wrappedObjects.push(new defaulter(unwrappedObjects[i]));
+			}
+			
+			return wrappedObjects;
+		}
 
   }
 })();

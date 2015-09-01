@@ -12,19 +12,21 @@ jshint -W098, -W117, -W003, -W026
   function EtlRestService($q) {
     var numberOfVitalsToReturn = 40;
     var numberOfPatientTestsToReturn = 40;
-    var returnErrorOnNextCall = false;
     var service = {
       isMockService: true,
       getVitals: getVitals,
       numberOfVitalsToReturn: numberOfVitalsToReturn,
-      
+
       getPatientTests: getPatientTests,
       numberOfPatientTestsToReturn: numberOfPatientTestsToReturn,
-      
-      getAppointmentSchedule:getAppointmentSchedule,
+
+      getAppointmentSchedule: getAppointmentSchedule,
       numberOfAppointmentsToReturn: 20,
       
-      returnErrorOnNextCall: returnErrorOnNextCall
+      getDefaultersList:getDefaultersList,
+      numberOfDefaultersToReturn:20,
+
+      returnErrorOnNextCall: false
     };
     //debugger;
     return service;
@@ -37,7 +39,7 @@ jshint -W098, -W117, -W003, -W026
       if (!limit) {
         limit = 20;
       }
-      if (returnErrorOnNextCall === true) {
+      if (service.returnErrorOnNextCall === true) {
         console.log('returning error on get vitals');
         failedCallback({ message: 'An error occured' });
         return;
@@ -47,7 +49,7 @@ jshint -W098, -W117, -W003, -W026
 
       var numberOfRecords = limit;
 
-      if (startIndex >= numberOfVitalsToReturn) {
+      if (startIndex >= service.numberOfVitalsToReturn) {
         successCallback({
           startIndex: startIndex,
           size: 0,
@@ -56,7 +58,7 @@ jshint -W098, -W117, -W003, -W026
         return;
       }
 
-      if ((startIndex + limit) > numberOfVitalsToReturn) {
+      if ((startIndex + limit) > service.numberOfVitalsToReturn) {
         numberOfRecords = numberOfVitalsToReturn - (startIndex + limit);
       }
       else {
@@ -83,7 +85,7 @@ jshint -W098, -W117, -W003, -W026
       if (!limit) {
         limit = 20;
       }
-      if (returnErrorOnNextCall === true) {
+      if (service.returnErrorOnNextCall === true) {
         console.log('returning error on get vitals');
         failedCallback({ message: 'An error occured' });
         return;
@@ -93,7 +95,7 @@ jshint -W098, -W117, -W003, -W026
 
       var numberOfRecords = limit;
 
-      if (startIndex >= numberOfPatientTestsToReturn) {
+      if (startIndex >= service.numberOfPatientTestsToReturn) {
         successCallback({
           startIndex: startIndex,
           size: 0,
@@ -102,7 +104,7 @@ jshint -W098, -W117, -W003, -W026
         return;
       }
 
-      if ((startIndex + limit) > numberOfPatientTestsToReturn) {
+      if ((startIndex + limit) > service.numberOfPatientTestsToReturn) {
         numberOfRecords = numberOfPatientTestsToReturn - (startIndex + limit);
       }
       else {
@@ -118,6 +120,55 @@ jshint -W098, -W117, -W003, -W026
         size: numberOfRecords,
         result: patientTests
       });
+
+    }
+    
+    function getDefaultersList(locationUuid, defaulterThreshold, successCallback, failedCallback, startIndex, limit) {
+      console.log('calling mock getDefaultersList');
+      
+      if (!startIndex) {
+        startIndex = 0;
+      }
+
+      if (!limit) {
+        limit = service.numberOfDefaultersToReturn;
+      }
+      if (service.returnErrorOnNextCall === true) {
+        console.log('returning error on getDefaultersList');
+        failedCallback({ message: 'An error occured' });
+        return;
+      }
+
+      var patients = [];
+
+      var numberOfRecords = limit;
+
+      if (startIndex >= service.numberOfDefaultersToReturn) {
+        successCallback({
+          startIndex: startIndex,
+          size: 0,
+          result: []
+        });
+        return;
+      }
+
+      if ((startIndex + limit) > service.numberOfDefaultersToReturn) {
+        numberOfRecords = service.numberOfDefaultersToReturn - (startIndex + limit);
+      }
+      else {
+        numberOfRecords = limit;
+      }
+
+      for (var i = startIndex; i < (startIndex + numberOfRecords); i++) {
+        patients.push(getDefaulterRecord(i));
+      }
+
+      successCallback({
+        startIndex: startIndex,
+        size: numberOfRecords,
+        result: patients
+      });
+
 
     }
 
@@ -204,6 +255,27 @@ jshint -W098, -W117, -W003, -W026
         tests_ordered: 'tests_ordered' + index
       };
       return patientTestEtl;
+    }
+
+    function getDefaulterRecord(index) {
+      /* jshint ignore:start */
+      var defaulterEtl = {
+        person_id: 'person_id' + index,
+        encounter_id: 'encounter_id' + index,
+        encounter_datetime: 'encounter_datetime',
+        encounter_type: 'encounter_type',
+        location_id: '_location_id',
+        location_uuid: 'location_uuid',
+        rtc_date: 'rtc_date',
+        arv_start_date: 'arv_start_date',
+        encounter_type_name: 'encounter_type_name',
+        person_name: 'person_name',
+        phone_number: 'phone_number',
+        identifiers: 'identifiers',
+        patient_uuid: 'patient_uuid' + index
+      };
+      /* jshint ignore:end */
+      return defaulterEtl;
     }
 
     function getAppointmentScheduleRecord(index) {

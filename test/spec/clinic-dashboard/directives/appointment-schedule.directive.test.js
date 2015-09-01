@@ -78,7 +78,7 @@
 			
 		});
 		
-		it('should call loadSchedule on loading of the controller, and attach appointments to the scope', function () {
+		it('should call loadSchedule on loading of the controller, and attach appointments to the scope when loaded', function () {
 			//at this point, the location uuid changed on load and therefore appointments are present
 			//by default the etservicemock will return 20 appointments
 			var isolateScope = scope.$$childHead; 
