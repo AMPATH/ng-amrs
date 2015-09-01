@@ -115,21 +115,21 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 i = i+1;
               });
 
-              //clear the modelValue
-              _.each(Object.keys(scope.model), function(key){
-                if(key !== 'obs_' + createFieldKey(params.field) && !key.startsWith('$$'))
-                {
-                  // console.log('view Value', $viewValue);
-                  // console.log('model Value', $modelValue);
-                  // console.log('Current Scope', scope);
-                  // console.log('Current Value',scope.model[key]);
-                  if($modelValue !== scope.model[key] && ($modelValue !== null || $modelValue !== '' || $modelValue !== undefined) )
-                    delete scope.model[key];
-                }
-              });
-              console.log('Hide Expression test - model n expr')
-              console.log(results)
-              console.log(scope.model)
+              // //clear the modelValue
+              // _.each(Object.keys(scope.model), function(key){
+              //   if(key !== 'obs_' + createFieldKey(params.field) && !key.startsWith('$$'))
+              //   {
+              //     // console.log('view Value', $viewValue);
+              //     // console.log('model Value', $modelValue);
+              //     // console.log('Current Scope', scope);
+              //     // console.log('Current Value',scope.model[key]);
+              //     // if($modelValue !== scope.model[key] && ($modelValue !== null || $modelValue !== '' || $modelValue !== undefined) )
+              //     //   delete scope.model[key];
+              //   }
+              // });
+              // console.log('Hide Expression test - model n expr')
+              // console.log(results)
+              // console.log(scope.model)
               return results;
             });
           }
@@ -199,7 +199,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         function getObsValue(key, obs)
         {
           var val = _.find(obs,function(obs_){
-            if(obs_.concept.uuid === key.split('_')[1]) return obs_;
+            if(obs_.concept.uuid === convertKey_to_uuid(key.split('_')[1])) return obs_;
           });
 
           return val;
@@ -215,7 +215,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           var val = _.filter(obs, function(obs_){
           //console.log(obs);
           if(key !== undefined)
-            if(obs_.concept.uuid === key.split('_')[1]) return obs_;
+            if(obs_.concept.uuid === convertKey_to_uuid(key.split('_')[1])) return obs_;
           });
           return val;
         }
@@ -315,7 +315,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     var multiArr = [];
                     var multi_uuid = [];
                     var val = _.filter(obs_data,function(obs){
-                      if(obs.concept.uuid === field_key.split('_')[1]) return obs;
+                      if(obs.concept.uuid === convertKey_to_uuid(field_key.split('_')[1])) return obs;
                     });
                     //console.log('matching multiCheckbox:');
                     //console.log(val);
@@ -379,7 +379,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           var multiArr = [];
                           var multi_uuid = [];
                           var val = _.filter(obs_data,function(obs){
-                            if(obs.concept.uuid === field_key.split('_')[1]) return obs;
+                            if(obs.concept.uuid === convertKey_to_uuid(field_key.split('_')[1])) return obs;
                           });
                           //console.log('matching multiCheckbox:');
                           //console.log(val);
@@ -412,12 +412,12 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                              if(_.contains(_group_field.key, 'obsDate_'))
                              {
                                var val = _.find(group_data[0].groupMembers, function(obs){
-                                 if(obs.concept.uuid === _group_field.key.split('_')[1]) return obs;
+                                 if(obs.concept.uuid === convertKey_to_uuid(_group_field.key.split('_')[1])) return obs;
                                });
 
-                               _.each(group_data, function(_data){
-
-                               })
+                              //  _.each(group_data, function(_data){
+                               //
+                              //  })
 
                                if(val !== undefined)
                                {
@@ -434,7 +434,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                {
                                  val = _.find(group_data[0].groupMembers, function(obs){
                                    //console.log(obs)
-                                   if(obs.concept.uuid === _group_field.key.split('_')[1]) return obs;
+                                   if(obs.concept.uuid === convertKey_to_uuid(_group_field.key.split('_')[1])) return obs;
                                  });
                                }
 
@@ -464,7 +464,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                              if(group_data.length>0)
                              {
                                val = _.filter(group_data[0].groupMembers, function(obs){
-                                 if(obs.concept.uuid === _group_field.key.split('_')[1]) return obs;
+                                 if(obs.concept.uuid === convertKey_to_uuid(_group_field.key.split('_')[1])) return obs;
                                });
                              }
                              var multiArr = [];
@@ -510,13 +510,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       _.each(_field.templateOptions.fields[0].fieldGroup, function (_repeating_field) {
                         // body...
 
-                        field_keys[_repeating_field.key.split('_')[1]] = {key:_repeating_field.key, type:_repeating_field.type};
+                        field_keys[convertKey_to_uuid(_repeating_field.key.split('_')[1])] = {key:_repeating_field.key, type:_repeating_field.type};
                         // update fields with existing data
                         var arr = [];
                         var arr_uuid = [];
                         _.each(group_data, function(_data){
                           _.each(_data.groupMembers, function(obs){
-                            if(obs.concept.uuid === _repeating_field.key.split('_')[1]){
+                            if(obs.concept.uuid === convertKey_to_uuid(_repeating_field.key.split('_')[1])){
                               if (typeof obs.value === 'object')
                               {
                                 arr.push(obs.value.uuid);
@@ -549,7 +549,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           if(field_keys[obs.concept.uuid])
                           {
                              //console.log(obs.concept.uuid);
-                             var colKey = 'obs_' + obs.concept.uuid
+                             var colKey = 'obs_' + createFieldKey(obs.concept.uuid)
 
                              //console.log('columns: '+colKey);
 
@@ -894,13 +894,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                     obs.push({uuid:init_data.uuid, voided:true});
                                   }
                                   else {
-                                    obs.push({uuid:init_data.uuid, obsDatetime:getFormattedValue(groupValues[group_member]),concept:group_member.split('_')[1], value:getFormattedValue(groupValues['obs_'+group_member.split('_')[1]])});
+                                    obs.push({uuid:init_data.uuid, obsDatetime:getFormattedValue(groupValues[group_member]),concept:convertKey_to_uuid(group_member.split('_')[1]), value:getFormattedValue(groupValues['obs_'+group_member.split('_')[1]])});
                                   }
                                 }
                               }
                               else {
                                 //new val being added
-                                obs.push({obsDatetime:getFormattedValue(groupValues[group_member]),concept:group_member.split('_')[1], value:getFormattedValue(groupValues['obs_'+group_member.split('_')[1]])});
+                                obs.push({obsDatetime:getFormattedValue(groupValues[group_member]),concept:convertKey_to_uuid(group_member.split('_')[1]), value:getFormattedValue(groupValues['obs_'+group_member.split('_')[1]])});
                               }
 
                             }
@@ -986,13 +986,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                             obs.push({uuid:init_data.uuid[obs_index], voided:true});
                                           }
                                           else {
-                                            groupMembers.push({uuid:init_data.uuid[obs_index], concept:group_member.split('_')[1],
+                                            groupMembers.push({uuid:init_data.uuid[obs_index], concept:convertKey_to_uuid(group_member.split('_')[1]),
                                                         value:getFormattedValue(ArrayVal[arrKey])});
                                           }
                                         }
                                       }
                                       else {
-                                        groupMembers.push({concept:group_member.split('_')[1],
+                                        groupMembers.push({concept:convertKey_to_uuid(group_member.split('_')[1]),
                                                     value:getFormattedValue(ArrayVal[arrKey])});
                                       }
                                     }
@@ -1022,7 +1022,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                               obs.push({uuid:init_data.uuid[obs_index], voided:true});
                                             }
                                             else {
-                                              groupMembers.push({uuid:init_data.uuid[obs_index], concept:arrKey.split('_')[1],
+                                              groupMembers.push({uuid:init_data.uuid[obs_index], concept:convertKey_to_uuid(arrKey.split('_')[1]),
                                                           value:getFormattedValue(ArrayVal[arrKey])});
                                             }
                                         }
@@ -1031,7 +1031,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                             //new val being added
                                             // console.log('Getting Here', getFormattedValue(ArrayVal[arrKey]))
                                             if(getFormattedValue(ArrayVal[arrKey]) !== '' && getFormattedValue(ArrayVal[arrKey]) !== null && getFormattedValue(ArrayVal[arrKey]) !=='null')
-                                              groupMembers.push({concept:arrKey.split('_')[1],
+                                              groupMembers.push({concept:convertKey_to_uuid(arrKey.split('_')[1]),
                                                           value:getFormattedValue(ArrayVal[arrKey])});
                                       }
                                     }
@@ -1058,9 +1058,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                   console.log('Main Key', key);
                                     //obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
                                     if(group_member.startsWith('obs_'))
-                                      {obs.push({concept:group_member.split('_')[1], groupMembers:groupMembers});}
+                                      {obs.push({concept:convertKey_to_uuid(group_member.split('_')[1]), groupMembers:groupMembers});}
                                     else {
-                                      obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
+                                      obs.push({concept:convertKey_to_uuid(key.split('_')[1]), groupMembers:groupMembers});
                                     }
                                 }
                                 groupMembers = [];
@@ -1101,13 +1101,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                         obs.push({uuid:init_data.uuid[obs_index], voided:true});
                                       }
                                       else {
-                                        obs.push({uuid:init_data.uuid[obs_index], concept:key.split('_')[1],
+                                        obs.push({uuid:init_data.uuid[obs_index], concept:convertKey_to_uuid(key.split('_')[1]),
                                                     value:getFormattedValue(groupValues[group_member])});
                                       }
                                     }
                                   }
                                   else {
-                                    obs.push({concept:key.split('_')[1],
+                                    obs.push({concept:convertKey_to_uuid(key.split('_')[1]),
                                                 value:getFormattedValue(groupValues[group_member])});
                                   }
                                 }
@@ -1133,7 +1133,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                         obs.push({uuid:init_data.uuid, voided:true});
                                       }
                                       else {
-                                        obs.push({uuid:init_data.uuid, concept:group_member.split('_')[1],
+                                        obs.push({uuid:init_data.uuid, concept:convertKey_to_uuid(group_member.split('_')[1]),
                                                     value:getFormattedValue(groupValues[group_member])});
                                       }
                                     }
@@ -1141,7 +1141,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                   else {
                                         //new val being added
                                         if(getFormattedValue(groupValues[group_member])!==null && getFormattedValue(groupValues[group_member])!=='null' && getFormattedValue(groupValues[group_member])!=='')
-                                          groupMembers.push({concept:group_member.split('_')[1],
+                                          groupMembers.push({concept:convertKey_to_uuid(group_member.split('_')[1]),
                                                       value:getFormattedValue(groupValues[group_member])});
                                   }
                                 }
@@ -1166,7 +1166,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           }
                           if (groupMembers.length>0)
                           {
-                              obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
+                              obs.push({concept:convertKey_to_uuid(key.split('_')[1]), groupMembers:groupMembers});
                           }
                         }
                         else {
@@ -1190,7 +1190,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                 obs.push({uuid:init_data.uuid, voided:true});
                               }
                               else {
-                                obs.push({uuid:init_data.uuid, concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                                obs.push({uuid:init_data.uuid, concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
                               }
                             }
                           }
@@ -1204,14 +1204,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                               point unless it is a date or blank object
                               */
                               if(Object.prototype.toString.call(val[key]) === '[object Date]')
-                                obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                                obs.push({concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
                               else
                                 console.log('Ingoring Empty Object',val[key]);
 
                             }
                             else {
                               if(getFormattedValue(val[key]) !=='null' && getFormattedValue(val[key]) !==null && getFormattedValue(val[key]) !=='')
-                                obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                                obs.push({concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
                             }
                           }
                         }
@@ -1236,7 +1236,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                             obs.push({uuid:init_data.uuid, voided:true});
                           }
                           else {
-                            obs.push({uuid:init_data.uuid,concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                            obs.push({uuid:init_data.uuid,concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
                           }
                         }
                       }
@@ -1249,13 +1249,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           point unless it is a date or blank object
                           */
                           if(Object.prototype.toString.call(val[key]) === '[object Date]')
-                            obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                            obs.push({concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
                           else
                             console.log('Ingoring Empty Object',val[key]);
                         }
                         else {
                           if(getFormattedValue(val[key])!==null && getFormattedValue(val[key])!=='null' && getFormattedValue(val[key])!=='')
-                          obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                          obs.push({concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
                         }
                       }
                     }
@@ -1429,6 +1429,17 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         function createFormlyField(obs_field){
           //console.log(obs_field)
 
+          var custom_expression;
+          // if(obs_field.concept === 'a899e444-1350-11df-a1f1-0026b9348838')
+          // {
+          //   custom_expression = {
+          //     console.log('custom expression works fine')
+          //   };
+          // }
+          // else {
+          //   custom_expression = {console.log('custom expression works fine')}
+          // }
+
           var hideExpression_;
           if(obs_field.hide !== undefined)
           {
@@ -1511,11 +1522,28 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               type: obs_field.type,
               data: {concept:obs_field.concept,
                 answer_value:''},
+                ngModelAttrs: {
+                  customExpression: {
+                    expression: 'custom-expression'
+                  }
+                },
               templateOptions: {
                 type: obs_field.type,
                 label: obs_field.label,
                 required:required,
-                options:opts
+                options:opts,
+                customExpression: function(value, options, scope, $event) {
+                  // alert('Custom expression!');
+                  console.log(arguments);
+                  console.log(scope.model);
+                  // _.each(Object.keys(scope.model), function(key){
+                  //   if(key !== 'obs_' + createFieldKey('a899e444-1350-11df-a1f1-0026b9348838') && !key.startsWith('$$'))
+                  //   {
+                  //     console.log('Current Value',scope.model[key]);
+                  //     delete scope.model[key];
+                  //   }
+                  // });
+                }
               },
               hideExpression:hideExpression_
             }

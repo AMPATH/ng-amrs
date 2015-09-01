@@ -2,6 +2,10 @@
   <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
   <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">
+  <div data-ng-show='vm.isBusy'>
+     <img data-ng-show="vm.isBusy" data-ng-src="images/ajax-loader.gif" autofocus />
+     <b>Loading Form...</b>
+   </div>
   <form name="vm.form" novalidate>
     <div class="breadcrumb">
       Patient Details: Identifier: {{vm.patient.identifierFormatted()}} | Name : {{vm.patient.fullNames()}}

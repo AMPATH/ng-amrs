@@ -13,6 +13,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
     function FormentryCtrl($translate, dialogs, $location, $rootScope, $stateParams, $state, $scope, FormentryService, OpenmrsRestService, $timeout, FormsMetaData) {
 
         $scope.vm = {};
+        $scope.vm.isBusy = true;
         $scope.vm.error = '';
         $scope.vm.model = {};
         $scope.vm.patient = $rootScope.broadcastPatient;
@@ -56,8 +57,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
          FormentryService.getFormSchema(selectedForm, function(schema){
           formSchema = schema;
           FormentryService.createForm(formSchema, function(formlySchema){
-            $scope.vm.formlyFields = formlySchema;
-            $scope.vm.tabs = $scope.vm.formlyFields;
+            //$scope.vm.formlyFields = formlySchema;
+            $scope.vm.tabs = formlySchema;
 
             var i = 0;
             angular.forEach($scope.vm.tabs, function(tab){
@@ -67,6 +68,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               i++;
               tab.form['model']=$scope.vm.model;
             });
+            $scope.vm.isBusy = false;
             ///FormentryService.getEncounter('encData', formlySchema)
             //var params = {uuid:'cf3f041c-9c37-44c5-983a-d02507ffe279'};
             if(params.uuid !== undefined && params.uuid !== '')
