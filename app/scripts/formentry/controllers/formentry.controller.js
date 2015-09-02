@@ -13,6 +13,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
     function FormentryCtrl($translate, dialogs, $location, $rootScope, $stateParams, $state, $scope, FormentryService, OpenmrsRestService, $timeout, FormsMetaData) {
 
         $scope.vm = {};
+        $scope.vm.isBusy = true;
         $scope.vm.error = '';
         $scope.vm.model = {};
         $scope.vm.patient = $rootScope.broadcastPatient;
@@ -21,8 +22,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         var formSchema;
         $scope.vm.formlyFields;
         $scope.vm.tabs = [];
-        $scope.vm.encounter = $rootScope.activeEncounter;
-        console.log('ACTIVE ENCOUNTER', $scope.vm.encounter);
+        $scope.vm.encounter;
+        //console.log('ACTIVE ENCOUNTER', $scope.vm.encounter);
 
         /*
         Test logic to get either a blank form or form filled with existing data.
@@ -32,17 +33,19 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         var params={uuid: $stateParams.encuuid };
         //var params = {uuid: '18a1f142-f2c6-4419-a5db-5f875020b887'};
         var encData;
-        var selectedForm = $stateParams.formuuid;
+        var selectedForm //= $stateParams.formuuid;
         if(params.uuid !== undefined)
         {
-          var encForm = FormsMetaData.getForm($scope.vm.encounter.encounterTypeUuid());
-          selectedForm = encForm.name;
+          $scope.vm.encounter = $rootScope.activeEncounter;
+          //var encForm = FormsMetaData.getForm($scope.vm.encounter.encounterTypeUuid());
+          selectedForm = FormsMetaData.getForm($scope.vm.encounter.encounterTypeUuid());
           $scope.vm.encounterType = $scope.vm.encounter.encounterTypeName();
         }
         else {
-          selectedForm = $stateParams.formuuid;
-          var encForm = FormsMetaData.getForm($stateParams.formuuid);
-          $scope.vm.encounterType = encForm.encounterTypeName
+          //selectedForm = $stateParams.formuuid;
+          selectedForm = FormsMetaData.getForm($stateParams.formuuid);
+          //var encForm = FormsMetaData.getForm($stateParams.formuuid);
+          $scope.vm.encounterType = selectedForm.encounterTypeName
         }
 
         // console.log('testing selected Form')
@@ -53,11 +56,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
           // get form schema data
          //  var selectedForm = $stateParams.formuuid;
          //  console.log('testing selected Form')
-         FormentryService.getFormSchema(selectedForm, function(schema){
+         FormentryService.getFormSchema(selectedForm.name, function(schema){
           formSchema = schema;
           FormentryService.createForm(formSchema, function(formlySchema){
-            $scope.vm.formlyFields = formlySchema;
-            $scope.vm.tabs = $scope.vm.formlyFields;
+            //$scope.vm.formlyFields = formlySchema;
+            $scope.vm.tabs = formlySchema;
 
             var i = 0;
             angular.forEach($scope.vm.tabs, function(tab){
@@ -67,6 +70,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               i++;
               tab.form['model']=$scope.vm.model;
             });
+            $scope.vm.isBusy = false;
             ///FormentryService.getEncounter('encData', formlySchema)
             //var params = {uuid:'cf3f041c-9c37-44c5-983a-d02507ffe279'};
             if(params.uuid !== undefined && params.uuid !== '')
@@ -102,13 +106,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         $scope.vm.submit = function() {
           //  $scope.vm.error = FormentryService.validateForm($scope.vm.userFields);
-            console.log('Checking form Validity')
-            console.log($scope.vm.form.$valid);
-            console.log($scope.vm.form)
+            // console.log('Checking form Validity')
+            // console.log($scope.vm.form.$valid);
+            // console.log($scope.vm.form)
 
             if ($scope.vm.form.$valid)
             {
-              var form = FormsMetaData.getForm($stateParams.formuuid);
+              var form = selectedForm;
               // console.log($stateParams.formuuid)
               // console.log('Selected Form');
               // console.log(form);
@@ -151,7 +155,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     //void obs only
                     if($scope.vm.submitLabel === 'Update')
                     {
-                      var obsToVoid = _.where(updatedPayLoad.obs,{voided:true});
+                      var obsToVoid = _.where(payLoad.obs,{voided:true});
                       //console.log('Obs to Void: ', obsToVoid);
                       if(obsToVoid !== undefined)
                       {

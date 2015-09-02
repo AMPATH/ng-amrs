@@ -557,7 +557,7 @@
                     },
                     {
                       "concept": "a897d0be-1350-11df-a1f1-0026b9348838",
-                      "label": "Rifampicin XXXXXX"
+                      "label": "Rifampicin"
                     },
                     {
                       "concept": "a8952e4a-1350-11df-a1f1-0026b9348838",
@@ -576,22 +576,35 @@
                 {
                   "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                   "label": "tabs/day",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                    "value":["a899f51a-1350-11df-a1f1-0026b9348838",
+                      "a897d1a4-1350-11df-a1f1-0026b9348838",
+                      "a8a382ba-1350-11df-a1f1-0026b9348838"]}]
                 },
                 {
                   "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
                   "label": "mg",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                    "value":["a899e19c-1350-11df-a1f1-0026b9348838",
+                      "a8ac5f2a-1350-11df-a1f1-0026b9348838",
+                      "a8952e4a-1350-11df-a1f1-0026b9348838"]}]
                 },
                 {
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "mg/day",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                    "value":["a896cc00-1350-11df-a1f1-0026b9348838",
+                      "a8971c64-1350-11df-a1f1-0026b9348838"]}]
                 },
                 {
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "tabs",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                    "value":["b8aa06ca-93c6-40ea-b144-c74f841926f4"]}]
                 }
               ]
             },
@@ -1811,7 +1824,7 @@
                     },
                     {
                       "concept": "a897d0be-1350-11df-a1f1-0026b9348838",
-                      "label": "Rifampicin XXXXXX"
+                      "label": "Rifampicin"
                     },
                     {
                       "concept": "a8952e4a-1350-11df-a1f1-0026b9348838",
@@ -1830,22 +1843,35 @@
                 {
                   "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                   "label": "tabs/day",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"89c218c-1350-11df-a1f1-0026b9348838",
+                    "value":["a899f51a-1350-11df-a1f1-0026b9348838",
+                      "a897d1a4-1350-11df-a1f1-0026b9348838",
+                      "a8a382ba-1350-11df-a1f1-0026b9348838"]}]
                 },
                 {
                   "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
                   "label": "mg",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"89c218c-1350-11df-a1f1-0026b9348838",
+                    "value":["a899e19c-1350-11df-a1f1-0026b9348838",
+                      "a8ac5f2a-1350-11df-a1f1-0026b9348838",
+                      "a8952e4a-1350-11df-a1f1-0026b9348838"]}]
                 },
                 {
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "mg/day",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"a89c218c-1350-11df-a1f1-0026b9348838",
+                    "value":["a896cc00-1350-11df-a1f1-0026b9348838",
+                      "a8971c64-1350-11df-a1f1-0026b9348838"]}]
                 },
                 {
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "tabs",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                    "value":["b8aa06ca-93c6-40ea-b144-c74f841926f4"]}]
                 }
               ]
             },

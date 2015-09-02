@@ -142,7 +142,7 @@
               "type": "group",
               "questions": [
                 {
-                  "obsConceptUuid": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "3. Transfer in from other clinic (specify):",
                   "type": "text",
                   "validators": []
@@ -949,22 +949,35 @@
                 {
                   "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                   "label": "tabs/day",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                    "value":["a899f51a-1350-11df-a1f1-0026b9348838",
+                      "a897d1a4-1350-11df-a1f1-0026b9348838",
+                      "a8a382ba-1350-11df-a1f1-0026b9348838"]}]
                 },
                 {
                   "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
                   "label": "mg",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                    "value":["a899e19c-1350-11df-a1f1-0026b9348838",
+                      "a8ac5f2a-1350-11df-a1f1-0026b9348838",
+                      "a8952e4a-1350-11df-a1f1-0026b9348838"]}]
                 },
                 {
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "mg/day",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                    "value":["a896cc00-1350-11df-a1f1-0026b9348838",
+                      "a8971c64-1350-11df-a1f1-0026b9348838"]}]
                 },
                 {
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "tabs",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                    "value":["b8aa06ca-93c6-40ea-b144-c74f841926f4"]}]
                 }
               ]
             }
@@ -1474,6 +1487,7 @@
             {
               "type": "group_repeating",
               "label": "14g. If yes, drug(s)",
+              "concept": "a8a072c8-1350-11df-a1f1-0026b9348838",
               "questions": [
                 {
                   "concept": "1682a920-c93d-4aad-b9cb-4a2b2c41ff1a",
@@ -3350,7 +3364,7 @@
                     },
                     {
                       "concept": "a897d0be-1350-11df-a1f1-0026b9348838",
-                      "label": "Rifampicin XXXXXX"
+                      "label": "Rifampicin"
                     },
                     {
                       "concept": "a8952e4a-1350-11df-a1f1-0026b9348838",
@@ -3365,22 +3379,35 @@
                 {
                   "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                   "label": "tabs/day",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                    "value":["a899f51a-1350-11df-a1f1-0026b9348838",
+                      "a897d1a4-1350-11df-a1f1-0026b9348838",
+                      "a8a382ba-1350-11df-a1f1-0026b9348838"]}]
                 },
                 {
                   "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
                   "label": "mg",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                    "value":["a899e19c-1350-11df-a1f1-0026b9348838",
+                      "a8ac5f2a-1350-11df-a1f1-0026b9348838",
+                      "a8952e4a-1350-11df-a1f1-0026b9348838"]}]
                 },
                 {
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "mg/day",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                    "value":["a896cc00-1350-11df-a1f1-0026b9348838",
+                      "a8971c64-1350-11df-a1f1-0026b9348838"]}]
                 },
                 {
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "tabs",
-                  "type": "number"
+                  "type": "number",
+                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                    "value":["b8aa06ca-93c6-40ea-b144-c74f841926f4"]}]
                 }
               ]
             },

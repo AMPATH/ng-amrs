@@ -18,8 +18,8 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
 
 
         function copyFields(fields) {
-          console.log('fields');
-          console.log(fields);
+          // console.log('fields');
+          // console.log(fields);
           return angular.copy(fields);
         }
 
