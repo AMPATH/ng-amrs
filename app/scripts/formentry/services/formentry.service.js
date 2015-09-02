@@ -21,14 +21,15 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             generateFormPayLoad: generateFormPayLoad,
             updateFormPayLoad: updateFormPayLoad
         };
+        var obs_id = 0;
 
         return service;
 
 
         function getFieldValidator(params)
         {
-          console.log('Validation params');
-          console.log(params);
+          // console.log('Validation params');
+          // console.log(params);
 
           if ((params.type === 'date') && (params.allowFutureDates !== 'true'))
           {
@@ -46,9 +47,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 }
                 if(dateValue !== undefined)
                 {
-                  console.log('Today: '+curDate);
-                  console.log('Date Entered: '+dateValue.clearTime());
-                  console.log(dateValue.isAfter(curDate));
+                  // console.log('Today: '+curDate);
+                  // console.log('Date Entered: '+dateValue.clearTime());
+                  // console.log(dateValue.isAfter(curDate));
                   return !dateValue.isAfter(curDate);
                 }
                 if (value === undefined) return true;
@@ -102,7 +103,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               });
             }
 
-            console.log('Test Field Hiding')
+            //console.log('Test Field Hiding')
             //console.log("'" + results.toString() + "'");
             //return  "'" + results.toString() + "'";
 
@@ -302,6 +303,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   {
                     field_key = _field.key;
                     var val = getObsValue(field_key, obs_data);
+                    console.log(val)
                     if (val !== undefined)
                     {
                       sec_data[field_key] = val.value.uuid;
@@ -427,7 +429,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                }
                              }
                              else {
-                                console.log(group_data)
+                                //console.log(group_data)
                               //  console.log(group_data[0].groupMembers)
                               var val;
                                if(group_data.length>0)
@@ -687,6 +689,24 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             }
 
           }
+          else if (sel_field.concept === undefined || sel_field.concept === '')
+          {
+            pass = false;
+            console.log('This field is missing the concept attribute', sel_field);
+            console.log('Add this: "concept:concept_uuid')
+          }
+          else if (sel_field.type === undefined || sel_field.type === '')
+          {
+            pass = false;
+            console.log('This field is missing the type attribute', sel_field);
+            console.log('Add this: "type:date/number/select/radio/multiCheckbox')
+          }
+          else if (sel_field.label === undefined || sel_field.label === '')
+          {
+            pass = false;
+            console.log('This field is missing the label attribute', sel_field);
+            console.log('Add this: "label:your label of choice')
+          }
 
           return pass;
         }
@@ -796,16 +816,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           var section;
 
           // console.log('Test sample model');
-          console.log(model)
+          //console.log(model)
           _.each (Object.keys(model), function(obj){
             val = model[obj];
-            console.log('Section: '+ obj + ' No of Keys: '+ Object.keys(val).length);
+            //console.log('Section: '+ obj + ' No of Keys: '+ Object.keys(val).length);
 
             //check if the current key is an object
             if(typeof val === 'object')
             {
               //This should be a section
-              console.log(obj);
+              //console.log(obj);
               if(obj.startsWith('section')){
 
                 _.each(Object.keys(val), function(key){
@@ -935,16 +955,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         {
                           groupMembers = [];
                           var traversed_objects = [];
-                          console.log('group val', groupValues);
+                          //console.log('group val', groupValues);
                           _.each(Object.keys(groupValues), function(group_member){
 
                             if (groupValues[group_member] !== undefined)
                             {
                               if(typeof groupValues[group_member] === 'object')// array object
                               {
-                                 console.log('OBJECT TYPE')
+                                 //console.log('OBJECT TYPE')
                                 // console.log('Testing Object Vals');
-                                console.log('ValKey: '+ group_member,'  Value: ', groupValues[group_member])
+                                //console.log('ValKey: '+ group_member,'  Value: ', groupValues[group_member])
                                 var ArrayVal = groupValues[group_member]
                                 groupMembers = [];
                                 _.each(Object.keys(ArrayVal), function(arrKey){
@@ -964,7 +984,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                     if(!arrKey.startsWith('obs_'))
                                     {
                                       //multiCheckbox field
-                                      console.log('Multi ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
+                                      //console.log('Multi ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
                                       init_data = getInitialFieldValue(group_member, section);
 
                                       if(typeof init_data === 'object')
@@ -1054,8 +1074,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                                 if (groupMembers.length>0)
                                 {
-                                  console.log('Group key',group_member);
-                                  console.log('Main Key', key);
+                                  //console.log('Group key',group_member);
+                                  //console.log('Main Key', key);
                                     //obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
                                     if(group_member.startsWith('obs_'))
                                       {obs.push({concept:convertKey_to_uuid(group_member.split('_')[1]), groupMembers:groupMembers});}
@@ -1067,10 +1087,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                 traversed_objects = [];
                               }
                               else {
-                                   console.log('NONE OBJECT TYPE')
+                                   //console.log('NONE OBJECT TYPE')
                                   // console.log('Testing Object Vals');
-                                  console.log('ValKey: ', group_member,'  Value: ', groupValues[group_member])
-                                  console.log(typeof group_member);
+                                  //console.log('ValKey: ', group_member,'  Value: ', groupValues[group_member])
+                                //  console.log(typeof group_member);
                                 // groupMembers.push({concept:group_member.split('_')[1],
                                 //             value:getFormattedValue(groupValues[group_member])});
 
@@ -1079,7 +1099,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                 if(!group_member.startsWith('obs_'))
                                 {
                                   //multiCheckbox field
-                                  console.log('Multi ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
+                                  //console.log('Multi ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
                                   init_data = getInitialFieldValue(key, section);
 
                                   if(typeof init_data === 'object')
@@ -1429,17 +1449,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         function createFormlyField(obs_field){
           //console.log(obs_field)
 
-          var custom_expression;
-          // if(obs_field.concept === 'a899e444-1350-11df-a1f1-0026b9348838')
-          // {
-          //   custom_expression = {
-          //     console.log('custom expression works fine')
-          //   };
-          // }
-          // else {
-          //   custom_expression = {console.log('custom expression works fine')}
-          // }
-
           var hideExpression_;
           if(obs_field.hide !== undefined)
           {
@@ -1533,9 +1542,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 required:required,
                 options:opts,
                 customExpression: function(value, options, scope, $event) {
+                  //Not being used for now but will be a great feature for various stuff
                   // alert('Custom expression!');
-                  console.log(arguments);
-                  console.log(scope.model);
+                  // console.log(arguments);
+                  // console.log(scope.model);
                   // _.each(Object.keys(scope.model), function(key){
                   //   if(key !== 'obs_' + createFieldKey('a899e444-1350-11df-a1f1-0026b9348838') && !key.startsWith('$$'))
                   //   {
@@ -1849,9 +1859,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         }
 
         function getFormattedValue(value){
+            console.log(value)
             if(!value) return value;
 
-            if(angular.isNumber(value)) return value;
+            if(typeof value === 'number') return value;
 
             if(Object.prototype.toString.call(value) === '[object Date]'){
 

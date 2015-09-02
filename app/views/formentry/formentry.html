@@ -9,7 +9,7 @@
   <form name="vm.form" novalidate>
     <div class="breadcrumb">
       Patient Details: Identifier: {{vm.patient.identifierFormatted()}} | Name : {{vm.patient.fullNames()}}
-      |{{vm.encounterType}} | {{vm.success}}
+      |{{vm.encounterType}} - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}}| {{vm.success}}
     </div>
     <div style="color:red;">{{vm.error}}</div>
 
@@ -30,8 +30,8 @@
   </form>
 
   <hr />
-  <h2>Model Value</h2>
-  <pre>{{vm.model | json}}</pre>
+  <!-- <h2>Model Value</h2>
+  <pre>{{vm.model | json}}</pre> -->
 
   <!-- Put custom templates here -->
       <script type="text/ng-template" id="my-messages.html">
