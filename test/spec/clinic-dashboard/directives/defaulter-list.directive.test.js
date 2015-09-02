@@ -158,6 +158,18 @@
 			
 		});
 		
+		it('should call loadDefaulterList etl service method when location uuid changes', function () {
+			var isolateScope = scope.$$childHead;
+			var getDefaultersSpy = sinon.spy(etlRestServiceMock, 'getDefaultersList');
+			
+			scope.location.uuid = 'uuid2';
+			
+			scope.$digest();
+			
+			chai.expect(getDefaultersSpy.callCount).to.equal(1);
+			
+		});
+		
 		
 		
 	});
