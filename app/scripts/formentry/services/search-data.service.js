@@ -145,7 +145,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
         function getConceptAnswers(uuid, onSuccess, onError) {
           ConceptResService.getConceptAnswers(uuid,
             function (concept) {
-              var wrapped = wrapConceptsWithLabels(wrapConcepts(concept.answers));
+              var wrapped = wrapConceptsWithLabels(concept.answers);
               onSuccess(wrapped);
             },
             function (error) {
@@ -205,8 +205,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
           var wrappedObjects = [];
           for (var i = 0; i < concepts.length; i++) {
                 var concept={
-                  "concept": concepts[i].uuId,
-                  "label": concepts[i].name
+                  "concept": concepts[i].uuid,
+                  "label": concepts[i].display
                 }
             wrappedObjects.push(concept);
           }

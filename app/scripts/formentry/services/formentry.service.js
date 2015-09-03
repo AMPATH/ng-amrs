@@ -299,7 +299,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       //console.log(model);
                     }
                   }
-                  else if(_field.type === 'select' || _field.type === 'radio' || _field.type === 'ui-select-extended')
+                  else if(_field.type === 'select' || _field.type === 'radio' || _field.type === 'ui-select-extended'|| _field.type==='concept-search-select')
                   {
                     field_key = _field.key;
                     var val = getObsValue(field_key, obs_data);
@@ -1611,25 +1611,33 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               }
             };
           }
-        else if(obs_field.type === 'showcodedanswers'){
+        else if(obs_field.type === 'select-concept-answers'){
             var required=false;
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
             obsField = {
               key: 'obs_' + createFieldKey(obs_field.concept),
               defaultValue: defaultValue_,
-              type: 'ui-select-extended',
+              type: 'concept-search-select',
               data: {concept:obs_field.concept,
                 answer_value:''},
+                ngModelAttrs: {
+                customExpression: {
+                  expression: 'custom-expression'
+                }
+              },
               templateOptions: {
-                type: 'text',
+                type: 'concept-search-select',
                 label: obs_field.label,
-                valueProp: 'uuId',
-                labelProp:'display',
-                deferredFilterFunction: SearchDataService.findDrugConcepts,
-                getSelectedObjectFunction: SearchDataService.getDrugConceptByUuid,
                 required:required,
-                options:[]
-              }
+                options:[],
+                displayMember:'label',
+                valueMember:'concept',
+                questionConceptUuid:obs_field.concept,
+                fetchOptionsFunction:SearchDataService.getConceptAnswers
+
+
+              },
+              hideExpression:hideExpression_
             };
           }
           return obsField;
