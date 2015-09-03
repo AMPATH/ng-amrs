@@ -1006,6 +1006,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                             obs.push({uuid:init_data.uuid[obs_index], voided:true});
                                           }
                                           else {
+                                            //console.log('Obsuuid-1009',init_data.uuid[obs_index])
                                             groupMembers.push({uuid:init_data.uuid[obs_index], concept:convertKey_to_uuid(group_member.split('_')[1]),
                                                         value:getFormattedValue(ArrayVal[arrKey])});
                                           }
@@ -1042,6 +1043,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                               obs.push({uuid:init_data.uuid[obs_index], voided:true});
                                             }
                                             else {
+                                              //console.log('Obsuuid-1046',init_data.uuid[obs_index])
                                               groupMembers.push({uuid:init_data.uuid[obs_index], concept:convertKey_to_uuid(arrKey.split('_')[1]),
                                                           value:getFormattedValue(ArrayVal[arrKey])});
                                             }
@@ -1121,6 +1123,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                         obs.push({uuid:init_data.uuid[obs_index], voided:true});
                                       }
                                       else {
+                                        //console.log('Obsuuid-1126',init_data.uuid[obs_index])
                                         obs.push({uuid:init_data.uuid[obs_index], concept:convertKey_to_uuid(key.split('_')[1]),
                                                     value:getFormattedValue(groupValues[group_member])});
                                       }
@@ -1153,7 +1156,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                         obs.push({uuid:init_data.uuid, voided:true});
                                       }
                                       else {
-                                        obs.push({uuid:init_data.uuid, concept:convertKey_to_uuid(group_member.split('_')[1]),
+                                        //console.log('Obsuuid-1159',init_data)
+                                        obs.push({uuid:init_data.uuid[0], concept:convertKey_to_uuid(group_member.split('_')[1]),
                                                     value:getFormattedValue(groupValues[group_member])});
                                       }
                                     }
@@ -1210,7 +1214,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                 obs.push({uuid:init_data.uuid, voided:true});
                               }
                               else {
-                                obs.push({uuid:init_data.uuid, concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
+                                //console.log('Obsuuid-1217',init_data)
+                                obs.push({uuid:init_data.uuid[0], concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
                               }
                             }
                           }
@@ -1256,7 +1261,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                             obs.push({uuid:init_data.uuid, voided:true});
                           }
                           else {
-                            obs.push({uuid:init_data.uuid,concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
+                            //console.log('Obsuuid - 1264',init_data)
+                            obs.push({uuid:init_data.uuid[0],concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
                           }
                         }
                       }

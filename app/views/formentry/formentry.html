@@ -9,7 +9,7 @@
         {{vm.patient.fullNames()}} | Sex: {{vm.patient.gender()}} | Age: {{vm.patient.age()}}
         | Identifier: {{vm.patient.identifierFormatted()}}
       </h2>
-      {{vm.encounterType}} - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}}| {{vm.success}}
+      {{vm.encounterType}} - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}} {{vm.success}}
     </div>
     <div data-ng-show='vm.isBusy'>
       <h2>

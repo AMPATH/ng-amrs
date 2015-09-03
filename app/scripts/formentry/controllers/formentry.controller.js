@@ -147,7 +147,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     OpenmrsRestService.getEncounterResService().saveEncounter(JSON.stringify(payLoad), function(data){
                       if (data)
                       {
-                        $scope.vm.success = 'Form Submitted successfully'
+                        $scope.vm.success = '| Form Submitted successfully'
                         var dlg=dialogs.notify('Success', $scope.vm.success);
                         if($scope.vm.submitLabel === 'Update')
                         {
@@ -195,7 +195,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                   }
               }
               else {
-                  var dlg=dialogs.notify('Error', 'No data to be Submitted. Please fill the form first....');
+                  var dlg=dialogs.notify('Info', 'No data to be Submitted. Please fill the form first....');
               }
 
             }
