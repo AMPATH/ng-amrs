@@ -36,12 +36,14 @@
 		<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;Defaulters List</a>
 	</li>
 </ul>
-<div class="tab-content panel panel-default" style="margin-top:2px; margin-bottom: 0px; padding:2px;" ng-hide="selectedLocation.selected === undefined">
+<div class="tab-content panel panel-default" style="margin-top:2px; margin-bottom: 8px; padding:2px;" ng-hide="selectedLocation.selected === undefined">
 	<div class="tab-pane " id="tab1" ng-class="{active: activeTabId === 1}">
 		<appointment-schedule location-uuid="{{selectedLocation.selected.uuId()}}"  />
 	</div>
 	<div class="tab-pane " id="tab2" ng-class="{active: activeTabId === 2}">
 		<monthly-appointment location-uuid="{{selectedLocation.selected.uuId()}}" selected="selected"></monthly-appointment>
 	</div>
-	<div class="tab-pane " id="tab3" ng-class="{active: activeTabId === 3}"></div>
+	<div class="tab-pane " id="tab3" ng-class="{active: activeTabId === 3}">
+		<defaulter-list location-uuid="{{selectedLocation.selected.uuId()}}" selected="selected"></defaulter-list>
+	</div>
 </div>

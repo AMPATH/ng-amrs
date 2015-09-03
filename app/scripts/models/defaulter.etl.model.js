@@ -12,7 +12,8 @@
 
   function factory() {
     var service = {
-      defaulter: defaulter
+      defaulter: defaulter,
+      toArrayOfModels: toArrayOfModels
     };
 
     return service;
@@ -36,6 +37,7 @@
       var _phoneNumber = defaulterEtl.phone_number ? defaulterEtl.phone_number : '';
       var _identifiers = defaulterEtl.identifiers ? defaulterEtl.identifiers : '';
       var _patientUuid = defaulterEtl.patient_uuid ? defaulterEtl.patient_uuid : '';
+      var _daysSinceRtc = defaulterEtl.days_since_rtc ? defaulterEtl.days_since_rtc : '';
 
       modelDefinition.personId = function (value) {
         if (angular.isDefined(value)) {
@@ -154,6 +156,25 @@
         }
       };
 
+      modelDefinition.daysSinceRtc = function (value) {
+        if (angular.isDefined(value)) {
+          _daysSinceRtc = value;
+        }
+        else {
+          return _daysSinceRtc;
+        }
+      };
+
+    }
+
+    function toArrayOfModels(unwrappedObjects) {
+      var wrappedObjects = [];
+
+      for (var i = 0; i < unwrappedObjects.length; i++) {
+        wrappedObjects.push(new defaulter(unwrappedObjects[i]));
+      }
+
+      return wrappedObjects;
     }
 
   }
