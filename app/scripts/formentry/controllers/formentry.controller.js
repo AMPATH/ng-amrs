@@ -87,6 +87,26 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 }
                });
             }
+            else {
+              //set the current user as the default provider
+              _.each($scope.vm.tabs, function(page){
+                var model = page.form.model;
+                _.each(page.form.fields, function(_section){
+                  if (_section.type === 'section')
+                  {
+                    var sec_key = _section.key;
+                    var sec_data = model[sec_key] = {};
+                    _.each(_section.templateOptions.fields[0].fieldGroup, function(_field){
+                      if(_field.key === 'encounterProvider'){
+                        sec_data['encounterProvider'] = OpenmrsRestService.getUserService().user.personUuId();
+                        return;
+                      }
+                    });
+                  }
+                });
+              });
+
+            }
           });
          });
        },1000);

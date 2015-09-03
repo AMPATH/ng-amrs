@@ -1448,7 +1448,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         */
         function createFormlyField(obs_field){
           //console.log(obs_field)
-
+          var defaultValue_
+          if(obs_field.default !== undefined)
+          {
+              defaultValue_ = obs_field.default;
+          }
+          // else {
+          //   defaultValue_ = '';
+          // }
           var hideExpression_;
           if(obs_field.hide !== undefined)
           {
@@ -1472,6 +1479,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               type: 'datepicker',
               data: {concept:obs_field.concept,
                 answer_value:''},
+                defaultValue: defaultValue_,
               templateOptions: {
                 type: 'text',
                 label: obs_field.label,
@@ -1492,6 +1500,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             obsField = {
               key: 'obs_' + createFieldKey(obs_field.concept),
               type: 'input',
+              defaultValue: defaultValue_,
               data: {concept:obs_field.concept,
                 answer_value:''},
               templateOptions: {
@@ -1529,6 +1538,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             obsField = {
               key: 'obs_' + createFieldKey(obs_field.concept),
               type: obs_field.type,
+              defaultValue: defaultValue_,
               data: {concept:obs_field.concept,
                 answer_value:''},
                 ngModelAttrs: {
@@ -1563,6 +1573,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
             obsField = {
               key: 'obs_' + createFieldKey(obs_field.concept),
+              defaultValue: defaultValue_,
               type: 'ui-select-extended',
               data: {concept:obs_field.concept,
                 answer_value:''},
@@ -1585,6 +1596,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             obsField = {
               key: 'obs_' + createFieldKey(obs_field.concept),
               type: 'ui-select-extended',
+              defaultValue: defaultValue_,
               data: {concept:obs_field.concept,
                 answer_value:''},
               templateOptions: {
@@ -1604,6 +1616,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
             obsField = {
               key: 'obs_' + createFieldKey(obs_field.concept),
+              defaultValue: defaultValue_,
               type: 'ui-select-extended',
               data: {concept:obs_field.concept,
                 answer_value:''},
@@ -1690,7 +1703,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           _.each(obs_field.questions,function(curField){
             // process the fields the normal way
 
-            var selField=createFormlyField(curField);
+            var selField = createFormlyField(curField);
             //selField['className'] = 'col-md-2';
             //selfField['key'] = selfField['key']
             repeatingFields.push(selField);
@@ -1733,6 +1746,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         }
         function createForm(schema, callback)
         {
+          var defaultValue_;
           var pages = schema.pages;
           var tab;
           var tabs = [];
@@ -1741,12 +1755,31 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           var field ={};
           var section_id = 0;
           var gpSectionRnd = 0 ; //this a random number for grp sections without an obs group
+
           _.each(pages, function(page){
             pageFields = [];
             _.each(page.sections, function(section){
               sectionFields = [];
               //section fields
               _.each(section.questions, function(sec_field){
+                if (sec_field.default !== undefined)
+                {
+                  if (sec_field.default === 'today')
+                  {
+                    defaultValue_ = Date.today().clearTime();
+                  }
+                  else if (sec_field.default === 'now')
+                  {
+                    defaultValue_ = Date.today();
+                  }
+                  else {
+                    defaultValue_ = sec_field.default;
+                  }
+                }
+                else {
+                  defaultValue_ = '';
+                }
+
                 if(sec_field.type === 'encounterDate')
                 {
                   var required=false;
@@ -1755,6 +1788,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   field = {
                     key: sec_field.type,
                     type: 'datepicker',
+                    defaultValue: defaultValue_,
                     data: {encounter:'enc_' + sec_field.type},
                     templateOptions: {
                       type: 'text',
@@ -1775,6 +1809,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   field = {
                     key: sec_field.type,
                     type: 'ui-select-extended',
+                    defaultValue:defaultValue_,
                     data: {encounter:'enc_' + sec_field.type},
                     templateOptions: {
                       type: 'text',
@@ -1796,6 +1831,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   field = {
                     key: sec_field.type,
                     type: 'ui-select-extended',
+                    defaultValue:defaultValue_,
                     data: {encounter:'enc_' + sec_field.type},
                     templateOptions: {
                       type: 'text',

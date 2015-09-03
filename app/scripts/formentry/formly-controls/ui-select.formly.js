@@ -1,5 +1,5 @@
 /*
-jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
+jshint -W106, -W098, -W109, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W026
 */
 (function () {
 
@@ -23,7 +23,7 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
                 $scope.refreshItemSource = refreshItemSource;
                 $scope.evaluateFunction = evaluateFunction;
                 vm.getSelectedObject = getSelectedObject;
-                
+
                 $scope.$watch(
                 function(scope){
                     return evaluateFunction(scope.model[scope.options.key]);
@@ -43,7 +43,7 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
 
                 function getSelectedObject() {
                     var selectedValue = typeof $scope.model[$scope.options.key] === 'function' ? $scope.model[$scope.options.key]() : $scope.model[$scope.options.key];
-                    if (selectedValue !== undefined && selectedValue !== null)
+                    if (selectedValue !== undefined && selectedValue !== null && selectedValue !== '')
                         $scope.to.getSelectedObjectFunction(selectedValue,
                             function (object) {
                                 $scope.itemSource = [object];
