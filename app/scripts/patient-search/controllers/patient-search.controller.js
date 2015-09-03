@@ -24,7 +24,7 @@ jshint -W003, -W098, -W117, -W109
 
    $scope.$watch('searchString', function (searchString) {
      $scope.patients = [];
-     if (searchString && searchString.length > 3) {
+     if (searchString && searchString.length > 2) {
        $scope.isBusy = true;
        OpenmrsRestService.getPatientService().getPatientQuery({q:searchString},
          function(data) {
