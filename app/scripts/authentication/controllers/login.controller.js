@@ -12,7 +12,7 @@ function LoginCtrl($scope, OpenmrsRestService, $timeout) {
   $scope.CurrentUser = {username:'',
               password:''
   };
-  
+
   $scope.isBusy = false;
 
 
@@ -30,7 +30,7 @@ function LoginCtrl($scope, OpenmrsRestService, $timeout) {
         }
         else {
             OpenmrsRestService.getUserService().getUser({q:$scope.CurrentUser.username},function(data){
-            console.log(data);
+            console.log('Logged in user:',data);
 
 
           });

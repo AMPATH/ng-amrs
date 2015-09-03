@@ -13,6 +13,7 @@
               "label": "Visit Date",
               "type": "encounterDate",
               "required": "true",
+              "default":"today",
               "validators":[{"type":"date"}]
             },
             {
