@@ -37,7 +37,8 @@ jshint -W030
 				person_name: 'person_name',
 				phone_number: 'phone_number',
 				identifiers: 'identifiers',
-				patient_uuid: 'patient_uuid'
+				patient_uuid: 'patient_uuid',
+				days_since_rtc: 'days_since_rtc'
 			};
 
 			defaultersEtl = [
@@ -54,7 +55,8 @@ jshint -W030
 					person_name: 'person_name',
 					phone_number: 'phone_number',
 					identifiers: 'identifiers',
-					patient_uuid: 'patient_uuid'
+					patient_uuid: 'patient_uuid',
+					days_since_rtc: 'days_since_rtc'
 				},
 				{
 					person_id: 'person_id2',
@@ -69,7 +71,8 @@ jshint -W030
 					person_name: 'person_name',
 					phone_number: 'phone_number',
 					identifiers: 'identifiers',
-					patient_uuid: 'patient_uuid2'
+					patient_uuid: 'patient_uuid2',
+					days_since_rtc: 'days_since_rtc'
 				}
 			];
 			
@@ -98,6 +101,7 @@ jshint -W030
 			expect(model.phoneNumber()).to.equal(defaulterEtl.phone_number);
 			expect(model.identifiers()).to.equal(defaulterEtl.identifiers);
 			expect(model.patientUuid()).to.equal(defaulterEtl.patient_uuid);
+			expect(model.daysSinceRtc()).to.equal(defaulterEtl.days_since_rtc);
 		
 			/* jshint ignore:end */
 		});

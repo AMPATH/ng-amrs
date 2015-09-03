@@ -33,10 +33,19 @@ jshint -W003, -W026
         //function types scope members
         $scope.loadDefaulterList = loadDefaulterList;
         
+        $scope.utcDateToLocal = utcDateToLocal;
+        
+        $scope.currentPage = 1;
+        
         activate();
         
         function activate() {
             
+        }
+        
+        function utcDateToLocal(date) {
+            var day = new moment(date).format();;
+            return day;
         }
         
         function loadDefaulterList() {

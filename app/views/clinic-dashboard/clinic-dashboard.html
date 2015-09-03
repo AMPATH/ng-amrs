@@ -43,5 +43,7 @@
 	<div class="tab-pane " id="tab2" ng-class="{active: activeTabId === 2}">
 		<monthly-appointment location-uuid="{{selectedLocation.selected.uuId()}}" selected="selected"></monthly-appointment>
 	</div>
-	<div class="tab-pane " id="tab3" ng-class="{active: activeTabId === 3}"></div>
+	<div class="tab-pane " id="tab3" ng-class="{active: activeTabId === 3}">
+		<defaulter-list location-uuid="{{selectedLocation.selected.uuId()}}" selected="selected"></defaulter-list>
+	</div>
 </div>
