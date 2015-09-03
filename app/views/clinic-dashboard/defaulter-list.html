@@ -37,7 +37,7 @@
 				<th></th>
 			</tr>
 		</thead>
-		<tr ng-repeat="patient in patients | startFrom:(currentPage-1)*10 | limitTo:10" data-ng-click="loadPatient(patient.uuid())"
+		<tr ng-repeat="patient in patients | startFrom:(currentPage-1)*10 | limitTo:10" data-ng-click="loadPatient(patient.patientUuid())"
 		style="cursor: pointer;">
 			<td>{{patient.identifiers()}}</td>
 			<td>{{patient.personName() | titlecase}}</td>

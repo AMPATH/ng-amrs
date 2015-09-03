@@ -29,18 +29,32 @@ jshint -W003, -W026
         
         $scope.isBusy = false;
         $scope.experiencedLoadingErrors = false;
+        $scope.currentPage = 1;
         
         //function types scope members
         $scope.loadDefaulterList = loadDefaulterList;
         
+        $scope.loadPatient = loadPatient;
+        
         $scope.utcDateToLocal = utcDateToLocal;
         
-        $scope.currentPage = 1;
         
         activate();
         
         function activate() {
             
+        }
+        
+        function loadPatient(patientUuid) {
+            /*
+            Get the selected patient and save the details in the root scope
+            so that we don't do another round trip to get the patient details
+            */
+            $rootScope.broadcastPatient = _.find($scope.patients, function (patient) {
+                if (patient.patientUuid() === patientUuid)
+                { return patient; }
+            });
+            $state.go('patient', { uuid: patientUuid });
         }
         
         function utcDateToLocal(date) {
