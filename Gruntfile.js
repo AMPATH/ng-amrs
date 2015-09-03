@@ -256,15 +256,14 @@ module.exports = function (grunt) {
     //     }
     //   }
     // },
-    // uglify: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/scripts/scripts.js': [
-    //         '<%= yeoman.dist %>/scripts/scripts.js'
-    //       ]
-    //     }
-    //   }
-    // },
+    
+    uglify: {
+      // Uses preparations done by useminPrepare
+      options: {
+        mangle: false
+      }
+    },
+    
     // concat: {
     //   dist: {}
     // },
@@ -322,13 +321,6 @@ module.exports = function (grunt) {
       }
     },
 
-    // Replace Google CDN references
-    cdnify: {
-      dist: {
-        html: ['<%= yeoman.dist %>/*.html']
-      }
-    },
-
     // Copies remaining files to places other tasks can use
     copy: {
       dist: {
@@ -363,12 +355,15 @@ module.exports = function (grunt) {
           cwd: 'bower_components/bootstrap/dist',
           src: 'fonts/*',
           dest: '<%= yeoman.dist %>'
-        },  {
-          expand: true,
-          cwd: '<%= yeoman.app %>/scripts/formentry/formschema',
-          src: '*.json',
-          dest: '<%= yeoman.dist %>/scripts/formentry/formschema'
         }]
+      },
+      json: {
+        files: [{
+            expand: true,
+            cwd: '<%= yeoman.app %>/scripts/formentry/formschema',
+            src: '*.json',
+            dest: '<%= yeoman.dist %>/scripts/formentry/formschema'
+          }]
       },
       styles: {
         expand: true,
@@ -418,11 +413,6 @@ module.exports = function (grunt) {
     ]);
   });
 
-  grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
-    grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-    grunt.task.run(['serve:' + target]);
-  });
-
   grunt.registerTask('test', [
     'clean:server',
     'wiredep',
@@ -441,12 +431,12 @@ module.exports = function (grunt) {
     'concat',
     'ngAnnotate',
     'copy:dist',
-    // 'cdnify',
     'cssmin',
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
+    'copy:json'
   ]);
 
   grunt.registerTask('default', [
