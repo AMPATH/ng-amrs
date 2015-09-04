@@ -171,7 +171,7 @@
       var wrappedObjects = [];
 
       for (var i = 0; i < unwrappedObjects.length; i++) {
-        wrappedObjects.push(new defaulter(unwrappedObjects[i]));
+        wrappedObjects.push(new service.defaulter(unwrappedObjects[i]));
       }
 
       return wrappedObjects;

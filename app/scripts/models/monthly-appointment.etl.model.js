@@ -60,7 +60,7 @@
 			var wrappedObjects = [];
 			
 			for(var i = 0; i < unwrappedObjects.length; i++){
-				wrappedObjects.push(new monthlyAppointment(unwrappedObjects[i]));
+				wrappedObjects.push(new service.monthlyAppointment(unwrappedObjects[i]));
 			}
 			
 			return wrappedObjects;
