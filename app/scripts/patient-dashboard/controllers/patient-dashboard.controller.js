@@ -1,5 +1,5 @@
 /*jshint -W003, -W098, -W033 */
-(function() {
+(function () {
   'use strict';
 
   /**
@@ -10,28 +10,25 @@
    * Controller of the ngAmrsApp
    */
   angular
-  .module('app.patientdashboard')
-  .controller('PatientDashboardCtrl', PatientDashboardCtrl);
-  PatientDashboardCtrl.$nject = ['$rootScope', '$scope', '$stateParams','$timeout', 'OpenmrsRestService'];
+    .module('app.patientdashboard')
+    .controller('PatientDashboardCtrl', PatientDashboardCtrl);
+  PatientDashboardCtrl.$nject = ['$rootScope', '$scope', '$stateParams', '$timeout', 'OpenmrsRestService'];
 
   function PatientDashboardCtrl($rootScope, $scope, $stateParams, $timeout, OpenmrsRestService) {
     $scope.patient = {};
     $scope.patient = $rootScope.broadcastPatient;
     $scope.p = null;
     $scope.encounters = [];
+    
+    $scope.HivHistoricalExpanded = true;
+    
+    $scope.showHivHistoricalSummary = false;
 
-    // $timeout(function () {
-    //   OpenmrsRestService.getPatientService().getPatientByUuid({uuid:$stateParams.uuid},
-    //     function (data) {
-    //       $scope.patient = data;
-    //       //console.log(data);
-    //       $rootScope.broadcastPatient = $scope.patient; // trying to broadcast
-    //     });
-    //
-    // }, 1000);
-
-    // $rootScope.encounters = $scope.encounters; //trying to this available throughout the app
-    // $rootScope.patient = $scope.patient; //trying to this available throughout the app
-
+    $scope.$on('viewHivHistoricalSummary',viewHivHistoricalSummary);
+    
+    function viewHivHistoricalSummary() {
+      $scope.showHivHistoricalSummary = true;
     }
+
+  }
 })();

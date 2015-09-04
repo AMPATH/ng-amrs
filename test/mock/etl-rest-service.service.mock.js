@@ -17,19 +17,67 @@ jshint -W098, -W117, -W003, -W026
       getVitals: getVitals,
       numberOfVitalsToReturn: numberOfVitalsToReturn,
 
+      getHivSummary: getHivSummary,
+      numberOfHivSummaryRecordsToReturn: 20,
+
       getPatientTests: getPatientTests,
       numberOfPatientTestsToReturn: numberOfPatientTestsToReturn,
 
       getAppointmentSchedule: getAppointmentSchedule,
       numberOfAppointmentsToReturn: 20,
-      
-      getDefaultersList:getDefaultersList,
-      numberOfDefaultersToReturn:20,
+
+      getDefaultersList: getDefaultersList,
+      numberOfDefaultersToReturn: 20,
 
       returnErrorOnNextCall: false
     };
     //debugger;
     return service;
+
+    function getHivSummary(patientUuid, startIndex, limit, successCallback, failedCallback) {
+      if (!startIndex) {
+        startIndex = 0;
+      }
+
+      if (!limit) {
+        limit = 20;
+      }
+      if (service.returnErrorOnNextCall === true) {
+        console.log('returning error on get hivSummary');
+        failedCallback({ message: 'An error occured' });
+        return;
+      }
+
+      var hivSummaryRecords = [];
+
+      var numberOfRecords = limit;
+
+      if (startIndex >= service.numberOfHivSummaryRecordsToReturn) {
+        successCallback({
+          startIndex: startIndex,
+          size: 0,
+          result: []
+        });
+        return;
+      }
+
+      if ((startIndex + limit) > service.numberOfHivSummaryRecordsToReturn) {
+        numberOfRecords = service.numberOfHivSummaryRecordsToReturn - (startIndex + limit);
+      }
+      else {
+        numberOfRecords = limit;
+      }
+
+      for (var i = startIndex; i < (startIndex + numberOfRecords); i++) {
+        hivSummaryRecords.push(getHivSummaryRecord(i));
+      }
+
+      successCallback({
+        startIndex: startIndex,
+        size: numberOfRecords,
+        result: hivSummaryRecords
+      });
+    }
 
     function getVitals(patientUuid, startIndex, limit, successCallback, failedCallback) {
       if (!startIndex) {
@@ -122,10 +170,10 @@ jshint -W098, -W117, -W003, -W026
       });
 
     }
-    
+
     function getDefaultersList(locationUuid, defaulterThreshold, successCallback, failedCallback, startIndex, limit) {
       console.log('calling mock getDefaultersList');
-      
+
       if (!startIndex) {
         startIndex = 0;
       }
@@ -327,6 +375,54 @@ jshint -W098, -W117, -W003, -W026
       };
       /* jshint ignore:end */
       return appointmentScheduleEtl;
+    }
+
+    function getHivSummaryRecord(index) {
+      /* jshint ignore:start */
+      var hivSummaryEtl = {
+        person_id: 'person_id' + index,
+        uuid: 'middleName' + index,
+        encounter_id: 'familyName' + index,
+        encounter_datetime: 'familyName2' + index,
+        location_id: '_location_id',
+        location_uuid: '_location_uuid',
+        visit_num: '_visit_num',
+        death_date: '_death_date',
+        scheduled_visit: '_scheduled_visit',
+        transfer_out: '_transfer_out',
+        out_of_care: 'out_of_care',
+        prev_rtc_date: '_prev_rtc_date',
+        rtc_date: '_rtc_date',
+        arv_start_date: '_arv_start_date',
+        arv_first_regimen: '_arv_first_regimen',
+        cur_arv_meds: '_cur_arv_meds',
+        cur_arv_line: '_cur_arv_line',
+        first_evidence_patient_pregnant: '_first_evidence_patient_pregnant',
+        edd: '_edd',
+        screened_for_tb: '_screened_for_tb',
+        tb_tx_start_date: '_tb_tx_start_date',
+        pcp_prophylaxis_start_date: '_pcp_prophylaxis_start_date',
+        cd4_resulted: '_cd4_resulted',
+        cd4_resulted_date: '_cd4_resulted_date',
+        cd4_1: '_cd4_1',
+        cd4_1_date: '_cd4_1_date',
+        cd4_2_date: '_cd4_2_date',
+        cd4_percent_1: '_cd4_percent_1',
+        cd4_percent_1_date: '_cd4_percent_1_date',
+        cd4_percent_2: '_cd4_percent_2',
+        cd4_percent_2_date: '_cd4_percent_2_date',
+        vl_resulted: '_vl_resulted',
+        vl_resulted_date: '_vl_resulted_date',
+        vl_1: '_vl_1',
+        vl_1_date: '_vl_1_date',
+        vl_2: '_vl_2',
+        vl_2_date: '_vl_2_date',
+        vl_order_date: '_vl_order_date',
+        cd4_order_date: '_cd4_order_date'
+      };
+      /* jshint ignore:end */
+
+      return hivSummaryEtl;
     }
 
 

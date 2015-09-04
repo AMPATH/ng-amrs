@@ -26,7 +26,7 @@
 <div style="margin-top: 4px; margin-bottom:4px;">
 	<div class="row">
 		<div class="col-lg-2 " style="padding-left:13px; padding-right:13px; padding-top:4px; padding-bottom:4px;">
-			<ul class="nav nav-pills nav-stacked hidden-sm hidden-md"  style="cursor: pointer;">
+			<ul class="nav nav-pills nav-stacked hidden-sm hidden-md" style="cursor: pointer;">
 				<li active-tab-sync index="1" data-ng-glick="activeList(this, 1)" ng-class="{active: activeListId === 1}">
 					<a data-target="#tab1" data-toggle="tab"><span class="icon-i-administration" aria-hidden="true"></span>&nbsp;Patient Info</a>
 				</li>
@@ -43,7 +43,7 @@
 					<a data-target="#tab5" data-toggle="tab"><span class="icon-i-laboratory" aria-hidden="true"></span>&nbsp;Lab Data Summary</a>
 				</li>
 			</ul>
-			<ul class="nav nav-pills hidden-xs hidden-lg hidden-xl "  style="cursor: pointer;">
+			<ul class="nav nav-pills hidden-xs hidden-lg hidden-xl " style="cursor: pointer;">
 				<li active-tab-sync index="1" data-ng-glick="activeList(this, 1)" ng-class="{active: activeListId === 1}">
 					<a data-target="#tab1" data-toggle="tab"><span class="icon-i-administration" aria-hidden="true"></span>&nbsp;Patient Info</a>
 				</li>
@@ -75,6 +75,16 @@
 				<div style="margin-top: 2px; padding:2px;">
 					<hiv-summary patient-uuid="{{patient.uuid()}}"></hiv-summary>
 				</div>
+				<accordion ng-show="showHivHistoricalSummary">
+					<accordion-group is-open="HivHistoricalExpanded">
+						<accordion-heading>
+							<div style="padding:3px;">Historical Hiv Summary
+								<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': HivHistoricalExpanded, 'glyphicon-chevron-right': !HivHistoricalExpanded}"></i>
+							</div>
+						</accordion-heading>
+						<hiv-summary-historical patient-uuid="{{patient.uuid()}}"></hiv-summary-historical>
+					</accordion-group>
+				</accordion>
 			</div>
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab2">
 				<div class="page-content">
@@ -92,7 +102,9 @@
 					<p>
 						<a href="#/form/form3/patient/{{patient.uuid()}}">AMPATH PMTCT Postnatal Care Encounter Form</a>
 					</p>
-					<p><a href="#/form/tabs">Test Tab Form</a></p>
+					<p>
+						<a href="#/form/tabs">Test Tab Form</a>
+					</p>
 				</div>
 			</div>
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab4">
