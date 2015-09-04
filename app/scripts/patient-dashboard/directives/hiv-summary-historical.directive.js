@@ -39,11 +39,15 @@ jshint -W003, -W026
         activate();
         
         function activate() {
-            
+            $scope.$on('viewHivHistoricalSummary',viewHivHistoricalSummary);
         }
         
         
-        function loadHistoricalHivSummary(params) {
+        function viewHivHistoricalSummary() {
+            loadHistoricalHivSummary();
+        }
+        
+        function loadHistoricalHivSummary() {
              $scope.experiencedLoadingErrors = false;
              
              if($scope.isBusy === true) return;

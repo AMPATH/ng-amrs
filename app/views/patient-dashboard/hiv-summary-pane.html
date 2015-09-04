@@ -1,24 +1,31 @@
 <div ng-hide="hasSummary === true" class="bg-warning">
   <p>No summary available</p>
 </div>
- <div ng-show='isBusy'>
-    <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
-    <b>Loading data...</b>
-  </div>
+<div ng-show='isBusy'>
+  <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+  <b>Loading data...</b>
+</div>
 <div ng-show='experiencedLoadingError'>
   <p class="bg-danger" style="padding:4px;">
     <b>
       <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
-  <p>
-  <div ng-show='!isBusy && experiencedLoadingError'>
-    <button class="btn btn-info" ng-click="fetchHivSummary()">
-      <span class="glyphicon glyphicon-refresh"></span><span> Try Again</span></button>
-  </div>
+    <p>
+      <div ng-show='!isBusy && experiencedLoadingError'>
+        <button class="btn btn-info" ng-click="fetchHivSummary()">
+          <span class="glyphicon glyphicon-refresh"></span>
+          <span>Try Again</span>
+        </button>
+      </div>
 </div>
 <ul class="list-group" ng-show="(hasSummary === true && experiencedLoadingError == false)">
-  <li class="list-group-item" style="font-size:large">Last Appt Date: {{hivSummary.encounterDatetime().substring(0,10)}}</li>
-  <li class="list-group-item" style="font-size:large">RTC Date: {{hivSummary.rtcDate().substring(0,10)}}</li>
-  <li class="list-group-item" style="font-size:large">Last Viral Load: {{hivSummary.vl_1()}} ({{hivSummary.vl_1Date().substring(0,10)}})</li>
-  <li class="list-group-item" style="font-size:large">Last CD4 Count: {{hivSummary.cd4_1()}} ({{hivSummary.cd4_1Date().substring(0,10)}})</li>
+  <li class="list-group-item" style="font-size:large">Last Appt Date: {{hivSummary.encounterDatetime()| date:'dd-MM-yyyy'}}</li>
+  <li class="list-group-item" style="font-size:large">RTC Date: {{hivSummary.rtcDate()| date:'dd-MM-yyyy'}}</li>
+  <li class="list-group-item" style="font-size:large">Last Viral Load: {{hivSummary.vl_1()}} ({{hivSummary.vl_1Date() | date:'dd-MM-yyyy'}})</li>
+  <li class="list-group-item" style="font-size:large">Last CD4 Count: {{hivSummary.cd4_1()}} ({{hivSummary.cd4_1Date()| date:'dd-MM-yyyy'}})</li>
   <li class="list-group-item" style="font-size:large">Current ARV Regimen: {{hivSummary.curArvMeds()}}</li>
 </ul>
+<div>
+  <button class="btn btn-info" ng-click="openHistoricalSection()" ng-show="!showingHistoricalSummary && hasSummary">
+    <span>Show Complete HIV History</span>
+  </button>
+</div>
