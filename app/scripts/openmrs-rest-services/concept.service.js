@@ -20,7 +20,8 @@
       findConcept: findConcept,
       findConceptByConceptClassesUuid: findConceptByConceptClassesUuid,
       filterResultsByConceptClassesUuid: filterResultsByConceptClassesUuid,
-      filterResultsByConceptClassesName:filterResultsByConceptClassesName
+      filterResultsByConceptClassesName:filterResultsByConceptClassesName,
+      getConceptAnswers:getConceptAnswers
     };
     return serviceDefinition;
 
@@ -43,7 +44,7 @@
     }
 
     function getConceptWithAnswersResource() {
-      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + '/:uuid?v=custom:(uuid,name,answers)',
+      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'concept/:uuid?v=custom:(uuid,name,answers)',
         { q: '@q' },
         { query: { method: 'GET', isArray: false } });
     }
