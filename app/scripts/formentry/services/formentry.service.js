@@ -25,6 +25,15 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         return service;
 
+        function getFieldKeyById(id_, searchFields)
+        {
+          var result;
+          _.each(searchFields, function(cfield){
+            if(cfield.data.id === id_) result = cfield.key
+          })
+          return result;
+        }
+
 
         function getFieldValidator(params)
         {
@@ -109,28 +118,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
             return (function($viewValue, $modelValue, scope) {
               var i = 0;
+              // console.log('current scope', scope)
               _.each(params.value, function(val){
-                result = scope.model['obs_' + createFieldKey(params.field)] !== val
+                var fkey = getFieldKeyById(params.field, scope.fields)
+                result = scope.model[fkey] !== val
                 if(i === 0) results = result;
                 else results = results  && result;
                 i = i+1;
               });
-
-              // //clear the modelValue
-              // _.each(Object.keys(scope.model), function(key){
-              //   if(key !== 'obs_' + createFieldKey(params.field) && !key.startsWith('$$'))
-              //   {
-              //     // console.log('view Value', $viewValue);
-              //     // console.log('model Value', $modelValue);
-              //     // console.log('Current Scope', scope);
-              //     // console.log('Current Value',scope.model[key]);
-              //     // if($modelValue !== scope.model[key] && ($modelValue !== null || $modelValue !== '' || $modelValue !== undefined) )
-              //     //   delete scope.model[key];
-              //   }
-              // });
-              // console.log('Hide Expression test - model n expr')
-              // console.log(results)
-              // console.log(scope.model)
               return results;
             });
           }
@@ -254,7 +249,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             _.each(page.form.fields, function(_section){
               if (_section.type === 'section')
               {
-                //console.log('Section: ' + _section.key);
+                console.log('Section: ' + _section.key);
                 /*
                 Updating the section keys in the model;
                 It is important that we update the model with the section key
@@ -266,8 +261,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                 //loop through the individual fields in the section and update accordingly
                 _.each(_section.templateOptions.fields[0].fieldGroup, function(_field){
-                  //console.log('Fields Available...')
-                  //console.log(_field)
+                  // console.log('Fields Available...')
+                  // console.log(_field)
                   var field_key;
 
                   if(_field.key === 'encounterDate')
@@ -303,12 +298,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   {
                     field_key = _field.key;
                     var val = getObsValue(field_key, obs_data);
-                    console.log(val)
+                    console.log('initial value',val)
                     if (val !== undefined)
                     {
-                      sec_data[field_key] = val.value.uuid;
-                      _field.data['init_val'] = val.value.uuid;
-                      _field.data['uuid'] = val.uuid; //obs uuid
+                      if(val.value !== null)
+                      {
+                        sec_data[field_key] = val.value.uuid;
+                        _field.data['init_val'] = val.value.uuid;
+                        _field.data['uuid'] = val.uuid; //obs uuid
+                        console.log('updated field',_field)
+                      }
                     }
                   }
                   else if(_field.type === 'multiCheckbox')
@@ -347,7 +346,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       {
                         if(_group_field.type !== 'multiCheckbox')
                         {
-                          if(_.contains(_group_field.key, 'obsDate_'))
+                          if(_.contains(_group_field.key, 'obsDate'))
                           {
                             var val = getObsValue(_group_field.key, obs_data);
                             if(val !== undefined)
@@ -404,14 +403,18 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       }
                       else {
                         //valid group uuids
+                        // console.log('This Section Field')
+                        // console.log(field_key);
+                        // console.log('OBS GROUP', obs_group_data)
                         var group_data = getObsGroupValue(field_key, obs_group_data);
                         // console.log('NON REPEATING SEC DATA TEST');
                         //console.log(group_data)
                         if(group_data !== undefined)
                         {
+
                           if(_group_field.type !== 'multiCheckbox')
                           {
-                             if(_.contains(_group_field.key, 'obsDate_'))
+                             if(_.contains(_group_field.key, 'obsDate'))
                              {
                                var val = _.find(group_data[0].groupMembers, function(obs){
                                  if(obs.concept.uuid === convertKey_to_uuid(_group_field.key.split('_')[1])) return obs;
@@ -429,15 +432,27 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                }
                              }
                              else {
-                                //console.log(group_data)
-                              //  console.log(group_data[0].groupMembers)
+                              //  console.log('Area of interest')
+                              //  console.log(_group_field)
+                              //  console.log(group_data)
+                               //console.log(group_data[0].groupMembers)
                               var val;
+                              var this_val
                                if(group_data.length>0)
                                {
-                                 val = _.find(group_data[0].groupMembers, function(obs){
-                                   //console.log(obs)
-                                   if(obs.concept.uuid === convertKey_to_uuid(_group_field.key.split('_')[1])) return obs;
-                                 });
+                                //  val = _.find(group_data[0].groupMembers, function(obs){
+                                //    //console.log(obs)
+                                //    if(obs.concept.uuid === convertKey_to_uuid(_group_field.key.split('_')[1])) return obs;
+                                //  });
+
+                                 _.each(group_data, function(obs){
+                                   this_val = _.find(obs.groupMembers, function(obs_var){
+                                     //console.log(obs)
+                                     if(obs_var.concept.uuid === convertKey_to_uuid(_group_field.key.split('_')[1])) return obs_var;
+                                   });
+                                   if (this_val !== undefined) val = this_val;
+                                 })
+
                                }
 
                               //  console.log(val)
@@ -461,21 +476,39 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                              }
                            }
                            else {
-                             var val;
+                             var val = [];
+                             var this_val;
                              //if the field group section field is a multi select
                              if(group_data.length>0)
                              {
-                               val = _.filter(group_data[0].groupMembers, function(obs){
-                                 if(obs.concept.uuid === convertKey_to_uuid(_group_field.key.split('_')[1])) return obs;
-                               });
+                              //  val = _.filter(group_data[0].groupMembers, function(obs){
+                              //    if(obs.concept.uuid === convertKey_to_uuid(_group_field.key.split('_')[1])) return obs;
+                              //  });
+
+                               _.each(group_data, function(obs){
+                                 this_val = _.filter(obs.groupMembers, function(obs_var){
+                                   //console.log(obs)
+                                   if(obs_var.concept.uuid === convertKey_to_uuid(_group_field.key.split('_')[1])) return obs_var;
+                                 });
+                                 if (this_val !== undefined) val.push(this_val) ;
+                               })
                              }
                              var multiArr = [];
                              var multi_uuid = [];
                              if(val !== undefined)
                              {
                                _.each(val, function(data){
-                                 multiArr.push(data.value.uuid);
-                                 multi_uuid.push(obs.uuid);
+                                 if(angular.isArray(data))
+                                 {
+                                   _.each(data, function(d){
+                                     multiArr.push(d.value.uuid);
+                                     multi_uuid.push(d.uuid);
+                                   })
+                                 }
+                                 else {
+                                   multiArr.push(data.value.uuid);
+                                   multi_uuid.push(data.uuid);
+                                 }
                                });
                                group_val[_group_field.key] = multiArr;
                                _group_field.data['init_val'] = multiArr;
@@ -504,8 +537,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     var group_data = getObsGroupValue(field_key, obs_group_data);
                     var field_keys = {};
                     var multiArr = [];
-                    // console.log('REPEATING SEC DATA TEST');
-                    // console.log(group_data)
+                    console.log('REPEATING SEC DATA TEST');
+                    console.log(group_data)
 
                     if (group_data !== undefined)
                     {
@@ -519,6 +552,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         _.each(group_data, function(_data){
                           _.each(_data.groupMembers, function(obs){
                             if(obs.concept.uuid === convertKey_to_uuid(_repeating_field.key.split('_')[1])){
+                              console.log('Concept uuid',convertKey_to_uuid(_repeating_field.key.split('_')[1]));
+                              console.log(obs)
                               if (typeof obs.value === 'object')
                               {
                                 arr.push(obs.value.uuid);
@@ -550,8 +585,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           //assumed row data
                           if(field_keys[obs.concept.uuid])
                           {
-                             //console.log(obs.concept.uuid);
-                             var colKey = 'obs_' + createFieldKey(obs.concept.uuid)
+                             console.log(obs.concept.uuid);
+                            //  var colKey = 'obs_' + createFieldKey(obs.concept.uuid)
+                             var colKey = field_keys[obs.concept.uuid].key
 
                              //console.log('columns: '+colKey);
 
@@ -604,16 +640,31 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   }
                   else
                   {
+                    // console.log('Other Fields Available...')
+                    // console.log(_field.type)
+                    // console.log(_field)
                     field_key = _field.key;
                     var val = getObsValue(field_key, obs_data);
                     if (val !== undefined)
                     {
-                      sec_data[field_key] = val.value;
-                      _field.data['init_val'] = val.value;
-                      _field.data['uuid'] = val.uuid; //obs uuid
+                      if (typeof val.value === 'object')
+                      {
+                        sec_data[field_key] = val.value.uuid;
+                        _field.data['init_val'] = val.value.uuid;
+                        _field.data['uuid'] = val.uuid; //obs uuid
+                      }
+                      else {
+                        sec_data[field_key] = val.value;
+                        _field.data['init_val'] = val.value;
+                        _field.data['uuid'] = val.uuid; //obs uuid
+                      }
+                      // sec_data[field_key] = val.value;
+                      // _field.data['init_val'] = val.value;
+                      // _field.data['uuid'] = val.uuid; //obs uuid
                     }
                   }
                   // console.log('Updated Fields Available...')
+                  // console.log(_field.type)
                   // console.log(_field)
                 });
               }
@@ -763,6 +814,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         function getInitialFieldValue(_field_key, _section){
           //Running this function mannually since find method was not doing a good/perfect job
           var data;
+          console.log('Section Key:', _section.key)
           _.each(_section.templateOptions.fields[0].fieldGroup, function(_field){
             if(_field.type !== 'section' && _field.type !== 'group' && _field.type !== 'repeatSection' && _field.type !== undefined)
             {
@@ -881,19 +933,21 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                       var groupValues = val[key];
                       var groupMembers = [];
-                      // console.log('OBJECT TYPES')
+                       //console.log('OBJECT TYPES')
                       // console.log(key);
-                      // console.log(groupValues);
+                       //console.log(groupValues);
                       if(_.contains(key, 'unamed')) // having valid obs group concept uuid
                       {
                         _.each(Object.keys(groupValues), function(group_member){
                           //console.log(groupValues[group_member])
                           if (groupValues[group_member] !== undefined)
                           {
-                            if (group_member.startsWith('obsDate_'))
+                            if (group_member.startsWith('obsDate'))
                             {
                               init_data = getInitialFieldValue(group_member, section);
-                              var init_data_1 = getInitialFieldValue('obs_'+group_member.split('_')[1], section);
+                              var sl_obs_id = group_member.slice(7).split('_')[0];
+                              var sl_obs_key = group_member.split('_')[1]
+                              var init_data_1 = getInitialFieldValue('obs' + sl_obs_id + '_' + sl_obs_key, section);
                               var date_val;
                               var obs_val;
                               if (typeof init_data === 'object')
@@ -906,21 +960,22 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                               }
                               if (date_val !== undefined || obs_val !== undefined)
                               {
-                                if(date_val !== getFormattedValue(groupValues[group_member]) || obs_val !== getFormattedValue(groupValues['obs_'+group_member.split('_')[1]]))
+                                if(date_val !== getFormattedValue(groupValues[group_member]) || obs_val !== getFormattedValue(groupValues['obs' + sl_obs_id + '_' + sl_obs_key]))
                                 {
                                   //check if the value is dropped so that we can void it
-                                  if(groupValues[group_member]=== null || groupValues['obs_'+group_member.split('_')[1]] === null || groupValues[group_member]=== '' || groupValues['obs_'+group_member.split('_')[1]] === '' || groupValues[group_member] === 'null' || groupValues['obs_'+group_member.split('_')[1]] === 'null')
+
+                                  if(groupValues[group_member]=== null || groupValues['obs' + sl_obs_id + '_' + sl_obs_key] === null || groupValues[group_member]=== '' || groupValues['obs' + sl_obs_id + '_' + sl_obs_key] === '' || groupValues[group_member] === 'null' || groupValues['obs' + sl_obs_id + '_' + sl_obs_key] === 'null')
                                   {
                                     obs.push({uuid:init_data.uuid, voided:true});
                                   }
                                   else {
-                                    obs.push({uuid:init_data.uuid, obsDatetime:getFormattedValue(groupValues[group_member]),concept:convertKey_to_uuid(group_member.split('_')[1]), value:getFormattedValue(groupValues['obs_'+group_member.split('_')[1]])});
+                                    obs.push({uuid:init_data.uuid, obsDatetime:getFormattedValue(groupValues[group_member]),concept:convertKey_to_uuid(sl_obs_key), value:getFormattedValue(groupValues['obs' + sl_obs_id + '_'+sl_obs_key])});
                                   }
                                 }
                               }
                               else {
                                 //new val being added
-                                obs.push({obsDatetime:getFormattedValue(groupValues[group_member]),concept:convertKey_to_uuid(group_member.split('_')[1]), value:getFormattedValue(groupValues['obs_'+group_member.split('_')[1]])});
+                                obs.push({obsDatetime:getFormattedValue(groupValues[group_member]),concept:convertKey_to_uuid(sl_obs_key), value:getFormattedValue(groupValues['obs' + sl_obs_id + '_'+sl_obs_key])});
                               }
 
                             }
@@ -955,111 +1010,153 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         {
                           groupMembers = [];
                           var traversed_objects = [];
-                          //console.log('group val', groupValues);
+                          console.log('group val', groupValues);
                           _.each(Object.keys(groupValues), function(group_member){
 
                             if (groupValues[group_member] !== undefined)
                             {
+                              console.log('group val-1008', groupValues);
                               if(typeof groupValues[group_member] === 'object')// array object
                               {
-                                 //console.log('OBJECT TYPE')
-                                // console.log('Testing Object Vals');
-                                //console.log('ValKey: '+ group_member,'  Value: ', groupValues[group_member])
+                                 console.log('OBJECT TYPE')
+                                 console.log('Testing Object Vals');
+                                 console.log('ValKey: '+ group_member,'  Value: ', groupValues[group_member])
+
                                 var ArrayVal = groupValues[group_member]
+                                console.log('length',Object.keys(ArrayVal).length)
                                 groupMembers = [];
-                                _.each(Object.keys(ArrayVal), function(arrKey){
-                                  if(!arrKey.startsWith('$$'))
+                                if(ArrayVal !== undefined && Object.keys(ArrayVal).length === 0)
+                                {
+                                  //handling some dates
+
+                                  init_data = getInitialFieldValue(group_member, section);
+                                  if(typeof init_data === 'object')
+                                  {
+                                    if (init_data.init_val !== undefined)
+                                    {
+                                      obs_index = init_data.init_val.indexOf(getFormattedValue(groupValues[group_member]));
+                                      obs_val = init_data.init_val[obs_index];
+                                    }
+
+                                  }
+                                  if (obs_val !== undefined)
                                   {
 
-                                    // groupMembers.push({concept:arrKey.split('_')[1],
-                                    //             value:getFormattedValue(ArrayVal[arrKey])});
-                                    // console.log('ARRAY Section_id: ', obj);
-                                    // console.log('Testing grouped values');
-                                    // console.log('ARRAY KEY');
-                                    // console.log(arrKey);
-                                    // console.log('Value: ', getFormattedValue(ArrayVal[arrKey]));
-                                    var obs_index;
-                                    var obs_val;
-
-                                    if(!arrKey.startsWith('obs_'))
+                                    if(obs_val !== getFormattedValue(groupValues[group_member]))
                                     {
-                                      //multiCheckbox field
-                                      //console.log('Multi ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
-                                      init_data = getInitialFieldValue(group_member, section);
-
-                                      if(typeof init_data === 'object')
+                                      if(getFormattedValue(groupValues[group_member])==='null' || getFormattedValue(groupValues[group_member]) === null || getFormattedValue(groupValues[group_member]) ==='')
                                       {
-                                        if (init_data.init_val !== undefined)
-                                        {
-                                          obs_index = init_data.init_val.indexOf(getFormattedValue(ArrayVal[arrKey]));
-                                          obs_val = init_data.init_val[obs_index];
-                                        }
-
-                                      }
-                                      if (obs_val !== undefined)
-                                      {
-                                        traversed_objects.push(getFormattedValue(ArrayVal[arrKey]));
-                                        if(obs_val !== getFormattedValue(ArrayVal[arrKey]))
-                                        {
-                                          if(getFormattedValue(ArrayVal[arrKey])==='null' || getFormattedValue(ArrayVal[arrKey]) === null || getFormattedValue(ArrayVal[arrKey]) ==='')
-                                          {
-                                            obs.push({uuid:init_data.uuid[obs_index], voided:true});
-                                          }
-                                          else {
-                                            //console.log('Obsuuid-1009',init_data.uuid[obs_index])
-                                            groupMembers.push({uuid:init_data.uuid[obs_index], concept:convertKey_to_uuid(group_member.split('_')[1]),
-                                                        value:getFormattedValue(ArrayVal[arrKey])});
-                                          }
-                                        }
+                                        obs.push({uuid:init_data.uuid[obs_index], voided:true});
                                       }
                                       else {
-                                        groupMembers.push({concept:convertKey_to_uuid(group_member.split('_')[1]),
-                                                    value:getFormattedValue(ArrayVal[arrKey])});
+                                        //console.log('Obsuuid-1126',init_data.uuid[obs_index])
+                                        groupMembers.push({uuid:init_data.uuid[obs_index], concept:convertKey_to_uuid(group_member.split('_')[1]),
+                                                    value:getFormattedValue(groupValues[group_member])});
                                       }
                                     }
-                                    else {
-                                      init_data = getInitialFieldValue(arrKey, section);
+                                  }
+                                  else {
+                                    groupMembers.push({concept:convertKey_to_uuid(group_member.split('_')[1]),
+                                                value:getFormattedValue(groupValues[group_member])});
+                                  }
+                                }
+                                else {
 
-                                      // console.log('INIT DATA');
-                                      // console.log(init_data);
+                                  _.each(Object.keys(ArrayVal), function(arrKey){
+                                    if(!arrKey.startsWith('$$'))
+                                    {
 
+                                      // groupMembers.push({concept:arrKey.split('_')[1],
+                                      //             value:getFormattedValue(ArrayVal[arrKey])});
+                                      // console.log('ARRAY Section_id: ', obj);
+                                      // console.log('Testing grouped values');
+                                      // console.log('ARRAY KEY');
+                                      // console.log(arrKey);
+                                      // console.log('Value: ', getFormattedValue(ArrayVal[arrKey]));
+                                      var obs_index;
+                                      var obs_val;
 
-                                      if (typeof init_data === 'object')
+                                      if(!arrKey.startsWith('obs'))
                                       {
-                                        if (init_data.init_val !== undefined)
+                                        //multiCheckbox field
+                                        //console.log('Multi ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
+                                        init_data = getInitialFieldValue(group_member, section);
+
+                                        if(typeof init_data === 'object')
                                         {
-                                          obs_index = init_data.init_val.indexOf(getFormattedValue(ArrayVal[arrKey]));
-                                          obs_val = init_data.init_val[obs_index];
+                                          if (init_data.init_val !== undefined)
+                                          {
+                                            obs_index = init_data.init_val.indexOf(getFormattedValue(ArrayVal[arrKey]));
+                                            obs_val = init_data.init_val[obs_index];
+                                          }
+
                                         }
-                                      }
-
-                                      if (obs_val !== undefined)
-                                      {
-                                        traversed_objects.push(getFormattedValue(ArrayVal[arrKey]));
-                                        if(obs_val !== getFormattedValue(ArrayVal[arrKey]))
+                                        if (obs_val !== undefined)
                                         {
-                                            if(getFormattedValue(ArrayVal[arrKey]) ==='null' && getFormattedValue(ArrayVal[arrKey]) === null && getFormattedValue(ArrayVal[arrKey]) ==='')
+                                          traversed_objects.push(getFormattedValue(ArrayVal[arrKey]));
+                                          if(obs_val !== getFormattedValue(ArrayVal[arrKey]))
+                                          {
+                                            if(getFormattedValue(ArrayVal[arrKey])==='null' || getFormattedValue(ArrayVal[arrKey]) === null || getFormattedValue(ArrayVal[arrKey]) ==='')
                                             {
                                               obs.push({uuid:init_data.uuid[obs_index], voided:true});
                                             }
                                             else {
-                                              //console.log('Obsuuid-1046',init_data.uuid[obs_index])
-                                              groupMembers.push({uuid:init_data.uuid[obs_index], concept:convertKey_to_uuid(arrKey.split('_')[1]),
+                                              //console.log('Obsuuid-1009',init_data.uuid[obs_index])
+                                              groupMembers.push({uuid:init_data.uuid[obs_index], concept:convertKey_to_uuid(group_member.split('_')[1]),
                                                           value:getFormattedValue(ArrayVal[arrKey])});
                                             }
+                                          }
+                                        }
+                                        else {
+                                          groupMembers.push({concept:convertKey_to_uuid(group_member.split('_')[1]),
+                                                      value:getFormattedValue(ArrayVal[arrKey])});
                                         }
                                       }
                                       else {
-                                            //new val being added
-                                            // console.log('Getting Here', getFormattedValue(ArrayVal[arrKey]))
-                                            if(getFormattedValue(ArrayVal[arrKey]) !== '' && getFormattedValue(ArrayVal[arrKey]) !== null && getFormattedValue(ArrayVal[arrKey]) !=='null')
-                                              groupMembers.push({concept:convertKey_to_uuid(arrKey.split('_')[1]),
-                                                          value:getFormattedValue(ArrayVal[arrKey])});
+                                        init_data = getInitialFieldValue(arrKey, section);
+
+                                        // console.log('INIT DATA');
+                                        // console.log(init_data);
+
+
+                                        if (typeof init_data === 'object')
+                                        {
+                                          if (init_data.init_val !== undefined)
+                                          {
+                                            obs_index = init_data.init_val.indexOf(getFormattedValue(ArrayVal[arrKey]));
+                                            obs_val = init_data.init_val[obs_index];
+                                          }
+                                        }
+
+                                        if (obs_val !== undefined)
+                                        {
+                                          traversed_objects.push(getFormattedValue(ArrayVal[arrKey]));
+                                          if(obs_val !== getFormattedValue(ArrayVal[arrKey]))
+                                          {
+                                              if(getFormattedValue(ArrayVal[arrKey]) ==='null' && getFormattedValue(ArrayVal[arrKey]) === null && getFormattedValue(ArrayVal[arrKey]) ==='')
+                                              {
+                                                obs.push({uuid:init_data.uuid[obs_index], voided:true});
+                                              }
+                                              else {
+                                                //console.log('Obsuuid-1046',init_data.uuid[obs_index])
+                                                groupMembers.push({uuid:init_data.uuid[obs_index], concept:convertKey_to_uuid(arrKey.split('_')[1]),
+                                                            value:getFormattedValue(ArrayVal[arrKey])});
+                                              }
+                                          }
+                                        }
+                                        else {
+                                              //new val being added
+                                              // console.log('Getting Here', getFormattedValue(ArrayVal[arrKey]))
+                                              if(getFormattedValue(ArrayVal[arrKey]) !== '' && getFormattedValue(ArrayVal[arrKey]) !== null && getFormattedValue(ArrayVal[arrKey]) !=='null')
+                                                groupMembers.push({concept:convertKey_to_uuid(arrKey.split('_')[1]),
+                                                            value:getFormattedValue(ArrayVal[arrKey])});
+                                        }
                                       }
                                     }
-                                  }
 
-                                });
+                                  });
+                                }
+
                                 if(traversed_objects.length>0)
                                 {
                                   if(!_.isEmpty(init_data))
@@ -1079,30 +1176,32 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                   //console.log('Group key',group_member);
                                   //console.log('Main Key', key);
                                     //obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
-                                    if(group_member.startsWith('obs_'))
-                                      {obs.push({concept:convertKey_to_uuid(group_member.split('_')[1]), groupMembers:groupMembers});}
-                                    else {
-                                      obs.push({concept:convertKey_to_uuid(key.split('_')[1]), groupMembers:groupMembers});
-                                    }
+                                    obs.push({concept:convertKey_to_uuid(key.split('_')[1]), groupMembers:groupMembers});
+                                    // if(group_member.startsWith('obs_'))
+                                    //   {obs.push({concept:convertKey_to_uuid(group_member.split('_')[1]), groupMembers:groupMembers});}
+                                    // else {
+                                    //   obs.push({concept:convertKey_to_uuid(key.split('_')[1]), groupMembers:groupMembers});
+                                    // }
                                 }
                                 groupMembers = [];
                                 traversed_objects = [];
                               }
                               else {
-                                   //console.log('NONE OBJECT TYPE')
+                                   console.log('NONE OBJECT TYPE')
                                   // console.log('Testing Object Vals');
-                                  //console.log('ValKey: ', group_member,'  Value: ', groupValues[group_member])
+                                  console.log('ValKey: ', group_member,'  Value: ', groupValues[group_member])
                                 //  console.log(typeof group_member);
                                 // groupMembers.push({concept:group_member.split('_')[1],
                                 //             value:getFormattedValue(groupValues[group_member])});
 
                                 var obs_val;
                                 var obs_index;
-                                if(!group_member.startsWith('obs_'))
+                                if(!group_member.startsWith('obs'))
                                 {
                                   //multiCheckbox field
-                                  //console.log('Multi ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
+                                  // console.log('Multi ValKey--1192: '+ group_member,'  Value: '+ groupValues[group_member])
                                   init_data = getInitialFieldValue(key, section);
+                                  console.log(init_data)
 
                                   if(typeof init_data === 'object')
                                   {
@@ -1157,7 +1256,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                       }
                                       else {
                                         //console.log('Obsuuid-1159',init_data)
-                                        obs.push({uuid:init_data.uuid[0], concept:convertKey_to_uuid(group_member.split('_')[1]),
+                                        obs.push({uuid:init_data.uuid, concept:convertKey_to_uuid(group_member.split('_')[1]),
                                                     value:getFormattedValue(groupValues[group_member])});
                                       }
                                     }
@@ -1215,7 +1314,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                               }
                               else {
                                 //console.log('Obsuuid-1217',init_data)
-                                obs.push({uuid:init_data.uuid[0], concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
+                                obs.push({uuid:init_data.uuid, concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
                               }
                             }
                           }
@@ -1231,7 +1330,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                               if(Object.prototype.toString.call(val[key]) === '[object Date]')
                                 obs.push({concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
                               else
-                                console.log('Ingoring Empty Object',val[key]);
+                                console.log('Ignoring Empty Object',val[key]);
 
                             }
                             else {
@@ -1246,6 +1345,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       // value pair are strings or values
                       //console.log('Normal Key pairs');
                       init_data = getInitialFieldValue(key, section);
+                      console.log('Init data - 1344',init_data)
+                      console.log('Form val - 1345',getFormattedValue(val[key]))
                       var obs_val;
                       if (typeof init_data === 'object')
                       {
@@ -1262,7 +1363,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           }
                           else {
                             //console.log('Obsuuid - 1264',init_data)
-                            obs.push({uuid:init_data.uuid[0],concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
+                            obs.push({uuid:init_data.uuid,concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
                           }
                         }
                       }
@@ -1277,7 +1378,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           if(Object.prototype.toString.call(val[key]) === '[object Date]')
                             obs.push({concept:convertKey_to_uuid(key.split('_')[1]), value:getFormattedValue(val[key])});
                           else
-                            console.log('Ingoring Empty Object',val[key]);
+                            console.log('Ignoring Empty Object',val[key]);
                         }
                         else {
                           if(getFormattedValue(val[key])!==null && getFormattedValue(val[key])!=='null' && getFormattedValue(val[key])!=='')
@@ -1357,9 +1458,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           //console.log(groupValues[group_member])
                           if (groupValues[group_member] !== undefined)
                           {
-                            if (group_member.startsWith('obsDate_'))
+                            if (group_member.startsWith('obsDate'))
                             {
-                              obs.push({obsDatetime:getFormattedValue(groupValues[group_member]),concept:group_member.split('_')[1], value:getFormattedValue(groupValues['obs_'+group_member.split('_')[1]])});
+                              obs.push({obsDatetime:getFormattedValue(groupValues[group_member]),concept:group_member.split('_')[1], value:getFormattedValue(groupValues['obs' + group_member.slice(7).split('_')[0] + '_' +group_member.split('_')[1]])});
                             }
                           }
                         });
@@ -1454,6 +1555,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         */
         function createFormlyField(obs_field){
           //console.log(obs_field)
+          obs_id = obs_id + 1;
           var defaultValue_
           if(obs_field.default !== undefined)
           {
@@ -1463,9 +1565,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           //   defaultValue_ = '';
           // }
           var hideExpression_;
+          var id_;
+          if(obs_field.id !== undefined)
+          {
+            id_ = obs_field.id;
+          }
           if(obs_field.hide !== undefined)
           {
-            hideExpression_= getFieldValidator(obs_field.hide[0]);
+            hideExpression_= getFieldValidator(obs_field.hide[0], obs_id);
           }
           else {
             hideExpression_ = '';
@@ -1481,10 +1588,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
 
             obsField = {
-              key: 'obs_' + createFieldKey(obs_field.concept),
+              key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
               type: 'datepicker',
               data: {concept:obs_field.concept,
-                answer_value:''},
+                id:id_},
                 defaultValue: defaultValue_,
               templateOptions: {
                 type: 'text',
@@ -1504,11 +1611,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
 
             obsField = {
-              key: 'obs_' + createFieldKey(obs_field.concept),
+              key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
               type: 'input',
               defaultValue: defaultValue_,
               data: {concept:obs_field.concept,
-                answer_value:''},
+                id:id_},
               templateOptions: {
                 type: obs_field.type,
                 label: obs_field.label,
@@ -1542,11 +1649,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
 
             obsField = {
-              key: 'obs_' + createFieldKey(obs_field.concept),
+              key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
               type: obs_field.type,
               defaultValue: defaultValue_,
               data: {concept:obs_field.concept,
-                answer_value:''},
+                id:id_},
                 ngModelAttrs: {
                   customExpression: {
                     expression: 'custom-expression'
@@ -1578,11 +1685,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             var required=false;
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
             obsField = {
-              key: 'obs_' + createFieldKey(obs_field.concept),
+              key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
               defaultValue: defaultValue_,
               type: 'ui-select-extended',
               data: {concept:obs_field.concept,
-                answer_value:''},
+                id:id_},
               templateOptions: {
                 type: 'text',
                 label: obs_field.label,
@@ -1600,11 +1707,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             var required=false;
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
             obsField = {
-              key: 'obs_' + createFieldKey(obs_field.concept),
+              key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
               type: 'ui-select-extended',
               defaultValue: defaultValue_,
               data: {concept:obs_field.concept,
-                answer_value:''},
+                id:id_},
               templateOptions: {
                 type: 'text',
                 label: obs_field.label,
@@ -1621,16 +1728,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             var required=false;
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
             obsField = {
-              key: 'obs_' + createFieldKey(obs_field.concept),
+              key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
               defaultValue: defaultValue_,
               type: 'concept-search-select',
               data: {concept:obs_field.concept,
-                answer_value:''},
-                ngModelAttrs: {
-                customExpression: {
-                  expression: 'custom-expression'
-                }
-              },
+                id:id_},
               templateOptions: {
                 type: 'concept-search-select',
                 label: obs_field.label,
@@ -1655,14 +1757,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         function createGroupFormlyField(obs_field, gpSectionRnd)
         {
           var hideExpression_;
-          var hideExpression_;
-          if(obs_field.hide !== undefined)
-          {
-            hideExpression_= getFieldValidator(obs_field.hide[0]);
-          }
-          else {
-            hideExpression_ = '';
-          }
 
           var obsField = {};
           var groupingFields = [];
@@ -1676,9 +1770,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             groupingFields.push(selField);
             if(curField.showDate === 'true')
             {
+              if(obs_field.hide !== undefined)
+              {
+                hideExpression_= getFieldValidator(obs_field.hide[0], obs_id);
+              }
+              else {
+                hideExpression_ = '';
+              }
               var dateField = {
               //className: 'col-md-2',
-              key: 'obsDate_' + createFieldKey(curField.concept),
+              key: 'obsDate' + obs_id + '_' + createFieldKey(curField.concept),
               type: 'datepicker',
               data: {concept:curField.concept,
                 answer_value:''},
@@ -1725,7 +1826,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             {
               var dateField = {
               //className: 'col-md-2',
-              key: 'obsDate_' + createFieldKey(curField.concept),
+              key: 'obsDate' + obs_id + '_' + createFieldKey(curField.concept),
               type: 'datepicker',
               data: {concept:curField.concept,
                 answer_value:''},
