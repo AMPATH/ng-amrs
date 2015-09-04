@@ -65,7 +65,7 @@ jshint -W030
         vl_order_date: '_vl_order_date',
         cd4_order_date: '_cd4_order_date'
       };
-      /* jshint ignore:end */
+      
 
       hivSummaryRecordsEtl = [];
       hivSummaryRecordsEtl.push(hivSummaryEtl);
@@ -75,6 +75,7 @@ jshint -W030
       hivSummaryClone.uuid = hivSummaryClone.uuid + '1';
       
       hivSummaryRecordsEtl.push(hivSummaryClone);
+      /* jshint ignore:end */
 
     }));
 
@@ -152,8 +153,9 @@ jshint -W030
     
 
   });
-
+/* jshint ignore:start */
   function clone(obj) {
+    
     var copy;
 
     // Handle the 3 simple types, and null or undefined
@@ -185,6 +187,7 @@ jshint -W030
     }
 
     throw new Error("Unable to copy obj! Its type isn't supported.");
+   
   }
-
+ /* jshint ignore:end */
 })();
