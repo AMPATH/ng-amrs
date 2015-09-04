@@ -3,7 +3,7 @@
     <label for="search-textbox">Search by Patient Name</label>
     <div class="input-group">
       <input type="text" id="search-textbox" class="form-control" ng-model="searchString" ng-model-options="{ debounce: 500 }" placeholder="Enter the Patient Name to search"
-      autofocus>
+      focus="true">
       <div class="input-group-addon">
         <img ng-show="isBusy" src="images/ajax-loader.gif" />
         <span ng-hide="isBusy" class="glyphicon glyphicon-search"></span>
