@@ -101,7 +101,7 @@
 			chai.expect(getDefaultersSpy.callCount).to.equal(0);
 			
 			//case empty
-			isolateScope.locationUuid = undefined;
+			isolateScope.locationUuid = '';
 			
 			isolateScope.loadDefaulterList();
 			
@@ -110,7 +110,7 @@
 			
 		});
 		
-		it('should set isBusy to true when loadDefaulterList is invoked, and callbacks return', function () {
+		it('should set isBusy to false when loadDefaulterList is invoked, and callbacks return', function () {
 			var isolateScope = scope.$$childHead;
 			
 			//case when no error occurs during call
