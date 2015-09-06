@@ -119,15 +119,15 @@
         it('Should be able to add sections to a page', function(){
           expect(tabs).to.be.an('array');
           expect(tabs[0].form.fields).to.be.an('array');
-          expect(tabs[0].form.fields[0].type).to.equal('section');
+          expect(tabs[0].form.fields[1].type).to.equal('section');
         });
 
         it('Should be able to add fields to sections in a page', function(){
-          expect(tabs[0].form.fields[0].templateOptions.fields[0].fieldGroup).to.be.an('array');
+          expect(tabs[0].form.fields[1].templateOptions.fields[0].fieldGroup).to.be.an('array');
         });
 
         it('Should be able to add fields of type date to sections in a page', function(){
-          expect(tabs[0].form.fields[0].templateOptions.fields[0].fieldGroup[0].type).to.equal('datepicker');
+          expect(tabs[0].form.fields[1].templateOptions.fields[0].fieldGroup[0].type).to.equal('datepicker');
         });
 
         it('Should be able to add fields of type select/dropdown to sections in a page', function(){
@@ -145,7 +145,7 @@
         var formly_schema;
         var form = {encounterType:'xx1234'};
         var payLoad;
-        var patient;        
+        var patient;
         beforeEach(function(){
           schema = mockData.getMockSchema();
           model = mockData.getMockModel();
