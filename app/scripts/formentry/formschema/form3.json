@@ -13,6 +13,7 @@
               "label": "Visit Date",
               "type": "encounterDate",
               "required": "true",
+              "default":"today",
               "validators":[{"type": "date"}]
             },
             {
@@ -477,13 +478,13 @@
                 }
               ],
               "type": "select",
-              "validators": "null"
+              "validators": []
             },
             {
               "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
               "label": "Start Date of TB treatment",
               "type": "text",
-              "validators": "null"
+              "validators": []
             },
             {
               "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",
@@ -509,7 +510,7 @@
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "Other Specify:",
                   "type": "text",
-                  "validators": "null"
+                  "validators": []
                 }
               ]
             },
@@ -520,6 +521,7 @@
               "questions": [
                 {
                   "concept": "a899e444-1350-11df-a1f1-0026b9348838",
+                  "id":"tb_drug_13k",
                   "label": "13k",
                   "type": "select",
                   "validators": [],
@@ -582,7 +584,7 @@
                   "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                   "label": "tabs/day",
                   "type": "number",
-                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                  "hide":[{"field":"tb_drug_13k",
                     "value":["a899f51a-1350-11df-a1f1-0026b9348838",
                       "a897d1a4-1350-11df-a1f1-0026b9348838",
                       "a8a382ba-1350-11df-a1f1-0026b9348838"]}]
@@ -591,7 +593,7 @@
                   "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
                   "label": "mg",
                   "type": "number",
-                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                  "hide":[{"field":"tb_drug_13k",
                     "value":["a899e19c-1350-11df-a1f1-0026b9348838",
                       "a8ac5f2a-1350-11df-a1f1-0026b9348838",
                       "a8952e4a-1350-11df-a1f1-0026b9348838"]}]
@@ -600,7 +602,7 @@
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "mg/day",
                   "type": "number",
-                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                  "hide":[{"field":"tb_drug_13k",
                     "value":["a896cc00-1350-11df-a1f1-0026b9348838",
                       "a8971c64-1350-11df-a1f1-0026b9348838"]}]
                 },
@@ -608,7 +610,7 @@
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "tabs",
                   "type": "number",
-                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                  "hide":[{"field":"tb_drug_13k",
                     "value":["b8aa06ca-93c6-40ea-b144-c74f841926f4"]}]
                 }
               ]
@@ -627,7 +629,7 @@
                 }
               ],
               "type": "select",
-              "validators": "null"
+              "validators": []
             }
           ]
         },
@@ -642,7 +644,7 @@
                   "concept": "a8a060c6-1350-11df-a1f1-0026b9348838",
                   "label": "m. Other drugs:To Do Add REPEAT",
                   "type": "text",
-                  "validators": "null"
+                  "validators": []
                 }
               ]
             }
@@ -677,7 +679,7 @@
                 }
               ],
               "type": "select",
-              "validators": "null"
+              "validators": []
             },
             {
               "concept": "a894b1cc-1350-11df-a1f1-0026b9348838",
@@ -1483,7 +1485,7 @@
               "concept":"a89b75d4-1350-11df-a1f1-0026b9348838",
               "label":"22a.ARVs Plan",
               "answers":[
-                {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "Not on ARVS"},
+                  {"concept": "a899e0ac-1350-11df-a1f1-0026b9348838", "label": "Not on ARVS"},
                 {"concept": "a89b77aa-1350-11df-a1f1-0026b9348838", "label": " Start ARVs"},
                 {"concept": "a8a00158-1350-11df-a1f1-0026b9348838", "label": " Drug substitution"},
                 {"concept": "a89b7908-1350-11df-a1f1-0026b9348838", "label": " continue regimen"},
@@ -1797,13 +1799,14 @@
               ]
             },
             {
-              "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
+              "concept": "a89fe6f0-1350-11df-a1f1-0026b9348838",
               "type": "group_repeating",
               "label": "New TB drugs",
               "questions": [
                 {
                   "concept": "a89c218c-1350-11df-a1f1-0026b9348838",
                   "label": "22p. New drugs:",
+                  "id":"new_drugs_22p",
                   "type": "select",
                   "validators": [],
                   "answers": [
@@ -1865,7 +1868,7 @@
                   "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                   "label": "tabs/day",
                   "type": "number",
-                  "hide":[{"field":"89c218c-1350-11df-a1f1-0026b9348838",
+                  "hide":[{"field":"new_drugs_22p",
                     "value":["a899f51a-1350-11df-a1f1-0026b9348838",
                       "a897d1a4-1350-11df-a1f1-0026b9348838",
                       "a8a382ba-1350-11df-a1f1-0026b9348838"]}]
@@ -1874,7 +1877,7 @@
                   "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
                   "label": "mg",
                   "type": "number",
-                  "hide":[{"field":"89c218c-1350-11df-a1f1-0026b9348838",
+                  "hide":[{"field":"new_drugs_22p",
                     "value":["a899e19c-1350-11df-a1f1-0026b9348838",
                       "a8ac5f2a-1350-11df-a1f1-0026b9348838",
                       "a8952e4a-1350-11df-a1f1-0026b9348838"]}]
@@ -1883,7 +1886,7 @@
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "mg/day",
                   "type": "number",
-                  "hide":[{"field":"a89c218c-1350-11df-a1f1-0026b9348838",
+                  "hide":[{"field":"new_drugs_22p",
                     "value":["a896cc00-1350-11df-a1f1-0026b9348838",
                       "a8971c64-1350-11df-a1f1-0026b9348838"]}]
                 },
@@ -1891,7 +1894,7 @@
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "tabs",
                   "type": "number",
-                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                  "hide":[{"field":"new_drugs_22p",
                     "value":["b8aa06ca-93c6-40ea-b144-c74f841926f4"]}]
                 }
               ]

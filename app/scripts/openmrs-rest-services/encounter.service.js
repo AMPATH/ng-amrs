@@ -18,14 +18,14 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
     }
 
     return service;
-                    
+
     function getEncounterByUuid(params, successCallback, errorCallback) {
       var objParams = {};
       var _customDefaultRep = 'custom:(uuid,encounterDatetime,' +
                       'patient:(uuid,uuid),form:(uuid,name),' +
                       'location:ref,encounterType:ref,provider:ref,' +
-                      'obs:(uuid,concept:(uuid,uuid),value:ref,groupMembers))';
-                      
+                      'obs:(uuid,obsDatetime,concept:(uuid,uuid),value:ref,groupMembers))';
+
       if(angular.isDefined(params) && typeof params === 'string'){
         var encounterUuid = params;
         objParams = {'encounter': encounterUuid, 'v': _customDefaultRep}
@@ -81,12 +81,12 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
 
     function getPatientEncounters(params, successCallback, errorCallback) {
       var objParams = {};
-      
+
       // Don't include obs by default
       var _customDefaultRep = 'custom:(uuid,encounterDatetime,' +
                       'patient:(uuid,uuid),form:(uuid,name),' +
                       'location:ref,encounterType:ref,provider:ref)';
-                      
+
       if(angular.isDefined(params) && typeof params === 'string'){
         var patientUuid = params;
         objParams = {'patient': patientUuid, 'v':_customDefaultRep}

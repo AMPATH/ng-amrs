@@ -143,59 +143,43 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                   /*
                   submit only if we have some obs
                   */
+
                   if(payLoad.encounterType !== undefined){
                     OpenmrsRestService.getEncounterResService().saveEncounter(JSON.stringify(payLoad), function(data){
                       if (data)
                       {
-                        $scope.vm.success = 'Form Submitted successfully'
-                        var dlg=dialogs.notify('Success', $scope.vm.success);
                         if($scope.vm.submitLabel === 'Update')
                         {
-                          var obsToVoid = _.where(payLoad.obs,{voided:true});
-                          // console.log('Obs to Void: ', obsToVoid);
-                          if(obsToVoid !== undefined)
-                          {
-                            _.each(obsToVoid, function(obs){
-                              OpenmrsRestService.getObsResService().voidObs(obs, function(data){
-                                if (data)
-                                {
-                                  console.log('Voided Obs uuid: ', obs.uuid);
-                                }
-                              });
-                            })
-                          }
+                          console.log('Trying to void/update obs')
+                          var cPayload = angular.copy(payLoad)
+                          voidObs(cPayload);
+                          updateObs(cPayload);
                         }
+                        $scope.vm.success = '| Form Submitted successfully'
+                        var dlg=dialogs.notify('Success', $scope.vm.success);
                         // console.log('Previous State')
                         // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
                         $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
                       }
                     });
                   }
-                  else {
-                    //void obs only
-                    if($scope.vm.submitLabel === 'Update')
-                    {
-                      var obsToVoid = _.where(payLoad.obs,{voided:true});
-                      //console.log('Obs to Void: ', obsToVoid);
-                      if(obsToVoid !== undefined)
-                      {
-                        _.each(obsToVoid, function(obs){
-                          OpenmrsRestService.getObsResService().voidObs(obs, function(data){
-                            if (data)
-                            {
-                              console.log('Voided Obs uuid: ', obs.uuid);
-                            }
-                          });
-                        })
-                      }
-                    }
-                    $scope.vm.success = 'Form Submitted successfully'
-                    var dlg=dialogs.notify('Success', $scope.vm.success);
-                    $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
-                  }
+
+
+
+                  // else {
+                  //   //void obs only
+                  //   if($scope.vm.submitLabel === 'Update')
+                  //   {
+                  //     voidObs(payLoad);
+                  //     updateObs(payLoad);
+                  //   }
+                  //   $scope.vm.success = '| Form Submitted successfully'
+                  //   var dlg=dialogs.notify('Success', $scope.vm.success);
+                  //   $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
+                  // }
               }
               else {
-                  var dlg=dialogs.notify('Error', 'No data to be Submitted. Please fill the form first....');
+                  var dlg=dialogs.notify('Info', 'No Changes to be Submitted. Please fill the form first....');
               }
 
             }
@@ -230,6 +214,43 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         }
 
+function voidObs(pay_load)
+{
+  var obsToVoid = _.where(pay_load.obs,{voided:true});
+  //console.log('Obs to Void: ', obsToVoid);
+  if(obsToVoid !== undefined)
+  {
+    _.each(obsToVoid, function(obs){
+      OpenmrsRestService.getObsResService().voidObs(obs, function(data){
+        if (data)
+        {
+          console.log('Voided Obs uuid: ', obs.uuid);
+        }
+      });
+    })
+  }
+}
+
+function updateObs(pay_load)
+{
+  var obsToUpdate = _.filter(pay_load.obs,function(obs){
+    // console.log(obs);
+    if(obs.uuid !== undefined && obs.voided === undefined)
+    { return obs;}
+  });
+  //console.log('Obs to Void: ', obsToVoid);
+  if(obsToUpdate !== undefined)
+  {
+    _.each(obsToUpdate, function(obs){
+      OpenmrsRestService.getObsResService().saveUpdateObs(obs, function(data){
+        if (data)
+        {
+          console.log('Updated Obs uuid: ', data);
+        }
+      });
+    })
+  }
+}
 //$scope.vm.userFields = $scope.vm.formlyFields;
  //console.log(JSON.stringify($scope.vm.userFields));
 }

@@ -12,7 +12,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
       var testRestUrl = 'http://testingurl/openmrs/ws/rest/v1/';
       var httpBackend;
       var encounterResService;
-      var OpenmrsSettings;                      
+      var OpenmrsSettings;
       var dummyEncounter = {
         uuid:'encounter-test-uuid',
         patient: {
@@ -57,7 +57,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
         var customDefaultRep = 'custom:(uuid,encounterDatetime,' +
                         'patient:(uuid,uuid),form:(uuid,name),' +
                         'location:ref,encounterType:ref,provider:ref,' +
-                        'obs:(uuid,concept:(uuid,uuid),value:ref,groupMembers))';
+                        'obs:(uuid,obsDatetime,concept:(uuid,uuid),value:ref,groupMembers))';
         httpBackend.expectGET(testRestUrl + 'encounter/encounter-test-uuid?v=' +
           customDefaultRep).respond(dummyEncounter);
         encounterResService.getEncounterByUuid('encounter-test-uuid', function(data){
@@ -65,7 +65,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
         });
         httpBackend.flush();
       });
-      
+
       it('Should save new Encounter to the database', function() {
 
       });

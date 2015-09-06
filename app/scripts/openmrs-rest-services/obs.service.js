@@ -20,7 +20,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
     return service;
 
     function getResource() {
-      var v = 'custom:(uuid,concept:(uuid,uuid),groupMembers,value:ref)';
+      var v = 'custom:(uuid,obsDatetime,concept:(uuid,uuid),groupMembers,value:ref)';
       return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'obs/:uuid',
         { uuid: '@uuid', v:v},
         { query: { method: 'GET', isArray: false } });
@@ -28,14 +28,16 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
 
     function saveUpdateObs(obs, successCallback, errorCallback)
     {
+      console.log('Received Obs', obs)
       var obsResource = getResource()
-      var _obs =JSON.parse(obs);
+      var _obs =obs;
       if (obs.uuid !== undefined)
       {
         //update obs
-        var uuid = _obs.uuid
-        delete _obs['uuid'];
-        obsResource.save(JSON.stringify(_obs), {uuid: uuid }).$promise
+        var uuid = obs.uuid
+        delete obs['uuid'];
+        console.log('Stringified Obs', JSON.stringify(obs))
+        obsResource.save({uuid: uuid }, JSON.stringify(obs)).$promise
           .then(function (data) {
           successCallback(data);
         })
@@ -60,6 +62,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
         */
       }
       else {
+        obsResource = getResource()
         obsResource.save(obs).$promise
         .then(function (data) {
         successCallback(data);

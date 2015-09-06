@@ -10,7 +10,7 @@
 
   function OpenmrsSettings() {
     var serviceDefinition;
-    var restUrlBaseList = ['https://test1.ampath.or.ke:8443/amrs/ws/rest/v1/', 'https://etl1.ampath.or.ke:8443/amrs/ws/rest/v1/'];
+    var restUrlBaseList = ['https://test1.ampath.or.ke:8443/amrs/ws/rest/v1/', 'https://etl1.ampath.or.ke:8443/amrs/ws/rest/v1/', 'http://localhost:8080/openmrs/ws/rest/v1/'];
     var restUrlBase = restUrlBaseList[0];
 
     serviceDefinition = {
