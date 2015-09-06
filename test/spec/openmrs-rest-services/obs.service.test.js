@@ -9,7 +9,7 @@
       var httpBackend;
       var obsService;
       var settingsService;
-      var v = 'custom:(uuid,concept:(uuid,uuid),groupMembers,value:ref)';
+      var v = 'custom:(uuid,obsDatetime,concept:(uuid,uuid),groupMembers,value:ref)';
       var mockData;
 
       beforeEach(inject(function ($injector) {
