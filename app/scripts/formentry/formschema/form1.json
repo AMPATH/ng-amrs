@@ -264,7 +264,8 @@
               "concept": "a89ff758-1350-11df-a1f1-0026b9348838",
               "label": "12a. Females: LMP",
               "type": "date",
-              "validators": [{"type":"date"}]
+              "validators": [{"type":"date"}],
+              "hide":[{"field":"gender", "value":["F"]}]
             },
             {
               "concept": "6b4f1d00-0a27-41dd-a299-fb7dc730819c",
@@ -280,7 +281,8 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [],
+              "hide":[{"field":"gender", "value":["F"]}]
             },
             {
               "concept": "a89a94ca-1350-11df-a1f1-0026b9348838",
@@ -296,7 +298,8 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [],
+              "hide":[{"field":"gender", "value":["F"]}]
             },
             {
               "concept": "774961c6-232f-4332-8a9f-f5c55ebe86d0",
