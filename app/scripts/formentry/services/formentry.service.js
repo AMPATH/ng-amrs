@@ -98,29 +98,28 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           {
             var result;
             var results;
-            if(params.value.length>0)
-            {
-              var i = 0;
-              _.each(params.value, function(val){
-                //result = 'model.' + 'obs_' + createFieldKey(params.field) + ' !== ' +
-                // result = 'scope.model.' + 'obs_' + createFieldKey(params.field) + ' === ' +
-                // '"' + val + '"';
-                result = val;
-                if(i === 0) results = result;
-                else results = results + ' && ' + result;
-                i=i+1;
-              });
-            }
+            // if(params.value.length>0)
+            // {
+            //   var i = 0;
+            //   _.each(params.value, function(val){
+            //     //result = 'model.' + 'obs_' + createFieldKey(params.field) + ' !== ' +
+            //     // result = 'scope.model.' + 'obs_' + createFieldKey(params.field) + ' === ' +
+            //     // '"' + val + '"';
+            //     result = val;
+            //     if(i === 0) results = result;
+            //     else results = results + ' && ' + result;
+            //     i=i+1;
+            //   });
+            // }
 
-            //console.log('Test Field Hiding')
-            //console.log("'" + results.toString() + "'");
-            //return  "'" + results.toString() + "'";
 
             return (function($viewValue, $modelValue, scope) {
               var i = 0;
               // console.log('current scope', scope)
+              var fkey;
+              if(params.field === 'gender' || param.field === 'sex') fkey = 'sex';
+              else fkey = getFieldKeyById(params.field, scope.fields)
               _.each(params.value, function(val){
-                var fkey = getFieldKeyById(params.field, scope.fields)
                 result = scope.model[fkey] !== val
                 if(i === 0) results = result;
                 else results = results  && result;
@@ -1910,9 +1909,27 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           var field ={};
           var section_id = 0;
           var gpSectionRnd = 0 ; //this a random number for grp sections without an obs group
+          var i=0; //page id
 
           _.each(pages, function(page){
             pageFields = [];
+            if (i === 0)
+            {
+              // adding hidden gender field
+              field = {
+                key: 'sex',
+                type: 'select',
+                defaultValue: '',
+                data: {},
+                templateOptions: {
+                  label: 'sex',
+                  required:false,
+                  options:[{name:'Female', value:'F'},{name:'Male', value:'M'}]
+                },
+                hideExpression:'model.hide !== ""'
+              }
+              pageFields.push(field);
+            }
             _.each(page.sections, function(section){
               sectionFields = [];
               //section fields
@@ -2031,7 +2048,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               }
               pageFields.push(sec_field);
             });
-
+            // adding hidden gender field
             //create page fields
             tab =
             {
@@ -2043,6 +2060,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             }
             tabs.push(tab);
             // callback(tabs);
+            i = i+1;
           });
 
           //return tabs;
