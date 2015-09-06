@@ -195,6 +195,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         function getObsValue(key, obs)
         {
           var val = _.find(obs,function(obs_){
+            // console.log('Check Obs', obs_)
             if(obs_.concept.uuid === convertKey_to_uuid(key.split('_')[1])) return obs_;
           });
 
@@ -225,8 +226,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           Each page/tab has various sections
           each section has a set of various questions/data elements
           The model is simply aware of sections only
-
           */
+
           //geting obs data without obs groups
           var obs_data = _.filter(enc_data.obs,function(obs){
             if(obs.groupMembers === null) return obs
@@ -348,9 +349,12 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         {
                           if(_.contains(_group_field.key, 'obsDate'))
                           {
+
                             var val = getObsValue(_group_field.key, obs_data);
                             if(val !== undefined)
                             {
+                              console.log('Obs Date Key', _group_field.key);
+                              console.log('Obs Date value', val);
                               group_val[_group_field.key] = val.obsDatetime;
                               _group_field.data['init_val'] = val.obsDatetime;
                               _group_field.data['uuid'] = val.uuid; //obs uuid
@@ -819,17 +823,29 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             if(_field.type !== 'section' && _field.type !== 'group' && _field.type !== 'repeatSection' && _field.type !== undefined)
             {
               // console.log('testing selected key_first opt ', _field)
-              if (_field_key === _field.key) data =_field;
+              if (_field_key === _field.key)
+              {
+                data =_field;
+                console.log('matched field',_field);
+              }
 
             }
             else if (_field.type === 'repeatSection'){
               _.each(_field.templateOptions.fields[0].fieldGroup, function(_field_){
-                if(_field_.key === _field_key) data =_field_;
+                if(_field_.key === _field_key)
+                {
+                  data =_field_;
+                  console.log('matched field',_field_);
+                }
               });
             }
             else {
-              _.each(_field.fieldGroup, function(_field_){
-                if( _field_.key === _field_key) data = _field_
+              _.each(_field.fieldGroup, function(__field_){
+                if( __field_.key === _field_key)
+                {
+                  data = __field_;
+                  console.log('matched field',__field_);
+                }
               });
             }
           });
@@ -1010,26 +1026,28 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         {
                           groupMembers = [];
                           var traversed_objects = [];
-                          console.log('group val', groupValues);
+                          // console.log('group val', groupValues);
                           _.each(Object.keys(groupValues), function(group_member){
 
                             if (groupValues[group_member] !== undefined)
                             {
-                              console.log('group val-1008', groupValues);
+                              // console.log('group val-1008', groupValues);
                               if(typeof groupValues[group_member] === 'object')// array object
                               {
-                                 console.log('OBJECT TYPE')
-                                 console.log('Testing Object Vals');
-                                 console.log('ValKey: '+ group_member,'  Value: ', groupValues[group_member])
+                                //  console.log('OBJECT TYPE')
+                                //  console.log('Testing Object Vals');
+                                //  console.log('ValKey: '+ group_member,'  Value: ', groupValues[group_member])
 
                                 var ArrayVal = groupValues[group_member]
-                                console.log('length',Object.keys(ArrayVal).length)
+                                // console.log('length',Object.keys(ArrayVal).length)
                                 groupMembers = [];
                                 if(ArrayVal !== undefined && Object.keys(ArrayVal).length === 0)
                                 {
                                   //handling some dates
 
                                   init_data = getInitialFieldValue(group_member, section);
+                                  // console.log('field key -1033', group_member, 'section:',obj)
+                                  // console.log('init_data -1034', init_data)
                                   if(typeof init_data === 'object')
                                   {
                                     if (init_data.init_val !== undefined)
@@ -1056,8 +1074,25 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                     }
                                   }
                                   else {
-                                    groupMembers.push({concept:convertKey_to_uuid(group_member.split('_')[1]),
-                                                value:getFormattedValue(groupValues[group_member])});
+
+                                    if(angular.isArray(groupValues[group_member]) && groupValues[group_member].length === 0)
+                                    {
+                                      //void any existing values
+                                      if (init_data.init_val.length>0)
+                                      {
+                                        _.each(init_data.uuid, function(item_to_void){
+
+                                          obs.push({uuid:item_to_void, voided:true});
+                                        })
+                                      }
+                                      console.log('Ignoring Empty Array')
+                                    }
+                                    else {
+                                      if(groupValues[group_member] !== undefined && groupValues[group_member] !== null && groupValues[group_member] !=='')
+                                        groupMembers.push({concept:convertKey_to_uuid(group_member.split('_')[1]),
+                                                  value:getFormattedValue(groupValues[group_member])});
+                                    }
+
                                   }
                                 }
                                 else {
@@ -1081,7 +1116,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                         //multiCheckbox field
                                         //console.log('Multi ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
                                         init_data = getInitialFieldValue(group_member, section);
-
+                                        // console.log('field key -1086', group_member, 'section:',obj)
+                                        // console.log('init_data -1087', init_data)
                                         if(typeof init_data === 'object')
                                         {
                                           if (init_data.init_val !== undefined)
@@ -1114,10 +1150,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                       }
                                       else {
                                         init_data = getInitialFieldValue(arrKey, section);
-
-                                        // console.log('INIT DATA');
-                                        // console.log(init_data);
-
+                                        // console.log('field key -1120', arrKey, 'section:',obj)
+                                        // console.log('init_data -1121', init_data)
 
                                         if (typeof init_data === 'object')
                                         {
@@ -1187,9 +1221,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                 traversed_objects = [];
                               }
                               else {
-                                   console.log('NONE OBJECT TYPE')
+                                  //  console.log('NONE OBJECT TYPE')
                                   // console.log('Testing Object Vals');
-                                  console.log('ValKey: ', group_member,'  Value: ', groupValues[group_member])
+                                  // console.log('ValKey: ', group_member,'  Value: ', groupValues[group_member])
                                 //  console.log(typeof group_member);
                                 // groupMembers.push({concept:group_member.split('_')[1],
                                 //             value:getFormattedValue(groupValues[group_member])});
@@ -1201,7 +1235,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                   //multiCheckbox field
                                   // console.log('Multi ValKey--1192: '+ group_member,'  Value: '+ groupValues[group_member])
                                   init_data = getInitialFieldValue(key, section);
-                                  console.log(init_data)
+                                  // console.log('field key -1205', key, 'section:',obj)
+                                  // console.log('init_data -1206', init_data)
 
                                   if(typeof init_data === 'object')
                                   {
@@ -1241,7 +1276,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                   // console.log(group_member)
                                   // console.log('INIT DATA');
                                   // console.log(init_data);
-
+                                  // console.log('field key -1246', group_member, 'section:',obj)
+                                  // console.log('init_data -1247', init_data)
                                   if (typeof init_data === 'object')
                                   {
                                     obs_val = init_data.init_val;
@@ -1298,6 +1334,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           // console.log('type of: ', typeof(val[key]), 'Keys: ', Object.keys(val[key]));
                           // console.log('Payload Value ', getFormattedValue(val[key]))
                           init_data = getInitialFieldValue(key, section);
+                          // console.log('field key -1304', key, 'section:',obj)
+                          // console.log('init_data -1305', init_data)
+                          // console.log('init_data type -1305', typeof init_data)
                           var obs_val;
                           if (typeof init_data === 'object')
                           {
@@ -1305,6 +1344,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           }
                           if (obs_val !== undefined)
                           {
+                            // console.log('init_data gets here', init_data.init_val)
                             if(obs_val !== getFormattedValue(val[key]))
                             {
                               //check if the value is dropped so that we can void it
@@ -1345,8 +1385,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       // value pair are strings or values
                       //console.log('Normal Key pairs');
                       init_data = getInitialFieldValue(key, section);
-                      console.log('Init data - 1344',init_data)
-                      console.log('Form val - 1345',getFormattedValue(val[key]))
+                      // console.log('field key -1353', key, 'section:',obj)
+                      // console.log('init_data -1354', init_data)
                       var obs_val;
                       if (typeof init_data === 'object')
                       {
@@ -1405,7 +1445,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             }
           }
           return formPayLoad;
-
         }
 
         /*
@@ -1861,6 +1900,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         }
         function createForm(schema, callback)
         {
+          obs_id = 0;
           var defaultValue_;
           var pages = schema.pages;
           var tab;
@@ -2016,8 +2056,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             if(typeof value === 'number') return value;
 
             if(Object.prototype.toString.call(value) === '[object Date]'){
-
-               value = moment(value).format('YYYY-MM-DDTHH:mm:ssZ');
+              // if(_.contains(value,':'))
+              console.log('convert to date', value)
+                value = moment(value).format('YYYY-MM-DDTHH:mm:ssZ');
             }
 
             //moment().utc();
