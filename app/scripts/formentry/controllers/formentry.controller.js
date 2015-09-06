@@ -56,21 +56,28 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
           // get form schema data
          //  var selectedForm = $stateParams.formuuid;
          //  console.log('testing selected Form')
+         var start = new Date().getTime();
          FormentryService.getFormSchema(selectedForm.name, function(schema){
           formSchema = schema;
+
           FormentryService.createForm(formSchema, function(formlySchema){
             //$scope.vm.formlyFields = formlySchema;
-            $scope.vm.tabs = formlySchema;
+            if(formlySchema)  {
+              $scope.vm.tabs = formlySchema;
 
-            var i = 0;
-            angular.forEach($scope.vm.tabs, function(tab){
-              // console.log('Tab Structure');
-              // console.log(tab);
-              if (i===0) {tab.active = true;}
-              i++;
-              tab.form['model']=$scope.vm.model;
-            });
-            $scope.vm.isBusy = false;
+              var i = 0;
+              angular.forEach($scope.vm.tabs, function(tab){
+                // console.log('Tab Structure');
+                // console.log(tab);
+                if (i===0) {tab.active = true;}
+                i++;
+                tab.form['model']=$scope.vm.model;
+              });
+              $scope.vm.isBusy = false;
+              var end = new Date().getTime();
+              var time = end - start;
+              console.log('Form Creation Execution time: ' + time + ' ms');
+            }
             ///FormentryService.getEncounter('encData', formlySchema)
             //var params = {uuid:'cf3f041c-9c37-44c5-983a-d02507ffe279'};
             if(params.uuid !== undefined && params.uuid !== '')
@@ -150,7 +157,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                       {
                         if($scope.vm.submitLabel === 'Update')
                         {
-                          console.log('Trying to void/update obs')
+                          // console.log('Trying to void/update obs')
                           var cPayload = angular.copy(payLoad)
                           voidObs(cPayload);
                           updateObs(cPayload);
@@ -163,9 +170,6 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                       }
                     });
                   }
-
-
-
                   // else {
                   //   //void obs only
                   //   if($scope.vm.submitLabel === 'Update')

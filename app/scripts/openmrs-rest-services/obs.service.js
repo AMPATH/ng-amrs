@@ -28,7 +28,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
 
     function saveUpdateObs(obs, successCallback, errorCallback)
     {
-      console.log('Received Obs', obs)
+      // console.log('Received Obs', obs)
       var obsResource = getResource()
       var _obs =obs;
       if (obs.uuid !== undefined)
@@ -36,7 +36,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
         //update obs
         var uuid = obs.uuid
         delete obs['uuid'];
-        console.log('Stringified Obs', JSON.stringify(obs))
+        // console.log('Stringified Obs', JSON.stringify(obs))
         obsResource.save({uuid: uuid }, JSON.stringify(obs)).$promise
           .then(function (data) {
           successCallback(data);
