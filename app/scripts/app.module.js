@@ -73,10 +73,16 @@
           data: { requireLogin: true }
         })
         .state('tabs', {
-        url: '/form/tabs',
-        templateUrl: 'views/formentry/tab.html',
-        controller: 'tabCtrl',
-        data: { requireLogin: true}
+          url: '/form/tabs',
+          templateUrl: 'views/formentry/tab.html',
+          controller: 'tabCtrl',
+          data: { requireLogin: true }
+        })
+        .state('url-selector', {
+          url: '/url-selector',
+          templateUrl: 'views/main/url-selector.html',
+          controller: 'UrlSelectorCtrl',
+          data: { requireLogin: false }
         })
         .state('login', {
           url: '/login',
@@ -85,10 +91,20 @@
           data: { requireLogin: false }
         });
 
-    }).run(function ($rootScope, $state, $location, OpenmrsRestService) {
+
+    }).run(function ($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings) {
 
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-
+        //check whether selection of url base is required first
+        var hasPersistedCurrentUrl = OpenmrsSettings.hasCoockiePersistedCurrentUrlBase();
+        
+        if (!hasPersistedCurrentUrl && toState.name !== 'url-selector') {
+          $state.go('url-selector', { onSuccessRout: toState, onSuccessParams: toParams });
+          event.preventDefault();
+          return;
+        }
+        
+        //check whether loginis required
         var shouldLogin = toState.data !== undefined && toState.data.requireLogin && !OpenmrsRestService.getAuthService().authenticated;
         //console.log(shouldLogin);
         if (shouldLogin) {
