@@ -24,7 +24,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr style="cursor: pointer;" ng-click="loadPatient(patient.uuid())" ng-repeat="patient in patients = patients | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+        <tr style="cursor: pointer;" ng-click="loadPatient(patient.uuid())" ng-repeat="patient in patients ">
           <td>{{patient.identifierFormatted()}}</td>
           <td>{{patient.fullNames()}}</td>
           <td>{{patient.gender()}}</td>
@@ -36,8 +36,8 @@
       </tbody>
     </table>
   </div>
-  <pagination boundary-links="true" ng-model="currentPage" max-size="4" total-items="totalItems" items-per-page="entryLimit"
-  ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" rotate="false"
+  <pagination boundary-links="true" ng-model="currentPage" max-size="entryLimit" num-pages="numPages" total-items="totalItems"
+  class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" rotate="false"
   style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;">
   </pagination>
 </div>

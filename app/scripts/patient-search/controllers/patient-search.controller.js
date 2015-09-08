@@ -18,27 +18,29 @@ jshint -W003, -W098, -W117, -W109
 
     // pagination controls
   	$scope.currentPage = 1;
-  	//$scope.totalItems = $scope.items.length;
   	$scope.entryLimit = 10; // items per page
-  	$scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
 
    $scope.$watch('searchString', function (searchString) {
      $scope.patients = [];
      if (searchString && searchString.length > 2) {
        $scope.isBusy = true;
        OpenmrsRestService.getPatientService().getPatientQuery({q:searchString},
-         function(data) {
-           $scope.isBusy = false;
-           //if (data) data = data.results;
-           //console.log(data);
-           $scope.patients = data;
-          //  for (var i in data) {
-          //    $scope.patients.push(PatientService.Patient(data[i]));
-          //  }
-          $scope.totalItems = $scope.patients.length;
-          $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
-        	$scope.currentPage = 1;
-         }
+           function(data) {
+             $scope.isBusy = false;
+
+             //Initializing required var for the pagination
+             $scope.allPatients = data;
+             $scope.totalItems = $scope.allPatients.length;
+             $scope.entryLimit = 10;
+
+             //Adding $watch to currentPage amd EntryLimit
+             $scope.$watch('currentPage + entryLimit', function() {
+               var begin = (($scope.currentPage - 1) * $scope.entryLimit)
+                 , end = begin + $scope.entryLimit;
+               $scope.patients= $scope.allPatients.slice(begin, end);
+               console.log("The new patient after filter " +$scope.patients);
+             });
+           }
        );
      }
    });
