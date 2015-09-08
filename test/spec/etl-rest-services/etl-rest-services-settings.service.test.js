@@ -4,7 +4,7 @@
 (function() {
   'use strict';
 
-  describe('OpenMRS Settings Service Unit Tests', function () {
+  describe('Etl REST Service Settings Unit Tests', function () {
     beforeEach(function () {
       module('app.etlRestServices');
     });
@@ -19,10 +19,10 @@
     }));
     
     afterEach(function(){
-      cookieStoreService.remove('restUrlBase');
+      cookieStoreService.remove('restEtlUrlBase');
     });
     
-    it('should have OpenmrsSettings service defined', function () {
+    it('should have EtlRESTSettings service defined', function () {
       expect(settingsService).to.exist;
       expect(cookieStoreService).to.exist;
     });
@@ -36,14 +36,14 @@
     it('should change the current  in-cookie RestUrlBase when setCurrentRestUrlBase is invoked with a url', function () {
       var urlString = 'test1.url.com';
       settingsService.setCurrentRestUrlBase(urlString);
-      var storedUrl = cookieStoreService.get('restUrlBase');
+      var storedUrl = cookieStoreService.get('restEtlUrlBase');
       expect(storedUrl).to.equal(urlString);
       
      //second trial
       expect(storedUrl).to.equal(urlString);
       urlString = 'test2.url.com';
       settingsService.setCurrentRestUrlBase(urlString);
-      storedUrl = cookieStoreService.get('restUrlBase');
+      storedUrl = cookieStoreService.get('restEtlUrlBase');
       expect(storedUrl).to.equal(urlString);
       
     });
@@ -70,7 +70,7 @@
       expect(settingsService.hasCoockiePersistedCurrentUrlBase()).to.equal(true);
       
       //case has NO value
-      cookieStoreService.remove('restUrlBase');
+      cookieStoreService.remove('restEtlUrlBase');
       expect(settingsService.hasCoockiePersistedCurrentUrlBase()).to.equal(false);
       
     });

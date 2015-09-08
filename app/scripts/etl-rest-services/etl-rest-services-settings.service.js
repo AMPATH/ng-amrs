@@ -27,14 +27,14 @@
 
     function initialize() {
 
-      var lastSetUrl = $cookieStore.get('restUrlBase');
+      var lastSetUrl = $cookieStore.get('restEtlUrlBase');
 
       if (lastSetUrl)
         restUrlBase = lastSetUrl;
     }
 
     function hasCoockiePersistedCurrentUrlBase() {
-      var lastSetUrl = $cookieStore.get('restUrlBase');
+      var lastSetUrl = $cookieStore.get('restEtlUrlBase');
 
       if (lastSetUrl)
         return true;
@@ -48,7 +48,7 @@
 
     function setCurrentRestUrlBase(url) {
       restUrlBase = url;
-      $cookieStore.put('restUrlBase', url);
+      $cookieStore.put('restEtlUrlBase', url);
     }
 
     function getUrlBaseList() {
