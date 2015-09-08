@@ -71,7 +71,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 // console.log(tab);
                 if (i===0) {tab.active = true;}
                 i++;
-                tab.form['model']=$scope.vm.model;
+                tab.form['model'] = $scope.vm.model;
               });
               //update sex;
               $scope.vm.model['sex'] = $scope.vm.patient.gender();

@@ -197,6 +197,30 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             // console.log('Check Obs', obs_)
             if(obs_.concept.uuid === convertKey_to_uuid(key.split('_')[1])) return obs_;
           });
+          return val;
+        }
+
+        function getObsValueSelect(key, obs)
+        {
+          var field_key = key.key
+
+          var opts = [];
+          _.each(key.templateOptions.options, function(select_item){
+            //handle boolen TYPES - dirty hack
+            // console.log('Check Boolean ', select_item)
+            // if (select_item.value === 'true') opts.push('a899b35c-1350-11df-a1f1-0026b9348838');
+            // else if (select_item.value === 'false') opts.push('a899b42e-1350-11df-a1f1-0026b9348838');
+            // else
+            opts.push(select_item.value);
+          });
+          var val = _.find(obs,function(obs_){
+            // console.log('Check Obs', obs_)
+            if(obs_.concept.uuid === convertKey_to_uuid(field_key.split('_')[1]))
+            {
+              console.log('Check Obs', obs_)
+              if(opts.indexOf(obs_.value.uuid) !== -1) return obs_;
+            }
+          });
 
           return val;
         }
@@ -297,7 +321,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   else if(_field.type === 'select' || _field.type === 'radio' || _field.type === 'ui-select-extended'|| _field.type==='concept-search-select')
                   {
                     field_key = _field.key;
-                    var val = getObsValue(field_key, obs_data);
+                    // var val = getObsValue(field_key, obs_data);
+                    var val = getObsValueSelect( _field, obs_data);
                     console.log('initial value',val)
                     if (val !== undefined)
                     {
@@ -306,6 +331,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         sec_data[field_key] = val.value.uuid;
                         _field.data['init_val'] = val.value.uuid;
                         _field.data['uuid'] = val.uuid; //obs uuid
+
                         console.log('updated field',_field)
                       }
                     }
@@ -541,19 +567,20 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     var field_keys = {};
                     var multiArr = [];
                     console.log('REPEATING SEC DATA TEST');
-                    console.log(group_data)
+                    console.log('Group Vaaaal ',group_data)
 
                     if (group_data !== undefined)
                     {
                       _.each(_field.templateOptions.fields[0].fieldGroup, function (_repeating_field) {
                         // body...
-
+                        // console.log('getting Here ',_repeating_field)
                         field_keys[convertKey_to_uuid(_repeating_field.key.split('_')[1])] = {key:_repeating_field.key, type:_repeating_field.type};
                         // update fields with existing data
                         var arr = [];
                         var arr_uuid = [];
                         _.each(group_data, function(_data){
                           _.each(_data.groupMembers, function(obs){
+                            console.log('getting Here ', obs)
                             if(obs.concept.uuid === convertKey_to_uuid(_repeating_field.key.split('_')[1])){
                               console.log('Concept uuid',convertKey_to_uuid(_repeating_field.key.split('_')[1]));
                               console.log(obs)
@@ -981,6 +1008,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                                   if(groupValues[group_member]=== null || groupValues['obs' + sl_obs_id + '_' + sl_obs_key] === null || groupValues[group_member]=== '' || groupValues['obs' + sl_obs_id + '_' + sl_obs_key] === '' || groupValues[group_member] === 'null' || groupValues['obs' + sl_obs_id + '_' + sl_obs_key] === 'null')
                                   {
+                                    console.log('Executing Obs to void - 1011')
                                     obs.push({uuid:init_data.uuid, voided:true});
                                   }
                                   else {
@@ -1016,6 +1044,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                             _.each(blanksToVoid,function(_toVoid){
                               _.each(_toVoid.uuid, function (uuid) {
                                 // body...
+                                consol.log('Executing Obs to void -- 1046')
                                 obs.push({uuid:uuid, voided:true});
                               });
                             });
@@ -1063,6 +1092,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                     {
                                       if(getFormattedValue(groupValues[group_member])==='null' || getFormattedValue(groupValues[group_member]) === null || getFormattedValue(groupValues[group_member]) ==='')
                                       {
+                                        consol.log('Executing Obs to void -- 1093')
                                         obs.push({uuid:init_data.uuid[obs_index], voided:true});
                                       }
                                       else {
@@ -1080,7 +1110,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                       if (init_data.init_val.length>0)
                                       {
                                         _.each(init_data.uuid, function(item_to_void){
-
+                                          consol.log('Executing Obs to void -- 1112')
                                           obs.push({uuid:item_to_void, voided:true});
                                         })
                                       }
@@ -1133,6 +1163,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                           {
                                             if(getFormattedValue(ArrayVal[arrKey])==='null' || getFormattedValue(ArrayVal[arrKey]) === null || getFormattedValue(ArrayVal[arrKey]) ==='')
                                             {
+                                              consol.log('Executing Obs to void -- 1165')
                                               obs.push({uuid:init_data.uuid[obs_index], voided:true});
                                             }
                                             else {
@@ -1168,6 +1199,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                           {
                                               if(getFormattedValue(ArrayVal[arrKey]) ==='null' && getFormattedValue(ArrayVal[arrKey]) === null && getFormattedValue(ArrayVal[arrKey]) ==='')
                                               {
+                                                consol.log('Executing Obs to void -- 1201')
                                                 obs.push({uuid:init_data.uuid[obs_index], voided:true});
                                               }
                                               else {
@@ -1198,6 +1230,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                       if(traversed_objects.indexOf(item) === -1)
                                       {
                                         var obs_index = init_data.init_val.indexOf(item);
+                                        console.log('Executing Obs to void -- 1232')
                                         obs.push({voided:true, uuid:init_data.uuid[obs_index]});
                                       }
                                     });
@@ -1253,6 +1286,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                     {
                                       if(getFormattedValue(groupValues[group_member])==='null' || getFormattedValue(groupValues[group_member]) === null || getFormattedValue(groupValues[group_member]) ==='')
                                       {
+                                        consol.log('Executing Obs to void -- 1288')
                                         obs.push({uuid:init_data.uuid[obs_index], voided:true});
                                       }
                                       else {
@@ -1287,6 +1321,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                     {
                                       if(getFormattedValue(groupValues[group_member])==='null' || getFormattedValue(groupValues[group_member]) === null || getFormattedValue(groupValues[group_member]) ==='')
                                       {
+                                        consol.log('Executing Obs to void -- 1323')
                                         obs.push({uuid:init_data.uuid, voided:true});
                                       }
                                       else {
@@ -1317,6 +1352,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                 if(traversed_objects.indexOf(item) === -1)
                                 {
                                   var obs_index = init_data.init_val.indexOf(item);
+                                  consol.log('Executing Obs to void -- 1354')
                                   obs.push({voided:true, uuid:init_data.uuid[obs_index]});
                                 }
                               });
@@ -1349,6 +1385,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                               //check if the value is dropped so that we can void it
                               if(val[key] ==='null' || val[key]  === null || val[key]  ==='')
                               {
+                                consol.log('Executing Obs to void -- 1387')
                                 obs.push({uuid:init_data.uuid, voided:true});
                               }
                               else {
@@ -1398,6 +1435,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           //check if the value is dropped so that we can void it
                           if(val[key] ==='null' || val[key]  === null || val[key]  ==='')
                           {
+                            consol.log('Executing Obs to void -- 1437')
                             obs.push({uuid:init_data.uuid, voided:true});
                           }
                           else {
