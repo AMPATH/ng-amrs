@@ -23,6 +23,41 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         $scope.vm.formlyFields;
         $scope.vm.tabs = [];
         $scope.vm.encounter;
+
+        $scope.vm.currentTab = 0;
+
+        $scope.vm.tabSelected = function($index) {
+          $scope.vm.currentTab = $index;
+        }
+
+      var isLastTab = function() {
+        return $scope.vm.currentTab === $scope.vm.tabs.length-1;
+      }
+
+      var isFirstTab = function() {
+        return $scope.vm.currentTab === 0;
+      }
+
+      $scope.vm.isLastTab = isLastTab;
+      $scope.vm.isFirstTab = isFirstTab;
+
+      $scope.vm.activateTab = function(button) {
+        if(button === 'next')
+        {
+          if(!isLastTab()){
+          $scope.vm.currentTab++;
+          $scope.vm.tabs[$scope.vm.currentTab].active = true;
+          }
+        }
+        else if(button === 'prev')
+        {
+          if(!isFirstTab()){
+          $scope.vm.currentTab--;
+          $scope.vm.tabs[$scope.vm.currentTab].active = true;
+          }
+        }
+      };
+
         //console.log('ACTIVE ENCOUNTER', $scope.vm.encounter);
 
         /*
@@ -69,7 +104,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               angular.forEach($scope.vm.tabs, function(tab){
                 // console.log('Tab Structure');
                 // console.log(tab);
-                if (i===0) {tab.active = true;}
+                if (i===0) {
+                  tab.active = true;
+                }
                 i++;
                 tab.form['model'] = $scope.vm.model;
               });
