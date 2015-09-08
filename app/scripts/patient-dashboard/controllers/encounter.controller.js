@@ -56,7 +56,7 @@
       vm.encounterList = EncounterModel.toArrayOfModels(data);
       vm.hasEncounters = vm.encounterList.length > 0 ? true : false;
       vm.totalItems =  vm.encounterList.length;
-      vm.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
+      vm.noOfPages = Math.ceil(vm.totalItems / vm.entryLimit);
 
     }
 
