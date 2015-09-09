@@ -1,8 +1,9 @@
-(function() {
+(function () {
   'use strict';
 
   angular
-        .module('app.etlRestServices', [
-            'ngResource'
-        ]);
+    .module('app.etlRestServices', [
+      'ngResource',
+      'ngCookies'
+    ]);
 })();

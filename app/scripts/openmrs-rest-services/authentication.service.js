@@ -12,6 +12,7 @@
     var service = {
       isAuthenticated: isAuthenticated,
       setCredentials: setCredentials,
+      logOut: logOut,
       clearCredentials: clearCredentials,
       authenticated: false
     };
@@ -52,6 +53,13 @@
         callback(error);
       });
 
+    }
+    
+    function logOut(){
+      clearCredentials();
+      service.authenticated = false;
+      $rootScope.$broadcast('onUserLoggedOut');
+      $state.go('login');
     }
 
     function setCredentials(CurrentUser) {

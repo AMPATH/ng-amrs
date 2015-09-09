@@ -5,6 +5,7 @@
         .module('app.openmrsRestServices', [
             'base64',
             'ngResource',
+            'ngCookies',
             'models',
             'restangular'
         ])
