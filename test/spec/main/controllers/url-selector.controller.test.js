@@ -29,7 +29,7 @@ jshint -W098, -W117, -W030
 
 			OpenmrsSettings = $injector.get('OpenmrsSettings');
 			EtlRestServicesSettings = $injector.get('EtlRestServicesSettings');
-			cookieStoreService= $injector.get('$cookieStore');
+			cookieStoreService= $injector.get('$cookies');
 			AuthService= $injector.get('AuthService');
 			rootScope =  $rootScope;
 			controllerScope = $rootScope.$new();
@@ -101,6 +101,7 @@ jshint -W098, -W117, -W030
 		it('should add urlToAdd url to the openmrs settings list of urls when addUrlToList is invoked with a non-empty defined urlToAdd value', function () {
 			controllerScope.urlToAdd = 'urlToAdd.com';
 			controllerScope.addUrlToList();
+			controllerScope.addUrlToList();
 			
 			expect(OpenmrsSettings.getUrlBaseList()).to.include(controllerScope.urlToAdd);
 			
@@ -109,21 +110,23 @@ jshint -W098, -W117, -W030
 		it('should refresh openmrs settings list when addUrlToList is invoked successfully', function () {
 			controllerScope.urlToAdd = 'urlToAdd.com';
 			controllerScope.addUrlToList();
+			controllerScope.addUrlToList();
 			
 			expect(controllerScope.urlRestBaseList).to.equal(OpenmrsSettings.getUrlBaseList());
 			
 		});
 		
-		it('should add urlToAdd url to the openmrs settings list of urls when addUrlToList is invoked with a non-empty defined urlToAdd value', function () {
+		it('should add urlToAdd url to the openmrs settings list of urls when addEtlUrlToList is invoked with a non-empty defined urlToAdd value', function () {
 			controllerScope.urlEtlToAdd = 'urlToAdd.com';
+			controllerScope.addEtlUrlToList();//one to switch to adding url nmode
 			controllerScope.addEtlUrlToList();
-			
 			expect(EtlRestServicesSettings.getUrlBaseList()).to.include(controllerScope.urlEtlToAdd);
 			
 		});
 		
 		it('should refresh etl rest settings url list when addEtlUrlToList is invoked successfully', function () {
 			controllerScope.urlEtlToAdd = 'urlToAdd.com';
+			controllerScope.addEtlUrlToList();//one to switch to adding url nmode
 			controllerScope.addEtlUrlToList();
 			
 			expect(controllerScope.urlEtlRestBaseList).to.equal(EtlRestServicesSettings.getUrlBaseList());

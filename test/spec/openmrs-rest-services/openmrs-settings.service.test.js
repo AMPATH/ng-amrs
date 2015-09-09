@@ -15,7 +15,7 @@
     
     beforeEach(inject(function ($injector) {
       settingsService = $injector.get('OpenmrsSettings');
-      cookieStoreService = $injector.get('$cookieStore');
+      cookieStoreService = $injector.get('$cookies');
     }));
     
     afterEach(function(){

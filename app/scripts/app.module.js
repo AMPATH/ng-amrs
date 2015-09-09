@@ -92,11 +92,11 @@
         });
 
 
-    }).run(function ($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings) {
+    }).run(function ($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings, EtlRestServicesSettings) {
 
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
         //check whether selection of url base is required first
-        var hasPersistedCurrentUrl = OpenmrsSettings.hasCoockiePersistedCurrentUrlBase();
+        var hasPersistedCurrentUrl = OpenmrsSettings.hasCoockiePersistedCurrentUrlBase() && EtlRestServicesSettings.hasCoockiePersistedCurrentUrlBase();
         
         if (!hasPersistedCurrentUrl && toState.name !== 'url-selector') {
           $state.go('url-selector', { onSuccessRout: toState, onSuccessParams: toParams });

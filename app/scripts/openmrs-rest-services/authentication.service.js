@@ -59,6 +59,7 @@
       clearCredentials();
       service.authenticated = false;
       $rootScope.$broadcast('onUserLoggedOut');
+      $state.go('login');
     }
 
     function setCredentials(CurrentUser) {

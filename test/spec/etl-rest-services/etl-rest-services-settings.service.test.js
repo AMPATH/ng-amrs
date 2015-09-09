@@ -15,7 +15,7 @@
     
     beforeEach(inject(function ($injector) {
       settingsService = $injector.get('EtlRestServicesSettings');
-      cookieStoreService = $injector.get('$cookieStore');
+      cookieStoreService = $injector.get('$cookies');
     }));
     
     afterEach(function(){

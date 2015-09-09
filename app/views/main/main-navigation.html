@@ -15,7 +15,7 @@
         </a>
       </div>
       <div class="navbar-collapse" ng-class="{collapse: isCollapsed}">
-        <ul class="nav navbar-nav"  style="cursor: pointer;">
+        <ul class="nav navbar-nav" style="cursor: pointer;">
           <!--<li ui-sref-active="active" ui-sref="home"><a href="#/"><span class="text-primary"><b style="font-size:20px;"> P.O.C  </b><small>v0.1.0</small></span></a></li>-->
           <li ui-sref-active="active" ui-sref="patientsearch" ng-click="isCollapsed = true">
             <a href="#/patientsearch"><span class="glyphicon glyphicon-search "  aria-hidden="true"></span><span >&nbsp;Patient Search</span></a>
@@ -24,7 +24,7 @@
             <a href="#/clinical-dashboard/test"><span><span class="icon-i-care-staff-area" aria-hidden="true"></span>&nbsp;Clinic Dashboard</span></a>
           </li>
         </ul>
-        <ul  style="cursor: pointer;" class="nav navbar-nav navbar-right">
+        <ul style="cursor: pointer;" class="nav navbar-nav navbar-right">
           <li ui-sref-active="active" ui-sref="admin" ng-click="isCollapsed = true">
             <a href="#/Admin">
             <b><span class="glyphicon glyphicon-cog"></span></b>
@@ -44,7 +44,14 @@
               </li>
               <li class="divider"></li>
               <li ui-sref-active="active" ng-click="isCollapsed = true">
-                <a ui-sref="login" ng-href="#/dashboard">
+                <a ui-sref="url-selector" ng-href="#/url-selector">
+                  <span class="glyphicon glyphicon-hdd"></span> Switch Servers
+                  
+                </a>
+              </li>
+              <li class="divider"></li>
+              <li ui-sref-active="active" ng-click="isCollapsed = true" >
+                <a ui-sref="login" ng-href="#/dashboard" data-ng-click="logOut()">
                   <span class="glyphicon glyphicon-log-out"></span> Logout
                   
                 </a>

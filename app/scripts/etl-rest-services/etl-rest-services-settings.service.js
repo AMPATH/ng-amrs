@@ -6,9 +6,9 @@
     .module('app.etlRestServices')
     .service('EtlRestServicesSettings', EtlRestServicesSettings);
 
-  EtlRestServicesSettings.$inject = ['$cookieStore'];
+  EtlRestServicesSettings.$inject = ['$cookies'];
 
-  function EtlRestServicesSettings($cookieStore) {
+  function EtlRestServicesSettings($cookies) {
     var serviceDefinition;
     var restUrlBaseList = ['https://etl.ampath.or.ke:8002/etl/', 'https://test1.ampath.or.ke:8002/etl/'];
     var restUrlBase = restUrlBaseList[1];
@@ -27,17 +27,19 @@
 
     function initialize() {
 
-      var lastSetUrl = $cookieStore.get('restEtlUrlBase');
+      var lastSetUrl = $cookies.get('restEtlUrlBase');
 
-      if (lastSetUrl)
+      if (lastSetUrl) {
         restUrlBase = lastSetUrl;
+      }
     }
 
     function hasCoockiePersistedCurrentUrlBase() {
-      var lastSetUrl = $cookieStore.get('restEtlUrlBase');
+      var lastSetUrl = $cookies.get('restEtlUrlBase');
 
-      if (lastSetUrl)
+      if (lastSetUrl) {
         return true;
+      }
 
       return false;
     }
@@ -48,7 +50,9 @@
 
     function setCurrentRestUrlBase(url) {
       restUrlBase = url;
-      $cookieStore.put('restEtlUrlBase', url);
+      var d = new Date();
+      d.setFullYear(2050);//expires in 2050
+      $cookies.put('restEtlUrlBase', url, { 'expires': d });
     }
 
     function getUrlBaseList() {

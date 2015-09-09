@@ -6,13 +6,13 @@
     .module('app.openmrsRestServices')
     .service('OpenmrsSettings', OpenmrsSettings);
 
-  OpenmrsSettings.$inject = ['$cookieStore'];
+  OpenmrsSettings.$inject = ['$cookies'];
 
-  function OpenmrsSettings($cookieStore) {
+  function OpenmrsSettings($cookies) {
     var serviceDefinition;
     var restUrlBaseList = ['https://test1.ampath.or.ke:8443/amrs/ws/rest/v1/', 'https://etl1.ampath.or.ke:8443/amrs/ws/rest/v1/', 'http://localhost:8080/openmrs/ws/rest/v1/'];
     var restUrlBase = restUrlBaseList[0];
-    
+
     initialize();
     serviceDefinition = {
       reInitialize: initialize,
@@ -24,21 +24,23 @@
       hasCoockiePersistedCurrentUrlBase: hasCoockiePersistedCurrentUrlBase
     };
     return serviceDefinition;
-    
-    function initialize(){
-      
-      var lastSetUrl = $cookieStore.get('restUrlBase');
-      
-      if(lastSetUrl) 
+
+    function initialize() {
+
+      var lastSetUrl = $cookies.get('restUrlBase');
+
+      if (lastSetUrl) {
         restUrlBase = lastSetUrl;
+      }
     }
-    
-    function hasCoockiePersistedCurrentUrlBase(){
-      var lastSetUrl = $cookieStore.get('restUrlBase');
-      
-      if(lastSetUrl)
+
+    function hasCoockiePersistedCurrentUrlBase() {
+      var lastSetUrl = $cookies.get('restUrlBase');
+
+      if (lastSetUrl) {
         return true;
-        
+      }
+
       return false;
     }
 
@@ -48,7 +50,9 @@
 
     function setCurrentRestUrlBase(url) {
       restUrlBase = url;
-      $cookieStore.put('restUrlBase',url);
+      var d = new Date();
+      d.setFullYear(2050);//expires in 2050
+      $cookies.put('restUrlBase', url, { 'expires': d });
     }
 
     function getUrlBaseList() {
