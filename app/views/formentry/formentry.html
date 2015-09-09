@@ -23,14 +23,17 @@
       <tab ng-repeat="tab in vm.tabs"
            heading="{{tab.title}}"
            active="tab.active"
-           disable="tab.disabled">
+           disable="tab.disabled"
+           select="vm.tabSelected($index)">
         <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options">
         </formly-form>
       </tab>
     </tabset>
     <div style="text-align: center;">
+      <button type="submit" class="btn btn-default" ng-click="vm.activateTab('prev')" ng-disabled="vm.isFirstTab()"> &lt;&lt; </button>
       <button type="submit" class="btn btn-primary submit-button" ng-click="vm.submit()">{{vm.submitLabel}}</button>
       <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
+      <button type="submit" class="btn btn-default" ng-click="vm.activateTab('next')" ng-disabled="vm.isLastTab()" alt="next Page">&gt;&gt;</button>
     </div>
   </form>
 <!--
