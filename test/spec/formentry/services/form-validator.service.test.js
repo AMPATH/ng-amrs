@@ -77,7 +77,7 @@
       
       var newValue = service.getAnswerByQuestionKey(formlyModel, 'obs3_a89ff9a6n1350n11dfna1f1n0026b9348838');
       
-      expect(newValue).to.equal(null);
+      expect((newValue === null || newValue === undefined || newValue === '')).to.equal(true);
       
     });
     

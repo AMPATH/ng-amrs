@@ -21,19 +21,28 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         function clearQuestionValueByKey(formlyModel, key) {
             var containingObject = getContainingObjectForQuestionKey(formlyModel, key);
-            if(containingObject){
+            if (containingObject) {
                 //containingObject[key] = null;
-                if(Array.isArray(containingObject[key])){
+                if (Array.isArray(containingObject[key])) {
                     console.log('is array')
                     containingObject[key] = [];
                 }
-                else if(typeof containingObject[key] === 'object'){
+                else if (typeof containingObject[key] === 'number') {
+                   containingObject[key] = '';
+                }
+                else if(Object.prototype.toString.call(containingObject[key]) === '[object Date]'){
+                   containingObject[key] = '';
+                }
+                else if (typeof containingObject[key] === 'string') {
+                   containingObject[key] = '';
+                }
+                else if (typeof containingObject[key] === 'object') {
                     console.log('object');
                     containingObject[key] = {};
                 }
-                else{
+                else {
                     containingObject[key] = null;
-                }   
+                }
             }
         }
 

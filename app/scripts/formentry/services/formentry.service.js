@@ -8,9 +8,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         .module('app.formentry')
         .factory('FormentryService', FormentryService);
 
-    FormentryService.$inject = ['$http', 'SearchDataService', 'moment'];
+    FormentryService.$inject = ['$http', 'SearchDataService', 'moment', 'FormValidator'];
 
-    function FormentryService($http, SearchDataService, moment) {
+    function FormentryService($http, SearchDataService, moment, FormValidator) {
         var service = {
             createForm: createForm,
             getConceptUuid:getConceptUuid,
@@ -37,8 +37,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         function getFieldValidator(params)
         {
-          // console.log('Validation params');
-          // console.log(params);
+           //console.log('Validation params');
+           //console.log(params);
 
           if ((params.type === 'date') && (params.allowFutureDates !== 'true'))
           {
@@ -78,11 +78,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 var value = modelValue || viewValue;
                 var dateValue;
                 var curDate = Date.parse(Date.today(),'d-MMM-yyyy');
-                if(value !== undefined)
+               
+                if(value !== undefined && value !== null && value !== '')
                 {
+                     console.log('before lunch: ', value);
                   dateValue = Date.parse(value,'d-MMM-yyyy').clearTime();
                 }
-                if(dateValue !== undefined)
+                if(dateValue !== undefined && dateValue !== null && value !== '')
                 {
                   //return !dateValue.isBefore(curDate);
                   return true;
@@ -113,11 +115,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             // }
 
 
-            return (function($viewValue, $modelValue, scope) {
+            return (function($viewValue, $modelValue, scope, element) {
+              //if element is undefined then we are looking for a disable expression
+              //if element is defined then we are looking for a hide expression   
+                
               var i = 0;
               // console.log('current scope', scope)
               var fkey;
-              if(params.field === 'gender' || param.field === 'sex') fkey = 'sex';
+              if(params.field === 'gender' || params.field === 'sex') fkey = 'sex';
               else fkey = getFieldKeyById(params.field, scope.fields)
               _.each(params.value, function(val){
                 result = scope.model[fkey] !== val
@@ -125,6 +130,23 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 else results = results  && result;
                 i = i+1;
               });
+              
+              
+              console.log('results' + results);
+              
+              if(results === true){
+                  // console.log('+++scope ',element);
+                  // console.log('+++model ', scope.model);
+                  // console.log('+++this ', this);
+                  if(element) {
+                      //case hide
+                    FormValidator.clearQuestionValueByKey(scope.model, element.options.key);
+                  }
+                  else {
+                      //case disable
+                    FormValidator.clearQuestionValueByKey(scope.model, scope.options.key);    
+                  }
+              }
               return results;
             });
           }
@@ -1641,6 +1663,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           //   defaultValue_ = '';
           // }
           var hideExpression_;
+          var disableExpression_;
+          
           var id_;
           if(obs_field.id !== undefined)
           {
@@ -1653,6 +1677,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           else {
             hideExpression_ = '';
           }
+          
+          
+          if(obs_field.disable !== undefined)
+          {
+            disableExpression_= getFieldValidator(obs_field.disable[0], obs_id);
+          }
+          else {
+            disableExpression_ = '';
+          }
+          
           var obsField = {};
           if (validateFieldFormat(obs_field) !== true)
           {
@@ -1674,7 +1708,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 label: obs_field.label,
                 datepickerPopup: 'dd-MMMM-yyyy',
                 required:required
+                
               },
+               expressionProperties: {
+                'templateOptions.disabled': disableExpression_
+               },
               hideExpression:hideExpression_,
               validators: {
                 dateValidator: getFieldValidator(obs_field.validators[0]) //this  will require refactoring as we move forward
@@ -1697,6 +1735,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 label: obs_field.label,
                 required:required
               },
+               expressionProperties: {
+                'templateOptions.disabled': disableExpression_
+               },
               hideExpression:hideExpression_
               //         ,
               // validators: {
@@ -1754,6 +1795,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   // });
                 }
               },
+              expressionProperties: {
+                'templateOptions.disabled': disableExpression_
+               },
               hideExpression:hideExpression_
             }
           }
@@ -1776,6 +1820,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 required:required,
                 options:[]
               },
+              expressionProperties: {
+                'templateOptions.disabled': disableExpression_
+               },
               hideExpression:hideExpression_
             };
           }
@@ -1797,7 +1844,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 getSelectedObjectFunction: SearchDataService.getDrugConceptByUuid,
                 required:required,
                 options:[]
-              }
+              },
+              expressionProperties: {
+                'templateOptions.disabled': disableExpression_
+               }
             };
           }
         else if(obs_field.type === 'select-concept-answers'){
@@ -1821,6 +1871,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
 
               },
+              expressionProperties: {
+                'templateOptions.disabled': disableExpression_
+               },
               hideExpression:hideExpression_
             };
           }
