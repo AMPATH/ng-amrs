@@ -1,36 +1,28 @@
 <div class="row">
-  <div class="col-md-3"></div>
-  <div class="col-md-6 well">
-    <form role="form" class="form-horizontal" ng-submit="authenticate()">
-    <div>
-      <div class="form-group">
-        <h5 style="text-align:center;">Welcome to AMPATH AMRS Point of CARE.<br/>Please log in to prooceed:</h5>
-      </div>
-      <div class="form-group">
-        <label for="username" class="control-label col-sm-6">Username:</label>
-        <div class="col-sm-6">
-          <input type="text" name="username" id="username" ng-model="CurrentUser.username" autofocus />
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="password" class="control-label col-sm-6">Password:</label>
-        <div class="col-sm-6">
-            <input type="password" name="password" ng-model="CurrentUser.password"/>
-        </div>
-      </div>
-      <div class="form-group">
-        <div align="right" style="margin-right: 10px;">
-          <input class="btn btn-info" type="submit" id="login" ng-disabled="isBusy" value="Login   " ng-click="authenticate()"/>
-          <img ng-show="isBusy" src="images/ajax-loader.gif"/>
-        </div>
+  <div class="container-fluid">
 
-      </div>
-      <div class="form-group">
-        <div style="color:red; text-align:center;" class="col-sm-12">{{errors}}</div>
-      </div>
-
+    <div class="form-group centerText">
+      <img src="favicon.ico">
+      <h3 >AMPATH AMRS Point of CARE.</h3><h5>Please log in to proceed:</h5>
     </div>
+    <hr/>
+    <form role="form" class="box login" ng-submit="authenticate()">
+        <header>
+          <h3 class="text-primary centerText"><span class="glyphicon glyphicon-lock"></span> Login</h3>
+        </header>
+        <fieldset class="boxBody">
+          <label>Username</label>
+          <input type="text" tabindex="1" placeholder="Username" name="username" id="username" ng-model="CurrentUser.username" autofocus required="">
+          <label><a href="#" class="rLink" tabindex="5">Forgot your Password?</a>Password</label>
+          <input type="password" name="password" ng-model="CurrentUser.password" tabindex="2" required="" placeholder="Password" >
+        </fieldset>
+        <footer>
+          <label><input type="checkbox" tabindex="3">Keep me logged in</label>
+          <input type="submit" class="btn btn-primary btnLogin"  value="Login" tabindex="4" id="login" ng-disabled="isBusy" ng-click="authenticate()"/>
+          <img class=" btnLogin" ng-show="isBusy" src="images/ajax-loader.gif"/>
+          <div style="color:red; text-align:center;" class="col-sm-12">{{errors}}</div>
+        </footer>
+
   </form>
-  </div>
-  <div class="col-md-3"></div>
+</div>
 </div>
