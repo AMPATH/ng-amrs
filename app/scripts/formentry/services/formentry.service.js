@@ -97,6 +97,35 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               message: '"Should be a future date!"'
             };
           }
+          
+          if((params.type === 'conditional-answered'))
+          {
+            return {
+              expression: function(viewValue, modelValue, elementScope) {
+                  
+                  var val = viewValue || modelValue;
+                  
+                  var referenceQuestionkey = getFieldKeyFromGlobalById(params.referenceQuestionId);
+                  
+                  var referenceQuestionCurrentValue = FormValidator.getAnswerByQuestionKey(service.currentFormModel, referenceQuestionkey);
+                   
+                   var referenceQuestionAllowableAnswers = params.referenceQuestionAnswers;
+                   
+                   var isValid = false;
+                                      
+                   _.each(referenceQuestionAllowableAnswers, function(answer) {
+                       if(referenceQuestionCurrentValue === answer)
+                        isValid = true;
+                   });
+                  console.log('isValid',isValid);
+                  return isValid;
+              },
+              message: params.message
+            };
+          }
+          
+          
+          
 
           if(params.field !== undefined && params.value !== undefined)
           {
@@ -1818,6 +1847,21 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             }
           }
           else if(obs_field.type === 'problem'){
+              //console.log('validators', obs_field);
+            var validators = obs_field.validators;
+            
+            //set the validator to default validator
+            var compiledValidator = {
+              expression: function(viewValue, modelValue, scope, element) {
+                  return true;
+              },
+              message: ''
+            };
+            
+            if(validators && validators.length !== 0){
+                compiledValidator = getFieldValidator(obs_field.validators[0])
+            }
+            
             var required=false;
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
             obsField = {
@@ -1839,7 +1883,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               expressionProperties: {
                 'templateOptions.disabled': disableExpression_
                },
-              hideExpression:hideExpression_
+              hideExpression:hideExpression_,
+              validators: {
+                conditionalValidators: compiledValidator //this  will require refactoring as we move forward
+              }
             };
           }
           else if(obs_field.type === 'drug'){
@@ -2138,7 +2185,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   field = createFormlyField(sec_field)
                 }
                 sectionFields.push(field);
-                addFieldToValidationMetadata(field, section, pageFields);
+                addFieldToValidationMetadata(field, section, pageFields, sec_field.type);
               });
               //creating formly field section
               section_id = section_id  + 1;
@@ -2177,7 +2224,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           callback(tabs);
         }
         
-        function addFieldToValidationMetadata(field, section, page){
+        function addFieldToValidationMetadata(field, section, page, typeOfField){
             //console.log('etl stuff', field);
             if(field && field.data && field.data.id && field.data.id !== ''){
                 service.lastFormValidationMetadata[field.data.id] = {
@@ -2185,6 +2232,12 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     section: section,
                     page: page
                 };
+            }
+            
+            if(typeOfField === 'group'){
+                   _.each(field.fieldGroup, function(groupField){
+                       addFieldToValidationMetadata(groupField, section, page, 'field');
+                   });
             }
         }
         
