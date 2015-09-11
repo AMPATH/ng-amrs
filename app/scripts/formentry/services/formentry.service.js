@@ -8,9 +8,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         .module('app.formentry')
         .factory('FormentryService', FormentryService);
 
-    FormentryService.$inject = ['$http', 'SearchDataService', 'moment'];
+    FormentryService.$inject = ['$http', 'SearchDataService', 'moment', 'FormValidator'];
 
-    function FormentryService($http, SearchDataService, moment) {
+    function FormentryService($http, SearchDataService, moment, FormValidator) {
         var service = {
             createForm: createForm,
             getConceptUuid:getConceptUuid,
@@ -19,7 +19,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             getFormSchema: getFormSchema,
             getCompiledFormSchema: getCompiledFormSchema,
             generateFormPayLoad: generateFormPayLoad,
-            updateFormPayLoad: updateFormPayLoad
+            updateFormPayLoad: updateFormPayLoad,
+            lastFormValidationMetadata: {},
+            currentFormModel: {}
         };
         var obs_id = 0;
 
@@ -29,16 +31,25 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         {
           var result;
           _.each(searchFields, function(cfield){
-            if(cfield.data.id === id_) result = cfield.key
+            if(cfield.data && cfield.data.id === id_) result = cfield.key
           })
           return result;
         }
-
+        
+        function getFieldValidators(arrayOfValidations) {
+           var validator = {};
+           
+           _.each(arrayOfValidations, function(validate){
+               validator[validate.type] = getFieldValidator(validate);
+           });
+           
+           return validator;
+        }
 
         function getFieldValidator(params)
         {
-          // console.log('Validation params');
-          // console.log(params);
+           //console.log('Validation params');
+           //console.log(params);
 
           if ((params.type === 'date') && (params.allowFutureDates !== 'true'))
           {
@@ -78,11 +89,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 var value = modelValue || viewValue;
                 var dateValue;
                 var curDate = Date.parse(Date.today(),'d-MMM-yyyy');
-                if(value !== undefined)
+               
+                if(value !== undefined && value !== null && value !== '')
                 {
+                     console.log('before lunch: ', value);
                   dateValue = Date.parse(value,'d-MMM-yyyy').clearTime();
                 }
-                if(dateValue !== undefined)
+                if(dateValue !== undefined && dateValue !== null && value !== '')
                 {
                   //return !dateValue.isBefore(curDate);
                   return true;
@@ -93,6 +106,74 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               message: '"Should be a future date!"'
             };
           }
+          
+          if((params.type === 'conditionalAnswered'))
+          {
+            return {
+              expression: function(viewValue, modelValue, elementScope) {
+                  
+                  var val = viewValue || modelValue;
+                  
+                  var referenceQuestionkey = getFieldKeyFromGlobalById(params.referenceQuestionId);
+                  
+                  var referenceQuestionCurrentValue = FormValidator.getAnswerByQuestionKey(service.currentFormModel, referenceQuestionkey);
+                   
+                   var referenceQuestionAllowableAnswers = params.referenceQuestionAnswers;
+                   
+                   var isValid = false;
+                                      
+                   _.each(referenceQuestionAllowableAnswers, function(answer) {
+                       if(referenceQuestionCurrentValue === answer)
+                        isValid = true;
+                   });
+                  console.log('isValid',isValid);
+                  return isValid;
+              },
+              message: '"' + params.message +  '"'
+            };
+          }
+          if((params.type === 'conditionalRequired'))
+          {
+              console.log('wiring conditional-required validation');
+            return {
+              expression: function(viewValue, modelValue, elementScope) {
+                  
+                  var val = viewValue || modelValue;
+                  
+                  //if(val) return true;
+                  
+                  var referenceQuestionkey = getFieldKeyFromGlobalById(params.referenceQuestionId);
+                   console.log('referenceQuestionId', params.referenceQuestionId); 
+                    console.log('q7a', getFieldKeyFromGlobalById(params.referenceQuestionId));
+                  var referenceQuestionCurrentValue = FormValidator.getAnswerByQuestionKey(service.currentFormModel, referenceQuestionkey);
+                   
+                   var referenceQuestionAllowableAnswers = params.referenceQuestionAnswers;
+                   
+                   console.log('val', val);
+                   
+                   var isUnscheduled = false;
+                      console.log('referenceQuestionCurrentValue', referenceQuestionCurrentValue);                
+                   _.each(referenceQuestionAllowableAnswers, function(answer) {
+                        console.log('answer', answer);
+                       if(referenceQuestionCurrentValue === answer)
+                        isUnscheduled = true;
+                   });
+                   
+                   console.log("isUnscheduled", isUnscheduled);
+                   if (isUnscheduled && (val === undefined || val === null || val === "") )
+                    return false;
+                   else return true;
+                   
+                     
+                  console.log('isValid',isValid);
+                  return isValid;
+              },
+              message:  '"' + params.message +  '"'
+            };
+          }
+          
+          
+          
 
           if(params.field !== undefined && params.value !== undefined)
           {
@@ -113,21 +194,55 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             // }
 
 
-            return (function($viewValue, $modelValue, scope) {
+            return (function($viewValue, $modelValue, scope, element) {
+              //if element is undefined then we are looking for a disable expression
+              //if element is defined then we are looking for a hide expression   
+                
               var i = 0;
               // console.log('current scope', scope)
               var fkey;
-              if(params.field === 'gender' || param.field === 'sex') fkey = 'sex';
+              
+              if(params.field === 'gender' || params.field === 'sex') fkey = 'sex';
               else fkey = getFieldKeyById(params.field, scope.fields)
+              
+              //else fkey = getFieldKeyFromGlobalById(params.field);
+              
               _.each(params.value, function(val){
+                  
                 result = scope.model[fkey] !== val
+                //result = FormValidator.getAnswerByQuestionKey(fkey) !== val
                 if(i === 0) results = result;
                 else results = results  && result;
                 i = i+1;
+                
               });
+              
+              
+              //console.log('results: ' + results);
+              
+              if(results === true){
+                  //console.log('+++scope ',scope);
+                  // console.log('+++model ', scope.model);
+                  // console.log('+++this ', this);
+                  if(element) {
+                      //case hide
+                    FormValidator.clearQuestionValueByKey(scope.model, element.options.key);
+                  }
+                  else {
+                      //case disable
+                    FormValidator.clearQuestionValueByKey(scope.model, scope.options.key);    
+                  }
+              }
               return results;
             });
           }
+        }
+        
+        function getFieldKeyFromGlobalById(id){
+            var obj = service.lastFormValidationMetadata[id];
+            if(obj)
+                return service.lastFormValidationMetadata[id].key;
+            return null;    
         }
 
         function getFormSchema(formName, callback) {
@@ -1641,6 +1756,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           //   defaultValue_ = '';
           // }
           var hideExpression_;
+          var disableExpression_;
+          
           var id_;
           if(obs_field.id !== undefined)
           {
@@ -1653,11 +1770,43 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           else {
             hideExpression_ = '';
           }
+          
+          
+          if(obs_field.disable !== undefined)
+          {
+            disableExpression_= getFieldValidator(obs_field.disable[0], obs_id);
+          }
+          else {
+            disableExpression_ = '';
+          }
+          
           var obsField = {};
           if (validateFieldFormat(obs_field) !== true)
           {
             console.log('Something Went Wrong While creating this field', obs_field)
           }
+          
+          //console.log('validators', obs_field);
+            var validators = obs_field.validators;
+            
+            //set the validator to default validator
+            var defaultValidator = {
+              expression: function(viewValue, modelValue, scope) {
+                  return true;
+              },
+              message: ''
+            };
+            
+            var compiledValidators = {
+                defaultValidator: defaultValidator
+            };
+            
+            if(validators && validators.length !== 0){
+                compiledValidators = getFieldValidators(validators);
+            }
+            
+            
+          
           if(obs_field.type === 'date')
           {
             var required=false;
@@ -1674,11 +1823,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 label: obs_field.label,
                 datepickerPopup: 'dd-MMMM-yyyy',
                 required:required
+                
               },
+               expressionProperties: {
+                'templateOptions.disabled': disableExpression_
+               },
               hideExpression:hideExpression_,
-              validators: {
-                dateValidator: getFieldValidator(obs_field.validators[0]) //this  will require refactoring as we move forward
-              }
+              validators: compiledValidators
             }
           }
           else if ((obs_field.type === 'text') || (obs_field.type === 'number'))
@@ -1697,11 +1848,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 label: obs_field.label,
                 required:required
               },
-              hideExpression:hideExpression_
-              //         ,
-              // validators: {
-              //   //ipAddress: validatorsArray['ipAddress']
-              // }
+               expressionProperties: {
+                'templateOptions.disabled': disableExpression_
+               },
+              hideExpression:hideExpression_,
+              validators: compiledValidators
             }
           }
           else if ((obs_field.type === 'radio') || (obs_field.type === 'select') || (obs_field.type === 'multiCheckbox'))
@@ -1754,10 +1905,19 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   // });
                 }
               },
+              expressionProperties: {
+                'templateOptions.disabled': disableExpression_
+               },
               hideExpression:hideExpression_
             }
           }
           else if(obs_field.type === 'problem'){
+              
+            
+            if(validators && validators.length !== 0){
+                defaultValidator = getFieldValidator(obs_field.validators[0])
+            }
+            
             var required=false;
             if (obs_field.required !== undefined) required=Boolean(obs_field.required);
             obsField = {
@@ -1776,7 +1936,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 required:required,
                 options:[]
               },
-              hideExpression:hideExpression_
+              expressionProperties: {
+                'templateOptions.disabled': disableExpression_
+               },
+              hideExpression:hideExpression_,
+              validators: compiledValidators
             };
           }
           else if(obs_field.type === 'drug'){
@@ -1797,7 +1961,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 getSelectedObjectFunction: SearchDataService.getDrugConceptByUuid,
                 required:required,
                 options:[]
-              }
+              },
+              expressionProperties: {
+                'templateOptions.disabled': disableExpression_
+               }
             };
           }
         else if(obs_field.type === 'select-concept-answers'){
@@ -1821,6 +1988,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
 
               },
+              expressionProperties: {
+                'templateOptions.disabled': disableExpression_
+               },
               hideExpression:hideExpression_
             };
           }
@@ -2069,6 +2239,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   field = createFormlyField(sec_field)
                 }
                 sectionFields.push(field);
+                addFieldToValidationMetadata(field, section, pageFields, sec_field.type);
               });
               //creating formly field section
               section_id = section_id  + 1;
@@ -2103,8 +2274,27 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
           //return tabs;
           // console.log(JSON.stringify(tabs))
+          //console.log('Foooooooooorm', service.lastFormValidationMetadata);
           callback(tabs);
         }
+        
+        function addFieldToValidationMetadata(field, section, page, typeOfField){
+            //console.log('etl stuff', field);
+            if(field && field.data && field.data.id && field.data.id !== ''){
+                service.lastFormValidationMetadata[field.data.id] = {
+                    key: field.key,
+                    section: section,
+                    page: page
+                };
+            }
+            
+            if(typeOfField === 'group'){
+                   _.each(field.fieldGroup, function(groupField){
+                       addFieldToValidationMetadata(groupField, section, page, 'field');
+                   });
+            }
+        }
+        
 
         function getFormattedValue(value){
             console.log(value)

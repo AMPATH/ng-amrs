@@ -2,60 +2,47 @@
   <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
   <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">
-
   <form name="vm.form" novalidate>
     <div class="breadcrumb">
-      <h2>
-        {{vm.patient.fullNames()}} | Sex: {{vm.patient.gender()}} | Age: {{vm.patient.age()}}
-        | Identifier: {{vm.patient.identifierFormatted()}}
-      </h2>
-      {{vm.encounterType}} - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}} {{vm.success}}
-    </div>
+      <h2>{{vm.patient.fullNames()}} | Sex: {{vm.patient.gender()}} | Age: {{vm.patient.age()}} | Identifier: {{vm.patient.identifierFormatted()}}</h2>{{vm.encounterType}}
+      - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}} {{vm.success}}</div>
     <div data-ng-show='vm.isBusy'>
       <h2>
-       <img data-ng-show="vm.isBusy" data-ng-src="images/ajax-loader.gif" autofocus />
-       Loading Form...
-      </h2>
-     </div>
+        <img data-ng-show="vm.isBusy" data-ng-src="images/ajax-loader.gif" autofocus />Loading Form...</h2>
+    </div>
     <div style="color:red;">{{vm.error}}</div>
-
     <tabset>
-      <tab ng-repeat="tab in vm.tabs"
-           heading="{{tab.title}}"
-           active="tab.active"
-           disable="tab.disabled"
-           select="vm.tabSelected($index)">
-        <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options">
-        </formly-form>
+      <tab ng-repeat="tab in vm.tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled" select="vm.tabSelected($index)">
+        <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
       </tab>
     </tabset>
     <div style="text-align: center;">
-      <button type="submit" class="btn btn-default" ng-click="vm.activateTab('prev')" ng-disabled="vm.isFirstTab()"> &lt;&lt; </button>
+      <button type="submit" class="btn btn-default" ng-click="vm.activateTab('prev')" ng-disabled="vm.isFirstTab()">&lt;&lt;</button>
       <button type="submit" class="btn btn-primary submit-button" ng-click="vm.submit()">{{vm.submitLabel}}</button>
       <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
-      <button type="submit" class="btn btn-default" ng-click="vm.activateTab('next')" ng-disabled="vm.isLastTab()" alt="next Page">&gt;&gt;</button>
+      <button type="submit" class="btn btn-default" ng-click="vm.activateTab('next')" ng-disabled="vm.isLastTab()"
+      alt="next Page">&gt;&gt;</button>
     </div>
   </form>
-<!--
   <hr />
+  
+  <!--<h2>tabs</h2>
+  <pre>{{vm.tabs | json}}</pre>-->
+  
   <h2>Model Value</h2>
-  <pre>{{vm.model | json}}</pre> -->
-
+  <pre>{{vm.model | json}}</pre>
   <!-- Put custom templates here -->
-      <script type="text/ng-template" id="my-messages.html">
-        <formly-transclude></formly-transclude>
+  <script type="text/ng-template" id="my-messages.html">
+    <formly-transclude></formly-transclude>
         <div class="my-messages" ng-messages="fc.$error" ng-if="options.formControl.$touched">
           <div class="some-message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages" style="color:red;">
             {{message(fc.$viewValue, fc.$modelValue, this)}}
           </div>
         </div>
-      </script>
-      <!--
-      Custom template to allows representation of repeatSection
-      in a form.
-      -->
-            <script type="text/ng-template" id="repeatSection.html">
-            <div class="panel panel-default">
+  </script>
+  <!-- Custom template to allows representation of repeatSection in a form. -->
+  <script type="text/ng-template" id="repeatSection.html">
+    <div class="panel panel-default">
             <div class="panel-heading">
             {{to.label}}
             </div>
@@ -80,11 +67,10 @@
             </div>
 
             </div>
-            </script>
-
-            <!-- sections template -->
-            <script type="text/ng-template" id="section.html">
-            <div class="panel panel-default">
+  </script>
+  <!-- sections template -->
+  <script type="text/ng-template" id="section.html">
+    <div class="panel panel-default">
             <div class="panel-heading">
             {{to.label}}
             </div>
@@ -98,7 +84,5 @@
                </div>
 
             </div>
-            </script>
-
-
+  </script>
 </div>

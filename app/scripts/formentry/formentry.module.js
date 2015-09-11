@@ -18,7 +18,7 @@
     .run(function(formlyConfig, formlyValidationMessages, formlyApiCheck) {
     formlyConfig.setWrapper({
       name: 'validation',
-      types: ['input', 'customInput','datepicker'],
+      types: ['input', 'customInput','datepicker','ui-select-extended', 'select'],
       templateUrl: 'my-messages.html'
     });
 
