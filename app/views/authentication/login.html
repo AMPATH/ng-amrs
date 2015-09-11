@@ -1,28 +1,39 @@
-<div class="row">
-  <div class="container-fluid">
+<div class="container-fluid">
+  <div class="text-center">
+  <img src="favicon.ico">
+  <h3 >AMPATH AMRS Point of CARE.</h3><h5>Please log in to proceed:</h5>
+    <h3 class="text-primary"><span class="glyphicon glyphicon-lock"></span> Login</h3>
+  </div>
 
-    <div class="form-group centerText">
-      <img src="favicon.ico">
-      <h3 >AMPATH AMRS Point of CARE.</h3><h5>Please log in to proceed:</h5>
+  <hr/>
+  <form ng-submit="authenticate()">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <div class="input-group">
+        <input class="form-control" type="text" tabindex="1" placeholder="Username" name="username" id="username" ng-model="CurrentUser.username" autofocus required="">
+				<span class="input-group-addon">
+					<span class="glyphicon glyphicon-user text-primary"></span>
+				</span>
+      </div>
     </div>
-    <hr/>
-    <form role="form" class="box login" ng-submit="authenticate()">
-        <header>
-          <h3 class="text-primary centerText"><span class="glyphicon glyphicon-lock"></span> Login</h3>
-        </header>
-        <fieldset class="boxBody">
-          <label>Username</label>
-          <input type="text" tabindex="1" placeholder="Username" name="username" id="username" ng-model="CurrentUser.username" autofocus required="">
-          <label><a href="#" class="rLink" tabindex="5">Forgot your Password?</a>Password</label>
-          <input type="password" name="password" ng-model="CurrentUser.password" tabindex="2" required="" placeholder="Password" >
-        </fieldset>
-        <footer>
-          <label><input type="checkbox" tabindex="3">Keep me logged in</label>
-          <input type="submit" class="btn btn-primary btnLogin"  value="Login" tabindex="4" id="login" ng-disabled="isBusy" ng-click="authenticate()"/>
-          <img class=" btnLogin" ng-show="isBusy" src="images/ajax-loader.gif"/>
-          <div style="color:red; text-align:center;" class="col-sm-12">{{errors}}</div>
-        </footer>
-
+    <div class="form-group">
+      <label for="password">Password</label>
+      <div class="input-group">
+        <input class="form-control" id="password" type="password" name="password" ng-model="CurrentUser.password" tabindex="2" required="" placeholder="Password" >
+				<span class="input-group-addon" >
+					<span class="glyphicon glyphicon-lock text-primary"></span>
+				</span>
+      </div>
+    </div>
   </form>
+  <hr/>
+  <div class="form-group">
+    <input type="submit" class="btn btn-primary"  value="Login" tabindex="4" id="login" ng-disabled="isBusy" ng-click="authenticate()"/>
+    <a href="#/url-selector" id="serverSettings" class="btn btn-primary pull-right">Server Settings</a>
+    <img class="btnLogin" ng-show="isBusy" src="images/ajax-loader.gif"/>
+  </div>
+
+  <div class="col-sm-12 alert alert-danger" ng-show="isVisible" role="alert"><p class="text-center">{{errors}}</p></div>
+
 </div>
-</div>
+

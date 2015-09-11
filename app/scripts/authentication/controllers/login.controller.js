@@ -9,6 +9,7 @@ LoginCtrl.$inject = ['$scope', 'OpenmrsRestService', '$timeout'];
 
 function LoginCtrl($scope, OpenmrsRestService, $timeout) {
   $scope.errors = '';
+  $scope.isVisible = false;
   $scope.CurrentUser = {username:'',
               password:''
   };
@@ -26,7 +27,8 @@ function LoginCtrl($scope, OpenmrsRestService, $timeout) {
         $scope.isBusy = false;
         if (!authenticated) // check if user is authenticated
         {
-          $scope.errors = 'Invalid user name or password. please try again';
+          $scope.isVisible = true;
+          $scope.errors = 'Invalid user name or password. Please try again';
         }
         else {
             OpenmrsRestService.getUserService().getUser({q:$scope.CurrentUser.username},function(data){
