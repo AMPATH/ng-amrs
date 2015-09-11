@@ -2188,8 +2188,8 @@
               ]
             },
             {
-              "concept": "a89b6a62-1350-11df-a1f1-0026b9348838",
-              "label": "24e. If patient on ARVS, choose regimen below:",
+              "concept": "a89b662-1350-11df-a1f1-0026b9348838",
+              "label": "24e. If ARV regimen started or changed, choose regimen below:",
               "id": "q24e",
               "answers": [
                 {
@@ -2266,7 +2266,7 @@
                   ]
                 }
               ],
-              "validators": []
+              "validators": []            
             }
           ]
         },
