@@ -93,19 +93,19 @@
               "concept": "dc1942b2-5e50-4adc-949d-ad6c905f054e",
               "label": "7b. If Unscheduled, actual scheduled date",
               "type": "date",
-              "disable": [
-                {
-                  "field": "q7a",
-                  "value": [
-                    "a89ff816-1350-11df-a1f1-0026b9348838",
-                    "a89ff8de-1350-11df-a1f1-0026b9348838"
-                  ]
-                }
-              ],
               "validators": [
                 {
                   "type": "date",
                   "allowFutureDates": "true"
+                },
+                {
+                  "type": "conditionalRequired",
+                  "message": "Patient visit marked as unscheduled. Please provide the scheduled date.",
+                  "referenceQuestionId": "q7a",
+                  "referenceQuestionAnswers": [
+                    "a89ff816-1350-11df-a1f1-0026b9348838",
+                    "a89ff8de-1350-11df-a1f1-0026b9348838"
+                  ]
                 }
               ]
             }
@@ -251,7 +251,7 @@
                 {
                   "concept": "a898c56e-1350-11df-a1f1-0026b9348838",
                   "label": "11a. Has patient been Hospitalized since last visit:",
-                  "id":"q11a",
+                  "id": "q11a",
                   "answers": [
                     {
                       "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
@@ -278,10 +278,12 @@
                   "type": "problem",
                   "validators": [
                     {
-                      "type": "conditional-answered",
+                      "type": "conditionalAnswered",
                       "message": "Providing diagnosis but didn't answer that patient was hospitalized in question 11a",
                       "referenceQuestionId": "q11a",
-                      "referenceQuestionAnswers": ["a899b35c-1350-11df-a1f1-0026b9348838"]
+                      "referenceQuestionAnswers": [
+                        "a899b35c-1350-11df-a1f1-0026b9348838"
+                      ]
                     }
                   ]
                 }
@@ -631,7 +633,9 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [{
+                
+              }]
             },
             {
               "concept": "a899e516-1350-11df-a1f1-0026b9348838",

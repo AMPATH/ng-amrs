@@ -35,7 +35,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           })
           return result;
         }
-
+        
+        function getFieldValidators(arrayOfValidations) {
+           var validator = {};
+           
+           _.each(arrayOfValidations, function(validate){
+               validator[validate.type] = getFieldValidator(validate);
+           });
+           
+           return validator;
+        }
 
         function getFieldValidator(params)
         {
@@ -98,7 +107,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             };
           }
           
-          if((params.type === 'conditional-answered'))
+          if((params.type === 'conditionalAnswered'))
           {
             return {
               expression: function(viewValue, modelValue, elementScope) {
@@ -120,7 +129,46 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   console.log('isValid',isValid);
                   return isValid;
               },
-              message: params.message
+              message: '"' + params.message +  '"'
+            };
+          }
+          if((params.type === 'conditionalRequired'))
+          {
+              console.log('wiring conditional-required validation');
+            return {
+              expression: function(viewValue, modelValue, elementScope) {
+                  
+                  var val = viewValue || modelValue;
+                  
+                  //if(val) return true;
+                  
+                  var referenceQuestionkey = getFieldKeyFromGlobalById(params.referenceQuestionId);
+                   console.log('referenceQuestionId', params.referenceQuestionId); 
+                    console.log('q7a', getFieldKeyFromGlobalById(params.referenceQuestionId));
+                  var referenceQuestionCurrentValue = FormValidator.getAnswerByQuestionKey(service.currentFormModel, referenceQuestionkey);
+                   
+                   var referenceQuestionAllowableAnswers = params.referenceQuestionAnswers;
+                   
+                   console.log('val', val);
+                   
+                   var isUnscheduled = false;
+                      console.log('referenceQuestionCurrentValue', referenceQuestionCurrentValue);                
+                   _.each(referenceQuestionAllowableAnswers, function(answer) {
+                        console.log('answer', answer);
+                       if(referenceQuestionCurrentValue === answer)
+                        isUnscheduled = true;
+                   });
+                   
+                   console.log("isUnscheduled", isUnscheduled);
+                   if (isUnscheduled && (val === undefined || val === null || val === "") )
+                    return false;
+                   else return true;
+                   
+                     
+                  console.log('isValid',isValid);
+                  return isValid;
+              },
+              message:  '"' + params.message +  '"'
             };
           }
           
@@ -1737,6 +1785,28 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           {
             console.log('Something Went Wrong While creating this field', obs_field)
           }
+          
+          //console.log('validators', obs_field);
+            var validators = obs_field.validators;
+            
+            //set the validator to default validator
+            var defaultValidator = {
+              expression: function(viewValue, modelValue, scope) {
+                  return true;
+              },
+              message: ''
+            };
+            
+            var compiledValidators = {
+                defaultValidator: defaultValidator
+            };
+            
+            if(validators && validators.length !== 0){
+                compiledValidators = getFieldValidators(validators);
+            }
+            
+            
+          
           if(obs_field.type === 'date')
           {
             var required=false;
@@ -1759,9 +1829,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 'templateOptions.disabled': disableExpression_
                },
               hideExpression:hideExpression_,
-              validators: {
-                dateValidator: getFieldValidator(obs_field.validators[0]) //this  will require refactoring as we move forward
-              }
+              validators: compiledValidators
             }
           }
           else if ((obs_field.type === 'text') || (obs_field.type === 'number'))
@@ -1783,11 +1851,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                expressionProperties: {
                 'templateOptions.disabled': disableExpression_
                },
-              hideExpression:hideExpression_
-              //         ,
-              // validators: {
-              //   //ipAddress: validatorsArray['ipAddress']
-              // }
+              hideExpression:hideExpression_,
+              validators: compiledValidators
             }
           }
           else if ((obs_field.type === 'radio') || (obs_field.type === 'select') || (obs_field.type === 'multiCheckbox'))
@@ -1847,19 +1912,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             }
           }
           else if(obs_field.type === 'problem'){
-              //console.log('validators', obs_field);
-            var validators = obs_field.validators;
-            
-            //set the validator to default validator
-            var compiledValidator = {
-              expression: function(viewValue, modelValue, scope, element) {
-                  return true;
-              },
-              message: ''
-            };
+              
             
             if(validators && validators.length !== 0){
-                compiledValidator = getFieldValidator(obs_field.validators[0])
+                defaultValidator = getFieldValidator(obs_field.validators[0])
             }
             
             var required=false;
@@ -1884,9 +1940,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 'templateOptions.disabled': disableExpression_
                },
               hideExpression:hideExpression_,
-              validators: {
-                conditionalValidators: compiledValidator //this  will require refactoring as we move forward
-              }
+              validators: compiledValidators
             };
           }
           else if(obs_field.type === 'drug'){
