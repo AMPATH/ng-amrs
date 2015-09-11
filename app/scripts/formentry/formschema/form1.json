@@ -407,6 +407,7 @@
             {
               "concept": "a89ae254-1350-11df-a1f1-0026b9348838",
               "label": "13a. Currently on ARVS:",
+              "id": "q13a",
               "answers": [
                 {
                   "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
@@ -1989,6 +1990,7 @@
             {
               "concept": "a89b6a62-1350-11df-a1f1-0026b9348838",
               "label": "24e. If patient on ARVS, choose regimen below:",
+              "id": "q24e",
               "answers": [
                 {
                   "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
@@ -2056,6 +2058,10 @@
                 }
               ],
               "type": "multiCheckbox",
+              "disable": [{
+                "field":"q13a",
+                "value": ["a899b42e-1350-11df-a1f1-0026b9348838"]
+              }],
               "validators": []
             }]},
         {

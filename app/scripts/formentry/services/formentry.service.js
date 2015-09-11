@@ -19,7 +19,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             getFormSchema: getFormSchema,
             getCompiledFormSchema: getCompiledFormSchema,
             generateFormPayLoad: generateFormPayLoad,
-            updateFormPayLoad: updateFormPayLoad
+            updateFormPayLoad: updateFormPayLoad,
+            lastFormValidationMetadata: {},
+            currentFormModel: {}
         };
         var obs_id = 0;
 
@@ -29,7 +31,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         {
           var result;
           _.each(searchFields, function(cfield){
-            if(cfield.data.id === id_) result = cfield.key
+            if(cfield.data && cfield.data.id === id_) result = cfield.key
           })
           return result;
         }
@@ -122,20 +124,27 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               var i = 0;
               // console.log('current scope', scope)
               var fkey;
+              
               if(params.field === 'gender' || params.field === 'sex') fkey = 'sex';
               else fkey = getFieldKeyById(params.field, scope.fields)
+              
+              //else fkey = getFieldKeyFromGlobalById(params.field);
+              
               _.each(params.value, function(val){
+                  
                 result = scope.model[fkey] !== val
+                //result = FormValidator.getAnswerByQuestionKey(fkey) !== val
                 if(i === 0) results = result;
                 else results = results  && result;
                 i = i+1;
+                
               });
               
               
-              console.log('results' + results);
+              //console.log('results: ' + results);
               
               if(results === true){
-                  // console.log('+++scope ',element);
+                  //console.log('+++scope ',scope);
                   // console.log('+++model ', scope.model);
                   // console.log('+++this ', this);
                   if(element) {
@@ -150,6 +159,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               return results;
             });
           }
+        }
+        
+        function getFieldKeyFromGlobalById(id){
+            var obj = service.lastFormValidationMetadata[id];
+            if(obj)
+                return service.lastFormValidationMetadata[id].key;
+            return null;    
         }
 
         function getFormSchema(formName, callback) {
@@ -2122,6 +2138,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   field = createFormlyField(sec_field)
                 }
                 sectionFields.push(field);
+                addFieldToValidationMetadata(field, section, pageFields);
               });
               //creating formly field section
               section_id = section_id  + 1;
@@ -2156,8 +2173,21 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
           //return tabs;
           // console.log(JSON.stringify(tabs))
+          //console.log('Foooooooooorm', service.lastFormValidationMetadata);
           callback(tabs);
         }
+        
+        function addFieldToValidationMetadata(field, section, page){
+            //console.log('etl stuff', field);
+            if(field && field.data && field.data.id && field.data.id !== ''){
+                service.lastFormValidationMetadata[field.data.id] = {
+                    key: field.key,
+                    section: section,
+                    page: page
+                };
+            }
+        }
+        
 
         function getFormattedValue(value){
             console.log(value)
