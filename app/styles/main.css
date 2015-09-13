@@ -8,7 +8,7 @@
 html, body {
   padding: 0;
   padding-top: 29px;
-  
+
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -81,7 +81,7 @@ html, body {
     border-color: red;
     border-width: 2px;
   }
-  
+
   .fade {
 opacity: 0;
 -webkit-transition: opacity 1s linear;
@@ -117,15 +117,15 @@ opacity: 0;
 }
 
 /* when hiding the thing */
-.ng-hide-add.animate-hide { 
-  -webkit-animation:0.2s lightSpeedOut ease; 
-  animation:0.2s lightSpeedOut ease; 
+.ng-hide-add.animate-hide {
+  -webkit-animation:0.2s lightSpeedOut ease;
+  animation:0.2s lightSpeedOut ease;
 }
 
 /* when showing the thing */
-.ng-hide-remove.animate-show { 
-  -webkit-animation:0.5s flipInX ease; 
-  animation:0.5s flipInX ease; 
+.ng-hide-remove.animate-show {
+  -webkit-animation:0.5s flipInX ease;
+  animation:0.5s flipInX ease;
 }
 
 /* ANIMATIONS (FROM ANIMATE.CSS) */
