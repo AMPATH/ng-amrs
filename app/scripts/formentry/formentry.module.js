@@ -16,13 +16,16 @@
         ])
 
     .run(function(formlyConfig, formlyValidationMessages, formlyApiCheck) {
-    formlyConfig.setWrapper({
-      name: 'validation',
-      types: ['input', 'customInput','datepicker','ui-select-extended', 'select'],
-      templateUrl: 'my-messages.html'
-    });
+
+    formlyConfig.extras.errorExistsAndShouldBeVisibleExpression = 'fc.$touched || form.$submitted';
 
     formlyValidationMessages.addStringMessage('required', 'This field is required');
+
+    formlyConfig.setWrapper({
+      name: 'validation',
+      types: ['input', 'customInput','datepicker', 'customInputs', 'select'],
+      templateUrl: 'error-messages.html'
+    });
 
     formlyConfig.setType({
       name: 'customInput',
@@ -37,6 +40,16 @@
     formlyConfig.setType({
       name: 'datepicker',
       extends: 'input',
+      apiCheck: {
+        templateOptions: formlyApiCheck.shape({
+          foo: formlyApiCheck.string.optional
+        })
+      }
+    });
+
+    formlyConfig.setType({
+      name: 'customInputs',
+      extends: 'select',
       apiCheck: {
         templateOptions: formlyApiCheck.shape({
           foo: formlyApiCheck.string.optional

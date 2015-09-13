@@ -11,7 +11,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
     FormentryCtrl.$inject = ['$translate', 'dialogs', '$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'OpenmrsRestService', '$timeout', 'FormsMetaData'];
 
     function FormentryCtrl($translate, dialogs, $location, $rootScope, $stateParams, $state, $scope, FormentryService, OpenmrsRestService, $timeout, FormsMetaData) {
-        FormentryService.currentFormModel = {}; 
+        FormentryService.currentFormModel = {};
         $scope.vm = {};
         $scope.vm.isBusy = true;
         $scope.vm.error = '';
@@ -227,6 +227,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             }
             else {
+              // console.log('FormLy Form',$scope.vm);
+              // console.log('FormLy Scope',$scope);
+              // console.log('FormLy Json',$scope.vm.form.$validate());
+              // console.log('FormLy Field',$scope.vm.tabs);
+              //
+              // $scope.vm.form.setValidity()
+
               var error_required = $scope.vm.form.$error;
               var error_date = $scope.vm.form.$error;
               if(error_required !== undefined)
@@ -256,6 +263,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             }
 
         }
+
+
+function getErrorAsList(field) {
+_.each(Object.keys(field.formControl.$error), function(t){
+  console.log(t)
+});
+}
 
 function voidObs(pay_load)
 {

@@ -20,10 +20,106 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             getCompiledFormSchema: getCompiledFormSchema,
             generateFormPayLoad: generateFormPayLoad,
             updateFormPayLoad: updateFormPayLoad,
+            getFieldById_Key:getFieldById_Key,
             lastFormValidationMetadata: {},
             currentFormModel: {}
         };
         var obs_id = 0;
+        var g_fields; // var to hold all the fields on a form
+        var readyFields = [];
+
+        function getFieldById_Key(id_key, searchFields)
+        {
+          var selected_field;
+
+          //Search from the schema that is being currently built
+          if(readyFields.length>0)
+          {
+            _.each(readyFields, function(_field){
+              if(_field.type !== 'repeatSection' && _field.type !== undefined)
+              {
+                if (_field.key === id_key || _field.data.id === id_key )
+                {
+                  selected_field =_field;
+                  console.log('matched field',_field);
+                  return selected_field;
+                }
+              }
+              else if (_field.type === 'repeatSection'){
+                _.each(_field.templateOptions.fields[0].fieldGroup, function(_field_){
+                  if(_field_.key === id_key || _field_.data.id === id_key)
+                  {
+                    selected_field =_field_;
+                    console.log('matched field',_field_);
+                    return selected_field;
+                  }
+                });
+              }
+              else {
+                _.each(_field.fieldGroup, function(__field_){
+                  if( __field_.key === id_key ||  __field_.data.id === id_key)
+                  {
+                    selected_field = __field_;
+                    console.log('matched field',__field_);
+                    return selected_field;
+                  }
+                });
+              }
+            })
+          }
+
+          //search form the complete formly schema that is organized in tabs
+          if (searchFields === undefined) searchFields = g_fields;
+          // start by looping through the tabs
+
+          _.each(searchFields, function(page){
+            //loop through the sections in a page
+            _.each(page.form.fields, function(_section){
+              /*the assumption is that all questions will be in a section
+              but maybe we may have a question that is not isn a section
+              */
+              if(_section.type === 'section')
+              {
+                _.each(_section.templateOptions.fields[0].fieldGroup, function (_field) {
+                  // body...
+                  if(_field.type !== 'section' && _field.type !== 'group' && _field.type !== 'repeatSection' && _field.type !== undefined)
+                  {
+                    // console.log('testing selected key_first opt ', _field)
+                    if (_field.key === id_key || _field.data.id === id_key )
+                    {
+                      selected_field =_field;
+                      console.log('matched field',_field);
+                      return selected_field;
+                    }
+                  }
+                  else if (_field.type === 'repeatSection'){
+                    _.each(_field.templateOptions.fields[0].fieldGroup, function(_field_){
+                      if(_field_.key === id_key || _field_.data.id === id_key)
+                      {
+                        selected_field =_field_;
+                        console.log('matched field',_field_);
+                        return selected_field;
+                      }
+                    });
+                  }
+                  else {
+                    _.each(_field.fieldGroup, function(__field_){
+                      if( __field_.key === id_key ||  __field_.data.id === id_key)
+                      {
+                        selected_field = __field_;
+                        console.log('matched field',__field_);
+                        return selected_field;
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          });
+
+          console.log('No matching Field found')
+          return selected_field;
+        }
 
         return service;
 
@@ -35,14 +131,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           })
           return result;
         }
-        
+
         function getFieldValidators(arrayOfValidations) {
            var validator = {};
-           
+
            _.each(arrayOfValidations, function(validate){
                validator[validate.type] = getFieldValidator(validate);
            });
-           
+
            return validator;
         }
 
@@ -89,7 +185,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 var value = modelValue || viewValue;
                 var dateValue;
                 var curDate = Date.parse(Date.today(),'d-MMM-yyyy');
-               
+
                 if(value !== undefined && value !== null && value !== '')
                 {
                      console.log('before lunch: ', value);
@@ -106,22 +202,26 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               message: '"Should be a future date!"'
             };
           }
-          
+
           if((params.type === 'conditionalAnswered'))
           {
             return {
               expression: function(viewValue, modelValue, elementScope) {
-                  
+
                   var val = viewValue || modelValue;
-                  
+
                   var referenceQuestionkey = getFieldKeyFromGlobalById(params.referenceQuestionId);
-                  
+                  var referenceQuestion = getFieldById_Key(params.referenceQuestionId);
+                  if (referenceQuestion !== undefined) referenceQuestionkey =referenceQuestion.key
+
+                  console.log('test Field Search+++', referenceQuestion);
+
                   var referenceQuestionCurrentValue = FormValidator.getAnswerByQuestionKey(service.currentFormModel, referenceQuestionkey);
-                   
+
                    var referenceQuestionAllowableAnswers = params.referenceQuestionAnswers;
-                   
+
                    var isValid = false;
-                                      
+
                    _.each(referenceQuestionAllowableAnswers, function(answer) {
                        if(referenceQuestionCurrentValue === answer)
                         isValid = true;
@@ -135,45 +235,79 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           if((params.type === 'conditionalRequired'))
           {
               console.log('wiring conditional-required validation');
-            return {
-              expression: function(viewValue, modelValue, elementScope) {
-                  
-                  var val = viewValue || modelValue;
-                  
-                  //if(val) return true;
-                  
-                  var referenceQuestionkey = getFieldKeyFromGlobalById(params.referenceQuestionId);
-                   console.log('referenceQuestionId', params.referenceQuestionId); 
-                    console.log('q7a', getFieldKeyFromGlobalById(params.referenceQuestionId));
-                  var referenceQuestionCurrentValue = FormValidator.getAnswerByQuestionKey(service.currentFormModel, referenceQuestionkey);
-                   
-                   var referenceQuestionAllowableAnswers = params.referenceQuestionAnswers;
-                   
-                   console.log('val', val);
-                   
-                   var isUnscheduled = false;
-                      console.log('referenceQuestionCurrentValue', referenceQuestionCurrentValue);                
-                   _.each(referenceQuestionAllowableAnswers, function(answer) {
-                        console.log('answer', answer);
-                       if(referenceQuestionCurrentValue === answer)
-                        isUnscheduled = true;
-                   });
-                   
-                   console.log("isUnscheduled", isUnscheduled);
-                   if (isUnscheduled && (val === undefined || val === null || val === "") )
-                    return false;
-                   else return true;
-                   
-                     
-                  console.log('isValid',isValid);
-                  return isValid;
-              },
-              message:  '"' + params.message +  '"'
-            };
+              /*
+              Adding ability to do conditionalRequired
+              Toggle between required and not required
+              */
+              return (function($viewValue, $modelValue, scope, element) {
+
+                var i = 0;
+                var fkey;
+                var results;
+                var results;
+
+                var referenceQuestionkey = getFieldKeyFromGlobalById(params.referenceQuestionId);
+                var referenceQuestion = getFieldById_Key(params.referenceQuestionId);
+                if (referenceQuestion !== undefined) referenceQuestionkey =referenceQuestion.key;
+
+                fkey = referenceQuestionkey;
+
+                _.each(params.referenceQuestionAnswers, function(val){
+
+                  result = scope.model[fkey] === val
+                  //result = FormValidator.getAnswerByQuestionKey(fkey) !== val
+                  if(i === 0) results = result;
+                  else results = results  || result;
+                  i = i+1;
+
+                });
+                 return results;
+               });
+
+
+            // return {
+            //   expression: function(viewValue, modelValue, elementScope) {
+            //
+            //       var val = viewValue || modelValue;
+            //
+            //       //if(val) return true;
+            //
+            //       var referenceQuestionkey = getFieldKeyFromGlobalById(params.referenceQuestionId);
+            //       var referenceQuestion = getFieldById_Key(params.referenceQuestionId);
+            //       if (referenceQuestion !== undefined) referenceQuestionkey =referenceQuestion.key;
+            //        console.log('referenceQuestionId', params.referenceQuestionId);
+            //       // console.log('q7a', getFieldKeyFromGlobalById(params.referenceQuestionId));
+            //       console.log('q7a ', referenceQuestionkey);
+            //
+            //       var referenceQuestionCurrentValue = FormValidator.getAnswerByQuestionKey(service.currentFormModel, referenceQuestionkey);
+            //
+            //        var referenceQuestionAllowableAnswers = params.referenceQuestionAnswers;
+            //
+            //        console.log('val', val);
+            //
+            //        var isUnscheduled = false;
+            //           console.log('referenceQuestionCurrentValue', referenceQuestionCurrentValue);
+            //        _.each(referenceQuestionAllowableAnswers, function(answer) {
+            //             console.log('answer', answer);
+            //            if(referenceQuestionCurrentValue === answer)
+            //             isUnscheduled = true;
+            //        });
+            //
+            //        console.log("isUnscheduled", isUnscheduled);
+            //        if (isUnscheduled && (val === undefined || val === null || val === "") )
+            //         return false;
+            //        else return true;
+            //
+            //
+            //       console.log('isValid',isValid);
+            //       return isValid;
+            //   },
+            //   message:  '"' + params.message +  '"'
+            // };
           }
-          
-          
-          
+
+
+
 
           if(params.field !== undefined && params.value !== undefined)
           {
@@ -196,30 +330,30 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
             return (function($viewValue, $modelValue, scope, element) {
               //if element is undefined then we are looking for a disable expression
-              //if element is defined then we are looking for a hide expression   
-                
+              //if element is defined then we are looking for a hide expression
+
               var i = 0;
               // console.log('current scope', scope)
               var fkey;
-              
+
               if(params.field === 'gender' || params.field === 'sex') fkey = 'sex';
               else fkey = getFieldKeyById(params.field, scope.fields)
-              
+
               //else fkey = getFieldKeyFromGlobalById(params.field);
-              
+
               _.each(params.value, function(val){
-                  
+
                 result = scope.model[fkey] !== val
                 //result = FormValidator.getAnswerByQuestionKey(fkey) !== val
                 if(i === 0) results = result;
                 else results = results  && result;
                 i = i+1;
-                
+
               });
-              
-              
+
+
               //console.log('results: ' + results);
-              
+
               if(results === true){
                   //console.log('+++scope ',scope);
                   // console.log('+++model ', scope.model);
@@ -230,19 +364,19 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   }
                   else {
                       //case disable
-                    FormValidator.clearQuestionValueByKey(scope.model, scope.options.key);    
+                    FormValidator.clearQuestionValueByKey(scope.model, scope.options.key);
                   }
               }
               return results;
             });
           }
         }
-        
+
         function getFieldKeyFromGlobalById(id){
             var obj = service.lastFormValidationMetadata[id];
             if(obj)
                 return service.lastFormValidationMetadata[id].key;
-            return null;    
+            return null;
         }
 
         function getFormSchema(formName, callback) {
@@ -1728,6 +1862,18 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           return formPayLoad;
         }
 
+        function getConditionalValidationParams(params)
+        {
+          if(params !== undefined)
+          {
+            var conditionalRequired = _.find(params, function(field){
+              if(field.type === 'conditionalRequired')
+              return field;
+            })
+            return conditionalRequired;
+          }
+        }
+
         /*
         Private method to create valid keys
         */
@@ -1757,7 +1903,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           // }
           var hideExpression_;
           var disableExpression_;
-          
+
           var id_;
           if(obs_field.id !== undefined)
           {
@@ -1770,8 +1916,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           else {
             hideExpression_ = '';
           }
-          
-          
+
+
           if(obs_field.disable !== undefined)
           {
             disableExpression_= getFieldValidator(obs_field.disable[0], obs_id);
@@ -1779,16 +1925,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           else {
             disableExpression_ = '';
           }
-          
+
           var obsField = {};
           if (validateFieldFormat(obs_field) !== true)
           {
             console.log('Something Went Wrong While creating this field', obs_field)
           }
-          
+
           //console.log('validators', obs_field);
             var validators = obs_field.validators;
-            
+
             //set the validator to default validator
             var defaultValidator = {
               expression: function(viewValue, modelValue, scope) {
@@ -1796,21 +1942,39 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               },
               message: ''
             };
-            
+
             var compiledValidators = {
                 defaultValidator: defaultValidator
             };
-            
+
             if(validators && validators.length !== 0){
                 compiledValidators = getFieldValidators(validators);
             }
-            
-            
-          
+
+
+
           if(obs_field.type === 'date')
           {
-            var required=false;
-            if (obs_field.required !== undefined) required=Boolean(obs_field.required);
+            var required='false';
+            if (obs_field.required !== undefined)
+            {
+
+              required=obs_field.required;
+            }
+            else {
+              //look for conditonal requirements
+              var conditionalParams;
+              if(validators && validators.length !== 0){
+                  conditionalParams = getConditionalValidationParams(validators);
+              }
+              var conditionalRequired;
+              if(conditionalParams !== undefined)
+              {
+                conditionalRequired = getFieldValidator(conditionalParams);
+                required = conditionalRequired;
+              }
+
+            }
 
             obsField = {
               key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
@@ -1821,12 +1985,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               templateOptions: {
                 type: 'text',
                 label: obs_field.label,
-                datepickerPopup: 'dd-MMMM-yyyy',
-                required:required
-                
+                datepickerPopup: 'dd-MMMM-yyyy'
               },
                expressionProperties: {
-                'templateOptions.disabled': disableExpression_
+                'templateOptions.disabled': disableExpression_,
+                'templateOptions.required': required
                },
               hideExpression:hideExpression_,
               validators: compiledValidators
@@ -1834,8 +1997,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           }
           else if ((obs_field.type === 'text') || (obs_field.type === 'number'))
           {
-            var required=false;
-            if (obs_field.required !== undefined) required=Boolean(obs_field.required);
+            var required='false';
+            if (obs_field.required !== undefined) required=obs_field.required;
 
             obsField = {
               key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
@@ -1845,11 +2008,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 id:id_},
               templateOptions: {
                 type: obs_field.type,
-                label: obs_field.label,
-                required:required
+                label: obs_field.label
               },
                expressionProperties: {
-                'templateOptions.disabled': disableExpression_
+                'templateOptions.disabled': disableExpression_,
+                'templateOptions.required': required
                },
               hideExpression:hideExpression_,
               validators: compiledValidators
@@ -1872,8 +2035,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               opts.push(item);
             });
 
-            var required=false;
-            if (obs_field.required !== undefined) required=Boolean(obs_field.required);
+            var required='false';
+            if (obs_field.required !== undefined) required=obs_field.required;
 
             obsField = {
               key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
@@ -1887,9 +2050,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   }
                 },
               templateOptions: {
-                type: obs_field.type,
+                type: 'text',
                 label: obs_field.label,
-                required:required,
                 options:opts,
                 customExpression: function(value, options, scope, $event) {
                   //Not being used for now but will be a great feature for various stuff
@@ -1906,20 +2068,21 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 }
               },
               expressionProperties: {
-                'templateOptions.disabled': disableExpression_
+                'templateOptions.disabled': disableExpression_,
+                'templateOptions.required': required
                },
               hideExpression:hideExpression_
             }
           }
           else if(obs_field.type === 'problem'){
-              
-            
+
+
             if(validators && validators.length !== 0){
                 defaultValidator = getFieldValidator(obs_field.validators[0])
             }
-            
-            var required=false;
-            if (obs_field.required !== undefined) required=Boolean(obs_field.required);
+
+            var required='false';
+            if (obs_field.required !== undefined) required=obs_field.required;
             obsField = {
               key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
               defaultValue: defaultValue_,
@@ -1933,19 +2096,19 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 labelProp:'display',
                 deferredFilterFunction: SearchDataService.findProblem,
                 getSelectedObjectFunction: SearchDataService.getProblemByUuid,
-                required:required,
                 options:[]
               },
               expressionProperties: {
-                'templateOptions.disabled': disableExpression_
+                'templateOptions.disabled': disableExpression_,
+                'templateOptions.required': required
                },
               hideExpression:hideExpression_,
               validators: compiledValidators
             };
           }
           else if(obs_field.type === 'drug'){
-            var required=false;
-            if (obs_field.required !== undefined) required=Boolean(obs_field.required);
+            var required='false';
+            if (obs_field.required !== undefined) required=obs_field.required;
             obsField = {
               key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
               type: 'ui-select-extended',
@@ -1959,17 +2122,17 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 labelProp:'display',
                 deferredFilterFunction: SearchDataService.findDrugConcepts,
                 getSelectedObjectFunction: SearchDataService.getDrugConceptByUuid,
-                required:required,
                 options:[]
               },
               expressionProperties: {
-                'templateOptions.disabled': disableExpression_
+                'templateOptions.disabled': disableExpression_,
+                'templateOptions.required': required
                }
             };
           }
         else if(obs_field.type === 'select-concept-answers'){
-            var required=false;
-            if (obs_field.required !== undefined) required=Boolean(obs_field.required);
+            var required='false';
+            if (obs_field.required !== undefined) required=obs_field.required;
             obsField = {
               key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
               defaultValue: defaultValue_,
@@ -1977,9 +2140,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               data: {concept:obs_field.concept,
                 id:id_},
               templateOptions: {
-                type: 'concept-search-select',
+                type: 'text',
                 label: obs_field.label,
-                required:required,
                 options:[],
                 displayMember:'label',
                 valueMember:'concept',
@@ -1989,11 +2151,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
               },
               expressionProperties: {
-                'templateOptions.disabled': disableExpression_
+                'templateOptions.disabled': disableExpression_,
+                'templateOptions.required': required
                },
               hideExpression:hideExpression_
             };
           }
+          // console.log('Obs field', obsField);
           return obsField;
         }
 
@@ -2048,6 +2212,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             key:'obs' + gpSectionRnd + '_' + createFieldKey(sectionKey),
             fieldGroup:groupingFields
           }
+
           return obsField;
         }
 
@@ -2131,6 +2296,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 data: {},
                 templateOptions: {
                   label: 'sex',
+                  type: 'text',
                   required:false,
                   options:[{name:'Female', value:'F'},{name:'Male', value:'M'}]
                 },
@@ -2239,7 +2405,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   field = createFormlyField(sec_field)
                 }
                 sectionFields.push(field);
-                addFieldToValidationMetadata(field, section, pageFields, sec_field.type);
+                addToReadyFields(field)
+                // addFieldToValidationMetadata(field, section, pageFields, sec_field.type);
               });
               //creating formly field section
               section_id = section_id  + 1;
@@ -2275,9 +2442,21 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           //return tabs;
           // console.log(JSON.stringify(tabs))
           //console.log('Foooooooooorm', service.lastFormValidationMetadata);
+          //update the global set of fields
+          g_fields = tabs;
           callback(tabs);
         }
-        
+
+        function addToReadyFields(field)
+        {
+          // //console.log('Ready Fields',field.type);
+          // if(field.type === 'repeatSection' || field.type === undefined)
+          //   console.log('Ready Fields',field);
+
+          readyFields.push(field);
+
+        }
+
         function addFieldToValidationMetadata(field, section, page, typeOfField){
             //console.log('etl stuff', field);
             if(field && field.data && field.data.id && field.data.id !== ''){
@@ -2287,14 +2466,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     page: page
                 };
             }
-            
+
             if(typeOfField === 'group'){
                    _.each(field.fieldGroup, function(groupField){
                        addFieldToValidationMetadata(groupField, section, page, 'field');
                    });
             }
         }
-        
+
 
         function getFormattedValue(value){
             console.log(value)
