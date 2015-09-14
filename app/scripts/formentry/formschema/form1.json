@@ -1612,6 +1612,7 @@
                   "label": "4"
                 }
               ],
+              "required":"true",
               "type": "select",
               "validators": []
             },

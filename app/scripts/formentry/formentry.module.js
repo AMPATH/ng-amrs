@@ -20,10 +20,13 @@
     formlyConfig.extras.errorExistsAndShouldBeVisibleExpression = 'fc.$touched || form.$submitted';
 
     formlyValidationMessages.addStringMessage('required', 'This field is required');
+    formlyValidationMessages.addTemplateOptionValueMessage('max', 'max', 'The max value allowed is ', '', 'Too Big');
+    formlyValidationMessages.addTemplateOptionValueMessage('min', 'min', 'The min value allowed is ', '', 'Too Small');
+
 
     formlyConfig.setWrapper({
       name: 'validation',
-      types: ['input', 'customInput','datepicker', 'customInputs', 'select'],
+      types: ['input', 'customInput','datepicker', 'select', 'section'],
       templateUrl: 'error-messages.html'
     });
 
@@ -48,8 +51,8 @@
     });
 
     formlyConfig.setType({
-      name: 'customInputs',
-      extends: 'select',
+      name: 'section',
+      extends: 'input',
       apiCheck: {
         templateOptions: formlyApiCheck.shape({
           foo: formlyApiCheck.string.optional
