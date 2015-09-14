@@ -94,13 +94,11 @@
               "label": "7b. If Unscheduled, actual scheduled date",
               "type": "date",
               "validators": [
-                
                 {
                   "type": "expression",
                   "failsWhenExpression": "!isEmpty(q7a) && arrayContains(['a89ff816-1350-11df-a1f1-0026b9348838','a89ff8de-1350-11df-a1f1-0026b9348838'], q7a) && isEmpty(myValue)",
                   "message": "Patient visit marked as unscheduled. Please provide the scheduled date."
                 }
-                
               ]
             }
           ]
@@ -644,6 +642,7 @@
             {
               "concept": "a899e35e-1350-11df-a1f1-0026b9348838",
               "label": "14b. TB Prophylaxis:",
+              "id":"q14b",
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -712,6 +711,26 @@
               "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
               "type": "group",
               "questions": [
+                {
+                  "concept": "a899e444-1350-11df-a1f1-0026b9348838",
+                  "label": "15 a.On TB treatment:",
+                  "answers": [
+                    {
+                      "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                      "label": "None"
+                    },
+                    {
+                      "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                      "label": "On treatment"
+                    }
+                  ],
+                  "type": "select",
+                  "validators": [{
+                  "type": "expression",
+                  "failsWhenExpression": "!isEmpty(myValue) && myValue === 'a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(q14b) && q14b === 'a896cc00-1350-11df-a1f1-0026b9348838'",
+                  "message": "Patient cannot be on TB Prophylaxis and TB Treatment. Please choose one or the other."
+                }]
+                },
                 {
                   "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
                   "label": "b. Start Date of TB treatment:",
