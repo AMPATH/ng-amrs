@@ -15,7 +15,8 @@
               getMockStates: getMockStates,
               getMockObs: getMockObs,
               getMockModel: getMockModel,
-              getMockPatient: getMockPatient
+              getMockPatient: getMockPatient,
+              getMockObsField:getMockObsField
           };
 
           return mock_data;
@@ -82,6 +83,28 @@
               ];
           }
 
+          function getMockObsField()
+          {
+            var obsField = {
+              key: 'obs1_a89ff9a6n1350n11dfna1f1n0026b9348838',
+              type: 'select',
+              data: {concept:'a89ff9a6-1350-11df-a1f1-0026b9348838',
+                id:'q7a'},
+                defaultValue: '',
+              templateOptions: {
+                type: 'text',
+                label: '7a. Visit Type',
+                required:false,
+                options:[]
+              },
+               expressionProperties: {
+                'templateOptions.disabled': false
+               },
+              hideExpression:''
+            }
+            return obsField;
+          }
+
           function getMockSchema() {
               return {
                 "name": "test-form",
@@ -122,6 +145,7 @@
                         "questions": [
                           {
                             "concept": "a89ff9a6-1350-11df-a1f1-0026b9348838",
+                            "id":"q7a",
                             "label": "7a. Visit Type",
                             "type": "select",
                             "validators": [],

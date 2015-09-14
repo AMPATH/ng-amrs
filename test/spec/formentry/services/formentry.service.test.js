@@ -107,14 +107,19 @@
 
       describe('CreateForm method should return a tabbed form various input', function(){
         var tabs;
+
         beforeEach(function(){
           var schema = mockData.getMockSchema();
+
           //console.log(schema);
           formentryService.createForm(schema, function(data){
             tabs=data;
-            //console.log(tabs);
+            // console.log('++++++tabs',tabs);
           });
+
         });
+
+
 
         it('Should be able to add sections to a page', function(){
           expect(tabs).to.be.an('array');
@@ -137,6 +142,60 @@
         it('Should be able to add repeating section to sections in a page', function(){
           expect(tabs[1].form.fields[1].templateOptions.fields[0].fieldGroup[0].type).to.equal('repeatSection');
         });
+      });
+
+      describe('Should be able to Search any field in the form', function(){
+        var tabs;
+        var field;
+        var skey_Field;
+        var sid_Field;
+        var id ='q7a';
+        var key = 'obs1_a89ff9a6n1350n11dfna1f1n0026b9348838';
+
+        beforeEach(function(){
+          var schema = mockData.getMockSchema();
+          field = mockData.getMockObsField();
+          //console.log(schema);
+          formentryService.createForm(schema, function(data){
+            tabs=data;
+            // console.log('++++++tabs',tabs);
+          });
+          // g_fields=tabs;
+        });
+
+
+
+        it('Should be able to search field by Id', function(){
+          sid_Field = formentryService.getFieldById_Key(id);
+          expect(sid_Field).to.be.an('object');
+          expect(id).to.equal(sid_Field.data.id);
+          expect(sid_Field.key).to.equal(field.key);
+          expect(sid_Field.type).to.equal(field.type);
+        });
+
+        it('Should be able to search field by key', function(){
+          skey_Field = formentryService.getFieldById_Key(key);
+          expect(skey_Field).to.be.an('object');
+          expect(skey_Field.key).to.equal(field.key);
+          expect(skey_Field.type).to.equal(field.type);
+
+        });
+
+        it('Should be able to find EncounterDate Field', function(){
+          skey_Field = formentryService.getFieldById_Key('encounterDate');
+          expect(skey_Field).to.be.an('object');
+          expect(skey_Field.key).to.equal('encounterDate');
+          expect(skey_Field.type).to.equal('datepicker');
+
+        });
+
+        it('Should be able to return undefined if no field is found', function(){
+          skey_Field = formentryService.getFieldById_Key('test');
+          // console.log('++++', skey_Field);
+          expect(skey_Field).to.be.an('undefined');
+        });
+
+
       });
 
       describe('updateFormPayLoad method should be able to create a payLoad', function(){

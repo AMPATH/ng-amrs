@@ -25,20 +25,21 @@
     </div>
   </form>
   <hr />
-  
+
   <!--<h2>tabs</h2>
   <pre>{{vm.tabs | json}}</pre>-->
-  
+
   <h2>Model Value</h2>
   <pre>{{vm.model | json}}</pre>
   <!-- Put custom templates here -->
-  <script type="text/ng-template" id="my-messages.html">
-    <formly-transclude></formly-transclude>
-        <div class="my-messages" ng-messages="fc.$error" ng-if="options.formControl.$touched">
-          <div class="some-message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages" style="color:red;">
+  <script type="text/ng-template" id="error-messages.html">
+        <formly-transclude></formly-transclude>
+        <div class="error-messages" ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched">
+          <div class="message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages" style="color:red;">
             {{message(fc.$viewValue, fc.$modelValue, this)}}
           </div>
         </div>
+
   </script>
   <!-- Custom template to allows representation of repeatSection in a form. -->
   <script type="text/ng-template" id="repeatSection.html">
@@ -79,7 +80,7 @@
                 <div class="section" ng-repeat="element in to.fields" ng-init="fields = copyFields(to.fields)">
                   <formly-form fields="fields"
                                model="model[options.key]"
-                               bind-name="'formly_ng_repeat' + index + $parent.$index">
+                               bind-name="'formly_custom_section' + index + $parent.$index">
                   </formly-form>
                </div>
 
