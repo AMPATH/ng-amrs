@@ -26,7 +26,7 @@
 
     formlyConfig.setWrapper({
       name: 'validation',
-      types: ['input', 'customInput','datepicker', 'customInputs', 'select'],
+      types: ['input', 'customInput','datepicker', 'select', 'section'],
       templateUrl: 'error-messages.html'
     });
 
@@ -51,8 +51,8 @@
     });
 
     formlyConfig.setType({
-      name: 'customInputs',
-      extends: 'select',
+      name: 'section',
+      extends: 'input',
       apiCheck: {
         templateOptions: formlyApiCheck.shape({
           foo: formlyApiCheck.string.optional
