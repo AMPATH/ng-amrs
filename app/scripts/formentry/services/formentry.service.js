@@ -134,10 +134,15 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         function getFieldValidators(arrayOfValidations) {
            var validator = {};
-
+           var index = 1;
            _.each(arrayOfValidations, function(validate){
-               if(validate.type !== 'conditionalRequired')
-                  validator[validate.type] = getFieldValidator(validate);
+               var key = validate.type;
+               if(validate.type === 'expression'){
+                   key = key + index;
+                   index++;
+               }
+                if(validate.type !== 'conditionalRequired')
+               validator[key] = getFieldValidator(validate);
            });
 
            return validator;
@@ -203,7 +208,45 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               message: '"Should be a future date!"'
             };
           }
-
+          if(params.type === 'expression'){
+              console.log('wiring expression validation')
+              return {
+                expression: function(viewValue, modelValue, elementScope) {
+                    var val = viewValue || modelValue;
+                    
+                    var referencedQuestions = FormValidator.extractQuestionIds(params.expression, service.lastFormValidationMetadata);
+                    
+                    console.log('referencedQuestions', referencedQuestions);
+                    
+                    var keyValue = {};
+                    
+                    _.each(referencedQuestions, function(qId) {
+                       if(keyValue[qId] === undefined){
+                           var referenceQuestionkey = getFieldKeyFromGlobalById(qId);
+                           var referenceQuestionCurrentValue = FormValidator.getAnswerByQuestionKey(service.currentFormModel, referenceQuestionkey);
+                           keyValue[qId] = referenceQuestionCurrentValue;
+                       } 
+                    });
+                    
+                    console.log('keyValue', keyValue);
+                    
+                    var expressionToEvaluate = FormValidator.replaceQuestionsPlaceholdersWithValue(params.expression, keyValue);
+                    
+                    expressionToEvaluate = FormValidator.replaceQuestionsPlaceholdersWithValue(expressionToEvaluate, keyValue);
+                    
+                    expressionToEvaluate = FormValidator.replaceMyValuePlaceholdersWithActualValue(expressionToEvaluate, val);
+                    
+                    console.log('expressionToEvaluate',expressionToEvaluate);
+                    
+                    var isInvalid = FormValidator.evaluateExpression(expressionToEvaluate);
+                    
+                    console.log('isInvalid', isInvalid);
+                    return !isInvalid;
+                },
+                message: '"' + params.message +  '"'
+              };
+              
+          }
           if((params.type === 'conditionalAnswered'))
           {
             return {

@@ -16,6 +16,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             getContainingObjectForQuestionKey: getContainingObjectForQuestionKey,
             extractQuestionIds: extractQuestionIds,
             replaceQuestionsPlaceholdersWithValue: replaceQuestionsPlaceholdersWithValue,
+            replaceMyValuePlaceholdersWithActualValue: replaceMyValuePlaceholdersWithActualValue,
             evaluateExpression: evaluateExpression
         }
 
@@ -84,56 +85,63 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         function replaceQuestionsPlaceholdersWithValue(expression, keyValuObject) {
             var fieldIds = Object.keys(keyValuObject);
-            var replaced =  expression;
-            _.each(fieldIds, function (key){
+            var replaced = expression;
+            _.each(fieldIds, function (key) {
                 var toReplace = keyValuObject[key];
-                if(typeof keyValuObject[key] === 'string')
-                toReplace = '"' + toReplace + '"';
+                if (typeof keyValuObject[key] === 'string')
+                    toReplace = '"' + toReplace + '"';
                 replaced = replaced.replace(key, toReplace);
             });
             return replaced;
         }
 
-        function extractQuestionIds(expression, objectWithKeysBeingIds) {
-            var fieldIds = Object.keys(objectWithKeysBeingIds); 
-            var extracted = [];
-             _.each(fieldIds, function (key){
-                 var findResult = expression.search(key);
-                 if(findResult !== -1){
-                     extracted.push(key);
-                 }
-             });
-             
-             return extracted;
+        function replaceMyValuePlaceholdersWithActualValue(expression, myValue) {
+            var replaced = expression;
+            var toReplace = myValue;
+            if (typeof toReplace === 'string')
+                toReplace = '"' + toReplace + '"';
+            replaced = replaced.replace('myValue', toReplace);
+            return replaced;
         }
-        
-        
-        function evaluateExpression(expression){
+
+        function extractQuestionIds(expression, objectWithKeysBeingIds) {
+            var fieldIds = Object.keys(objectWithKeysBeingIds);
+            var extracted = [];
+            _.each(fieldIds, function (key) {
+                var findResult = expression.search(key);
+                if (findResult !== -1) {
+                    extracted.push(key);
+                }
+            });
+
+            return extracted;
+        }
+
+
+        function evaluateExpression(expression) {
             return eval(expression);
         }
-        
-        function isEmpty(val){
-            if(val === undefined || val === null || val  === ''){
+
+        function isEmpty(val) {
+            if (val === undefined || val === null || val === '') {
                 return true;
             }
             return false;
         }
-        
-        function arrayContains(array, members){
-            if(Array.isArray(members)){
-                if(members.length === 0) return true;
+
+        function arrayContains(array, members) {
+            if (Array.isArray(members)) {
+                if (members.length === 0) return true;
                 var contains = true;
-               _.each(members, function(val) {
-                   if(array.indexOf(val) === -1)
-                   {
-                       contains = false;
-                   }
-               });
-               return contains; 
+                _.each(members, function (val) {
+                    if (array.indexOf(val) === -1) {
+                        contains = false;
+                    }
+                });
+                return contains;
             }
-            else
-            {
-               return array.indexOf(members) !== -1; 
+            else {
+                return array.indexOf(members) !== -1;
             }
         }
 		  }

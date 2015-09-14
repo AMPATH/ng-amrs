@@ -99,14 +99,11 @@
                   "allowFutureDates": "true"
                 },
                 {
-                  "type": "conditionalRequired",
-                  "message": "Patient visit marked as unscheduled. Please provide the scheduled date.",
-                  "referenceQuestionId": "q7a",
-                  "referenceQuestionAnswers": [
-                    "a89ff816-1350-11df-a1f1-0026b9348838",
-                    "a89ff8de-1350-11df-a1f1-0026b9348838"
-                  ]
+                  "type": "expression",
+                  "expression": "!isEmpty(q7a) && arrayContains(['a89ff816-1350-11df-a1f1-0026b9348838','a89ff8de-1350-11df-a1f1-0026b9348838'], q7a) && isEmpty(myValue)",
+                  "message": ""
                 }
+                
               ]
             }
           ]
