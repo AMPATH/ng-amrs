@@ -10,7 +10,11 @@
 
   function EtlRestServicesSettings($cookies) {
     var serviceDefinition;
-    var restUrlBaseList = ['https://etl.ampath.or.ke:8002/etl/', 'https://test1.ampath.or.ke:8002/etl/'];
+    var restUrlBaseList = [
+      'https://etl.ampath.or.ke:8002/etl/', 
+      'https://test1.ampath.or.ke:8002/etl/',
+      'https://amrsreporting.ampath.or.ke:8002/etl/'
+    ];
     var restUrlBase = restUrlBaseList[1];
 
     initialize();
