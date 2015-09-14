@@ -95,17 +95,9 @@
               "type": "date",
               "validators": [
                 {
-                  "type": "date",
-                  "allowFutureDates": "true"
-                },
-                {
-                  "type": "conditionalRequired",
-                  "message": "Patient visit marked as unscheduled. Please provide the scheduled date.",
-                  "referenceQuestionId": "q7a",
-                  "referenceQuestionAnswers": [
-                    "a89ff816-1350-11df-a1f1-0026b9348838",
-                    "a89ff8de-1350-11df-a1f1-0026b9348838"
-                  ]
+                  "type": "expression",
+                  "failsWhenExpression": "!isEmpty(q7a) && arrayContains(['a89ff816-1350-11df-a1f1-0026b9348838','a89ff8de-1350-11df-a1f1-0026b9348838'], q7a) && isEmpty(myValue)",
+                  "message": "Patient visit marked as unscheduled. Please provide the scheduled date."
                 }
               ]
             }
@@ -650,6 +642,7 @@
             {
               "concept": "a899e35e-1350-11df-a1f1-0026b9348838",
               "label": "14b. TB Prophylaxis:",
+              "id":"q14b",
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -712,7 +705,13 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                  "type": "expression",
+                  "failsWhenExpression": "!isEmpty(myValue) && myValue === 'a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(q14b) && q14b === 'a896cc00-1350-11df-a1f1-0026b9348838'",
+                  "message": "Patient cannot be on TB Prophylaxis and TB Treatment. Please choose one or the other."
+                }
+              ]
             },
             {
               "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
@@ -2188,8 +2187,8 @@
               ]
             },
             {
-              "concept": "a89b6a62-1350-11df-a1f1-0026b9348838",
-              "label": "24e. If patient on ARVS, choose regimen below:",
+              "concept": "a89b662-1350-11df-a1f1-0026b9348838",
+              "label": "24e. If ARV regimen started or changed, choose regimen below:",
               "id": "q24e",
               "answers": [
                 {
@@ -2266,7 +2265,7 @@
                   ]
                 }
               ],
-              "validators": []
+              "validators": []            
             }
           ]
         },

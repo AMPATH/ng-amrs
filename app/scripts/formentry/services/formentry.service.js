@@ -134,10 +134,15 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         function getFieldValidators(arrayOfValidations) {
            var validator = {};
-
+           var index = 1;
            _.each(arrayOfValidations, function(validate){
-               if(validate.type !== 'conditionalRequired')
-                  validator[validate.type] = getFieldValidator(validate);
+               var key = validate.type;
+               if(validate.type === 'expression'){
+                   key = key + index;
+                   index++;
+               }
+                if(validate.type !== 'conditionalRequired')
+               validator[key] = getFieldValidator(validate);
            });
 
            return validator;
@@ -179,10 +184,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           if((params.type === 'date') && (params.allowFutureDates === 'true'))
           {
             return {
-              expression: function(viewValue, modelValue) {
+              expression: function(viewValue, modelValue, elementScope) {
                 /*
                 using datejs library
-                */
+                */ 
                 var value = modelValue || viewValue;
                 var dateValue;
                 var curDate = Date.parse(Date.today(),'d-MMM-yyyy');
@@ -203,7 +208,45 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               message: '"Should be a future date!"'
             };
           }
-
+          if(params.type === 'expression'){
+              console.log('wiring expression validation')
+              return {
+                expression: function(viewValue, modelValue, elementScope) {
+                    var val = viewValue || modelValue;
+                    
+                    var referencedQuestions = FormValidator.extractQuestionIds(params.failsWhenExpression, service.lastFormValidationMetadata);
+                    
+                    console.log('referencedQuestions', referencedQuestions);
+                    
+                    var keyValue = {};
+                    
+                    console.log('service.lastFormValidationMetadata', service.lastFormValidationMetadata);
+                    
+                    _.each(referencedQuestions, function(qId) {
+                       if(keyValue[qId] === undefined){
+                           var referenceQuestionkey = getFieldKeyFromGlobalById(qId);
+                           var referenceQuestionCurrentValue = FormValidator.getAnswerByQuestionKey(service.currentFormModel, referenceQuestionkey);
+                           keyValue[qId] = referenceQuestionCurrentValue;
+                       } 
+                    });
+                    
+                    console.log('keyValue', keyValue);
+                    
+                    var expressionToEvaluate = FormValidator.replaceQuestionsPlaceholdersWithValue(params.failsWhenExpression, keyValue);
+                    
+                    expressionToEvaluate = FormValidator.replaceMyValuePlaceholdersWithActualValue(expressionToEvaluate, val);
+                    
+                    console.log('expressionToEvaluate',expressionToEvaluate);
+                    
+                    var isInvalid = FormValidator.evaluateExpression(expressionToEvaluate);
+                    
+                    console.log('isInvalid', isInvalid);
+                    return !isInvalid;
+                },
+                message: '"' + params.message +  '"'
+              };
+              
+          }
           if((params.type === 'conditionalAnswered'))
           {
             return {
@@ -2070,34 +2113,17 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               defaultValue: defaultValue_,
               data: {concept:obs_field.concept,
                 id:id_},
-                ngModelAttrs: {
-                  customExpression: {
-                    expression: 'custom-expression'
-                  }
-                },
               templateOptions: {
                 type: 'text',
                 label: obs_field.label,
-                options:opts,
-                customExpression: function(value, options, scope, $event) {
-                  //Not being used for now but will be a great feature for various stuff
-                  // alert('Custom expression!');
-                  // console.log(arguments);
-                  // console.log(scope.model);
-                  // _.each(Object.keys(scope.model), function(key){
-                  //   if(key !== 'obs_' + createFieldKey('a899e444-1350-11df-a1f1-0026b9348838') && !key.startsWith('$$'))
-                  //   {
-                  //     console.log('Current Value',scope.model[key]);
-                  //     delete scope.model[key];
-                  //   }
-                  // });
-                }
+                options:opts
               },
               expressionProperties: {
                 'templateOptions.disabled': disableExpression_,
                 'templateOptions.required': required
                },
-              hideExpression:hideExpression_
+              hideExpression:hideExpression_,
+              validators: compiledValidators
             }
           }
           else if(obs_field.type === 'problem'){
@@ -2432,7 +2458,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 }
                 sectionFields.push(field);
                 addToReadyFields(field)
-                // addFieldToValidationMetadata(field, section, pageFields, sec_field.type);
+                addFieldToValidationMetadata(field, section, pageFields, sec_field.type);
               });
               //creating formly field section
               section_id = section_id  + 1;
