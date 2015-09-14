@@ -214,7 +214,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 expression: function(viewValue, modelValue, elementScope) {
                     var val = viewValue || modelValue;
                     
-                    var referencedQuestions = FormValidator.extractQuestionIds(params.expression, service.lastFormValidationMetadata);
+                    var referencedQuestions = FormValidator.extractQuestionIds(params.failsWhenExpression, service.lastFormValidationMetadata);
                     
                     console.log('referencedQuestions', referencedQuestions);
                     
@@ -230,7 +230,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     
                     console.log('keyValue', keyValue);
                     
-                    var expressionToEvaluate = FormValidator.replaceQuestionsPlaceholdersWithValue(params.expression, keyValue);
+                    var expressionToEvaluate = FormValidator.replaceQuestionsPlaceholdersWithValue(params.failsWhenExpression, keyValue);
                     
                     expressionToEvaluate = FormValidator.replaceQuestionsPlaceholdersWithValue(expressionToEvaluate, keyValue);
                     
