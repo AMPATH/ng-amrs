@@ -94,6 +94,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 var beforeReplaced = replaced;
                 
                 replaced = replaced.replace(key, toReplace);
+                
                 while (replaced.localeCompare(beforeReplaced) !== 0) {
                     beforeReplaced = replaced;
                     replaced = replaced.replace(key, toReplace);
@@ -109,11 +110,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 toReplace = '"' + toReplace + '"';
                 
             var beforeReplaced = replaced;
-                
             replaced = replaced.replace('myValue', toReplace);
-            
-             
-            
             while (replaced.localeCompare(beforeReplaced) !== 0) {
                 beforeReplaced = replaced;
                 replaced = replaced.replace('myValue', toReplace);

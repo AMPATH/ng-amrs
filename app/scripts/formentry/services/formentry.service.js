@@ -220,6 +220,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     
                     var keyValue = {};
                     
+                    console.log('service.lastFormValidationMetadata', service.lastFormValidationMetadata);
+                    
                     _.each(referencedQuestions, function(qId) {
                        if(keyValue[qId] === undefined){
                            var referenceQuestionkey = getFieldKeyFromGlobalById(qId);
@@ -2114,7 +2116,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               templateOptions: {
                 type: 'text',
                 label: obs_field.label,
-                required:required,
                 options:opts
               },
               expressionProperties: {
@@ -2457,7 +2458,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 }
                 sectionFields.push(field);
                 addToReadyFields(field)
-                // addFieldToValidationMetadata(field, section, pageFields, sec_field.type);
+                addFieldToValidationMetadata(field, section, pageFields, sec_field.type);
               });
               //creating formly field section
               section_id = section_id  + 1;

@@ -705,32 +705,18 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                  "type": "expression",
+                  "failsWhenExpression": "!isEmpty(myValue) && myValue === 'a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(q14b) && q14b === 'a896cc00-1350-11df-a1f1-0026b9348838'",
+                  "message": "Patient cannot be on TB Prophylaxis and TB Treatment. Please choose one or the other."
+                }
+              ]
             },
             {
               "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
               "type": "group",
               "questions": [
-                {
-                  "concept": "a899e444-1350-11df-a1f1-0026b9348838",
-                  "label": "15 a.On TB treatment:",
-                  "answers": [
-                    {
-                      "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                      "label": "None"
-                    },
-                    {
-                      "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
-                      "label": "On treatment"
-                    }
-                  ],
-                  "type": "select",
-                  "validators": [{
-                  "type": "expression",
-                  "failsWhenExpression": "!isEmpty(myValue) && myValue === 'a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(q14b) && q14b === 'a896cc00-1350-11df-a1f1-0026b9348838'",
-                  "message": "Patient cannot be on TB Prophylaxis and TB Treatment. Please choose one or the other."
-                }]
-                },
                 {
                   "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
                   "label": "b. Start Date of TB treatment:",
