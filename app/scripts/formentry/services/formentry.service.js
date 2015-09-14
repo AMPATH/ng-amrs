@@ -136,7 +136,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
            var validator = {};
 
            _.each(arrayOfValidations, function(validate){
-               validator[validate.type] = getFieldValidator(validate);
+               if(validate.type !== 'conditionalRequired')
+                  validator[validate.type] = getFieldValidator(validate);
            });
 
            return validator;
@@ -149,7 +150,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
           if ((params.type === 'date') && (params.allowFutureDates !== 'true'))
           {
-            return {
+            return  {
               expression: function(viewValue, modelValue) {
                 /*
                 using datejs library
@@ -1995,7 +1996,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               validators: compiledValidators
             }
           }
-          else if ((obs_field.type === 'text') || (obs_field.type === 'number'))
+          else if (obs_field.type === 'text')
           {
             var required='false';
             if (obs_field.required !== undefined) required=obs_field.required;
@@ -2009,6 +2010,31 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               templateOptions: {
                 type: obs_field.type,
                 label: obs_field.label
+              },
+               expressionProperties: {
+                'templateOptions.disabled': disableExpression_,
+                'templateOptions.required': required
+               },
+              hideExpression:hideExpression_,
+              validators: compiledValidators
+            }
+          }
+          else if (obs_field.type === 'number')
+          {
+            var required='false';
+            if (obs_field.required !== undefined) required=obs_field.required;
+
+            obsField = {
+              key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
+              type: 'input',
+              defaultValue: defaultValue_,
+              data: {concept:obs_field.concept,
+                id:id_},
+              templateOptions: {
+                type: obs_field.type,
+                label: obs_field.label,
+                min:obs_field.min,
+                max:obs_field.max
               },
                expressionProperties: {
                 'templateOptions.disabled': disableExpression_,

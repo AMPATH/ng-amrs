@@ -20,6 +20,9 @@
     formlyConfig.extras.errorExistsAndShouldBeVisibleExpression = 'fc.$touched || form.$submitted';
 
     formlyValidationMessages.addStringMessage('required', 'This field is required');
+    formlyValidationMessages.addTemplateOptionValueMessage('max', 'max', 'The max value allowed is ', '', 'Too Big');
+    formlyValidationMessages.addTemplateOptionValueMessage('min', 'min', 'The min value allowed is ', '', 'Too Small');
+
 
     formlyConfig.setWrapper({
       name: 'validation',

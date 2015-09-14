@@ -17,11 +17,13 @@
            </formly-form>
          </tab>
 
-         <tab heading="Submit">
+         <!-- <tab heading="Submit">
            <button type="submit" class="btn btn-primary submit-button" ng-click="vm.onSubmit()">{{vm.submitLabel}}</button>
            <button type="button" class="btn btn-default" ng-click="vm.resetAllForms()">Cancel</button>
-         </tab>
+         </tab> -->
        </tabset>
+       <button type="submit" class="btn btn-primary submit-button" ng-click="vm.onSubmit()">{{vm.submitLabel}}</button>
+       <button type="button" class="btn btn-default" ng-click="vm.resetAllForms()">Cancel</button>
 
      </form>
      <hr />
@@ -33,14 +35,15 @@
      <pre ng-repeat="tab in vm.tabs">{{tab.form.fields | json}}</pre> -->
      <!-- important scripts Section -->
      <!-- Put custom templates here -->
-         <script type="text/ng-template" id="my-messages.html">
+     <script type="text/ng-template" id="error-messages.html">
            <formly-transclude></formly-transclude>
-           <div class="my-messages" ng-messages="fc.$error" ng-if="options.formControl.$touched">
-             <div class="some-message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages" style="color:red;">
+           <div class="error-messages" ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched">
+             <div class="message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages" style="color:red;">
                {{message(fc.$viewValue, fc.$modelValue, this)}}
              </div>
            </div>
-         </script>
+
+     </script>
          <!--
          Custom template to allows representation of repeatSection
          in a form.
@@ -77,19 +80,19 @@
                </script>
                <!-- sections test -->
                <script type="text/ng-template" id="section.html">
-               <div class="panel panel-default">
-               <div class="panel-heading">
-               {{to.label}}
-               </div>
-               <div class="panel-body">
-               <!--loop through each element in model array-->
-                   <div class="section" ng-repeat="element in to.fields" ng-init="fields = copyFields(to.fields)">
-                     <formly-form fields="fields"
-                                  model="model[options.key]"
-                                  bind-name="'formly_ng_repeat' + index + $parent.$index">
-                     </formly-form>
-                  </div>
+                 <div class="panel panel-default">
+                         <div class="panel-heading">
+                         {{to.label}}
+                         </div>
+                         <div class="panel-body">
+                         <!--loop through each element in model array-->
+                             <div class="section" ng-repeat="element in to.fields" ng-init="fields = copyFields(to.fields)">
+                               <formly-form fields="fields"
+                                            model="model[options.key]"
+                                            bind-name="'formly_custom_section' + index + $parent.$index">
+                               </formly-form>
+                            </div>
 
-               </div>
+                         </div>
                </script>
 </div>

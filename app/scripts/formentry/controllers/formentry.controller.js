@@ -174,7 +174,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
           //  $scope.vm.error = FormentryService.validateForm($scope.vm.userFields);
             // console.log('Checking form Validity')
             // console.log($scope.vm.form.$valid);
-            // console.log($scope.vm.form)
+            console.log($scope.vm.form)
 
             if ($scope.vm.form.$valid)
             {
@@ -252,7 +252,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               if(error_date !== undefined)
               {
                 var i = 0;
-                _.each(error_date.dateValidator[0].$error.dateValidator, function(error_field){
+                _.each(error_date.date[0].$error.date, function(error_field){
                   if (i === 0) {
                     $scope.vm.error= 'One of the date fields is invalid';
                   }
