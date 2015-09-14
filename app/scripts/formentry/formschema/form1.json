@@ -3209,6 +3209,7 @@
               "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
               "label": "31. Return to clinic Date:",
               "type": "date",
+              "required": "true",
               "validators": [
                 {
                   "type": "date",
