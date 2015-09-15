@@ -22,7 +22,7 @@
     return serviceDefinition;
 
     function getResource(path) {
-      return $resource(EtlRestServicesSettings.getCurrentRestUrlBase() + path,
+      return $resource(EtlRestServicesSettings.getCurrentRestUrlBase().trim() + path,
         { uuid: '@uuid' },
         { query: { method: 'GET', isArray: false } });
     }

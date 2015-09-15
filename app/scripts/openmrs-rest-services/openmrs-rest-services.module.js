@@ -15,6 +15,6 @@
 
   function RestangularConfig(Restangular, OpenmrsSettings) {  // jshint ignore:line
     // Should of the form /ws/rest/v1 or https://host/ws/rest/v1
-    Restangular.setBaseUrl(OpenmrsSettings.getCurrentRestUrlBase());
+    Restangular.setBaseUrl(OpenmrsSettings.getCurrentRestUrlBase().trim());
   }
 })();
