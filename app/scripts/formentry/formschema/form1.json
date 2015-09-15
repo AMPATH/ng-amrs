@@ -1204,7 +1204,13 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q15a) && q15a === 'a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                      "message": "Patient on TB Treament. Please provide adherence history."
+                    }
+                  ]
                 },
                 {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
