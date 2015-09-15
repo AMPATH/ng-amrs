@@ -350,7 +350,7 @@
             {
               "concept": "774961c6-232f-4332-8a9f-f5c55ebe86d0",
               "label": "12d. Family Planning:",
-              "id":"q12d",
+              "id": "q12d",
               "answers": [
                 {
                   "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
@@ -412,13 +412,14 @@
               "type": "multiCheckbox",
               "validators": [
                 {
-                "type": "conditionalAnswered",
-                "message": "Patient on family planning. Please provide a method.",
-                "referenceQuestionId": "q12d",
-                "referenceQuestionAnswers": [
-                  "a899b35c-1350-11df-a1f1-0026b9348838"
-                ]
-              }]
+                  "type": "conditionalAnswered",
+                  "message": "Patient on family planning. Please provide a method.",
+                  "referenceQuestionId": "q12d",
+                  "referenceQuestionAnswers": [
+                    "a899b35c-1350-11df-a1f1-0026b9348838"
+                  ]
+                }
+              ]
             },
             {
               "concept": "88ad5975-4762-4108-a967-072f12f91b0b",
@@ -444,13 +445,14 @@
               "type": "select",
               "validators": [
                 {
-                "type": "conditionalAnswered",
-                "message": "Patient not on family planning. Please provide a reason.",
-                "referenceQuestionId": "q12d",
-                "referenceQuestionAnswers": [
-                  "a899b42e-1350-11df-a1f1-0026b9348838"
-                ]
-              }]
+                  "type": "conditionalAnswered",
+                  "message": "Patient not on family planning. Please provide a reason.",
+                  "referenceQuestionId": "q12d",
+                  "referenceQuestionAnswers": [
+                    "a899b42e-1350-11df-a1f1-0026b9348838"
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -643,7 +645,7 @@
             {
               "concept": "a899e35e-1350-11df-a1f1-0026b9348838",
               "label": "14b. TB Prophylaxis:",
-              "id":"q14b",
+              "id": "q14b",
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -817,8 +819,8 @@
                 {
                   "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                   "label": "tabs/day",
-                  "max":"30",
-                  "min":"0",
+                  "max": "30",
+                  "min": "0",
                   "type": "number",
                   "hide": [
                     {
@@ -834,8 +836,8 @@
                 {
                   "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
                   "label": "mg",
-                  "max":"1000",
-                  "min":"0",
+                  "max": "1000",
+                  "min": "0",
                   "type": "number",
                   "hide": [
                     {
@@ -851,8 +853,8 @@
                 {
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "mg/day",
-                  "max":"2000",
-                  "min":"0",
+                  "max": "2000",
+                  "min": "0",
                   "type": "number",
                   "hide": [
                     {
@@ -868,8 +870,8 @@
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "tabs",
                   "type": "number",
-                  "max":"30",
-                  "min":"0",
+                  "max": "30",
+                  "min": "0",
                   "hide": [
                     {
                       "field": "tb_current",
@@ -908,7 +910,13 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q13a) && q13a === 'a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                      "message": "Patient on ARVs. Please provide adherence history."
+                    }
+                  ]
                 },
                 {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
@@ -1416,40 +1424,40 @@
               "concept": "a8a65d5a-1350-11df-a1f1-0026b9348838",
               "label": "BP:Systolic as:",
               "type": "number",
-              "max":"250",
-              "min":"0",
+              "max": "250",
+              "min": "0",
               "validators": []
             },
             {
               "concept": "a8a65e36-1350-11df-a1f1-0026b9348838",
               "label": "BP:Diastolic:",
               "type": "number",
-              "max":"150",
-              "min":"0",
+              "max": "150",
+              "min": "0",
               "validators": []
             },
             {
               "concept": "a8a65f12-1350-11df-a1f1-0026b9348838",
               "label": "Pulse(Rate/Min):",
               "type": "number",
-              "max":"230",
-              "min":"0",
+              "max": "230",
+              "min": "0",
               "validators": []
             },
             {
               "concept": "a8a65fee-1350-11df-a1f1-0026b9348838",
               "label": "Temp(C):",
               "type": "number",
-              "max":"43",
-              "min":"25",
+              "max": "43",
+              "min": "25",
               "validators": []
             },
             {
               "concept": "a8a660ca-1350-11df-a1f1-0026b9348838",
               "label": "Weight(Kg):",
               "type": "number",
-              "max":"150",
-              "min":"0",
+              "max": "150",
+              "min": "0",
               "validators": []
             },
             {
@@ -1462,16 +1470,16 @@
               "concept": "a8a66354-1350-11df-a1f1-0026b9348838",
               "label": "Sp02:",
               "type": "number",
-              "max":"100",
-              "min":"0",
+              "max": "100",
+              "min": "0",
               "validators": []
             },
             {
               "concept": "a89c60c0-1350-11df-a1f1-0026b9348838",
               "label": "BMI:Kg/M2",
               "type": "number",
-              "max":"60",
-              "min":"25",
+              "max": "60",
+              "min": "25",
               "validators": []
             }
           ]
@@ -1613,7 +1621,7 @@
                   "label": "4"
                 }
               ],
-              "required":"true",
+              "required": "true",
               "type": "select",
               "validators": []
             },
@@ -1652,8 +1660,8 @@
                   "concept": "a896dea2-1350-11df-a1f1-0026b9348838",
                   "label": "WBC/mm3",
                   "type": "number",
-                  "max":"500",
-                  "min":"0",
+                  "max": "500",
+                  "min": "0",
                   "showDate": "true",
                   "validators": [
                     {
@@ -1665,8 +1673,8 @@
                   "concept": "a8908a16-1350-11df-a1f1-0026b9348838",
                   "label": "Hgb g/dL",
                   "type": "number",
-                  "max":"50",
-                  "min":"0",
+                  "max": "50",
+                  "min": "0",
                   "showDate": "true",
                   "validators": [
                     {
@@ -1678,8 +1686,8 @@
                   "concept": "a898201e-1350-11df-a1f1-0026b9348838",
                   "label": "MCV",
                   "type": "number",
-                  "max":"500",
-                  "min":"0",
+                  "max": "500",
+                  "min": "0",
                   "showDate": "true",
                   "validators": [
                     {
@@ -1691,8 +1699,8 @@
                   "concept": "a898b20e-1350-11df-a1f1-0026b9348838",
                   "label": "ALC/ mm3",
                   "type": "number",
-                  "max":"500",
-                  "min":"0",
+                  "max": "500",
+                  "min": "0",
                   "showDate": "true",
                   "validators": [
                     {
@@ -1715,8 +1723,8 @@
                   "concept": "a8970a26-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "CD4%:",
-                  "max":"100",
-                  "min":"0",
+                  "max": "100",
+                  "min": "0",
                   "showDate": "true",
                   "validators": [
                     {
@@ -1728,8 +1736,8 @@
                   "concept": "a8982474-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "Viral Load:",
-                  "max":"10000000",
-                  "min":"0",
+                  "max": "10000000",
+                  "min": "0",
                   "showDate": "true",
                   "validators": [
                     {
@@ -1742,8 +1750,8 @@
                   "type": "number",
                   "label": "Creatinine mmol/L:",
                   "showDate": "true",
-                  "max":"11050",
-                  "min":"0",
+                  "max": "11050",
+                  "min": "0",
                   "validators": [
                     {
                       "type": "date"
@@ -1754,8 +1762,8 @@
                   "concept": "a896ca48-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "SGPT(ALT):",
-                  "max":"3500",
-                  "min":"0",
+                  "max": "3500",
+                  "min": "0",
                   "showDate": "true",
                   "validators": [
                     {
@@ -2906,8 +2914,8 @@
                   "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                   "label": "tabs/day",
                   "type": "number",
-                  "max":"30",
-                  "min":"0",
+                  "max": "30",
+                  "min": "0",
                   "hide": [
                     {
                       "field": "a899e444-1350-11df-a1f1-0026b9348838",
@@ -2923,8 +2931,8 @@
                   "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
                   "label": "mg",
                   "type": "number",
-                  "max":"1000",
-                  "min":"0",
+                  "max": "1000",
+                  "min": "0",
                   "hide": [
                     {
                       "field": "a899e444-1350-11df-a1f1-0026b9348838",
@@ -2940,8 +2948,8 @@
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "mg/day",
                   "type": "number",
-                  "max":"2000",
-                  "min":"0",
+                  "max": "2000",
+                  "min": "0",
                   "hide": [
                     {
                       "field": "a899e444-1350-11df-a1f1-0026b9348838",
@@ -2955,8 +2963,8 @@
                 {
                   "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                   "label": "tabs",
-                  "max":"30",
-                  "min":"0",
+                  "max": "30",
+                  "min": "0",
                   "type": "number",
                   "hide": [
                     {
