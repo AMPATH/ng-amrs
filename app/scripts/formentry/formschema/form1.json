@@ -350,7 +350,7 @@
             {
               "concept": "774961c6-232f-4332-8a9f-f5c55ebe86d0",
               "label": "12d. Family Planning:",
-              "id":"q12d",
+              "id": "q12d",
               "answers": [
                 {
                   "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
@@ -412,13 +412,14 @@
               "type": "multiCheckbox",
               "validators": [
                 {
-                "type": "conditionalAnswered",
-                "message": "Patient on family planning. Please provide a method.",
-                "referenceQuestionId": "q12d",
-                "referenceQuestionAnswers": [
-                  "a899b35c-1350-11df-a1f1-0026b9348838"
-                ]
-              }]
+                  "type": "conditionalAnswered",
+                  "message": "Patient on family planning. Please provide a method.",
+                  "referenceQuestionId": "q12d",
+                  "referenceQuestionAnswers": [
+                    "a899b35c-1350-11df-a1f1-0026b9348838"
+                  ]
+                }
+              ]
             },
             {
               "concept": "88ad5975-4762-4108-a967-072f12f91b0b",
@@ -444,13 +445,14 @@
               "type": "select",
               "validators": [
                 {
-                "type": "conditionalAnswered",
-                "message": "Patient not on family planning. Please provide a reason.",
-                "referenceQuestionId": "q12d",
-                "referenceQuestionAnswers": [
-                  "a899b42e-1350-11df-a1f1-0026b9348838"
-                ]
-              }]
+                  "type": "conditionalAnswered",
+                  "message": "Patient not on family planning. Please provide a reason.",
+                  "referenceQuestionId": "q12d",
+                  "referenceQuestionAnswers": [
+                    "a899b42e-1350-11df-a1f1-0026b9348838"
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -643,7 +645,7 @@
             {
               "concept": "a899e35e-1350-11df-a1f1-0026b9348838",
               "label": "14b. TB Prophylaxis:",
-              "id":"q14b",
+              "id": "q14b",
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -817,8 +819,8 @@
                 {
                   "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                   "label": "tabs/day",
-                  "max":"30",
-                  "min":"0",
+                  "max": "30",
+                  "min": "0",
                   "type": "number",
                   "hide": [
                     {
@@ -834,8 +836,8 @@
                 {
                   "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
                   "label": "mg",
-                  "max":"1000",
-                  "min":"0",
+                  "max": "1000",
+                  "min": "0",
                   "type": "number",
                   "hide": [
                     {
@@ -851,8 +853,8 @@
                 {
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "mg/day",
-                  "max":"2000",
-                  "min":"0",
+                  "max": "2000",
+                  "min": "0",
                   "type": "number",
                   "hide": [
                     {
@@ -868,8 +870,8 @@
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "tabs",
                   "type": "number",
-                  "max":"30",
-                  "min":"0",
+                  "max": "30",
+                  "min": "0",
                   "hide": [
                     {
                       "field": "tb_current",
@@ -908,7 +910,13 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q13a) && q13a === 'a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                      "message": "Patient on ARVs. Please provide adherence history."
+                    }
+                  ]
                 },
                 {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
@@ -1000,7 +1008,13 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q14a) && arrayContains(['a8989396-1350-11df-a1f1-0026b9348838', 'a890c9e0-1350-11df-a1f1-0026b9348838'], q14a) && isEmpty(myValue)",
+                      "message": "Patient on PCP Prophylaxis. Please provide adherence history"
+                    }
+                  ]
                 },
                 {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
@@ -1092,7 +1106,13 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q14b) && arrayContains(['a896cc00-1350-11df-a1f1-0026b9348838'], q14b) && isEmpty(myValue)",
+                      "message": "Patient on TB Prophylaxis. Please provide adherence history."
+                    }
+                  ]
                 },
                 {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
@@ -1184,7 +1204,13 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q15a) && q15a === 'a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                      "message": "Patient on TB Treament. Please provide adherence history."
+                    }
+                  ]
                 },
                 {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
@@ -1416,40 +1442,40 @@
               "concept": "a8a65d5a-1350-11df-a1f1-0026b9348838",
               "label": "BP:Systolic as:",
               "type": "number",
-              "max":"250",
-              "min":"0",
+              "max": "250",
+              "min": "0",
               "validators": []
             },
             {
               "concept": "a8a65e36-1350-11df-a1f1-0026b9348838",
               "label": "BP:Diastolic:",
               "type": "number",
-              "max":"150",
-              "min":"0",
+              "max": "150",
+              "min": "0",
               "validators": []
             },
             {
               "concept": "a8a65f12-1350-11df-a1f1-0026b9348838",
               "label": "Pulse(Rate/Min):",
               "type": "number",
-              "max":"230",
-              "min":"0",
+              "max": "230",
+              "min": "0",
               "validators": []
             },
             {
               "concept": "a8a65fee-1350-11df-a1f1-0026b9348838",
               "label": "Temp(C):",
               "type": "number",
-              "max":"43",
-              "min":"25",
+              "max": "43",
+              "min": "25",
               "validators": []
             },
             {
               "concept": "a8a660ca-1350-11df-a1f1-0026b9348838",
               "label": "Weight(Kg):",
               "type": "number",
-              "max":"150",
-              "min":"0",
+              "max": "150",
+              "min": "0",
               "validators": []
             },
             {
@@ -1462,16 +1488,16 @@
               "concept": "a8a66354-1350-11df-a1f1-0026b9348838",
               "label": "Sp02:",
               "type": "number",
-              "max":"100",
-              "min":"0",
+              "max": "100",
+              "min": "0",
               "validators": []
             },
             {
               "concept": "a89c60c0-1350-11df-a1f1-0026b9348838",
               "label": "BMI:Kg/M2",
               "type": "number",
-              "max":"60",
-              "min":"25",
+              "max": "60",
+              "min": "25",
               "validators": []
             }
           ]
@@ -1613,7 +1639,7 @@
                   "label": "4"
                 }
               ],
-              "required":"true",
+              "required": "true",
               "type": "select",
               "validators": []
             },
@@ -1652,8 +1678,8 @@
                   "concept": "a896dea2-1350-11df-a1f1-0026b9348838",
                   "label": "WBC/mm3",
                   "type": "number",
-                  "max":"500",
-                  "min":"0",
+                  "max": "500",
+                  "min": "0",
                   "showDate": "true",
                   "validators": [
                     {
@@ -1665,8 +1691,8 @@
                   "concept": "a8908a16-1350-11df-a1f1-0026b9348838",
                   "label": "Hgb g/dL",
                   "type": "number",
-                  "max":"50",
-                  "min":"0",
+                  "max": "50",
+                  "min": "0",
                   "showDate": "true",
                   "validators": [
                     {
@@ -1678,8 +1704,8 @@
                   "concept": "a898201e-1350-11df-a1f1-0026b9348838",
                   "label": "MCV",
                   "type": "number",
-                  "max":"500",
-                  "min":"0",
+                  "max": "500",
+                  "min": "0",
                   "showDate": "true",
                   "validators": [
                     {
@@ -1691,8 +1717,8 @@
                   "concept": "a898b20e-1350-11df-a1f1-0026b9348838",
                   "label": "ALC/ mm3",
                   "type": "number",
-                  "max":"500",
-                  "min":"0",
+                  "max": "500",
+                  "min": "0",
                   "showDate": "true",
                   "validators": [
                     {
@@ -1715,8 +1741,8 @@
                   "concept": "a8970a26-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "CD4%:",
-                  "max":"100",
-                  "min":"0",
+                  "max": "100",
+                  "min": "0",
                   "showDate": "true",
                   "validators": [
                     {
@@ -1728,8 +1754,8 @@
                   "concept": "a8982474-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "Viral Load:",
-                  "max":"10000000",
-                  "min":"0",
+                  "max": "10000000",
+                  "min": "0",
                   "showDate": "true",
                   "validators": [
                     {
@@ -1742,8 +1768,8 @@
                   "type": "number",
                   "label": "Creatinine mmol/L:",
                   "showDate": "true",
-                  "max":"11050",
-                  "min":"0",
+                  "max": "11050",
+                  "min": "0",
                   "validators": [
                     {
                       "type": "date"
@@ -1754,8 +1780,8 @@
                   "concept": "a896ca48-1350-11df-a1f1-0026b9348838",
                   "type": "number",
                   "label": "SGPT(ALT):",
-                  "max":"3500",
-                  "min":"0",
+                  "max": "3500",
+                  "min": "0",
                   "showDate": "true",
                   "validators": [
                     {
@@ -2632,6 +2658,8 @@
             {
               "concept": "a89c1fd4-1350-11df-a1f1-0026b9348838",
               "label": "26a.TB Treatment plan:",
+              "id": "26a_TB_Treatment_plan",
+              "required": "true",
               "answers": [
                 {
                   "concept": "a89b7c50-1350-11df-a1f1-0026b9348838",
@@ -2655,10 +2683,10 @@
                 },
                 {
                   "concept": "a8a00158-1350-11df-a1f1-0026b9348838",
-                  "label": "substitution"
+                  "label": "Substitution"
                 },
                 {
-                  "concept": "a89b7d36-1350-11df-a1f1-0026b9348838",
+                  "concept": "a89b7d36-1350-11df-a1f1-0026b9348838", 
                   "label": "Stop"
                 }
               ],
@@ -2672,6 +2700,7 @@
                 {
                   "concept": "a89c1fd4-1350-11df-a1f1-0026b9348838",
                   "label": "26b.If plan is to stop/change/re-dose, reason:",
+                  "id": "26b_If_plan",
                   "answers": [
                     {
                       "concept": "a89c1ef8-1350-11df-a1f1-0026b9348838",
@@ -2687,7 +2716,18 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(26a_TB_Treatment_plan) && arrayContains(['a89b7d36-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838'], 26a_TB_Treatment_plan) && isEmpty(myValue)",
+                      "message": "You indicated patient is stopping, changing or re-dosing tb medication, therefore reason should be selected."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "(isEmpty(26a_TB_Treatment_plan) || !arrayContains(['a89b7d36-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838'], 26a_TB_Treatment_plan)) && !isEmpty(myValue)",
+                      "message": "You indicated patient is not stopping, changing or re-dosing tb medication, therefore reason should not be selected."
+                    }
+                  ]
                 },
                 {
                   "concept": "a8a176b4-1350-11df-a1f1-0026b9348838",
@@ -2696,12 +2736,23 @@
                   "validators": [
                     {
                       "type": "date"
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(26b_If_plan) && arrayContains(['a89c1ef8-1350-11df-a1f1-0026b9348838'], 26b_If_plan) && isEmpty(myValue)",
+                      "message": "You indicated patient completed tb medication. Please indicate date completed."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "(isEmpty(26b_If_plan) || !arrayContains(['a89c1ef8-1350-11df-a1f1-0026b9348838'], 26b_If_plan)) && !isEmpty(myValue)",
+                      "message": "You indicated patient did not completed tb medication, therefore date completed is not to be indicated."
                     }
                   ]
                 },
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label": "26b. If toxicity, please provide cause:",
+                  "id": "26b_If_toxicity",
                   "answers": [
                     {
                       "concept": "a877c7f6-1350-11df-a1f1-0026b9348838",
@@ -2745,13 +2796,35 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(26b_If_plan) && arrayContains(['a890d1ba-1350-11df-a1f1-0026b9348838'], 26b_If_plan) && isEmpty(myValue)",
+                      "message": "You indicated patient changed tb medication because of toxicity. Please select toxicity cause."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "(isEmpty(26b_If_plan) || !arrayContains(['a890d1ba-1350-11df-a1f1-0026b9348838'], 26b_If_plan)) && !isEmpty(myValue)",
+                      "message": "You indicated patient did not change tb medication because of toxicity, therefore cause should not be selected."
+                    }
+                  ]
                 },
                 {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "26b.If toxicity, please provide cause: Other (specify):",
                   "type": "text",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(26b_If_toxicity) && arrayContains(['a8aaf3e2-1350-11df-a1f1-0026b9348838'], 26b_If_toxicity) && isEmpty(myValue)",
+                      "message": "You indicated patient changed tb medication because of other toxicity. Please indicate the other cause."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "(isEmpty(26b_If_toxicity) || !arrayContains(['a8aaf3e2-1350-11df-a1f1-0026b9348838'], 26b_If_toxicity)) && !isEmpty(myValue)",
+                      "message": "You indicated patient did not change tb medication because of other toxicity, therefore other cause should not be indicated."
+                    }
+                  ]
                 }
               ]
             },
@@ -2785,7 +2858,18 @@
                       "label": "Relapse/re-infection"
                     }
                   ],
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(26a_TB_Treatment_plan) && arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838'], 26a_TB_Treatment_plan) && isEmpty(myValue)",
+                      "message": "You indicated patient is starting tb medication, therefore reason should be selected."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "(isEmpty(26a_TB_Treatment_plan) || !arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838'], 26a_TB_Treatment_plan)) && !isEmpty(myValue)",
+                      "message": "You did not indicate re/start tb medication, therefore reason should not be selected."
+                    }
+                  ]
                 },
                 {
                   "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
@@ -2794,18 +2878,18 @@
                   "validators": [
                     {
                       "type": "date"
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q15a) && arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], q15a) && isEmpty(myValue)",
+                      "message": "You indicated patient on tb treatment, indicate start date."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "(isEmpty(q15a) || !arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], q15a)) && !isEmpty(myValue)",
+                      "message": "You indicated patient is not on tb treatment, therefore start date should not be indicated."
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
-              "label": "26d. If on treatment: start date:",
-              "type": "date",
-              "validators": [
-                {
-                  "type": "date"
                 }
               ]
             },
@@ -2906,8 +2990,8 @@
                   "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                   "label": "tabs/day",
                   "type": "number",
-                  "max":"30",
-                  "min":"0",
+                  "max": "30",
+                  "min": "0",
                   "hide": [
                     {
                       "field": "a899e444-1350-11df-a1f1-0026b9348838",
@@ -2923,8 +3007,8 @@
                   "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
                   "label": "mg",
                   "type": "number",
-                  "max":"1000",
-                  "min":"0",
+                  "max": "1000",
+                  "min": "0",
                   "hide": [
                     {
                       "field": "a899e444-1350-11df-a1f1-0026b9348838",
@@ -2940,8 +3024,8 @@
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "mg/day",
                   "type": "number",
-                  "max":"2000",
-                  "min":"0",
+                  "max": "2000",
+                  "min": "0",
                   "hide": [
                     {
                       "field": "a899e444-1350-11df-a1f1-0026b9348838",
@@ -2955,8 +3039,8 @@
                 {
                   "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                   "label": "tabs",
-                  "max":"30",
-                  "min":"0",
+                  "max": "30",
+                  "min": "0",
                   "type": "number",
                   "hide": [
                     {
@@ -3209,6 +3293,7 @@
               "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
               "label": "31. Return to clinic Date:",
               "type": "date",
+              "required": "true",
               "validators": [
                 {
                   "type": "date",
