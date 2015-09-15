@@ -3839,18 +3839,7 @@
                     {
                       "concept": "a89c2344-1350-11df-a1f1-0026b9348838",
                       "label": "Referrals Ordered:",
-                      "type": "select",
-                      "answers":[
-                        {
-                          "concept": "a89accc4-1350-11df-a1f1-0026b9348838",
-                          "label": "Disclosure Counseling"
-                        },
-                        {
-                          "concept": "a8a8b42e-1350-11df-a1f1-0026b9348838",
-                          "label": "Mental Health Services:"
-                        }
-                      ],
-
+                      "type": "select-concept-answers",
                       "validators": []
                     }
                   ]
@@ -3929,6 +3918,7 @@
                   "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
                   "label": "Return to clinic date:",
                   "type": "date",
+                  "required": "true",
                   "validators": [{"type":"date", "allowFutureDates":"true"}]
                 }
               ]
