@@ -1825,7 +1825,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         }
                         else {
 
-                          console.log('Calling non onject type Section Method -1')
+                          console.log('Calling non object type Section Method -1')
                           createPayloadNonObject(val[key], key, obs, section);
                           // value pair are strings or values
                           // console.log('Complex Object Key pairs');
@@ -1883,7 +1883,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     else {
                       // value pair are strings or values
                       //console.log('Normal Key pairs');
-                      console.log('Calling non onject type Section Method -2')
+                      console.log('Calling non object type Section Method -2')
                       createPayloadNonObject(val[key], key, obs, section);
 
                       // init_data = getInitialFieldValue(key, section);
