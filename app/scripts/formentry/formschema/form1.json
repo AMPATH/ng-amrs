@@ -631,7 +631,7 @@
                   "label": "None"
                 },
                 {
-                  "concept": "a8989396-1350-11df-a1f1-0026b9348838",
+                  "concept": "a8989396-1350-11df-a1f1-0026b9348838", 
                   "label": "Septrin"
                 },
                 {
@@ -1008,7 +1008,13 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q14a) && arrayContains(['a8989396-1350-11df-a1f1-0026b9348838', 'a890c9e0-1350-11df-a1f1-0026b9348838'], q14a) && isEmpty(myValue)",
+                      "message": "Patient on PCP Prophylaxis. Please provide adherence history" 
+                    }
+                  ]
                 },
                 {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
