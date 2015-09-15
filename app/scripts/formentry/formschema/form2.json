@@ -3810,18 +3810,7 @@
                     {
                       "concept": "a89c2268-1350-11df-a1f1-0026b9348838",
                       "label": "Test Ordered:",
-                      "type": "select",
-                      "answers":[
-                        {
-                          "concept": "a8908a16-1350-11df-a1f1-0026b9348838",
-                          "label": "HB"
-                        },
-                        {
-                          "concept": "a898f50c-1350-11df-a1f1-0026b9348838",
-                          "label": "WBC:"
-                        }
-                      ],
-
+                      "type": "select-concept-answers",
                       "validators": []
                     }
                   ]
