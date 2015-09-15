@@ -236,12 +236,14 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
               var error_required = $scope.vm.form.$error;
               var error_date = $scope.vm.form.$error;
-              if(error_required !== undefined)
+              if(error_required !== undefined && error_required.required !== undefined)
               {
                   var i = 0;
                   _.each(error_required.required[0].$error.required, function(error_field){
                     if (i === 0) {
-                      $scope.vm.error= 'required field: '+ error_field.$name;
+                      var field = getErrorField(error_field.$name);
+                      if(field !== undefined)
+                        {$scope.vm.error= 'Missing required field: '+ field.templateOptions.label;}
                     }
                     i = i + 1;
                   });
@@ -249,7 +251,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
               }
 
-              if(error_date !== undefined)
+              if(error_date !== undefined && error_date.date !== undefined)
               {
                 var i = 0;
                 _.each(error_date.date[0].$error.date, function(error_field){
@@ -308,6 +310,15 @@ function updateObs(pay_load)
     })
   }
 }
+function getErrorField(fieldKey)
+{
+   var errorField = fieldKey.split('obs')[1];
+   var field_key = 'obs'+errorField.split('_')[0] + '_' + errorField.split('_')[1]
+   var field = FormentryService.getFieldById_Key(field_key, $scope.vm.tabs);
+   console.log('error Field ', field);
+   return field;
+}
+
 //$scope.vm.userFields = $scope.vm.formlyFields;
  //console.log(JSON.stringify($scope.vm.userFields));
 }
