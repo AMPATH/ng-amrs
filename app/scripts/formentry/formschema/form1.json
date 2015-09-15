@@ -631,7 +631,7 @@
                   "label": "None"
                 },
                 {
-                  "concept": "a8989396-1350-11df-a1f1-0026b9348838", 
+                  "concept": "a8989396-1350-11df-a1f1-0026b9348838",
                   "label": "Septrin"
                 },
                 {
@@ -1012,7 +1012,7 @@
                     {
                       "type": "expression",
                       "failsWhenExpression": "!isEmpty(q14a) && arrayContains(['a8989396-1350-11df-a1f1-0026b9348838', 'a890c9e0-1350-11df-a1f1-0026b9348838'], q14a) && isEmpty(myValue)",
-                      "message": "Patient on PCP Prophylaxis. Please provide adherence history" 
+                      "message": "Patient on PCP Prophylaxis. Please provide adherence history"
                     }
                   ]
                 },
@@ -1110,7 +1110,7 @@
                     {
                       "type": "expression",
                       "failsWhenExpression": "!isEmpty(q14b) && arrayContains(['a896cc00-1350-11df-a1f1-0026b9348838'], q14b) && isEmpty(myValue)",
-                      "message": "Patient on TB Prophylaxis. Please provide adherence history."  
+                      "message": "Patient on TB Prophylaxis. Please provide adherence history."
                     }
                   ]
                 },
@@ -2658,6 +2658,8 @@
             {
               "concept": "a89c1fd4-1350-11df-a1f1-0026b9348838",
               "label": "26a.TB Treatment plan:",
+              "id": "26a_TB_Treatment_plan",
+              "required": "true",
               "answers": [
                 {
                   "concept": "a89b7c50-1350-11df-a1f1-0026b9348838",
@@ -2681,10 +2683,10 @@
                 },
                 {
                   "concept": "a8a00158-1350-11df-a1f1-0026b9348838",
-                  "label": "substitution"
+                  "label": "Substitution"
                 },
                 {
-                  "concept": "a89b7d36-1350-11df-a1f1-0026b9348838",
+                  "concept": "a89b7d36-1350-11df-a1f1-0026b9348838", 
                   "label": "Stop"
                 }
               ],
@@ -2698,6 +2700,7 @@
                 {
                   "concept": "a89c1fd4-1350-11df-a1f1-0026b9348838",
                   "label": "26b.If plan is to stop/change/re-dose, reason:",
+                  "id": "26b_If_plan",
                   "answers": [
                     {
                       "concept": "a89c1ef8-1350-11df-a1f1-0026b9348838",
@@ -2713,7 +2716,18 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(26a_TB_Treatment_plan) && arrayContains(['a89b7d36-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838'], 26a_TB_Treatment_plan) && isEmpty(myValue)",
+                      "message": "You indicated patient is stopping, changing or re-dosing tb medication, therefore reason should be selected."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "(isEmpty(26a_TB_Treatment_plan) || !arrayContains(['a89b7d36-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838'], 26a_TB_Treatment_plan)) && !isEmpty(myValue)",
+                      "message": "You indicated patient is not stopping, changing or re-dosing tb medication, therefore reason should not be selected."
+                    }
+                  ]
                 },
                 {
                   "concept": "a8a176b4-1350-11df-a1f1-0026b9348838",
@@ -2722,12 +2736,23 @@
                   "validators": [
                     {
                       "type": "date"
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(26b_If_plan) && arrayContains(['a89c1ef8-1350-11df-a1f1-0026b9348838'], 26b_If_plan) && isEmpty(myValue)",
+                      "message": "You indicated patient completed tb medication. Please indicate date completed."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "(isEmpty(26b_If_plan) || !arrayContains(['a89c1ef8-1350-11df-a1f1-0026b9348838'], 26b_If_plan)) && !isEmpty(myValue)",
+                      "message": "You indicated patient did not completed tb medication, therefore date completed is not to be indicated."
                     }
                   ]
                 },
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label": "26b. If toxicity, please provide cause:",
+                  "id": "26b_If_toxicity",
                   "answers": [
                     {
                       "concept": "a877c7f6-1350-11df-a1f1-0026b9348838",
@@ -2771,13 +2796,35 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(26b_If_plan) && arrayContains(['a890d1ba-1350-11df-a1f1-0026b9348838'], 26b_If_plan) && isEmpty(myValue)",
+                      "message": "You indicated patient changed tb medication because of toxicity. Please select toxicity cause."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "(isEmpty(26b_If_plan) || !arrayContains(['a890d1ba-1350-11df-a1f1-0026b9348838'], 26b_If_plan)) && !isEmpty(myValue)",
+                      "message": "You indicated patient did not change tb medication because of toxicity, therefore cause should not be selected."
+                    }
+                  ]
                 },
                 {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "26b.If toxicity, please provide cause: Other (specify):",
                   "type": "text",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(26b_If_toxicity) && arrayContains(['a8aaf3e2-1350-11df-a1f1-0026b9348838'], 26b_If_toxicity) && isEmpty(myValue)",
+                      "message": "You indicated patient changed tb medication because of other toxicity. Please indicate the other cause."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "(isEmpty(26b_If_toxicity) || !arrayContains(['a8aaf3e2-1350-11df-a1f1-0026b9348838'], 26b_If_toxicity)) && !isEmpty(myValue)",
+                      "message": "You indicated patient did not change tb medication because of other toxicity, therefore other cause should not be indicated."
+                    }
+                  ]
                 }
               ]
             },
@@ -2811,7 +2858,18 @@
                       "label": "Relapse/re-infection"
                     }
                   ],
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(26a_TB_Treatment_plan) && arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838'], 26a_TB_Treatment_plan) && isEmpty(myValue)",
+                      "message": "You indicated patient is starting tb medication, therefore reason should be selected."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "(isEmpty(26a_TB_Treatment_plan) || !arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838'], 26a_TB_Treatment_plan)) && !isEmpty(myValue)",
+                      "message": "You did not indicate re/start tb medication, therefore reason should not be selected."
+                    }
+                  ]
                 },
                 {
                   "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
@@ -2820,18 +2878,18 @@
                   "validators": [
                     {
                       "type": "date"
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q15a) && arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], q15a) && isEmpty(myValue)",
+                      "message": "You indicated patient on tb treatment, indicate start date."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "(isEmpty(q15a) || !arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], q15a)) && !isEmpty(myValue)",
+                      "message": "You indicated patient is not on tb treatment, therefore start date should not be indicated."
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
-              "label": "26d. If on treatment: start date:",
-              "type": "date",
-              "validators": [
-                {
-                  "type": "date"
                 }
               ]
             },
