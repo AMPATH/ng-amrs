@@ -3413,6 +3413,7 @@
                 {
                   "concept": "a89c1fd4-1350-11df-a1f1-0026b9348838",
                   "label": "21l. TB Treatment:",
+                  "required": "true",
                   "answers": [
                     {
                       "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -3773,6 +3774,7 @@
                   "concept": "7cad5b2e-867f-4f6e-9e15-4b205712bd31",
                   "label": "22a. This child",
                   "type": "select",
+                  "required": "true",
                   "answers":[
                     {
                       "concept": "29b25c26-f947-4d72-9e4a-54b9e936be7a",
