@@ -1106,7 +1106,13 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q14b) && arrayContains(['a896cc00-1350-11df-a1f1-0026b9348838'], q14b) && isEmpty(myValue)",
+                      "message": "Patient on TB Prophylaxis. Please provide adherence history."  
+                    }
+                  ]
                 },
                 {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
