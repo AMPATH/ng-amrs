@@ -401,13 +401,14 @@
               "validators": [
                 {
                   "type": "expression",
-                  "failsWhenExpression": "!isEmpty(q7a) && arrayContains(q7a, 'a89cca10-1350-11df-a1f1-0026b9348838') && !isEmpty(myValue)",
+                  "failsWhenExpression": "!isEmpty(q7a) && !arrayContains(q7a, 'a89cca10-1350-11df-a1f1-0026b9348838') && !isEmpty(myValue)",
                   "message": "Question 7a current feeding not marked as breast/expressed breast milk. This question can only be answered if mother is breastfeeding."
                 }
               ]
             },
             {
               "concept": "a8a0bbde-1350-11df-a1f1-0026b9348838",
+              "id":"q8a",
               "label": "8a.Are there Siblings less than 18months",
               "answers": [
                 {
@@ -428,7 +429,8 @@
             },
             {
               "concept": "a8a0bd00-1350-11df-a1f1-0026b9348838",
-              "label": "8b.If yes for siblings less than 18 monthsare they registered in Pediatric HIV clinic:",
+              "id":"q8b",
+              "label": "8b.If yes for siblings less than 18 months are they registered in Pediatric HIV clinic:",
               "answers": [
                 {
                   "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
@@ -444,7 +446,19 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+
+                {
+                  "type": "expression",
+                  "failsWhenExpression": "!isEmpty(q8a) && q8a!=='a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
+                  "message": "Question 8a, no siblings indicated. This question can only be answered if patient has siblings less than 18 months."
+                },
+                {
+                  "type": "expression",
+                  "failsWhenExpression": "!isEmpty(q8a) && q8a==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                  "message": "Question 8a has siblings indicated. PLease indicate if patient is registered in Pediatric HIV clinic."
+                }
+              ]
             }
           ]
         },
@@ -453,6 +467,7 @@
           "questions": [
             {
               "concept": "a89c9658-1350-11df-a1f1-0026b9348838",
+              "id":"q9a",
               "type": "group",
               "questions": [
                 {
@@ -546,7 +561,8 @@
             {
               "concept": "a8a76cae-1350-11df-a1f1-0026b9348838",
               "required":"true",
-              "label": "HIV Status:",
+              "id":"q10",
+              "label": "Child's Current HIV Status:",
               "answers": [
                 {
                   "concept": "a897ff62-1350-11df-a1f1-0026b9348838",
@@ -597,7 +613,17 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                "type": "expression",
+                "failsWhenExpression": "!isEmpty(q10) && q10==='a89ace7c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                "message": "Question 10, child is HIV infected. Please indicate if child is aware of own HIV status."
+                },
+                {
+                "type": "expression",
+                "failsWhenExpression": "!isEmpty(q10) && q10!=='a89ace7c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
+                "message": "Child aware of own HIV status can only be answered when child's HIV status is marked as HIV infected."
+              }]
             }
           ]
         },
@@ -610,6 +636,7 @@
               "questions": [
                 {
                   "concept": "a898c56e-1350-11df-a1f1-0026b9348838",
+                  "id": "q12a",
                   "label": "12a. Has patient been hospitalized since last visit:",
                   "answers": [
                     {
@@ -651,7 +678,8 @@
             {
               "concept": "a89ae254-1350-11df-a1f1-0026b9348838",
               "label": "13a. ARVs use:",
-              "id":"13a",
+              "required":"true",
+              "id":"q13a",
               "answers": [
                 {
                   "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
@@ -679,7 +707,17 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                "type": "expression",
+                "failsWhenExpression": "!isEmpty(q13a) && q13a==='a899b42e-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
+                "message": "This question can only be answered if question 13a, ARVs use is marked as yes."
+                },
+                {
+                  "type": "expression",
+                  "failsWhenExpression": "!isEmpty(q13a) && q13a==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                  "message": "The patient is on ARVs use, please provide reason."
+                }]
             },
             {
               "concept": "a89d200a-1350-11df-a1f1-0026b9348838",
@@ -705,9 +743,19 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                "type": "expression",
+                "failsWhenExpression": "!isEmpty(q13a) && q13a==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                "message": "Patient on ARVs. Please provide regimen."
+                },
+                {
+                  "type": "expression",
+                  "failsWhenExpression": "!isEmpty(q13a) && q13a!=='a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
+                  "message": "Patient not on ARVs. Regimen should not be provided."
+                }]
             },
-            {
+              {
               "concept": "a899cf5e-1350-11df-a1f1-0026b9348838",
               "label": "13e. Current ARV drugs:",
               "answers": [
@@ -821,7 +869,18 @@
                 }
               ],
               "type": "multiCheckbox",
-              "validators": []
+              "validators": [
+                {
+                  "type": "expression",
+                  "failsWhenExpression": "!isEmpty(q13a) && q13a==='a899b42e-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                  "message": "Patient on ARVs. Please provide ARV drugs."
+                },
+                {
+                  "type": "expression",
+                  "failsWhenExpression": "!isEmpty(q13a) && q13a!=='a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
+                  "message": "Patient not on ARVs. Regimen should not be provided."
+                }
+              ]
             }
           ]
         },
@@ -830,6 +889,7 @@
           "questions": [
             {
               "concept": "212fdebe-4745-4f60-aaa0-35f4193abaf8",
+              "required":"true",
               "label": "13f.Opportunistic Infection(OI) Prophylaxis:",
               "answers": [
                 {
@@ -855,6 +915,7 @@
             {
               "concept": "a899e35e-1350-11df-a1f1-0026b9348838",
               "label": "13g.TB Prophylaxis",
+              "required":"true",
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -874,26 +935,48 @@
           "label": "TB Treatment:",
           "questions": [
             {
-              "concept": "a899e444-1350-11df-a1f1-0026b9348838",
-              "label": "13h.TB treatment:",
+              "concept": "a8afcc82-1350-11df-a1f1-0026b9348838",
+              "id": "q13h",
+              "required":"true",
+              "label": "13h. On TB treatment:",
               "answers": [
                 {
-                  "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "None"
+                  "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                  "label": "Yes"
                 },
                 {
-                  "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
-                  "label": "On treatment"
+                  "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                  "label": "No"
                 }
               ],
               "type": "select",
               "validators": []
             },
             {
-              "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
-              "label": "Start Date of TB treatment",
-              "type": "date",
-              "validators": [{"type":"date"}]
+              "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
+                  "label": "Start Date of TB treatment",
+                  "type": "date",
+                  "validators": [
+                    {
+                      "type": "date"
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q13h) && q13h!=='a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
+                      "message": "Patient not on TB treatment. Start date not required."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q13h) && q13h==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                      "message": "Patient on TB treatment. Please indicate start date."
+                    }
+                  ]
+                }
+              ]
             },
             {
               "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",
@@ -902,6 +985,7 @@
                 {
                   "concept": "16db21cd-10cb-4c31-bb5a-b7619bfbea66",
                   "label": "13i. Site of TB meds pick-up:",
+                  "id":"q13i",
                   "answers": [
                     {
                       "concept": "a89c2f42-1350-11df-a1f1-0026b9348838",
@@ -913,13 +997,25 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                  ]
                 },
                 {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "Other Specify:",
                   "type": "text",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q13i) && q13i==='a8aaf3e2-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                      "message": "Please indicate other site of meds pickup."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q13i) && q13i==='a89c2f42-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
+                      "message": "Please do not indicate other site of meds pickup."
+                    }
+                  ]
                 }
               ]
             },
@@ -930,7 +1026,9 @@
               "questions": [
                 {
                   "concept": "a899e444-1350-11df-a1f1-0026b9348838",
-                  "label": "f. Current TB Regimen",
+                  "label": "13 i. Current TB Regimen",
+                  "required":"true",
+                  "id":"currentTBRegimen",
                   "type": "select",
                   "validators": [],
                   "answers": [
@@ -972,19 +1070,23 @@
                     },
                     {
                       "concept": "a897d0be-1350-11df-a1f1-0026b9348838",
-                      "label": "Rifampicin XXXXXX"
+                      "label": "Rifampicin"
                     },
                     {
                       "concept": "a8952e4a-1350-11df-a1f1-0026b9348838",
                       "label": "Streptomycin"
                     },
                     {
-                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                      "label": "Other"
-                    },
-                    {
                       "concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4",
                       "label": "Rifabutin"
+                    },
+                    {
+                      "concept": "a89c1ef8-1350-11df-a1f1-0026b9348838",
+                      "label": "Completed"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
                     }
                   ]
                 },
@@ -992,16 +1094,17 @@
                   "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                   "label": "tabs/day",
                   "type": "number",
-                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                  "hide":[
+                    {"field":"currentTBRegimen",
                     "value":["a899f51a-1350-11df-a1f1-0026b9348838",
                       "a897d1a4-1350-11df-a1f1-0026b9348838",
                       "a8a382ba-1350-11df-a1f1-0026b9348838"]}]
                 },
                 {
-                  "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
+                  "concept":"a8a063c8-1350-11df-a1f1-0026b9348838",
                   "label": "mg",
                   "type": "number",
-                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                  "hide":[{"field":"currentTBRegimen",
                     "value":["a899e19c-1350-11df-a1f1-0026b9348838",
                       "a8ac5f2a-1350-11df-a1f1-0026b9348838",
                       "a8952e4a-1350-11df-a1f1-0026b9348838"]}]
@@ -1010,7 +1113,7 @@
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "mg/day",
                   "type": "number",
-                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                  "hide":[{"field":"currentTBRegimen",
                     "value":["a896cc00-1350-11df-a1f1-0026b9348838",
                       "a8971c64-1350-11df-a1f1-0026b9348838"]}]
                 },
@@ -1018,9 +1121,19 @@
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                   "label": "tabs",
                   "type": "number",
-                  "hide":[{"field":"a899e444-1350-11df-a1f1-0026b9348838",
+                  "hide":[{"field":"currentTBRegimen",
                     "value":["b8aa06ca-93c6-40ea-b144-c74f841926f4"]}]
+                },
+                {
+                  "concept": "a8a176b4-1350-11df-a1f1-0026b9348838",
+                  "label": "Date completed",
+                  "type": "number",
+                  "validators":[{"type":"date"}],
+                  "hide":[{"field":"currentTBRegimen",
+                    "value":["a89c1ef8-1350-11df-a1f1-0026b9348838"]}]
                 }
+
+
               ]
             }
           ]
@@ -1036,7 +1149,11 @@
                   "concept": "a8a060c6-1350-11df-a1f1-0026b9348838",
                   "label": "13i. Other current drugs:To Do Add REPEAT",
                   "type": "text",
-                  "validators": []
+                  "validators": [{
+                    "type": "expression",
+                    "failsWhenExpression": "!isEmpty(q13h) && q13h==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                    "message": "Patient on TB treatment. Please indicate start date."
+                  }]
                 }
               ]
             }
