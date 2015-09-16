@@ -651,6 +651,7 @@
             {
               "concept": "a89ae254-1350-11df-a1f1-0026b9348838",
               "label": "13a. ARVs use:",
+              "id":"13a",
               "answers": [
                 {
                   "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
@@ -2305,6 +2306,8 @@
                   "label": "Hgb g/dL",
                   "type": "number",
                   "showDate": "true",
+                  "max":"50",
+                  "min":"0",
                   "validators": [{"type":"date"}]
                 },
                 {
@@ -2312,6 +2315,8 @@
                   "label": "MCV",
                   "type": "number",
                   "showDate": "true",
+                  "max":"500",
+                  "min":"0",
                   "validators": [{"type":"date"}]
                 },
                 {
@@ -2319,6 +2324,8 @@
                   "label": "ALC/ mm3",
                   "type": "number",
                   "showDate": "true",
+                  "max":"500",
+                  "min":"0",
                   "validators": [{"type":"date"}]
                 },
                 {
@@ -2326,6 +2333,8 @@
                   "type": "number",
                   "label": "CD4*:",
                   "showDate": "true",
+                  "max":"500",
+                  "min":"0",
                   "validators": [{"type":"date"}]
                 },
                 {
@@ -2333,6 +2342,8 @@
                   "type": "number",
                   "label": "CD4%:",
                   "showDate": "true",
+                  "max":"100",
+                  "min":"0",
                   "validators": [{"type":"date"}]
                 },
                 {
@@ -2340,6 +2351,8 @@
                   "type": "number",
                   "label": "Viral Load:",
                   "showDate": "true",
+                  "max":"10000000",
+                  "min":"0",
                   "validators": [{"type":"date"}]
                 },
                 {
@@ -2347,6 +2360,8 @@
                   "type": "number",
                   "label": "Creatinine mmol/L:",
                   "showDate": "true",
+                  "max":"11050",
+                  "min":"0",
                   "validators": [{"type":"date"}]
                 },
                 {
@@ -2354,6 +2369,8 @@
                   "type": "number",
                   "label": "SGPT(ALT):",
                   "showDate": "true",
+                  "max":"3500",
+                  "min":"0",
                   "validators": [{"type":"date"}]
                 }
               ]
@@ -2553,6 +2570,7 @@
             {
               "concept": "a89b3740-1350-11df-a1f1-0026b9348838",
               "label": "Who Stage",
+              "required": "true",
               "answers": [
                 {
                   "concept": "a89b33d0-1350-11df-a1f1-0026b9348838",
@@ -2578,6 +2596,7 @@
               "concept": "a89b2976-1350-11df-a1f1-0026b9348838",
               "label": "Criteria SEARCH",
               "type": "text",
+              "required": "true",
               "validators": []
             },
             {
@@ -2599,6 +2618,7 @@
             {
               "concept": "a8a0cd5e-1350-11df-a1f1-0026b9348838",
               "label": "18.b Not applicable:",
+              "required": "true",
               "answers": [
                 {
                   "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
@@ -2626,6 +2646,7 @@
               "concept": "a8afcafc-1350-11df-a1f1-0026b9348838",
               "label": "19a. Since last visit have you had any of the following? (tick all that apply) SEARCH",
               "type": "text",
+              "required": "true",
               "validators": []
             },
             {
@@ -2745,6 +2766,8 @@
             {
               "concept": "a89b75d4-1350-11df-a1f1-0026b9348838",
               "label": "21a. ARV Plan:",
+              "id":"21a",
+              "required": "true",
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -2784,7 +2807,18 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                  "type": "expression",
+                  "failsWhenExpression": "13a==='a899b35c-1350-11df-a1f1-0026b9348838' && arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'],myValue)",
+                  "message": "Patient marked as on ARVs in question 14. Therefore plan can only be drug substitution, continue regimen, change dose, change regimen, change formulation, stop all."
+                },
+                {
+                  "type": "expression",
+                  "failsWhenExpression": "13a==='a899b42e-1350-11df-a1f1-0026b9348838' && arrayContains(['a8a00158-1350-11df-a1f1-0026b9348838','a89b7908-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'],myValue)",
+                  "message": "Patient marked as not on ARVs in question 14. Therefore plan can only be not on ARVs, start ARVs or restart."
+                }
+              ]
             },
             {
               "concept": "a8a07688-1350-11df-a1f1-0026b9348838",
@@ -2793,6 +2827,7 @@
                 {
                   "concept": "a89b7110-1350-11df-a1f1-0026b9348838",
                   "label": "21b.Reason for stop/change/re-dose",
+                  "id":"21b",
                   "answers": [
                     {
                       "concept": "a8981934-1350-11df-a1f1-0026b9348838",
@@ -2840,7 +2875,13 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "arrayContains(['a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'], 21a)",
+                      "message": "You indicated patient is changing /changing dose/substituting/stopping arvs, reason for changing should be selected."
+                    }
+                  ]
                 }
               ]
             },
@@ -2852,7 +2893,13 @@
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label": " Toxicity cause :SEARCH",
                   "type": "text",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "21b!=='a890d1ba-1350-11df-a1f1-0026b9348838'",
+                      "message": "Reason for stop/change/re-dose is toxicity. Kindly indicate the toxicity cause."
+                    }
+                  ]
                 },
                 {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
@@ -2892,7 +2939,13 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "21a!=='a899e0ac-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue) ",
+                      "message": "Based on the plan selected, please indicate eligibility reason."
+                    }
+                  ]
                 },
                 {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
