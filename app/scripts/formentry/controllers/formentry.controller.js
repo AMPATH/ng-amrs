@@ -174,7 +174,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
           //  $scope.vm.error = FormentryService.validateForm($scope.vm.userFields);
             // console.log('Checking form Validity')
             // console.log($scope.vm.form.$valid);
-            console.log($scope.vm.form)
+            console.log($scope.vm.form)      
 
             if ($scope.vm.form.$valid)
             {
@@ -312,8 +312,24 @@ function updateObs(pay_load)
 }
 function getErrorField(fieldKey)
 {
-   var errorField = fieldKey.split('obs')[1];
-   var field_key = 'obs'+errorField.split('_')[0] + '_' + errorField.split('_')[1]
+
+   console.log('++++field_key', fieldKey);
+   var errorField;
+   var field_key;
+   if(_.contains(fieldKey,'ui-select-extended'))
+   {
+      errorField = fieldKey.split('ui-select-extended_')[1];
+      field_key = errorField.split('_')[0];
+      console.log(errorField)
+      console.log(field_key)
+   }
+   else
+   {
+     errorField = fieldKey.split('obs')[1];
+     field_key = 'obs'+errorField.split('_')[0] + '_' + errorField.split('_')[1]
+   }
+
+
    var field = FormentryService.getFieldById_Key(field_key, $scope.vm.tabs);
    console.log('error Field ', field);
    return field;

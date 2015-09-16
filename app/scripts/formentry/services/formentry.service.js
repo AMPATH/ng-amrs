@@ -2438,6 +2438,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 label: 'Date',
                 datepickerPopup: 'dd-MMMM-yyyy'
                 },
+                expressionProperties: {
+                  'templateOptions.required': function($viewValue, $modelValue, scope, element) {
+
+                    var value = $viewValue || $modelValue;
+                    var fkey = selField.key
+                    // console.log('This Key', fkey);
+                    // console.log('Model val now ',scope.model[fkey])
+                    return scope.model[fkey] !== undefined && scope.model[fkey] !== null && scope.model[fkey] !== '';
+                   }
+                 },
                 hideExpression:hideExpression_,
               validators: {
                 dateValidator: getFieldValidator(curField.validators[0]) //this  will require refactoring as we move forward
@@ -2586,6 +2596,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       dateValidator: getFieldValidator(sec_field.validators[0]) //this  will require refactoring as we move forward
                     }
                   }
+                  addToReadyFields(field)
                 }
                 else if(sec_field.type === 'encounterProvider')
                 {
@@ -2608,6 +2619,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       options:[]
                     }
                   }
+                  addToReadyFields(field);
                 }
                 else if(sec_field.type === 'encounterLocation')
                 {
@@ -2630,6 +2642,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       options:[]
                     }
                   }
+                  addToReadyFields(field);
                 }
                 else if(sec_field.type === 'group')
                 {
