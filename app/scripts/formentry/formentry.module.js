@@ -26,7 +26,7 @@
 
     formlyConfig.setWrapper({
       name: 'validation',
-      types: ['input', 'customInput','datepicker', 'select', 'section'],
+      types: ['input', 'customInput','datepicker', 'select', 'section', 'multiCheckbox'],
       templateUrl: 'error-messages.html'
     });
 
