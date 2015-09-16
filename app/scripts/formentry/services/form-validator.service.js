@@ -91,6 +91,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 if (typeof keyValuObject[key] === 'string')
                     toReplace = '"' + toReplace + '"';
 
+              if (Array.isArray(keyValuObject[key]))
+                  toReplace = convertArrayToString(toReplace);
+
                 var beforeReplaced = replaced;
 
                 replaced = replaced.replace(key, toReplace);
@@ -108,6 +111,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             var toReplace = myValue;
             if (typeof toReplace === 'string')
                 toReplace = '"' + toReplace + '"';
+            if (Array.isArray(toReplace))
+            toReplace =convertArrayToString(toReplace);
 
             var beforeReplaced = replaced;
             replaced = replaced.replace('myValue', toReplace);
@@ -135,6 +140,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         function evaluateExpression(expression) {
             return eval(expression);
         }
+
+      function  convertArrayToString(array){
+        var converted = '[';
+        for(var i = 0; i < array.length; i++){
+          if(i !== 0) converted = converted + ",";
+          converted = converted + "'" + array[i] + "'";
+        }
+        converted = converted + ']';
+        return converted;
+      }
 
         function isEmpty(val) {
 

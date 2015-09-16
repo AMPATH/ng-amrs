@@ -73,6 +73,7 @@
         }
       ]
     },
+
     {
       "label": "Page 2",
       "sections": [
@@ -83,12 +84,16 @@
               "concept": "a8a65d5a-1350-11df-a1f1-0026b9348838",
               "label": "2. BP:Systolic:",
               "type": "number",
+              "max":"250",
+              "min":"0",
               "validators": []
             },
             {
               "concept": "a8a65e36-1350-11df-a1f1-0026b9348838",
               "label": "BP:Diastolic:",
               "type": "number",
+              "max":"150",
+              "min":"0",
               "validators": []
             },
             {
@@ -101,6 +106,8 @@
               "concept": "a8a660ca-1350-11df-a1f1-0026b9348838",
               "label": "Weight(Kg):",
               "type": "number",
+              "max":"150",
+              "min":"0",
               "validators": []
             },
             {
@@ -113,24 +120,32 @@
               "concept": "a8a65f12-1350-11df-a1f1-0026b9348838",
               "label": "Pulse(Rate/Min):",
               "type": "number",
+              "max":"230",
+              "min":"0",
               "validators": []
             },
             {
               "concept": "a8a65fee-1350-11df-a1f1-0026b9348838",
               "label": "Temp(C):",
               "type": "number",
+              "max":"43",
+              "min":"25",
               "validators": []
             },
             {
               "concept": "a8a77686-1350-11df-a1f1-0026b9348838",
               "label": "Head Circ cm(less than/=2yrs)",
               "type": "number",
+              "max":"60",
+              "min":"25",
               "validators": []
             },
             {
               "concept": "a8a66354-1350-11df-a1f1-0026b9348838",
               "label": "Sp02 %:",
               "type": "number",
+              "max":"100",
+              "min":"0",
               "validators": []
             }
           ]
@@ -158,6 +173,7 @@
             {
               "concept": "a89ff9a6-1350-11df-a1f1-0026b9348838",
               "label": "4a. Visit Type",
+              "id":"q4a",
               "answers": [
                 {
                   "concept": "a89b6440-1350-11df-a1f1-0026b9348838",
@@ -181,8 +197,9 @@
               "type": "date",
               "validators": [
                 {
-                  "type": "date",
-                  "allowFutureDates": "true"
+                  "type": "expression",
+                  "failsWhenExpression": "!isEmpty(q4a) && arrayContains(['a89ff816-1350-11df-a1f1-0026b9348838','a89ff8de-1350-11df-a1f1-0026b9348838'],q4a) && isEmpty(myValue)",
+                  "message": "Patient visit marked as unscheduled. Please provide the scheduled date."
                 }
               ]
             }
@@ -194,6 +211,7 @@
             {
               "concept": "a8a0b670-1350-11df-a1f1-0026b9348838",
               "label": "5a. Mother Deceased",
+              "id":"q5a",
               "answers": [
                 {
                   "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
@@ -213,6 +231,7 @@
             },
             {
               "concept": "a8a0b788-1350-11df-a1f1-0026b9348838",
+              "id":"q5b",
               "label": "5b. Father Deceased",
               "answers": [
                 {
@@ -237,6 +256,7 @@
               "questions": [
                 {
                   "concept": "a898c01e-1350-11df-a1f1-0026b9348838",
+                  "required":"true",
                   "label": "6. Person Bringing Patient:",
                   "answers": [
                     {
@@ -289,7 +309,19 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q5a) && q5a==='a899b35c-1350-11df-a1f1-0026b9348838' && myValue==='a898c0dc-1350-11df-a1f1-0026b9348838'",
+                      "message": "Question 5a mother is marked as deceased. Mother cannot be answer to this question."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(q5b) && q5b==='a899b35c-1350-11df-a1f1-0026b9348838' && myValue==='a898c1a4-1350-11df-a1f1-0026b9348838'",
+                      "message": "Question 5a father is marked as deceased. Father cannot be answer to this question."
+                    }
+
+                  ]
                 }
               ]
             }
@@ -305,6 +337,7 @@
           "questions": [
             {
               "concept": "a89abee6-1350-11df-a1f1-0026b9348838",
+              "id":"q7a",
               "label": "7a. Current feeding:(tick all that apply)",
               "answers": [
                 {
@@ -365,7 +398,13 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                  "type": "expression",
+                  "failsWhenExpression": "!isEmpty(q7a) && arrayContains(q7a, 'a89cca10-1350-11df-a1f1-0026b9348838') && !isEmpty(myValue)",
+                  "message": "Question 7a current feeding not marked as breast/expressed breast milk. This question can only be answered if mother is breastfeeding."
+                }
+              ]
             },
             {
               "concept": "a8a0bbde-1350-11df-a1f1-0026b9348838",
@@ -506,6 +545,7 @@
           "questions": [
             {
               "concept": "a8a76cae-1350-11df-a1f1-0026b9348838",
+              "required":"true",
               "label": "HIV Status:",
               "answers": [
                 {
@@ -2256,6 +2296,8 @@
                   "label": "WBC/mm3",
                   "type": "number",
                   "showDate": "true",
+                  "max":"500",
+                  "min":"0",
                   "validators": [{"type":"date"}]
                 },
                 {
