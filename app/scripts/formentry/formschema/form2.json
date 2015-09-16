@@ -1127,19 +1127,8 @@
                 {
                   "concept": "a8a176b4-1350-11df-a1f1-0026b9348838",
                   "label": "Date completed",
-                  "type": "date",
-                  "validators":[
-                    {"type":"date"},
-                    {
-                      "type": "expression",
-                      "failsWhenExpression": "!isEmpty(currentTBRegimen) && currentTBRegimen==='a89c1ef8-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
-                      "message": "Patient completed TB treatment. Please indicate completed date."
-                    },
-                    {
-                      "type": "expression",
-                      "failsWhenExpression": "!isEmpty(currentTBRegimen) && currentTBRegimen!=='a89c1ef8-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
-                      "message": "Patient has not completed TB treatment. Please do not indicate completed date."
-                    }],
+                  "type": "number",
+                  "validators":[{"type":"date"}],
                   "hide":[{"field":"currentTBRegimen",
                     "value":["a89c1ef8-1350-11df-a1f1-0026b9348838"]}]
                 }
