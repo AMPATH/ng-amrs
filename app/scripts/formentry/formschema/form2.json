@@ -3403,6 +3403,7 @@
             {
               "concept": "a89c1e12-1350-11df-a1f1-0026b9348838",
               "label": "21i.TB Prophylaxis:",
+              "required": "true",
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -3455,6 +3456,10 @@
                     {
                       "concept": "a890d1ba-1350-11df-a1f1-0026b9348838",
                       "label": " Toxicity"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": " Other"
                     }
                   ],
                   "type": "select",
@@ -3462,14 +3467,8 @@
                 },
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
-                  "label": "Toxicity cause :SEARCH",
-                  "type": "text",
-                  "validators": []
-                },
-                {
-                  "concept": "a89c1e12-1350-11df-a1f1-0026b9348838",
-                  "label": "Other specifiy:CHECKBOX",
-                  "type": "text",
+                  "label": "Toxicity cause",
+                  "type": "select-concept-answers",
                   "validators": []
                 },
                 {
