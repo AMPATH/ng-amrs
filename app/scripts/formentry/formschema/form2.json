@@ -199,7 +199,7 @@
               "type": "date",
               "validators": [
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(q4a) && arrayContains(['a89ff816-1350-11df-a1f1-0026b9348838','a89ff8de-1350-11df-a1f1-0026b9348838'],q4a) && isEmpty(myValue)",
                   "message": "Patient visit marked as unscheduled. Please provide the scheduled date."
                 }
@@ -313,12 +313,12 @@
                   "type": "select",
                   "validators": [
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(q5a) && q5a==='a899b35c-1350-11df-a1f1-0026b9348838' && myValue==='a898c0dc-1350-11df-a1f1-0026b9348838'",
                       "message": "Question 5a mother is marked as deceased. Mother cannot be answer to this question."
                     },
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(q5b) && q5b==='a899b35c-1350-11df-a1f1-0026b9348838' && myValue==='a898c1a4-1350-11df-a1f1-0026b9348838'",
                       "message": "Question 5a father is marked as deceased. Father cannot be answer to this question."
                     }
@@ -401,7 +401,7 @@
               "type": "select",
               "validators": [
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(q7a) && !arrayContains(q7a, 'a89cca10-1350-11df-a1f1-0026b9348838') && !isEmpty(myValue)",
                   "message": "Question 7a current feeding not marked as breast/expressed breast milk. This question can only be answered if mother is breastfeeding."
                 }
@@ -449,12 +449,12 @@
               "type": "select",
               "validators": [
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(q8a) && q8a!=='a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
                   "message": "Question 8a, no siblings indicated. This question can only be answered if patient has siblings less than 18 months."
                 },
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(q8a) && q8a==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                   "message": "Question 8a has siblings indicated. PLease indicate if patient is registered in Pediatric HIV clinic."
                 }
@@ -616,12 +616,12 @@
               "type": "select",
               "validators": [
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(q10) && q10==='a89ace7c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                   "message": "Question 10, child is HIV infected. Please indicate if child is aware of own HIV status."
                 },
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(q10) && q10!=='a89ace7c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
                   "message": "Child aware of own HIV status can only be answered when child's HIV status is marked as HIV infected."
                 }
@@ -710,12 +710,12 @@
               "type": "select",
               "validators": [
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(q13a) && q13a==='a899b42e-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
                   "message": "This question can only be answered if question 13a, ARVs use is marked as yes."
                 },
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(q13a) && q13a==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                   "message": "The patient is on ARVs use, please provide reason."
                 }
@@ -751,12 +751,12 @@
               "type": "select",
               "validators": [
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(q13a) && q13a==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                   "message": "Patient on ARVs. Please provide regimen."
                 },
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(q13a) && q13a!=='a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
                   "message": "Patient not on ARVs. Regimen should not be provided."
                 }
@@ -878,12 +878,12 @@
               "type": "multiCheckbox",
               "validators": [
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(q13a) && q13a==='a899b42e-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                   "message": "Patient on ARVs. Please provide ARV drugs."
                 },
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(q13a) && q13a!=='a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
                   "message": "Patient not on ARVs. Regimen should not be provided."
                 }
@@ -972,12 +972,12 @@
                       "type": "date"
                     },
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(13h_Tb_Treatment) && 13h_Tb_Treatment!=='a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
                       "message": "Patient not on TB treatment. Start date not required."
                     },
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(13h_Tb_Treatment) && 13h_Tb_Treatment==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                       "message": "Patient on TB treatment. Please indicate start date."
                     }
@@ -1012,12 +1012,12 @@
                   "type": "text",
                   "validators": [
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(q13i) && q13i==='a8aaf3e2-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                       "message": "Please indicate other site of meds pickup."
                     },
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(q13i) && q13i==='a89c2f42-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
                       "message": "Please do not indicate other site of meds pickup."
                     }
@@ -1188,7 +1188,7 @@
                   "type": "text",
                   "validators": [
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(13h_Tb_Treatment) && 13h_Tb_Treatment==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                       "message": "Patient on TB treatment. Please indicate start date."
                     }
@@ -3029,12 +3029,12 @@
               "type": "select",
               "validators": [
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "13a==='a899b35c-1350-11df-a1f1-0026b9348838' && arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'],myValue)",
                   "message": "Patient marked as on ARVs in question 14. Therefore plan can only be drug substitution, continue regimen, change dose, change regimen, change formulation, stop all."
                 },
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "13a==='a899b42e-1350-11df-a1f1-0026b9348838' && arrayContains(['a8a00158-1350-11df-a1f1-0026b9348838','a89b7908-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'],myValue)",
                   "message": "Patient marked as not on ARVs in question 14. Therefore plan can only be not on ARVs, start ARVs or restart."
                 }
@@ -3097,7 +3097,7 @@
                   "type": "select",
                   "validators": [
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "arrayContains(['a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'], 21a)",
                       "message": "You indicated patient is changing /changing dose/substituting/stopping arvs, reason for changing should be selected."
                     }
@@ -3115,7 +3115,7 @@
                   "type": "text",
                   "validators": [
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "21b!=='a890d1ba-1350-11df-a1f1-0026b9348838'",
                       "message": "Reason for stop/change/re-dose is toxicity. Kindly indicate the toxicity cause."
                     }
@@ -3161,7 +3161,7 @@
                   "type": "select",
                   "validators": [
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "21a!=='a899e0ac-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue) ",
                       "message": "Based on the plan selected, please indicate eligibility reason."
                     }
@@ -3554,12 +3554,12 @@
                   "type": "select",
                   "validators": [
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(13h_Tb_Treatment) && 13h_Tb_Treatment === 'a899e0ac-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue) && arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838', 'a89b7908-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838', 'a8a00158-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838', 'dd01765f-7e26-4704-a790-5eb049670571'], myValue)",
                       "message": "You indicated patient is not on TB treatment in question 13h, therefore the selected option is invalid."
                     },
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(13h_Tb_Treatment) && 13h_Tb_Treatment === 'a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue) && arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838'], myValue)",
                       "message": "You indicated patient already on TB treatment in question 13h, therefore treatment plan cannot be none, start or restart"
                     }
@@ -3595,7 +3595,7 @@
               "type": "select",
               "validators": [
                 {
-                  "type": "expression",
+                  "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(myValue) && !isEmpty(21l_Tb_Treatment) && arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838', 'a89b7908-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'], 21l_Tb_Treatment)",
                   "message": "Cannot answer since you did not indicate that plan is to start TB treatment in question 21l."
                 }
@@ -3626,17 +3626,17 @@
                       "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
                       "label": "Other"
                     }
-                    
+
                   ],
                   "type": "select",
                   "validators": [
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(myValue) && !isEmpty(21l_Tb_Treatment) && !arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'], 21l_Tb_Treatment)",
                       "message": "Cannot answer since you did not indicate that plan is to stop/change or redose TB treatment in question 21l."
                     },
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "isEmpty(myValue) && !isEmpty(21l_Tb_Treatment) && arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'], 21l_Tb_Treatment)",
                       "message": "Based on the TB treatment plan marked, please indicate reason for stop/change/re-dose."
                     }
@@ -3648,12 +3648,12 @@
                   "type": "select-concept-answers",
                   "validators": [
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "isEmpty(myValue) && !isEmpty(21n_ReasonStop) && 21n_ReasonStop === 'a890d1ba-1350-11df-a1f1-0026b9348838'",
                       "message": "Reason for stop/change/re-dose is toxicity. Kindly indicate the toxicity cause."
                     },
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(myValue) && (isEmpty(21n_ReasonStop) || 21n_ReasonStop !== 'a890d1ba-1350-11df-a1f1-0026b9348838')",
                       "message": "Reason for stop/change/re-dose is not toxicity, therefore no toxicity cause."
                     }
@@ -3665,12 +3665,12 @@
                   "type": "text",
                   "validators": [
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "isEmpty(myValue) && !isEmpty(21n_ReasonStop) && 21n_ReasonStop === 'a8aaf3e2-1350-11df-a1f1-0026b9348838'",
                       "message": "Reason for stop/change/re-dose is Other. Please indicate other cause."
                     },
                     {
-                      "type": "expression",
+                      "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(myValue) && (isEmpty(21n_ReasonStop) || 21n_ReasonStop !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838')",
                       "message": "Cannot answer since reason for stop/change/re-dose is blank or not Other"
                     }

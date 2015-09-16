@@ -1611,7 +1611,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                       if(!arrKey.startsWith('obs'))
                                       {
                                         console.log('Calling createPayloadObsGroupArray method -1');
-                                        createPayloadObsGroupArray(ArrayVal[arrKey], arrKey, obs, groupMembers, section, traversed_objects)
+                                        createPayloadObsGroupArray(ArrayVal[arrKey], group_member, obs, groupMembers, section, traversed_objects)
 
                                         //multiCheckbox field
                                         //console.log('Multi ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
