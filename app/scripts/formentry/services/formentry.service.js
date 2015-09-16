@@ -2368,7 +2368,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               expressionProperties: {
                 'templateOptions.disabled': disableExpression_,
                 'templateOptions.required': required
-               }
+               },
+               validators: compiledValidators
             };
           }
         else if(obs_field.type === 'select-concept-answers'){
@@ -2394,7 +2395,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 'templateOptions.disabled': disableExpression_,
                 'templateOptions.required': required
                },
-              hideExpression:hideExpression_
+              hideExpression:hideExpression_,
+              validators: compiledValidators
             };
           }
           // console.log('Obs field', obsField);
