@@ -3616,13 +3616,18 @@
                       "label": "Completed"
                     },
                     {
+                      "concept": "a890d1ba-1350-11df-a1f1-0026b9348838",
+                      "label": " Toxicity"
+                    },
+                    {
                       "concept": "a898cfe6-1350-11df-a1f1-0026b9348838",
                       "label": " Weight change"
                     },
                     {
-                      "concept": "a890d1ba-1350-11df-a1f1-0026b9348838",
-                      "label": " Toxicity"
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
                     }
+                    
                   ],
                   "type": "select",
                   "validators": [
@@ -3641,7 +3646,7 @@
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label": "Toxicity cause",
-                  "type": "text",
+                  "type": "select-concept-answers",
                   "validators": [
                     {
                       "type": "expression",
@@ -3650,22 +3655,27 @@
                     },
                     {
                       "type": "expression",
-                      "failsWhenExpression": "!isEmpty(myValue) && !isEmpty(21n_ReasonStop) && 21n_ReasonStop !== 'a890d1ba-1350-11df-a1f1-0026b9348838'",
+                      "failsWhenExpression": "!isEmpty(myValue) && (isEmpty(21n_ReasonStop) || 21n_ReasonStop !== 'a890d1ba-1350-11df-a1f1-0026b9348838')",
                       "message": "Reason for stop/change/re-dose is not toxicity, therefore no toxicity cause."
                     }
                   ]
                 },
                 {
-                  "concept": "a89c20b0-1350-11df-a1f1-0026b9348838",
-                  "label": "Other specifiy:Checkbox",
-                  "type": "text",
-                  "validators": []
-                },
-                {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "Other specifiy",
                   "type": "text",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "isEmpty(myValue) && !isEmpty(21n_ReasonStop) && 21n_ReasonStop === 'a8aaf3e2-1350-11df-a1f1-0026b9348838'",
+                      "message": "Reason for stop/change/re-dose is Other. Please indicate other cause."
+                    },
+                    {
+                      "type": "expression",
+                      "failsWhenExpression": "!isEmpty(myValue) && (isEmpty(21n_ReasonStop) || 21n_ReasonStop !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838')",
+                      "message": "Cannot answer since reason for stop/change/re-dose is blank or not Other"
+                    }
+                  ]
                 }
               ]
             },
