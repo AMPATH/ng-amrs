@@ -239,11 +239,14 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               if(error_required !== undefined && error_required.required !== undefined)
               {
                   var i = 0;
-                  _.each(error_required.required[0].$error.required, function(error_field){
+                  _.some(error_required.required[0].$error.required, function(error_field){
                     if (i === 0) {
                       var field = getErrorField(error_field.$name);
                       if(field !== undefined)
-                        {$scope.vm.error= 'Missing required field: '+ field.templateOptions.label;}
+                      {
+                        $scope.vm.error= 'Missing required field: '+ field.templateOptions.label;
+                        return true;
+                      }
                     }
                     i = i + 1;
                   });
@@ -254,14 +257,56 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               if(error_date !== undefined && error_date.date !== undefined)
               {
                 var i = 0;
-                _.each(error_date.date[0].$error.date, function(error_field){
+                _.some(error_date.date[0].$error.date, function(error_field){
                   if (i === 0) {
-                    $scope.vm.error= 'One of the date fields is invalid';
+                    var field = getErrorField(error_field.$name);
+                    if(field !== undefined)
+                    {
+                      $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
+                      return true;
+                    }
+
                   }
                   i = i + 1;
                 });
                 return;
               }
+
+              if(error_date !== undefined && error_date.dateValidator !== undefined)
+              {
+                var i = 0;
+                _.some(error_date.dateValidator[0].$error.dateValidator, function(error_field){
+                  if (i === 0) {
+                    var field = getErrorField(error_field.$name);
+                    if(field !== undefined)
+                    {
+                      $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
+                      return true;
+                    }
+
+                  }
+                  i = i + 1;
+                });
+                return;
+              }
+              if(error_date !== undefined && error_date.js_expression !== undefined)
+              {
+                var i = 0;
+                _.some(error_date.js_expression[0].$error.js_expression, function(error_field){
+                  if (i === 0) {
+                    var field = getErrorField(error_field.$name);
+                    if(field !== undefined)
+                    {
+                      $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
+                      return true;
+                    }
+
+                  }
+                  i = i + 1;
+                });
+                return;
+              }
+
             }
 
         }
@@ -313,15 +358,15 @@ function updateObs(pay_load)
 function getErrorField(fieldKey)
 {
 
-   console.log('++++field_key', fieldKey);
+  //  console.log('++++field_key', fieldKey);
    var errorField;
    var field_key;
    if(_.contains(fieldKey,'ui-select-extended'))
    {
       errorField = fieldKey.split('ui-select-extended_')[1];
       field_key = errorField.split('_')[0];
-      console.log(errorField)
-      console.log(field_key)
+      // console.log(errorField)
+      // console.log(field_key)
    }
    else
    {
@@ -331,7 +376,7 @@ function getErrorField(fieldKey)
 
 
    var field = FormentryService.getFieldById_Key(field_key, $scope.vm.tabs);
-   console.log('error Field ', field);
+  //  console.log('error Field ', field);
    return field;
 }
 

@@ -10,7 +10,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
     FormentryService.$inject = ['$http', 'SearchDataService', 'moment', 'FormValidator'];
 
-    function FormentryService($http, SearchDataService, moment, FormValidator) {
+    function FormentryService( $http, SearchDataService, moment, FormValidator) {
         var service = {
             createForm: createForm,
             getConceptUuid:getConceptUuid,
@@ -37,7 +37,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           {
             // _.each(readyFields, function(_field){
               _.some(readyFields, function(_field){
-              console.log(_field)
+              // console.log(_field)
               if(_field.type !== 'repeatSection' && _field.type !== undefined)
               {
                 if (_field.key === id_key || _field.data.id === id_key )
@@ -235,6 +235,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               return {
                 expression: function(viewValue, modelValue, elementScope) {
                     var val = viewValue || modelValue;
+                    if (val === true)
+                    {
+                      val = elementScope.option.value;
+                    }
 
                     var referencedQuestions = FormValidator.extractQuestionIds(params.failsWhenExpression, service.lastFormValidationMetadata);
 
@@ -257,12 +261,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     var expressionToEvaluate = FormValidator.replaceQuestionsPlaceholdersWithValue(params.failsWhenExpression, keyValue);
 
                     expressionToEvaluate = FormValidator.replaceMyValuePlaceholdersWithActualValue(expressionToEvaluate, val);
-
-                    // console.log('expressionToEvaluate',expressionToEvaluate);
+                    console.log('Evaluates val',val);
+                    console.log('Evaluates model',elementScope);
+                    console.log('expressionToEvaluate',expressionToEvaluate);
 
                     var isInvalid = FormValidator.evaluateExpression(expressionToEvaluate);
 
-                    // console.log('isInvalid', isInvalid);
+                     console.log('isInvalid', isInvalid);
                     return !isInvalid;
                 },
                 message: '"' + params.message +  '"'
@@ -422,8 +427,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           else {
               formName = 'form1.json';
           }
+          var url = 'scripts/formentry/formschema/'+formName;
 
-          $http.get('scripts/formentry/formschema/'+formName)
+          $http.get(url, {cache: true})
             .success(function(response) {
 
               //console.log('testing json files');
