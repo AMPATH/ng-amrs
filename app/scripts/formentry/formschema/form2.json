@@ -1156,7 +1156,7 @@
                 {
                   "concept": "a8a176b4-1350-11df-a1f1-0026b9348838",
                   "label": "Date completed",
-                  "type": "number",
+                  "type": "date",
                   "validators": [
                     {
                       "type": "date"
@@ -1270,7 +1270,12 @@
                     }
                   ],
                   "type": "multiCheckbox",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "!isEmpty(q5a) && arrayContains(myValue,'a898c0dc-1350-11df-a1f1-0026b9348838')",
+                      "message": "Question 5a mother is marked as deceased. Mother cannot be answer to this question."
+                    }]
                 }
               ]
             },
