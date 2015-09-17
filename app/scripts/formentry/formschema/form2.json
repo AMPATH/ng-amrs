@@ -163,7 +163,7 @@
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "3. Transfer in from other clinic (specify):",
                   "type": "text",
-                  "validators": []
+                  "validators":{}
                 }
               ]
             }
@@ -1156,7 +1156,7 @@
                 {
                   "concept": "a8a176b4-1350-11df-a1f1-0026b9348838",
                   "label": "Date completed",
-                  "type": "number",
+                  "type": "date",
                   "validators": [
                     {
                       "type": "date"
@@ -1180,12 +1180,13 @@
           "questions": [
             {
               "concept": "a8a072c8-1350-11df-a1f1-0026b9348838",
-              "type": "group",
+              "type": "group_repeating",
+              "label": "13i. Other current drugs:",
               "questions": [
                 {
                   "concept": "a8a060c6-1350-11df-a1f1-0026b9348838",
-                  "label": "13i. Other current drugs:To Do Add REPEAT",
-                  "type": "text",
+                  "label": "Other Drugs:",
+                  "type": "drug",
                   "validators": [
                     {
                       "type": "js_expression",
@@ -1196,6 +1197,7 @@
                 }
               ]
             }
+
           ]
         }
       ]
@@ -1268,7 +1270,12 @@
                     }
                   ],
                   "type": "multiCheckbox",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "!isEmpty(q5a) && arrayContains(myValue,'a898c0dc-1350-11df-a1f1-0026b9348838')",
+                      "message": "Question 5a mother is marked as deceased. Mother cannot be answer to this question."
+                    }]
                 }
               ]
             },
@@ -1318,219 +1325,215 @@
               "answers": [
                 {
                   "concept": "2febe315-fe2c-4bad-a734-16d013cb2d9a",
-                  "label": "INCORRECT DRUG DOSAGE"
+                  "label": "Incorrect drug dosage"
                 },
                 {
                   "concept": "2febe315-fe2c-4bad-a734-16d013cb2d9a",
-                  "label": "WRONG MEDICATION DOSE"
+                  "label": "Wrong medication dose"
                 },
                 {
                   "concept": "7211031b-0685-44bc-a5e9-5a018d0173ea",
-                  "label": "SHARE MEDICATION WITH OTHER PEOPLE"
+                  "label": "Share medication with other people"
                 },
                 {
                   "concept": "98933740-e688-4b6e-b618-7b4030804728",
-                  "label": "CAREGIVER UNABLE"
+                  "label": "Caregiver unable"
                 },
                 {
                   "concept": "98933740-e688-4b6e-b618-7b4030804728",
-                  "label": "CARETAKER NOT ABLE "
+                  "label": "Caretaker not able "
                 },
                 {
                   "concept": "a8935fde-1350-11df-a1f1-0026b9348838",
-                  "label": "DEPRESSION"
+                  "label": "Depression"
                 },
                 {
                   "concept": "a8935fde-1350-11df-a1f1-0026b9348838",
-                  "label": "DEPRESSIVE EPISODE"
+                  "label": "Depressive episode"
                 },
                 {
                   "concept": "a8935fde-1350-11df-a1f1-0026b9348838",
-                  "label": "DEPRESSED"
+                  "label": "Depressed"
                 },
                 {
                   "concept": "a897fdaa-1350-11df-a1f1-0026b9348838",
-                  "label": "TRANSPORT PROBLEMS"
+                  "label": "Transport problems"
                 },
                 {
                   "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
-                  "label": "ALCOHOLISM"
+                  "label": "Alcoholism"
                 },
                 {
                   "concept": "a89cefd6-1350-11df-a1f1-0026b9348838",
-                  "label": "MISSED APPOINTMENT"
+                  "label": "Missed appointment"
                 },
                 {
                   "concept": "a89cefd6-1350-11df-a1f1-0026b9348838",
-                  "label": "NO SHOW"
+                  "label": "No show"
                 },
                 {
                   "concept": "a89d25fa-1350-11df-a1f1-0026b9348838",
-                  "label": "PATIENT REFUSAL"
+                  "label": "Patient refusal"
                 },
                 {
                   "concept": "a89d25fa-1350-11df-a1f1-0026b9348838",
-                  "label": "PATIENT REFUSE"
+                  "label": "Patient refuse"
                 },
                 {
                   "concept": "a89d25fa-1350-11df-a1f1-0026b9348838",
-                  "label": "REFUSAL OF TREATMENT BY PATIENT"
+                  "label": "Refusal of treatment by patient"
                 },
                 {
                   "concept": "a89de152-1350-11df-a1f1-0026b9348838",
-                  "label": "TRAVEL"
+                  "label": "Travel"
                 },
                 {
                   "concept": "a89de152-1350-11df-a1f1-0026b9348838",
-                  "label": "TRAVELING"
+                  "label": "Traveling"
                 },
                 {
                   "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
-                  "label": "HEALTH ISSUES"
+                  "label": "Health issues"
                 },
                 {
                   "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
-                  "label": "TOO ILLED"
+                  "label": "Too illed"
                 },
                 {
                   "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
-                  "label": "TOO SICK"
+                  "label": "Too sick"
                 },
                 {
                   "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
-                  "label": "DISEASE"
+                  "label": "Disease"
                 },
                 {
                   "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
-                  "label": "ILLNESS"
+                  "label": "Illness"
                 },
                 {
                   "concept": "a89dee54-1350-11df-a1f1-0026b9348838",
-                  "label": "NOT AT HOME"
+                  "label": "Not at home"
                 },
                 {
                   "concept": "a89e3396-1350-11df-a1f1-0026b9348838",
-                  "label": "HEALED BY FAITH"
+                  "label": "Healed by faith"
                 },
                 {
                   "concept": "a89e5db2-1350-11df-a1f1-0026b9348838",
-                  "label": "DISLIKE TAKING MEDICINE"
+                  "label": "Dislike taking medicine"
                 },
                 {
                   "concept": "a89e6ae6-1350-11df-a1f1-0026b9348838",
-                  "label": "DO NOT KNOW"
+                  "label": "Do not know"
                 },
                 {
                   "concept": "a89e6ae6-1350-11df-a1f1-0026b9348838",
-                  "label": "DON'T KNOW"
+                  "label": "Don't know"
                 },
                 {
                   "concept": "a89eac04-1350-11df-a1f1-0026b9348838",
-                  "label": "FELT WELL AND DID NOT THINK TAKING MEDICINIE WAS NEEDED"
+                  "label": "Felt well and did not think taking medicine was needed"
                 },
                 {
                   "concept": "a89eacc2-1350-11df-a1f1-0026b9348838",
-                  "label": "FORGOT TO TAKE MEDICINE"
+                  "label": "Forgot to take medicine"
                 },
                 {
                   "concept": "a89eb744-1350-11df-a1f1-0026b9348838",
-                  "label": "COULD NOT GET MEDICINE"
-                },
-                {
-                  "concept": "a89eb744-1350-11df-a1f1-0026b9348838",
-                  "label": "COULDN'T GET MEDICATION"
+                  "label": "Could not get medicine"
                 },
                 {
                   "concept": "a89eb802-1350-11df-a1f1-0026b9348838",
-                  "label": "MEDICINE NOT USEFUL"
+                  "label": "Medicine not useful"
                 },
                 {
                   "concept": "a89eb802-1350-11df-a1f1-0026b9348838",
-                  "label": "MEDICATION NOT USEFUL"
+                  "label": "Medication not useful"
                 },
                 {
                   "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
-                  "label": "SIDE EFFECTS FROM TAKING MEDICATIONS"
+                  "label": "Side effects from taking medications"
                 },
                 {
                   "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
-                  "label": "ADVERSE EFFECTS FROM TAKING MEDICINE"
+                  "label": "Adverse effects from taking medicine"
                 },
                 {
                   "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
-                  "label": "ADVERSE DRUG EFFECT"
+                  "label": "Adverse drug effect"
                 },
                 {
                   "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
-                  "label": "ADVERSE DRUG REACTION"
+                  "label": "Adverse drug reaction"
                 },
                 {
                   "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
-                  "label": "ADR"
+                  "label": "Adr"
                 },
                 {
                   "concept": "a89eb97e-1350-11df-a1f1-0026b9348838",
-                  "label": "TIME FOR A BREAK"
+                  "label": "Time for a break"
                 },
                 {
                   "concept": "a89eba46-1350-11df-a1f1-0026b9348838",
-                  "label": "STIGMA"
+                  "label": "Stigma"
                 },
                 {
                   "concept": "a89ebb04-1350-11df-a1f1-0026b9348838",
-                  "label": "OTHER TREATMENT"
+                  "label": "Other treatment"
                 },
                 {
                   "concept": "a89ec3f6-1350-11df-a1f1-0026b9348838",
-                  "label": "STOPPED"
+                  "label": "Stopped"
                 },
                 {
                   "concept": "a89ee2e6-1350-11df-a1f1-0026b9348838",
-                  "label": "DID NOT MISS ANY DOSES"
+                  "label": "Did not miss any doses"
                 },
                 {
                   "concept": "a8a08ff6-1350-11df-a1f1-0026b9348838",
-                  "label": "REFUSAL"
+                  "label": "Refusal"
                 },
                 {
                   "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                  "label": "OTHER NON-CODED"
+                  "label": "Other non-coded"
                 },
                 {
                   "concept": "a8ad3b02-1350-11df-a1f1-0026b9348838",
-                  "label": "CONFUSION"
+                  "label": "Confusion"
                 },
                 {
                   "concept": "a8ad3b02-1350-11df-a1f1-0026b9348838",
-                  "label": "CONFUSED"
+                  "label": "Confused"
                 },
                 {
                   "concept": "a8af4cee-1350-11df-a1f1-0026b9348838",
-                  "label": "RUN OUT OF MEDICATIONS"
+                  "label": "Run out of medications"
                 },
                 {
                   "concept": "a8af4cee-1350-11df-a1f1-0026b9348838",
-                  "label": "RUN OUT DRUGS"
+                  "label": "Run out drugs"
                 },
                 {
                   "concept": "a8b03af0-1350-11df-a1f1-0026b9348838",
-                  "label": "FINANCIAL BARRIER"
+                  "label": "Financial barrier"
                 },
                 {
                   "concept": "a8b03af0-1350-11df-a1f1-0026b9348838",
-                  "label": "MONEY BARRIER"
+                  "label": "Money barrier"
                 },
                 {
                   "concept": "c0c9eab3-46f6-453c-b29d-dc1c242317c5",
-                  "label": "FACILITY STOCKED OUT OF MEDICATION"
+                  "label": "Facility stocked out of medication"
                 },
                 {
                   "concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46",
-                  "label": "PILL BURDEN"
+                  "label": "Pill burden"
                 },
                 {
                   "concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46",
-                  "label": "TOO MANY PILLS TO TAKE"
+                  "label": "Too many pills to take"
                 }
               ],
               "type": "multiCheckbox",
@@ -2814,8 +2817,8 @@
             },
             {
               "concept": "a89b2976-1350-11df-a1f1-0026b9348838",
-              "label": "Criteria SEARCH",
-              "type": "text",
+              "label": "Criteria",
+              "type": "select-concept-answers",
               "required": "true",
               "validators": []
             },
@@ -2864,8 +2867,8 @@
           "questions": [
             {
               "concept": "a8afcafc-1350-11df-a1f1-0026b9348838",
-              "label": "19a. Since last visit have you had any of the following? (tick all that apply) SEARCH",
-              "type": "text",
+              "label": "19a. Since last visit have you had any of the following? (tick all that apply)",
+              "type": "select-concept-answers",
               "required": "true",
               "validators": []
             },
@@ -3111,8 +3114,8 @@
               "questions": [
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
-                  "label": " Toxicity cause :SEARCH",
-                  "type": "text",
+                  "label": " Toxicity cause :",
+                  "type": "select-concept-answers",
                   "validators": [
                     {
                       "type": "js_expression",
@@ -3380,8 +3383,8 @@
             },
             {
               "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
-              "label": "Toxicity cause:SEARCH",
-              "type": "text",
+              "label": "Toxicity cause:",
+              "type": "select-concept-answers",
               "validators": []
             },
             {

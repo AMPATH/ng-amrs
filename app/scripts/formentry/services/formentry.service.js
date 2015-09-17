@@ -185,7 +185,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 var value = modelValue || viewValue;
                 var dateValue;
                 var curDate = Date.parse(Date.today(),'d-MMM-yyyy');
-                if(value !== undefined)
+                if((value !== undefined) && (value !== null))
                 {
                   dateValue = Date.parse(value,'d-MMM-yyyy').clearTime();
                 }
