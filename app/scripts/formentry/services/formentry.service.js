@@ -35,33 +35,40 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           //Search from the schema that is being currently built
           if(readyFields.length>0)
           {
-            _.each(readyFields, function(_field){
+            // _.each(readyFields, function(_field){
+              _.some(readyFields, function(_field){
+              console.log(_field)
               if(_field.type !== 'repeatSection' && _field.type !== undefined)
               {
                 if (_field.key === id_key || _field.data.id === id_key )
                 {
                   selected_field =_field;
                   console.log('matched field',_field);
-                  return selected_field;
+                  // return selected_field;
+                  return true;
                 }
               }
               else if (_field.type === 'repeatSection'){
-                _.each(_field.templateOptions.fields[0].fieldGroup, function(_field_){
+                // _.each(_field.templateOptions.fields[0].fieldGroup, function(_field_){
+                _.some(_field.templateOptions.fields[0].fieldGroup, function(_field_){
                   if(_field_.key === id_key || _field_.data.id === id_key)
                   {
                     selected_field =_field_;
                     console.log('matched field',_field_);
-                    return selected_field;
+                    // return selected_field;
+                    return true;
                   }
                 });
               }
               else {
-                _.each(_field.fieldGroup, function(__field_){
+                // _.each(_field.fieldGroup, function(__field_){
+                _.some(_field.fieldGroup, function(__field_){
                   if( __field_.key === id_key ||  __field_.data.id === id_key)
                   {
                     selected_field = __field_;
                     console.log('matched field',__field_);
-                    return selected_field;
+                    // return selected_field;
+                    return true;
                   }
                 });
               }
@@ -72,52 +79,63 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           if (searchFields === undefined) searchFields = g_fields;
           // start by looping through the tabs
 
-          _.each(searchFields, function(page){
-            //loop through the sections in a page
-            _.each(page.form.fields, function(_section){
-              /*the assumption is that all questions will be in a section
-              but maybe we may have a question that is not isn a section
-              */
-              if(_section.type === 'section')
-              {
-                _.each(_section.templateOptions.fields[0].fieldGroup, function (_field) {
-                  // body...
-                  if(_field.type !== 'section' && _field.type !== 'group' && _field.type !== 'repeatSection' && _field.type !== undefined)
-                  {
-                    // console.log('testing selected key_first opt ', _field)
-                    if (_field.key === id_key || _field.data.id === id_key )
+          if (selected_field === undefined)
+          {
+            // _.each(searchFields, function(page){
+            _.some(searchFields, function(page){
+              //loop through the sections in a page
+              // _.each(page.form.fields, function(_section){
+              _.some(page.form.fields, function(_section){
+                /*the assumption is that all questions will be in a section
+                but maybe we may have a question that is not isn a section
+                */
+                if(_section.type === 'section')
+                {
+                  // _.each(_section.templateOptions.fields[0].fieldGroup, function (_field) {
+                  _.some(_section.templateOptions.fields[0].fieldGroup, function (_field) {
+                    // body...
+                    if(_field.type !== 'section' && _field.type !== 'group' && _field.type !== 'repeatSection' && _field.type !== undefined)
                     {
-                      selected_field =_field;
-                      console.log('matched field',_field);
-                      return selected_field;
+                      // console.log('testing selected key_first opt ', _field)
+                      if (_field.key === id_key || _field.data.id === id_key )
+                      {
+                        selected_field =_field;
+                        console.log('matched field',_field);
+                        // return selected_field;
+                        return true;
+                      }
                     }
-                  }
-                  else if (_field.type === 'repeatSection'){
-                    _.each(_field.templateOptions.fields[0].fieldGroup, function(_field_){
-                      if(_field_.key === id_key || _field_.data.id === id_key)
-                      {
-                        selected_field =_field_;
-                        console.log('matched field',_field_);
-                        return selected_field;
-                      }
-                    });
-                  }
-                  else {
-                    _.each(_field.fieldGroup, function(__field_){
-                      if( __field_.key === id_key ||  __field_.data.id === id_key)
-                      {
-                        selected_field = __field_;
-                        console.log('matched field',__field_);
-                        return selected_field;
-                      }
-                    });
-                  }
-                });
-              }
+                    else if (_field.type === 'repeatSection'){
+                      // _.each(_field.templateOptions.fields[0].fieldGroup, function(_field_){
+                      _.some(_field.templateOptions.fields[0].fieldGroup, function(_field_){
+                        if(_field_.key === id_key || _field_.data.id === id_key)
+                        {
+                          selected_field =_field_;
+                          console.log('matched field',_field_);
+                          // return selected_field;
+                          return true;
+                        }
+                      });
+                    }
+                    else {
+                      // _.each(_field.fieldGroup, function(__field_){
+                      _.some(_field.fieldGroup, function(__field_){
+                        if( __field_.key === id_key ||  __field_.data.id === id_key)
+                        {
+                          selected_field = __field_;
+                          console.log('matched field',__field_);
+                          // return selected_field;
+                          return true;
+                        }
+                      });
+                    }
+                  });
+                }
+              });
             });
-          });
+          }
 
-          console.log('No matching Field found')
+          if (selected_field === undefined) console.log('No matching Field found')
           return selected_field;
         }
 
@@ -127,8 +145,12 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         {
           var result;
           _.each(searchFields, function(cfield){
-            if(cfield.data && cfield.data.id === id_) result = cfield.key
-          })
+            if(cfield.data && cfield.data.id === id_)
+            {
+              result = cfield.key;
+              return result;
+            }
+          });
           return result;
         }
 
@@ -2498,6 +2520,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 label: 'Date',
                 datepickerPopup: 'dd-MMMM-yyyy'
                 },
+                expressionProperties: {
+                  'templateOptions.required': function($viewValue, $modelValue, scope, element) {
+
+                    var value = $viewValue || $modelValue;
+                    var fkey = selField.key
+                    // console.log('This Key', fkey);
+                    // console.log('Model val now ',scope.model[fkey])
+                    return scope.model[fkey] !== undefined && scope.model[fkey] !== null && scope.model[fkey] !== '';
+                   }
+                 },
                 hideExpression:hideExpression_,
               validators: {
                 dateValidator: getFieldValidator(curField.validators[0]) //this  will require refactoring as we move forward
@@ -2522,7 +2554,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           }
            return obsField;
         }
-        function createForm(schema, callback)
+        function createForm(schema, model, callback)
         {
           obs_id = 0;
           var defaultValue_;
@@ -2685,9 +2717,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             {
               title: page.label,
               form:{
+                model:model,
                 options:{},
                 fields:pageFields
               }
+            }
+            if (i === 0) {
+              tab.active = true;
             }
             tabs.push(tab);
             // callback(tabs);

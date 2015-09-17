@@ -95,21 +95,21 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
          FormentryService.getFormSchema(selectedForm.name, function(schema){
           formSchema = schema;
 
-          FormentryService.createForm(formSchema, function(formlySchema){
+          FormentryService.createForm(formSchema, $scope.vm.model, function(formlySchema){
             //$scope.vm.formlyFields = formlySchema;
             if(formlySchema)  {
               $scope.vm.tabs = formlySchema;
 
-              var i = 0;
-              angular.forEach($scope.vm.tabs, function(tab){
-                // console.log('Tab Structure');
-                // console.log(tab);
-                if (i===0) {
-                  tab.active = true;
-                }
-                i++;
-                tab.form['model'] = $scope.vm.model;
-              });
+              // var i = 0;
+              // angular.forEach($scope.vm.tabs, function(tab){
+              //   // console.log('Tab Structure');
+              //   // console.log(tab);
+              //   if (i===0) {
+              //     tab.active = true;
+              //   }
+              //   i++;
+              //   tab.form['model'] = $scope.vm.model;
+              // });
               //update sex;
               $scope.vm.model['sex'] = $scope.vm.patient.gender();
               $scope.vm.isBusy = false;
@@ -174,7 +174,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
           //  $scope.vm.error = FormentryService.validateForm($scope.vm.userFields);
             // console.log('Checking form Validity')
             // console.log($scope.vm.form.$valid);
-            console.log($scope.vm.form)      
+            console.log($scope.vm.form)
 
             if ($scope.vm.form.$valid)
             {

@@ -92,8 +92,9 @@
       it('CreateForm method should return a tabbed form', function(){
         var schema = mockData.getMockSchema();
         //console.log(schema);
+        var model = {};
         var tabs;
-        formentryService.createForm(schema, function(data){
+        formentryService.createForm(schema, model, function(data){
           tabs=data;
           //console.log(tabs);
           expect(tabs).to.be.an('array');
@@ -110,9 +111,9 @@
 
         beforeEach(function(){
           var schema = mockData.getMockSchema();
-
+          var model = {};
           //console.log(schema);
-          formentryService.createForm(schema, function(data){
+          formentryService.createForm(schema, model, function(data){
             tabs=data;
             // console.log('++++++tabs',tabs);
           });
@@ -155,8 +156,9 @@
         beforeEach(function(){
           var schema = mockData.getMockSchema();
           field = mockData.getMockObsField();
+          var model = {};
           //console.log(schema);
-          formentryService.createForm(schema, function(data){
+          formentryService.createForm(schema, model, function(data){
             tabs=data;
             // console.log('++++++tabs',tabs);
           });
@@ -211,7 +213,7 @@
           patient = new patientModel.patient(mockData.getMockPatient());
 
           //console.log(model);
-          formentryService.createForm(schema, function(data){
+          formentryService.createForm(schema, model, function(data){
             formly_schema = data;
             // console.log('FORMLY SCHEMAS');
             // console.log(formly_schema);
