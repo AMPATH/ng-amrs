@@ -3030,12 +3030,12 @@
               "validators": [
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "13a==='a899b35c-1350-11df-a1f1-0026b9348838' && arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'],myValue)",
+                  "failsWhenExpression": "q13a==='a899b35c-1350-11df-a1f1-0026b9348838' && arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'],myValue)",
                   "message": "Patient marked as on ARVs in question 14. Therefore plan can only be drug substitution, continue regimen, change dose, change regimen, change formulation, stop all."
                 },
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "13a==='a899b42e-1350-11df-a1f1-0026b9348838' && arrayContains(['a8a00158-1350-11df-a1f1-0026b9348838','a89b7908-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'],myValue)",
+                  "failsWhenExpression": "q13a==='a899b42e-1350-11df-a1f1-0026b9348838' && arrayContains(['a8a00158-1350-11df-a1f1-0026b9348838','a89b7908-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'],myValue)",
                   "message": "Patient marked as not on ARVs in question 14. Therefore plan can only be not on ARVs, start ARVs or restart."
                 }
               ]
