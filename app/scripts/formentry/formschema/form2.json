@@ -897,6 +897,7 @@
             {
               "concept": "212fdebe-4745-4f60-aaa0-35f4193abaf8",
               "required": "true",
+              "id":"13f",
               "label": "13f.Opportunistic Infection(OI) Prophylaxis:",
               "answers": [
                 {
@@ -922,6 +923,7 @@
             {
               "concept": "a899e35e-1350-11df-a1f1-0026b9348838",
               "label": "13g.TB Prophylaxis",
+              "id":"13g",
               "required": "true",
               "answers": [
                 {
@@ -3205,6 +3207,7 @@
                 {
                   "concept": "a89b6a62-1350-11df-a1f1-0026b9348838",
                   "label": "21e.ARV drugs:",
+                  "id": "21e",
                   "answers": [
                     {
                       "concept": "b7735b8a-22f2-41d6-b450-65ec7588839c",
@@ -3320,7 +3323,13 @@
                     }
                   ],
                   "type": "multiCheckbox",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "!isEmpty(21a) && isEmpty(myValue) && arrayContains(['a898c938-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'],21a)",
+                      "message": "Based on the plan selected, please indicate a regimen."
+                    }
+                    ]
                 }
               ]
             }
@@ -3332,6 +3341,8 @@
             {
               "concept": "8b181385-353a-4f51-9b81-1b5f7f267f5f",
               "label": "21f. OI Prophylaxis:",
+              "id":"21f",
+              "required": "true",
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -3363,11 +3374,23 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a89b7908-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'],21a) && myValue==='a899e0ac-1350-11df-a1f1-0026b9348838'",
+                  "message": "Based on the current OI prophylaxis marked, please indicate OI prophylaxis plan."
+                },
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838', 'a89b77aa-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'], myValue) && arrayContains(['a8989396-1350-11df-a1f1-0026b9348838','a890c9e0-1350-11df-a1f1-0026b9348838','a8971e12-1350-11df-a1f1-0026b9348838'], 13f)",
+                  "message": "Based on the current OI prophylaxis marked, please indicate OI prophylaxis plan."
+                }
+              ]
             },
             {
               "concept": "7e82e662-6bda-4b6f-9080-7662d35c39ca",
               "label": "21g. Reason for stop/change/re-dose:",
+              "id": "21g",
               "answers": [
                 {
                   "concept": "a898cfe6-1350-11df-a1f1-0026b9348838",
@@ -3379,7 +3402,13 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "arrayContains([ 'a899e0ac-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a89b7908-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'],21f)",
+                  "message": "Based on the OI prophylaxis plan marked, please indicate reason for stop/change/re-dose"
+                }
+              ]
             },
             {
               "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
@@ -3401,7 +3430,13 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "21g!=='a890d1ba-1350-11df-a1f1-0026b9348838'",
+                  "message": "Reason for stop/change/re-dose is toxicity. Kindly indicate the toxicity cause."
+                }
+              ]
             },
             {
               "concept": "a89c1e12-1350-11df-a1f1-0026b9348838",
@@ -3434,7 +3469,8 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+              ]
             },
             {
               "concept": "a8a0780e-1350-11df-a1f1-0026b9348838",
@@ -3466,7 +3502,13 @@
                     }
                   ],
                   "type": "select",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838', 'a89b77aa-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'], 13g) &&",
+                      "message": "Based on the current OI prophylaxis marked, please indicate OI prophylaxis plan."
+                    }
+                  ]
                 },
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
