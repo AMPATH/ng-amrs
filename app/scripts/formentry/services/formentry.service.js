@@ -578,7 +578,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       //console.log(model);
                     }
                   }
-                  else if(_field.type === 'select' || _field.type === 'radio' || _field.type === 'ui-select-extended'|| _field.type==='concept-search-select')
+                  else if(_field.type === 'select' || _field.type === 'radio' || _field.type === 'ui-select-extended'|| _field.type==='select-concept-answers')
                   {
                     field_key = _field.key;
                     // var val = getObsValue(field_key, obs_data);
