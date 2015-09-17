@@ -26,25 +26,25 @@
     return serviceDefinition;
 
     function getResource() {
-      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'concept/:uuid?v=custom:(uuid,name,conceptClass)',
+      return $resource(OpenmrsSettings.getCurrentRestUrlBase().trim() + 'concept/:uuid?v=custom:(uuid,name,conceptClass)',
         { uuid: '@uuid' },
         { query: { method: 'GET', isArray: false } });
     }
 
     function getSearchResource() {
-      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'concept?q=:q&v=custom:(uuid,name,conceptClass)',
+      return $resource(OpenmrsSettings.getCurrentRestUrlBase().trim() + 'concept?q=:q&v=custom:(uuid,name,conceptClass)',
         { q: '@q' },
         { query: { method: 'GET', isArray: false } });
     }
 
     function getConceptClassResource() {
-      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'conceptclass',
+      return $resource(OpenmrsSettings.getCurrentRestUrlBase().trim() + 'conceptclass',
         { uuid: '@uuid' },
         { query: { method: 'GET', isArray: false } });
     }
 
     function getConceptWithAnswersResource() {
-      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'concept/:uuid?v=custom:(uuid,name,answers)',
+      return $resource(OpenmrsSettings.getCurrentRestUrlBase().trim() + 'concept/:uuid?v=custom:(uuid,name,answers)',
         { q: '@q' },
         { query: { method: 'GET', isArray: false } });
     }

@@ -20,7 +20,7 @@
         return serviceDefinition;
 
         function getResource() {
-          return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'session');
+          return $resource(OpenmrsSettings.getCurrentRestUrlBase().trim() + 'session');
         }
 
         function getSession(successCallback, failedCallback) {
