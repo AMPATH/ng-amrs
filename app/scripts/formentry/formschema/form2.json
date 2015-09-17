@@ -3326,7 +3326,7 @@
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(21a) && isEmpty(myValue)&&arrayContains(['a898c938-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'],21a)",
+                      "failsWhenExpression": "!isEmpty(21a) && isEmpty(myValue) && arrayContains(['a898c938-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'],21a)",
                       "message": "Based on the plan selected, please indicate a regimen."
                     }
                     ]
