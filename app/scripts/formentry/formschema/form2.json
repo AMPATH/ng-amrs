@@ -3505,7 +3505,7 @@
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838', 'a89b77aa-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'], 13g) &&",
+                      "failsWhenExpression": "arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838', 'a89b77aa-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'], 13g)",
                       "message": "Based on the current OI prophylaxis marked, please indicate OI prophylaxis plan."
                     }
                   ]
