@@ -20,19 +20,19 @@
     return serviceDefinition;
 
     function getResource() {
-      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'provider/:uuid?v=full',
+      return $resource(OpenmrsSettings.getCurrentRestUrlBase().trim() + 'provider/:uuid?v=full',
         { uuid: '@uuid' },
         { query: { method: 'GET', isArray: false } });
     }
 
     function getPersonResource() {
-      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'person/:uuid',
+      return $resource(OpenmrsSettings.getCurrentRestUrlBase().trim() + 'person/:uuid',
         { uuid: '@uuid' },
         { query: { method: 'GET', isArray: false } });
     }
 
     function searchResource() {
-        return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'provider?q=:search&v=default',
+        return $resource(OpenmrsSettings.getCurrentRestUrlBase().trim() + 'provider?q=:search&v=default',
         { search: '@search' },
         { query: { method: 'GET', isArray: false } });
     }

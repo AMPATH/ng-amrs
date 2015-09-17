@@ -21,13 +21,13 @@
     return serviceDefinition;
 
     function getResource() {
-      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'drug/:uuid?v=custom:(uuid,name,concept)',
+      return $resource(OpenmrsSettings.getCurrentRestUrlBase().trim() + 'drug/:uuid?v=custom:(uuid,name,concept)',
         { uuid: '@uuid' },
         { query: { method: 'GET', isArray: false } });
     }
 
     function getSearchResource() {
-      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'drug?q=:q&v=custom:(uuid,name,concept)',
+      return $resource(OpenmrsSettings.getCurrentRestUrlBase().trim() + 'drug?q=:q&v=custom:(uuid,name,concept)',
         { q: '@q' },
         { query: { method: 'GET', isArray: false } });
     }

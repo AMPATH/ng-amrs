@@ -21,7 +21,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
 
     function getResource() {
       var v = 'custom:(uuid,obsDatetime,concept:(uuid,uuid),groupMembers,value:ref)';
-      return $resource(OpenmrsSettings.getCurrentRestUrlBase() + 'obs/:uuid',
+      return $resource(OpenmrsSettings.getCurrentRestUrlBase().trim() + 'obs/:uuid',
         { uuid: '@uuid', v:v},
         { query: { method: 'GET', isArray: false } });
     }
