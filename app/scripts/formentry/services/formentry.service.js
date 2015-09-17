@@ -268,7 +268,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     var isInvalid = FormValidator.evaluateExpression(expressionToEvaluate);
 
                      console.log('isInvalid', isInvalid);
-                    return !isInvalid;
+                     if (val !== undefined || val !== null || val !== '')
+                      {
+                        // console.log('Conditional Answered +++', val)
+                        return true;
+                      }
+                      else{
+                        return !isInvalid;
+                      }
                 },
                 message: '"' + params.message +  '"'
               };
@@ -1834,7 +1841,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                   }
                                   else {
                                         //new val being added
-                                        if(value_ !== null && value !=='null' && value !=='')
+                                        if(value_ !== null && value_ !=='null' && value_ !=='')
                                           groupMembers.push({concept:concept_, value:value_});
                                   }
                                 }
