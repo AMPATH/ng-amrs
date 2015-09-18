@@ -494,11 +494,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
           var opts = [];
           _.each(key.templateOptions.options, function(select_item){
-            //handle boolen TYPES - dirty hack
-            // console.log('Check Boolean ', select_item)
-            // if (select_item.value === 'true') opts.push('a899b35c-1350-11df-a1f1-0026b9348838');
-            // else if (select_item.value === 'false') opts.push('a899b42e-1350-11df-a1f1-0026b9348838');
-            // else
+
             opts.push(select_item.value);
           });
           var val = _.find(obs,function(obs_){
@@ -506,7 +502,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             if(obs_.concept.uuid === convertKey_to_uuid(field_key.split('_')[1]))
             {
               console.log('Check Obs', obs_)
-              if(opts.indexOf(obs_.value.uuid) !== -1) return obs_;
+              // if(opts.indexOf(obs_.value.uuid) !== -1) 
+              return obs_;
             }
           });
 
