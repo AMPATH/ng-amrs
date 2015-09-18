@@ -185,7 +185,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 var value = modelValue || viewValue;
                 var dateValue;
                 var curDate = Date.parse(Date.today(),'d-MMM-yyyy');
-                if((value !== undefined) && (value !== null))
+                if(value !== undefined)
                 {
                   dateValue = Date.parse(value,'d-MMM-yyyy').clearTime();
                 }
@@ -261,21 +261,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     var expressionToEvaluate = FormValidator.replaceQuestionsPlaceholdersWithValue(params.failsWhenExpression, keyValue);
 
                     expressionToEvaluate = FormValidator.replaceMyValuePlaceholdersWithActualValue(expressionToEvaluate, val);
-                    console.log('Evaluates val',val);
-                    console.log('Evaluates model',elementScope);
-                    console.log('expressionToEvaluate',expressionToEvaluate);
+                    // console.log('Evaluates val',val);
+                    // console.log('Evaluates model',elementScope);
+                    // console.log('expressionToEvaluate',expressionToEvaluate);
 
                     var isInvalid = FormValidator.evaluateExpression(expressionToEvaluate);
 
-                     console.log('isInvalid', isInvalid);
-                     if (val !== undefined || val !== null || val !== '')
-                      {
-                        // console.log('Conditional Answered +++', val)
-                        return true;
-                      }
-                      else{
-                        return !isInvalid;
-                      }
+                    //  console.log('isInvalid', isInvalid);
+                    return !isInvalid;
                 },
                 message: '"' + params.message +  '"'
               };
@@ -613,12 +606,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       //console.log(model);
                     }
                   }
-                  else if(_field.type === 'select' || _field.type === 'radio' || _field.type === 'ui-select-extended'|| _field.type==='select-concept-answers')
+                  else if(_field.type === 'select' || _field.type === 'radio' || _field.type === 'ui-select-extended'|| _field.type==='concept-search-select')
                   {
                     field_key = _field.key;
                     // var val = getObsValue(field_key, obs_data);
                     var val = getObsValueSelect( _field, obs_data);
-                    console.log('initial value',val)
+                    // console.log('initial value',val)
+                    if(_field.type==='concept-search-select'){
+                      console.log('concept-search-select+++++++',_field);
+                      console.log('initial value',val)
+                    }
                     if (val !== undefined)
                     {
                       if(val.value !== null)
