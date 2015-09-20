@@ -131,7 +131,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                   $scope.vm.submitLabel = 'Update'
                     FormentryService.getEncounter(encData,formlySchema);
                 }
-               });
+              },
+              //error callback
+              function (error){
+                $scope.vm.error = 'An Error occured when trying to get encounter data';
+              }
+            );
             }
             else {
               //set the current user as the default provider
@@ -207,7 +212,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                         // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
                         $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
                       }
-                    });
+                    },
+                    //error callback
+                    function (error) {
+                      // body...
+                      $scope.vm.error = 'An Error occured while trying to save the form';
+                    }
+                  );
                   }
                   // else {
                   //   //void obs only
@@ -355,7 +366,13 @@ function voidObs(pay_load)
         {
           console.log('Voided Obs uuid: ', obs.uuid);
         }
-      });
+      },
+      //error callback
+      function(error)
+      {
+        $scope.vm.error = 'An error occured when trying to void obs';
+      }
+    );
     })
   }
 }
@@ -376,7 +393,13 @@ function updateObs(pay_load)
         {
           console.log('Updated Obs uuid: ', data);
         }
-      });
+      },
+      //error callback
+      function(error)
+      {
+        $scope.vm.error = 'An error occured when trying to void obs';
+      }
+    );
     })
   }
 }

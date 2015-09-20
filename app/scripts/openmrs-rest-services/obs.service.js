@@ -42,8 +42,9 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
           successCallback(data);
         })
           .catch(function (error) {
-          errorCallback('Error processing request', error);
-          console.error(error);
+            console.error('An Error occured when saving Obs ',error);
+            if (typeof errorCallback === 'function')
+              errorCallback('Error processing request', error);
         });
         /*
         Plan B
@@ -68,8 +69,10 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
         successCallback(data);
       })
         .catch(function (error) {
-        errorCallback('Error processing request', error);
-        console.error(error);
+          console.error('An Error occured when saving Obs ',error);
+          if (typeof errorCallback === 'function')
+            errorCallback('Error processing request', error);
+
       });
       }
     }
@@ -82,8 +85,9 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
         successCallback(data);
       })
         .catch(function (error) {
-        errorCallback('Error processing request', error);
-        console.error(error);
+          console.error('An Error occured when getting Obs ',error);
+          if (typeof errorCallback === 'function')
+            errorCallback('Error processing request', error);
       });
     }
 
@@ -93,7 +97,13 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
         function (data) {
           if (successCallback) { successCallback(data); }
           else return data;
-        });
+        },
+        function(error){
+          console.error('An Error occured when voiding Obs ',error);
+          if (typeof errorCallback === 'function')
+            errorCallback('Error processing request', error);
+        }
+      );
     }
 
 
