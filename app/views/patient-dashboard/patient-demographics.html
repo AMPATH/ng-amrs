@@ -1,5 +1,5 @@
 <ul class="list-group">
-    <li class="list-group-item" style="font-size:large" ng-if="patient.fullNames()">Name: {{patient.fullNames()}}</li>
+    <li class="list-group-item" style="font-size:large" ng-if="patient.fullNames()">Name: {{patient.fullNames() | titlecase }}</li>
     <li class="list-group-item" style="font-size:large" ng-if="patient.healthCenter()">Health Center: {{patient.healthCenter()}}</li>
     <li class="list-group-item" style="font-size:large" ng-if="patient.isTestorFakePatient()">Test Patient</li>
     <li class="list-group-item markDeceased" style="font-size:large" ng-if="patient.deathDate()">Death Date: {{patient.deathDate()}}</li>

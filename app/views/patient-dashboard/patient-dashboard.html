@@ -3,7 +3,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-4">
-					<h5>{{patient.fullNames()}}</h5>
+					<h5>{{patient.fullNames() | titlecase}}</h5>
 				</div>
 				<div class="col-sm-4">
 					<h5>Identifier: {{patient.identifierFormatted()}}</h5>

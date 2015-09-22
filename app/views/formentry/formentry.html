@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">
   <form name="vm.form" novalidate>
     <div class="breadcrumb">
-      <h2>{{vm.patient.fullNames()}} | Sex: {{vm.patient.gender()}} | Age: {{vm.patient.age()}} | Identifier: {{vm.patient.identifierFormatted()}}</h2>{{vm.encounterType}}
+      <h2>{{vm.patient.fullNames() | titlecase}} | Sex: {{vm.patient.gender()}} | Age: {{vm.patient.age()}} | Identifier: {{vm.patient.identifierFormatted()}}</h2>{{vm.encounterType}}
       - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}} {{vm.success}}</div>
     <div data-ng-show='vm.isBusy'>
       <h2>
