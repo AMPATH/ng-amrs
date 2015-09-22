@@ -237,8 +237,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               return {
                 expression: function(viewValue, modelValue, elementScope) {
                     var val = viewValue || modelValue;
-                    if (val === true)
+                    
+                    //special case for multicheck box
+                    if (val === true && elementScope.$parent && elementScope.$parent.multiCheckbox)
                     {
+                      console.log('validating multicheck box..', elementScope.$parent.multiCheckbox);
                       val = elementScope.option.value;
                     }
 
@@ -268,8 +271,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     // console.log('expressionToEvaluate',expressionToEvaluate);
 
                     var isInvalid = FormValidator.evaluateExpression(expressionToEvaluate);
-                    // if (loaded) isInvalid = FormValidator.evaluateExpression(expressionToEvaluate);
-                    // console.log('Validation on Load-Custom Js++++', isInvalid);
+                    
                     return !isInvalid;
                 },
                 message: '"' + params.message +  '"'
