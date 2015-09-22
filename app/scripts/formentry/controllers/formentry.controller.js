@@ -86,85 +86,87 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         // console.log('testing selected Form')
         // console.log(selectedForm);
 
+        activate();
 
-        $timeout(function () {
-          // get form schema data
-         //  var selectedForm = $stateParams.formuuid;
-         //  console.log('testing selected Form')
-         var start = new Date().getTime();
-         FormentryService.getFormSchema(selectedForm.name, function(schema){
-          formSchema = schema;
-
-          FormentryService.createForm(formSchema, $scope.vm.model, function(formlySchema){
-            //$scope.vm.formlyFields = formlySchema;
-            if(formlySchema)  {
-              $scope.vm.tabs = formlySchema;
-
-              // var i = 0;
-              // angular.forEach($scope.vm.tabs, function(tab){
-              //   // console.log('Tab Structure');
-              //   // console.log(tab);
-              //   if (i===0) {
-              //     tab.active = true;
-              //   }
-              //   i++;
-              //   tab.form['model'] = $scope.vm.model;
-              // });
-              //update sex;
-              $scope.vm.model['sex'] = $scope.vm.patient.gender();
-              $scope.vm.isBusy = false;
-              var end = new Date().getTime();
-              var time = end - start;
-              console.log('Form Creation Execution time: ' + time + ' ms');
-            }
-            ///FormentryService.getEncounter('encData', formlySchema)
-            //var params = {uuid:'cf3f041c-9c37-44c5-983a-d02507ffe279'};
-            if(params.uuid !== undefined && params.uuid !== '')
-            {
-              OpenmrsRestService.getEncounterResService().getEncounterByUuid(params,
-                function(data){
-                var encData = data;
-                // console.log('Rest Feeback')
-                // console.log(encData);
-                if (data)
-                {
-                  $scope.vm.submitLabel = 'Update'
-                    FormentryService.getEncounter(encData,formlySchema);
-                }
-              },
-              //error callback
-              function (error){
-                $scope.vm.error = 'An Error occured when trying to get encounter data';
-              }
-            );
-            }
-            else {
-              //set the current user as the default provider
-              var done = false;
-              _.some($scope.vm.tabs, function(page){
-                var model = page.form.model;
-                _.some(page.form.fields, function(_section){
-                  if (_section.type === 'section')
-                  {
-                    var sec_key = _section.key;
-                    var sec_data = model[sec_key] = {};
-                    _.some(_section.templateOptions.fields[0].fieldGroup, function(_field){
-                      if(_field.key === 'encounterProvider'){
-                        sec_data['encounterProvider'] = OpenmrsRestService.getUserService().user.personUuId();
-                        done = true;
-                        return true;
-                      }
-                    });
-                  }
-                  if (done) return true;
-                });
-                if (done) return true;
-              });
-
-            }
-          });
-         });
-       },1000);
+       //
+      //   $timeout(function () {
+      //     // get form schema data
+      //    //  var selectedForm = $stateParams.formuuid;
+      //    //  console.log('testing selected Form')
+      //    var start = new Date().getTime();
+      //    FormentryService.getFormSchema(selectedForm.name, function(schema){
+      //     formSchema = schema;
+       //
+      //     FormentryService.createForm(formSchema, $scope.vm.model, function(formlySchema){
+      //       //$scope.vm.formlyFields = formlySchema;
+      //       if(formlySchema)  {
+      //         $scope.vm.tabs = formlySchema;
+       //
+      //         // var i = 0;
+      //         // angular.forEach($scope.vm.tabs, function(tab){
+      //         //   // console.log('Tab Structure');
+      //         //   // console.log(tab);
+      //         //   if (i===0) {
+      //         //     tab.active = true;
+      //         //   }
+      //         //   i++;
+      //         //   tab.form['model'] = $scope.vm.model;
+      //         // });
+      //         //update sex;
+      //         $scope.vm.model['sex'] = $scope.vm.patient.gender();
+      //         $scope.vm.isBusy = false;
+      //         var end = new Date().getTime();
+      //         var time = end - start;
+      //         console.log('Form Creation Execution time: ' + time + ' ms');
+      //       }
+      //       ///FormentryService.getEncounter('encData', formlySchema)
+      //       //var params = {uuid:'cf3f041c-9c37-44c5-983a-d02507ffe279'};
+      //       if(params.uuid !== undefined && params.uuid !== '')
+      //       {
+      //         OpenmrsRestService.getEncounterResService().getEncounterByUuid(params,
+      //           function(data){
+      //           var encData = data;
+      //           // console.log('Rest Feeback')
+      //           // console.log(encData);
+      //           if (data)
+      //           {
+      //             $scope.vm.submitLabel = 'Update'
+      //               FormentryService.getEncounter(encData,formlySchema);
+      //           }
+      //         },
+      //         //error callback
+      //         function (error){
+      //           $scope.vm.error = 'An Error occured when trying to get encounter data';
+      //         }
+      //       );
+      //       }
+      //       else {
+      //         //set the current user as the default provider
+      //         var done = false;
+      //         _.some($scope.vm.tabs, function(page){
+      //           var model = page.form.model;
+      //           _.some(page.form.fields, function(_section){
+      //             if (_section.type === 'section')
+      //             {
+      //               var sec_key = _section.key;
+      //               var sec_data = model[sec_key] = {};
+      //               _.some(_section.templateOptions.fields[0].fieldGroup, function(_field){
+      //                 if(_field.key === 'encounterProvider'){
+      //                   sec_data['encounterProvider'] = OpenmrsRestService.getUserService().user.personUuId();
+      //                   done = true;
+      //                   return true;
+      //                 }
+      //               });
+      //             }
+      //             if (done) return true;
+      //           });
+      //           if (done) return true;
+      //         });
+       //
+      //       }
+      //     });
+      //    });
+      //  },1000);
 
 
         $scope.vm.cancel = function()
@@ -356,6 +358,71 @@ function getErrorAsList(field) {
 _.each(Object.keys(field.formControl.$error), function(t){
   console.log(t)
 });
+}
+
+function activate()
+{
+  $timeout(function () {
+    // get form schema data
+   //  var selectedForm = $stateParams.formuuid;
+   //  console.log('testing selected Form')
+   var start = new Date().getTime();
+   FormentryService.getFormSchema(selectedForm.name, function(schema){
+    formSchema = schema;
+
+    FormentryService.createForm(formSchema, $scope.vm.model,$scope.vm.tabs)
+    if($scope.vm.tabs.length>0)
+    {
+      $scope.vm.model['sex'] = $scope.vm.patient.gender();
+      $scope.vm.isBusy = false;
+      if(params.uuid !== undefined && params.uuid !== '')
+      {
+        OpenmrsRestService.getEncounterResService().getEncounterByUuid(params,
+          function(data){
+          var encData = data;
+          // console.log('Rest Feeback')
+          // console.log(encData);
+          if (data)
+          {
+            $scope.vm.submitLabel = 'Update'
+              FormentryService.getEncounter(encData,formlySchema);
+          }
+        },
+        //error callback
+        function (error){
+          $scope.vm.error = 'An Error occured when trying to get encounter data';
+        });
+      }
+      else {
+        //set the current user as the default provider
+        var done = false;
+        _.some($scope.vm.tabs, function(page){
+          var model = page.form.model;
+          _.some(page.form.fields, function(_section){
+            if (_section.type === 'section')
+            {
+              var sec_key = _section.key;
+              var sec_data = model[sec_key] = {};
+              _.some(_section.templateOptions.fields[0].fieldGroup, function(_field){
+                if(_field.key === 'encounterProvider'){
+                  sec_data['encounterProvider'] = OpenmrsRestService.getUserService().user.personUuId();
+                  done = true;
+                  return true;
+                }
+              });
+            }
+            if (done) return true;
+          });
+          if (done) return true;
+        });
+      }
+      $scope.vm.isBusy = false;
+      var end = new Date().getTime();
+      var time = end - start;
+      console.log('Form Creation Execution time: ' + time + ' ms');
+    }
+   });
+ },1000);
 }
 
 function voidObs(pay_load)

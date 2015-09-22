@@ -151,8 +151,36 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
                   console.log(scope.model);
                 }
               }
+            },
+            {
+        key: 'address',
+        type: 'nested',
+        templateOptions: {
+          label: 'Address'
+        },
+        data: {
+          fields: [
+            {
+              key: 'town',
+              type: 'input',
+              templateOptions: {
+                required: true,
+                type: 'text',
+                label: 'Town'
+              }
+            },
+            {
+              key: 'country',
+              type: 'input',
+              templateOptions: {
+                required: true,
+                type: 'text',
+                label: 'Country'
+              }
             }
-
+          ]
+        }
+      }
           ]
         }
       }

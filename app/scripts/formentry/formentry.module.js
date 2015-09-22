@@ -20,6 +20,21 @@
 
       // console.log(formlyApiCheck)
     //apiCheck.globalConfig.disabled = true;
+    /*
+    Testing nested sections in formly way
+    */
+    // set templates here
+    formlyConfig.setType({
+      name: 'nested',
+      template: '<formly-form model="model[options.key]" fields="options.data.fields"></formly-form>'
+    });
+  	    
+	formlyConfig.setWrapper({
+      name: 'panel',
+      types: ['nested'],
+      templateUrl: 'panel.html'
+    });
+  /***************************************************************/
     formlyConfig.disableWarnings = true;
     formlyConfig.extras.removeChromeAutoComplete = true;
     formlyConfig.extras.explicitAsync = true;

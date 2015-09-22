@@ -81,8 +81,9 @@
                <!-- sections test -->
                <script type="text/ng-template" id="section.html">
                  <div class="panel panel-default">
-                         <div class="panel-heading">
+                         <div class="panel-heading" ng-if="to.label">
                          {{to.label}}
+                         {{to.required ? '*' : ''}}
                          </div>
                          <div class="panel-body">
                          <!--loop through each element in model array-->
@@ -95,4 +96,21 @@
 
                          </div>
                </script>
+
+        <script type="text/ng-template" id="panel.html">
+        <div class="panel panel-primary">
+
+          <div class="panel-heading px-nested-panel-heading clearfix">
+            <strong class="control-label" ng-if="to.label">
+              {{to.label}}
+              {{to.required ? '*' : ''}}
+            </strong>
+          </div>
+
+          <div class="panel-body px-nested-panel-body">
+            <formly-transclude></formly-transclude>
+          </div>
+
+        </div>
+    </script>
 </div>
