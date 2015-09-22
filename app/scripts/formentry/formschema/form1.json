@@ -426,7 +426,7 @@
               "validators": [
                 {
                   "type": "conditionalAnswered",
-                  "message": "Patient on family planning. Please provide a method.",
+                  "message": "Patient is not on family planning method, therefore should not provide a method.",
                   "referenceQuestionId": "q12d",
                   "referenceQuestionAnswers": [
                     "a899b35c-1350-11df-a1f1-0026b9348838"
@@ -459,7 +459,7 @@
               "validators": [
                 {
                   "type": "conditionalAnswered",
-                  "message": "Patient not on family planning. Please provide a reason.",
+                  "message": "You didn't specify that patient is not on family planning therefore you can't specify reason",
                   "referenceQuestionId": "q12d",
                   "referenceQuestionAnswers": [
                     "a899b42e-1350-11df-a1f1-0026b9348838"
@@ -541,12 +541,9 @@
               "type": "select",
               "validators": [
                 {
-                  "type": "conditionalAnswered",
-                  "message": "Patient on ARVs. Please provide regimen.",
-                  "referenceQuestionId": "q13a",
-                  "referenceQuestionAnswers": [
-                    "a899b35c-1350-11df-a1f1-0026b9348838"
-                  ]
+                  "type": "js_expression",
+                  "failsWhenExpression": "isEmpty(myValue) && !isEmpty(q13a) && q13a === 'a899b35c-1350-11df-a1f1-0026b9348838'",
+                  "message": "Patient on ARV as per question 13a. Please provide the treatment catogory."
                 }
               ]
             },

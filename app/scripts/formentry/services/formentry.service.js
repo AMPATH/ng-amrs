@@ -198,7 +198,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   console.log('Validation on Load- Dates ++++', !dateValue.isAfter(curDate));
                   return !dateValue.isAfter(curDate);
                 }
-                if (dateValue !== undefined || dateValue !== null || value !== '') return true;
+                if (dateValue !== undefined || dateValue !== null || value !== '') 
+                    return true;
 
               },
               message: '"Should not be a future date!"'
@@ -218,7 +219,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                 if(value !== undefined && value !== null && value !== '')
                 {
-                    //  console.log('before lunch: ', value);
                   dateValue = Date.parse(value,'d-MMM-yyyy').clearTime();
                 }
                 if(dateValue !== undefined || dateValue !== null || value !== '')
@@ -284,22 +284,41 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               expression: function(viewValue, modelValue, elementScope) {
 
                   var val = viewValue || modelValue;
+                  
+                  if (val === true && elementScope.$parent && elementScope.$parent.multiCheckbox)
+                    {
+                      val = elementScope.option.value;
+                    }
+                  var modelOptions;
+                  if (elementScope.$parent && elementScope.$parent.multiCheckbox)
+                    {
+                      modelOptions = elementScope.$parent.model[elementScope.$parent.options.key];
+                    }
+                    
+                  var modelIsNonEmptyArray =  (modelOptions !== undefined && Array.isArray(modelOptions) && modelOptions.length !== 0); 
+                  
+                  var hasValue = modelIsNonEmptyArray ||
+                     (val !== undefined && val !== null && val !== '' && val !== false);
+                   if(!hasValue){
+                       //question was not answered therefore it is always true
+                       return true;
+                   }  
 
+                  //question was asnwered, therefore establish that the reference questions have the required answers
                   var referenceQuestionkey = getFieldKeyFromGlobalById(params.referenceQuestionId);
                   var referenceQuestion = getFieldById_Key(params.referenceQuestionId);
-                  if (referenceQuestion !== undefined) referenceQuestionkey =referenceQuestion.key
-
-                  // console.log('test Field Search+++', referenceQuestion);
+                  if (referenceQuestion !== undefined) 
+                    referenceQuestionkey =referenceQuestion.key
 
                   var referenceQuestionCurrentValue = FormValidator.getAnswerByQuestionKey(service.currentFormModel, referenceQuestionkey);
 
-                   var referenceQuestionAllowableAnswers = params.referenceQuestionAnswers;
+                  var answersThatPermitThisQuestionAnswered = params.referenceQuestionAnswers;
 
-                   var isValid = false;
+                  var isValid = false;
 
-                   _.each(referenceQuestionAllowableAnswers, function(answer) {
+                   _.each(answersThatPermitThisQuestionAnswered, function(answer) {
                        if(referenceQuestionCurrentValue === answer)
-                        isValid = true;
+                         isValid = true;
                    });
                   // console.log('isValid',isValid);
                   // console.log('isValue +++', val);
@@ -344,7 +363,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   i = i+1;
 
                 });
-                // console.log('Validation on Load-Conditional required ++++', results);
+                console.log('isValid', results);
                  return results;
                });
           }
