@@ -333,6 +333,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               message: '"' + params.message +  '"'
             };
           }
+          /// obsolete. Do not use this method as it won't work when the reference question is not in the same formly form'
           if((params.type === 'conditionalRequired'))
           {
               // console.log('wiring conditional-required validation');
@@ -344,10 +345,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                 var i = 0;
                 var fkey;
-                var results;
-                var results;
-                var value = $viewValue || $modelValue;
-
+                var isRequired;
+                
                 var referenceQuestionkey = getFieldKeyFromGlobalById(params.referenceQuestionId);
                 var referenceQuestion = getFieldById_Key(params.referenceQuestionId);
                 if (referenceQuestion !== undefined) referenceQuestionkey =referenceQuestion.key;
@@ -358,13 +357,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                   result = scope.model[fkey] === val
                   //result = FormValidator.getAnswerByQuestionKey(fkey) !== val
-                  if(i === 0) results = result;
-                  else results = results  || result;
+                  if(i === 0) isRequired = result;
+                  else isRequired = isRequired  || result;
                   i = i+1;
 
                 });
-                console.log('isValid', results);
-                 return results;
+                console.log('isRequired', isRequired);
+                 return isRequired;
                });
           }
 
