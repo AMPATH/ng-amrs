@@ -239,10 +239,24 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     var val = viewValue || modelValue;
                     
                     //special case for multicheck box
-                    if (val === true && elementScope.$parent && elementScope.$parent.multiCheckbox)
+                    if (elementScope.$parent && elementScope.$parent.multiCheckbox)
                     {
                       console.log('validating multicheck box..', elementScope.$parent.multiCheckbox);
-                      val = elementScope.option.value;
+                      var selectedOptions = elementScope.$parent.model[elementScope.$parent.options.key];
+                      var mergedOptions = selectedOptions? [].concat(selectedOptions):[];
+                      
+                      if(val === true){
+                          if(elementScope.option.value)
+                            mergedOptions.push(elementScope.option.value);
+                      }
+                      else{
+                          var index = mergedOptions.indexOf(elementScope.option.value);
+                          if(index >= 0){
+                              mergedOptions =_.without(mergedOptions,elementScope.option.value);
+                          }
+                      }
+                      
+                      val = mergedOptions;
                     }
 
                     var referencedQuestions = FormValidator.extractQuestionIds(params.failsWhenExpression, service.lastFormValidationMetadata);
@@ -252,7 +266,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     var keyValue = {};
 
                     // console.log('service.lastFormValidationMetadata', service.lastFormValidationMetadata);
-
+ 
                     _.each(referencedQuestions, function(qId) {
                        if(keyValue[qId] === undefined){
                            var referenceQuestionkey = getFieldKeyFromGlobalById(qId);

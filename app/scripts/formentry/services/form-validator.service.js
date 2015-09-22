@@ -153,9 +153,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         function isEmpty(val) {
 
-            if (val === undefined || val === null || val === '' || val === 'null') {
+            if (val === undefined || val === null || val === '' || val === 'null' || val === 'undefined') {
                 return true;
             }
+            if(Array.isArray(val) && val.length === 0)
+                return true;
             return false;
         }
 

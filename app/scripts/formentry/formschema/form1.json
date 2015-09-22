@@ -95,8 +95,8 @@
               "type": "date",
               "validators": [
                 {
-                  "type":"date",
-                  "allowFutureDates" :"true"
+                  "type": "date",
+                  "allowFutureDates": "true"
                 },
                 {
                   "type": "js_expression",
@@ -621,7 +621,13 @@
                     }
                   ],
                   "type": "multiCheckbox",
-                  "validators": []
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "isEmpty(myValue) && !isEmpty(q13a) && q13a === 'a899b35c-1350-11df-a1f1-0026b9348838'",
+                      "message": "Patient on ARV as per question 13a. Please provide regimen."
+                    }
+                  ]
                 }
               ]
             }
@@ -633,7 +639,7 @@
             {
               "concept": "a899e282-1350-11df-a1f1-0026b9348838",
               "label": "14a. PCP Prophylaxis:",
-              "id":"q14a",
+              "id": "q14a",
               "required": "true",
               "answers": [
                 {
@@ -1649,16 +1655,15 @@
                   "label": "4"
                 }
               ],
-              "required": "true",
               "type": "select",
               "validators": []
             },
             {
-              "concept":"a8ae88a4-1350-11df-a1f1-0026b9348838",
-              "required":"true",
-              "label":"Criteria:",
+              "concept": "a8ae88a4-1350-11df-a1f1-0026b9348838",
+              "required": "true",
+              "label": "Criteria:",
               "type": "select-concept-answers",
-              "validators":[]
+              "validators": []
             },
             {
               "concept": "a89b67d8-1350-11df-a1f1-0026b9348838",
@@ -1998,7 +2003,7 @@
             {
               "concept": "a89b75d4-1350-11df-a1f1-0026b9348838",
               "required": "true",
-              "id":"q24a",
+              "id": "q24a",
               "label": "24a. ARV Plan:",
               "answers": [
                 {
@@ -2083,7 +2088,7 @@
               "questions": [
                 {
                   "concept": "a89b7110-1350-11df-a1f1-0026b9348838",
-                  "id":"q24c_reason_drug_change",
+                  "id": "q24c_reason_drug_change",
                   "label": "24c.Reason for stopping/change/substitution/interruption:",
                   "answers": [
                     {
@@ -2162,7 +2167,7 @@
                 },
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
-                  "id":"q24cToxicity",
+                  "id": "q24cToxicity",
                   "label": "24c.If toxicity, please provide cause:",
                   "answers": [
                     {
@@ -2366,8 +2371,8 @@
           "questions": [
             {
               "concept": "a89b7e12-1350-11df-a1f1-0026b9348838",
-              "required":"true",
-              "id":"q25a",
+              "required": "true",
+              "id": "q25a",
               "label": "25a. PCP Prophylaxis Plan:",
               "answers": [
                 {
@@ -2403,7 +2408,6 @@
                   "failsWhenExpression": "!isEmpty(q14a)&&!isEmpty(myValue)&&arrayContains(['a8989396-1350-11df-a1f1-0026b9348838','a890c9e0-1350-11df-a1f1-0026b9348838'],q14a)&&!(arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7908-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'],myValue))",
                   "message": "Patient marked as on PCP Prophylaxis. Therefore plan can only be change regimen,continue or stop."
                 }
-
               ]
             },
             {
@@ -2413,7 +2417,7 @@
                 {
                   "concept": "a89b7eee-1350-11df-a1f1-0026b9348838",
                   "label": "25b.If Change/Stop, reason:",
-                  "id":"q25b",
+                  "id": "q25b",
                   "answers": [
                     {
                       "concept": "a890d1ba-1350-11df-a1f1-0026b9348838",
@@ -2440,7 +2444,7 @@
                 },
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
-                  "id":"qPcptoxicity",
+                  "id": "qPcptoxicity",
                   "label": "25b. If toxicity, please provide cause:",
                   "answers": [
                     {
@@ -2939,7 +2943,7 @@
                 {
                   "concept": "a899e444-1350-11df-a1f1-0026b9348838",
                   "label": "f. Current TB Regimen",
-                  "id":"q26f",
+                  "id": "q26f",
                   "type": "select",
                   "validators": [],
                   "answers": [
