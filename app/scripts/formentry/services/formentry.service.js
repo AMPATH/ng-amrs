@@ -24,9 +24,12 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             lastFormValidationMetadata: {},
             currentFormModel: {}
         };
+
+        //local variables
         var obs_id = 0;
         var g_fields; // var to hold all the fields on a form
         var readyFields = [];
+        var loaded = false;
 
         function getFieldById_Key(id_key, searchFields)
         {
@@ -144,11 +147,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         function getFieldKeyById(id_, searchFields)
         {
           var result;
-          _.each(searchFields, function(cfield){
+          _.some(searchFields, function(cfield){
             if(cfield.data && cfield.data.id === id_)
             {
               result = cfield.key;
-              return result;
+              return true;
             }
           });
           return result;
@@ -166,7 +169,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 if(validate.type !== 'conditionalRequired')
                   validator[key] = getFieldValidator(validate);
            });
-           console.log('Validators++++', validator)
+          //  console.log('Validators++++', validator)
            return validator;
         }
 
@@ -193,7 +196,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 {
                   // console.log('Today: '+curDate);
                   // console.log('Date Entered: '+dateValue.clearTime());
-                  // console.log(dateValue.isAfter(curDate));
+                  console.log('Validation on Load- Dates ++++', !dateValue.isAfter(curDate));
                   return !dateValue.isAfter(curDate);
                 }
                 if (dateValue !== undefined || dateValue !== null || value !== '') return true;
@@ -265,9 +268,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     // console.log('Evaluates model',elementScope);
                     // console.log('expressionToEvaluate',expressionToEvaluate);
 
-                    var isInvalid = FormValidator.evaluateExpression(expressionToEvaluate);
-
-                    //  console.log('isInvalid', isInvalid);
+                    var isInvalid// = FormValidator.evaluateExpression(expressionToEvaluate);
+                    if (loaded) isInvalid = FormValidator.evaluateExpression(expressionToEvaluate);
+                    console.log('Validation on Load-Custom Js++++', isInvalid);
                     return !isInvalid;
                 },
                 message: '"' + params.message +  '"'
@@ -305,6 +308,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     return true;
                   }
                   else return isValid;
+                  console.log('Validation on Load-Conditional answered++++', isInvalid);
               },
               message: '"' + params.message +  '"'
             };
@@ -339,6 +343,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   i = i+1;
 
                 });
+                console.log('Validation on Load-Conditional required ++++', results);
                  return results;
                });
           }
@@ -405,6 +410,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     FormValidator.clearQuestionValueByKey(scope.model, scope.options.key);
                   }
               }
+              console.log('Validation on Load- Hide++++', results);
               return results;
             });
           }
@@ -502,7 +508,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             if(obs_.concept.uuid === convertKey_to_uuid(field_key.split('_')[1]))
             {
               console.log('Check Obs', obs_)
-              // if(opts.indexOf(obs_.value.uuid) !== -1) 
+              // if(opts.indexOf(obs_.value.uuid) !== -1)
               return obs_;
             }
           });
@@ -2733,6 +2739,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               tab.active = true;
             }
             tabs.push(tab);
+            // g_fields = tabs;
             // callback(tabs);
             i = i+1;
           });
@@ -2741,6 +2748,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           // console.log(JSON.stringify(tabs))
           //console.log('Foooooooooorm', service.lastFormValidationMetadata);
           //update the global set of fields
+          loaded = true;
           g_fields = tabs;
           callback(tabs);
         }
