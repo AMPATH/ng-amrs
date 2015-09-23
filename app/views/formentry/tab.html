@@ -12,7 +12,8 @@
          <tab ng-repeat="tab in vm.tabs"
               heading="{{tab.title}}"
               active="tab.active"
-              disable="tab.disabled">
+              disable="tab.disabled"
+              select="vm.tabSelected($index)">
            <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options">
            </formly-form>
          </tab>
@@ -78,26 +79,9 @@
 
                </div>
                </script>
-               <!-- sections test -->
-               <script type="text/ng-template" id="section.html">
-                 <div class="panel panel-default">
-                         <div class="panel-heading" ng-if="to.label">
-                         {{to.label}}
-                         {{to.required ? '*' : ''}}
-                         </div>
-                         <div class="panel-body">
-                         <!--loop through each element in model array-->
-                             <div class="section" ng-repeat="element in to.fields" ng-init="fields = copyFields(to.fields)">
-                               <formly-form fields="fields"
-                                            model="model[options.key]"
-                                            bind-name="'formly_custom_section' + index + $parent.$index">
-                               </formly-form>
-                            </div>
+              
 
-                         </div>
-               </script>
-
-        <script type="text/ng-template" id="panel.html">
+        <script type="text/ng-template" id="section.html">
         <div class="panel panel-primary">
 
           <div class="panel-heading px-nested-panel-heading clearfix">

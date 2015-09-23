@@ -2567,13 +2567,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           }
            return obsField;
         }
-        function createForm(schema, model, tabs /*callback*/)
+        function createForm(schema, model, callback)
         {
           obs_id = 0;
           var defaultValue_;
           var pages = schema.pages;
           var tab;
-          // var tabs = [];
+          var tabs = [];
           var sectionFields = [];
           var pageFields = [];
           var field ={};
@@ -2710,16 +2710,32 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               });
               //creating formly field section
               section_id = section_id  + 1;
+              // var sec_field =
+              // {
+              //   key:'section_' + section_id,
+              //   type: 'section',
+              //   templateOptions: {
+              //     label:section.label,
+              //     fields:[{
+              //       className: 'row',
+              //       fieldGroup: sectionFields
+              //     }]
+              //   }
+              // }
+
               var sec_field =
               {
                 key:'section_' + section_id,
                 type: 'section',
                 templateOptions: {
-                  label:section.label,
-                  fields:[{
-                    className: 'row',
-                    fieldGroup: sectionFields
-                  }]
+                  label:section.label
+                  // fields:[{
+                  //   className: 'row',
+                  //   fieldGroup: sectionFields
+                  // }]
+                },
+                data:{
+                  fields:sectionFields
                 }
               }
               pageFields.push(sec_field);
@@ -2750,7 +2766,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           //update the global set of fields
           loaded = true;
           g_fields = tabs;
-          // callback(tabs);
+          callback(tabs);
         }
 
         function addToReadyFields(field)
