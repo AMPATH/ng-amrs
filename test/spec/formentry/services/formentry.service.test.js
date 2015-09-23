@@ -129,19 +129,19 @@
         });
 
         it('Should be able to add fields to sections in a page', function(){
-          expect(tabs[0].form.fields[1].templateOptions.fields[0].fieldGroup).to.be.an('array');
+          expect(tabs[0].form.fields[1].data.fields).to.be.an('array');
         });
 
         it('Should be able to add fields of type date to sections in a page', function(){
-          expect(tabs[0].form.fields[1].templateOptions.fields[0].fieldGroup[0].type).to.equal('datepicker');
+          expect(tabs[0].form.fields[1].data.fields[0].type).to.equal('datepicker');
         });
 
         it('Should be able to add fields of type select/dropdown to sections in a page', function(){
-          expect(tabs[1].form.fields[0].templateOptions.fields[0].fieldGroup[0].type).to.equal('select');
+          expect(tabs[1].form.fields[0].data.fields[0].type).to.equal('select');
         });
 
         it('Should be able to add repeating section to sections in a page', function(){
-          expect(tabs[1].form.fields[1].templateOptions.fields[0].fieldGroup[0].type).to.equal('repeatSection');
+          expect(tabs[1].form.fields[1].data.fields[0].type).to.equal('repeatSection');
         });
       });
 

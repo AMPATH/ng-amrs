@@ -28,7 +28,7 @@
   <!--<h2>tabs</h2>
   <pre>{{vm.tabs | json}}</pre>-->
 
-  <!-- <h2>Model Value</h2>
+   <!-- <h2>Model Value</h2>
   <pre>{{vm.model | json}}</pre> -->
   <!-- Put custom templates here -->
   <script type="text/ng-template" id="error-messages.html">
@@ -70,19 +70,19 @@
   </script>
   <!-- sections template -->
   <script type="text/ng-template" id="section.html">
-    <div class="panel panel-default">
-            <div class="panel-heading">
-            {{to.label}}
-            </div>
-            <div class="panel-body">
-            <!--loop through each element in model array-->
-                <div class="section" ng-repeat="element in to.fields" ng-init="fields = copyFields(to.fields)">
-                  <formly-form fields="fields"
-                               model="model[options.key]"
-                               bind-name="'formly_custom_section' + index">
-                  </formly-form>
-               </div>
+  <div class="panel panel-primary">
 
-            </div>
-  </script>
+    <div class="panel-heading px-nested-panel-heading clearfix">
+      <strong class="control-label" ng-if="to.label">
+        {{to.label}}
+        {{to.required ? '*' : ''}}
+      </strong>
+    </div>
+
+    <div class="panel-body px-nested-panel-body">
+      <formly-transclude></formly-transclude>
+    </div>
+
+  </div>
+</script>
 </div>

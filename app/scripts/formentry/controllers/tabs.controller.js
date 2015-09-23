@@ -209,6 +209,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
       {
         if(!isLastTab()){
         $scope.vm.currentTab++;
+        $scope.vm.tabs[$scope.vm.currentTab]['form']=$scope.vm.formlyFields[$scope.vm.currentTab].form;
         $scope.vm.tabs[$scope.vm.currentTab].active = true;
         }
       }
@@ -216,6 +217,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
       {
         if(!isFirstTab()){
         $scope.vm.currentTab--;
+        $scope.vm.tabs[$scope.vm.currentTab]['form']=$scope.vm.formlyFields[$scope.vm.currentTab].form;
         $scope.vm.tabs[$scope.vm.currentTab].active = true;
         }
       }

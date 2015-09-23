@@ -880,11 +880,11 @@
                   ]
                 },
                 {
-                  "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
+                  "concept": "a8a0630a-1350-11df-a1f1-0026b9348838",
                   "label": "tabs",
-                  "type": "number",
-                  "max": "30",
+                  "max": "180",
                   "min": "0",
+                  "type": "number",
                   "hide": [
                     {
                       "field": "tb_current",
@@ -2279,7 +2279,7 @@
               ]
             },
             {
-              "concept": "a89b662-1350-11df-a1f1-0026b9348838",
+              "concept": "a89b6a62-1350-11df-a1f1-0026b9348838",
               "label": "24e. If ARV regimen started or changed, choose regimen below:",
               "id": "q24e",
               "answers": [
@@ -2979,10 +2979,6 @@
                       "label": "Pyrazinamide"
                     },
                     {
-                      "concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4",
-                      "label": "Rifabutin"
-                    },
-                    {
                       "concept": "a897d0be-1350-11df-a1f1-0026b9348838",
                       "label": "Rifampicin"
                     },
@@ -3051,9 +3047,9 @@
                   ]
                 },
                 {
-                  "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
+                  "concept": "a8a0630a-1350-11df-a1f1-0026b9348838",
                   "label": "tabs",
-                  "max": "30",
+                  "max": "180",
                   "min": "0",
                   "type": "number",
                   "hide": [
