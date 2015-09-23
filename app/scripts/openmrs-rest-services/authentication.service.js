@@ -30,7 +30,7 @@
         {
           console.log('routing to the right page');
           //$location.path('/'); //go to the home page if user is authenticated or
-          $state.go('home');
+          $state.go('patientsearch');
 
 
 
@@ -54,7 +54,7 @@
       });
 
     }
-    
+
     function logOut(){
       clearCredentials();
       service.authenticated = false;
