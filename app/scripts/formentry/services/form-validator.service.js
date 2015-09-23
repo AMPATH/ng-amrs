@@ -8,13 +8,12 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
     angular
         .module('app.formentry')
         .service('FormValidator', FormValidator);
+        
+    FormValidator.$inject = ['CurrentLoadedFormService'];    
 
-    function FormValidator() {
-        var lastFound;
+    function FormValidator(CurrentLoadedFormService) {
+        
         var service = {
-            clearQuestionValueByKey: clearQuestionValueByKey,
-            getAnswerByQuestionKey: getAnswerByQuestionKey,
-            getContainingObjectForQuestionKey: getContainingObjectForQuestionKey,
             extractQuestionIds: extractQuestionIds,
             replaceQuestionsPlaceholdersWithValue: replaceQuestionsPlaceholdersWithValue,
             replaceMyValuePlaceholdersWithActualValue: replaceMyValuePlaceholdersWithActualValue,
@@ -139,14 +138,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         val = mergedOptions;
                     }
 
-                    var referencedQuestions = service.extractQuestionIds(params.failsWhenExpression, service.lastFormValidationMetadata);
+                    var referencedQuestions = service.extractQuestionIds(params.failsWhenExpression, CurrentLoadedFormService.formValidationMetadata);
 
                     var keyValue = {};
 
                     _.each(referencedQuestions, function (qId) {
                         if (keyValue[qId] === undefined) {
                             var referenceQuestionkey = getFieldKeyFromGlobalByIdFunction(qId);
-                            var referenceQuestionCurrentValue = service.getAnswerByQuestionKey(service.currentFormModel, referenceQuestionkey);
+                            var referenceQuestionCurrentValue = CurrentLoadedFormService.getAnswerByQuestionKey(CurrentLoadedFormService.formModel, referenceQuestionkey);
                             keyValue[qId] = referenceQuestionCurrentValue;
                         }
                     });
@@ -196,7 +195,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     if (referenceQuestion !== undefined)
                         referenceQuestionkey = referenceQuestion.key
 
-                    var referenceQuestionCurrentValue = service.getAnswerByQuestionKey(service.currentFormModel, referenceQuestionkey);
+                    var referenceQuestionCurrentValue = CurrentLoadedFormService.getAnswerByQuestionKey(CurrentLoadedFormService.formModel, referenceQuestionkey);
 
                     var answersThatPermitThisQuestionAnswered = params.referenceQuestionAnswers;
 
@@ -268,11 +267,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 if (results === true) {
                     if (element) {
                         //case hide
-                        service.clearQuestionValueByKey(scope.model, element.options.key);
+                        CurrentLoadedFormService.clearQuestionValueByKey(scope.model, element.options.key);
                     }
                     else {
                         //case disable
-                        service.clearQuestionValueByKey(scope.model, scope.options.key);
+                        CurrentLoadedFormService.clearQuestionValueByKey(scope.model, scope.options.key);
                     }
                 }
                 return results;
@@ -286,66 +285,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             this.message = message;
             this.expression = expressionFunction;
         }
-
-        function clearQuestionValueByKey(formlyModel, key) {
-            var containingObject = getContainingObjectForQuestionKey(formlyModel, key);
-            if (containingObject) {
-                //containingObject[key] = null;
-                if (Array.isArray(containingObject[key])) {
-                    console.log('is array')
-                    containingObject[key] = [];
-                }
-                else if (typeof containingObject[key] === 'number') {
-                    containingObject[key] = '';
-                }
-                else if (Object.prototype.toString.call(containingObject[key]) === '[object Date]') {
-                    containingObject[key] = '';
-                }
-                else if (typeof containingObject[key] === 'string') {
-                    containingObject[key] = '';
-                }
-                else if (typeof containingObject[key] === 'object') {
-                    console.log('object');
-                    containingObject[key] = {};
-                }
-                else {
-                    containingObject[key] = null;
-                }
-            }
-        }
-
-        function getAnswerByQuestionKey(formlyModel, key) {
-            lastFound = null;
-            traverse(formlyModel, key);
-
-            if (lastFound) {
-                return lastFound[key];
-            }
-            return undefined;
-        }
-
-        function getContainingObjectForQuestionKey(formlyModel, key) {
-            lastFound = null;
-            traverse(formlyModel, key);
-            return lastFound;
-        }
-
-        function traverse(o, key) {
-            for (var i in o) {
-                if (typeof (o[i]) === 'object') {
-                    if (i === key) {
-                        lastFound = o;
-                    }
-                    traverse(o[i], key);
-                }
-                else {
-                    if (i === key) {
-                        lastFound = o;
-                    }
-                }
-            }
-        }
-
 
         function replaceQuestionsPlaceholdersWithValue(expression, keyValuObject) {
             var fieldIds = Object.keys(keyValuObject);

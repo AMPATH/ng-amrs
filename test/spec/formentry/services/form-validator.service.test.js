@@ -6,7 +6,7 @@
 /*jshint -W026, -W030, -W106 */
 (function () {
   'use strict';
-  describe('Formentry Service unit tests', function () {
+  describe('Form Validator Service: Formentry Validation Service Helper Functions Unit Tests', function () {
     beforeEach(function () {
       module('app.formentry');
 
@@ -58,9 +58,9 @@
       };
 
       validationExpression = '(q1 === null) || (q3 in ["val1", "val2", "val3"])';
-      
+
       validationExpression2 = '(q1 === null) || ([12, "stringVal", "val3"].indexOf(q3) !== -1)';
-      
+
 
       formIds = { q1: 12, q2: new Date(), q3: 'stringVal' };
 
@@ -69,53 +69,16 @@
 
     it('should have form validator services are defined', function () {
       expect(service).to.exist;
-      expect(service.clearQuestionValueByKey).to.exist;
-    });
-    it('should getAnswerByQuestionKey', function () {
-      //case existing key
-      var answer = service.getAnswerByQuestionKey(formlyModel, 'obs3_a89ff9a6n1350n11dfna1f1n0026b9348838');
-      expect(answer).to.equal('1234565');
-      
-      //case non-exstant key
-      var answer2 = service.getAnswerByQuestionKey(formlyModel, 'not_existing');
-      expect(answer2).to.equal(undefined);
-
+      expect(service.evaluateExpression).to.exist;
     });
 
-    it('should clear non-group question when clearQuestionValueByKey', function () {
-      service.clearQuestionValueByKey(formlyModel, 'obs3_a89ff9a6n1350n11dfna1f1n0026b9348838');
-
-      var newValue = service.getAnswerByQuestionKey(formlyModel, 'obs3_a89ff9a6n1350n11dfna1f1n0026b9348838');
-
-      expect((newValue === null || newValue === undefined || newValue === '')).to.equal(true);
-
-    });
-
-    it('should clear group question when clearQuestionValueByKey', function () {
-      
-      //case array group
-      service.clearQuestionValueByKey(formlyModel, 'obs3_a8a003a6n1350n11dfna1f1n0026b9348838');
-
-      var newValue = service.getAnswerByQuestionKey(formlyModel, 'obs3_a8a003a6n1350n11dfna1f1n0026b9348838');
-
-      expect(Array.isArray(newValue)).to.equal(true);
-      
-      //case object group
-      service.clearQuestionValueByKey(formlyModel, 'section_2');
-
-      var newValue2 = service.getAnswerByQuestionKey(formlyModel, 'section_2');
-
-      expect(newValue2).to.deep.equal({});
-
-    });
-
-    it('should extract question ids when extractQuestionIds is called with an expression and object containing kesys', function (){
+    it('should extract question ids when extractQuestionIds is called with an expression and object containing kesys', function () {
       var keys = service.extractQuestionIds(validationExpression, formIds);
-      
-      expect(keys).to.include.members(['q1','q3']);
+
+      expect(keys).to.include.members(['q1', 'q3']);
     });
-    
-    it('should replace question placeholders with value when extractQuestionIds is invoked', function(){
+
+    it('should replace question placeholders with value when extractQuestionIds is invoked', function () {
       var replaced = service.replaceQuestionsPlaceholdersWithValue(validationExpression, formIds);
       expect(replaced).to.equal('(12 === null) || ("stringVal" in ["val1", "val2", "val3"])');
       
@@ -123,30 +86,30 @@
       replaced = service.replaceQuestionsPlaceholdersWithValue(validationExpression2, formIds);
       expect(replaced).to.equal('(12 === null) || ([12, "stringVal", "val3"].indexOf("stringVal") !== -1)');
     });
-    
-    it('should evaluate an expression when evaluateExpression is inviked', function(){
+
+    it('should evaluate an expression when evaluateExpression is inviked', function () {
       var toEvaluate = service.replaceQuestionsPlaceholdersWithValue(validationExpression2, formIds);
       var result = service.evaluateExpression(toEvaluate);
-      
-       expect(result).to.equal(true);
+
+      expect(result).to.equal(true);
     });
-    
-    it('should invoke isEmpty function when evaluateExpression is invoked with an expression containing isEmpty', function() {
+
+    it('should invoke isEmpty function when evaluateExpression is invoked with an expression containing isEmpty', function () {
       var expression = '(isEmpty("val"))';
       var result = service.evaluateExpression(expression);
       expect(result).to.equal(false);
-      
+
       expression = '(isEmpty(undefined))';
       result = service.evaluateExpression(expression);
       expect(result).to.equal(true);
     });
-    
-    it('should invoke arrayContains function when evaluateExpression is invoked with an expression containing arrayContains', function() {
+
+    it('should invoke arrayContains function when evaluateExpression is invoked with an expression containing arrayContains', function () {
       //non-array parameter
       var expression = '(arrayContains(["val", "val2", "val3"], "val"))';
       var result = service.evaluateExpression(expression);
       expect(result).to.equal(true);
-      
+
       expression = '(arrayContains(["val", "val2", "val3"], "val4"))';
       result = service.evaluateExpression(expression);
       expect(result).to.equal(false);
@@ -156,13 +119,29 @@
       expression = '(arrayContains(["val", "val2", "val3"], ["val","val3"]))';
       result = service.evaluateExpression(expression);
       expect(result).to.equal(true);
-      
+
       expression = '(arrayContains(["val", "val2", "val3"], ["val","val4"]))';
       result = service.evaluateExpression(expression);
       expect(result).to.equal(false);
     });
+  });
 
+  describe('Form Validator Service: Generic Validation Logic Functions Unit Tests', function () {
+    beforeEach(function () {
+      module('app.formentry');
 
+    });
+
+    var service;
+
+    beforeEach(inject(function ($injector) {
+      service = $injector.get('FormValidator');
+    }));
+
+    it('should have form validator services are defined', function () {
+      expect(service).to.exist;
+      expect(service.evaluateExpression).to.exist;
+    });
 
   });
 })();

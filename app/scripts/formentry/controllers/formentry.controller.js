@@ -8,14 +8,14 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         .module('app.formentry')
         .controller('FormentryCtrl', FormentryCtrl);
 
-    FormentryCtrl.$inject = ['$translate', 'dialogs', '$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'OpenmrsRestService', '$timeout', 'FormsMetaData'];
+    FormentryCtrl.$inject = ['$translate', 'dialogs', '$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'OpenmrsRestService', '$timeout', 'FormsMetaData', 'CurrentLoadedFormService'];
 
-    function FormentryCtrl($translate, dialogs, $location, $rootScope, $stateParams, $state, $scope, FormentryService, OpenmrsRestService, $timeout, FormsMetaData) {
+    function FormentryCtrl($translate, dialogs, $location, $rootScope, $stateParams, $state, $scope, FormentryService, OpenmrsRestService, $timeout, FormsMetaData, CurrentLoadedFormService) {
         FormentryService.currentFormModel = {};
         $scope.vm = {};
         $scope.vm.isBusy = true;
         $scope.vm.error = '';
-        $scope.vm.model = FormentryService.currentFormModel;
+        $scope.vm.model = CurrentLoadedFormService.formModel;
         $scope.vm.patient = $rootScope.broadcastPatient;
         $scope.vm.submitLabel = 'Save';
         $scope.vm.encounterType;

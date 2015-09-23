@@ -8,9 +8,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         .module('app.formentry')
         .factory('FormentryService', FormentryService);
 
-    FormentryService.$inject = ['$http', 'SearchDataService', 'moment', 'FormValidator'];
+    FormentryService.$inject = ['$http', 'SearchDataService', 'moment', 'FormValidator', 'CurrentLoadedFormService'];
 
-    function FormentryService( $http, SearchDataService, moment, FormValidator) {
+    function FormentryService( $http, SearchDataService, moment, FormValidator, CurrentLoadedFormService) {
         var service = {
             createForm: createForm,
             getConceptUuid:getConceptUuid,
@@ -19,12 +19,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             getFormSchema: getFormSchema,
             getCompiledFormSchema: getCompiledFormSchema,
             updateFormPayLoad: updateFormPayLoad,
-            getFieldById_Key:getFieldById_Key,
-            lastFormValidationMetadata: {},
-            currentFormModel: {}
+            getFieldById_Key:getFieldById_Key
         };
 
-        //local variables
         var obs_id = 0;
         var g_fields; // var to hold all the fields on a form
         var readyFields = [];
@@ -157,9 +154,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         }
         
         function getFieldKeyFromGlobalById(id){
-            var obj = service.lastFormValidationMetadata[id];
+            var obj = CurrentLoadedFormService.formValidationMetadata[id];
             if(obj)
-                return service.lastFormValidationMetadata[id].key;
+                return CurrentLoadedFormService.formValidationMetadata[id].key;
             return null;
         }
 
@@ -1686,7 +1683,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             };
 
             if(validators && validators.length !== 0){
-                compiledValidators = getFieldValidators(validators);
+                compiledValidators = FormValidator.getFieldValidators(validators, getFieldKeyFromGlobalById, getFieldById_Key, getFieldKeyById);
             }
 
 
@@ -2210,8 +2207,12 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             // callback(tabs);
             i = i+1;
           });
+<<<<<<< HEAD
 
           loaded = true;
+=======
+         
+>>>>>>> AA-192: Moved current loaded forms reference to a new service 'CurrentLoadedForm' service
           g_fields = tabs;
           callback(tabs);
         }
@@ -2313,7 +2314,6 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
     {
       console.log('Something Went Wrong While creating this field', obs_field)
     }
-
     //console.log('validators', obs_field);
 
       var validators;
