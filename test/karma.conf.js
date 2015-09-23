@@ -49,6 +49,7 @@ module.exports = function (config) {
     'bower_components/angular-translate/angular-translate.js',
     'bower_components/angular-dialog-service/dist/dialogs.js',
     'bower_components/angular-dialog-service/dist/dialogs-default-translations.js',
+    'bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.min.js',
     'bower_components/angular-mocks/angular-mocks.js',
     // endbower
       'app/scripts/**/*.module.js',

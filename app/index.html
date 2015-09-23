@@ -84,6 +84,7 @@
     <script src="bower_components/angular-translate/angular-translate.js"></script>
     <script src="bower_components/angular-dialog-service/dist/dialogs.js"></script>
     <script src="bower_components/angular-dialog-service/dist/dialogs-default-translations.js"></script>
+    <script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -119,7 +120,8 @@
         <script src="scripts/openmrs-rest-services/concept.service.js"></script>
         <script src="scripts/openmrs-rest-services/drug.service.js"></script>
         <script src="scripts/formentry/services/form-validator.service.js"></script>
-        <script src="scripts/formentry/services/current-loaded-form.service.js"></script>        
+        <script src="scripts/formentry/services/current-loaded-form.service.js"></script>
+        <script src="scripts/openmrs-rest-services/visit.service.js"></script>
 
         <!-- models -->
         <script src="scripts/models/session.model.js"></script>
@@ -158,6 +160,7 @@
         <script src="scripts/formentry/directives/error-summary-directive.js"></script>
         <script src="scripts/clinic-dashboard/directives/defaulter-list.directive.js"></script>
         <script src="scripts/patient-search/directives/focus.directive.js"></script>
+        <script src="scripts/patient-dashboard/directives/current-visit.directive.js"></script>
 
         <!-- Controllers -->
         <script src="scripts/patient-dashboard/controllers/patient-dashboard.controller.js"></script>
@@ -186,6 +189,7 @@
 
         <!-- Formly -->
         <script src="scripts/formentry/formly-controls/datepicker.formly.js"></script>
+        <script src="scripts/formentry/formly-controls/datetimepicker.formly.js"></script>
         <script src="scripts/formentry/formly-controls/ui-select.formly.js"></script>
         <script src="scripts/formentry/formly-controls/labelled-button-field.formly.js"></script>
         <script src="scripts/formentry/formly-controls/repeating-section.formly.js"></script>

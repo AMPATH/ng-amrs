@@ -14,11 +14,24 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
     var service = {
       getEncounterByUuid: getEncounterByUuid,
       saveEncounter: saveEncounter,
-      getPatientEncounters: getPatientEncounters
+      getPatientEncounters: getPatientEncounters,
+      voidEncounter: voidEncounter
     }
 
     return service;
-
+    
+    function voidEncounter(uuid, successCallback, errorCallback) {
+        Restangular.one('encounter', uuid).remove().then(function(response) {
+            if(typeof successCallback === 'function') {
+                successCallback(response);
+            }
+        }, function(error) {
+            if(typeof errorCallback === 'function') {
+                errorCallback(error);
+            }
+        });
+    }
+    
     function getEncounterByUuid(params, successCallback, errorCallback) {
       var objParams = {};
       var _customDefaultRep = 'custom:(uuid,encounterDatetime,' +
@@ -91,10 +104,22 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
         var patientUuid = params;
         objParams = {'patient': patientUuid, 'v':_customDefaultRep}
       } else {
+        var v = params.rep || params.v;
         objParams = {
           'patient': params.patientUuid,
-          'v': params.rep || _customDefaultRep
+          'v': v || _customDefaultRep
         }
+
+        /* jshint ignore: start */
+        delete params.patientUuid;
+        delete params.rep;
+        /* jshint ignore: end */
+
+        //Add objParams to params and assign it back objParams
+        params.patient = objParams.patient;
+        params.v = objParams.v;
+
+        objParams = params;
       }
 
       Restangular.one('encounter').get(objParams).then(function(data) {

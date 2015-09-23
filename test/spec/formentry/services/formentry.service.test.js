@@ -133,7 +133,7 @@
         });
 
         it('Should be able to add fields of type date to sections in a page', function(){
-          expect(tabs[0].form.fields[1].data.fields[0].type).to.equal('datepicker');
+          expect(tabs[0].form.fields[1].data.fields[0].type).to.equal('datetimepicker');
         });
 
         it('Should be able to add fields of type select/dropdown to sections in a page', function(){
@@ -165,8 +165,6 @@
           // g_fields=tabs;
         });
 
-
-
         it('Should be able to search field by Id', function(){
           sid_Field = formentryService.getFieldById_Key(id);
           expect(sid_Field).to.be.an('object');
@@ -187,8 +185,7 @@
           skey_Field = formentryService.getFieldById_Key('encounterDate');
           expect(skey_Field).to.be.an('object');
           expect(skey_Field.key).to.equal('encounterDate');
-          expect(skey_Field.type).to.equal('datepicker');
-
+          expect(skey_Field.type).to.equal('datetimepicker');
         });
 
         it('Should be able to return undefined if no field is found', function(){
