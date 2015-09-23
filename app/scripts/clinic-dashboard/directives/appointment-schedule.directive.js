@@ -12,7 +12,9 @@ jshint -W003, -W026
     function appointmentSchedule() {
         return {
             restict: "E",
-            scope: { locationUuid: "@" },
+            scope: { locationUuid: "@",
+              patientFilter:"="
+            },
             controller: appointmentScheduleController,
             link: appointmentScheduleLink,
             templateUrl: "views/clinic-dashboard/appointment-schedule.html"
@@ -29,6 +31,7 @@ jshint -W003, -W026
         $scope.isBusy = false;
         $scope.experiencedLoadingError = false;
         $scope.currentPage = 1;
+
 
         $scope.loadSchedule = loadSchedule;
         $scope.loadPatient = loadPatient;
