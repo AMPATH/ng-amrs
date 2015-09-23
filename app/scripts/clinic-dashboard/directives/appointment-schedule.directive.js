@@ -12,8 +12,7 @@ jshint -W003, -W026
     function appointmentSchedule() {
         return {
             restict: "E",
-            scope: { locationUuid: "@",
-              patientFilter:"="
+            scope: { locationUuid: "@"
             },
             controller: appointmentScheduleController,
             link: appointmentScheduleLink,
@@ -27,7 +26,7 @@ jshint -W003, -W026
 
         //scope members region
         $scope.patients = [];
-
+        $scope.searchString='';
         $scope.isBusy = false;
         $scope.experiencedLoadingError = false;
         $scope.currentPage = 1;
@@ -76,7 +75,6 @@ jshint -W003, -W026
 
 
 
-
         function loadPatient(patientUuid) {
             /*
             Get the selected patient and save the details in the root scope
@@ -109,6 +107,18 @@ jshint -W003, -W026
             for (var e in appointmentSchedule.result) {
                 $scope.patients.push(new AppointmentScheduleModel.appointmentSchedule(appointmentSchedule.result[e]));
             }
+          console.log("Appointment patient---", $scope.patients);
+          $scope.customPatients =[];
+          _.each($scope.patients, function(patient)
+          {
+            var singlePatient={
+                uuid:patient.uuid(),
+                identifier:patient.identifiers(),
+                name:patient.givenName()+' '+patient.familyName()+' '+patient.middleName()
+              }
+            $scope.customPatients.push(singlePatient);
+
+          });
             $scope.isBusy = false;
         }
 
