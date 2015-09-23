@@ -44,7 +44,7 @@
 		</thead>
 		<tr ng-repeat="patient in patients" data-ng-click="loadPatient(patient.uuid())">
 			<td>{{patient.identifiers()}}</td>
-			<td>{{patient.givenName() + ' ' + patient.familyName() + ' ' + patient.middleName()}}</td>
+			<td>{{patient.givenName() | titlecase}} {{patient.familyName() | titlecase}} {{patient.middleName() | titlecase}}</td>
 			<td>{{utcDateToLocal(patient.rtcDate()) | date:'dd-MM-yyyy'}}</td>
 			<td>
 				<a href="#/patient/{{patient.uuid()}}"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
