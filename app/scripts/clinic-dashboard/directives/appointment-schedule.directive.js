@@ -22,12 +22,13 @@ jshint -W003, -W026
     appointmentScheduleController.$inject = ['$scope', '$rootScope', 'EtlRestService', 'AppointmentScheduleModel', 'moment', '$state'];
 
     function appointmentScheduleController($scope, $rootScope, EtlRestService, AppointmentScheduleModel, moment, $state) {
-        
+
         //scope members region
         $scope.patients = [];
 
         $scope.isBusy = false;
         $scope.experiencedLoadingError = false;
+        $scope.currentPage = 1;
 
         $scope.loadSchedule = loadSchedule;
         $scope.loadPatient = loadPatient;
@@ -35,7 +36,7 @@ jshint -W003, -W026
 
 
         $scope.utcDateToLocal = utcDateToLocal;
-        
+
         $scope.startDate = new Date();
         $scope.selectedDate = function (value) {
             if (value) {
@@ -46,19 +47,19 @@ jshint -W003, -W026
                 return $scope.startDate;
             }
         };
-        
-        $scope.openDatePopup = openDatePopup; 
+
+        $scope.openDatePopup = openDatePopup;
         $scope.dateControlStatus = {
             startOpened: false
         };
 
         //end scope members region
-        
+
         function onViewDayAppointmentBroadcast(event, arg) {
             $scope.selectedDate(arg);
         }
-        
-        
+
+
         function openDatePopup ($event) {
             $event.preventDefault();
             $event.stopPropagation();
