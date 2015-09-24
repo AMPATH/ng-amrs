@@ -49,16 +49,17 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         {
           if(!isLastTab()){
           $scope.vm.currentTab++;
-          $scope.vm.tabs[$scope.vm.currentTab]['form']=$scope.vm.formlyFields[$scope.vm.currentTab].form;
           $scope.vm.tabs[$scope.vm.currentTab].active = true;
+          $scope.vm.tabs[$scope.vm.currentTab]['form']=$scope.vm.formlyFields[$scope.vm.currentTab].form;
+
           }
         }
         else if(button === 'prev')
         {
           if(!isFirstTab()){
           $scope.vm.currentTab--;
-          $scope.vm.tabs[$scope.vm.currentTab]['form']=$scope.vm.formlyFields[$scope.vm.currentTab].form;
           $scope.vm.tabs[$scope.vm.currentTab].active = true;
+          $scope.vm.tabs[$scope.vm.currentTab]['form']=$scope.vm.formlyFields[$scope.vm.currentTab].form;          
           }
         }
       };
@@ -91,9 +92,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         // console.log('testing selected Form')
         // console.log(selectedForm);
 
+        //load the selected form
         activate();
-
-       //
 
 
         $scope.vm.cancel = function()
