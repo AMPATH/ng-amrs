@@ -15,7 +15,7 @@
 					</p>
 				</div>
 			</div>
-		</div>
+    </div>
 		<div ng-show='!isBusy && experiencedLoadingError'>
 			<button class="btn btn-info" ng-click="loadSchedule()">
 				<span class="glyphicon glyphicon-refresh"></span>
@@ -65,19 +65,13 @@
 			</tr>
 		</thead>
 		<tr class="slide-animation" ng-repeat="patient in patients | filter:patientFilter | startFrom:(currentPage-1)*10 | limitTo:10 " data-ng-click="loadPatient(patient.uuid())">
-<<<<<<< HEAD
       <td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
 			<td>{{patient.identifiers()}}</td>
 			<td>{{patient.givenName() | titlecase}} {{patient.familyName() | titlecase}} {{patient.middleName() | titlecase}}</td>
-=======
-      <td>{{}}</td>
-			<td>{{patient.identifiers()}}</td>
-			<td>{{patient.givenName() + ' ' + patient.familyName() + ' ' + patient.middleName()}}</td>
 
->>>>>>> AA-211 Add a box to filter by text. This will allow a user to search by name or identifier
 			<td>
 				<a href="#/patient/{{patient.uuid()}}"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
-			</td>
+      </td>
 		</tr>
 	</table>
 
@@ -88,7 +82,3 @@
 </div>
   </div>
   </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> AA-211 Add a box to filter by text. This will allow a user to search by name or identifier
