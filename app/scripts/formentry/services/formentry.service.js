@@ -140,26 +140,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         return service;
 
-        function getFieldKeyById(id_, searchFields)
-        {
-          var result;
-          _.some(searchFields, function(cfield){
-            if(cfield.data && cfield.data.id === id_)
-            {
-              result = cfield.key;
-              return true;
-            }
-          });
-          return result;
-        }
-        
-        function getFieldKeyFromGlobalById(id){
-            var obj = CurrentLoadedFormService.formValidationMetadata[id];
-            if(obj)
-                return CurrentLoadedFormService.formValidationMetadata[id].key;
-            return null;
-        }
-
         function getFormSchema(formName, callback) {
           var schema = {};
           // this should de dropped once we align all forms related issues
@@ -1643,7 +1623,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           }
           if(obs_field.hide !== undefined)
           {
-            hideExpression_= FormValidator.getFieldValidator(obs_field.hide[0], getFieldKeyFromGlobalById, getFieldById_Key, getFieldKeyById);
+            hideExpression_= FormValidator.getFieldValidator(obs_field.hide[0], getFieldById_Key);
           }
           else {
             hideExpression_ = '';
@@ -1652,7 +1632,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
           if(obs_field.disable !== undefined)
           {
-            disableExpression_= FormValidator.getHideDisableExpressionFunction(obs_field.disable[0], getFieldKeyById);
+            disableExpression_= FormValidator.getHideDisableExpressionFunction(obs_field.disable[0]);
           }
           else {
             disableExpression_ = '';
@@ -1683,7 +1663,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             };
 
             if(validators && validators.length !== 0){
-                compiledValidators = FormValidator.getFieldValidators(validators, getFieldKeyFromGlobalById, getFieldById_Key, getFieldKeyById);
+                compiledValidators = FormValidator.getFieldValidators(validators, getFieldById_Key);
             }
 
 
@@ -1705,7 +1685,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               var conditionalRequired;
               if(conditionalParams !== undefined)
               {
-                conditionalRequired =  FormValidator.getConditionalRequiredExpressionFunction(conditionalParams, getFieldKeyFromGlobalById, getFieldById_Key);
+                conditionalRequired =  FormValidator.getConditionalRequiredExpressionFunction(conditionalParams, getFieldById_Key);
                 required = conditionalRequired;
               }
 
@@ -1821,7 +1801,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
 
             if(validators && validators.length !== 0){
-                defaultValidator = FormValidator.getFieldValidator(obs_field.validators[0], getFieldKeyFromGlobalById, getFieldById_Key, getFieldKeyById);
+                defaultValidator = FormValidator.getFieldValidator(obs_field.validators[0], getFieldById_Key);
             }
 
             var required='false';
@@ -1926,7 +1906,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             {
               if(obs_field.hide !== undefined)
               {
-                hideExpression_= FormValidator.getHideDisableExpressionFunction(obs_field.hide[0], getFieldKeyById);
+                hideExpression_= FormValidator.getHideDisableExpressionFunction(obs_field.hide[0]);
               }
               else {
                 hideExpression_ = '';
@@ -2207,12 +2187,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             // callback(tabs);
             i = i+1;
           });
-<<<<<<< HEAD
 
           loaded = true;
-=======
-         
->>>>>>> AA-192: Moved current loaded forms reference to a new service 'CurrentLoadedForm' service
           g_fields = tabs;
           callback(tabs);
         }

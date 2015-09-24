@@ -4,26 +4,46 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 (function () {
     'use strict';
 
-	angular
+    angular
         .module('app.formentry')
         .service('CurrentLoadedFormService', CurrentLoadedFormService);
 
-	CurrentLoadedFormService.$inject = [];
+    CurrentLoadedFormService.$inject = [];
 
-	function CurrentLoadedFormService() {
-		var lastFound;
+    function CurrentLoadedFormService() {
+        var lastFound;
 
-		var service = {
-			formModel: {},
-			formValidationMetadata: {},
-			clearQuestionValueByKey: clearQuestionValueByKey,
+        var service = {
+            formModel: {},
+            formValidationMetadata: {},
+            clearQuestionValueByKey: clearQuestionValueByKey,
             getAnswerByQuestionKey: getAnswerByQuestionKey,
             getContainingObjectForQuestionKey: getContainingObjectForQuestionKey,
-		};
+            getFieldKeyFromGlobalById: getFieldKeyFromGlobalById,
+            getFieldKeyById: getFieldKeyById
+        };
 
-		return service;
+        return service;
 
-		function clearQuestionValueByKey(formlyModel, key) {
+        function getFieldKeyFromGlobalById(id) {
+            var obj = service.formValidationMetadata[id];
+            if (obj)
+                return service.formValidationMetadata[id].key;
+            return null;
+        }
+
+        function getFieldKeyById(id_, searchFields) {
+            var result;
+            _.each(searchFields, function (cfield) {
+                if (cfield.data && cfield.data.id === id_) {
+                    result = cfield.key;
+                    return result;
+                }
+            });
+            return result;
+        }
+
+        function clearQuestionValueByKey(formlyModel, key) {
             var containingObject = getContainingObjectForQuestionKey(formlyModel, key);
             if (containingObject) {
                 //containingObject[key] = null;
@@ -50,7 +70,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             }
         }
 
-		function getAnswerByQuestionKey(formlyModel, key) {
+        function getAnswerByQuestionKey(formlyModel, key) {
             lastFound = null;
             traverse(formlyModel, key);
 
@@ -81,6 +101,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 }
             }
         }
-	}
+    }
 
 })();

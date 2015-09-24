@@ -18,9 +18,11 @@
     var validationExpression;
     var validationExpression2;
     var formIds;
+    var currentLoadedFormService;
 
     beforeEach(inject(function ($injector) {
       service = $injector.get('FormValidator');
+      currentLoadedFormService = $injector.get('CurrentLoadedFormService');
     }));
 
     beforeEach(function () {
@@ -133,15 +135,62 @@
     });
 
     var service;
+    var currentLoadedFormService;
 
     beforeEach(inject(function ($injector) {
       service = $injector.get('FormValidator');
+      currentLoadedFormService = $injector.get('CurrentLoadedFormService');
+      
     }));
 
     it('should have form validator services are defined', function () {
       expect(service).to.exist;
       expect(service.evaluateExpression).to.exist;
     });
+
+    it('should return correct validation results when the validator object that getJsExpressionValidatorObject is invoked', function () {
+      //sample one
+      var params1 = {
+        'type': 'js_expression',
+        'failsWhenExpression': '!isEmpty(q7a) && arrayContains(["a89ff816-1350-11df-a1f1-0026b9348838","a89ff8de-1350-11df-a1f1-0026b9348838"], q7a) && isEmpty(myValue)',
+        'message': 'Patient visit marked as unscheduled. Please provide the scheduled date.'
+      };
+      
+      var currentModel = {
+        key1: 'a89ff816-1350-11df-a1f1-0026b9348838',
+        key2: ''
+      };
+      
+      currentLoadedFormService.formValidationMetadata = {
+        q7a:{
+          key: 'key1'
+        },
+        q13a: {
+          key: 'key2'
+        }
+      };
+      
+      currentLoadedFormService.formModel = currentModel;
+      
+      var validator =  service.getJsExpressionValidatorObject(params);
+      
+      var isValid = validator.expression(undefined, undefined, {});
+      console.log(isValid);
+      
+      //failed case
+      expect(isValid).to.equal(false);
+      
+      isValid = validator.expression(new Date().toISOString(), undefined, {});
+      console.log(isValid);
+      //passed case
+      expect(isValid).to.equal(true);
+      
+      //sampe two
+      
+      
+    });
+    
+    
 
   });
 })();

@@ -22,39 +22,40 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             getFieldValidators: getFieldValidators,
             getHideDisableExpressionFunction: getHideDisableExpressionFunction,
             getConditionalRequiredExpressionFunction: getConditionalRequiredExpressionFunction,
-            getDateValidatorObject: getDateValidatorObject
+            getDateValidatorObject: getDateValidatorObject,
+            getJsExpressionValidatorObject: getJsExpressionValidatorObject
         }
 
         return service;
 
-        function getFieldValidators(arrayOfValidations, getFieldKeyFromGlobalByIdFunction, getFieldById_KeyFunction, getFieldKeyByIdFunction) {
+        function getFieldValidators(arrayOfValidations, getFieldById_KeyFunction) {
             var validator = {};
             var index = 1;
-            _.each(arrayOfValidations, function (validate) {
+            _.each(arrayOfValidations, function (validate) {    
                 var key = validate.type;
                 if (validate.type === 'js_expression') {
                     key = key + index;
                     index++;
                 }
                 if (validate.type !== 'conditionalRequired')
-                    validator[key] = getFieldValidatorObject(validate, getFieldKeyFromGlobalByIdFunction, getFieldById_KeyFunction, getFieldKeyByIdFunction);
+                    validator[key] = getFieldValidatorObject(validate, getFieldById_KeyFunction);
             });
             return validator;
         }
 
-        function getFieldValidatorObject(params, getFieldKeyFromGlobalByIdFunction, getFieldById_KeyFunction, getFieldKeyByIdFunction) {
+        function getFieldValidatorObject(params, getFieldById_KeyFunction) {
             switch (params.type) {
                 case 'date':
                     return getDateValidatorObject(params);
                     break;
                 case 'js_expression':
-                    return getJsExpressionValidatorObject(params, getFieldKeyFromGlobalByIdFunction);
+                    return getJsExpressionValidatorObject(params);
                     break;
                 case 'conditionalAnswered':
-                    return getConditionalAnsweredValidatorObject(params, getFieldKeyFromGlobalByIdFunction, getFieldById_KeyFunction);
+                    return getConditionalAnsweredValidatorObject(params, getFieldById_KeyFunction);
                     break;
                 case 'conditionalRequired':
-                    return getConditionalRequiredExpressionFunction(params, getFieldKeyFromGlobalByIdFunction, getFieldById_KeyFunction);
+                    return getConditionalRequiredExpressionFunction(params, getFieldById_KeyFunction);
                     break;
             }
 
@@ -112,7 +113,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             return validator;
         }
 
-        function getJsExpressionValidatorObject(params, getFieldKeyFromGlobalByIdFunction) {
+        function getJsExpressionValidatorObject(params) {
 
             var validator = new Validator('"' + params.message + '"',
                 function (viewValue, modelValue, elementScope) {
@@ -144,7 +145,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                     _.each(referencedQuestions, function (qId) {
                         if (keyValue[qId] === undefined) {
-                            var referenceQuestionkey = getFieldKeyFromGlobalByIdFunction(qId);
+                            var referenceQuestionkey = CurrentLoadedFormService.getFieldKeyFromGlobalById(qId);
                             var referenceQuestionCurrentValue = CurrentLoadedFormService.getAnswerByQuestionKey(CurrentLoadedFormService.formModel, referenceQuestionkey);
                             keyValue[qId] = referenceQuestionCurrentValue;
                         }
@@ -167,7 +168,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         }
 
-        function getConditionalAnsweredValidatorObject(params, getFieldKeyFromGlobalByIdFunction, getFieldById_KeyFunction) {
+        function getConditionalAnsweredValidatorObject(params, getFieldById_KeyFunction) {
             var validator = new Validator('"' + params.message + '"',
                 function (viewValue, modelValue, elementScope) {
                     var val = viewValue || modelValue;
@@ -190,7 +191,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     }  
 
                     //question was asnwered, therefore establish that the reference questions have the required answers
-                    var referenceQuestionkey = getFieldKeyFromGlobalByIdFunction(params.referenceQuestionId);
+                    var referenceQuestionkey = CurrentLoadedFormService.getFieldKeyFromGlobalById(params.referenceQuestionId);
                     var referenceQuestion = getFieldById_KeyFunction(params.referenceQuestionId);
                     if (referenceQuestion !== undefined)
                         referenceQuestionkey = referenceQuestion.key
@@ -213,7 +214,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             return validator;
         }
 
-        function getConditionalRequiredExpressionFunction(params, getFieldKeyFromGlobalByIdFunction, getFieldById_KeyFunction) {
+        function getConditionalRequiredExpressionFunction(params, getFieldById_KeyFunction) {
 
             return function ($viewValue, $modelValue, scope, element) {
                 var i = 0;
@@ -221,7 +222,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 var isRequired;
                 var result;
 
-                var referenceQuestionkey = getFieldKeyFromGlobalByIdFunction(params.referenceQuestionId);
+                var referenceQuestionkey = CurrentLoadedFormService.getFieldKeyFromGlobalById(params.referenceQuestionId);
                 var referenceQuestion = getFieldById_KeyFunction(params.referenceQuestionId);
                 if (referenceQuestion !== undefined) referenceQuestionkey = referenceQuestion.key;
 
@@ -241,7 +242,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         }
 
-        function getHideDisableExpressionFunction(params, getFieldKeyByIdFunction) {
+        function getHideDisableExpressionFunction(params) {
             var result;
             var results;
 
@@ -253,7 +254,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 var fkey;
 
                 if (params.field === 'gender' || params.field === 'sex') fkey = 'sex';
-                else fkey = getFieldKeyByIdFunction(params.field, scope.fields)
+                else fkey = CurrentLoadedFormService.getFieldKeyByIdFunction(params.field, scope.fields)
 
                 _.each(params.value, function (val) {
 
