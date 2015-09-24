@@ -1657,14 +1657,19 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           {
                             if(!_.isEmpty(init_data))
                             {
-                              _.each(init_data.init_val, function(item){
-                                if(traversed_objects.indexOf(item) === -1)
-                                {
-                                  var obs_index = init_data.init_val.indexOf(item);
-                                  console.log('Executing Obs to void -- 1354')
-                                  obs.push({voided:true, uuid:init_data.uuid[obs_index]});
-                                }
-                              });
+                              console.log('init date b4 delete ', init_data)
+                              if (angular.isArray(init_data.init_val))
+                              {
+                                _.each(init_data.init_val, function(item){
+                                  if(traversed_objects.indexOf(item) === -1)
+                                  {
+                                    var obs_index = init_data.init_val.indexOf(item);
+                                    console.log('Executing Obs to void -- 1354')
+                                    console.log('b4 delete xx ', init_data.init_val)
+                                    obs.push({voided:true, uuid:init_data.uuid[obs_index]});
+                                  }
+                                });
+                              }
                             }
                           }
                           if (groupMembers.length>0)
@@ -2376,13 +2381,39 @@ function getFormattedValue(value){
     }
 
     //moment().utc();
-    var isDateValid = moment(value, 'YYYY-MM-DDTHH:mm:ssZ').isValid();
+
+    var isDateValid = false;
+    if (isDateValid === false)
+    {
+      isDateValid = moment(value, 'YYYY-MM-DDTHH:mm:ssZ').isValid();
+      if (isDateValid)
+      {
+        var stringToValidate = value.substr(0, 10);
+        console.log('xxxx ',stringToValidate)
+        var rgexp = /(^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$)/;
+        var isValidDate = rgexp.test(stringToValidate);
+        console.log('yyyy ',isValidDate)
+        if (isValidDate)
+        {
+          isDateValid = true;
+        }
+        else {
+          isDateValid = false;
+        }
+      }
+
+
+    }
+
+
+
     if(isDateValid)
     {
+      console.log('convert to date XXX', value)
       var localTime = moment(value).format('YYYY-MM-DDTHH:mm:ss.SSSZZ');
       return localTime;
     }
-
+console.log('Returned value',value);
     return value;
 }
 
