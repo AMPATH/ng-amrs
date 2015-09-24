@@ -387,5 +387,31 @@
       expect(isValid).to.equal(false);
     });
 
+
+    it('should return correct date validation result when future date validators returned by getDateValidatorObject is invoked', function () {
+      var params = {
+        'type': 'date',
+        'allowFutureDates': 'false'
+      };
+      //case now
+      var value = new Date();
+      var validator = service.getDateValidatorObject(params);
+      var isValid = validator.expression(value, undefined);
+      
+      expect(isValid).to.equal(true);
+      
+      //case past
+      value = new Date('2014-05-05');
+      isValid = validator.expression(value, undefined);
+      
+      expect(isValid).to.equal(true);
+      
+      //case future
+      value = new Date('2016-05-05');
+      isValid = validator.expression(value, undefined);
+      
+      expect(isValid).to.equal(false);
+    });
+
   });
 })();
