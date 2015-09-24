@@ -266,7 +266,66 @@
 
     });
 
+    it('should return a function that when invoked conditionally sets a field to required when getConditionalRequiredExpressionFunction is invoked', function () {
+      
+      //case reference question has the required answers to make this question a required question
+      var params = {
+        'type': 'conditionalRequired',
+        'message': 'Patient visit marked as unscheduled. Please provide the scheduled date.',
+        'referenceQuestionId': 'q7a',
+        'referenceQuestionAnswers': [
+          'a89ff816-1350-11df-a1f1-0026b9348838',
+          'a89ff8de-1350-11df-a1f1-0026b9348838'
+        ]
+      };
+      var currentModel = {
+        key1: 'a89ff8de-1350-11df-a1f1-0026b9348838',
+        key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
+      };
 
+      currentLoadedFormService.formValidationMetadata = {
+        q7a: {
+          key: 'key1'
+        },
+        q13a: {
+          key: 'key2'
+        }
+      };
+
+      currentLoadedFormService.formModel = currentModel;
+      
+      //mock getFieldById_KeyFunction
+      var getFieldById_KeyFunctionMock = function (qId) {
+        return {
+          key: 'key1'
+        };
+      };
+
+      var isRequiredExpressionFunction = service.getConditionalRequiredExpressionFunction(params, getFieldById_KeyFunctionMock);
+
+      var fieldScope = {
+        model: currentModel
+      };
+
+      var isRequired = isRequiredExpressionFunction(undefined, undefined, fieldScope, undefined);
+
+      expect(isRequired).to.equal(true);
+      
+      //case reference question does not have the required answer to make this question a required question
+      currentModel = {
+        key1: 'unrequired asnwer',
+        key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
+      };
+      currentLoadedFormService.formModel = currentModel;
+      isRequiredExpressionFunction = service.getConditionalRequiredExpressionFunction(params, getFieldById_KeyFunctionMock);
+      fieldScope = {
+        model: currentModel
+      };
+      
+      isRequired = isRequiredExpressionFunction(undefined, undefined, fieldScope, undefined);
+      
+      expect(isRequired).to.equal(false);
+    });
 
   });
 })();
