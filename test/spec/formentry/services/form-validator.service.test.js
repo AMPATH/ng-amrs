@@ -140,7 +140,7 @@
     beforeEach(inject(function ($injector) {
       service = $injector.get('FormValidator');
       currentLoadedFormService = $injector.get('CurrentLoadedFormService');
-      
+
     }));
 
     it('should have form validator services are defined', function () {
@@ -155,42 +155,118 @@
         'failsWhenExpression': '!isEmpty(q7a) && arrayContains(["a89ff816-1350-11df-a1f1-0026b9348838","a89ff8de-1350-11df-a1f1-0026b9348838"], q7a) && isEmpty(myValue)',
         'message': 'Patient visit marked as unscheduled. Please provide the scheduled date.'
       };
-      
+
       var currentModel = {
         key1: 'a89ff816-1350-11df-a1f1-0026b9348838',
-        key2: ''
+        key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
       };
-      
+
       currentLoadedFormService.formValidationMetadata = {
-        q7a:{
+        q7a: {
           key: 'key1'
         },
         q13a: {
           key: 'key2'
         }
       };
-      
+
       currentLoadedFormService.formModel = currentModel;
-      
-      var validator =  service.getJsExpressionValidatorObject(params);
-      
+
+      var validator = service.getJsExpressionValidatorObject(params1);
+
       var isValid = validator.expression(undefined, undefined, {});
       console.log(isValid);
       
       //failed case
       expect(isValid).to.equal(false);
-      
+
       isValid = validator.expression(new Date().toISOString(), undefined, {});
       console.log(isValid);
       //passed case
       expect(isValid).to.equal(true);
       
       //sampe two
+      var params2 = {
+        'type': 'js_expression',
+        'failsWhenExpression': 'isEmpty(myValue) && !isEmpty(q13a) && q13a === "a899b35c-1350-11df-a1f1-0026b9348838"',
+        'message': 'Patient visit marked as unscheduled. Please provide the scheduled date.'
+      };
+
+      validator = service.getJsExpressionValidatorObject(params2);
       
+      //case valid
+      isValid = validator.expression('not empty', undefined, {});
+      expect(isValid).to.equal(true);
       
+      //case invalid
+      isValid = validator.expression(undefined, undefined, {});
+      expect(isValid).to.equal(false);
+
     });
-    
-    
+
+    it('should return correct value to validate when getFieldValueToValidate is invoked with viewvalue or modelvalue being non-empty', function () {
+      var returnVal = service.getFieldValueToValidate('non-empty', undefined, {});
+
+      expect(returnVal).to.equal('non-empty');
+
+      returnVal = service.getFieldValueToValidate(undefined, 'non-empty', {});
+
+      expect(returnVal).to.equal('non-empty');
+
+    });
+
+    it('should return correct value to validate when getFieldValueToValidate is invoked with multi-select field scope', function () {
+      
+      //case: no new value being added
+      var multiSelectFormlyScope = {
+        $parent: {
+          multiCheckbox: [true, false, true, true],
+          model: {
+            key1: ['val1'],
+            key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
+          },
+          options: {
+            key: 'key1'
+          }
+        },
+        option: {
+          value: 'val2'
+        }
+      };
+
+      var returnVal = service.getFieldValueToValidate(false, undefined, multiSelectFormlyScope); //this will usually have true or false being the value 
+
+      expect(returnVal).to.have.members(['val1']);
+      expect(['val1']).to.have.members(returnVal);
+      
+      //case: new value being added 
+      returnVal = service.getFieldValueToValidate(true, undefined, multiSelectFormlyScope);
+      expect(returnVal).to.have.members(['val1', 'val2']);
+      expect(['val1', 'val2']).to.have.members(returnVal);
+      
+      //case: existing value being removed
+      multiSelectFormlyScope = {
+        $parent: {
+          multiCheckbox: [true, false, true, true],
+          model: {
+            key1: ['val1'],
+            key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
+          },
+          options: {
+            key: 'key1'
+          }
+        },
+        option: {
+          value: 'val1'
+        }
+      };
+      returnVal = service.getFieldValueToValidate(false, undefined, multiSelectFormlyScope);
+      expect(returnVal).to.have.members([]);
+      expect([]).to.have.members(returnVal);
+
+    });
+
+
 
   });
 })();

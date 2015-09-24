@@ -8,16 +8,17 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
     angular
         .module('app.formentry')
         .service('FormValidator', FormValidator);
-        
-    FormValidator.$inject = ['CurrentLoadedFormService'];    
+
+    FormValidator.$inject = ['CurrentLoadedFormService'];
 
     function FormValidator(CurrentLoadedFormService) {
-        
+
         var service = {
             extractQuestionIds: extractQuestionIds,
             replaceQuestionsPlaceholdersWithValue: replaceQuestionsPlaceholdersWithValue,
             replaceMyValuePlaceholdersWithActualValue: replaceMyValuePlaceholdersWithActualValue,
             evaluateExpression: evaluateExpression,
+            getFieldValueToValidate: getFieldValueToValidate,
             getFieldValidator: getFieldValidatorObject,
             getFieldValidators: getFieldValidators,
             getHideDisableExpressionFunction: getHideDisableExpressionFunction,
@@ -31,7 +32,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         function getFieldValidators(arrayOfValidations, getFieldById_KeyFunction) {
             var validator = {};
             var index = 1;
-            _.each(arrayOfValidations, function (validate) {    
+            _.each(arrayOfValidations, function (validate) {
                 var key = validate.type;
                 if (validate.type === 'js_expression') {
                     key = key + index;
@@ -90,7 +91,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
             }
             else {
-                //case should be a future date
+                //case should be a date
                 validator.expression = function (viewValue, modelValue, elementScope) {
                     /*
                     using datejs library
@@ -108,7 +109,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     else return false;
 
                 };
-                validator.message = '"Should be a future date!"';
+                validator.message = '"Should be a date!"';
             }
             return validator;
         }
@@ -117,28 +118,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
             var validator = new Validator('"' + params.message + '"',
                 function (viewValue, modelValue, elementScope) {
-                    var val = viewValue || modelValue;
                     
-                    //special case for multicheck box
-                    if (elementScope.$parent && elementScope.$parent.multiCheckbox) {
-                        console.log('validating multicheck box..', elementScope.$parent.multiCheckbox);
-                        var selectedOptions = elementScope.$parent.model[elementScope.$parent.options.key];
-                        var mergedOptions = selectedOptions ? [].concat(selectedOptions) : [];
-
-                        if (val === true) {
-                            if (elementScope.option.value)
-                                mergedOptions.push(elementScope.option.value);
-                        }
-                        else {
-                            var index = mergedOptions.indexOf(elementScope.option.value);
-                            if (index >= 0) {
-                                mergedOptions = _.without(mergedOptions, elementScope.option.value);
-                            }
-                        }
-
-                        val = mergedOptions;
-                    }
-
+                    var val = getFieldValueToValidate(viewValue, modelValue, elementScope);                 
+                    
                     var referencedQuestions = service.extractQuestionIds(params.failsWhenExpression, CurrentLoadedFormService.formValidationMetadata);
 
                     var keyValue = {};
@@ -166,6 +148,32 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 });
             return validator;
 
+        }
+
+        function getFieldValueToValidate(viewValue, modelValue, elementScope) {
+            var val = viewValue || modelValue;
+                    
+            //special case for multicheck box
+            if (elementScope.$parent && elementScope.$parent.multiCheckbox) {
+                console.log('validating multicheck box..', elementScope.$parent.multiCheckbox);
+                var selectedOptions = elementScope.$parent.model[elementScope.$parent.options.key];
+                var mergedOptions = selectedOptions ? [].concat(selectedOptions) : [];
+
+                if (val === true) {
+                    if (elementScope.option.value)
+                        mergedOptions.push(elementScope.option.value);
+                }
+                else {
+                    var index = mergedOptions.indexOf(elementScope.option.value);
+                    if (index >= 0) {
+                        mergedOptions = _.without(mergedOptions, elementScope.option.value);
+                    }
+                }
+
+                val = mergedOptions;
+            }
+            
+            return val;
         }
 
         function getConditionalAnsweredValidatorObject(params, getFieldById_KeyFunction) {
