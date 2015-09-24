@@ -23,6 +23,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             getFieldValidators: getFieldValidators,
             getHideDisableExpressionFunction: getHideDisableExpressionFunction,
             getConditionalRequiredExpressionFunction: getConditionalRequiredExpressionFunction,
+            getConditionalAnsweredValidatorObject:getConditionalAnsweredValidatorObject,
             getDateValidatorObject: getDateValidatorObject,
             getJsExpressionValidatorObject: getJsExpressionValidatorObject
         }

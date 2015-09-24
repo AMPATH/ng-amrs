@@ -321,10 +321,70 @@
       fieldScope = {
         model: currentModel
       };
-      
+
       isRequired = isRequiredExpressionFunction(undefined, undefined, fieldScope, undefined);
-      
+
       expect(isRequired).to.equal(false);
+    });
+
+    it('should return a validator that when invoked return correct validation result when getConditionalAnsweredValidatorObject is invoked', function () {
+      
+      //case reference question has the required answers to allow this question to be answered
+      var params = {
+        'type': 'conditionalAnswered',
+        'message': 'Providing diagnosis but didnt answer that patient was hospitalized in question 11a',
+        'referenceQuestionId': 'q11a',
+        'referenceQuestionAnswers': [
+          'a899b35c-1350-11df-a1f1-0026b9348838'
+        ]
+      };
+      var currentModel = {
+        key1: 'a899b35c-1350-11df-a1f1-0026b9348838',
+        key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
+      };
+
+      currentLoadedFormService.formValidationMetadata = {
+        q11a: {
+          key: 'key1'
+        },
+        q13a: {
+          key: 'key2'
+        }
+      };
+
+      currentLoadedFormService.formModel = currentModel;
+      
+      //mock getFieldById_KeyFunction
+      var getFieldById_KeyFunctionMock = function (qId) {
+        return {
+          key: 'key1'
+        };
+      };
+
+      var validator = service.getConditionalAnsweredValidatorObject(params, getFieldById_KeyFunctionMock);
+
+      var fieldScope = {
+        model: currentModel
+      };
+
+      var isValid = validator.expression(undefined, undefined, fieldScope, {});
+
+      expect(isValid).to.equal(true);
+      
+      //case reference question does not have the required answers to allow this question to be answered
+      currentModel = {
+        key1: 'unrequired asnwer',
+        key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
+      };
+      currentLoadedFormService.formModel = currentModel;
+      validator = service.getConditionalAnsweredValidatorObject(params, getFieldById_KeyFunctionMock);
+      fieldScope = {
+        model: currentModel
+      };
+
+      isValid = validator.expression('answered', undefined, fieldScope, {});
+
+      expect(isValid).to.equal(false);
     });
 
   });
