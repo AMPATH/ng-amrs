@@ -23,11 +23,14 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         $scope.vm.formlyFields;
         $scope.vm.tabs = [];
         $scope.vm.encounter;
+        $scope.vm.encData;
 
         $scope.vm.currentTab = 0;
 
         $scope.vm.tabSelected = function($index) {
           $scope.vm.currentTab = $index;
+          console.log('Page ', $index)
+          $scope.vm.tabs[$index]['form']=$scope.vm.formlyFields[$index].form;
         }
 
       var isLastTab = function() {
@@ -47,6 +50,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
           if(!isLastTab()){
           $scope.vm.currentTab++;
           $scope.vm.tabs[$scope.vm.currentTab].active = true;
+          $scope.vm.tabs[$scope.vm.currentTab]['form']=$scope.vm.formlyFields[$scope.vm.currentTab].form;
+
           }
         }
         else if(button === 'prev')
@@ -54,6 +59,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
           if(!isFirstTab()){
           $scope.vm.currentTab--;
           $scope.vm.tabs[$scope.vm.currentTab].active = true;
+          $scope.vm.tabs[$scope.vm.currentTab]['form']=$scope.vm.formlyFields[$scope.vm.currentTab].form;
           }
         }
       };
@@ -86,76 +92,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         // console.log('testing selected Form')
         // console.log(selectedForm);
 
-
-        $timeout(function () {
-          // get form schema data
-         //  var selectedForm = $stateParams.formuuid;
-         //  console.log('testing selected Form')
-         var start = new Date().getTime();
-         FormentryService.getFormSchema(selectedForm.name, function(schema){
-          formSchema = schema;
-
-          FormentryService.createForm(formSchema, $scope.vm.model, function(formlySchema){
-            //$scope.vm.formlyFields = formlySchema;
-            if(formlySchema)  {
-              $scope.vm.tabs = formlySchema;
-
-              // var i = 0;
-              // angular.forEach($scope.vm.tabs, function(tab){
-              //   // console.log('Tab Structure');
-              //   // console.log(tab);
-              //   if (i===0) {
-              //     tab.active = true;
-              //   }
-              //   i++;
-              //   tab.form['model'] = $scope.vm.model;
-              // });
-              //update sex;
-              $scope.vm.model['sex'] = $scope.vm.patient.gender();
-              $scope.vm.isBusy = false;
-              var end = new Date().getTime();
-              var time = end - start;
-              console.log('Form Creation Execution time: ' + time + ' ms');
-            }
-            ///FormentryService.getEncounter('encData', formlySchema)
-            //var params = {uuid:'cf3f041c-9c37-44c5-983a-d02507ffe279'};
-            if(params.uuid !== undefined && params.uuid !== '')
-            {
-              OpenmrsRestService.getEncounterResService().getEncounterByUuid(params,
-                function(data){
-                var encData = data;
-                // console.log('Rest Feeback')
-                // console.log(encData);
-                if (data)
-                {
-                  $scope.vm.submitLabel = 'Update'
-                    FormentryService.getEncounter(encData,formlySchema);
-                }
-               });
-            }
-            else {
-              //set the current user as the default provider
-              _.each($scope.vm.tabs, function(page){
-                var model = page.form.model;
-                _.each(page.form.fields, function(_section){
-                  if (_section.type === 'section')
-                  {
-                    var sec_key = _section.key;
-                    var sec_data = model[sec_key] = {};
-                    _.each(_section.templateOptions.fields[0].fieldGroup, function(_field){
-                      if(_field.key === 'encounterProvider'){
-                        sec_data['encounterProvider'] = OpenmrsRestService.getUserService().user.personUuId();
-                        return;
-                      }
-                    });
-                  }
-                });
-              });
-
-            }
-          });
-         });
-       },1000);
+        //load the selected form
+        activate();
 
 
         $scope.vm.cancel = function()
@@ -181,15 +119,15 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               var form = selectedForm;
               // console.log($stateParams.formuuid)
               // console.log('Selected Form');
-              // console.log(form);
-              var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.tabs, $scope.vm.patient,form,params.uuid);
+              console.log('current tabs',$scope.vm.tabs);
+              console.log('Original tabs',$scope.vm.formlyFields);
+              var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.formlyFields, $scope.vm.patient,form,params.uuid);
               console.log(payLoad);
               if (!_.isEmpty(payLoad.obs))
               {
                   /*
                   submit only if we have some obs
                   */
-
                   if(payLoad.encounterType !== undefined){
                     OpenmrsRestService.getEncounterResService().saveEncounter(JSON.stringify(payLoad), function(data){
                       if (data)
@@ -207,7 +145,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                         // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
                         $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
                       }
-                    });
+                    },
+                    //error callback
+                    function (error) {
+                      // body...
+                      $scope.vm.error = 'An Error occured while trying to save the form';
+                    }
+                  );
                   }
                   // else {
                   //   //void obs only
@@ -227,12 +171,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             }
             else {
-              // console.log('FormLy Form',$scope.vm);
-              // console.log('FormLy Scope',$scope);
-              // console.log('FormLy Json',$scope.vm.form.$validate());
-              // console.log('FormLy Field',$scope.vm.tabs);
-              //
-              // $scope.vm.form.setValidity()
+              // // console.log('FormLy Form',$scope.vm);
+              // // console.log('FormLy Scope',$scope);
+              // // console.log('FormLy Json',$scope.vm.form.$validate());
+              // // console.log('FormLy Field',$scope.vm.tabs);
+              // //
+              // // $scope.vm.form.setValidity()
               $scope.vm.error = '';
               var error_required = $scope.vm.form.$error;
               var error_date = $scope.vm.form.$error;
@@ -253,7 +197,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                   return;
 
               }
-
+              //
               if(error_date !== undefined && error_date.date !== undefined)
               {
                 var i = 0;
@@ -289,47 +233,48 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 });
                 return;
               }
-              if(error_date !== undefined && error_date.js_expression !== undefined)
-              {
-                var i = 0;
-                _.some(error_date.js_expression[0].$error.js_expression, function(error_field){
-                  if (i === 0) {
-                    var field = getErrorField(error_field.$name);
-                    if(field !== undefined)
-                    {
-                      $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
-                      return true;
-                    }
-
-                  }
-                  i = i + 1;
-                });
-                _.some(error_date.js_expression1[0].$error.js_expression1, function(error_field){
-                  if (i === 0) {
-                    var field = getErrorField(error_field.$name);
-                    if(field !== undefined)
-                    {
-                      $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
-                      return true;
-                    }
-
-                  }
-                  i = i + 1;
-                });
-                 _.some(error_date.js_expression2[0].$error.js_expression2, function(error_field){
-                  if (i === 0) {
-                    var field = getErrorField(error_field.$name);
-                    if(field !== undefined)
-                    {
-                      $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
-                      return true;
-                    }
-
-                  }
-                  i = i + 1;
-                });
-                return;
-              }
+              // if(error_date !== undefined)
+              // {
+              //   var i = 0;
+              //   _.some(error_date.js_expression[0].$error.js_expression, function(error_field){
+              //     if (i === 0) {
+              //       var field = getErrorField(error_field.$name);
+              //       if(field !== undefined)
+              //       {
+              //         $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
+              //         return true;
+              //       }
+              //
+              //     }
+              //     i = i + 1;
+              //   });
+              //   _.some(error_date.js_expression1[0].$error.js_expression1, function(error_field){
+              //     if (i === 0) {
+              //       var field = getErrorField(error_field.$name);
+              //       if(field !== undefined)
+              //       {
+              //         $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
+              //         return true;
+              //       }
+              //
+              //     }
+              //     i = i + 1;
+              //   });
+              //    _.some(error_date.js_expression2[0].$error.js_expression2, function(error_field){
+              //     if (i === 0) {
+              //       var field = getErrorField(error_field.$name);
+              //       if(field !== undefined)
+              //       {
+              //         $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
+              //         return true;
+              //       }
+              //
+              //     }
+              //     i = i + 1;
+              //   });
+              //
+              //   return;
+              // }
 
             }
 
@@ -340,6 +285,91 @@ function getErrorAsList(field) {
 _.each(Object.keys(field.formControl.$error), function(t){
   console.log(t)
 });
+}
+
+function activate()
+{
+    $timeout(function () {
+      // get form schema data
+     //  var selectedForm = $stateParams.formuuid;
+     //  console.log('testing selected Form')
+     var start = new Date().getTime();
+     FormentryService.getFormSchema(selectedForm.name, function(schema){
+      formSchema = schema;
+
+      FormentryService.createForm(formSchema, $scope.vm.model, function(formlySchema){
+        $scope.vm.formlyFields = formlySchema;
+        if(formlySchema.length>0)  {
+
+          var i = 0;
+          angular.forEach(formlySchema, function(tab){
+            // console.log('Tab Structure');
+            // console.log(tab);
+            if (i === 0)
+            {
+              $scope.vm.tabs.push(formlySchema[i]);
+            }
+            else {
+              $scope.vm.tabs.push({form:{},title:tab.title});
+            }
+            i++;
+          });
+          //update sex;
+          $scope.vm.model['sex'] = $scope.vm.patient.gender();
+          $scope.vm.isBusy = false;
+          var end = new Date().getTime();
+          var time = end - start;
+          console.log('Form Creation Execution time: ' + time + ' ms');
+        }
+        ///FormentryService.getEncounter('encData', formlySchema)
+        //var params = {uuid:'cf3f041c-9c37-44c5-983a-d02507ffe279'};
+        if(params.uuid !== undefined && params.uuid !== '')
+        {
+          OpenmrsRestService.getEncounterResService().getEncounterByUuid(params,
+            function(data){
+            $scope.vm.encData = data;
+            // console.log('Rest Feeback')
+            // console.log(encData);
+            if (data)
+            {
+              $scope.vm.submitLabel = 'Update'
+                FormentryService.getEncounter($scope.vm.encData,formlySchema);
+            }
+          },
+          //error callback
+          function (error){
+            $scope.vm.error = 'An Error occured when trying to get encounter data';
+          }
+        );
+        }
+        else {
+          //set the current user as the default provider
+          var done = false;
+          _.some($scope.vm.tabs, function(page){
+            var model = page.form.model;
+            _.some(page.form.fields, function(_section){
+              if (_section.type === 'section')
+              {
+                var sec_key = _section.key;
+                var sec_data = model[sec_key] = {};
+                _.some(_section.data.fields, function(_field){
+                  if(_field.key === 'encounterProvider'){
+                    sec_data['encounterProvider'] = OpenmrsRestService.getUserService().user.personUuId();
+                    done = true;
+                    return true;
+                  }
+                });
+              }
+              if (done) return true;
+            });
+            if (done) return true;
+          });
+
+        }
+      });
+     });
+   },1000);
+
 }
 
 function voidObs(pay_load)
@@ -354,7 +384,13 @@ function voidObs(pay_load)
         {
           console.log('Voided Obs uuid: ', obs.uuid);
         }
-      });
+      },
+      //error callback
+      function(error)
+      {
+        $scope.vm.error = 'An error occured when trying to void obs';
+      }
+    );
     })
   }
 }
@@ -375,7 +411,13 @@ function updateObs(pay_load)
         {
           console.log('Updated Obs uuid: ', data);
         }
-      });
+      },
+      //error callback
+      function(error)
+      {
+        $scope.vm.error = 'An error occured when trying to void obs';
+      }
+    );
     })
   }
 }

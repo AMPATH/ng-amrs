@@ -56,6 +56,16 @@
         expect(obsService.saveUpdateObs).to.be.an('function');
       });
 
+      it('should Call errorCallback when getObsByUuid fails', function () {
+        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'obs?v='+v).respond(500);
+        obsService.getObsByUuid('passed-uuid', function (){},
+        function(error){
+          expect(error).to.equal('Error processing request',500);
+        });
+        httpBackend.flush();
+      });
+
+
 
     });
 })();

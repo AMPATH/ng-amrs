@@ -20,6 +20,7 @@
 
       // console.log(formlyApiCheck)
     //apiCheck.globalConfig.disabled = true;
+
     formlyConfig.disableWarnings = true;
     formlyConfig.extras.removeChromeAutoComplete = true;
     formlyConfig.extras.explicitAsync = true;
