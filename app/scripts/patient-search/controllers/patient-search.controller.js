@@ -13,12 +13,9 @@
   function PatientSearchCtrl($rootScope, OpenmrsRestService, $scope, $log, filterFilter, $state) {
     $scope.filter = "";
     $scope.patients = [];
-
     $scope.isBusy = false;
-
     // pagination controls
     $scope.currentPage = 1;
-    //$scope.totalItems = $scope.items.length;
     $scope.entryLimit = 10; // items per page
     $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
 
@@ -29,12 +26,7 @@
         OpenmrsRestService.getPatientService().getPatientQuery({q:searchString},
           function(data) {
             $scope.isBusy = false;
-            //if (data) data = data.results;
-            //console.log(data);
             $scope.patients = data;
-            //  for (var i in data) {
-            //    $scope.patients.push(PatientService.Patient(data[i]));
-            //  }
             $scope.totalItems = $scope.patients.length;
             $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
             $scope.currentPage = 1;
@@ -42,7 +34,6 @@
         );
       }
     });
-
 
     $scope.loadPatient = function (patientUuid){
       /*
@@ -56,35 +47,16 @@
       $state.go('patient', {uuid:patientUuid});
     };
 
-
-    //  $scope.currentPage = 1;
-
-    //   $scope.setPage = function(pageNo) {
-    //   $scope.currentPage = pageNo;
-    // };
-
     $scope.pageChanged = function() {
       $log.log('Page changed to: ' + $scope.currentPage);
     };
 
     $scope.items = [];
-
     // create empty search model (object) to trigger $watch on update
     $scope.search = {};
-
     $scope.resetFilters = function () {
       // needs to be a function or it won't trigger a $watch
       $scope.search = {};
     };
-
-
-
-    // $watch search to update pagination
-    // $scope.$watch('search', function (newVal, oldVal) {
-    // 	$scope.filtered = filterFilter($scope.items, newVal);
-    // 	$scope.totalItems = $scope.filtered.length;
-    // 	$scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
-    // 	$scope.currentPage = 1;
-    // }, true);
   }
 })();

@@ -3,7 +3,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-4">
-					<h5>{{patient.fullNames() | titlecase}} { {{patient.genderFull()}} }</h5>
+					<h5>{{patient.fullNames() | titlecase}} ({{patient.genderFull()}})</h5>
         </div>
 				<div class="col-sm-4">
 					<h5>Identifier: {{patient.identifierFormatted()}}</h5>
@@ -11,7 +11,7 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-4">
-					<h5>Age: {{patient.age()}} D.O.B: ({{patient.birthdate()| date:'dd-MM-yyyy'}})</h5>
+					<h5>Age: {{patient.age()}} DOB: ({{patient.birthdate()| date:'dd-MM-yyyy'}})</h5>
 				</div>
 				<div class="col-sm-4">
 					<h5>Health Center: {{patient.healthCenter()}}</h5>

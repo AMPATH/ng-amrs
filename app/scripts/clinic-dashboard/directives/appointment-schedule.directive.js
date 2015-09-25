@@ -12,7 +12,8 @@ jshint -W003, -W026
     function appointmentSchedule() {
         return {
             restict: "E",
-            scope: { locationUuid: "@"
+            scope: {
+              locationUuid: "@"
             },
             controller: appointmentScheduleController,
             link: appointmentScheduleLink,
@@ -30,14 +31,10 @@ jshint -W003, -W026
         $scope.isBusy = false;
         $scope.experiencedLoadingError = false;
         $scope.currentPage = 1;
-
         $scope.loadSchedule = loadSchedule;
         $scope.loadPatient = loadPatient;
         $scope.$on('viewDayAppointments',onViewDayAppointmentBroadcast);
-
-
         $scope.utcDateToLocal = utcDateToLocal;
-
         $scope.startDate = new Date();
         $scope.selectedDate = function (value) {
             if (value) {
@@ -60,21 +57,16 @@ jshint -W003, -W026
             $scope.selectedDate(arg);
         }
 
-
         function openDatePopup ($event) {
             $event.preventDefault();
             $event.stopPropagation();
             $scope.dateControlStatus.startOpened = true;
         };
 
-
-
         function utcDateToLocal(date) {
             var day = new moment(date).format();;
             return day;
         }
-
-
 
         function loadPatient(patientUuid) {
             /*
@@ -88,13 +80,9 @@ jshint -W003, -W026
             $state.go('patient', { uuid: patientUuid });
         }
 
-
-
         function loadSchedule() {
 
-
             if ($scope.isBusy === true) return;
-
             $scope.isBusy = true;
             $scope.patients = [];
             $scope.experiencedLoadingError = false;
@@ -132,7 +120,6 @@ jshint -W003, -W026
     function appointmentScheduleLink(scope, element, attrs, vm) {
         attrs.$observe('locationUuid', onLocationUuidChanged);
 
-
         function onLocationUuidChanged(newVal, oldVal) {
             if (newVal && newVal != "") {
                 scope.isBusy = false;
@@ -141,5 +128,4 @@ jshint -W003, -W026
             }
         }
     }
-
 })();
