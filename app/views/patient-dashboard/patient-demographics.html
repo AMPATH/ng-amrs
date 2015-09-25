@@ -1,9 +1,9 @@
 <ul class="list-group">
-    <li class="list-group-item" style="font-size:large" ng-if="patient.fullNames()">Name: {{patient.fullNames()}}</li>
+    <li class="list-group-item" style="font-size:large" ng-if="patient.fullNames()">Name: {{patient.fullNames() | titlecase }}</li>
     <li class="list-group-item" style="font-size:large" ng-if="patient.healthCenter()">Health Center: {{patient.healthCenter()}}</li>
     <li class="list-group-item" style="font-size:large" ng-if="patient.isTestorFakePatient()">Test Patient</li>
     <li class="list-group-item markDeceased" style="font-size:large" ng-if="patient.deathDate()">Death Date: {{patient.deathDate()}}</li>
     <li class="list-group-item" style="font-size:large" ng-if="patient.phoneNumber()">Phone Number: {{patient.phoneNumber()}}</li>
-    <li ng-if="patient.address().noAddress!='None'" ng-repeat="(key,value) in patient.address()"
-    ng-if="value" class="list-group-item" style="font-size:large">{{key}} : {{value}}</li>
+    <li ng-if="patient.address().noAddress" ng-repeat="(key,value) in patient.address()"
+    ng-if="value" class="list-group-item" style="font-size:large"><p  ng-if="value">{{key}} : {{value}}</p></li>
 </ul>

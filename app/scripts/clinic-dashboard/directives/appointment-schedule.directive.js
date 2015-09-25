@@ -12,7 +12,9 @@ jshint -W003, -W026
     function appointmentSchedule() {
         return {
             restict: "E",
-            scope: { locationUuid: "@" },
+            scope: {
+              locationUuid: "@"
+            },
             controller: appointmentScheduleController,
             link: appointmentScheduleLink,
             templateUrl: "views/clinic-dashboard/appointment-schedule.html"
@@ -22,20 +24,17 @@ jshint -W003, -W026
     appointmentScheduleController.$inject = ['$scope', '$rootScope', 'EtlRestService', 'AppointmentScheduleModel', 'moment', '$state'];
 
     function appointmentScheduleController($scope, $rootScope, EtlRestService, AppointmentScheduleModel, moment, $state) {
-        
+
         //scope members region
         $scope.patients = [];
-
+        $scope.searchString='';
         $scope.isBusy = false;
         $scope.experiencedLoadingError = false;
-
+        $scope.currentPage = 1;
         $scope.loadSchedule = loadSchedule;
         $scope.loadPatient = loadPatient;
         $scope.$on('viewDayAppointments',onViewDayAppointmentBroadcast);
-
-
         $scope.utcDateToLocal = utcDateToLocal;
-        
         $scope.startDate = new Date();
         $scope.selectedDate = function (value) {
             if (value) {
@@ -46,34 +45,28 @@ jshint -W003, -W026
                 return $scope.startDate;
             }
         };
-        
-        $scope.openDatePopup = openDatePopup; 
+
+        $scope.openDatePopup = openDatePopup;
         $scope.dateControlStatus = {
             startOpened: false
         };
 
         //end scope members region
-        
+
         function onViewDayAppointmentBroadcast(event, arg) {
             $scope.selectedDate(arg);
         }
-        
-        
+
         function openDatePopup ($event) {
             $event.preventDefault();
             $event.stopPropagation();
             $scope.dateControlStatus.startOpened = true;
         };
 
-
-
         function utcDateToLocal(date) {
             var day = new moment(date).format();;
             return day;
         }
-
-
-
 
         function loadPatient(patientUuid) {
             /*
@@ -87,13 +80,9 @@ jshint -W003, -W026
             $state.go('patient', { uuid: patientUuid });
         }
 
-
-
         function loadSchedule() {
 
-
             if ($scope.isBusy === true) return;
-
             $scope.isBusy = true;
             $scope.patients = [];
             $scope.experiencedLoadingError = false;
@@ -107,6 +96,18 @@ jshint -W003, -W026
             for (var e in appointmentSchedule.result) {
                 $scope.patients.push(new AppointmentScheduleModel.appointmentSchedule(appointmentSchedule.result[e]));
             }
+          console.log("Appointment patient---", $scope.patients);
+          $scope.customPatients =[];
+          _.each($scope.patients, function(patient)
+          {
+            var singlePatient={
+                uuid:patient.uuid(),
+                identifier:patient.identifiers(),
+                name:patient.givenName()+' '+patient.familyName()+' '+patient.middleName()
+              }
+            $scope.customPatients.push(singlePatient);
+
+          });
             $scope.isBusy = false;
         }
 
@@ -119,7 +120,6 @@ jshint -W003, -W026
     function appointmentScheduleLink(scope, element, attrs, vm) {
         attrs.$observe('locationUuid', onLocationUuidChanged);
 
-
         function onLocationUuidChanged(newVal, oldVal) {
             if (newVal && newVal != "") {
                 scope.isBusy = false;
@@ -128,5 +128,4 @@ jshint -W003, -W026
             }
         }
     }
-
 })();
