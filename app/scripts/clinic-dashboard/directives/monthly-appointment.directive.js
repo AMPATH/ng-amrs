@@ -29,8 +29,12 @@ jshint -W003, -W026
 
         vm.selectedMonth = new Date();
 
+        $scope.previousMonth= previousMonth;
+
+        $scope.nextMonth= nextMonth;
+
         vm.loadSchedule = loadSchedule;
-        
+
         $scope.loadSchedule = loadSchedule;
 
         vm.viewDaysAppointments = viewDaysAppointments;
@@ -38,8 +42,16 @@ jshint -W003, -W026
         function viewDaysAppointments(day) {
             $rootScope.$broadcast('viewDayAppointments', day);
         }
+        function nextMonth () {
+          $scope.selectedMonth(vm.selectedMonth.addMonths(1));
 
-        function loadSchedule() {
+        }
+        function previousMonth () {
+          $scope.selectedMonth(vm.selectedMonth.addMonths(-1));
+        }
+
+
+      function loadSchedule() {
             if ($scope.isBusy === true) return;
 
             $scope.isBusy = true;
@@ -74,8 +86,8 @@ jshint -W003, -W026
                 vm.loadSchedule();
             }
         }
-		
-        //date selection 
+
+        //date selection
         scope.status = {
             startOpened: false
         };
@@ -97,7 +109,7 @@ jshint -W003, -W026
 
         scope.selectedMonth = function (value) {
             if (value) {
-                vm.selectedMonth = value; 
+                vm.selectedMonth = value;
                 //console.log(value);
                 vm.loadSchedule();
                 scope.bringCurrentMonthIntoView(new vm.moment(value));
@@ -106,13 +118,13 @@ jshint -W003, -W026
                 return vm.selectedMonth;
             }
         };
-        
-        
-        
-        
-        
-        
-        //calender view
+
+
+
+
+
+
+      //calender view
         scope.selected = _removeTime(scope.selected || vm.moment());
         scope.month = scope.selected.clone();
 
