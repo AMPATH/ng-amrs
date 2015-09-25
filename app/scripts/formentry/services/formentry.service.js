@@ -13,7 +13,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
     function FormentryService( $http, SearchDataService, moment, FormValidator, CurrentLoadedFormService) {
         var service = {
             createForm: createForm,
-            getConceptUuid:getConceptUuid,
             validateForm:validateForm,
             getEncounter:getEncounter,
             getFormSchema: getFormSchema,
@@ -799,11 +798,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
           return pass;
         }
-
-        function getConceptUuid()
-        {
-
-        }
+       
 
         /*
         Methdod to get all the sections in a schema
@@ -1573,443 +1568,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           // console.log(formPayLoad)
           return formPayLoad;
         }
-
-        function getConditionalValidationParams(params)
-        {
-          if(params !== undefined)
-          {
-            var conditionalRequired = _.find(params, function(field){
-              if(field.type === 'conditionalRequired')
-              return field;
-            })
-            return conditionalRequired;
-          }
-        }
-
-        /*
-        Private method to create valid keys
-        */
-        function createFieldKey(key)
-        {
-          return key.replace(/-/gi,'n'); // $$ Inserts a "$".
-        }
-
-        function convertKey_to_uuid(key)
-        {
-          return key.replace(/n/gi,'-');
-        }
-
-        /*
-        Private method to create  formly fields without group
-        */
-        function createFormlyField(obs_field){
-          //console.log(obs_field)
-          obs_id = obs_id + 1;
-          var defaultValue_
-          if(obs_field.default !== undefined)
-          {
-              defaultValue_ = obs_field.default;
-          }
-          // else {
-          //   defaultValue_ = '';
-          // }
-          var hideExpression_;
-          var disableExpression_;
-
-          var id_;
-          if(obs_field.id !== undefined)
-          {
-            id_ = obs_field.id;
-          }
-          if(obs_field.hide !== undefined)
-          {
-            hideExpression_= FormValidator.getFieldValidator(obs_field.hide[0], getFieldById_Key);
-          }
-          else {
-            hideExpression_ = '';
-          }
-
-
-          if(obs_field.disable !== undefined)
-          {
-            disableExpression_= FormValidator.getHideDisableExpressionFunction(obs_field.disable[0]);
-          }
-          else {
-            disableExpression_ = '';
-          }
-
-          var obsField = {};
-          if (validateFieldFormat(obs_field) !== true)
-          {
-            console.log('Something Went Wrong While creating this field', obs_field)
-          }
-
-          //console.log('validators', obs_field);
-
-            var validators;
-            if (obs_field.showDate === undefined) //load if the field has no this property (this obs datatime)
-                validators = obs_field.validators;
-
-            //set the validator to default validator
-            var defaultValidator = {
-              expression: function(viewValue, modelValue, scope) {
-                  return true;
-              },
-              message: ''
-            };
-
-            var compiledValidators = {
-                defaultValidator: defaultValidator
-            };
-
-            if(validators && validators.length !== 0){
-                compiledValidators = FormValidator.getFieldValidators(validators, getFieldById_Key);
-            }
-
-
-
-          if(obs_field.type === 'date')
-          {
-            var required='false';
-            if (obs_field.required !== undefined)
-            {
-
-              required=obs_field.required;
-            }
-            else {
-              //look for conditonal requirements
-              var conditionalParams;
-              if(validators && validators.length !== 0){
-                  conditionalParams = getConditionalValidationParams(validators);
-              }
-              var conditionalRequired;
-              if(conditionalParams !== undefined)
-              {
-                conditionalRequired =  FormValidator.getConditionalRequiredExpressionFunction(conditionalParams, getFieldById_Key);
-                required = conditionalRequired;
-              }
-
-            }
-
-            obsField = {
-              key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
-              type: 'datepicker',
-              data: {concept:obs_field.concept,
-                id:id_},
-                defaultValue: defaultValue_,
-              templateOptions: {
-                type: 'text',
-                label: obs_field.label,
-                datepickerPopup: 'dd-MMMM-yyyy'
-              },
-               expressionProperties: {
-                'templateOptions.disabled': disableExpression_,
-                'templateOptions.required': required
-               },
-              hideExpression:hideExpression_,
-              validators: compiledValidators
-            }
-          }
-          else if (obs_field.type === 'text')
-          {
-            var required='false';
-            if (obs_field.required !== undefined) required=obs_field.required;
-
-            obsField = {
-              key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
-              type: 'input',
-              defaultValue: defaultValue_,
-              data: {concept:obs_field.concept,
-                id:id_},
-              templateOptions: {
-                type: obs_field.type,
-                label: obs_field.label
-              },
-               expressionProperties: {
-                'templateOptions.disabled': disableExpression_,
-                'templateOptions.required': required
-               },
-              hideExpression:hideExpression_,
-              validators: compiledValidators
-            }
-          }
-          else if (obs_field.type === 'number')
-          {
-            var required='false';
-            if (obs_field.required !== undefined) required=obs_field.required;
-
-            obsField = {
-              key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
-              type: 'input',
-              defaultValue: defaultValue_,
-              data: {concept:obs_field.concept,
-                id:id_},
-              templateOptions: {
-                type: obs_field.type,
-                label: obs_field.label,
-                min:obs_field.min,
-                max:obs_field.max
-              },
-               expressionProperties: {
-                'templateOptions.disabled': disableExpression_,
-                'templateOptions.required': required
-               },
-              hideExpression:hideExpression_,
-              validators: compiledValidators
-            }
-          }
-          else if ((obs_field.type === 'radio') || (obs_field.type === 'select') || (obs_field.type === 'multiCheckbox'))
-          {
-            var opts= [];
-            //Adding unselect option
-            if (obs_field.type !== 'multiCheckbox')
-              opts.push({name:'', value:undefined});
-            //get the radio/select options/multicheckbox
-            //console.log(obs_Field);
-            _.each(obs_field.answers, function (answer) {
-              // body...
-              var item={
-                name:answer.label,
-                value:answer.concept
-                };
-              opts.push(item);
-            });
-
-            var required='false';
-            if (obs_field.required !== undefined) required=obs_field.required;
-
-            obsField = {
-              key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
-              type: obs_field.type,
-              defaultValue: defaultValue_,
-              data: {concept:obs_field.concept,
-                id:id_},
-              templateOptions: {
-                type: 'text',
-                label: obs_field.label,
-                options:opts
-              },
-              expressionProperties: {
-                'templateOptions.disabled': disableExpression_,
-                'templateOptions.required': required
-               },
-              hideExpression:hideExpression_,
-              validators: compiledValidators
-            }
-          }
-          else if(obs_field.type === 'problem'){
-
-
-            if(validators && validators.length !== 0){
-                defaultValidator = FormValidator.getFieldValidator(obs_field.validators[0], getFieldById_Key);
-            }
-
-            var required='false';
-            if (obs_field.required !== undefined) required=obs_field.required;
-            obsField = {
-              key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
-              defaultValue: defaultValue_,
-              type: 'ui-select-extended',
-              data: {concept:obs_field.concept,
-                id:id_},
-              templateOptions: {
-                type: 'text',
-                label: obs_field.label,
-                valueProp: 'uuId',
-                labelProp:'display',
-                deferredFilterFunction: SearchDataService.findProblem,
-                getSelectedObjectFunction: SearchDataService.getProblemByUuid,
-                options:[]
-              },
-              expressionProperties: {
-                'templateOptions.disabled': disableExpression_,
-                'templateOptions.required': required
-               },
-              hideExpression:hideExpression_,
-              validators: compiledValidators
-            };
-          }
-          else if(obs_field.type === 'drug'){
-            var required='false';
-            if (obs_field.required !== undefined) required=obs_field.required;
-            obsField = {
-              key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
-              type: 'ui-select-extended',
-              defaultValue: defaultValue_,
-              data: {concept:obs_field.concept,
-                id:id_},
-              templateOptions: {
-                type: 'text',
-                label: obs_field.label,
-                valueProp: 'uuId',
-                labelProp:'display',
-                deferredFilterFunction: SearchDataService.findDrugConcepts,
-                getSelectedObjectFunction: SearchDataService.getDrugConceptByUuid,
-                options:[]
-              },
-              expressionProperties: {
-                'templateOptions.disabled': disableExpression_,
-                'templateOptions.required': required
-               },
-               validators: compiledValidators
-            };
-          }
-        else if(obs_field.type === 'select-concept-answers'){
-            var required='false';
-            if (obs_field.required !== undefined) required=obs_field.required;
-            obsField = {
-              key: 'obs' + obs_id + '_' + createFieldKey(obs_field.concept),
-              defaultValue: defaultValue_,
-              type: 'concept-search-select',
-              data: {concept:obs_field.concept,
-                id:id_},
-              templateOptions: {
-                type: 'text',
-                label: obs_field.label,
-                options:[],
-                displayMember:'label',
-                valueMember:'concept',
-                questionConceptUuid:obs_field.concept,
-                fetchOptionsFunction:SearchDataService.getConceptAnswers
-
-              },
-              expressionProperties: {
-                'templateOptions.disabled': disableExpression_,
-                'templateOptions.required': required
-               },
-              hideExpression:hideExpression_,
-              validators: compiledValidators
-            };
-          }
-          // console.log('Obs field', obsField);
-          return obsField;
-        }
-
-        /*
-        Private method to create Group formly fields
-        */
-        function createGroupFormlyField(obs_field, gpSectionRnd)
-        {
-          var hideExpression_;
-
-          var obsField = {};
-          var groupingFields = [];
-          //gpSectionRnd = gpSectionRnd + 1;
-          var sectionKey = obs_field.concept ? obs_field.concept : 'unamed_' + gpSectionRnd;
-          //Get the fields in the group section
-          _.each(obs_field.questions, function(curField){
-            // process the fields the normal way
-            var selField=createFormlyField(curField);
-            //selField['key'] = selField['key'] + '@obs_' + sectionKey;
-            groupingFields.push(selField);
-            if(curField.showDate === 'true')
-            {
-              if(obs_field.hide !== undefined)
-              {
-                hideExpression_= FormValidator.getHideDisableExpressionFunction(obs_field.hide[0]);
-              }
-              else {
-                hideExpression_ = '';
-              }
-              var dateField = {
-              //className: 'col-md-2',
-              key: 'obsDate' + obs_id + '_' + createFieldKey(curField.concept),
-              type: 'datepicker',
-              data: {concept:curField.concept,
-                answer_value:''},
-              templateOptions: {
-                type: 'text',
-                label: 'Date',
-                datepickerPopup: 'dd-MMMM-yyyy'
-                },
-                expressionProperties: {
-                  'templateOptions.required': function($viewValue, $modelValue, scope, element) {
-
-                    var value = $viewValue || $modelValue;
-                    var fkey = selField.key
-                    // console.log('This Key', fkey);
-                    // console.log('Model val now ',scope.model[fkey])
-                    return scope.model[fkey] !== undefined && scope.model[fkey] !== null && scope.model[fkey] !== '';
-                   }
-                 },
-                hideExpression:hideExpression_,
-              validators: {
-                dateValidator: FormValidator.getDateValidatorObject(curField.validators[0]) //this  will require refactoring as we move forward
-                }
-              }
-              groupingFields.push(dateField);
-            }
-          });
-
-          obsField = {
-            className: 'row',
-            key:'obs' + gpSectionRnd + '_' + createFieldKey(sectionKey),
-            fieldGroup:groupingFields
-          }
-
-          return obsField;
-        }
-
-        /*
-        Private method/function to create a repeating section
-        */
-        function createRepeatingFormlyField(obs_field, gpSectionRnd)
-        {
-          var repeatingFields = [];
-          //Get the fields in the repeating section
-
-          var sectionKey = obs_field.concept ? obs_field.concept : 'unamed_' + gpSectionRnd;
-            var selField = createFormlyField(curField);
-            //selField['className'] = 'col-md-2';
-            //selfField['key'] = selfField['key']
-            repeatingFields.push(selField);
-            if(curField.showDate === 'true')
-            {
-              var dateField = {
-              //className: 'col-md-2',
-              key: 'obsDate' + obs_id + '_' + createFieldKey(curField.concept),
-              type: 'datepicker',
-              data: {concept:curField.concept,
-                answer_value:''},
-              templateOptions: {
-                type: 'text',
-                label: 'Date',
-                datepickerPopup: 'dd-MMMM-yyyy'
-                },
-                expressionProperties: {
-                  'templateOptions.required': function($viewValue, $modelValue, scope, element) {
-
-                    var value = $viewValue || $modelValue;
-                    var fkey = selField.key
-                    // console.log('This Key', fkey);
-                    // console.log('Model val now ',scope.model[fkey])
-                    return scope.model[fkey] !== undefined && scope.model[fkey] !== null && scope.model[fkey] !== '';
-                   }
-                 },
-                hideExpression:hideExpression_,
-              validators: {
-                dateValidator: FormValidator.getDateValidatorObject(curField.validators[0]) //this  will require refactoring as we move forward
-                }
-              }
-              repeatingFields.push(dateField);
-            }
-          })
-          var obsField = {
-            key:'obs' + gpSectionRnd + '_' + createFieldKey(obs_field.concept),
-            type: 'repeatSection',
-            templateOptions: {
-              label:obs_field.label,
-              btnText:'Add',
-              fields:[
-                {
-                  className: 'row',
-                  fieldGroup:repeatingFields
-                }
-              ]
-            }
-          }
-           return obsField;
-        }
         
         function createForm(schema, model, callback)
         {
@@ -2202,7 +1760,7 @@ function addToReadyFields(field)
 function addFieldToValidationMetadata(field, section, page, typeOfField){
     //console.log('etl stuff', field);
     if(field && field.data && field.data.id && field.data.id !== ''){
-        service.lastFormValidationMetadata[field.data.id] = {
+        CurrentLoadedFormService.formValidationMetadata[field.data.id] = {
             key: field.key,
             section: section,
             page: page
@@ -2270,7 +1828,7 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
     }
     if(obs_field.hide !== undefined)
     {
-      hideExpression_= getFieldValidator(obs_field.hide[0], obs_id);
+      hideExpression_= FormValidator.getFieldValidator(obs_field.hide[0], getFieldById_Key);
     }
     else {
       hideExpression_ = '';
@@ -2279,7 +1837,7 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
 
     if(obs_field.disable !== undefined)
     {
-      disableExpression_= getFieldValidator(obs_field.disable[0], obs_id);
+      disableExpression_= FormValidator.getHideDisableExpressionFunction(obs_field.disable[0]);
     }
     else {
       disableExpression_ = '';
@@ -2309,7 +1867,7 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
       };
 
       if(validators && validators.length !== 0){
-          compiledValidators = getFieldValidators(validators);
+          compiledValidators = FormValidator.getFieldValidators(validators, getFieldById_Key);
       }
 
 
@@ -2331,7 +1889,7 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
         var conditionalRequired;
         if(conditionalParams !== undefined)
         {
-          conditionalRequired = getFieldValidator(conditionalParams);
+          conditionalRequired = FormValidator.getConditionalRequiredExpressionFunction(conditionalParams, getFieldById_Key);
           required = conditionalRequired;
         }
 
@@ -2447,7 +2005,7 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
 
 
       if(validators && validators.length !== 0){
-          defaultValidator = getFieldValidator(obs_field.validators[0])
+          defaultValidator = FormValidator.getFieldValidator(obs_field.validators[0], getFieldById_Key);
       }
 
       var required='false';
@@ -2552,7 +2110,7 @@ function createGroupFormlyField(obs_field, gpSectionRnd)
     {
       if(obs_field.hide !== undefined)
       {
-        hideExpression_= getFieldValidator(obs_field.hide[0], obs_id);
+        hideExpression_= FormValidator.getHideDisableExpressionFunction(obs_field.hide[0]);
       }
       else {
         hideExpression_ = '';
@@ -2580,7 +2138,7 @@ function createGroupFormlyField(obs_field, gpSectionRnd)
          },
         hideExpression:hideExpression_,
       validators: {
-        dateValidator: getFieldValidator(curField.validators[0]) //this  will require refactoring as we move forward
+        dateValidator: FormValidator.getDateValidatorObject(curField.validators[0]) //this  will require refactoring as we move forward
         }
       }
       groupingFields.push(dateField);
@@ -2636,14 +2194,14 @@ function createRepeatingFormlyField(obs_field, gpSectionRnd)
             return scope.model[fkey] !== undefined && scope.model[fkey] !== null && scope.model[fkey] !== '';
            }
          },
-        hideExpression:hideExpression_,
       validators: {
-        dateValidator: getFieldValidator(curField.validators[0]) //this  will require refactoring as we move forward
+        dateValidator: FormValidator.getDateValidatorObject(curField.validators[0]) //this  will require refactoring as we move forward
         }
       }
       repeatingFields.push(dateField);
     }
-  })
+  });
+  
   var obsField = {
     key:'obs' + gpSectionRnd + '_' + createFieldKey(obs_field.concept),
     type: 'repeatSection',
@@ -2711,6 +2269,6 @@ function getFormattedValue(value){
 console.log('Returned value',value);
     return value;
 }
+    }
 
-}
 })();
