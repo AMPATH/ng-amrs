@@ -17,6 +17,7 @@ jshint -W098, -W117, -W030
       var timeout;
       var formsMetaData;
       var mockData;
+      var currentLoadedFormService;
 
       beforeEach(function(){
         module('ngAmrsApp');
@@ -36,6 +37,7 @@ jshint -W098, -W117, -W030
         timeout = $injector.get('$timeout');
         formentryService = $injector.get('FormentryService');
         formsMetaData = $injector.get('FormsMetaData');
+        currentLoadedFormService = $injector.get('CurrentLoadedFormService');
         openmrsRestService = $injector.get('OpenmrsRestService');
         mockData = $injector.get('mockData');
 
@@ -50,7 +52,8 @@ jshint -W098, -W117, -W030
           FormentryService:formentryService,
           OpenmrsRestService:openmrsRestService,
           $timeout:timeout,
-          FormsMetaData:formsMetaData
+          FormsMetaData:formsMetaData,
+          CurrentLoadedFormService: currentLoadedFormService
           });
 
       }));

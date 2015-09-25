@@ -8,23 +8,19 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         .module('app.formentry')
         .factory('FormentryService', FormentryService);
 
-    FormentryService.$inject = ['$http', 'SearchDataService', 'moment', 'FormValidator'];
+    FormentryService.$inject = ['$http', 'SearchDataService', 'moment', 'FormValidator', 'CurrentLoadedFormService'];
 
-    function FormentryService( $http, SearchDataService, moment, FormValidator) {
+    function FormentryService( $http, SearchDataService, moment, FormValidator, CurrentLoadedFormService) {
         var service = {
             createForm: createForm,
-            getConceptUuid:getConceptUuid,
             validateForm:validateForm,
             getEncounter:getEncounter,
             getFormSchema: getFormSchema,
             getCompiledFormSchema: getCompiledFormSchema,
             updateFormPayLoad: updateFormPayLoad,
-            getFieldById_Key:getFieldById_Key,
-            lastFormValidationMetadata: {},
-            currentFormModel: {}
+            getFieldById_Key:getFieldById_Key
         };
 
-        //local variables
         var obs_id = 0;
         var g_fields; // var to hold all the fields on a form
         var readyFields = [];
@@ -142,271 +138,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         }
 
         return service;
-
-        function getFieldKeyById(id_, searchFields)
-        {
-          var result;
-          _.some(searchFields, function(cfield){
-            if(cfield.data && cfield.data.id === id_)
-            {
-              result = cfield.key;
-              return true;
-            }
-          });
-          return result;
-        }
-
-        function getFieldValidators(arrayOfValidations) {
-           var validator = {};
-           var index = 1;
-           _.each(arrayOfValidations, function(validate){
-               var key = validate.type;
-               if(validate.type === 'js_expression'){
-                   key = key + index;
-                   index++;
-               }
-                if(validate.type !== 'conditionalRequired')
-                  validator[key] = getFieldValidator(validate);
-           });
-          //  console.log('Validators++++', validator)
-           return validator;
-        }
-
-        function getFieldValidator(params)
-        {
-           //console.log('Validation params');
-           //console.log(params);
-           //date validations
-          if ((params.type === 'date') && (params.allowFutureDates !== 'true'))
-          {
-            return  {
-              expression: function(viewValue, modelValue) {
-                /*
-                using datejs library
-                */
-                var value = modelValue || viewValue;
-                var dateValue;
-                var curDate = Date.parse(Date.today(),'d-MMM-yyyy');
-                if(value !== undefined)
-                {
-                  dateValue = Date.parse(value,'d-MMM-yyyy').clearTime();
-                }
-                if(dateValue !== undefined)
-                {
-                  // console.log('Today: '+curDate);
-                  // console.log('Date Entered: '+dateValue.clearTime());
-                  console.log('Validation on Load- Dates ++++', !dateValue.isAfter(curDate));
-                  return !dateValue.isAfter(curDate);
-                }
-                if (dateValue !== undefined || dateValue !== null || value !== '') return true;
-
-              },
-              message: '"Should not be a future date!"'
-            };
-          }
-
-          if((params.type === 'date') && (params.allowFutureDates === 'true'))
-          {
-            return {
-              expression: function(viewValue, modelValue, elementScope) {
-                /*
-                using datejs library
-                */
-                var value = modelValue || viewValue;
-                var dateValue;
-                var curDate = Date.parse(Date.today(),'d-MMM-yyyy');
-
-                if(value !== undefined && value !== null && value !== '')
-                {
-                    //  console.log('before lunch: ', value);
-                  dateValue = Date.parse(value,'d-MMM-yyyy').clearTime();
-                }
-                if(dateValue !== undefined || dateValue !== null || value !== '')
-                {
-                  //return !dateValue.isBefore(curDate);
-                  return true;
-                }
-                else return false;
-
-              },
-              message: '"Should be a future date!"'
-            };
-          }
-          if(params.type === 'js_expression'){
-              // console.log('wiring expression validation')
-              return {
-                expression: function(viewValue, modelValue, elementScope) {
-                    var val = viewValue || modelValue;
-                    if (val === true)
-                    {
-                      val = elementScope.option.value;
-                    }
-
-                    var referencedQuestions = FormValidator.extractQuestionIds(params.failsWhenExpression, service.lastFormValidationMetadata);
-
-                    // console.log('referencedQuestions', referencedQuestions);
-
-                    var keyValue = {};
-
-                    // console.log('service.lastFormValidationMetadata', service.lastFormValidationMetadata);
-
-                    _.each(referencedQuestions, function(qId) {
-                       if(keyValue[qId] === undefined){
-                           var referenceQuestionkey = getFieldKeyFromGlobalById(qId);
-                           var referenceQuestionCurrentValue = FormValidator.getAnswerByQuestionKey(service.currentFormModel, referenceQuestionkey);
-                           keyValue[qId] = referenceQuestionCurrentValue;
-                       }
-                    });
-
-                    // console.log('keyValue', keyValue);
-
-                    var expressionToEvaluate = FormValidator.replaceQuestionsPlaceholdersWithValue(params.failsWhenExpression, keyValue);
-
-                    expressionToEvaluate = FormValidator.replaceMyValuePlaceholdersWithActualValue(expressionToEvaluate, val);
-                    // console.log('Evaluates val',val);
-                    // console.log('Evaluates model',elementScope);
-                    // console.log('expressionToEvaluate',expressionToEvaluate);
-
-                    var isInvalid = FormValidator.evaluateExpression(expressionToEvaluate);
-                    // if (loaded) isInvalid = FormValidator.evaluateExpression(expressionToEvaluate);
-                    // console.log('Validation on Load-Custom Js++++', isInvalid);
-                    return !isInvalid;
-                },
-                message: '"' + params.message +  '"'
-              };
-
-          }
-          if((params.type === 'conditionalAnswered'))
-          {
-            return {
-              expression: function(viewValue, modelValue, elementScope) {
-
-                  var val = viewValue || modelValue;
-
-                  var referenceQuestionkey = getFieldKeyFromGlobalById(params.referenceQuestionId);
-                  var referenceQuestion = getFieldById_Key(params.referenceQuestionId);
-                  if (referenceQuestion !== undefined) referenceQuestionkey =referenceQuestion.key
-
-                  // console.log('test Field Search+++', referenceQuestion);
-
-                  var referenceQuestionCurrentValue = FormValidator.getAnswerByQuestionKey(service.currentFormModel, referenceQuestionkey);
-
-                   var referenceQuestionAllowableAnswers = params.referenceQuestionAnswers;
-
-                   var isValid = false;
-
-                   _.each(referenceQuestionAllowableAnswers, function(answer) {
-                       if(referenceQuestionCurrentValue === answer)
-                        isValid = true;
-                   });
-                  // console.log('isValid',isValid);
-                  // console.log('isValue +++', val);
-                  if (val !== undefined || val !== null || val !== '')
-                  {
-                    // console.log('Conditional Answered +++', val)
-                    return true;
-                  }
-                  else return isValid;
-                  // console.log('Validation on Load-Conditional answered++++', isInvalid);
-              },
-              message: '"' + params.message +  '"'
-            };
-          }
-          if((params.type === 'conditionalRequired'))
-          {
-              // console.log('wiring conditional-required validation');
-              /*
-              Adding ability to do conditionalRequired
-              Toggle between required and not required
-              */
-              return (function($viewValue, $modelValue, scope, element) {
-
-                var i = 0;
-                var fkey;
-                var results;
-                var results;
-                var value = $viewValue || $modelValue;
-
-                var referenceQuestionkey = getFieldKeyFromGlobalById(params.referenceQuestionId);
-                var referenceQuestion = getFieldById_Key(params.referenceQuestionId);
-                if (referenceQuestion !== undefined) referenceQuestionkey =referenceQuestion.key;
-
-                fkey = referenceQuestionkey;
-
-                _.each(params.referenceQuestionAnswers, function(val){
-
-                  result = scope.model[fkey] === val
-                  //result = FormValidator.getAnswerByQuestionKey(fkey) !== val
-                  if(i === 0) results = result;
-                  else results = results  || result;
-                  i = i+1;
-
-                });
-                // console.log('Validation on Load-Conditional required ++++', results);
-                 return results;
-               });
-          }
-
-
-
-           //Hide validations
-          if(params.field !== undefined && params.value !== undefined)
-          {
-            // console.log('++Creating Hide Expression')
-            var result;
-            var results;
-
-            return (function($viewValue, $modelValue, scope, element) {
-              //if element is undefined then we are looking for a disable expression
-              //if element is defined then we are looking for a hide expression
-
-              var i = 0;
-              // console.log('current scope', scope)
-              var fkey;
-
-              if(params.field === 'gender' || params.field === 'sex') fkey = 'sex';
-              else fkey = getFieldKeyById(params.field, scope.fields)
-
-              //else fkey = getFieldKeyFromGlobalById(params.field);
-
-              _.each(params.value, function(val){
-
-                result = scope.model[fkey] !== val
-                //result = FormValidator.getAnswerByQuestionKey(fkey) !== val
-                if(i === 0) results = result;
-                else results = results  && result;
-                i = i+1;
-
-              });
-
-
-              //console.log('results: ' + results);
-
-              if(results === true){
-                  //console.log('+++scope ',scope);
-                  // console.log('+++model ', scope.model);
-                  // console.log('+++this ', this);
-                  if(element) {
-                      //case hide
-                    FormValidator.clearQuestionValueByKey(scope.model, element.options.key);
-                  }
-                  else {
-                      //case disable
-                    FormValidator.clearQuestionValueByKey(scope.model, scope.options.key);
-                  }
-              }
-              // console.log('Validation on Load- Hide++++', results);
-              return results;
-            });
-          }
-        }
-
-        function getFieldKeyFromGlobalById(id){
-            var obj = service.lastFormValidationMetadata[id];
-            if(obj)
-                return service.lastFormValidationMetadata[id].key;
-            return null;
-        }
 
         function getFormSchema(formName, callback) {
           var schema = {};
@@ -1067,11 +798,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
           return pass;
         }
-
-        function getConceptUuid()
-        {
-
-        }
+       
 
         /*
         Methdod to get all the sections in a schema
@@ -1713,8 +1440,135 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           return formPayLoad;
         }
 
+        /*
+        Method/function to create to create Form payLoad given the model
+        */
+        function generateFormPayLoad(model/*, patient, form, uuid*/){
+          var formPayLoad = {};
+          var obs = [];
+          var val;
+          // console.log('Test sample model');
+          // console.log(model)
+          _.each (Object.keys(model), function(obj){
+            val = model[obj];
+            //console.log('Section: '+ obj + 'No of Keys: '+ Object.keys(val).length);
 
+            //check if the current key is an object
+            if(typeof val === 'object')
+            {
+              //This could be a section or just and independent group outside the section
+              if(obj.startsWith('section')){
 
+                _.each(Object.keys(val), function(key){
+                  //console.log('item Key: '+ key);
+                  //Handling special keys related to encounter
+                  if (key === 'encounterProvider' && val[key] !== undefined)
+                  {
+                    //add property to the payload
+                    formPayLoad.provider = val[key];
+                  }
+                  else if (key === 'encounterDate' && val[key] !== undefined)
+                  {
+                    formPayLoad.encounterDatetime = getFormattedValue(val[key]);
+                  }
+                  else if (key === 'encounterLocation' && val[key] !== undefined) {
+                    //add property to the payload
+                    formPayLoad.location = val[key];
+                  }
+                  else if (val[key] !== undefined) {
+                    if (typeof val[key] === 'object') {
+                      //this is the case when we have obs groups that are not repeating
+
+                      var groupValues = val[key];
+                      var groupMembers = [];
+                      // console.log('OBJECT TYPES')
+                      // console.log(key);
+                      // console.log(groupValues);
+                      if(_.contains(key, 'unamed')) // having valid obs group concept uuid
+                      {
+                        _.each(Object.keys(groupValues), function(group_member){
+                          //console.log(groupValues[group_member])
+                          if (groupValues[group_member] !== undefined)
+                          {
+                            if (group_member.startsWith('obsDate'))
+                            {
+                              obs.push({obsDatetime:getFormattedValue(groupValues[group_member]),concept:group_member.split('_')[1], value:getFormattedValue(groupValues['obs' + group_member.slice(7).split('_')[0] + '_' +group_member.split('_')[1]])});
+                            }
+                          }
+                        });
+
+                      }
+                      else if (typeof groupValues === 'object')
+                      {
+                        if(Object.keys(groupValues).length>0)
+                        {
+                          groupMembers = [];
+                          _.each(Object.keys(groupValues), function(group_member){
+
+                            if (groupValues[group_member] !== undefined)
+                            {
+                              if(typeof groupValues[group_member] === 'object')// array object
+                              {
+                                // console.log('OBJECT TYPE')
+                                // console.log('Testing Object Vals');
+                                // console.log('ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
+                                var ArrayVal = groupValues[group_member]
+                                groupMembers = [];
+                                _.each(Object.keys(ArrayVal), function(arrKey){
+                                  if(!arrKey.startsWith('$$'))
+                                  {
+                                    groupMembers.push({concept:arrKey.split('_')[1],
+                                                value:getFormattedValue(ArrayVal[arrKey])});
+                                  }
+
+                                });
+                                if (groupMembers.length>0)
+                                {
+                                    obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
+                                }
+                                groupMembers = [];
+                              }
+                              else {
+                                  // console.log('NONE OBJECT TYPE')
+                                  // console.log('Testing Object Vals');
+                                  // console.log('ValKey: '+ group_member,'  Value: '+ groupValues[group_member])
+                                groupMembers.push({concept:group_member.split('_')[1],
+                                            value:getFormattedValue(groupValues[group_member])});
+                              }
+                            }
+                          });
+                          if (groupMembers.length>0)
+                          {
+                              obs.push({concept:key.split('_')[1], groupMembers:groupMembers});
+                          }
+                        }
+                        else {
+                          // value pair are strings or values
+                          // console.log('Complex Object Key pairs');
+                          // console.log('type of: ', typeof(val[key]), 'Keys: ', Object.keys(val[key]));
+                          // console.log('Payload Value ', getFormattedValue(val[key]))
+                          if(getFormattedValue(val[key])!==null||  getFormattedValue(val[key])!=='null' || getFormattedValue(val[key])!=='')
+                          obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                        }
+                      }
+                    }
+                    else {
+                      // value pair are strings or values
+                      //console.log('Normal Key pairs');
+                      obs.push({concept:key.split('_')[1], value:getFormattedValue(val[key])});
+                    }
+                  }
+                });
+              }
+            }
+          });
+
+          formPayLoad.obs = obs;
+          // console.log('Sample payLoad');
+          // console.log(formPayLoad)
+          return formPayLoad;
+        }
+        
         function createForm(schema, model, callback)
         {
           obs_id = 0;
@@ -1788,7 +1642,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       required:required
                     },
                     validators: {
-                      dateValidator: getFieldValidator(sec_field.validators[0]) //this  will require refactoring as we move forward
+                      dateValidator: FormValidator.getDateValidatorObject(sec_field.validators[0]) //this  will require refactoring as we move forward
                     }
                   }
                   addToReadyFields(field)
@@ -1906,7 +1760,7 @@ function addToReadyFields(field)
 function addFieldToValidationMetadata(field, section, page, typeOfField){
     //console.log('etl stuff', field);
     if(field && field.data && field.data.id && field.data.id !== ''){
-        service.lastFormValidationMetadata[field.data.id] = {
+        CurrentLoadedFormService.formValidationMetadata[field.data.id] = {
             key: field.key,
             section: section,
             page: page
@@ -1974,7 +1828,7 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
     }
     if(obs_field.hide !== undefined)
     {
-      hideExpression_= getFieldValidator(obs_field.hide[0], obs_id);
+      hideExpression_= FormValidator.getFieldValidator(obs_field.hide[0], getFieldById_Key);
     }
     else {
       hideExpression_ = '';
@@ -1983,7 +1837,7 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
 
     if(obs_field.disable !== undefined)
     {
-      disableExpression_= getFieldValidator(obs_field.disable[0], obs_id);
+      disableExpression_= FormValidator.getHideDisableExpressionFunction(obs_field.disable[0]);
     }
     else {
       disableExpression_ = '';
@@ -1994,7 +1848,6 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
     {
       console.log('Something Went Wrong While creating this field', obs_field)
     }
-
     //console.log('validators', obs_field);
 
       var validators;
@@ -2014,7 +1867,7 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
       };
 
       if(validators && validators.length !== 0){
-          compiledValidators = getFieldValidators(validators);
+          compiledValidators = FormValidator.getFieldValidators(validators, getFieldById_Key);
       }
 
 
@@ -2036,7 +1889,7 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
         var conditionalRequired;
         if(conditionalParams !== undefined)
         {
-          conditionalRequired = getFieldValidator(conditionalParams);
+          conditionalRequired = FormValidator.getConditionalRequiredExpressionFunction(conditionalParams, getFieldById_Key);
           required = conditionalRequired;
         }
 
@@ -2152,7 +2005,7 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
 
 
       if(validators && validators.length !== 0){
-          defaultValidator = getFieldValidator(obs_field.validators[0])
+          defaultValidator = FormValidator.getFieldValidator(obs_field.validators[0], getFieldById_Key);
       }
 
       var required='false';
@@ -2257,7 +2110,7 @@ function createGroupFormlyField(obs_field, gpSectionRnd)
     {
       if(obs_field.hide !== undefined)
       {
-        hideExpression_= getFieldValidator(obs_field.hide[0], obs_id);
+        hideExpression_= FormValidator.getHideDisableExpressionFunction(obs_field.hide[0]);
       }
       else {
         hideExpression_ = '';
@@ -2285,7 +2138,7 @@ function createGroupFormlyField(obs_field, gpSectionRnd)
          },
         hideExpression:hideExpression_,
       validators: {
-        dateValidator: getFieldValidator(curField.validators[0]) //this  will require refactoring as we move forward
+        dateValidator: FormValidator.getDateValidatorObject(curField.validators[0]) //this  will require refactoring as we move forward
         }
       }
       groupingFields.push(dateField);
@@ -2341,14 +2194,14 @@ function createRepeatingFormlyField(obs_field, gpSectionRnd)
             return scope.model[fkey] !== undefined && scope.model[fkey] !== null && scope.model[fkey] !== '';
            }
          },
-        hideExpression:hideExpression_,
       validators: {
-        dateValidator: getFieldValidator(curField.validators[0]) //this  will require refactoring as we move forward
+        dateValidator: FormValidator.getDateValidatorObject(curField.validators[0]) //this  will require refactoring as we move forward
         }
       }
       repeatingFields.push(dateField);
     }
-  })
+  });
+  
   var obsField = {
     key:'obs' + gpSectionRnd + '_' + createFieldKey(obs_field.concept),
     type: 'repeatSection',
@@ -2416,6 +2269,6 @@ function getFormattedValue(value){
 console.log('Returned value',value);
     return value;
 }
+    }
 
-}
 })();

@@ -8,14 +8,15 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         .module('app.formentry')
         .controller('FormentryCtrl', FormentryCtrl);
 
-    FormentryCtrl.$inject = ['$translate', 'dialogs', '$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'OpenmrsRestService', '$timeout', 'FormsMetaData'];
+    FormentryCtrl.$inject = ['$translate', 'dialogs', '$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'OpenmrsRestService', '$timeout', 'FormsMetaData', 'CurrentLoadedFormService'];
 
-    function FormentryCtrl($translate, dialogs, $location, $rootScope, $stateParams, $state, $scope, FormentryService, OpenmrsRestService, $timeout, FormsMetaData) {
+    function FormentryCtrl($translate, dialogs, $location, $rootScope, $stateParams, $state, $scope, FormentryService, OpenmrsRestService, $timeout, FormsMetaData, CurrentLoadedFormService) {
         FormentryService.currentFormModel = {};
         $scope.vm = {};
         $scope.vm.isBusy = true;
         $scope.vm.error = '';
-        $scope.vm.model = FormentryService.currentFormModel;
+        $scope.vm.model = {};
+        CurrentLoadedFormService.formModel = $scope.vm.model;
         $scope.vm.patient = $rootScope.broadcastPatient;
         $scope.vm.submitLabel = 'Save';
         $scope.vm.encounterType;
@@ -233,48 +234,48 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 });
                 return;
               }
-              // if(error_date !== undefined)
-              // {
-              //   var i = 0;
-              //   _.some(error_date.js_expression[0].$error.js_expression, function(error_field){
-              //     if (i === 0) {
-              //       var field = getErrorField(error_field.$name);
-              //       if(field !== undefined)
-              //       {
-              //         $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
-              //         return true;
-              //       }
-              //
-              //     }
-              //     i = i + 1;
-              //   });
-              //   _.some(error_date.js_expression1[0].$error.js_expression1, function(error_field){
-              //     if (i === 0) {
-              //       var field = getErrorField(error_field.$name);
-              //       if(field !== undefined)
-              //       {
-              //         $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
-              //         return true;
-              //       }
-              //
-              //     }
-              //     i = i + 1;
-              //   });
-              //    _.some(error_date.js_expression2[0].$error.js_expression2, function(error_field){
-              //     if (i === 0) {
-              //       var field = getErrorField(error_field.$name);
-              //       if(field !== undefined)
-              //       {
-              //         $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
-              //         return true;
-              //       }
-              //
-              //     }
-              //     i = i + 1;
-              //   });
-              //
-              //   return;
-              // }
+              if(error_date !== undefined)
+              {
+                var i = 0;
+                // _.some(error_date.js_expression[0].$error.js_expression, function(error_field){
+                //   if (i === 0) {
+                //     var field = getErrorField(error_field.$name);
+                //     if(field !== undefined)
+                //     {
+                //       $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
+                //       return true;
+                //     }
+              
+                //   }
+                //   i = i + 1;
+                // });
+                _.some(error_date.js_expression1[0].$error.js_expression1, function(error_field){
+                  if (i === 0) {
+                    var field = getErrorField(error_field.$name);
+                    if(field !== undefined)
+                    {
+                      $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
+                      return true;
+                    }
+              
+                  }
+                  i = i + 1;
+                });
+                 _.some(error_date.js_expression2[0].$error.js_expression2, function(error_field){
+                  if (i === 0) {
+                    var field = getErrorField(error_field.$name);
+                    if(field !== undefined)
+                    {
+                      $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
+                      return true;
+                    }
+              
+                  }
+                  i = i + 1;
+                });
+              
+                return;
+              }
 
             }
 

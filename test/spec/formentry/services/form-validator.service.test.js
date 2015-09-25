@@ -6,7 +6,7 @@
 /*jshint -W026, -W030, -W106 */
 (function () {
   'use strict';
-  describe('Formentry Service unit tests', function () {
+  describe('Form Validator Service: Formentry Validation Service Helper Functions Unit Tests', function () {
     beforeEach(function () {
       module('app.formentry');
 
@@ -18,9 +18,11 @@
     var validationExpression;
     var validationExpression2;
     var formIds;
+    var currentLoadedFormService;
 
     beforeEach(inject(function ($injector) {
       service = $injector.get('FormValidator');
+      currentLoadedFormService = $injector.get('CurrentLoadedFormService');
     }));
 
     beforeEach(function () {
@@ -58,9 +60,9 @@
       };
 
       validationExpression = '(q1 === null) || (q3 in ["val1", "val2", "val3"])';
-      
+
       validationExpression2 = '(q1 === null) || ([12, "stringVal", "val3"].indexOf(q3) !== -1)';
-      
+
 
       formIds = { q1: 12, q2: new Date(), q3: 'stringVal' };
 
@@ -69,53 +71,16 @@
 
     it('should have form validator services are defined', function () {
       expect(service).to.exist;
-      expect(service.clearQuestionValueByKey).to.exist;
-    });
-    it('should getAnswerByQuestionKey', function () {
-      //case existing key
-      var answer = service.getAnswerByQuestionKey(formlyModel, 'obs3_a89ff9a6n1350n11dfna1f1n0026b9348838');
-      expect(answer).to.equal('1234565');
-      
-      //case non-exstant key
-      var answer2 = service.getAnswerByQuestionKey(formlyModel, 'not_existing');
-      expect(answer2).to.equal(undefined);
-
+      expect(service.evaluateExpression).to.exist;
     });
 
-    it('should clear non-group question when clearQuestionValueByKey', function () {
-      service.clearQuestionValueByKey(formlyModel, 'obs3_a89ff9a6n1350n11dfna1f1n0026b9348838');
-
-      var newValue = service.getAnswerByQuestionKey(formlyModel, 'obs3_a89ff9a6n1350n11dfna1f1n0026b9348838');
-
-      expect((newValue === null || newValue === undefined || newValue === '')).to.equal(true);
-
-    });
-
-    it('should clear group question when clearQuestionValueByKey', function () {
-      
-      //case array group
-      service.clearQuestionValueByKey(formlyModel, 'obs3_a8a003a6n1350n11dfna1f1n0026b9348838');
-
-      var newValue = service.getAnswerByQuestionKey(formlyModel, 'obs3_a8a003a6n1350n11dfna1f1n0026b9348838');
-
-      expect(Array.isArray(newValue)).to.equal(true);
-      
-      //case object group
-      service.clearQuestionValueByKey(formlyModel, 'section_2');
-
-      var newValue2 = service.getAnswerByQuestionKey(formlyModel, 'section_2');
-
-      expect(newValue2).to.deep.equal({});
-
-    });
-
-    it('should extract question ids when extractQuestionIds is called with an expression and object containing kesys', function (){
+    it('should extract question ids when extractQuestionIds is called with an expression and object containing kesys', function () {
       var keys = service.extractQuestionIds(validationExpression, formIds);
-      
-      expect(keys).to.include.members(['q1','q3']);
+
+      expect(keys).to.include.members(['q1', 'q3']);
     });
-    
-    it('should replace question placeholders with value when extractQuestionIds is invoked', function(){
+
+    it('should replace question placeholders with value when extractQuestionIds is invoked', function () {
       var replaced = service.replaceQuestionsPlaceholdersWithValue(validationExpression, formIds);
       expect(replaced).to.equal('(12 === null) || ("stringVal" in ["val1", "val2", "val3"])');
       
@@ -123,30 +88,30 @@
       replaced = service.replaceQuestionsPlaceholdersWithValue(validationExpression2, formIds);
       expect(replaced).to.equal('(12 === null) || ([12, "stringVal", "val3"].indexOf("stringVal") !== -1)');
     });
-    
-    it('should evaluate an expression when evaluateExpression is inviked', function(){
+
+    it('should evaluate an expression when evaluateExpression is inviked', function () {
       var toEvaluate = service.replaceQuestionsPlaceholdersWithValue(validationExpression2, formIds);
       var result = service.evaluateExpression(toEvaluate);
-      
-       expect(result).to.equal(true);
+
+      expect(result).to.equal(true);
     });
-    
-    it('should invoke isEmpty function when evaluateExpression is invoked with an expression containing isEmpty', function() {
+
+    it('should invoke isEmpty function when evaluateExpression is invoked with an expression containing isEmpty', function () {
       var expression = '(isEmpty("val"))';
       var result = service.evaluateExpression(expression);
       expect(result).to.equal(false);
-      
+
       expression = '(isEmpty(undefined))';
       result = service.evaluateExpression(expression);
       expect(result).to.equal(true);
     });
-    
-    it('should invoke arrayContains function when evaluateExpression is invoked with an expression containing arrayContains', function() {
+
+    it('should invoke arrayContains function when evaluateExpression is invoked with an expression containing arrayContains', function () {
       //non-array parameter
       var expression = '(arrayContains(["val", "val2", "val3"], "val"))';
       var result = service.evaluateExpression(expression);
       expect(result).to.equal(true);
-      
+
       expression = '(arrayContains(["val", "val2", "val3"], "val4"))';
       result = service.evaluateExpression(expression);
       expect(result).to.equal(false);
@@ -156,13 +121,297 @@
       expression = '(arrayContains(["val", "val2", "val3"], ["val","val3"]))';
       result = service.evaluateExpression(expression);
       expect(result).to.equal(true);
-      
+
       expression = '(arrayContains(["val", "val2", "val3"], ["val","val4"]))';
       result = service.evaluateExpression(expression);
       expect(result).to.equal(false);
     });
+  });
+
+  describe('Form Validator Service: Generic Validation Logic Functions Unit Tests', function () {
+    beforeEach(function () {
+      module('app.formentry');
+
+    });
+
+    var service;
+    var currentLoadedFormService;
+
+    beforeEach(inject(function ($injector) {
+      service = $injector.get('FormValidator');
+      currentLoadedFormService = $injector.get('CurrentLoadedFormService');
+
+    }));
+
+    it('should have form validator services are defined', function () {
+      expect(service).to.exist;
+      expect(service.evaluateExpression).to.exist;
+    });
+
+    it('should return correct validation results when the validator object that getJsExpressionValidatorObject is invoked', function () {
+      //sample one
+      var params1 = {
+        'type': 'js_expression',
+        'failsWhenExpression': '!isEmpty(q7a) && arrayContains(["a89ff816-1350-11df-a1f1-0026b9348838","a89ff8de-1350-11df-a1f1-0026b9348838"], q7a) && isEmpty(myValue)',
+        'message': 'Patient visit marked as unscheduled. Please provide the scheduled date.'
+      };
+
+      var currentModel = {
+        key1: 'a89ff816-1350-11df-a1f1-0026b9348838',
+        key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
+      };
+
+      currentLoadedFormService.formValidationMetadata = {
+        q7a: {
+          key: 'key1'
+        },
+        q13a: {
+          key: 'key2'
+        }
+      };
+
+      currentLoadedFormService.formModel = currentModel;
+
+      var validator = service.getJsExpressionValidatorObject(params1);
+
+      var isValid = validator.expression(undefined, undefined, {});
+      console.log(isValid);
+      
+      //failed case
+      expect(isValid).to.equal(false);
+
+      isValid = validator.expression(new Date().toISOString(), undefined, {});
+      console.log(isValid);
+      //passed case
+      expect(isValid).to.equal(true);
+      
+      //sampe two
+      var params2 = {
+        'type': 'js_expression',
+        'failsWhenExpression': 'isEmpty(myValue) && !isEmpty(q13a) && q13a === "a899b35c-1350-11df-a1f1-0026b9348838"',
+        'message': 'Patient visit marked as unscheduled. Please provide the scheduled date.'
+      };
+
+      validator = service.getJsExpressionValidatorObject(params2);
+      
+      //case valid
+      isValid = validator.expression('not empty', undefined, {});
+      expect(isValid).to.equal(true);
+      
+      //case invalid
+      isValid = validator.expression(undefined, undefined, {});
+      expect(isValid).to.equal(false);
+
+    });
+
+    it('should return correct value to validate when getFieldValueToValidate is invoked with viewvalue or modelvalue being non-empty', function () {
+      var returnVal = service.getFieldValueToValidate('non-empty', undefined, {});
+
+      expect(returnVal).to.equal('non-empty');
+
+      returnVal = service.getFieldValueToValidate(undefined, 'non-empty', {});
+
+      expect(returnVal).to.equal('non-empty');
+
+    });
+
+    it('should return correct value to validate when getFieldValueToValidate is invoked with multi-select field scope', function () {
+      
+      //case: no new value being added
+      var multiSelectFormlyScope = {
+        $parent: {
+          multiCheckbox: [true, false, true, true],
+          model: {
+            key1: ['val1'],
+            key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
+          },
+          options: {
+            key: 'key1'
+          }
+        },
+        option: {
+          value: 'val2'
+        }
+      };
+
+      var returnVal = service.getFieldValueToValidate(false, undefined, multiSelectFormlyScope); //this will usually have true or false being the value 
+
+      expect(returnVal).to.have.members(['val1']);
+      expect(['val1']).to.have.members(returnVal);
+      
+      //case: new value being added 
+      returnVal = service.getFieldValueToValidate(true, undefined, multiSelectFormlyScope);
+      expect(returnVal).to.have.members(['val1', 'val2']);
+      expect(['val1', 'val2']).to.have.members(returnVal);
+      
+      //case: existing value being removed
+      multiSelectFormlyScope = {
+        $parent: {
+          multiCheckbox: [true, false, true, true],
+          model: {
+            key1: ['val1'],
+            key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
+          },
+          options: {
+            key: 'key1'
+          }
+        },
+        option: {
+          value: 'val1'
+        }
+      };
+      returnVal = service.getFieldValueToValidate(false, undefined, multiSelectFormlyScope);
+      expect(returnVal).to.have.members([]);
+      expect([]).to.have.members(returnVal);
+
+    });
+
+    it('should return a function that when invoked conditionally sets a field to required when getConditionalRequiredExpressionFunction is invoked', function () {
+      
+      //case reference question has the required answers to make this question a required question
+      var params = {
+        'type': 'conditionalRequired',
+        'message': 'Patient visit marked as unscheduled. Please provide the scheduled date.',
+        'referenceQuestionId': 'q7a',
+        'referenceQuestionAnswers': [
+          'a89ff816-1350-11df-a1f1-0026b9348838',
+          'a89ff8de-1350-11df-a1f1-0026b9348838'
+        ]
+      };
+      var currentModel = {
+        key1: 'a89ff8de-1350-11df-a1f1-0026b9348838',
+        key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
+      };
+
+      currentLoadedFormService.formValidationMetadata = {
+        q7a: {
+          key: 'key1'
+        },
+        q13a: {
+          key: 'key2'
+        }
+      };
+
+      currentLoadedFormService.formModel = currentModel;
+      
+      //mock getFieldById_KeyFunction
+      var getFieldById_KeyFunctionMock = function (qId) {
+        return {
+          key: 'key1'
+        };
+      };
+
+      var isRequiredExpressionFunction = service.getConditionalRequiredExpressionFunction(params, getFieldById_KeyFunctionMock);
+
+      var fieldScope = {
+        model: currentModel
+      };
+
+      var isRequired = isRequiredExpressionFunction(undefined, undefined, fieldScope, undefined);
+
+      expect(isRequired).to.equal(true);
+      
+      //case reference question does not have the required answer to make this question a required question
+      currentModel = {
+        key1: 'unrequired asnwer',
+        key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
+      };
+      currentLoadedFormService.formModel = currentModel;
+      isRequiredExpressionFunction = service.getConditionalRequiredExpressionFunction(params, getFieldById_KeyFunctionMock);
+      fieldScope = {
+        model: currentModel
+      };
+
+      isRequired = isRequiredExpressionFunction(undefined, undefined, fieldScope, undefined);
+
+      expect(isRequired).to.equal(false);
+    });
+
+    it('should return a validator that when invoked return correct validation result when getConditionalAnsweredValidatorObject is invoked', function () {
+      
+      //case reference question has the required answers to allow this question to be answered
+      var params = {
+        'type': 'conditionalAnswered',
+        'message': 'Providing diagnosis but didnt answer that patient was hospitalized in question 11a',
+        'referenceQuestionId': 'q11a',
+        'referenceQuestionAnswers': [
+          'a899b35c-1350-11df-a1f1-0026b9348838'
+        ]
+      };
+      var currentModel = {
+        key1: 'a899b35c-1350-11df-a1f1-0026b9348838',
+        key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
+      };
+
+      currentLoadedFormService.formValidationMetadata = {
+        q11a: {
+          key: 'key1'
+        },
+        q13a: {
+          key: 'key2'
+        }
+      };
+
+      currentLoadedFormService.formModel = currentModel;
+      
+      //mock getFieldById_KeyFunction
+      var getFieldById_KeyFunctionMock = function (qId) {
+        return {
+          key: 'key1'
+        };
+      };
+
+      var validator = service.getConditionalAnsweredValidatorObject(params, getFieldById_KeyFunctionMock);
+
+      var fieldScope = {
+        model: currentModel
+      };
+
+      var isValid = validator.expression(undefined, undefined, fieldScope, {});
+
+      expect(isValid).to.equal(true);
+      
+      //case reference question does not have the required answers to allow this question to be answered
+      currentModel = {
+        key1: 'unrequired asnwer',
+        key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
+      };
+      currentLoadedFormService.formModel = currentModel;
+      validator = service.getConditionalAnsweredValidatorObject(params, getFieldById_KeyFunctionMock);
+      fieldScope = {
+        model: currentModel
+      };
+
+      isValid = validator.expression('answered', undefined, fieldScope, {});
+
+      expect(isValid).to.equal(false);
+    });
 
 
+    it('should return correct date validation result when future date validators returned by getDateValidatorObject is invoked', function () {
+      var params = {
+        'type': 'date',
+        'allowFutureDates': 'false'
+      };
+      //case now
+      var value = new Date();
+      var validator = service.getDateValidatorObject(params);
+      var isValid = validator.expression(value, undefined);
+      
+      expect(isValid).to.equal(true);
+      
+      //case past
+      value = new Date('2014-05-05');
+      isValid = validator.expression(value, undefined);
+      
+      expect(isValid).to.equal(true);
+      
+      //case future
+      value = new Date('2016-05-05');
+      isValid = validator.expression(value, undefined);
+      
+      expect(isValid).to.equal(false);
+    });
 
   });
 })();
