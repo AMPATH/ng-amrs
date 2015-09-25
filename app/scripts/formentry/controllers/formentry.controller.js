@@ -237,18 +237,18 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               if(error_date !== undefined)
               {
                 var i = 0;
-                _.some(error_date.js_expression[0].$error.js_expression, function(error_field){
-                  if (i === 0) {
-                    var field = getErrorField(error_field.$name);
-                    if(field !== undefined)
-                    {
-                      $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
-                      return true;
-                    }
+                // _.some(error_date.js_expression[0].$error.js_expression, function(error_field){
+                //   if (i === 0) {
+                //     var field = getErrorField(error_field.$name);
+                //     if(field !== undefined)
+                //     {
+                //       $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
+                //       return true;
+                //     }
               
-                  }
-                  i = i + 1;
-                });
+                //   }
+                //   i = i + 1;
+                // });
                 _.some(error_date.js_expression1[0].$error.js_expression1, function(error_field){
                   if (i === 0) {
                     var field = getErrorField(error_field.$name);
