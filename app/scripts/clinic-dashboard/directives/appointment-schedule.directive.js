@@ -30,6 +30,7 @@ jshint -W003, -W026
         $scope.isBusy = false;
         $scope.experiencedLoadingError = false;
         $scope.currentPage = 1;
+
         $scope.loadSchedule = loadSchedule;
         $scope.loadPatient = loadPatient;
         $scope.$on('viewDayAppointments',onViewDayAppointmentBroadcast);
