@@ -7,6 +7,32 @@
       "label": "Page 1",
       "sections": [
         {
+          "label": "Encounter Details",
+          "questions": [
+            {
+              "label": "Visit Date",
+              "type": "encounterDate",
+              "required": "true",
+              "default": "today",
+              "validators": [
+                {
+                  "type": "date"
+                }
+              ]
+            },
+            {
+              "type": "encounterProvider",
+              "label": "Provider",
+              "required": "true"
+            },          
+            {
+              "type": "encounterLocation",
+              "label": "5. Facility name (site/satellite clinic required):",
+              "required": "true"
+            }
+          ]
+        },
+        {
           "label": "Vital Signs:",
           "questions": [
             {
