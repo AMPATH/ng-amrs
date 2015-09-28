@@ -67,6 +67,8 @@
         })
       }
     });
+
+
   })
   .config(['dialogsProvider','$translateProvider',function(dialogsProvider,$translateProvider){
 		dialogsProvider.useBackdrop('static');
