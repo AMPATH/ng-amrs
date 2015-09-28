@@ -1,0 +1,79 @@
+{
+  "name": "AMPATH Triage Encounter Form 1.00",
+  "uuid": "xxxx",
+  "processor": "triageEncounterForm",
+  "pages": [
+    {
+      "label": "Page 1",
+      "sections": [
+        {
+          "label": "Vital Signs:",
+          "questions": [
+            {
+              "concept": "a8a65d5a-1350-11df-a1f1-0026b9348838",
+              "label": "BP:Systolic:",
+              "type": "number",
+              "max": "250",
+              "min": "0",
+              "validators": []
+            },
+            {
+              "concept": "a8a65e36-1350-11df-a1f1-0026b9348838",
+              "label": "BP:Diastolic:",
+              "type": "number",
+              "max": "150",
+              "min": "0",
+              "validators": []
+            },
+            {
+              "concept": "a8a65f12-1350-11df-a1f1-0026b9348838",
+              "label": "Pulse(Rate/Min):",
+              "type": "number",
+              "max": "230",
+              "min": "0",
+              "validators": []
+            },
+            {
+              "concept": "a8a65fee-1350-11df-a1f1-0026b9348838",
+              "label": "Temp(C):",
+              "type": "number",
+              "max": "43",
+              "min": "25",
+              "validators": []
+            },
+            {
+              "concept": "a8a660ca-1350-11df-a1f1-0026b9348838",
+              "label": "Weight(Kg):",
+              "type": "number",
+              "max": "150",
+              "min": "0",
+              "validators": []
+            },
+            {
+              "concept": "a8a6619c-1350-11df-a1f1-0026b9348838",
+              "label": "Height(CM):",
+              "type": "number",
+              "validators": []
+            },
+            {
+              "concept": "a8a66354-1350-11df-a1f1-0026b9348838",
+              "label": "Sp02:",
+              "type": "number",
+              "max": "100",
+              "min": "0",
+              "validators": []
+            },
+            {
+              "concept": "a89c60c0-1350-11df-a1f1-0026b9348838",
+              "label": "BMI:Kg/M2",
+              "type": "number",
+              "max": "60",
+              "min": "25",
+              "validators": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

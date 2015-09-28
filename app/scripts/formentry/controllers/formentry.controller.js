@@ -16,8 +16,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         $scope.vm.isBusy = true;
         $scope.vm.errorSubmit = '';
         $scope.vm.errorMessage = 'The form has some validation errors, see the list above';
-        $scope.vm.model = CurrentLoadedFormService.formModel;
-        // CurrentLoadedFormService.formModel = $scope.vm.model;
+        $scope.vm.model = {};
+        CurrentLoadedFormService.formModel = $scope.vm.model;
         $scope.vm.patient = $rootScope.broadcastPatient;
         $scope.vm.submitLabel = 'Save';
         $scope.vm.encounterType;
