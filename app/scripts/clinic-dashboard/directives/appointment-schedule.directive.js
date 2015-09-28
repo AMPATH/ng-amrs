@@ -103,8 +103,11 @@ jshint -W003, -W026
             var singlePatient={
                 uuid:patient.uuid(),
                 identifier:patient.identifiers(),
-                name:patient.givenName()+' '+patient.familyName()+' '+patient.middleName()
-              }
+                name:patient.givenName()+' '+patient.familyName()+' '+patient.middleName(),
+                rtc_date:patient.rtc_date(),
+                status:Math.round(Math.abs((patient.rtc_date()) - (patient.next_encounter_datetime()))/8.64e7)<=7
+            }
+            console.log("Use (rtc_date - next_encounter_datetime) to determine if the row should be highlighted:",singlePatient.status);
             $scope.customPatients.push(singlePatient);
 
           });

@@ -14,10 +14,10 @@
     var service = {
       appointmentSchedule: appointmentSchedule
     };
-        
+
     //http://www.bennadel.com/blog/1566-using-super-constructors-is-critical-in-prototypal-inheritance-in-javascript.htm
     //inheritanc logic goes here
-        
+
     // Create sub-class and extend base class.
     appointmentSchedule.prototype = new HivSummaryModel.hivSummary({});
     appointmentSchedule.constructor = appointmentSchedule;
@@ -27,11 +27,11 @@
 
     //madnatory fields givenName, familyName
     function appointmentSchedule(appointmentScheduleEtl) {
-          
-      //call the inherited object contructor    
-      // Call super constructor.      
+
+      //call the inherited object contructor
+      // Call super constructor.
       HivSummaryModel.hivSummary.call(this, appointmentScheduleEtl);
-         
+
       var modelDefinition = this;
 
       //initialize private members
@@ -39,7 +39,8 @@
       var _middleName = appointmentScheduleEtl.middle_name ? appointmentScheduleEtl.middle_name : '';
       var _familyName = appointmentScheduleEtl.family_name ? appointmentScheduleEtl.family_name : '';
       var _identifiers = appointmentScheduleEtl.identifiers ? appointmentScheduleEtl.identifiers : '';
-
+      var _rtc_date= formatDate(appointmentScheduleEtl.rtc_date) || '';
+      var _next_encounter_datetime= formatDate(appointmentScheduleEtl.next_encounter_datetime) || '';
       modelDefinition.givenName = function (value) {
         if (angular.isDefined(value)) {
           _givenName = value;
@@ -67,6 +68,24 @@
         }
       };
 
+      modelDefinition.rtc_date = function (value) {
+        if (angular.isDefined(value)) {
+          _rtc_date = value;
+        }
+        else {
+          return _rtc_date;
+        }
+      };
+
+      modelDefinition.next_encounter_datetime = function (value) {
+        if (angular.isDefined(value)) {
+          _next_encounter_datetime = value;
+        }
+        else {
+          return _next_encounter_datetime;
+        }
+      };
+
       modelDefinition.identifiers = function (value) {
         if (angular.isDefined(value)) {
           _identifiers = value;
@@ -75,6 +94,27 @@
           return _identifiers;
         }
       };
+
+      //format dates
+      function formatDate(dateString){
+        var formattedDate='';
+        if(dateString!==null) {
+          var date = new Date(dateString);
+          var day = date.getDate();
+          var monthIndex = date.getMonth() + 1;
+          var year = date.getFullYear();
+
+          if (10 > monthIndex) {
+            monthIndex = '0' + monthIndex;
+          }
+          if (10 > day) {
+            day = '0' + day;
+          }
+          formattedDate = day + '-' + monthIndex + '-' +year ;
+        }
+
+        return formattedDate;
+      }
 
     }
   }
