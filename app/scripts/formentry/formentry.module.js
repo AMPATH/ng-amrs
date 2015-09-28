@@ -41,7 +41,7 @@
     formlyConfig.setType({
       name: 'customInput',
       extends: 'input',
-      apiCheck: {
+      apiCheck: function(){
         templateOptions: formlyApiCheck.shape({
           foo: formlyApiCheck.string.optional
         })
@@ -51,7 +51,7 @@
     formlyConfig.setType({
       name: 'datepicker',
       extends: 'input',
-      apiCheck: {
+      apiCheck: function(){
         templateOptions: formlyApiCheck.shape({
           foo: formlyApiCheck.string.optional
         })
@@ -61,7 +61,7 @@
     formlyConfig.setType({
       name: 'section',
       extends: 'input',
-      apiCheck: {
+      apiCheck: function(){
         templateOptions: formlyApiCheck.shape({
           foo: formlyApiCheck.string.optional
         })
