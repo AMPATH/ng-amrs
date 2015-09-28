@@ -92,6 +92,7 @@
             {
               "concept": "dc1942b2-5e50-4adc-949d-ad6c905f054e",
               "label": "7b. If Unscheduled, actual scheduled date",
+              "id": "q7b",
               "type": "date",
               "validators": [
                 {
@@ -111,6 +112,11 @@
                     "a89ff816-1350-11df-a1f1-0026b9348838",
                     "a89ff8de-1350-11df-a1f1-0026b9348838"
                   ]
+                }
+              ],
+              "disableExpression" : [
+                {
+                  "disableWhenExpression":"!arrayContains(['a89ff816-1350-11df-a1f1-0026b9348838','a89ff8de-1350-11df-a1f1-0026b9348838'], q7a)"
                 }
               ]
             }
