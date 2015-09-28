@@ -249,6 +249,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 //   }
                 //   i = i + 1;
                 // });
+                if(error_date.js_expression1)
                 _.some(error_date.js_expression1[0].$error.js_expression1, function(error_field){
                   if (i === 0) {
                     var field = getErrorField(error_field.$name);
@@ -261,6 +262,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                   }
                   i = i + 1;
                 });
+                
+                if(error_date.js_expression2)
                  _.some(error_date.js_expression2[0].$error.js_expression2, function(error_field){
                   if (i === 0) {
                     var field = getErrorField(error_field.$name);

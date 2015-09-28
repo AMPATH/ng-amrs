@@ -114,9 +114,9 @@
                   ]
                 }
               ],
-              "disableExpression" : [
+              "disableExpression": [
                 {
-                  "disableWhenExpression":"!arrayContains(['a89ff816-1350-11df-a1f1-0026b9348838','a89ff8de-1350-11df-a1f1-0026b9348838'], q7a)"
+                  "disableWhenExpression": "!arrayContains(['a89ff816-1350-11df-a1f1-0026b9348838','a89ff8de-1350-11df-a1f1-0026b9348838'], q7a)"
                 }
               ]
             }
@@ -309,7 +309,7 @@
                   "type": "date"
                 }
               ],
-              "": [
+              "hide": [
                 {
                   "field": "gender",
                   "value": [
@@ -333,7 +333,7 @@
               ],
               "type": "select",
               "validators": [],
-              "": [
+              "hide": [
                 {
                   "field": "gender",
                   "value": [
@@ -357,7 +357,7 @@
               ],
               "type": "select",
               "validators": [],
-              "": [
+              "hide": [
                 {
                   "field": "gender",
                   "value": [
@@ -386,6 +386,7 @@
             {
               "concept": "a894b1cc-1350-11df-a1f1-0026b9348838",
               "label": "12e. Family Planning Method:",
+              "id": "q12e",
               "answers": [
                 {
                   "concept": "a893516a-1350-11df-a1f1-0026b9348838",
@@ -438,11 +439,17 @@
                     "a899b35c-1350-11df-a1f1-0026b9348838"
                   ]
                 }
+              ],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q12d !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
               ]
             },
             {
               "concept": "88ad5975-4762-4108-a967-072f12f91b0b",
               "label": "12f. If not on family panning, reason:",
+              "id": "q12f",
               "answers": [
                 {
                   "concept": "2d6f977e-3b3f-4ea9-82ee-fde1fb4bdf56",
@@ -470,6 +477,11 @@
                   "referenceQuestionAnswers": [
                     "a899b42e-1350-11df-a1f1-0026b9348838"
                   ]
+                }
+              ],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q12d !== 'a899b42e-1350-11df-a1f1-0026b9348838'"
                 }
               ]
             }
@@ -560,6 +572,7 @@
                 {
                   "concept": "a899cf5e-1350-11df-a1f1-0026b9348838",
                   "label": "13e. Medication:",
+                  "id": "q13e",
                   "answers": [
                     {
                       "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
@@ -632,6 +645,11 @@
                       "type": "js_expression",
                       "failsWhenExpression": "isEmpty(myValue) && !isEmpty(q13a) && q13a === 'a899b35c-1350-11df-a1f1-0026b9348838'",
                       "message": "Patient on ARV as per question 13a. Please provide regimen."
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "q13a !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                     }
                   ]
                 }
@@ -2061,6 +2079,7 @@
             {
               "concept": "a89b6ce2-1350-11df-a1f1-0026b9348838",
               "label": "24b.Reason to Start ARVs:",
+              "id": "q24b",
               "answers": [
                 {
                   "concept": "c9778159-958b-4f59-9053-a6171074726f",
@@ -2085,6 +2104,11 @@
                   "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(q24a)&&!isEmpty(myValue)&&!arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'],q24a)",
                   "message": "You indicated patient is not (re)starting arvs, no reason for starting should be selected."
+                }
+              ],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "!arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'],q24a)"
                 }
               ]
             },
@@ -2229,11 +2253,17 @@
                       "failsWhenExpression": "!isEmpty(q24c_reason_drug_change)&&!isEmpty(myValue)&&(q24c_reason_drug_change!=='a890d1ba-1350-11df-a1f1-0026b9348838')",
                       "message": "You indicated patient is not changing/dose/substituting/stopping arvs due to toxicity, cause should be selected."
                     }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "q24c_reason_drug_change!=='a890d1ba-1350-11df-a1f1-0026b9348838'"
+                    }
                   ]
                 },
                 {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "24c.If toxicity: Other (specify):",
+                  "id": "q24cToxOther",
                   "type": "text",
                   "validators": [
                     {
@@ -2245,6 +2275,11 @@
                       "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(q24cToxicity)&&!isEmpty(myValue)&&(q24cToxicity!=='a8aaf3e2-1350-11df-a1f1-0026b9348838')",
                       "message": "You indicated patient is not changing /changing dose/substituting/stopping arvs due to other toxicity, other cause is not required."
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "q24cToxicity!=='a8aaf3e2-1350-11df-a1f1-0026b9348838'"
                     }
                   ]
                 }

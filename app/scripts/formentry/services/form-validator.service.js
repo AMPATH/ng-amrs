@@ -268,11 +268,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 var i = 0;
                 var fkey;
 
-                if (scope.options && scope.options.data && scope.options.data.id) {
-                    var fields = [];
-                    fields.push(params.field)
-                    addToListenersMetadata(scope.options.data.id, fields);
-                }
+                
 
                 if (params.field === 'gender' || params.field === 'sex') fkey = 'sex';
                 else fkey = CurrentLoadedFormService.getFieldKeyById(params.field, scope.fields)
@@ -304,6 +300,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         function getHideDisableExpressionFunction_JS(params) {
             return function ($viewValue, $modelValue, scope, element) {
                 var val = getFieldValueToValidate($viewValue, $modelValue, scope);
+                
+                if (scope.options && scope.options.data && scope.options.data.id) {
+                    var fields = service.extractQuestionIds(params.disableWhenExpression, CurrentLoadedFormService.formValidationMetadata);
+                    addToListenersMetadata(scope.options.data.id, fields);
+                }
 
                 var referencedQuestions = service.extractQuestionIds(params.disableWhenExpression, CurrentLoadedFormService.formValidationMetadata);
 
