@@ -8,9 +8,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         .module('app.formentry')
         .controller('FormentryCtrl', FormentryCtrl);
 
-    FormentryCtrl.$inject = ['$translate', 'dialogs', '$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'OpenmrsRestService', '$timeout', 'FormsMetaData', 'CurrentLoadedFormService'];
+    FormentryCtrl.$inject = ['$translate', 'dialogs', '$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'OpenmrsRestService', '$timeout', 'FormsMetaData', 'CurrentLoadedFormService','UtilRestService'];
 
-    function FormentryCtrl($translate, dialogs, $location, $rootScope, $stateParams, $state, $scope, FormentryService, OpenmrsRestService, $timeout, FormsMetaData, CurrentLoadedFormService) {
+    function FormentryCtrl($translate, dialogs, $location, $rootScope, $stateParams, $state, $scope, FormentryService, OpenmrsRestService, $timeout, FormsMetaData, CurrentLoadedFormService,UtilRestService) {
         FormentryService.currentFormModel = {};
         $scope.vm = {};
         $scope.vm.isBusy = true;
@@ -72,6 +72,35 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         */
 
         //8a79e511-edb1-4b9d-a94e-ab51e4f6528c
+        
+        //Checking user navigations
+        var userConfirmedChange=false;
+        var usedStateChange=false;
+         $scope.$on('$stateChangeStart', function(event,toState,toParams) {     
+           usedStateChange=true;       
+           if($scope.vm.form.$dirty){          
+            if(userConfirmedChange===false){ 
+              //prevent transition to new url before saving data          
+              event.preventDefault();       
+                var dialogPromise =dialogs.confirm('Changes Not Saved','Do you want to close this form?');        
+                  dialogPromise.result.then(function(btn){  
+                      userConfirmedChange=true;                       
+                    $state.go(toState.name, {onSuccessRout:toState, onSuccessParams:toParams})
+                    },function(btn){					
+                      //Prevent any transition to new url            
+                      event.preventDefault();
+                    userConfirmedChange=false;            
+                    });                         
+            }   
+           }           
+                     
+             
+       });
+       
+       if(usedStateChange===false){            
+              UtilRestService.confirmBrowserExit();                     
+       }
+       
         var params={uuid: $stateParams.encuuid };
         //var params = {uuid: '18a1f142-f2c6-4419-a5db-5f875020b887'};
         var encData;
