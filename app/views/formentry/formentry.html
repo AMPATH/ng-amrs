@@ -2,7 +2,7 @@
   <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
   <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">
-  <form name="vm.form" novalidate>
+
     <div class="breadcrumb">
       <h2>{{vm.patient.fullNames() | titlecase}} | Sex: {{vm.patient.gender()}} | Age: {{vm.patient.age()}} | Identifier: {{vm.patient.identifierFormatted()}}</h2>{{vm.encounterType}}
       - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}} {{vm.success}}</div>
@@ -12,18 +12,26 @@
       </h2>
     </div>
     <!-- Error messages Summary -->
-    <div ng-repeat="tab in vm.tabs" ng-show="vm.form.$submitted">
-      test
-      <formly-error-summary form="vm.form" fields="tab.form.fields"></formly-error-summary>
+    <div ng-repeat="tab in vm.formlyFields" ng-show="vm.form.$submitted">
+      <div ng-show="vm.form.$invalid &amp;&amp; tab.form.fields.length>0">
+        <h4 ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">
+          Errors on {{tab.title}}
+        </h4>
+        <formly-error-summary form="vm.form" fields="tab.form.fields"></formly-error-summary>
+      </div>
     </div>
 
-    <div style="color:red;">{{vm.error}}</div>
+    <div style="color:red;" ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">{{vm.errorMessage}}</div>
+    <div style="color:red;" >{{vm.errorSubmit}}</div>
+    <form name="vm.form" novalidate>
     <tabset>
       <tab ng-repeat="tab in vm.tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled" select="vm.tabSelected($index)">
         <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
       </tab>
     </tabset>
-    <div style="color:red;">{{vm.error}}</div>
+    <div style="color:red;" ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">{{vm.errorMessage}}</div>
+    <div style="color:red;" >{{vm.errorSubmit}}</div>
+
     <div style="text-align: center;">
       <button type="button" class="btn btn-default" ng-click="vm.activateTab('prev')" ng-disabled="vm.isFirstTab()">&lt;&lt;</button>
       <button type="submit" class="btn btn-primary submit-button" ng-click="vm.submit()">{{vm.submitLabel}}</button>
@@ -35,9 +43,11 @@
 
   <!--<h2>tabs</h2>
   <pre>{{vm.tabs | json}}</pre>-->
-   <!-- <h2>Model Value</h2>
-  <pre>{{vm.model | json}}</pre> -->
-  <!-- Put custom templates here -->
+<!--
+   <h2>Model Value</h2>
+  <pre>{{vm.model | json}}</pre>
+-->
+<!-- Put custom templates here -->
   <script type="text/ng-template" id="error-messages.html">
         <formly-transclude></formly-transclude>
         <div class="error-messages" ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched">
@@ -99,24 +109,22 @@
     body {margin: 20px}
     .formly-field {margin-bottom: 16px;}
     .formly-error-summary {margin-bottom: 20px;}
-    .color-error {color: #a94442;}
-    .color-success {color: #3c763d}
+    .color-error {color: red;}
+    .color-success {color: green}
   </style>
   <!-- The field here are the fields passed within the directives scope -->
     <div class="formly-error-summary">
-      <div ng-repeat="field in vm.fields | limitTo:5"
+    <!--
+    Allow all validations to be run on form submit only and when its rendered
+    Other custom validations will still run  when the field is touched anyway
+     -->
+      <div ng-repeat="field in vm.page_fields" ng-if="vm.form.$invalid &amp;&amp; vm.form.$submitted"
         ng-class="{'color-success': field.formControl.$valid, 'color-error': field.formControl.$invalid}">
         <div ng-show="field.formControl.$invalid" >
           <i class="glyphicon glyphicon-{{field.formControl.$invalid ? 'remove' : 'ok'}}"></i>
-          {{field.templateOptions.label}} is
           <span ng-if="field.formControl.$invalid">
-              has an Error! <!-- {{vm.getErrorAsList(field)}} -->
+              {{vm.getErrorAsList(field)}} ({{field.templateOptions.label}})
           </span>
-            <!--
-                 <span ng-if="field.formControl.$valid">
-                  valid!
-                </span>
-            -->
         </div>
       </div>
     </div>
