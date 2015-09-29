@@ -542,6 +542,7 @@
             {
               "concept": "04616f5d-b961-4f41-bbd7-bcc0dd235577",
               "label": "13d. Treatment Categories:",
+              "id": "q13d",
               "answers": [
                 {
                   "concept": "034047bd-3fa1-4b2a-b0f0-2787e9b9f7b3",
@@ -935,6 +936,7 @@
                 {
                   "concept": "2c363a0e-7cf9-42cd-9778-1301b09c4484",
                   "label": "16a. ARVs:",
+                  "id":"q16a",
                   "answers": [
                     {
                       "concept": "a8b0f882-1350-11df-a1f1-0026b9348838",
@@ -1033,6 +1035,7 @@
                 {
                   "concept": "115c744a-cf54-469f-bd5f-820352ffe9be",
                   "label": "16b. PCP Prophylaxis:",
+                  "id": "q16b",
                   "answers": [
                     {
                       "concept": "a8b0f882-1350-11df-a1f1-0026b9348838",
@@ -1131,6 +1134,7 @@
                 {
                   "concept": "ebfdb93a-9292-4245-9a27-0faf49545720",
                   "label": "16c. TB Prophylaxis:",
+                  "id": "q16c",
                   "answers": [
                     {
                       "concept": "a8b0f882-1350-11df-a1f1-0026b9348838",
@@ -1229,6 +1233,7 @@
                 {
                   "concept": "479decbd-e964-41c3-9576-98b39089ebd3",
                   "label": "16d. TB Treatment:",
+                  "id": "q16d",
                   "answers": [
                     {
                       "concept": "a8b0f882-1350-11df-a1f1-0026b9348838",
@@ -2546,6 +2551,7 @@
                 {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "25b.If toxicity, please provide cause: Other (specify):",
+                  "id": "q25OtherToxicity",
                   "type": "text",
                   "validators": [
                     {
@@ -2787,6 +2793,7 @@
                 {
                   "concept": "a8a176b4-1350-11df-a1f1-0026b9348838",
                   "label": "26b. If completed, date:",
+                  "id": "26bCompletedDate",
                   "type": "date",
                   "validators": [
                     {
@@ -2868,6 +2875,7 @@
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "26b.If toxicity, please provide cause: Other (specify):",
                   "type": "text",
+                  "id": "26bToxicityOther",
                   "validators": [
                     {
                       "type": "js_expression",
@@ -2930,6 +2938,7 @@
                   "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
                   "label": "26d. If on treatment: start date:",
                   "type": "date",
+                  "id": "26dStartDate",
                   "validators": [
                     {
                       "type": "date"

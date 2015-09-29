@@ -1828,7 +1828,7 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
     }
     if(obs_field.hide !== undefined)
     {
-      hideExpression_= FormValidator.getFieldValidator(obs_field.hide[0], getFieldById_Key);
+      hideExpression_= FormValidator.getHideDisableExpressionFunction(obs_field.hide[0]);
     }
     else {
       hideExpression_ = '';
@@ -1839,7 +1839,6 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
     {
       disableExpression_= FormValidator.getHideDisableExpressionFunction(obs_field.disable[0]);
     }
-    
     
     if(obs_field.disableExpression !== undefined){
        disableExpression_= FormValidator.getHideDisableExpressionFunction_JS(obs_field.disableExpression[0]);
