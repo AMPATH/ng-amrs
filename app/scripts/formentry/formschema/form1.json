@@ -936,7 +936,7 @@
                 {
                   "concept": "2c363a0e-7cf9-42cd-9778-1301b09c4484",
                   "label": "16a. ARVs:",
-                  "id":"q16a",
+                  "id": "q16a",
                   "answers": [
                     {
                       "concept": "a8b0f882-1350-11df-a1f1-0026b9348838",
@@ -2297,6 +2297,7 @@
                 {
                   "concept": "a89d26cc-1350-11df-a1f1-0026b9348838",
                   "label": "24d. Eligible for ARVs but not started:",
+                  "id": "q24d_",
                   "answers": [
                     {
                       "concept": "a89ce50e-1350-11df-a1f1-0026b9348838",
@@ -2322,7 +2323,13 @@
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "24d.Eligible for ARVs but not started: Other (specify):",
                   "type": "text",
-                  "validators": []
+                  "id": "q24dOther",
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "q24d_ !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
+                    }
+                  ]
                 }
               ]
             },
@@ -2400,13 +2407,18 @@
               "validators": [
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q24a) && isEmpty(myValue)&&arrayContains(['a898c938-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'],q24a)",
+                  "failsWhenExpression": "!isEmpty(q24a) && isEmpty(myValue)&&arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'],q24a)",
                   "message": "Based on the plan selected, you must choose a regimen."
                 },
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q24a) && !isEmpty(myValue)&&!arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838','a89b7908-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'],q24a)",
+                  "failsWhenExpression": "!isEmpty(myValue)&& !arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'],q24a)",
                   "message": "Based on the plan selected, you may not choose a regimen."
+                }
+              ],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "!arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'],q24a)"
                 }
               ]
             }
@@ -2486,6 +2498,11 @@
                       "failsWhenExpression": "!isEmpty(q25a)&&!isEmpty(myValue)&&(!arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'],q25a))",
                       "message": "Patient has not changed drugs, please do not select a reason."
                     }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "!arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'],q25a)"
+                    }
                   ]
                 },
                 {
@@ -2546,6 +2563,11 @@
                       "failsWhenExpression": "!isEmpty(q25b)&&!isEmpty(myValue)&&(q25b!=='a890d1ba-1350-11df-a1f1-0026b9348838')",
                       "message": "You indicated patient is not changing/dose/substituting/stopping PCP due to toxicity, cause should not be selected."
                     }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "q25b!=='a890d1ba-1350-11df-a1f1-0026b9348838'"
+                    }
                   ]
                 },
                 {
@@ -2558,6 +2580,11 @@
                       "type": "js_expression",
                       "failsWhenExpression": "!(isEmpty(qPcptoxicity)&&isEmpty(myValue))&&(qPcptoxicity==='a8aaf3e2-1350-11df-a1f1-0026b9348838')",
                       "message": "You indicated patient is changing /changing dose/substituting/stopping arvs due to other toxicity, indicate the other cause."
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "qPcptoxicity!=='a8aaf3e2-1350-11df-a1f1-0026b9348838'"
                     }
                   ]
                 }
@@ -2788,6 +2815,11 @@
                       "failsWhenExpression": "(isEmpty(26a_TB_Treatment_plan) || !arrayContains(['a89b7d36-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838'], 26a_TB_Treatment_plan)) && !isEmpty(myValue)",
                       "message": "You indicated patient is not stopping, changing or re-dosing tb medication, therefore reason should not be selected."
                     }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "!arrayContains(['a89b7d36-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838'], 26a_TB_Treatment_plan)"
+                    }
                   ]
                 },
                 {
@@ -2808,6 +2840,11 @@
                       "type": "js_expression",
                       "failsWhenExpression": "(isEmpty(26b_If_plan) || !arrayContains(['a89c1ef8-1350-11df-a1f1-0026b9348838'], 26b_If_plan)) && !isEmpty(myValue)",
                       "message": "You indicated patient did not completed tb medication, therefore date completed is not to be indicated."
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "!arrayContains(['a89c1ef8-1350-11df-a1f1-0026b9348838'], 26b_If_plan)"
                     }
                   ]
                 },
@@ -2869,6 +2906,11 @@
                       "failsWhenExpression": "(isEmpty(26b_If_plan) || !arrayContains(['a890d1ba-1350-11df-a1f1-0026b9348838'], 26b_If_plan)) && !isEmpty(myValue)",
                       "message": "You indicated patient did not change tb medication because of toxicity, therefore cause should not be selected."
                     }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "!arrayContains(['a890d1ba-1350-11df-a1f1-0026b9348838'], 26b_If_plan)"
+                    }
                   ]
                 },
                 {
@@ -2886,6 +2928,11 @@
                       "type": "js_expression",
                       "failsWhenExpression": "(isEmpty(26b_If_toxicity) || !arrayContains(['a8aaf3e2-1350-11df-a1f1-0026b9348838'], 26b_If_toxicity)) && !isEmpty(myValue)",
                       "message": "You indicated patient did not change tb medication because of other toxicity, therefore other cause should not be indicated."
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "!arrayContains(['a8aaf3e2-1350-11df-a1f1-0026b9348838'], 26b_If_toxicity)"
                     }
                   ]
                 }
@@ -2952,6 +2999,11 @@
                       "type": "js_expression",
                       "failsWhenExpression": "(isEmpty(q15a) || !arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], q15a)) && !isEmpty(myValue)",
                       "message": "You indicated patient is not on tb treatment, therefore start date should not be indicated."
+                    }
+                  ],
+                   "disableExpression": [
+                    {
+                      "disableWhenExpression": "!arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], q15a)"
                     }
                   ]
                 }
