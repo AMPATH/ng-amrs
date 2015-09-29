@@ -25,6 +25,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         $scope.vm.tabs = [];
         $scope.vm.encounter;
         $scope.vm.encData;
+        $scope.vm.savedOrUpdated=false;
 
         $scope.vm.currentTab = 0;
 
@@ -78,7 +79,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         var usedStateChange=false;
           $scope.$on('$stateChangeStart', function(event,toState,toParams) {     
            usedStateChange=true;       
-           if($scope.vm.form.$dirty){          
+           if($scope.vm.form.$dirty&&$scope.vm.savedOrUpdated===false){          
             if(userConfirmedChange===false){ 
               //prevent transition to new url before saving data          
               event.preventDefault();       
@@ -127,6 +128,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         $scope.vm.cancel = function()
         {
           console.log($state);
+          $scope.vm.savedOrUpdated=true;
           var dlg = dialogs.confirm('Close Form', 'Do you want to close this form?');
 					dlg.result.then(function(btn){
 						$location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
@@ -140,6 +142,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
           //  $scope.vm.error = FormentryService.validateForm($scope.vm.userFields);
             // console.log('Checking form Validity')
             // console.log($scope.vm.form.$valid);
+            $scope.vm.savedOrUpdated=true;
             console.log($scope.vm.form)
 
             if ($scope.vm.form.$valid)
@@ -163,6 +166,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                         if($scope.vm.submitLabel === 'Update')
                         {
                           // console.log('Trying to void/update obs')
+                          $scope.vm.savedOrUpdated=true;
                           var cPayload = angular.copy(payLoad)
                           voidObs(cPayload);
                           updateObs(cPayload);
