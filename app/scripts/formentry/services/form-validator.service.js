@@ -23,9 +23,12 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             getFieldValidators: getFieldValidators,
             getHideDisableExpressionFunction: getHideDisableExpressionFunction,
             getConditionalRequiredExpressionFunction: getConditionalRequiredExpressionFunction,
-            getConditionalAnsweredValidatorObject:getConditionalAnsweredValidatorObject,
+            getConditionalAnsweredValidatorObject: getConditionalAnsweredValidatorObject,
             getDateValidatorObject: getDateValidatorObject,
-            getJsExpressionValidatorObject: getJsExpressionValidatorObject
+            getJsExpressionValidatorObject: getJsExpressionValidatorObject,
+            getHideDisableExpressionFunction_JS: getHideDisableExpressionFunction_JS,
+            addToListenersMetadata: addToListenersMetadata,
+            updateListeners: updateListeners
         }
 
         return service;
@@ -119,9 +122,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
             var validator = new Validator('"' + params.message + '"',
                 function (viewValue, modelValue, elementScope) {
-                    
-                    var val = getFieldValueToValidate(viewValue, modelValue, elementScope);                 
-                    
+
+                    var val = getFieldValueToValidate(viewValue, modelValue, elementScope);
+
+                    if (elementScope.options && elementScope.options.data && elementScope.options.data.id) {
+                        var fields = service.extractQuestionIds(params.failsWhenExpression, CurrentLoadedFormService.formValidationMetadata);
+                        addToListenersMetadata(elementScope.options.data.id, fields);
+                    }
+
                     var referencedQuestions = service.extractQuestionIds(params.failsWhenExpression, CurrentLoadedFormService.formValidationMetadata);
 
                     var keyValue = {};
@@ -151,6 +159,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         }
 
+
         function getFieldValueToValidate(viewValue, modelValue, elementScope) {
             var val = viewValue || modelValue;
                     
@@ -173,7 +182,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                 val = mergedOptions;
             }
-            
+
             return val;
         }
 
@@ -255,6 +264,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             var result;
             var results;
 
+
+
             return (function ($viewValue, $modelValue, scope, element) {
                 //if element is undefined then we are looking for a disable expression
                 //if element is defined then we are looking for a hide expression
@@ -262,8 +273,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 var i = 0;
                 var fkey;
 
+
+
                 if (params.field === 'gender' || params.field === 'sex') fkey = 'sex';
-                else fkey = CurrentLoadedFormService.getFieldKeyByIdFunction(params.field, scope.fields)
+                else fkey = CurrentLoadedFormService.getFieldKeyById(params.field, scope.fields)
 
                 _.each(params.value, function (val) {
 
@@ -284,11 +297,85 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         CurrentLoadedFormService.clearQuestionValueByKey(scope.model, scope.options.key);
                     }
                 }
+                console.log('hide/disable', results);
                 return results;
             });
         }
 
+        function getHideDisableExpressionFunction_JS(params) {
+            return function ($viewValue, $modelValue, scope, element) {
+                var val = getFieldValueToValidate($viewValue, $modelValue, scope);
 
+                if (scope.options && scope.options.data && scope.options.data.id) {
+                    var fields = service.extractQuestionIds(params.disableWhenExpression, CurrentLoadedFormService.formValidationMetadata);
+                    addToListenersMetadata(scope.options.data.id, fields);
+                }
+
+                var referencedQuestions = service.extractQuestionIds(params.disableWhenExpression, CurrentLoadedFormService.formValidationMetadata);
+
+                var keyValue = {};
+
+                _.each(referencedQuestions, function (qId) {
+                    if (keyValue[qId] === undefined) {
+                        var referenceQuestionkey = CurrentLoadedFormService.getFieldKeyFromGlobalById(qId);
+                        var referenceQuestionCurrentValue = CurrentLoadedFormService.getAnswerByQuestionKey(CurrentLoadedFormService.formModel, referenceQuestionkey);
+                        keyValue[qId] = referenceQuestionCurrentValue;
+                    }
+                });
+
+                var expressionToEvaluate = service.replaceQuestionsPlaceholdersWithValue(params.disableWhenExpression, keyValue);
+
+                expressionToEvaluate = service.replaceMyValuePlaceholdersWithActualValue(expressionToEvaluate, val);
+                console.log('Evaluates val', val);
+                console.log('Evaluates model', scope);
+                console.log('expressionToEvaluate', expressionToEvaluate);
+
+                var isDisabled = service.evaluateExpression(expressionToEvaluate);
+
+                console.log('isDisabled', isDisabled);
+
+                if (isDisabled === true) {
+                    if (element) {
+                        //case hide
+                        CurrentLoadedFormService.clearQuestionValueByKey(scope.model, element.options.key);
+                    }
+                    else {
+                        //case disable
+                        CurrentLoadedFormService.clearQuestionValueByKey(scope.model, scope.options.key);
+                    }
+                }
+
+                return isDisabled;
+            }
+        }
+
+        function addToListenersMetadata(listenerId, fieldsIds) {
+            _.each(fieldsIds, function (fieldId) {
+                if (CurrentLoadedFormService.listenersMetadata[fieldId] === undefined) {
+                    console.log('adding listeners entry', fieldId);
+                    CurrentLoadedFormService.listenersMetadata[fieldId] = [];
+                }
+                if (CurrentLoadedFormService.listenersMetadata[fieldId].indexOf(listenerId) < 0) {
+                    console.log('adding to listeners', listenerId);
+                    CurrentLoadedFormService.listenersMetadata[fieldId].push(listenerId);
+                }
+                console.log('listeners', CurrentLoadedFormService.listenersMetadata);
+            });
+        }
+
+        function updateListeners(fieldId, getFieldById_Key) {
+            if (CurrentLoadedFormService.listenersMetadata[fieldId] !== undefined) {
+                _.each(CurrentLoadedFormService.listenersMetadata[fieldId], function (listenerId) {
+                    var field = getFieldById_Key(listenerId);
+                    if (field.runExpressions) {
+                        field.runExpressions();
+                    }
+                    if(field.formControl){
+                        field.formControl.$validate();
+                    }
+                });
+            }
+        }
 
 
         function Validator(message, expressionFunction) {

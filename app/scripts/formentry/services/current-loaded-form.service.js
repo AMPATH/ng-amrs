@@ -16,6 +16,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         var service = {
             formModel: {},
             formValidationMetadata: {},
+            listenersMetadata: {},
             clearQuestionValueByKey: clearQuestionValueByKey,
             getAnswerByQuestionKey: getAnswerByQuestionKey,
             getContainingObjectForQuestionKey: getContainingObjectForQuestionKey,
