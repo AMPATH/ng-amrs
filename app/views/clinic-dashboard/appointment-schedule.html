@@ -60,14 +60,12 @@
           <th></th>
           <th>Identifier</th>
           <th>Name</th>
-
         </tr>
         </thead>
-        <tr class="slide-animation" ng-repeat="patient in customPatients | filter:searchString | startFrom:(currentPage-1)*10 | limitTo:10" data-ng-click="loadPatient(patient.uuid)">
+        <tr  ng-repeat="patient in customPatients | filter:searchString | startFrom:(currentPage-1)*10 | limitTo:10" ng-class="{ warning: patient.status}" data-ng-click="loadPatient(patient.uuid)">
           <td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
           <td>{{patient.identifier}}</td>
           <td>{{patient.name | titlecase}}</td>
-
           <td>
             <a href="#/patient/{{patient.uuid}}"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
           </td>
