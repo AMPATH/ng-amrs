@@ -76,7 +76,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         //Checking user navigations
         var userConfirmedChange=false;
         var usedStateChange=false;
-         $scope.$on('$stateChangeStart', function(event,toState,toParams) {     
+          $scope.$on('$stateChangeStart', function(event,toState,toParams) {     
            usedStateChange=true;       
            if($scope.vm.form.$dirty){          
             if(userConfirmedChange===false){ 
@@ -89,12 +89,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     },function(btn){					
                       //Prevent any transition to new url            
                       event.preventDefault();
-                    userConfirmedChange=false;            
-                    });                         
-            }   
-           }           
-                     
-             
+                      userConfirmedChange=false;            
+                       });                         
+               }   
+           }                    
        });
        
        if(usedStateChange===false){            
