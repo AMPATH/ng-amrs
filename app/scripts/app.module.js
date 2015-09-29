@@ -92,9 +92,10 @@
         });
 
 
-    }).run(function ($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings, EtlRestServicesSettings) {
+    }).run(function ($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings, EtlRestServicesSettings,UtilRestService) {
 
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+        
         //check whether selection of url base is required first
         var hasPersistedCurrentUrl = OpenmrsSettings.hasCoockiePersistedCurrentUrlBase() && EtlRestServicesSettings.hasCoockiePersistedCurrentUrlBase();
         
@@ -115,6 +116,9 @@
 
         //else navigate to page
       });
+     
+      UtilRestService.disableBackSpaceOnNoneInputElements();
+     
       // add provision of tracking various states for easy navigation and public variables of interest
       $rootScope.previousState;
       $rootScope.previousStateParams;
