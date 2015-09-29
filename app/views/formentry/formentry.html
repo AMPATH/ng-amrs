@@ -12,13 +12,9 @@
       </h2>
     </div>
     <!-- Error messages Summary -->
-    <div ng-repeat="tab in vm.formlyFields" ng-show="vm.form.$submitted">
-      <div ng-show="vm.form.$invalid &amp;&amp; tab.form.fields.length>0">
-        <h4 ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">
-          Errors on {{tab.title}}
-        </h4>
-        <formly-error-summary form="vm.form" fields="tab.form.fields"></formly-error-summary>
-      </div>
+    <div data-ng-repeat="tab in vm.formlyFields" data-ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">
+      <h4 data-ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">Error(s) on {{tab.title}}</h4>
+      <formly-error-summary form="vm.form" fields="tab.form.fields"></formly-error-summary>
     </div>
 
     <div style="color:red;" ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">{{vm.errorMessage}}</div>
@@ -118,11 +114,11 @@
     Allow all validations to be run on form submit only and when its rendered
     Other custom validations will still run  when the field is touched anyway
      -->
-      <div ng-repeat="field in vm.page_fields" ng-if="vm.form.$invalid &amp;&amp; vm.form.$submitted"
+      <div data-ng-repeat="field in vm.page_fields" data-ng-if="vm.form.$invalid &amp;&amp; vm.form.$submitted"
         ng-class="{'color-success': field.formControl.$valid, 'color-error': field.formControl.$invalid}">
-        <div ng-show="field.formControl.$invalid" >
+        <div data-ng-show="field.formControl.$invalid" >
           <i class="glyphicon glyphicon-{{field.formControl.$invalid ? 'remove' : 'ok'}}"></i>
-          <span ng-if="field.formControl.$invalid">
+          <span data-ng-if="field.formControl.$invalid">
               {{vm.getErrorAsList(field)}} ({{field.templateOptions.label}})
           </span>
         </div>
