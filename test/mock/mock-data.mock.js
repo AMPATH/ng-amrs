@@ -14,6 +14,8 @@
               getMockSchema: getMockSchema,
               getMockStates: getMockStates,
               getMockObs: getMockObs,
+              getMockPersonAttribute:getMockPersonAttribute,
+              getMockPersonAttributesArray:getMockPersonAttributesArray,
               getMockModel: getMockModel,
               getMockPatient: getMockPatient,
               getMockObsField:getMockObsField,
@@ -49,7 +51,7 @@
                 postalCode: null,
                 preferred: true,
                 stateProvince: null},
-              attributes: '_attributes'
+                attributes: '_attributes'
             },
             uuid: 'xxxx',
             };
@@ -81,8 +83,7 @@
             return testLocations;
           }
 
-          function getMockObs()
-          {
+          function getMockObs()  {
             return {
                 uuid: 'passed-uuid',
                 display: 'PROBLEM RESOLVED: MALARIA',
@@ -92,7 +93,47 @@
                   }
                 };
           }
-
+          
+          function getMockPersonAttribute () {
+            return {
+           results: [{
+                        display:  'Health Center 2 = 9',
+                        uuid:  'passed-uuid',
+                        value: {
+                        uuid:  'location1-uuid',
+                        display:  'Location 5 = 5'                    
+                        } ,
+                        attributeType: {
+                        uuid:  'fb121d9dc370',
+                        display:  'Health Center 2'                    
+                        } 
+                    },
+                    {
+                        display:  'Health Center = 4',
+                        uuid:  'passed-uuid-2',
+                        value: {
+                        uuid:  'location2-uuid',
+                        display:  'Location 9 '                    
+                        } ,
+                        attributeType: {
+                        uuid:  '8d87236c-c2cc-11de-8d13-0010c6dffd0f',
+                        display:  'Health Center 2'                    
+                        } 
+                    }]
+            };
+          }
+          
+          function getMockPersonAttributesArray() {
+              var testData=[{'uuid':'f123244d-8f1d-4430-9191-98ce60f3723b',
+                  'attributeType':'8d87236c-c2cc-11de-8d13-0010c6dffd0f','name':'Health Center',
+                  'value':{'uuid':'c09380bc-1691-11df-97a5-7038c432aabf','display':'Location-5'}},                  
+                  {'uuid':'413e25e9-12ad-4cbe-8197-d487e2da1959','attributeType':'7ef225db-94db-4e40-9dd8-fb121d9dc370','name':'Health Center 2',
+                  'value':{'uuid':'c093879e-1691-11df-97a5-7038c432aabf','display':'Location-9'}}];
+                  return testData;
+              
+              
+          }
+          
           function getMockStates() {
               return [
                   {
@@ -187,7 +228,13 @@
                             "type": "date",
                             "validators": [ {"type": "date", "allowFutureDates": "true"} ],
                             "label": "7b. If Unscheduled, actual scheduled date"
-                          }
+                          },
+                          {
+                            "attributeType": "7ef225db-94db-4e40-9dd8-fb121d9dc370",
+                            "label": "6 Transfer in from other AMPATH clinic (specify):",
+                            "type": "location-attribute",
+                            "validators": []
+                        }
                         ]
                       },
                       {
@@ -220,7 +267,8 @@
         "section_1": {
           "encounterDate": "2015-08-18T00:00:00.000+0300",
           "encounterProvider": "5d13dddc-1359-11df-a1f1-0026b9348838",
-          "encounterLocation": "00b47ef5-a29b-40a2-a7f4-6851df8d6532"
+          "encounterLocation": "00b47ef5-a29b-40a2-a7f4-6851df8d6532",
+          "personAttribute2_7ef225dbn94dbn4e40n9dd8nfb121d9dc370": "c093879e-1691-11df-97a5-7038c432aabf"
         },
         "section_2": {
           "obs_a89ff9a6-1350-11df-a1f1-0026b9348838": "a89b6440-1350-11df-a1f1-0026b9348838",

@@ -159,17 +159,11 @@
           "label": "Transfer details:",
           "questions": [
             {
-              "concept": "0f8b7f4e-1656-46b7-bc93-d1fe4f193f5d",
-              "type": "group",
-              "questions": [
-                {
-                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "attributeType": "7ef225db-94db-4e40-9dd8-fb121d9dc370",
                   "label": "3. Transfer in from other clinic (specify):",
-                  "type": "text",
-                  "validators": {}
-                }
-              ]
-            }
+                  "type": "location-attribute",
+                  "validators": []
+             }
           ]
         },
         {
@@ -4259,7 +4253,13 @@
                   ],
                   "type": "multiCheckbox",
                   "validators": []
-                }
+                },
+                {
+                  "attributeType": "8d87236c-c2cc-11de-8d13-0010c6dffd0f",
+                  "label": "27 Transfer care to other centre: specify Name",
+                  "type": "location-attribute",
+                  "validators": []
+             }
               ]
             }
           ]

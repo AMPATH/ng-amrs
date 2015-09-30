@@ -11,6 +11,7 @@
   describe('Open MRS Location Service Unit Tests', function () {
     beforeEach(function () {
       module('app.openmrsRestServices');
+      module('app.etlRestServices');
     });
 
     var callbacks;
@@ -18,11 +19,13 @@
     var httpBackend;
     var locationService;
     var settingsService;
+    var etlSettingsService;
     var testLocations;
     beforeEach(inject(function ($injector) {
       httpBackend = $injector.get('$httpBackend');
       locationService = $injector.get('LocationResService');
       settingsService = $injector.get('OpenmrsSettings');
+      etlSettingsService = $injector.get('EtlRestServicesSettings');
     }));
 
     beforeEach(inject(function () {
@@ -68,6 +71,10 @@
 
     it('should have Location service defined', function () {
       expect(locationService).to.exist;
+    });
+    
+    it('should have EtlSettings Service defined', function () {
+      expect(etlSettingsService).to.exist;
     });
 
     it('should make an api call to the location resource when getLocationByUuid is called with a uuid', function () {
@@ -165,6 +172,13 @@
       expect(callbacks.message).to.exist;
       expect(callbacks.message.trim()).not.to.equal('');
     });
-
+    
+    it('should make an api call to the  is called with a uuid', function () {               
+            httpBackend.expectGET(etlSettingsService.getCurrentRestUrlBase()+'custom_data/location/uuid/passed-uuid').respond({t:1,e:3});
+            locationService.getLocationByUuidFromEtl('passed-uuid', function (data){            
+         });
+         httpBackend.flush();
+      });
+      
   });
 })();
