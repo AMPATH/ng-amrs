@@ -146,6 +146,35 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
     it('should set default custom representation', function() {
         visitResService.defaultCustomRep('test representation');
         expect(visitResService.defaultCustomRep()).to.equal('test representation');
-    });     
+    }); 
+    
+    it('getVisitEncounters should return list of encounters', function() {
+        /* jshint ignore:start */
+        var response = {
+            "encounters": [{
+                    "uuid": "encounter-1-uuid",
+                }, {
+                    "uuid": "encounter-2-uuid"
+                }
+            ]
+        };
+        /* jshint ignore:end */
+        var defaultRep = 'custom:(encounters:(uuid,patient:(uuid,uuid),' +
+                'encounterDatetime,form:(uuid,name),encounterType:(uuid,name),' +
+                'encounterProviders:(uuid,uuid,provider:(uuid,name),' +
+                'encounterRole:(uuid,name)),' +
+                'visit:(uuid,visitType:(uuid,name))))';
+        
+        var params = {
+            visitUuid: 'visit-test-uuid',
+        };
+        httpBackend.expectGET(testRestUrl + 'visit/' + params.visitUuid + '?v='+
+            defaultRep).respond(response);
+        
+        visitResService.getVisitEncounters(params, function(encounters) {
+            expect(encounters).to.be.array;
+            expect(encounters.length).to.equal(response.encounters.length);
+        });
+    });    
   });
 })();
