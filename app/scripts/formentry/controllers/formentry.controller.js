@@ -8,9 +8,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         .module('app.formentry')
         .controller('FormentryCtrl', FormentryCtrl);
 
-    FormentryCtrl.$inject = ['$translate', 'dialogs', '$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'OpenmrsRestService', '$timeout', 'FormsMetaData', 'CurrentLoadedFormService','UtilRestService', '$loading'];
 
-    function FormentryCtrl($translate, dialogs, $location, $rootScope, $stateParams, $state, $scope, FormentryService, OpenmrsRestService, $timeout, FormsMetaData, CurrentLoadedFormService,UtilRestService, $loading) {
+    FormentryCtrl.$inject = ['$translate', 'dialogs', '$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'OpenmrsRestService', '$timeout', 'FormsMetaData', 'CurrentLoadedFormService','UtilRestService','$loading','PersonAttributesRestService'];
+
+    function FormentryCtrl($translate, dialogs, $location, $rootScope, $stateParams, $state, $scope, FormentryService, OpenmrsRestService, $timeout, FormsMetaData, CurrentLoadedFormService, UtilRestService, $loading, PersonAttributesRestService) {
+
         FormentryService.currentFormModel = {};
         $scope.vm = {};
         $scope.vm.isBusy = true;
@@ -134,7 +136,15 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             $scope.vm.savedOrUpdated=true;
             if ($scope.vm.form.$valid) {
               var form = selectedForm;
-              var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.tabs, $scope.vm.patient,form,params);
+
+              // console.log($stateParams.formuuid)
+              // console.log('Selected Form');
+              console.log('current tabs',$scope.vm.tabs);
+              console.log('Original tabs',$scope.vm.formlyFields);
+              var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.formlyFields, $scope.vm.patient,form,params.uuid);
+              console.log('Alfayo TTTTT')
+              var personAttributes=PersonAttributesRestService.getPersonAttributeFieldValues($scope.vm.model, $scope.vm.formlyFields, $scope.vm.patient);
+
               console.log(payLoad);
               if (!_.isEmpty(payLoad.obs)) {
                   /*
