@@ -33,9 +33,9 @@
       name: 'customInput',
       extends: 'input',
       apiCheck: function(){
-        templateOptions: formlyApiCheck.shape({
+        formlyApiCheck.shape({
           foo: formlyApiCheck.string.optional
-        })
+      });
       }
     });
 
@@ -43,9 +43,9 @@
       name: 'datepicker',
       extends: 'input',
       apiCheck: function(){
-        templateOptions: formlyApiCheck.shape({
+        formlyApiCheck.shape({
           foo: formlyApiCheck.string.optional
-        })
+      });
       }
     });
 
@@ -53,9 +53,9 @@
       name: 'section',
       extends: 'input',
       apiCheck: function(){
-        templateOptions: formlyApiCheck.shape({
+        formlyApiCheck.shape({
           foo: formlyApiCheck.string.optional
-        })
+      });
       }
     });
 

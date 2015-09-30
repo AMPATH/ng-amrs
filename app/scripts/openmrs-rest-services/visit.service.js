@@ -15,6 +15,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
           getVisitByUuid: getVisitByUuid,
           getPatientVisits: getPatientVisits,
           saveVisit: saveOrUpdateVisit,
+          getVisitEncounters: getVisitEncounters,
           defaultCustomRep: new DefaultCustomRep().getterSetter
       };
 
@@ -107,6 +108,34 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
                   }
               });
           }
+      }
+      
+      //Get encounters for a given Visit
+      function getVisitEncounters(params, successCallback, errorCallBack) {
+          var rep = 'custom:(encounters:(uuid,patient:(uuid,uuid),' +
+                  'encounterDatetime,form:(uuid,name),encounterType:(uuid,name),' +
+                  'encounterProviders:(uuid,uuid,provider:(uuid,name),' +
+                  'encounterRole:(uuid,name)),' +
+                  'visit:(uuid,visitType:(uuid,name))))';
+          
+          var visitUuid=null;
+          if(angular.isDefined(params) && typeof params === 'object') {
+              visitUuid = params.visitUuid;
+          } else {
+              //Assume string passed
+              visitUuid = params;
+          }
+      
+          Restangular.one('visit', visitUuid).get({v:rep}).then(function(data) {
+              if(angular.isDefined(data.encounters)) {
+                  data = data.encounters.reverse();
+              }      
+              _successCallbackHandler(successCallback, data);
+          }, function(error) {
+              if(typeof errorCallBack === 'function') {
+                  errorCallBack(error);
+              }
+          });
       }
       
       function DefaultCustomRep() {
