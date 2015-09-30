@@ -12,9 +12,9 @@ jshint -W003,-W109, -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W11
 
   function LocationResService(OpenmrsSettings, $resource) {
     var serviceDefinition;
-    
+
     var cachedLocations = [];
-    
+
     serviceDefinition = {
       initialize:initialize,
       getResource: getResource,
@@ -25,13 +25,12 @@ jshint -W003,-W109, -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W11
       findLocation: findLocation,
       cachedLocations: cachedLocations
     };
-    
+
     return serviceDefinition;
-    
+
     function initialize(){
       getLocations(function() {},function() {});
     }
-    
 
     function getResource() {
       return $resource(OpenmrsSettings.getCurrentRestUrlBase().trim() + 'location/:uuid',
@@ -74,7 +73,7 @@ jshint -W003,-W109, -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W11
           console.error(error);
         });
     }
-    
+
     function getLocations(successCallback, failedCallback, refreshCache) {
       var resource = getListResource();
       //console.log(serviceDefinition.cachedLocations);
@@ -82,7 +81,7 @@ jshint -W003,-W109, -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W11
         successCallback(serviceDefinition.cachedLocations);
         return { results: serviceDefinition.cachedLocations };
       }
-      
+
       return resource.get().$promise
         .then(function (response) {
           serviceDefinition.cachedLocations = response.results ? response.results : response;

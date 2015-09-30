@@ -59,13 +59,45 @@
       modelDefinition.identifierFormatted = function(value){
 
         if(_identifier.length > 0) {
-          return _identifier[0].display.split('=')[1];
+          //return _identifier[0].display.split('=')[1];
+          return _identifier[0].identifier;
         }
         else{
           return _identifier = '';
         }
 
       };
+
+      modelDefinition.ampathMrsUId = function(value) {
+        var type='AMRS Universal ID';
+        if(_identifier.length > 0) {
+          return getIdentifierByType(_identifier, type);
+        }
+        else{
+          return '';
+        }
+      };
+
+      modelDefinition.amrsMrn = function(value) {
+        var type='AMRS Medical Record Number';
+        if(_identifier.length > 0) {
+          return getIdentifierByType(_identifier, type);
+        }
+        else{
+          return '';
+        }
+      };
+
+      modelDefinition.kenyaNationalId = function(value) {
+        var type='KENYAN NATIONAL ID NUMBER';
+        if(_identifier.length > 0) {
+          return getIdentifierByType(_identifier, type);
+        }
+        else{
+          return '';
+        }
+      };
+
       modelDefinition.uuid = function(value){
         if(angular.isDefined(value)){
           _uuid = value;
@@ -236,6 +268,16 @@
           return _dead;
         }
       };
+
+      function getIdentifierByType(identifierObject, identifierUuid ) {
+        for (var e in identifierObject) {
+          var uuid = identifierObject[e].identifierType.name;
+          var id = identifierObject[e].identifier;
+          if (uuid ===identifierUuid) {
+            return id;
+          }
+        }
+      }
 
       modelDefinition.openmrsModel = function(value){
         return {
