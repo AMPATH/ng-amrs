@@ -17,7 +17,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
         uuid:'visit-test-uuid',
         patient: 'test-patient-uuid'
       }
-      
+
       /* jshint ignore:start */
       var singleResponse = {
           "uuid": "visit-test-uuid",
@@ -29,8 +29,8 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
             }
           ]
      };
-     
-     
+
+
      var visitsResponse = {
       "results": [
         {
@@ -75,47 +75,47 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
 
     it('Should call the appropriate rest end point when getVisitByUuid is' +
         'called', function() {
-        httpBackend.expectGET(testRestUrl + 'visit/visit-test-uuid?v=' + 
+        httpBackend.expectGET(testRestUrl + 'visit/visit-test-uuid?v=' +
         visitResService.defaultCustomRep()).respond(singleResponse);
-        
+
         visitResService.getVisitByUuid('visit-test-uuid', function(data) {
             expect(data.uuid).to.equal(singleResponse.uuid);
         });
         httpBackend.flush();
     });
-    
+
     it('getPatientVisits() should return a list of patient visits', function() {
         httpBackend.expectGET(testRestUrl + 'visit?patient=test-patient-uuid' +
             '&v=' + visitResService.defaultCustomRep()).respond(visitsResponse);
-            
+
         visitResService.getPatientVisits('test-patient-uuid', function(data) {
             expect(data).to.be.array;
             expect(data.length).to.equal(visitsResponse.results.length);
         });
-        httpBackend.flush();    
+        httpBackend.flush();
     });
-    
+
     it('getPatientVisits should return visits given object params', function() {
         httpBackend.expectGET(testRestUrl + 'visit?patient=test-patient-uuid' +
             '&v=' + visitResService.defaultCustomRep()).respond(visitsResponse);
-        
+
         var params = {
             'patientUuid': 'test-patient-uuid'
-        }    
+        }
         visitResService.getPatientVisits(params, function(data) {
             expect(data).to.be.array;
             expect(data.length).to.equal(visitsResponse.results.length);
         });
         httpBackend.flush();
     })
-    
+
     it('saveVisit should create a new visit', function() {
         var payload = {
             'patient': 'test-patient-uuid',
             'visitType': 'visittype-test-uuid',
             'startDatetime': '2015-09-22 08:30:00'
         };
-                
+
         httpBackend.expectPOST(testRestUrl + 'visit', payload)
             .respond(singleResponse);
         visitResService.saveVisit(payload, function(data) {
@@ -124,30 +124,30 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
         });
         httpBackend.flush();
     });
-    
+
     it('saveVisit should update an existing visit', function() {
         var payload = {
             'uuid': 'visit-test-uuid',
             'location': 'test-location-uuid'
         };
-        
+
         var expected = { 'location': payload.location };
-        
+
         httpBackend.expectPOST(testRestUrl + 'visit/'+payload.uuid, expected)
             .respond(payload);
-        
+
         visitResService.saveVisit(payload, function(data) {
             expect(data).to.be.object;
             expect(data.location).to.equal('test-location-uuid');
         });
-        httpBackend.flush();    
-    }); 
-    
+        httpBackend.flush();
+    });
+
     it('should set default custom representation', function() {
         visitResService.defaultCustomRep('test representation');
         expect(visitResService.defaultCustomRep()).to.equal('test representation');
-    }); 
-    
+    });
+
     it('getVisitEncounters should return list of encounters', function() {
         /* jshint ignore:start */
         var response = {
@@ -164,18 +164,18 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
                 'encounterProviders:(uuid,uuid,provider:(uuid,name),' +
                 'encounterRole:(uuid,name)),location:(uuid,name),' +
                 'visit:(uuid,visitType:(uuid,name))))';
-        
+
         var params = {
             visitUuid: 'visit-test-uuid',
         };
         httpBackend.expectGET(testRestUrl + 'visit/' + params.visitUuid + '?v='+
             defaultRep).respond(response);
-        
+
         visitResService.getVisitEncounters(params, function(encounters) {
             expect(encounters).to.be.array;
             expect(encounters.length).to.equal(response.encounters.length);
         });
-    });    
+    });
 
     it('getVisitTypes should return list of visit types', function() {
         /* jshint ignore: start */
@@ -198,11 +198,11 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
         var defaultCustomRep = 'custom:(uuid,name,description)';
         httpBackend.expectGET(testRestUrl + 'visittype?v=' + defaultCustomRep)
             .respond(visitTypesResponse);
-        
+
         visitResService.getVisitTypes(function(data) {
             expect(data).to.be.array;
             expect(data.length).to.equal(visitTypesResponse.results.length);
         });
-    });     
+    });
   });
 })();

@@ -39,7 +39,6 @@
       });
     })
     .run(function(formlyConfig, formlyValidationMessages, formlyApiCheck) {
-
         formlyConfig.extras.errorExistsAndShouldBeVisibleExpression = 'fc.$touched || form.$submitted';
         formlyValidationMessages.addStringMessage('required', 'This field is required');
         formlyValidationMessages.addTemplateOptionValueMessage('max', 'max', 'The max value allowed is ', '', 'Too Big');
