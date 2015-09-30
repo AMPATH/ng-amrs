@@ -91,7 +91,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
        });
 
        if(usedStateChange===false){
-              UtilRestService.confirmBrowserExit();
+              UtilRestService.confirmBrowserExit(function(data){
+                if (data)
+                {
+                  var dlg = dialogs.confirm('Close Form', 'Do you want to close this form?');
+                }
+              });
        }
 
         var params={uuid: $stateParams.encuuid };
@@ -126,14 +131,15 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         $scope.vm.submit = function() {
+            console.log('form',$scope.vm.form);
             $scope.vm.savedOrUpdated=true;
             if ($scope.vm.form.$valid)
             {
               var form = selectedForm;
               // console.log($stateParams.formuuid)
               // console.log('Selected Form');
-              console.log('current tabs',$scope.vm.tabs);
-              console.log('Original tabs',$scope.vm.tabs);
+              // console.log('current tabs',$scope.vm.tabs);
+              // console.log('Original tabs',$scope.vm.tabs);
               var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.formlyFields, $scope.vm.patient,form,params.uuid);
               console.log(payLoad);
               if (!_.isEmpty(payLoad.obs))
@@ -181,6 +187,19 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               }
               else {
                   var dlg=dialogs.notify('Info', 'No Changes to be Submitted. Please fill the form first....');
+              }
+            }
+            else {
+              if($scope.vm.form.$error !== undefined)
+              {
+                var err = $scope.vm.form.$error;
+                console.log('errrr', err),
+                console.log('err.js_expression1[0].$error.js_expression1[0]', err.js_expression1[0].$error.js_expression1)
+                _.each(err.js_expression1[0].$error.js_expression1, function(err_fields){
+                  console.log('errr 2', err_fields);
+                  console.log('errror_fields:', getErrorField(err_fields.$name));
+
+                });
               }
             }
         }
