@@ -19,24 +19,15 @@
     .run(function(formlyConfig, formlyValidationMessages, formlyApiCheck) {
 
       // console.log(formlyApiCheck)
-    //apiCheck.globalConfig.disabled = true;
 
-    formlyConfig.disableWarnings = true;
-    formlyConfig.extras.removeChromeAutoComplete = true;
-    formlyConfig.extras.explicitAsync = true;
+    // formlyConfig.disableWarnings = true;
+
 
     formlyConfig.extras.errorExistsAndShouldBeVisibleExpression = 'fc.$touched || form.$submitted';
 
     formlyValidationMessages.addStringMessage('required', 'This field is required');
     formlyValidationMessages.addTemplateOptionValueMessage('max', 'max', 'The max value allowed is ', '', 'Too Big');
     formlyValidationMessages.addTemplateOptionValueMessage('min', 'min', 'The min value allowed is ', '', 'Too Small');
-
-
-    formlyConfig.setWrapper({
-      name: 'validation',
-      types: ['input', 'customInput','datepicker', 'select', 'section', 'multiCheckbox', 'select-concept-answers'],
-      templateUrl: 'error-messages.html'
-    });
 
     formlyConfig.setType({
       name: 'customInput',
@@ -67,6 +58,13 @@
         })
       }
     });
+
+    formlyConfig.setWrapper({
+      name: 'validation',
+      types: ['input', 'customInput','datepicker', 'select', 'section', 'multiCheckbox', 'select-concept-answers'],
+      templateUrl: 'error-messages.html'
+    });
+
   })
   .config(['dialogsProvider','$translateProvider',function(dialogsProvider,$translateProvider){
 		dialogsProvider.useBackdrop('static');

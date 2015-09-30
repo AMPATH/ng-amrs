@@ -640,19 +640,7 @@
                       "label": "Other"
                     }
                   ],
-                  "type": "multiCheckbox",
-                  "validators": [
-                    {
-                      "type": "js_expression",
-                      "failsWhenExpression": "isEmpty(myValue) && !isEmpty(q13a) && q13a === 'a899b35c-1350-11df-a1f1-0026b9348838'",
-                      "message": "Patient on ARV as per question 13a. Please provide regimen."
-                    }
-                  ],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "q13a !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
-                    }
-                  ]
+                  "type": "multiCheckbox"
                 }
               ]
             }
@@ -3210,7 +3198,7 @@
                     },
                     {
                       "concept": "a8999fb6-1350-11df-a1f1-0026b9348838",
-                      "label": "Elisha"
+                      "label": "Elisa"
                     },
                     {
                       "concept": "741517cf-8bac-4755-b289-8dd2a2df7962",

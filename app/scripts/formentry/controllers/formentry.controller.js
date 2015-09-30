@@ -14,19 +14,21 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         FormentryService.currentFormModel = {};
         $scope.vm = {};
         $scope.vm.isBusy = true;
-        $scope.vm.error = '';
+        $scope.vm.errorSubmit = '';
+        $scope.vm.errorMessage = 'The form has some validation errors, see the list above';
         $scope.vm.model = {};
         CurrentLoadedFormService.formModel = $scope.vm.model;
         $scope.vm.patient = $rootScope.broadcastPatient;
         $scope.vm.submitLabel = 'Save';
         $scope.vm.encounterType;
         var formSchema;
-        $scope.vm.formlyFields;
+        $scope.vm.formlyFields=[];
         $scope.vm.tabs = [];
         $scope.vm.encounter;
         $scope.vm.encData;
         $scope.vm.savedOrUpdated=false;
-
+        $scope.vm.updated_failed = false;
+        $scope.vm.voidFailed = false;
         $scope.vm.currentTab = 0;
 
         $scope.vm.tabSelected = function($index) {
@@ -66,43 +68,38 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
       };
 
-        //console.log('ACTIVE ENCOUNTER', $scope.vm.encounter);
-
-        /*
-        Test logic to get either a blank form or form filled with existing data.
-        */
-
-        //8a79e511-edb1-4b9d-a94e-ab51e4f6528c
-        
         //Checking user navigations
         var userConfirmedChange=false;
         var usedStateChange=false;
-          $scope.$on('$stateChangeStart', function(event,toState,toParams) {     
-           usedStateChange=true;       
-           if($scope.vm.form.$dirty&&$scope.vm.savedOrUpdated===false){          
-            if(userConfirmedChange===false){ 
-              //prevent transition to new url before saving data          
-              event.preventDefault();       
-                var dialogPromise =dialogs.confirm('Changes Not Saved','Do you want to close this form?');        
-                  dialogPromise.result.then(function(btn){  
-                      userConfirmedChange=true;                       
+          $scope.$on('$stateChangeStart', function(event,toState,toParams) {
+           usedStateChange=true;
+           if($scope.vm.form.$dirty&&$scope.vm.savedOrUpdated===false){
+            if(userConfirmedChange===false){
+              //prevent transition to new url before saving data
+              event.preventDefault();
+                var dialogPromise =dialogs.confirm('Changes Not Saved','Do you want to close this form?');
+                  dialogPromise.result.then(function(btn){
+                      userConfirmedChange=true;
                     $state.go(toState.name, {onSuccessRout:toState, onSuccessParams:toParams})
-                    },function(btn){					
-                      //Prevent any transition to new url            
+                    },function(btn){
+                      //Prevent any transition to new url
                       event.preventDefault();
-                      userConfirmedChange=false;            
-                       });                         
-               }   
-           }                    
+                      userConfirmedChange=false;
+                       });
+               }
+           }
        });
-       
-       if(usedStateChange===false){            
-              UtilRestService.confirmBrowserExit();                     
+
+       if(usedStateChange===false){
+              UtilRestService.confirmBrowserExit(function(data){
+                if (data)
+                {
+                  var dlg = dialogs.confirm('Close Form', 'Do you want to close this form?');
+                }
+              });
        }
-       
+
         var params={uuid: $stateParams.encuuid };
-        //var params = {uuid: '18a1f142-f2c6-4419-a5db-5f875020b887'};
-        var encData;
         var selectedForm //= $stateParams.formuuid;
         if(params.uuid !== undefined)
         {
@@ -118,12 +115,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
           $scope.vm.encounterType = selectedForm.encounterTypeName
         }
 
-        // console.log('testing selected Form')
-        // console.log(selectedForm);
-
         //load the selected form
         activate();
-
 
         $scope.vm.cancel = function()
         {
@@ -135,23 +128,18 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 					},function(btn){
 						//$scope.vm.confirmed = 'You confirmed "No."';
 					});
-
         }
 
         $scope.vm.submit = function() {
-          //  $scope.vm.error = FormentryService.validateForm($scope.vm.userFields);
-            // console.log('Checking form Validity')
-            // console.log($scope.vm.form.$valid);
+            console.log('form',$scope.vm.form);
             $scope.vm.savedOrUpdated=true;
-            console.log($scope.vm.form)
-
             if ($scope.vm.form.$valid)
             {
               var form = selectedForm;
               // console.log($stateParams.formuuid)
               // console.log('Selected Form');
-              console.log('current tabs',$scope.vm.tabs);
-              console.log('Original tabs',$scope.vm.formlyFields);
+              // console.log('current tabs',$scope.vm.tabs);
+              // console.log('Original tabs',$scope.vm.tabs);
               var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.formlyFields, $scope.vm.patient,form,params.uuid);
               console.log(payLoad);
               if (!_.isEmpty(payLoad.obs))
@@ -169,165 +157,57 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                           $scope.vm.savedOrUpdated=true;
                           var cPayload = angular.copy(payLoad)
                           voidObs(cPayload);
-                          updateObs(cPayload);
+                          updateObs(cPayload, function(update_failed){
+                            if(update_failed === false)
+                            {
+                              $scope.vm.success = '| Form Submitted successfully'
+                              var dlg=dialogs.notify('Success', $scope.vm.success);
+                              // console.log('Previous State')
+                              // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
+                              $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
+                            }
+                          });
                         }
-                        $scope.vm.success = '| Form Submitted successfully'
-                        var dlg=dialogs.notify('Success', $scope.vm.success);
-                        // console.log('Previous State')
-                        // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
-                        $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
+                        else {
+                          $scope.vm.success = '| Form Submitted successfully'
+                          var dlg=dialogs.notify('Success', $scope.vm.success);
+                          // console.log('Previous State')
+                          // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
+                          $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
+                        }
                       }
                     },
                     //error callback
                     function (error) {
                       // body...
-                      $scope.vm.error = 'An Error occured while trying to save the form';
+                      $scope.vm.errorSubmit = 'An Error occured while trying to save the form';
                     }
                   );
                   }
-                  // else {
-                  //   //void obs only
-                  //   if($scope.vm.submitLabel === 'Update')
-                  //   {
-                  //     voidObs(payLoad);
-                  //     updateObs(payLoad);
-                  //   }
-                  //   $scope.vm.success = '| Form Submitted successfully'
-                  //   var dlg=dialogs.notify('Success', $scope.vm.success);
-                  //   $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
-                  // }
               }
               else {
                   var dlg=dialogs.notify('Info', 'No Changes to be Submitted. Please fill the form first....');
               }
-
             }
             else {
-              // // console.log('FormLy Form',$scope.vm);
-              // // console.log('FormLy Scope',$scope);
-              // // console.log('FormLy Json',$scope.vm.form.$validate());
-              // // console.log('FormLy Field',$scope.vm.tabs);
-              // //
-              // // $scope.vm.form.setValidity()
-              $scope.vm.error = '';
-              var error_required = $scope.vm.form.$error;
-              var error_date = $scope.vm.form.$error;
-              if(error_required !== undefined && error_required.required !== undefined)
+              if($scope.vm.form.$error !== undefined)
               {
-                  var i = 0;
-                  _.some(error_required.required[0].$error.required, function(error_field){
-                    if (i === 0) {
-                      var field = getErrorField(error_field.$name);
-                      if(field !== undefined)
-                      {
-                        $scope.vm.error= 'Missing required field: '+ field.templateOptions.label;
-                        return true;
-                      }
-                    }
-                    i = i + 1;
-                  });
-                  return;
+                var err = $scope.vm.form.$error;
+                console.log('errrr', err),
+                console.log('err.js_expression1[0].$error.js_expression1[0]', err.js_expression1[0].$error.js_expression1)
+                _.each(err.js_expression1[0].$error.js_expression1, function(err_fields){
+                  console.log('errr 2', err_fields);
+                  console.log('errror_fields:', getErrorField(err_fields.$name));
 
-              }
-              //
-              if(error_date !== undefined && error_date.date !== undefined)
-              {
-                var i = 0;
-                _.some(error_date.date[0].$error.date, function(error_field){
-                  if (i === 0) {
-                    var field = getErrorField(error_field.$name);
-                    if(field !== undefined)
-                    {
-                      $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
-                      return true;
-                    }
-
-                  }
-                  i = i + 1;
                 });
-                return;
               }
-
-              if(error_date !== undefined && error_date.dateValidator !== undefined)
-              {
-                var i = 0;
-                _.some(error_date.dateValidator[0].$error.dateValidator, function(error_field){
-                  if (i === 0) {
-                    var field = getErrorField(error_field.$name);
-                    if(field !== undefined)
-                    {
-                      $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
-                      return true;
-                    }
-
-                  }
-                  i = i + 1;
-                });
-                return;
-              }
-              if(error_date !== undefined)
-              {
-                var i = 0;
-                // _.some(error_date.js_expression[0].$error.js_expression, function(error_field){
-                //   if (i === 0) {
-                //     var field = getErrorField(error_field.$name);
-                //     if(field !== undefined)
-                //     {
-                //       $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
-                //       return true;
-                //     }
-              
-                //   }
-                //   i = i + 1;
-                // });
-                if(error_date.js_expression1)
-                _.some(error_date.js_expression1[0].$error.js_expression1, function(error_field){
-                  if (i === 0) {
-                    var field = getErrorField(error_field.$name);
-                    if(field !== undefined)
-                    {
-                      $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
-                      return true;
-                    }
-              
-                  }
-                  i = i + 1;
-                });
-                
-                if(error_date.js_expression2)
-                 _.some(error_date.js_expression2[0].$error.js_expression2, function(error_field){
-                  if (i === 0) {
-                    var field = getErrorField(error_field.$name);
-                    if(field !== undefined)
-                    {
-                      $scope.vm.error= 'Error on field: '+ field.templateOptions.label;
-                      return true;
-                    }
-              
-                  }
-                  i = i + 1;
-                });
-              
-                return;
-              }
-
             }
-
         }
-
-
-function getErrorAsList(field) {
-_.each(Object.keys(field.formControl.$error), function(t){
-  console.log(t)
-});
-}
 
 function activate()
 {
     $timeout(function () {
       // get form schema data
-     //  var selectedForm = $stateParams.formuuid;
-     //  console.log('testing selected Form')
      var start = new Date().getTime();
      FormentryService.getFormSchema(selectedForm.name, function(schema){
       formSchema = schema;
@@ -335,11 +215,8 @@ function activate()
       FormentryService.createForm(formSchema, $scope.vm.model, function(formlySchema){
         $scope.vm.formlyFields = formlySchema;
         if(formlySchema.length>0)  {
-
           var i = 0;
           angular.forEach(formlySchema, function(tab){
-            // console.log('Tab Structure');
-            // console.log(tab);
             if (i === 0)
             {
               $scope.vm.tabs.push(formlySchema[i]);
@@ -373,33 +250,13 @@ function activate()
           },
           //error callback
           function (error){
-            $scope.vm.error = 'An Error occured when trying to get encounter data';
+            $scope.vm.errorSubmit = 'An Error occured when trying to get encounter data';
           }
         );
         }
         else {
           //set the current user as the default provider
-          var done = false;
-          _.some($scope.vm.tabs, function(page){
-            var model = page.form.model;
-            _.some(page.form.fields, function(_section){
-              if (_section.type === 'section')
-              {
-                var sec_key = _section.key;
-                var sec_data = model[sec_key] = {};
-                _.some(_section.data.fields, function(_field){
-                  if(_field.key === 'encounterProvider'){
-                    sec_data['encounterProvider'] = OpenmrsRestService.getUserService().user.personUuId();
-                    done = true;
-                    return true;
-                  }
-                });
-              }
-              if (done) return true;
-            });
-            if (done) return true;
-          });
-
+          setProvider();
         }
       });
      });
@@ -407,6 +264,36 @@ function activate()
 
 }
 
+/*
+private methdd to set the current user as the selected provider
+*/
+function setProvider()
+{
+  var done = false;
+  _.some($scope.vm.tabs, function(page){
+    var model = page.form.model;
+    _.some(page.form.fields, function(_section){
+      if (_section.type === 'section')
+      {
+        var sec_key = _section.key;
+        var sec_data = model[sec_key] = {};
+        _.some(_section.data.fields, function(_field){
+          if(_field.key === 'encounterProvider'){
+            sec_data['encounterProvider'] = OpenmrsRestService.getUserService().user.personUuId();
+            done = true;
+            return true;
+          }
+        });
+      }
+      if (done) return true;
+    });
+    if (done) return true;
+  });
+}
+
+/*
+  private methdd to void obs
+*/
 function voidObs(pay_load)
 {
   var obsToVoid = _.where(pay_load.obs,{voided:true});
@@ -423,14 +310,17 @@ function voidObs(pay_load)
       //error callback
       function(error)
       {
-        $scope.vm.error = 'An error occured when trying to void obs';
-      }
-    );
+        $scope.vm.errorSubmit = 'An error occured when trying to void obs';
+        $scope.vm.voidFailed = true;
+      });
     })
   }
 }
 
-function updateObs(pay_load)
+/*
+  private methdd to update individual obs
+*/
+function updateObs(pay_load, callback)
 {
   var obsToUpdate = _.filter(pay_load.obs,function(obs){
     // console.log(obs);
@@ -450,15 +340,23 @@ function updateObs(pay_load)
       //error callback
       function(error)
       {
-        $scope.vm.error = 'An error occured when trying to void obs';
-      }
-    );
-    })
+        $scope.vm.updated_failed = true;
+        $scope.vm.errorSubmit = 'An error occured when trying to update the record';
+        callback($scope.vm.updated_failed)
+      });
+
+    });
+
   }
+  else callback($scope.vm.updated_failed)
 }
+
+
+  /*
+  private methdd to get the error field
+  */
 function getErrorField(fieldKey)
 {
-
   //  console.log('++++field_key', fieldKey);
    var errorField;
    var field_key;
@@ -466,23 +364,17 @@ function getErrorField(fieldKey)
    {
       errorField = fieldKey.split('ui-select-extended_')[1];
       field_key = errorField.split('_')[0];
-      // console.log(errorField)
-      // console.log(field_key)
    }
    else
    {
      errorField = fieldKey.split('obs')[1];
      field_key = 'obs'+errorField.split('_')[0] + '_' + errorField.split('_')[1]
    }
-
-
    var field = FormentryService.getFieldById_Key(field_key, $scope.vm.tabs);
-  //  console.log('error Field ', field);
+  // console.log('error Field ', field);
    return field;
 }
 
-//$scope.vm.userFields = $scope.vm.formlyFields;
- //console.log(JSON.stringify($scope.vm.userFields));
 }
 
 })();

@@ -162,7 +162,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         function getFieldValueToValidate(viewValue, modelValue, elementScope) {
             var val = viewValue || modelValue;
-                    
+
             //special case for multicheck box
             if (elementScope.$parent && elementScope.$parent.multiCheckbox) {
                 console.log('validating multicheck box..', elementScope.$parent.multiCheckbox);
@@ -206,7 +206,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     if (!hasValue) {
                         //question was not answered therefore it is always true
                         return true;
-                    }  
+                    }
 
                     //question was asnwered, therefore establish that the reference questions have the required answers
                     var referenceQuestionkey = CurrentLoadedFormService.getFieldKeyFromGlobalById(params.referenceQuestionId);
@@ -366,7 +366,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         function updateListeners(fieldId, getFieldById_Key) {
             if (CurrentLoadedFormService.listenersMetadata[fieldId] !== undefined) {
                 _.each(CurrentLoadedFormService.listenersMetadata[fieldId], function (listenerId) {
-                    var field = getFieldById_Key(listenerId);
+                    var field = getFieldById_Key(listenerId);                    
                     if (field.runExpressions) {
                         field.runExpressions();
                     }
