@@ -8,9 +8,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         .module('app.formentry')
         .controller('FormentryCtrl', FormentryCtrl);
 
-    FormentryCtrl.$inject = ['$translate', 'dialogs', '$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'OpenmrsRestService', '$timeout', 'FormsMetaData', 'CurrentLoadedFormService','UtilRestService'];
+    FormentryCtrl.$inject = ['$translate', 'dialogs', '$location', '$rootScope',  '$stateParams', '$state', '$scope', 'FormentryService', 'OpenmrsRestService', '$timeout', 'FormsMetaData', 'CurrentLoadedFormService','UtilRestService', '$loading'];
 
-    function FormentryCtrl($translate, dialogs, $location, $rootScope, $stateParams, $state, $scope, FormentryService, OpenmrsRestService, $timeout, FormsMetaData, CurrentLoadedFormService,UtilRestService) {
+    function FormentryCtrl($translate, dialogs, $location, $rootScope, $stateParams, $state, $scope, FormentryService, OpenmrsRestService, $timeout, FormsMetaData, CurrentLoadedFormService,UtilRestService, $loading) {
         FormentryService.currentFormModel = {};
         $scope.vm = {};
         $scope.vm.isBusy = true;
@@ -148,7 +148,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                   submit only if we have some obs
                   */
                   if(payLoad.encounterType !== undefined){
+                     isBusy(true);
                     OpenmrsRestService.getEncounterResService().saveEncounter(JSON.stringify(payLoad), function(data){
+                       isBusy(false);
                       if (data)
                       {
                         if($scope.vm.submitLabel === 'Update')
@@ -180,6 +182,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     //error callback
                     function (error) {
                       // body...
+                      isBusy(false);
                       $scope.vm.errorSubmit = 'An Error occured while trying to save the form';
                     }
                   );
@@ -255,7 +258,17 @@ function activate()
       });
      });
    },1000);
+   
+  
 
+}
+
+function isBusy(val){
+  if(val === true){
+    $loading.start('formEntryLoader');
+  }else{
+    $loading.finish('formEntryLoader');
+  }
 }
 
 /*
