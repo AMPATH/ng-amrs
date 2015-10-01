@@ -221,7 +221,13 @@
       };
       modelDefinition.healthCenter = function(value) {
         var healthCenterPersonAttributeTypeUuid='8d87236c-c2cc-11de-8d13-0010c6dffd0f';
-        return getPersonAttribute(healthCenterPersonAttributeTypeUuid);
+        var location =getPersonAttribute(healthCenterPersonAttributeTypeUuid);
+        if(angular.isDefined(location)){
+          return location.display;
+        }
+        else{
+          return '';
+        }
       };
       modelDefinition.isTestorFakePatient = function(value) {
         var testPatientPersonAttributeTypeUuid='1e38f1ca-4257-4a03-ad5d-f4d972074e69';
