@@ -14,7 +14,8 @@
             'angularMoment',
             'dialogs.main',
             'pascalprecht.translate',
-            'dialogs.default-translations'
+            'dialogs.default-translations',
+            'darthwade.dwLoading'
         ])
     .config(function ($stateProvider) {
       $stateProvider
