@@ -7,7 +7,7 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
     angular
         .module('app.formentry')
             .run(createDatetimePickerType);
-    
+
     function createDatetimePickerType(formlyConfig, $filter) {
         console.info('A new type is being created!!');
         var attributes = [
@@ -46,21 +46,21 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
             name: 'datetimepicker',
             template: '<input class="form-control" ng-model="model[options.key]" ' +
                     'is-open="to.isOpen" ng-click="open($event)"  ' +
-                    'datetime-picker="dd-MMM-yyyy hh:mm:ss" ' + 
+                    'datetime-picker="dd-MMM-yyyy hh:mm:ss" ' +
                     'datepicker-options="to.datepickerOptions"></input>',
-            wrapper: ['bootstrapLabel', 'bootstrapHasError'],          
+            wrapper: ['bootstrapLabel', 'bootstrapHasError'],
             overwriteOk: true,
             defaultOptions: {
                 parsers: [
                   function parseDate(value) {
-                      return $filter('date')(new Date(value), 'yyyy-MM-dd HH:mm:ss', '+0300');     
+                      return $filter('date')(new Date(value), 'yyyy-MM-dd HH:mm:ss', '+0300');
                   }
                 ],
                 formatters: [
                     function(value){
                         return $filter('date')(new Date(value),'dd-MMM-yyyy hh:mm:ss','+0300');
                     }
-                ],  
+                ],
                 ngModelAttrs: ngModelAttrs,
                 templateOptions: {
                     addonLeft: {
@@ -88,6 +88,6 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
             return string.replace(/^([A-Z])/, function (match, chr) {
                 return chr ? chr.toLowerCase() : '';
             });
-        }    
+        }
   }
 })();

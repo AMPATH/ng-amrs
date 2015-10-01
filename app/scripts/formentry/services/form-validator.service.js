@@ -9,9 +9,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         .module('app.formentry')
         .service('FormValidator', FormValidator);
 
-    FormValidator.$inject = ['CurrentLoadedFormService'];
+    FormValidator.$inject = ['CurrentLoadedFormService', '$filter'];
 
-    function FormValidator(CurrentLoadedFormService) {
+    function FormValidator(CurrentLoadedFormService, $filter) {
 
         var service = {
             extractQuestionIds: extractQuestionIds,
@@ -71,7 +71,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         function getDateValidatorObject(params) {
             var validator = new Validator('', undefined);
-
             if (params.allowFutureDates !== 'true') {
                 //case does not allow future dates
                 validator.expression = function (viewValue, modelValue) {
@@ -103,8 +102,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     var value = modelValue || viewValue;
                     var dateValue;
                     //var curDate = Date.parse(Date.today(), 'd-MMM-yyyy');
-
+                    console.log('date Value ++', value)
                     if (value !== undefined && value !== null && value !== '') {
+                        console.log('date Value ++', value)
                         dateValue = Date.parse(value, 'd-MMM-yyyy').clearTime();
                     }
                     if (dateValue !== undefined || dateValue !== null || value !== '') {
@@ -366,7 +366,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         function updateListeners(fieldId, getFieldById_Key) {
             if (CurrentLoadedFormService.listenersMetadata[fieldId] !== undefined) {
                 _.each(CurrentLoadedFormService.listenersMetadata[fieldId], function (listenerId) {
-                    var field = getFieldById_Key(listenerId);                    
+                    var field = getFieldById_Key(listenerId);
                     if (field.runExpressions) {
                         field.runExpressions();
                     }

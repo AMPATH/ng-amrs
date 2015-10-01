@@ -8,7 +8,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         .module('app.formentry')
         .factory('FormentryService', FormentryService);
 
-    FormentryService.$inject = ['$http', 'SearchDataService', 'moment', 
+    FormentryService.$inject = ['$http', 'SearchDataService', 'moment',
     'FormValidator', 'CurrentLoadedFormService', '$filter'];
 
     function FormentryService( $http, SearchDataService, moment, FormValidator,
@@ -1088,6 +1088,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   section = _.find(sections, function(sec){
                     if(sec.key === obj) return sec;
                   });
+
                   //Handling special keys related to encounter
                   if (key === 'encounterProvider' && val[key] !== undefined)
                   {
@@ -1293,6 +1294,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         }
                         else {
                           console.log('Calling non object type Section Method -1')
+                          console.log('SECTION 1296 --', section);
                           createPayloadNonObject(val[key], key, obs, section)
                         }
                       }
@@ -1320,7 +1322,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               formPayLoad['uuid'] = params.uuid;
             }
           }
-          
+
           if(params !== undefined && angular.isDefined(params.visitUuid)) {
               formPayLoad['visit'] = params.visitUuid;
           }
@@ -2078,9 +2080,11 @@ function createRepeatingFormlyField(obs_field, gpSectionRnd)
 /*Payload Creation helper functions */
 /* private method to format values before posting to the payload*/
 function getFormattedValue(value){
-    console.log(value)
+    console.log('convert to date', value);
     if(!value) return value;
+
     if(typeof value === 'number') return value;
+
     if(Object.prototype.toString.call(value) === '[object Date]'){
       // if(_.contains(value,':'))
       console.log('convert to date', value)

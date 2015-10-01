@@ -8,9 +8,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
         .module('app.formentry')
         .factory('SearchDataService', SearchDataService);
 
-    SearchDataService.$inject = ['ProviderResService', 'LocationResService', 'LocationModel', 'ProviderModel','ConceptResService', 'ConceptModel','DrugResService','DrugModel'];
+    SearchDataService.$inject = ['ProviderResService', 'CachedDataService', 'LocationModel', 'ProviderModel','ConceptResService', 'ConceptModel','DrugResService','DrugModel', '$rootScope'];
 
-    function SearchDataService(ProviderResService, LocationResService, LocationModelFactory, ProviderModelFactory, ConceptResService, ConceptModelFactory, DrugResService, DrugModelFactory) {
+    function SearchDataService(ProviderResService, CachedDataService, LocationModelFactory, ProviderModelFactory, ConceptResService, ConceptModelFactory, DrugResService, DrugModelFactory,$rootScope) {
 
         var problemConceptClassesArray = ['Diagnosis','Symptom','Symptom/Finding','Finding'];
         var drugConceptClassesArray=['Drug'];
@@ -31,25 +31,17 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
         return service;
 
         function findLocation(searchText, onSuccess, onError) {
-            LocationResService.findLocation(searchText,
-                function (locations) {
-                    var wrapped = wrapLocations(locations);
-                    onSuccess(wrapped);
-                },
-                function (error) {
-                    onError(onError);
-                });
+          CachedDataService.getCachedLocations(searchText, function(results){
+            var wrapped = wrapLocations(results);
+            onSuccess(wrapped);
+          });
         }
 
         function getLocationByUuid(uuid, onSuccess, onError) {
-            LocationResService.getLocationByUuid(uuid,
-                function (location) {
-                    var wrapped = wrapLocation(location);
-                    onSuccess(wrapped);
-                },
-                function (error) {
-                    onError(onError);
-                });
+          CachedDataService.getCachedLocationByUuid(uuid, function(results){
+            var wrapped = wrapLocation(results);
+            onSuccess(wrapped);
+          });
         }
 
         function findProblem(searchText, onSuccess, onError) {

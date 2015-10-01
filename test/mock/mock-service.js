@@ -3,27 +3,33 @@ jshint -W098, -W117, -W003, -W026
 */
 (function() {
   'use strict';
-
   // Mocked Service
   angular
-  .module('mock.authentication', [])
-  .factory('AuthService', AuthService);
-  AuthService.$inject = ['$q'];
-  function AuthService($q) {
+  .module('mock.util-service', ['mock.data'])
+  .factory('mockCachedDataService', mockCachedDataService);
+  mockCachedDataService.$inject = ['mockData'];
+  function mockCachedDataService(mockData) {
     var service = {
-      isAuthenticated: isAuthenticated
+      getCachedLocations: getCachedLocations,
+      getCachedLocationByUuid:getCachedLocationByUuid
     };
     return service;
 
-    function isAuthenticated(user, callback) {
-      console.log(user);
-      if ((user.username === 'test') && (user.password === 'test'))
-      {
-        callback(true);
-      }
-      else {
-        callback(false);
-      }
+    function getCachedLocations(searchText, callback) {
+      var cachedLocations = mockData.getMockLocations();
+      var results = _.filter(cachedLocations, function(l){
+        return (_.contains(l.name.toLowerCase(), searchText.toLowerCase()) ||
+                _.contains(l.description.toLowerCase(), searchText.toLowerCase()));
+      });
+      callback(results);
+    }
+
+    function getCachedLocationByUuid(uuid, callback) {
+      var cachedLocations = mockData.getMockLocations();
+      var results = _.find(cachedLocations, function(l){
+        return (l.uuid === uuid);
+      });
+      callback(results);
     }
   }
 })();

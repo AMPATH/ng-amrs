@@ -16,7 +16,8 @@
               getMockObs: getMockObs,
               getMockModel: getMockModel,
               getMockPatient: getMockPatient,
-              getMockObsField:getMockObsField
+              getMockObsField:getMockObsField,
+              getMockLocations: getMockLocations
           };
 
           return mock_data;
@@ -52,6 +53,32 @@
             },
             uuid: 'xxxx',
             };
+          }
+
+          function getMockLocations()
+          {
+            var testLocations = [
+              {
+                uuid: 'uuid_1',
+                name: 'Location-1',
+                display: 'Location-1',
+                description: 'Mock Location 1'
+              },
+              {
+                uuid: 'uuid_100',
+                name: 'Location-100',
+                display: 'Location-100',
+                description: 'Mock Location 2'
+              },
+              {
+                uuid: 'uuid_101',
+                name: 'Location-101',
+                display: 'Location-101',
+                description:'Mock Location 3'
+              }
+            ];
+
+            return testLocations;
           }
 
           function getMockObs()

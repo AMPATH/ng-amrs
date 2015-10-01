@@ -82,16 +82,16 @@
     }).run(function ($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings, EtlRestServicesSettings,UtilRestService) {
 
       $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-        
+
         //check whether selection of url base is required first
         var hasPersistedCurrentUrl = OpenmrsSettings.hasCoockiePersistedCurrentUrlBase() && EtlRestServicesSettings.hasCoockiePersistedCurrentUrlBase();
-        
+
         if (!hasPersistedCurrentUrl && toState.name !== 'url-selector') {
           $state.go('url-selector', { onSuccessRout: toState, onSuccessParams: toParams });
           event.preventDefault();
           return;
         }
-        
+
         //check whether loginis required
         var shouldLogin = toState.data !== undefined && toState.data.requireLogin && !OpenmrsRestService.getAuthService().authenticated;
         //console.log(shouldLogin);
@@ -103,9 +103,9 @@
 
         //else navigate to page
       });
-     
+
       UtilRestService.disableBackSpaceOnNoneInputElements();
-     
+
       // add provision of tracking various states for easy navigation and public variables of interest
       $rootScope.previousState;
       $rootScope.previousStateParams;
@@ -113,7 +113,8 @@
       $rootScope.currentStateParams;
       $rootScope.broadcastPatient;
       $rootScope.activeEncounter;
-
+      $rootScope.cachedLocations = [];
+      
       $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
         $rootScope.previousState = from.name;
         $rootScope.currentState = to.name;
