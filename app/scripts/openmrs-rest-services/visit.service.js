@@ -16,6 +16,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
           getPatientVisits: getPatientVisits,
           saveVisit: saveOrUpdateVisit,
           getVisitEncounters: getVisitEncounters,
+          getVisitTypes: getVisitTypes,
           defaultCustomRep: new DefaultCustomRep().getterSetter
       };
 
@@ -115,7 +116,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
           var rep = 'custom:(encounters:(uuid,patient:(uuid,uuid),' +
                   'encounterDatetime,form:(uuid,name),encounterType:(uuid,name),' +
                   'encounterProviders:(uuid,uuid,provider:(uuid,name),' +
-                  'encounterRole:(uuid,name)),' +
+                  'encounterRole:(uuid,name)),location:(uuid,name),' +
                   'visit:(uuid,visitType:(uuid,name))))';
           
           var visitUuid=null;
@@ -129,7 +130,30 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
           Restangular.one('visit', visitUuid).get({v:rep}).then(function(data) {
               if(angular.isDefined(data.encounters)) {
                   data = data.encounters.reverse();
-              }      
+              }
+              _successCallbackHandler(successCallback, data);
+          }, function(error) {
+              if(typeof errorCallBack === 'function') {
+                  errorCallBack(error);
+              }
+          });
+      }        
+
+      function getVisitTypes(rep, successCallback, errorCallback) {
+          var params = {};
+          if(angular.isDefined(rep)) {
+              if(typeof rep === 'string')params.v = rep;
+              else if(typeof rep === 'object')params = rep;
+              else {
+                  errorCallback = successCallback;
+                  successCallback = rep;
+              }
+          } 
+          params.v = params.v || 'custom:(uuid,name,description)';
+
+          Restangular.one('visittype').get(params).then(function(data) {
+              if(angular.isDefined(data.results)) data = data.results.reverse();
+
               _successCallbackHandler(successCallback, data);
           }, function(error) {
               if(typeof errorCallBack === 'function') {
@@ -137,7 +161,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
               }
           });
       }
-      
+
       function DefaultCustomRep() {
          var _defaultCustomRep = 'custom:(uuid,patient:(uuid,uuid),' +
             'visitType:(uuid,name),location:ref,startDatetime,encounters:(' +

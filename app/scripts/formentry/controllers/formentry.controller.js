@@ -98,8 +98,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 }
               });
        }
-
-        var params={uuid: $stateParams.encuuid };
+       
+        var params={
+            uuid: $stateParams.encuuid,
+            visitUuid: $stateParams.visitUuid
+         };
+        //var params = {uuid: '18a1f142-f2c6-4419-a5db-5f875020b887'};
+        var encData;
         var selectedForm //= $stateParams.formuuid;
         if(params.uuid !== undefined)
         {
@@ -109,9 +114,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
           $scope.vm.encounterType = $scope.vm.encounter.encounterTypeName();
         }
         else {
-          //selectedForm = $stateParams.formuuid;
           selectedForm = FormsMetaData.getForm($stateParams.formuuid);
-          //var encForm = FormsMetaData.getForm($stateParams.formuuid);
           $scope.vm.encounterType = selectedForm.encounterTypeName
         }
 
@@ -136,11 +139,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             if ($scope.vm.form.$valid)
             {
               var form = selectedForm;
-              // console.log($stateParams.formuuid)
-              // console.log('Selected Form');
-              // console.log('current tabs',$scope.vm.tabs);
-              // console.log('Original tabs',$scope.vm.tabs);
-              var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.formlyFields, $scope.vm.patient,form,params.uuid);
+
+              var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.tabs, $scope.vm.patient,form,params);
               console.log(payLoad);
               if (!_.isEmpty(payLoad.obs))
               {
@@ -198,7 +198,6 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 _.each(err.js_expression1[0].$error.js_expression1, function(err_fields){
                   console.log('errr 2', err_fields);
                   console.log('errror_fields:', getErrorField(err_fields.$name));
-
                 });
               }
             }
@@ -207,7 +206,6 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 function activate()
 {
     $timeout(function () {
-      // get form schema data
      var start = new Date().getTime();
      FormentryService.getFormSchema(selectedForm.name, function(schema){
       formSchema = schema;
@@ -233,15 +231,11 @@ function activate()
           var time = end - start;
           console.log('Form Creation Execution time: ' + time + ' ms');
         }
-        ///FormentryService.getEncounter('encData', formlySchema)
-        //var params = {uuid:'cf3f041c-9c37-44c5-983a-d02507ffe279'};
         if(params.uuid !== undefined && params.uuid !== '')
         {
           OpenmrsRestService.getEncounterResService().getEncounterByUuid(params,
             function(data){
             $scope.vm.encData = data;
-            // console.log('Rest Feeback')
-            // console.log(encData);
             if (data)
             {
               $scope.vm.submitLabel = 'Update'
@@ -374,7 +368,5 @@ function getErrorField(fieldKey)
   // console.log('error Field ', field);
    return field;
 }
-
 }
-
 })();

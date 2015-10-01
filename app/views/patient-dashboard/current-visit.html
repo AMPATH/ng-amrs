@@ -1,0 +1,87 @@
+<div>
+    <div class="panel panel-default" data-ng-show="visitTypesLoaded && !visitStarted">
+        <div class="panel-heading px-nested-panel-heading clearfix">
+            Choose Visit type to start.
+        </div>
+        <div class="panel-body px-nested-panel-body">
+        <form  class="form-inline">
+            <div class="form-group">
+                <span data-ng-repeat="visitType in visitTypes">
+                    <input type="radio" data-ng-model="currentVisit.visitType" value="{{visitType.uuid}}" id={{visitType.uuid}}>
+                    <label for="{{visitType.uuid}}">{{visitType.name}}</label>
+                </span>
+            </div>
+        </form>
+        </div> 
+        <div class="panel-footer px-nested-panel-footer">
+            <button class="btn btn-primary" data-ng-click="startNewVisit()" data-ng-disabled="!currentVisit.visitType">
+                Start New Visit
+            </button>
+        </div>
+    </div>
+    <!-- Start Time section -->
+    <div class="panel panel-info" data-ng-show="visitStarted">
+        <div class="panel-heading px-nested-panel-heading clearfix">
+            Visit Started at: <strong>{{visitStartDatetime | date: 'hh:mm:ss a MMM, dd yyyy'}}</strong>
+            <span data-ng-show="currentVisit.ended"> | Ended at: 
+                <strong>{{currentVisit.stopDatetime | date: 'hh:mm:ss a MMM, dd yyyy'}}</strong>
+            </span>    
+        </div>
+        <div class="panel-body px-nested-panel-body">
+            <div data-ng-show="hasCompletedEncounters" style="padding:2px;">
+              <div class="panel panel-default">
+                <div class="panel-heading px-nested-panel-heading">
+                    <p>Completed Encounters</p>
+                </div>
+                <table class="table table-striped table-hover">
+                  <thead>
+                  <tr>
+                    <th>Encounter Date</th>
+                    <th>Encounter Type</th>
+                    <th>Form</th>
+                    <th>Location</th>
+                    <th>Provider</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr style="cursor: pointer;" data-ng-click="loadEncounterForm(encounterModel)"
+                      data-ng-repeat="encounterModel in currentVisit.encounters">
+                    <td>{{encounterModel.encounterDate() | date: 'MMM dd, yyyy'}}</td>
+                    <td>{{encounterModel.encounterTypeName()}}</td>
+                    <td>{{encounterModel.formName()}}</td>
+                    <td>{{encounterModel.locationName() | titlecase}}</td>
+                    <td>{{encounterModel.providerName() | titlecase}}</td>
+                    <td>
+                      <a href="#/encounter/{{encounterModel.uuid()}}/patient/{{encounterModel.patientUuid()}}"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- <pagination boundary-links="true" ng-model="vm.currentPage" total-items="vm.totalItems" items-per-page="vm.entryLimit"
+                          ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" rotate="false"
+                          style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;">
+              </pagination> -->
+            </div>
+        </div>
+        <!-- Add a section for incomplete forms -->
+        <div data-ng-show="visitStarted" class="panel panel-info">
+            <p class="panel-heading px-nested-panel-heading clearfix">Choose a Form to Fill:</p>
+            <div class="panel-body px-nested-panel-body">
+                <span data-ng-repeat="status in formsFilledStatus">
+                    <p data-ng-hide="status.filled">
+                        <a href="#/form/{{status.shortName}}/patient/{{patientUuid}}/visit/{{currentVisit.uuid}}">{{status.name}}</a>
+                    </p>
+                </span>
+            </div>
+        </div>    
+        <div class="panel-footer">
+            <button class="btn btn-danger" data-ng-click="cancelVisit(currentVisit)">
+                Cancel This Visit
+            </button>
+            <button class="btn btn-primary" data-ng-show="!currentVisit.ended" data-ng-click="endVisit(currentVisit)">
+                End visit
+            </button>
+        </div>
+    </div>
+</div>

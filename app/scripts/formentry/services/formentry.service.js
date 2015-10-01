@@ -8,9 +8,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         .module('app.formentry')
         .factory('FormentryService', FormentryService);
 
-    FormentryService.$inject = ['$http', 'SearchDataService', 'moment', 'FormValidator', 'CurrentLoadedFormService'];
+    FormentryService.$inject = ['$http', 'SearchDataService', 'moment', 
+    'FormValidator', 'CurrentLoadedFormService', '$filter'];
 
-    function FormentryService( $http, SearchDataService, moment, FormValidator, CurrentLoadedFormService) {
+    function FormentryService( $http, SearchDataService, moment, FormValidator,
+        CurrentLoadedFormService, $filter) {
         var service = {
             createForm: createForm,
             validateForm:validateForm,
@@ -1056,7 +1058,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         /*
         Method to update the payload for existing encounter
         */
-        function updateFormPayLoad(model, formly_schema, patient, form, uuid)
+        function updateFormPayLoad(model, formly_schema, patient, form, params)
         {
           /*
           The objective of this method is to create a payload with only updated
@@ -1106,10 +1108,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     init_data = getInitialFieldValue(key, section);
                     if (typeof init_data === 'object')
                     {
-                      if (init_data.init_val !== getFormattedValue(val[key]))
+                      if (init_data.init_val !== parseDate(val[key]))
                       {
                         //add property to the payload
-                        formPayLoad.encounterDatetime = getFormattedValue(val[key]);
+                        formPayLoad.encounterDatetime = parseDate(val[key]);
                       }
                     }
                   }
@@ -1312,11 +1314,15 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             // console.log('Patient Selected', patient.uuid())
             formPayLoad['patient'] = patient.uuid();
             formPayLoad['encounterType'] = form.encounterType;
-            if(uuid !== undefined)
+            if(params !== undefined && params.uuid !== undefined)
             {
               //encounter uuid for existing encounter
-              formPayLoad['uuid'] = uuid;
+              formPayLoad['uuid'] = params.uuid;
             }
+          }
+          
+          if(params !== undefined && angular.isDefined(params.visitUuid)) {
+              formPayLoad['visit'] = params.visitUuid;
           }
           return formPayLoad;
         }
@@ -1348,7 +1354,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   }
                   else if (key === 'encounterDate' && val[key] !== undefined)
                   {
-                    formPayLoad.encounterDatetime = getFormattedValue(val[key]);
+                    formPayLoad.encounterDatetime = parseDate(val[key]);
                   }
                   else if (key === 'encounterLocation' && val[key] !== undefined) {
                     //add property to the payload
@@ -1501,13 +1507,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                   field = {
                     key: sec_field.type,
-                    type: 'datepicker',
-                    defaultValue: defaultValue_,
+                    type: 'datetimepicker',
+                    defaultValue: parseDate(new Date()),
                     data: {encounter:'enc_' + sec_field.type},
                     templateOptions: {
                       type: 'text',
                       label: sec_field.label,
-                      datepickerPopup: 'dd-MMMM-yyyy',
+                    //   datepickerPopup: 'dd-MMMM-yyyy',
                       required:required
                     },
                     validators: {
@@ -2107,5 +2113,17 @@ function getFormattedValue(value){
     }
     return value;
 }
-}
+
+
+        function parseDate(value) {
+            if(!(value instanceof Date)){
+                value = Date.parse(value);
+                if(angular.isUndefined(value)) {
+                    return '';
+                }
+            }
+            return $filter('date')(value,'yyyy-MM-dd HH:mm:ss', '+0300');
+        }
+    }
+
 })();

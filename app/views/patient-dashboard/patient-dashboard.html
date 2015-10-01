@@ -33,14 +33,17 @@
 				<li active-tab-sync index="2" data-ng-glick="activeList(this, 2)" ng-class="{active: activeListId === 2}">
 					<a data-target="#tab2" data-toggle="tab"><span class="icon-i-registration" aria-hidden="true"></span>&nbsp;Encounters</a>
 				</li>
-				<li active-tab-sync index="3" data-ng-glick="activeList(this, 3)" ng-class="{active: activeListId === 3}">
-					<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Forms</a>
-				</li>
 				<li active-tab-sync index="4" data-ng-glick="activeList(this, 4)" ng-class="{active: activeListId === 4}">
 					<a data-target="#tab4" data-toggle="tab"><span class="icon-i-cardiology" aria-hidden="true"></span>&nbsp;Vitals</a>
 				</li>
 				<li active-tab-sync index="5" data-ng-glick="activeList(this, 5)" ng-class="{active: activeListId === 5}">
 					<a data-target="#tab5" data-toggle="tab"><span class="icon-i-laboratory" aria-hidden="true"></span>&nbsp;Lab Data Summary</a>
+				</li>
+				<li active-tab-sync index="6" data-ng-glick="activeList(this, 6)" ng-class="{active: activeListId === 6}">
+					<a data-target="#tab6" data-toggle="tab"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;Current Visit</a>
+				</li>
+				<li active-tab-sync index="3" data-ng-glick="activeList(this, 3)" ng-class="{active: activeListId === 3}">
+					<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Forms</a>
 				</li>
 			</ul>
 			<ul class="nav nav-pills hidden-xs hidden-lg hidden-xl " style="cursor: pointer;">
@@ -50,14 +53,17 @@
 				<li active-tab-sync index="2" data-ng-glick="activeList(this, 2)" ng-class="{active: activeListId === 2}">
 					<a data-target="#tab2" data-toggle="tab"><span class="icon-i-registration" aria-hidden="true"></span>&nbsp;Encounters</a>
 				</li>
-				<li active-tab-sync index="3" data-ng-glick="activeList(this, 3)" ng-class="{active: activeListId === 3}">
-					<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Forms</a>
-				</li>
 				<li active-tab-sync index="4" data-ng-glick="activeList(this, 4)" ng-class="{active: activeListId === 4}">
 					<a data-target="#tab4" data-toggle="tab"><span class="icon-i-cardiology" aria-hidden="true"></span>&nbsp;Vitals</a>
 				</li>
 				<li active-tab-sync index="5" data-ng-glick="activeList(this, 5)" ng-class="{active: activeListId === 5}">
 					<a data-target="#tab5" data-toggle="tab"><span class="icon-i-laboratory" aria-hidden="true"></span>&nbsp;Lab Data Summary</a>
+				</li>
+				<li active-tab-sync index="6" data-ng-glick="activeList(this, 6)" ng-class="{active: activeListId === 6}">
+					<a data-target="#tab6" data-toggle="tab"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;Current Visit</a>
+				</li>
+				<li active-tab-sync index="3" data-ng-glick="activeList(this, 3)" ng-class="{active: activeListId === 3}">
+					<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Forms</a>
 				</li>
 			</ul>
 		</div>
@@ -118,6 +124,11 @@
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab5">
 				<div class="page-content">
 					<labs-summary patient-uuid="{{patient.uuid()}}"></labs-summary>
+				</div>
+			</div>
+			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab6">
+				<div class="page-content">
+					<current-visit patient-uuid="{{patient.uuid()}}"></current-visit>
 				</div>
 			</div>
 		</div>
