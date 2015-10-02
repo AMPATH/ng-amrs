@@ -370,7 +370,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     if (field.runExpressions) {
                         field.runExpressions();
                     }
-                    if(field.formControl){
+                    if (field.formControl) {
                         field.formControl.$validate();
                     }
                 });
@@ -489,6 +489,22 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 }
             }
             return $filter('date')(value, format, offset);
+        }
+
+        function arrayContainsAny(array, members) {
+            if (Array.isArray(members)) {
+                if (members.length === 0) return true;
+                var contains = false;
+                _.each(members, function (val) {
+                    if (array.indexOf(val) !== -1) {
+                        contains = true;
+                    }
+                });
+                return contains;
+            }
+            else {
+                return array.indexOf(members) !== -1;
+            }
         }
 
     }
