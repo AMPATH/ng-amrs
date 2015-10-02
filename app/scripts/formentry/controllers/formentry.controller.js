@@ -98,7 +98,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 }
               });
        }
-       
+
         var params={
             uuid: $stateParams.encuuid,
             visitUuid: $stateParams.visitUuid
@@ -139,7 +139,6 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             if ($scope.vm.form.$valid)
             {
               var form = selectedForm;
-
               var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.tabs, $scope.vm.patient,form,params);
               console.log(payLoad);
               if (!_.isEmpty(payLoad.obs))
@@ -155,7 +154,6 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                       {
                         if($scope.vm.submitLabel === 'Update')
                         {
-                          // console.log('Trying to void/update obs')
                           $scope.vm.savedOrUpdated=true;
                           var cPayload = angular.copy(payLoad)
                           voidObs(cPayload);
@@ -193,15 +191,18 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               }
             }
             else {
+              //only activate this for debugging purposes
               if($scope.vm.form.$error !== undefined)
               {
                 var err = $scope.vm.form.$error;
-                console.log('errrr', err),
-                console.log('err.js_expression1[0].$error.js_expression1[0]', err.js_expression1[0].$error.js_expression1)
-                _.each(err.js_expression1[0].$error.js_expression1, function(err_fields){
-                  console.log('errr 2', err_fields);
-                  console.log('errror_fields:', getErrorField(err_fields.$name));
-                });
+                console.log('errrr', err);
+                if (err.js_expression1)
+                {
+                  _.each(err.js_expression1[0].$error.js_expression1, function(err_fields){
+                    console.log('errr 2', err_fields);
+                    console.log('errror_fields:', getErrorField(err_fields.$name));
+                  });
+                }
               }
             }
         }
@@ -258,9 +259,6 @@ function activate()
       });
      });
    },1000);
-   
-  
-
 }
 
 function isBusy(val){

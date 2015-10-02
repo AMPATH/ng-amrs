@@ -15,7 +15,8 @@
             'dialogs.main',
             'pascalprecht.translate',
             'dialogs.default-translations',
-            'darthwade.dwLoading'
+            'darthwade.dwLoading',
+            'app.utils'
         ])
     .config(function ($stateProvider) {
       $stateProvider
@@ -46,16 +47,6 @@
 
         formlyConfig.setType({
           name: 'customInput',
-          extends: 'input',
-          apiCheck: function(){
-            formlyApiCheck.shape({
-              foo: formlyApiCheck.string.optional
-            });
-          }
-        });
-
-        formlyConfig.setType({
-          name: 'datepicker',
           extends: 'input',
           apiCheck: function(){
             formlyApiCheck.shape({

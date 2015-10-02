@@ -6,9 +6,9 @@
         .module('app.openmrsRestServices')
         .factory('AuthService', AuthService);
 
-  AuthService.$inject = ['$base64', '$http', 'SessionResService', '$state', 'SessionModel', '$rootScope'];
+  AuthService.$inject = ['$base64', '$http', 'SessionResService', '$state', 'SessionModel', '$rootScope', 'LocationResService'];
 
-  function AuthService(base64, $http, session, $state, SessionModel, $rootScope) {
+  function AuthService(base64, $http, session, $state, SessionModel, $rootScope, LocationResService) {
     var service = {
       isAuthenticated: isAuthenticated,
       setCredentials: setCredentials,
@@ -31,18 +31,20 @@
           console.log('routing to the right page');
           //$location.path('/'); //go to the home page if user is authenticated or
           $state.go('patientsearch');
-
-
-
+          LocationResService.getLocations(function(results){
+            $rootScope.cachedLocations = results;
+          },
+          function(failed_error){
+            console.log(failed_error);
+          })
           //console.log('Resolved View');
           //console.log($state.go('home'));
         }
         else{
-
+          console.log('authentication Failed');
         }
 
         $rootScope.$broadcast('onUserAuthenticationDetermined');
-
         callback(data.authenticated); //return authentication status (true/false)
 
         //console.log(service.authenticated);
