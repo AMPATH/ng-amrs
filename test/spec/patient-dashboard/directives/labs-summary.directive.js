@@ -53,13 +53,13 @@
     it('should fetch and bind more patient test records on clicking load more button', function () {
       //set items in backend to 70, being an abitrary number
       etlRestServiceMock.numberOfPatientTestsToReturn = 70;
-      
+
       //console.log(element.isolateScope().encounters);
-      
+
       var currentLength = element.isolateScope().encounters.length;
       console.log('initial length:' + currentLength);
       element.isolateScope().loadMoreLabs();
-      
+
       //digest the scope to reflect changes
       scope.$digest();
 
@@ -75,8 +75,8 @@
       element.isolateScope().loadMoreLabs();
       element.isolateScope().loadMoreLabs();
       element.isolateScope().loadMoreLabs();
-     
-      
+
+
       //digest the scope to reflect changes
       scope.$digest();
 

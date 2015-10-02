@@ -20,7 +20,6 @@ jshint -W003, -W026
     }
 
     labsSummaryController.$inject = ['$scope', 'EtlRestService', 'PatientTestModel'];
-
     function labsSummaryController($scope, EtlRestService, patientTestModel) {
         $scope.injectedEtlRestService = EtlRestService;
         $scope.encounters = [];
@@ -29,6 +28,7 @@ jshint -W003, -W026
         $scope.loadMoreLabs = loadMoreLabs;
         $scope.allDataLoaded = false;
         $scope.experiencedLoadingError = false;
+        $scope.testLength;
 
         function loadMoreLabs() {
             if ($scope.isBusy === true) return;
@@ -37,19 +37,36 @@ jshint -W003, -W026
             $scope.experiencedLoadingError = false;
 
             if ($scope.patientUuid && $scope.patientUuid !== '')
-                EtlRestService.getPatientTests($scope.patientUuid, $scope.nextStartIndex, 10, onFetchPatientTestsSuccess, onFetchPatientTestsFailed);
+                  EtlRestService.getPatientTests($scope.patientUuid, $scope.nextStartIndex, 10,
+                    onFetchPatientTestsSuccess, onFetchPatientTestsFailed);
         }
 
         function onFetchPatientTestsSuccess(patientTestsData) {
             $scope.nextStartIndex = +patientTestsData.startIndex + patientTestsData.size;
+            $scope.testLength=0;
             for (var e in patientTestsData.result) {
-                $scope.encounters.push(new patientTestModel.patientTest(patientTestsData.result[e]));
+                  var testData =patientTestsData.result[e];
+                  if(testData.cd4_count||testData.cd4_percent||testData.hiv_viral_load||testData.hemoglobin
+                    ||testData.ast||
+                    testData.creatinine||testData.chest_xray) {
+                    $scope.testLength= $scope.testLength+1;
+                    $scope.encounters.push(new patientTestModel.patientTest(patientTestsData.result[e]));
+                  }
             }
-            if (patientTestsData.size !== 0) {
-                $scope.isBusy = false;
-            }
-            else
+
+              if (patientTestsData.size !== 0) {
+                if ($scope.testLength==0)
+                {
+                  $scope.isBusy = false;
+                 loadMoreLabs();
+                }
+                else {
+                  $scope.isBusy = false;
+                }
+              }
+              else {
                 $scope.allDataLoaded = true;
+              }
         }
 
         function onFetchPatientTestsFailed(error) {
@@ -60,7 +77,6 @@ jshint -W003, -W026
 
     function labsSummaryLink(scope, element, attrs, vm) {
         attrs.$observe('patientUuid', onPatientUuidChanged);
-
         function onPatientUuidChanged(newVal, oldVal) {
             if (newVal && newVal != "") {
                 scope.isBusy = false;
@@ -71,5 +87,4 @@ jshint -W003, -W026
             }
         }
     }
-
 })();
