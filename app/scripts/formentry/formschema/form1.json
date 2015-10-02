@@ -432,12 +432,9 @@
               "type": "multiCheckbox",
               "validators": [
                 {
-                  "type": "conditionalAnswered",
-                  "message": "Patient is not on family planning method, therefore should not provide a method.",
-                  "referenceQuestionId": "q12d",
-                  "referenceQuestionAnswers": [
-                    "a899b35c-1350-11df-a1f1-0026b9348838"
-                  ]
+                  "type": "js_expression",
+                  "failsWhenExpression": "isEmpty(myValue) && q12d === 'a899b35c-1350-11df-a1f1-0026b9348838'",
+                  "message": "Patient on family planning. Please provide a method."
                 }
               ],
               "disableExpression": [
@@ -471,12 +468,9 @@
               "type": "select",
               "validators": [
                 {
-                  "type": "conditionalAnswered",
-                  "message": "You didn't specify that patient is not on family planning therefore you can't specify reason",
-                  "referenceQuestionId": "q12d",
-                  "referenceQuestionAnswers": [
-                    "a899b42e-1350-11df-a1f1-0026b9348838"
-                  ]
+                  "type": "js_expression",
+                  "failsWhenExpression": "isEmpty(myValue) && q12d === 'a899b42e-1350-11df-a1f1-0026b9348838'",
+                  "message": "Patient on family planning. Please provide a method."
                 }
               ],
               "disableExpression": [
@@ -640,7 +634,13 @@
                       "label": "Other"
                     }
                   ],
-                  "type": "multiCheckbox"
+                  "type": "multiCheckbox",
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "q13a !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                    }
+                  ]
                 }
               ]
             }
@@ -1529,8 +1529,8 @@
               "concept": "a89c60c0-1350-11df-a1f1-0026b9348838",
               "label": "BMI:Kg/M2",
               "type": "number",
-              "max": "60",
-              "min": "25",
+              "max": "100",
+              "min": "0",
               "validators": []
             }
           ]
@@ -2064,8 +2064,8 @@
               "validators": [
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q13a) && q13a === 'a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)&& arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838','a899e0ac-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'],myValue)",
-                  "message": "Patient marked as on ARVs in question 14. Therefore plan can only be drug substitution, continue regimen, change dose, chage regimen, change"
+                  "failsWhenExpression": "!isEmpty(q13a) && q13a === 'a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue) && arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838','a899e0ac-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'], myValue)",
+                  "message": "Patient marked as on ARVs in question 13a. Therefore plan can only be drug substitution, continue regimen, change dose, chage regimen, change"
                 }
               ]
             },
@@ -2095,13 +2095,18 @@
               "validators": [
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q24a)&&!isEmpty(myValue)&&!arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'],q24a)",
-                  "message": "You indicated patient is not (re)starting arvs, no reason for starting should be selected."
+                  "failsWhenExpression": "!isEmpty(q24a) && isEmpty(myValue) && arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'], q24a)",
+                  "message": "You indicated patient is (re)starting ARVs. Please provide reason."
+                },
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "!isEmpty(q24a) && !isEmpty(myValue) && !arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'], q24a)",
+                  "message": "You indicated patient is not (re)starting ARVs, therefore no reason for starting should be selected."
                 }
               ],
               "disableExpression": [
                 {
-                  "disableWhenExpression": "!arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'],q24a)"
+                  "disableWhenExpression": "!arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'], q24a)"
                 }
               ]
             },
@@ -2183,8 +2188,13 @@
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(q24a) && isEmpty(myValue)&&arrayContains(['a898c938-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'],q24a)",
+                      "failsWhenExpression": "!isEmpty(q24a) && isEmpty(myValue) && arrayContains(['a898c938-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'], q24a)",
                       "message": "You indicated patient is changing /changing dose/substituting/stopping arvs, reason for changing should be selected."
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "!arrayContains(['a898c938-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'], q24a)"
                     }
                   ]
                 },
@@ -2238,12 +2248,12 @@
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(q24c_reason_drug_change)&&isEmpty(myValue)&&(q24c_reason_drug_change==='a890d1ba-1350-11df-a1f1-0026b9348838')",
+                      "failsWhenExpression": "!isEmpty(q24c_reason_drug_change)&&isEmpty(myValue) && (q24c_reason_drug_change==='a890d1ba-1350-11df-a1f1-0026b9348838')",
                       "message": "You indicated patient is changing /changing dose/substituting/stopping arvs due to toxicity, cause should be selected."
                     },
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(q24c_reason_drug_change)&&!isEmpty(myValue)&&(q24c_reason_drug_change!=='a890d1ba-1350-11df-a1f1-0026b9348838')",
+                      "failsWhenExpression": "!isEmpty(q24c_reason_drug_change) && !isEmpty(myValue) && (q24c_reason_drug_change!=='a890d1ba-1350-11df-a1f1-0026b9348838')",
                       "message": "You indicated patient is not changing/dose/substituting/stopping arvs due to toxicity, cause should be selected."
                     }
                   ],
@@ -2261,12 +2271,12 @@
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(q24cToxicity)&&isEmpty(myValue)&&(q24cToxicity==='a8aaf3e2-1350-11df-a1f1-0026b9348838')",
+                      "failsWhenExpression": "!isEmpty(q24cToxicity) && isEmpty(myValue) && (q24cToxicity==='a8aaf3e2-1350-11df-a1f1-0026b9348838')",
                       "message": "You indicated patient is changing /changing dose/substituting/stopping arvs due to other toxicity, indicate the other cause."
                     },
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(q24cToxicity)&&!isEmpty(myValue)&&(q24cToxicity!=='a8aaf3e2-1350-11df-a1f1-0026b9348838')",
+                      "failsWhenExpression": "!isEmpty(q24cToxicity) && !isEmpty(myValue) && (q24cToxicity!=='a8aaf3e2-1350-11df-a1f1-0026b9348838')",
                       "message": "You indicated patient is not changing /changing dose/substituting/stopping arvs due to other toxicity, other cause is not required."
                     }
                   ],
@@ -2395,12 +2405,12 @@
               "validators": [
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q24a) && isEmpty(myValue)&&arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'],q24a)",
+                  "failsWhenExpression": "!isEmpty(q24a) && isEmpty(myValue) && arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'], q24a)",
                   "message": "Based on the plan selected, you must choose a regimen."
                 },
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(myValue)&& !arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'],q24a)",
+                  "failsWhenExpression": "!isEmpty(myValue) && !arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'], q24a)",
                   "message": "Based on the plan selected, you may not choose a regimen."
                 }
               ],
@@ -2446,12 +2456,12 @@
               "validators": [
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q14a)&&!isEmpty(myValue)&&!arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'],myValue)&&(q14a==='a899e0ac-1350-11df-a1f1-0026b9348838')",
+                  "failsWhenExpression": "!isEmpty(q14a) && !isEmpty(myValue) && !arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'],myValue)&&(q14a==='a899e0ac-1350-11df-a1f1-0026b9348838')",
                   "message": "Patient marked as Not on Prophylaxis. Therefore plan can only be none or start."
                 },
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q14a)&&!isEmpty(myValue)&&arrayContains(['a8989396-1350-11df-a1f1-0026b9348838','a890c9e0-1350-11df-a1f1-0026b9348838'],q14a)&&!(arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7908-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'],myValue))",
+                  "failsWhenExpression": "!isEmpty(q14a) && !isEmpty(myValue) && arrayContains(['a8989396-1350-11df-a1f1-0026b9348838','a890c9e0-1350-11df-a1f1-0026b9348838'],q14a)&&!(arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7908-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'], myValue))",
                   "message": "Patient marked as on PCP Prophylaxis. Therefore plan can only be change regimen,continue or stop."
                 }
               ]
@@ -2478,18 +2488,18 @@
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(q25a)&&isEmpty(myValue)&&arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'],q25a)",
+                      "failsWhenExpression": "!isEmpty(q25a) && isEmpty(myValue) && arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'], q25a)",
                       "message": "Patient changed drugs, please select reason."
                     },
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(q25a)&&!isEmpty(myValue)&&(!arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'],q25a))",
+                      "failsWhenExpression": "!isEmpty(q25a) && !isEmpty(myValue) && (!arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'], q25a))",
                       "message": "Patient has not changed drugs, please do not select a reason."
                     }
                   ],
                   "disableExpression": [
                     {
-                      "disableWhenExpression": "!arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'],q25a)"
+                      "disableWhenExpression": "!arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'], q25a)"
                     }
                   ]
                 },
@@ -2543,18 +2553,18 @@
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(q25b)&&isEmpty(myValue)&&(q25b==='a890d1ba-1350-11df-a1f1-0026b9348838')",
+                      "failsWhenExpression": "!isEmpty(q25b) && isEmpty(myValue) && (q25b==='a890d1ba-1350-11df-a1f1-0026b9348838')",
                       "message": "You indicated patient is changing /changing dose/substituting/stopping PCP due to toxicity, cause should be selected."
                     },
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(q25b)&&!isEmpty(myValue)&&(q25b!=='a890d1ba-1350-11df-a1f1-0026b9348838')",
+                      "failsWhenExpression": "!isEmpty(q25b) && !isEmpty(myValue) && (q25b!=='a890d1ba-1350-11df-a1f1-0026b9348838')",
                       "message": "You indicated patient is not changing/dose/substituting/stopping PCP due to toxicity, cause should not be selected."
                     }
                   ],
                   "disableExpression": [
                     {
-                      "disableWhenExpression": "q25b!=='a890d1ba-1350-11df-a1f1-0026b9348838'"
+                      "disableWhenExpression": "q25b !== 'a890d1ba-1350-11df-a1f1-0026b9348838'"
                     }
                   ]
                 },
@@ -2566,13 +2576,13 @@
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!(isEmpty(qPcptoxicity)&&isEmpty(myValue))&&(qPcptoxicity==='a8aaf3e2-1350-11df-a1f1-0026b9348838')",
-                      "message": "You indicated patient is changing /changing dose/substituting/stopping arvs due to other toxicity, indicate the other cause."
+                      "failsWhenExpression": "!isEmpty(qPcptoxicity) && isEmpty(myValue) && qPcptoxicity==='a8aaf3e2-1350-11df-a1f1-0026b9348838'",
+                      "message": "You indicated patient is changing /changing dose/substituting/stopping PCP due to other toxicity, indicate the other cause."
                     }
                   ],
                   "disableExpression": [
                     {
-                      "disableWhenExpression": "qPcptoxicity!=='a8aaf3e2-1350-11df-a1f1-0026b9348838'"
+                      "disableWhenExpression": "qPcptoxicity !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
                     }
                   ]
                 }
@@ -2581,6 +2591,7 @@
             {
               "concept": "a89b82cc-1350-11df-a1f1-0026b9348838",
               "label": "25c. If Start/Cont/Change, regimen:",
+              "id": "q25c",
               "answers": [
                 {
                   "concept": "a890c9e0-1350-11df-a1f1-0026b9348838",
@@ -2592,7 +2603,18 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "!isEmpty(q25a) && isEmpty(myValue) && arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838', 'a89b7908-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838'], q25a)",
+                  "message": "You indicated patient is starting/continuing/changing PCP regimen. Please select regimen."
+                }
+              ],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "!arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838', 'a89b7908-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838'], q25a)"
+                }
+              ]
             },
             {
               "concept": "a89c1cfa-1350-11df-a1f1-0026b9348838",
@@ -2989,7 +3011,7 @@
                       "message": "You indicated patient is not on tb treatment, therefore start date should not be indicated."
                     }
                   ],
-                   "disableExpression": [
+                  "disableExpression": [
                     {
                       "disableWhenExpression": "!arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], q15a)"
                     }
@@ -3004,6 +3026,7 @@
                 {
                   "concept": "16db21cd-10cb-4c31-bb5a-b7619bfbea66",
                   "label": "26e. Site of TB meds pick-up:",
+                  "id": "q26e",
                   "answers": [
                     {
                       "concept": "a89c2f42-1350-11df-a1f1-0026b9348838",
@@ -3021,7 +3044,12 @@
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "Other Specify:",
                   "type": "text",
-                  "validators": []
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "q26e !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
+                    }
+                  ]
                 }
               ]
             },
