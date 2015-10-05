@@ -141,12 +141,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               // console.log('Selected Form');
               console.log('current tabs',$scope.vm.tabs);
               console.log('Original tabs',$scope.vm.formlyFields);
-              var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.formlyFields, $scope.vm.patient,form,params.uuid);
-              console.log('Alfayo TTTTT')
-              var personAttributes=PersonAttributesRestService.getPersonAttributeFieldValues($scope.vm.model, $scope.vm.formlyFields, $scope.vm.patient);
 
-              console.log(payLoad);
-              if (!_.isEmpty(payLoad.obs)) {
+
+              var payLoadData = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.formlyFields, $scope.vm.patient,form,params.uuid);         
+              var payLoad=payLoadData.formPayLoad;  
+               console.log(payLoad);
+              if (!_.isEmpty(payLoad.obs))
+              {
                   /*
                   submit only if we have some obs
                   */
@@ -175,6 +176,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                                 // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
                                 $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
                               }
+
                             }
                           });
                         }
@@ -184,6 +186,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                           // console.log('Previous State')
                           // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
                           $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
+
+ 
                         }
                       }
                     },
@@ -247,7 +251,12 @@ function activate() {
             $scope.vm.encData = data;
             if (data) {
               $scope.vm.submitLabel = 'Update'
-                FormentryService.getEncounter($scope.vm.encData,formlySchema);
+              var existingPersonAttributes=$scope.vm.patient.getPersonAttributes();
+              if(existingPersonAttributes)
+              //formlySchema=PersonAttributesRestService.updateModelWIthExistingPersonAttributes(existingPersonAttributes,formlySchema);
+                FormentryService.getEncounter($scope.vm.encData,existingPersonAttributes,formlySchema);
+               
+                //updatePersonAttr
             }
           },
           //error callback
@@ -365,21 +374,30 @@ function voidObs(_payLoad, callback) {
   /*
   private methdd to get the error field
   */
-  function getErrorField(_fieldKey) {
-    //  console.log('++++field_key', fieldKey);
-     var errorField;
-     var fieldKey;
-     if(_.contains(_fieldKey,'ui-select-extended')) {
-        errorField = _fieldKey.split('ui-select-extended_')[1];
-        fieldKey = errorField.split('_')[0];
+function getErrorField(fieldKey)
+{
+
+  //  console.log('++++field_key', fieldKey);
+
+   var errorField;
+   var field_key;
+   if(_.contains(fieldKey,'ui-select-extended'))
+   {
+      errorField = fieldKey.split('ui-select-extended_')[1];
+      field_key = errorField.split('_')[0];
+   }
+
+   else
+   {  
+     if(fieldKey.startsWith('obs')){
+       errorField = fieldKey.split('obs')[1];
+       field_key = 'obs'+errorField.split('_')[0] + '_' + errorField.split('_')[1]
      }
-     else {
-       errorField = _fieldKey.split('obs')[1];
-       fieldKey = 'obs'+errorField.split('_')[0] + '_' + errorField.split('_')[1]
-     }
-     var field = FormentryService.getFieldById_Key(fieldKey, $scope.vm.tabs);
-    // console.log('error Field ', field);
-     return field;
-  }
+     
+   }
+   var field = FormentryService.getFieldById_Key(field_key, $scope.vm.tabs);
+  // console.log('error Field ', field);
+   return field;
+}
 }
 })();
