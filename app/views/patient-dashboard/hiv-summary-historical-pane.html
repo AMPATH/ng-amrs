@@ -8,17 +8,17 @@
 				<th>Viral Load</th>
 			</tr>
 		</thead>
-		<tr ng-repeat="encounter in hivSummaries">
+		<tr ng-repeat="encounter in hivSummaries" >
 			<td>{{encounter.encounterDatetime()  | date:'dd-MM-yyyy'}}</td>
 			<td>{{encounter.curArvMeds()}}</td>
 			<td>{{encounter.cd4_1()}}
 				<div>
-					<small class="text-default">({{encounter.cd4_1Date()  | date:'dd-MM-yyyy'}})</small>
+					<small ng-if="encounter.cd4_1Date()" class="text-default">({{encounter.cd4_1Date()  | date:'dd-MM-yyyy'}})</small>
 				</div>
 			</td>
 			<td>{{encounter.vl_1()}}
 				<div>
-					<small class="text-default">({{encounter.vl_1Date()  | date:'dd-MM-yyyy'}})</small>
+					<small ng-if="encounter.vl_1Date()" class="text-default">({{encounter.vl_1Date()  | date:'dd-MM-yyyy'}})</small>
 				</div>
 			</td>
 		</tr>
