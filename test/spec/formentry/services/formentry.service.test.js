@@ -169,7 +169,7 @@
         });
 
         it('Should be able to search field by Id', function(){
-          sid_Field = formentryService.getFieldById_Key(id);
+          sid_Field = formentryService.getFieldByIdKey(id);
           expect(sid_Field).to.be.an('object');
           expect(id).to.equal(sid_Field.data.id);
           expect(sid_Field.key).to.equal(field.key);
@@ -177,7 +177,7 @@
         });
 
         it('Should be able to search field by key', function(){
-          skey_Field = formentryService.getFieldById_Key(key);
+          skey_Field = formentryService.getFieldByIdKey(key);
           expect(skey_Field).to.be.an('object');
           expect(skey_Field.key).to.equal(field.key);
           expect(skey_Field.type).to.equal(field.type);
@@ -185,14 +185,14 @@
         });
 
         it('Should be able to find EncounterDate Field', function(){
-          skey_Field = formentryService.getFieldById_Key('encounterDate');
+          skey_Field = formentryService.getFieldByIdKey('encounterDate');
           expect(skey_Field).to.be.an('object');
           expect(skey_Field.key).to.equal('encounterDate');
           expect(skey_Field.type).to.equal('datetimepicker');
         });
 
         it('Should be able to return undefined if no field is found', function(){
-          skey_Field = formentryService.getFieldById_Key('test');
+          skey_Field = formentryService.getFieldByIdKey('test');
           // console.log('++++', skey_Field);
           expect(skey_Field).to.be.an('undefined');
         });

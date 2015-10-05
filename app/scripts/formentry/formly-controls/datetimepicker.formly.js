@@ -50,11 +50,11 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
             extends: 'input',
             template: '<input class="form-control" ng-model="model[options.key]" ' +
                     'is-open="to.isOpen" ng-click="open($event)"  ' +
-                    'datetime-picker="dd-MMM-yyyy hh:mm:ss a" ' + 
+                    'datetime-picker="dd-MMM-yyyy hh:mm:ss a" ' +
                     'datepicker-options="to.datepickerOptions"></input>',
             wrapper: ['bootstrapLabel', 'bootstrapHasError'],
             overwriteOk: true,
-            defaultOptions: {  
+            defaultOptions: {
                 ngModelAttrs: ngModelAttrs,
                 templateOptions: {
                     addonLeft: {
