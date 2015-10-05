@@ -143,7 +143,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               console.log('Original tabs',$scope.vm.formlyFields);
 
 
-              var payLoadData = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.formlyFields, $scope.vm.patient,form,params.uuid);         
+              var payLoadData = FormentryService.updateFormPayLoad($scope.vm.model, $scope.vm.formlyFields, $scope.vm.patient, form, params);         
               var payLoad=payLoadData.formPayLoad;  
                console.log(payLoad);
               if (!_.isEmpty(payLoad.obs))
@@ -172,13 +172,16 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                               if ($scope.vm.updatedFailed === false && $scope.vm.voidFailed === false) {
                                 $scope.vm.success = '| Form Submitted successfully'
                                 var dlg=dialogs.notify('Success', $scope.vm.success);
+                                if(payLoadData.personAttributes.length>0){
+                                PersonAttributesRestService.getPersonAttributeFieldValues(payLoadData.personAttributes, $scope.vm.patient);
+                                }
                                 // console.log('Previous State')
                                 // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
                                 $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
                               }
-
                             }
                           });
+                          
                         }
                         else {
                           $scope.vm.success = '| Form Submitted successfully'
@@ -186,8 +189,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                           // console.log('Previous State')
                           // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
                           $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
-
- 
+                          
                         }
                       }
                     },

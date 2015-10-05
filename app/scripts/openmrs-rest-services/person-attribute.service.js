@@ -90,14 +90,16 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
             _.each(personAttributes, function(attribute){
               var personAttribute={attribute:attribute,person:person}                                 
               saveUpdatePersonAttribute(personAttribute,function(response){
-               console.log('Person attribute value',response.attributeType.uuid),
+                console.log('TTTTTTTTTTTTT')
+                alert('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
+               console.log('XXXXXXXXXXXXXXXXXXXXXXPerson attribute value',JSON.stringify(response))
+              },
                function (error){
-                 console.log('An Error Occurred while getting the person attributes')
+                 console.log('An Error Occurred while getting the person attributes');
+                    alert('Failed')
                }
-             });
+             );
            })
-
-    return personAttributes;
     }       
    
   function getPersonAttributeValue(attributes,key){
