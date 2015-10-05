@@ -10,8 +10,8 @@ LoginCtrl.$inject = ['$scope', 'OpenmrsRestService', '$timeout'];
 function LoginCtrl($scope, OpenmrsRestService, $timeout) {
   $scope.errors = '';
   $scope.isVisible = false;
-  $scope.CurrentUser = {username:'akwatuha',
-              password:'2011@Ampath'
+  $scope.CurrentUser = {username:'',
+              password:''
   };
 
   $scope.isBusy = false;
