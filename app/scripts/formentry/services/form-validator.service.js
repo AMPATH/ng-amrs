@@ -79,9 +79,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     */
                     var value = modelValue || viewValue;
                     var dateValue;
-                    var curDate = Date.parse(Date.today(), 'd-MMM-yyyy');
+                    var curDate = new Date(formatDate(new Date(), 'd-MMM-yyyy'));
                     if ((value !== undefined) && (value !== null)) {
-                        dateValue = Date.parse(value, 'd-MMM-yyyy').clearTime();
+                        dateValue = new Date(formatDate(value, 'd-MMM-yyyy'));
                     }
                     if (dateValue !== undefined) {
                         return !dateValue.isAfter(curDate);
@@ -475,6 +475,20 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             else {
                 return array.indexOf(members) !== -1;
             }
+        }
+        
+        function formatDate(value, format, offset) {
+            var format = format || 'yyyy-MM-dd';
+            var offset = offset || '+0300'
+            
+            if(!(value instanceof Date)) {
+                value = new Date(value);
+                if(value === null || value === undefined) {
+                    throw new Exception('DateFormatException: value passed ' +
+                    'is not a valid date');
+                }
+            }
+            return $filter('date')(value, format, offset);
         }
 
     }

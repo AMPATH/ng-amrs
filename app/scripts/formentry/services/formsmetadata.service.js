@@ -44,8 +44,8 @@ jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069
         forms['triage'] = {
           name: 'triage',
           uuid: 'triage',
-          encounterType:'b1e9ed0f-5222-4d47-98f7-5678b8a21ebd',
-          encounterTypeName:'POST ANTENATAL'
+          encounterType:'a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7',
+          encounterTypeName:'TRIAGE'
         };
 
         var service = {

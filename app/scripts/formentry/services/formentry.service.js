@@ -1489,11 +1489,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 {
                   if (sec_field.default === 'today')
                   {
-                    defaultValue_ = Date.today().clearTime();
+                    defaultValue_ = new Date(parseDate(new Date(), 'dd-MMMM-yyyy'));
                   }
                   else if (sec_field.default === 'now')
                   {
-                    defaultValue_ = Date.today();
+                    defaultValue_ = new Date(Date.now(), 'dd-MMMM-yyyy');
                   }
                   else {
                     defaultValue_ = sec_field.default;
@@ -1510,7 +1510,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   field = {
                     key: sec_field.type,
                     type: 'datetimepicker',
-                    defaultValue: parseDate(new Date()),
+                    defaultValue: Date.now(),
                     data: {encounter:'enc_' + sec_field.type},
                     templateOptions: {
                       type: 'text',
@@ -2119,14 +2119,17 @@ function getFormattedValue(value){
 }
 
 
-        function parseDate(value) {
+        function parseDate(value, format, offset) {
+            var format = format || 'yyyy-MM-dd HH:mm:ss';
+            var offset = offset || '+0300';
+            
             if(!(value instanceof Date)){
-                value = Date.parse(value);
-                if(angular.isUndefined(value)) {
+                value = new Date(value);
+                if(value === null || value === undefined) {
                     return '';
                 }
             }
-            return $filter('date')(value,'yyyy-MM-dd HH:mm:ss', '+0300');
+            return $filter('date')(value, format, offset);
         }
     }
 
