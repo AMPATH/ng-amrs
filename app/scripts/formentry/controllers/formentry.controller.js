@@ -28,7 +28,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         $scope.vm.encData;
         $scope.vm.savedOrUpdated=false;
         $scope.vm.updated_failed = false;
-        $scope.vm.voidFailed = false;
+        $scope.vm.void_failed = false;
         $scope.vm.currentTab = 0;
 
         $scope.vm.tabSelected = function($index) {
@@ -156,15 +156,26 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                         {
                           $scope.vm.savedOrUpdated=true;
                           var cPayload = angular.copy(payLoad)
-                          voidObs(cPayload);
-                          updateObs(cPayload, function(update_failed){
-                            if(update_failed === false)
+                          voidObs(cPayload, function(void_failed){
+                            if (void_failed)
                             {
-                              $scope.vm.success = '| Form Submitted successfully'
-                              var dlg=dialogs.notify('Success', $scope.vm.success);
-                              // console.log('Previous State')
-                              // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
-                              $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
+                              $scope.vm.errorSubmit = 'An error occured when trying to void obs';
+                            }
+                          });
+                          updateObs(cPayload, function(update_failed){
+                            if(update_failed)
+                            {
+                              $scope.vm.errorSubmit = 'An error occured when trying to update the record';
+                            }
+                            else {
+                              if ($scope.vm.updated_failed === false && $scope.vm.void_failed === false)
+                              {
+                                $scope.vm.success = '| Form Submitted successfully'
+                                var dlg=dialogs.notify('Success', $scope.vm.success);
+                                // console.log('Previous State')
+                                // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
+                                $location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
+                              }
                             }
                           });
                         }
@@ -299,7 +310,7 @@ function setProvider()
 /*
   private methdd to void obs
 */
-function voidObs(pay_load)
+function voidObs(pay_load, callback)
 {
   var obsToVoid = _.where(pay_load.obs,{voided:true});
   //console.log('Obs to Void: ', obsToVoid);
@@ -316,10 +327,13 @@ function voidObs(pay_load)
       function(error)
       {
         $scope.vm.errorSubmit = 'An error occured when trying to void obs';
-        $scope.vm.voidFailed = true;
+        $scope.vm.void_failed = true;
+        callback($scope.vm.void_failed);
       });
     })
+    callback($scope.vm.void_failed);
   }
+  else callback($scope.vm.void_failed);
 }
 
 /*
@@ -351,7 +365,7 @@ function updateObs(pay_load, callback)
       });
 
     });
-
+    callback($scope.vm.updated_failed);
   }
   else callback($scope.vm.updated_failed)
 }

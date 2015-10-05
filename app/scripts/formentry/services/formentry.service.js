@@ -419,7 +419,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                });
                                if(val !== undefined)
                                {
-                                 group_val[_group_field.key] = val.obsDatetime;
+                                 group_val[_group_field.key] = new Date(val.obsDatetime);
                                  _group_field.data['init_val'] = val.obsDatetime;
                                  _group_field.data['uuid'] = val.uuid; //obs uuid
                                }
@@ -613,8 +613,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     // console.log('Other Fields Available...')
                     // console.log(_field.type)
                     // console.log(_field)
+
                     field_key = _field.key;
                     var val = getObsValue(field_key, obs_data);
+
                     if (val !== undefined)
                     {
                       if (typeof val.value === 'object')
@@ -624,9 +626,17 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         _field.data['uuid'] = val.uuid; //obs uuid
                       }
                       else {
-                        sec_data[field_key] = val.value;
-                        _field.data['init_val'] = val.value;
-                        _field.data['uuid'] = val.uuid; //obs uuid
+                        if(_field.type === 'datepicker')
+                        {
+                          sec_data[field_key] = new Date(val.value);
+                          _field.data['init_val'] = val.value;
+                          _field.data['uuid'] = val.uuid; //obs uuid
+                        }
+                        else {
+                          sec_data[field_key] = val.value;
+                          _field.data['init_val'] = val.value;
+                          _field.data['uuid'] = val.uuid; //obs uuid
+                        }
                       }
                     }
                   }
