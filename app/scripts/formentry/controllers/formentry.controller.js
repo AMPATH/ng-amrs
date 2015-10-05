@@ -27,8 +27,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         $scope.vm.encounter;
         $scope.vm.encData;
         $scope.vm.savedOrUpdated=false;
-        $scope.vm.updated_failed = false;
-        $scope.vm.void_failed = false;
+        $scope.vm.updatedFailed = false;
+        $scope.vm.voidFailed = false;
         $scope.vm.currentTab = 0;
 
         $scope.vm.tabSelected = function($index) {
@@ -49,8 +49,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
       $scope.vm.isFirstTab = isFirstTab;
 
       $scope.vm.activateTab = function(button) {
-        if(button === 'next')
-        {
+        if(button === 'next') {
           if(!isLastTab()){
           $scope.vm.currentTab++;
           $scope.vm.tabs[$scope.vm.currentTab].active = true;
@@ -58,8 +57,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
           }
         }
-        else if(button === 'prev')
-        {
+        else if(button === 'prev') {
           if(!isFirstTab()){
           $scope.vm.currentTab--;
           $scope.vm.tabs[$scope.vm.currentTab].active = true;
@@ -73,8 +71,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         var usedStateChange=false;
           $scope.$on('$stateChangeStart', function(event,toState,toParams) {
            usedStateChange=true;
-           if($scope.vm.form.$dirty&&$scope.vm.savedOrUpdated===false){
-            if(userConfirmedChange===false){
+           if($scope.vm.form.$dirty&&$scope.vm.savedOrUpdated===false) {
+            if(userConfirmedChange===false) {
               //prevent transition to new url before saving data
               event.preventDefault();
                 var dialogPromise =dialogs.confirm('Changes Not Saved','Do you want to close this form?');
@@ -106,8 +104,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         //var params = {uuid: '18a1f142-f2c6-4419-a5db-5f875020b887'};
         var encData;
         var selectedForm //= $stateParams.formuuid;
-        if(params.uuid !== undefined)
-        {
+        if(params.uuid !== undefined) {
           $scope.vm.encounter = $rootScope.activeEncounter;
           //var encForm = FormsMetaData.getForm($scope.vm.encounter.encounterTypeUuid());
           selectedForm = FormsMetaData.getForm($scope.vm.encounter.encounterTypeUuid());
@@ -121,12 +118,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         //load the selected form
         activate();
 
-        $scope.vm.cancel = function()
-        {
+        $scope.vm.cancel = function() {
           console.log($state);
           $scope.vm.savedOrUpdated=true;
           var dlg = dialogs.confirm('Close Form', 'Do you want to close this form?');
-					dlg.result.then(function(btn){
+					dlg.result.then(function(btn) {
 						$location.path($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid);
 					},function(btn){
 						//$scope.vm.confirmed = 'You confirmed "No."';
@@ -136,13 +132,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         $scope.vm.submit = function() {
             console.log('form',$scope.vm.form);
             $scope.vm.savedOrUpdated=true;
-            if ($scope.vm.form.$valid)
-            {
+            if ($scope.vm.form.$valid) {
               var form = selectedForm;
               var payLoad = FormentryService.updateFormPayLoad($scope.vm.model,$scope.vm.tabs, $scope.vm.patient,form,params);
               console.log(payLoad);
-              if (!_.isEmpty(payLoad.obs))
-              {
+              if (!_.isEmpty(payLoad.obs)) {
                   /*
                   submit only if we have some obs
                   */
@@ -150,26 +144,21 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                      isBusy(true);
                     OpenmrsRestService.getEncounterResService().saveEncounter(JSON.stringify(payLoad), function(data){
                        isBusy(false);
-                      if (data)
-                      {
-                        if($scope.vm.submitLabel === 'Update')
-                        {
+                      if (data) {
+                        if($scope.vm.submitLabel === 'Update') {
                           $scope.vm.savedOrUpdated=true;
                           var cPayload = angular.copy(payLoad)
-                          voidObs(cPayload, function(void_failed){
-                            if (void_failed)
-                            {
+                          voidObs(cPayload, function(voidFailed){
+                            if (voidFailed) {
                               $scope.vm.errorSubmit = 'An error occured when trying to void obs';
                             }
                           });
-                          updateObs(cPayload, function(update_failed){
-                            if(update_failed)
-                            {
+                          updateObs(cPayload, function(updateFailed) {
+                            if(updateFailed) {
                               $scope.vm.errorSubmit = 'An error occured when trying to update the record';
                             }
                             else {
-                              if ($scope.vm.updated_failed === false && $scope.vm.void_failed === false)
-                              {
+                              if ($scope.vm.updatedFailed === false && $scope.vm.voidFailed === false) {
                                 $scope.vm.success = '| Form Submitted successfully'
                                 var dlg=dialogs.notify('Success', $scope.vm.success);
                                 // console.log('Previous State')
@@ -203,12 +192,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             }
             else {
               //only activate this for debugging purposes
-              if($scope.vm.form.$error !== undefined)
-              {
+              if($scope.vm.form.$error !== undefined) {
                 var err = $scope.vm.form.$error;
                 console.log('errrr', err);
-                if (err.js_expression1)
-                {
+                if (err.js_expression1) {
                   _.each(err.js_expression1[0].$error.js_expression1, function(err_fields){
                     console.log('errr 2', err_fields);
                     console.log('errror_fields:', getErrorField(err_fields.$name));
@@ -218,8 +205,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             }
         }
 
-function activate()
-{
+function activate() {
     $timeout(function () {
      var start = new Date().getTime();
      FormentryService.getFormSchema(selectedForm.name, function(schema){
@@ -230,8 +216,7 @@ function activate()
         if(formlySchema.length>0)  {
           var i = 0;
           angular.forEach(formlySchema, function(tab){
-            if (i === 0)
-            {
+            if (i === 0) {
               $scope.vm.tabs.push(formlySchema[i]);
             }
             else {
@@ -246,19 +231,17 @@ function activate()
           var time = end - start;
           console.log('Form Creation Execution time: ' + time + ' ms');
         }
-        if(params.uuid !== undefined && params.uuid !== '')
-        {
+        if(params.uuid !== undefined && params.uuid !== '') {
           OpenmrsRestService.getEncounterResService().getEncounterByUuid(params,
             function(data){
             $scope.vm.encData = data;
-            if (data)
-            {
+            if (data) {
               $scope.vm.submitLabel = 'Update'
                 FormentryService.getEncounter($scope.vm.encData,formlySchema);
             }
           },
           //error callback
-          function (error){
+          function (error) {
             $scope.vm.errorSubmit = 'An Error occured when trying to get encounter data';
           }
         );
@@ -283,115 +266,110 @@ function isBusy(val){
 /*
 private methdd to set the current user as the selected provider
 */
-function setProvider()
-{
+function setProvider() {
   var done = false;
-  _.some($scope.vm.tabs, function(page){
+  _.some($scope.vm.tabs, function(page) {
     var model = page.form.model;
-    _.some(page.form.fields, function(_section){
-      if (_section.type === 'section')
-      {
-        var sec_key = _section.key;
-        var sec_data = model[sec_key] = {};
-        _.some(_section.data.fields, function(_field){
-          if(_field.key === 'encounterProvider'){
-            sec_data['encounterProvider'] = OpenmrsRestService.getUserService().user.personUuId();
+    _.some(page.form.fields, function(_section) {
+      if (_section.type === 'section') {
+        var secKey = _section.key;
+        var secData = model[secKey] = {};
+        _.some(_section.data.fields, function(_field) {
+          if(_field.key === 'encounterProvider') {
+            secData['encounterProvider'] = OpenmrsRestService.getUserService().user.personUuId();
             done = true;
             return true;
           }
         });
       }
-      if (done) return true;
+      if (done) {
+        return true;
+      }
     });
-    if (done) return true;
+    if (done) {
+      return true;
+    }
   });
 }
 
 /*
   private methdd to void obs
 */
-function voidObs(pay_load, callback)
-{
-  var obsToVoid = _.where(pay_load.obs,{voided:true});
+function voidObs(_payLoad, callback) {
+  var obsToVoid = _.where(_payLoad.obs,{voided:true});
   //console.log('Obs to Void: ', obsToVoid);
-  if(obsToVoid !== undefined)
-  {
-    _.each(obsToVoid, function(obs){
-      OpenmrsRestService.getObsResService().voidObs(obs, function(data){
-        if (data)
-        {
+  if(obsToVoid !== undefined) {
+    _.each(obsToVoid, function(obs) {
+      OpenmrsRestService.getObsResService().voidObs(obs, function(data) {
+        if (data) {
           console.log('Voided Obs uuid: ', obs.uuid);
         }
       },
       //error callback
-      function(error)
-      {
+      function(error) {
         $scope.vm.errorSubmit = 'An error occured when trying to void obs';
-        $scope.vm.void_failed = true;
-        callback($scope.vm.void_failed);
+        $scope.vm.voidFailed = true;
+        callback($scope.vm.voidFailed);
       });
-    })
-    callback($scope.vm.void_failed);
+    });
+    callback($scope.vm.voidFailed);
   }
-  else callback($scope.vm.void_failed);
+  else {
+    callback($scope.vm.voidFailed);
+  }
 }
 
 /*
   private methdd to update individual obs
 */
-function updateObs(pay_load, callback)
-{
-  var obsToUpdate = _.filter(pay_load.obs,function(obs){
-    // console.log(obs);
-    if(obs.uuid !== undefined && obs.voided === undefined)
-    { return obs;}
-  });
-  //console.log('Obs to Void: ', obsToVoid);
-  if(obsToUpdate !== undefined)
-  {
-    _.each(obsToUpdate, function(obs){
-      OpenmrsRestService.getObsResService().saveUpdateObs(obs, function(data){
-        if (data)
-        {
-          console.log('Updated Obs uuid: ', data);
-        }
-      },
-      //error callback
-      function(error)
-      {
-        $scope.vm.updated_failed = true;
-        $scope.vm.errorSubmit = 'An error occured when trying to update the record';
-        callback($scope.vm.updated_failed)
-      });
-
+  function updateObs(_payLoad, callback) {
+    var obsToUpdate = _.filter(_payLoad.obs,function(obs) {
+      // console.log(obs);
+      if(obs.uuid !== undefined && obs.voided === undefined) {
+        return obs;
+      }
     });
-    callback($scope.vm.updated_failed);
+    //console.log('Obs to Void: ', obsToVoid);
+    if(obsToUpdate !== undefined) {
+      _.each(obsToUpdate, function(obs) {
+        OpenmrsRestService.getObsResService().saveUpdateObs(obs, function(data) {
+          if (data) {
+            console.log('Updated Obs uuid: ', data);
+          }
+        },
+        //error callback
+        function(error) {
+          $scope.vm.updatedFailed = true;
+          $scope.vm.errorSubmit = 'An error occured when trying to update the record';
+          callback($scope.vm.updatedFailed);
+        });
+      });
+      callback($scope.vm.updatedFailed);
+    }
+    else {
+      callback($scope.vm.updatedFailed);
+    }
   }
-  else callback($scope.vm.updated_failed)
-}
 
 
   /*
   private methdd to get the error field
   */
-function getErrorField(fieldKey)
-{
-  //  console.log('++++field_key', fieldKey);
-   var errorField;
-   var field_key;
-   if(_.contains(fieldKey,'ui-select-extended'))
-   {
-      errorField = fieldKey.split('ui-select-extended_')[1];
-      field_key = errorField.split('_')[0];
-   }
-   else
-   {
-     errorField = fieldKey.split('obs')[1];
-     field_key = 'obs'+errorField.split('_')[0] + '_' + errorField.split('_')[1]
-   }
-   var field = FormentryService.getFieldById_Key(field_key, $scope.vm.tabs);
-  // console.log('error Field ', field);
-   return field;
-}
+  function getErrorField(_fieldKey) {
+    //  console.log('++++field_key', fieldKey);
+     var errorField;
+     var fieldKey;
+     if(_.contains(_fieldKey,'ui-select-extended')) {
+        errorField = _fieldKey.split('ui-select-extended_')[1];
+        fieldKey = errorField.split('_')[0];
+     }
+     else {
+       errorField = _fieldKey.split('obs')[1];
+       fieldKey = 'obs'+errorField.split('_')[0] + '_' + errorField.split('_')[1]
+     }
+     var field = FormentryService.getFieldById_Key(fieldKey, $scope.vm.tabs);
+    // console.log('error Field ', field);
+     return field;
+  }
 }
 })();

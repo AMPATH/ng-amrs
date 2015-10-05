@@ -34,9 +34,9 @@
           LocationResService.getLocations(function(results){
             $rootScope.cachedLocations = results;
           },
-          function(failed_error){
-            console.log(failed_error);
-          })
+          function(failedError){
+            console.log(failedError);
+          });
           //console.log('Resolved View');
           //console.log($state.go('home'));
         }
