@@ -29,7 +29,10 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
         var bindings = [
             'datepicker-mode',
             'min-date',
-            'max-date'
+            'max-date',
+            'hour-step',
+            'minute-step',
+            'show-meridian'
         ];
 
         var ngModelAttrs = {};
@@ -44,23 +47,14 @@ jshint -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069, -W0
 
         formlyConfig.setType({
             name: 'datetimepicker',
+            extends: 'input',
             template: '<input class="form-control" ng-model="model[options.key]" ' +
                     'is-open="to.isOpen" ng-click="open($event)"  ' +
-                    'datetime-picker="dd-MMM-yyyy hh:mm:ss" ' +
+                    'datetime-picker="dd-MMM-yyyy hh:mm:ss a" ' + 
                     'datepicker-options="to.datepickerOptions"></input>',
             wrapper: ['bootstrapLabel', 'bootstrapHasError'],
             overwriteOk: true,
-            defaultOptions: {
-                parsers: [
-                  function parseDate(value) {
-                      return $filter('date')(new Date(value), 'yyyy-MM-dd HH:mm:ss', '+0300');
-                  }
-                ],
-                formatters: [
-                    function(value){
-                        return $filter('date')(new Date(value),'dd-MMM-yyyy hh:mm:ss','+0300');
-                    }
-                ],
+            defaultOptions: {  
                 ngModelAttrs: ngModelAttrs,
                 templateOptions: {
                     addonLeft: {

@@ -33,17 +33,13 @@ jshint -W003, -W026
     function currentVisitController($scope, $rootScope, vService, $stateParams,
                                     encService, encModel, $filter, $timeout,
                                     $location, dialogs) {
-        $scope.currentVisit = {
-            ended: false
-        };
+        $scope.currentVisit = initializeCurrentVisit();
         $scope.busy = true;
         $scope.visitTypesLoaded = false;
-        $scope.visitDate = getFormattedDate(new Date());
-        $scope.hasCompletedEncounters = false;
         $scope.formsFilledStatus = [{
                 name: 'AMPATH Triage Encounter Form 1.0',
                 shortName: 'triage',
-                encounterType:'b1e9ed0f-5222-4d47-98f7-5678b8a21ebd',
+                encounterType:'a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7',
                 filled: false
             }, {
                 name: 'AMPATH Adult Return Encounter Form',
@@ -64,12 +60,12 @@ jshint -W003, -W026
         ];
         
         $scope.startNewVisit = function() {
-             $scope.visitStartDatetime = new Date();
+             $scope.currentVisit.startDatetime = new Date();
              //Create visit
              var newVisit = {
                  patient: $scope.patientUuid,
                  visitType: $scope.currentVisit.visitType,
-                 startDatetime: getFormattedDate($scope.visitStartDatetime)
+                 startDatetime: getFormattedDate($scope.currentVisit.startDatetime)
              };
 
              vService.saveVisit(newVisit, function(data) {
@@ -96,15 +92,13 @@ jshint -W003, -W026
                  vService.saveVisit(payload, function success(response){
                      //Update state
                      $scope.visitStarted = false;
-                     $scope.currentVisit = {
-                         ended: false
-                     };
+                     $scope.currentVisit = initializeCurrentVisit()
                      clearFormFilledStatus();
                      
                      //Void encounters
                      if(angular.isDefined(visit.encounters)) {
                          _.each(visit.encounters, function(encounter) {
-                             encService.voidEncounter(encounter.uuid);
+                             encService.voidEncounter(encounter.uuid());
                          });
                      }
                  });
@@ -140,7 +134,7 @@ jshint -W003, -W026
               vService.getPatientVisits(params, function(visits) {
                   //Get todays
                   var dFormat = 'yyyy-MM-dd';
-                  var today = getFormattedDate(Date.today(), dFormat);
+                  var today = getFormattedDate(Date.now(), dFormat);
                   var todayVisits = [];
                   function formatted(gDate) {
                       return getFormattedDate(new Date(gDate), dFormat);
@@ -156,9 +150,9 @@ jshint -W003, -W026
                         ' has visit started');
                       var visit = todayVisits[0];
                       $scope.currentVisit.uuid = visit.uuid;
-                      $scope.visitStartDatetime = visit.startDatetime;
+                      $scope.currentVisit.startDatetime = visit.startDatetime;
                       $scope.visitStarted = true;
-                      if(angular.isDefined(visit.stopDatetime)) {
+                      if(new Date(visit.stopDatetime) !== null) {
                           $scope.currentVisit.stopDatetime = visit.stopDatetime;
                           $scope.currentVisit.ended = true;
                       }
@@ -188,10 +182,11 @@ jshint -W003, -W026
              $scope.busy = true;
              vService.getVisitEncounters(visitUuid, function(visitEncounters) {
                  if(visitEncounters.length > 0) {
-                     $scope.hasCompletedEncounters = true;
+                     $scope.currentVisit.hasCompletedEncounters = true;
                      $scope.currentVisit.encounters = 
                         encModel.toArrayOfModels(visitEncounters);
-                     _.some(visitEncounters, function(encounter) {
+                        
+                     _.each(visitEncounters, function(encounter) {
                           var i = _.findIndex($scope.formsFilledStatus, function(entry) {
                              return entry.encounterType === encounter.encounterType.uuid;
                          });
@@ -220,6 +215,13 @@ jshint -W003, -W026
              _.each($scope.formsFilledStatus, function(entry) {
                  entry.filled = false;
              });
+         }
+         
+         function initializeCurrentVisit() {
+             return {
+                 ended: false,
+                 hasCompletedEncounters: false
+             };
          }
     }
 })();
