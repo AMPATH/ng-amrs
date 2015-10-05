@@ -152,7 +152,7 @@ jshint -W003, -W026
                       $scope.currentVisit.uuid = visit.uuid;
                       $scope.currentVisit.startDatetime = visit.startDatetime;
                       $scope.visitStarted = true;
-                      if(new Date(visit.stopDatetime) !== null) {
+                      if(Date.parse(visit.stopDatetime) !== null) {
                           $scope.currentVisit.stopDatetime = visit.stopDatetime;
                           $scope.currentVisit.ended = true;
                       }
