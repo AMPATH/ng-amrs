@@ -19,13 +19,13 @@
     $scope.patient = $rootScope.broadcastPatient;
     $scope.p = null;
     $scope.encounters = [];
-    
+
     $scope.HivHistoricalExpanded = true;
-    
+
     $scope.showHivHistoricalSummary = false;
 
     $scope.$on('viewHivHistoricalSummary',viewHivHistoricalSummary);
-    
+
     function viewHivHistoricalSummary() {
       $scope.showHivHistoricalSummary = true;
     }
