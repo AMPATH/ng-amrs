@@ -8,7 +8,7 @@
             <div class="form-group">
                 <span data-ng-repeat="visitType in visitTypes">
                     <input type="radio" data-ng-model="currentVisit.visitType" value="{{visitType.uuid}}" id={{visitType.uuid}}>
-                    <label for="{{visitType.uuid}}">{{visitType.name}}</label>
+                    <label for="{{visitType.uuid}}">{{visitType.name}}</label><br/>
                 </span>
             </div>
         </form>
@@ -47,7 +47,7 @@
                   <tbody>
                   <tr style="cursor: pointer;" data-ng-click="loadEncounterForm(encounterModel)"
                       data-ng-repeat="encounterModel in currentVisit.encounters">
-                    <td>{{encounterModel.encounterDate() | date: 'MMM dd, yyyy'}}</td>
+                    <td>{{encounterModel.encounterDate() | date: 'MMM dd, yyyy hh:mm a'}}</td>
                     <td>{{encounterModel.encounterTypeName()}}</td>
                     <td>{{encounterModel.formName()}}</td>
                     <td>{{encounterModel.locationName() | titlecase}}</td>
