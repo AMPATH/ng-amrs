@@ -325,11 +325,11 @@
     //Other Util Functions
     function mapAddress(preferredAddress) {
       return preferredAddress ? {
-        'Address1': preferredAddress.address1,
-        'Address2': preferredAddress.address2,
-        'Address3': preferredAddress.address3,
-        'City Village': preferredAddress.cityVillage,
-        'State Province': preferredAddress.stateProvince
+        'County': preferredAddress.address1,
+        'Sub-County': preferredAddress.address2,
+        'Estate/Landmark': preferredAddress.address3,
+        'Town/Village': preferredAddress.cityVillage,
+        'State/Province': preferredAddress.stateProvince
 
         //Added the noAddress to aid in creating logic for hiding when the patient has no address
       } : {noAddress:'None'};
