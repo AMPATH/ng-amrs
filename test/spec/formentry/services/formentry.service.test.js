@@ -202,6 +202,7 @@
         var schema;
         var formly_schema;
         var form = {encounterType:'xx1234'};
+        var payLoadData;
         var payLoad;
         var patient;
         beforeEach(function(){
@@ -214,7 +215,9 @@
             formly_schema = data;
             // console.log('FORMLY SCHEMAS');
             // console.log(formly_schema);
-            payLoad = formentryService.updateFormPayLoad(model,formly_schema,patient,form);
+            payLoadData = formentryService.updateFormPayLoad(model,formly_schema,patient,form);
+            payLoad=payLoadData.payLoad
+            console.log("TTTTTTTTTTTTTTTTTTTTTTPayload"+JSON.stringify(payLoad))
           });
 
         });

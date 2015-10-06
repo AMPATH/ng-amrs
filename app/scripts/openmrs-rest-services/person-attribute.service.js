@@ -25,7 +25,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
     function getPersonAttributeResource() {
       var v = 'custom:(uuid,value,attributeType:(uuid,uuid))';
       return $resource(OpenmrsSettings.getCurrentRestUrlBase().trim() + 'person/:uuid/attribute/:personattributeuuid',
-        { uuid: '@uuid', personattributeuuid:'@personattributeuuid'},
+        { uuid: '@uuid', personattributeuuid:'@personattributeuuid',v:v},
         { query: { method: 'GET', isArray: false } });
     }
 
@@ -37,12 +37,17 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
        var personAttributeUuid=personAttribute.attribute.uuid;
       if (patientUuid !== undefined)
       {
-        //update personAttribute    
-        if(personAttributeUuid){
-          delete personAttribute.attribute['uuid'];
+        //Void an existing person attribute and create a new one
+        if(personAttributeUuid){         
+          voidPersonAttribute(personAttribute, function(response){
+            console.log('Voided a person attribute with uuid '+personAttributeUuid);
+          }, function(error){
+            console.log('An Error Occurred while voiding the person attribute',error);
+          }) ;
+           delete personAttribute.attribute['uuid'];
          
         }
-        personAttributeResource.save({uuid:patientUuid, personattributeuuid:personAttributeUuid }, JSON.stringify(personAttribute.attribute)).$promise
+        personAttributeResource.save({uuid:patientUuid}, JSON.stringify(personAttribute.attribute)).$promise
           .then(function (data) {
           successCallback(data);
         })
@@ -89,14 +94,11 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
      function getPersonAttributeFieldValues(personAttributes, person){
             _.each(personAttributes, function(attribute){
               var personAttribute={attribute:attribute,person:person}                                 
-              saveUpdatePersonAttribute(personAttribute,function(response){
-                console.log('TTTTTTTTTTTTT')
-                alert('SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS')
-               console.log('XXXXXXXXXXXXXXXXXXXXXXPerson attribute value',JSON.stringify(response))
+              saveUpdatePersonAttribute(personAttribute,function(response){               
+               console.log('Person attribute value',JSON.stringify(response))
               },
                function (error){
-                 console.log('An Error Occurred while getting the person attributes');
-                    alert('Failed')
+                 console.log('An Error Occurred while getting the person attributes');                 
                }
              );
            })

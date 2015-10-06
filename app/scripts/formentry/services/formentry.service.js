@@ -309,8 +309,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       var personAttribute=[];
                           personAttribute=PersonAttributesRestService.getPersonAttributeValue(personAttributes,field_key);
                         if(personAttribute !== undefined && personAttribute !== null && personAttribute.length>0){
-                           sec_data[field_key] =personAttribute[0].value;
-                          _field.data['init_val'] =personAttribute[0].value
+                          var tv=personAttribute[0].value.uuid;
+                           sec_data[field_key] =personAttribute[0].value.uuid;
+                          _field.data['init_val'] =personAttribute[0].value.uuid
                           _field.data['uuid'] = personAttribute[0].uuid
                         }
                         
