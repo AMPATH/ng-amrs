@@ -30,7 +30,7 @@
         <tbody>
         <tr style="cursor: pointer;" data-ng-click="vm.loadEncounterForm(encounterModel)"
             ng-repeat="encounterModel in vm.encounterList = vm.encounterList | startFrom:(vm.currentPage-1)*vm.entryLimit | limitTo:vm.entryLimit">
-          <td>{{encounterModel.encounterDate() | date: 'MMM dd, yyyy'}}</td>
+          <td>{{encounterModel.encounterDate() | date: 'MMM dd, yyyy hh:mm a'}}</td>
           <td>{{encounterModel.encounterTypeName()}}</td>
           <td>{{encounterModel.formName()}}</td>
           <td>{{encounterModel.locationName() | titlecase}}</td>
