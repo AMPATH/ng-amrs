@@ -37,8 +37,7 @@ jshint -W003, -W026
         $scope.$on('viewDayAppointments',onViewDayAppointmentBroadcast);
         $scope.utcDateToLocal = utcDateToLocal;
         $scope.startDate = new Date();
-        $scope.previousDay= previousDay;
-        $scope.nextDay= nextDay;
+
         $scope.selectedDate = function (value) {
             if (value) {
                 $scope.startDate = value;
@@ -48,20 +47,15 @@ jshint -W003, -W026
                 return $scope.startDate;
             }
         };
-      function nextDay () {
-        $scope.selectedDate($scope.startDate.addDays(1));
-        var selectedDateField = document.getElementById('start-date');
-        var element = angular.element(selectedDateField);
-        element.val($filter('date')($scope.startDate, 'mediumDate'));
-        element.triggerHandler('input');
-      }
-      function previousDay () {
-        $scope.selectedDate($scope.startDate.addDays(-1));
-        var selectedDateField = document.getElementById('start-date');
-        var element = angular.element(selectedDateField);
-        element.val($filter('date')($scope.startDate, 'mediumDate'));
-        element.triggerHandler('input');
-      }
+      $scope.navigateDay =function (value) {
+        if (value) {
+          $scope.selectedDate(new Date($scope.startDate).addDays(value));
+          var selectedDateField = document.getElementById('start-date');
+          var element = angular.element(selectedDateField);
+          element.val($filter('date')($scope.startDate, 'mediumDate'));
+          element.triggerHandler('input');
+        }
+      };
 
       $scope.openDatePopup = openDatePopup;
         $scope.dateControlStatus = {
@@ -81,7 +75,7 @@ jshint -W003, -W026
         };
 
         function utcDateToLocal(date) {
-            var day = new moment(date).format();;
+            var day = new moment(date).format();
             return day;
         }
 
@@ -107,7 +101,7 @@ jshint -W003, -W026
             if ($scope.locationUuid && $scope.locationUuid !== '')
                 EtlRestService.getAppointmentSchedule($scope.locationUuid, moment($scope.startDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), moment($scope.startDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), onFetchAppointmentsScheduleSuccess, onFetchAppointmentScheduleFailed);
         }
-        
+
         function viewDayVisits(day) {
             $rootScope.$broadcast('viewDayVisits', day);
         }
