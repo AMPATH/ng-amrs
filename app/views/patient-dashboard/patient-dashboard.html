@@ -54,6 +54,9 @@
 				<li active-tab-sync index="4" data-ng-glick="activeList(this, 4)" ng-class="{active: activeListId === 4}">
 					<a data-target="#tab4" data-toggle="tab"><span class="icon-i-cardiology" aria-hidden="true"></span>&nbsp;Vitals</a>
 				</li>
+        <li active-tab-sync index="7" data-ng-glick="activeList(this, 7)" ng-class="{active: activeListId === 7}">
+          <a data-target="#tab7" data-toggle="tab"><span class="icon-i-medical-library" aria-hidden="true"></span>&nbsp;HIV Summary</a>
+        </li>
 				<li active-tab-sync index="5" data-ng-glick="activeList(this, 5)" ng-class="{active: activeListId === 5}">
 					<a data-target="#tab5" data-toggle="tab"><span class="icon-i-laboratory" aria-hidden="true"></span>&nbsp;Lab Data Summary</a>
 				</li>
@@ -74,6 +77,9 @@
 				<li active-tab-sync index="4" data-ng-glick="activeList(this, 4)" ng-class="{active: activeListId === 4}">
 					<a data-target="#tab4" data-toggle="tab"><span class="icon-i-cardiology" aria-hidden="true"></span>&nbsp;Vitals</a>
 				</li>
+        <li active-tab-sync index="7" data-ng-glick="activeList(this, 7)" ng-class="{active: activeListId === 7}">
+          <a data-target="#tab7" data-toggle="tab"><span class="icon-i-medical-library" aria-hidden="true"></span>&nbsp;HIV Summary</a>
+        </li>
 				<li active-tab-sync index="5" data-ng-glick="activeList(this, 5)" ng-class="{active: activeListId === 5}">
 					<a data-target="#tab5" data-toggle="tab"><span class="icon-i-laboratory" aria-hidden="true"></span>&nbsp;Lab Data Summary</a>
 				</li>
@@ -93,22 +99,6 @@
 				<div style="margin-top: 2px;">
 					<patient-demographics></patient-demographics>
 				</div>
-				<div class="panel panel-info" style="margin-bottom: 0px;">
-					<div class="panel-heading">HIV Summary</div>
-				</div>
-				<div style="margin-top: 2px; padding:2px;">
-					<hiv-summary patient-uuid="{{patient.uuid()}}"></hiv-summary>
-				</div>
-				<accordion ng-show="showHivHistoricalSummary">
-					<accordion-group is-open="HivHistoricalExpanded">
-						<accordion-heading>
-							<div style="padding:3px;">Historical Hiv Summary
-								<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': HivHistoricalExpanded, 'glyphicon-chevron-right': !HivHistoricalExpanded}"></i>
-							</div>
-						</accordion-heading>
-						<hiv-summary-historical patient-uuid="{{patient.uuid()}}"></hiv-summary-historical>
-					</accordion-group>
-				</accordion>
 			</div>
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab2">
 				<div class="page-content">
@@ -149,6 +139,24 @@
 					<current-visit patient-uuid="{{patient.uuid()}}"></current-visit>
 				</div>
 			</div>
+      <div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab7">
+        <div class="page-content">
+
+          <div style="margin-top: 2px; padding:2px;">
+            <hiv-summary patient-uuid="{{patient.uuid()}}"></hiv-summary>
+          </div>
+          <accordion ng-show="showHivHistoricalSummary">
+            <accordion-group is-open="HivHistoricalExpanded">
+              <accordion-heading>
+                <div style="padding:3px;">Historical Hiv Summary
+                  <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': HivHistoricalExpanded, 'glyphicon-chevron-right': !HivHistoricalExpanded}"></i>
+                </div>
+              </accordion-heading>
+              <hiv-summary-historical patient-uuid="{{patient.uuid()}}"></hiv-summary-historical>
+            </accordion-group>
+          </accordion>
+        </div>
+      </div>
 		</div>
 	</div>
 </div>
