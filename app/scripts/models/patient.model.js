@@ -84,7 +84,7 @@
               filteredIdentifiers = {'default': _identifier[0].identifier};
             }
             else{
-              filteredIdentifiers = {'default': 'Not Available'};
+              filteredIdentifiers = {'default': ''};
             }
           }
           else {
@@ -98,7 +98,7 @@
           return filteredIdentifiers;
         }
         else{
-          return _identifier = 'Not Available';
+          return _identifier = '';
         }
 
       };
@@ -321,11 +321,11 @@
     //Other Util Functions
     function mapAddress(preferredAddress) {
       return preferredAddress ? {
-        'County': preferredAddress.address1,
-        'Sub-County': preferredAddress.address2,
-        'Estate/Landmark': preferredAddress.address3,
-        'Town/Village': preferredAddress.cityVillage,
-        'State/Province': preferredAddress.stateProvince
+        'county': preferredAddress.address1,
+        'subCounty': preferredAddress.address2,
+        'estateLandmark': preferredAddress.address3,
+        'townVillage': preferredAddress.cityVillage,
+        'stateProvince': preferredAddress.stateProvince
 
         //Added the noAddress to aid in creating logic for hiding when the patient has no address
       } : {noAddress:'None'};
