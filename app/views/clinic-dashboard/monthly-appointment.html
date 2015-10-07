@@ -17,6 +17,11 @@
           <button class="btn btn-info next" style="float:right" ng-click="nextMonth(1)"> <span class="glyphicon glyphicon-chevron-right"></span>Next Month</button>
         </ul>
 			</div>
+			<div>
+				<h4>Key:</h4>
+				<span class="label label-info">scheduled</span>
+				<span class="label label-success">attended</span>
+			</div>
 		</div>
 	</div>
 	<div ng-show='!isBusy && experiencedLoadingError'>
@@ -55,7 +60,10 @@
 		ng-repeat="day in week.days">
 			<div class="panel panel-default" style="padding: 1px; horizontal-alignment: center;">{{day.number}}
 				<div>
-					<span class="label" ng-class="{'label-primary':((appointments | datesFilter: day) !== 0) }">{{appointments | datesFilter: day}}
+					<span class="label" ng-class="{'label-info':((appointments | datesFilter: day) != 0) }">{{appointments | datesFilter: day}}
+						<span class="glyphicon glyphicon-list-alt hidden-xs"></span>
+					</span>
+					<span class="label" ng-class="{'label-success':((appointments | visitDatesFilter: day) != 0) }">{{appointments | visitDatesFilter: day}}
 						<span class="glyphicon glyphicon-list-alt hidden-xs"></span>
 					</span>
 				</div>

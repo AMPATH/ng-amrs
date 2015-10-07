@@ -17,6 +17,7 @@
       getPatientTests: getPatientTests,
       getAppointmentSchedule: getAppointmentSchedule,
       getMonthlyAppointmentSchedule: getMonthlyAppointmentSchedule,
+      getMonthlyAppointmentAndVisits: getMonthlyAppointmentAndVisits,
       getDefaultersList: getDefaultersList
     };
     return serviceDefinition;
@@ -171,6 +172,32 @@
 
     }
 
+    function getMonthlyAppointmentAndVisits(locationUuid, monthDate,
+        successCallback, failedCallback, startIndex, limit) {
+      var resource = getResource('location/:uuid/monthly-appointment-visits');
 
+      var params = { startDate: monthDate, uuid: locationUuid };
+
+      if (startIndex !== undefined) {
+        params.startIndex = startIndex;
+      }
+
+      if (limit !== undefined) {
+        params.limit = limit;
+      }
+
+      console.log(params);
+      console.log(startIndex);
+
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+
+    }
   }
 })();

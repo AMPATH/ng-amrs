@@ -112,10 +112,5 @@
 			chai.expect(isolateScope.selectedDate()).to.equal( '2015-08-08');
 			
 		});
-		
-		
-
-
-
 	});
 })();
