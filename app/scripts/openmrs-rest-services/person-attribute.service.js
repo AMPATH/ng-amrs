@@ -29,41 +29,47 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
         { query: { method: 'GET', isArray: false } });
     }
 
-    function saveUpdatePersonAttribute(personAttribute, successCallback, errorCallback)
-    {
+    function saveUpdatePersonAttribute(personAttribute, successCallback, errorCallback) {
       var personAttributeResource = getPersonAttributeResource()
       var patient=personAttribute.person;      
       var patientUuid=patient.uuid();
-       var personAttributeUuid=personAttribute.attribute.uuid;
-       //getting the location id
-       //var locationUUid='08feb9a8-1352-11df-a1f1-0026b9348838'
-                       ///LocationResService.getLocationByUuidFromEtl(locationUUid,function(r){
-                         // alert('success r');
-                        // },function (d){
-                        //   alert('Failed')
-                        //   });
-      if (patientUuid !== undefined)
-      {
-        //Void an existing person attribute and create a new one
-        if(personAttributeUuid){         
-          voidPersonAttribute(personAttribute, function(response){
-            console.log('Voided a person attribute with uuid '+personAttributeUuid);
-          }, function(error){
-            console.log('An Error Occurred while voiding the person attribute',error);
-          }) ;
-           delete personAttribute.attribute['uuid'];
-         
-        }
-        personAttributeResource.save({uuid:patientUuid}, JSON.stringify(personAttribute.attribute)).$promise
-          .then(function (data) {
-          successCallback(data);
-        })
-          .catch(function (error) {
-            console.error('An Error occured when saving person attribute ',error);
-            if (typeof errorCallback === 'function')
-              errorCallback('Error processing request', error);
-        });        
-      }
+      var personAttributeUuid=personAttribute.attribute.uuid;
+      
+        if (patientUuid !== undefined)
+        {
+          //Void an existing person attribute and create a new one
+            if(personAttributeUuid) {         
+              voidPersonAttribute(personAttribute, function(response) {
+              console.log('Voided a person attribute with uuid '+personAttributeUuid);
+            }, function (error) {
+              console.log ('An Error Occurred while voiding the person attribute',error);
+            }) ;       
+          
+          }
+      
+          //getting the location id      
+              var locationUUid=personAttribute.attribute.value;        
+              LocationResService.getLocationByUuidFromEtl( locationUUid, function(response) {            
+              var locationId=response.result[0].location_id.toString();             
+              var attributePayLoad=JSON.stringify({value:locationId,attributeType:personAttribute.attribute.attributeType.uuid});
+          
+                        if(locationId!==null&&locationId!==undefined)  {
+                              personAttributeResource.save({uuid:patientUuid}, attributePayLoad).$promise
+                              .then(function (data) {
+                              successCallback(data);
+                            })
+                            .catch(function (error) {
+                              console.error('An Error occured when saving person attribute ',error);
+                            if (typeof errorCallback === 'function')
+                              errorCallback('Error processing request', error);
+                            });   
+                        }   
+            
+      
+                  }, function (error) {
+                            console.log('Failed get location id from etl server'+error);
+                  });                                   
+        }            
     }
 
     function getPersonAttributeByUuid(personAttribute, successCallback, errorCallback) {
