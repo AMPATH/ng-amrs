@@ -20,14 +20,15 @@ jshint -W003, -W026
 
     monthlyAppointmentController.$inject = [
         '$scope',
-        '$rootScope', 
+        '$rootScope',
         'EtlRestService',
         'MonthlyAppointmentVisitModel',
-        'moment'
+        'moment',
+        '$filter'
     ];
 
     function monthlyAppointmentController($scope, $rootScope, EtlRestService,
-        MonthlyAppointmentVisitModel, moment) {
+        MonthlyAppointmentVisitModel, moment, $filter) {
         var vm = this;
         vm.moment = moment;
         vm.loadSchedule = loadSchedule;
@@ -41,12 +42,21 @@ jshint -W003, -W026
         function viewDaysAppointments(day) {
             $rootScope.$broadcast('viewDayAppointments', day);
         }
+
         function nextMonth () {
           $scope.selectedMonth(vm.selectedMonth.addMonths(1));
-
+          var selectedDateField = document.getElementById('appointment-date');
+          var element = angular.element(selectedDateField);
+          element.val($filter('date')(vm.selectedMonth, 'mediumDate'));
+          element.triggerHandler('input');
         }
+
         function previousMonth () {
           $scope.selectedMonth(vm.selectedMonth.addMonths(-1));
+          var selectedDateField = document.getElementById('appointment-date');
+          var element = angular.element(selectedDateField);
+          element.val($filter('date')(vm.selectedMonth, 'mediumDate'));
+          element.triggerHandler('input');
         }
 
         function loadSchedule() {
@@ -64,7 +74,7 @@ jshint -W003, -W026
         }
 
         function onFetchAppointmentsScheduleSuccess(appointmentSchedule) {
-            $scope.nextStartIndex += 
+            $scope.nextStartIndex +=
                 appointmentSchedule.startIndex + appointmentSchedule.size;
             for (var e in appointmentSchedule.result) {
                 $scope.appointments.push(

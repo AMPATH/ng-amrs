@@ -1,10 +1,10 @@
 <div class="well" style="padding:2px;">
 	<div class="row">
 		<div class="form-group col-md-12">
-			<label for="start-date">Select Month</label>
+			<label for="appointment-date">Select Month</label>
 			<div>
 				<p class="input-group">
-					<input type="text" id="start-date" class="form-control" datepicker-popup="MM/yyyy" datepicker-mode="'month'" datepicker-options="{ 'minMode': 'month' }"
+					<input type="text" id="appointment-date" class="form-control" datepicker-popup="MM/yyyy" datepicker-mode="'month'" datepicker-options="{ 'minMode': 'month' }"
 					ng-model="selectedMonth" ng-model-options="{getterSetter: true}" is-open="status.startOpened" />
 					<span class="input-group-btn">
 						<button type="button" class="btn btn-default" ng-click="startOpen($event)">
@@ -13,8 +13,8 @@
 					</span>
 				</p>
         <ul class="pager">
-          <button class="btn btn-info previous" style="float:left" ng-click="previousMonth(-1)"> <span class="glyphicon glyphicon-chevron-left"></span>Previous Month</button>
-          <button class="btn btn-info next" style="float:right" ng-click="nextMonth(1)"> <span class="glyphicon glyphicon-chevron-right"></span>Next Month</button>
+          <button class="btn btn-info previous" style="float:left" ng-click="previousMonth()"> <span class="glyphicon glyphicon-chevron-left"></span>Previous Month</button>
+          <button class="btn btn-info next" style="float:right" ng-click="nextMonth()"> <span class="glyphicon glyphicon-chevron-right"></span>Next Month</button>
         </ul>
 			</div>
 			<div>

@@ -21,9 +21,9 @@ jshint -W003, -W026
         };
     }
 
-    appointmentScheduleController.$inject = ['$scope', '$rootScope', 'EtlRestService', 'AppointmentScheduleModel', 'moment', '$state'];
+    appointmentScheduleController.$inject = ['$scope', '$rootScope', 'EtlRestService', 'AppointmentScheduleModel', 'moment', '$state', '$filter'];
 
-    function appointmentScheduleController($scope, $rootScope, EtlRestService, AppointmentScheduleModel, moment, $state) {
+    function appointmentScheduleController($scope, $rootScope, EtlRestService, AppointmentScheduleModel, moment, $state, $filter) {
 
         //scope members region
         $scope.patients = [];
@@ -36,6 +36,8 @@ jshint -W003, -W026
         $scope.$on('viewDayAppointments',onViewDayAppointmentBroadcast);
         $scope.utcDateToLocal = utcDateToLocal;
         $scope.startDate = new Date();
+        $scope.previousDay= previousDay;
+        $scope.nextDay= nextDay;
         $scope.selectedDate = function (value) {
             if (value) {
                 $scope.startDate = value;
@@ -45,8 +47,22 @@ jshint -W003, -W026
                 return $scope.startDate;
             }
         };
+      function nextDay () {
+        $scope.selectedDate($scope.startDate.addDays(1));
+        var selectedDateField = document.getElementById('start-date');
+        var element = angular.element(selectedDateField);
+        element.val($filter('date')($scope.startDate, 'mediumDate'));
+        element.triggerHandler('input');
+      }
+      function previousDay () {
+        $scope.selectedDate($scope.startDate.addDays(-1));
+        var selectedDateField = document.getElementById('start-date');
+        var element = angular.element(selectedDateField);
+        element.val($filter('date')($scope.startDate, 'mediumDate'));
+        element.triggerHandler('input');
+      }
 
-        $scope.openDatePopup = openDatePopup;
+      $scope.openDatePopup = openDatePopup;
         $scope.dateControlStatus = {
             startOpened: false
         };
