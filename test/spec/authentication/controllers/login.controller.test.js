@@ -12,7 +12,7 @@ jshint -W098, -W117, -W030
 
     beforeEach(function() {
       module('app.authentication');
-
+      module('app.etlRestServices');
       //bard.inject('$scope', 'AuthService', '$rootScope');
     });
 

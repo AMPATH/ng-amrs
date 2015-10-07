@@ -11,7 +11,7 @@
   describe('Open MRS Location Service Unit Tests', function () {
     beforeEach(function () {
       module('app.openmrsRestServices');
-      //module('app.etlRestServices');
+      module('app.etlRestServices');
     });
 
     var callbacks;
@@ -25,7 +25,7 @@
       httpBackend = $injector.get('$httpBackend');
       locationService = $injector.get('LocationResService');
       settingsService = $injector.get('OpenmrsSettings');
-      //etlSettingsService = $injector.get('EtlRestServicesSettings');
+      etlSettingsService = $injector.get('EtlRestServicesSettings');
     }));
 
     beforeEach(inject(function () {

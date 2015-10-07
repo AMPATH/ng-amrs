@@ -6,8 +6,7 @@
           module('app.formentry');
           module('mock.data');
           module('models');
-          module('app.openmrsRestServices');
-          
+          module('app.etlRestServices');
       });
 
       var searchDataService;
@@ -16,7 +15,6 @@
       var moment;
       var formentryService;
       var patientModel;
-      var personAttributes;
      
 
       beforeEach(inject(function ($injector) {
@@ -26,7 +24,6 @@
         mockData = $injector.get('mockData');
         formentryService = $injector.get('FormentryService');
         patientModel = $injector.get('PatientModel');
-        personAttributes = $injector.get('PersonAttributesRestService');
        
 
         /*
@@ -223,10 +220,9 @@
             formly_schema = data;
              console.log('FORMLY SCHEMAS');
              console.log(formly_schema);//, params
-            payLoadData = formentryService.updateFormPayLoad(model,formly_schema,patient,form);
-            payLoad=payLoadData.payLoad;
-            alert(payLoad)
-            console.log("TTTTTTTTTTTTTTTTTTTTTT"+JSON.stringify(payLoad))
+             payLoadData = formentryService.updateFormPayLoad(model,formly_schema,patient,form);
+             payLoad=payLoadData.formPayLoad;
+           
           });
 
         });
