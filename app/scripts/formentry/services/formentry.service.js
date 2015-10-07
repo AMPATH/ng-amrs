@@ -139,7 +139,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         }
         return service;
 
-        function getFormSchema(formName, callback) {
+        function getFormSchema(formName, callback) {          
           var schema = {};
           // this should de dropped once we align all forms related issues
           if (formName !== undefined)
@@ -1167,7 +1167,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     {
                       if (init_data.init_val !== val[key])
                       {
-                        //add property to the payload
+                        //add property to the payload                        
                        personAttributes.push({uuid:init_data.uuid, value:val[key], attributeType:{uuid:convertKey_to_uuid(key.split('_')[1])}});
                       }
                     }

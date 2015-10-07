@@ -8,9 +8,9 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
     .module('app.openmrsRestServices')
           .factory('PersonAttributesRestService', PersonAttributesRestService);
 
-  PersonAttributesRestService.$inject = ['OpenmrsSettings', '$resource'];
+  PersonAttributesRestService.$inject = ['OpenmrsSettings', '$resource','LocationResService'];
 
-  function PersonAttributesRestService(OpenmrsSettings, $resource) {
+  function PersonAttributesRestService(OpenmrsSettings, $resource,LocationResService) {
     var service = {
       getPersonAttributeByUuid: getPersonAttributeByUuid,
       saveUpdatePersonAttribute:saveUpdatePersonAttribute,
@@ -35,6 +35,13 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
       var patient=personAttribute.person;      
       var patientUuid=patient.uuid();
        var personAttributeUuid=personAttribute.attribute.uuid;
+       //getting the location id
+       //var locationUUid='08feb9a8-1352-11df-a1f1-0026b9348838'
+                       ///LocationResService.getLocationByUuidFromEtl(locationUUid,function(r){
+                         // alert('success r');
+                        // },function (d){
+                        //   alert('Failed')
+                        //   });
       if (patientUuid !== undefined)
       {
         //Void an existing person attribute and create a new one

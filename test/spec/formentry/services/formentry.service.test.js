@@ -6,6 +6,8 @@
           module('app.formentry');
           module('mock.data');
           module('models');
+          module('app.openmrsRestServices');
+          
       });
 
       var searchDataService;
@@ -14,6 +16,8 @@
       var moment;
       var formentryService;
       var patientModel;
+      var personAttributes;
+     
 
       beforeEach(inject(function ($injector) {
         moment = $injector.get('moment');
@@ -22,6 +26,8 @@
         mockData = $injector.get('mockData');
         formentryService = $injector.get('FormentryService');
         patientModel = $injector.get('PatientModel');
+        personAttributes = $injector.get('PersonAttributesRestService');
+       
 
         /*
         Apperently underscore.string is not loading in thr headless browser during the tests
@@ -46,6 +52,7 @@
       }));
 
       afterEach(function() {
+        console.log('Verification -------------------------------------------------------')
         httpBackend.verifyNoOutstandingExpectation();
         //httpBackend.verifyNoOutstandingRequest();
       });
@@ -205,6 +212,7 @@
         var payLoadData;
         var payLoad;
         var patient;
+        var params={uuid:'encounteruuid',visituuid:'visituuid'}
         beforeEach(function(){
           schema = mockData.getMockSchema();
           model = mockData.getMockModel();
@@ -213,11 +221,12 @@
           //console.log(model);
           formentryService.createForm(schema, model, function(data){
             formly_schema = data;
-            // console.log('FORMLY SCHEMAS');
-            // console.log(formly_schema);
+             console.log('FORMLY SCHEMAS');
+             console.log(formly_schema);//, params
             payLoadData = formentryService.updateFormPayLoad(model,formly_schema,patient,form);
-            payLoad=payLoadData.payLoad
-            console.log("TTTTTTTTTTTTTTTTTTTTTTPayload"+JSON.stringify(payLoad))
+            payLoad=payLoadData.payLoad;
+            alert(payLoad)
+            console.log("TTTTTTTTTTTTTTTTTTTTTT"+JSON.stringify(payLoad))
           });
 
         });
