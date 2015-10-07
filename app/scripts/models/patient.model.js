@@ -67,36 +67,42 @@
         }
 
       };
+      modelDefinition.commonIdentifiers = function(value){
 
-      modelDefinition.ampathMrsUId = function(value) {
-        var type='AMRS Universal ID';
         if(_identifier.length > 0) {
-          return getIdentifierByType(_identifier, type);
+          //return _identifier[0].display.split('=')[1];
+          var filteredIdentifiers;
+          var identifier =_identifier;
+          var kenyaNationalId =getIdentifierByType(identifier, 'KENYAN NATIONAL ID NUMBER');
+          var amrsMrn =getIdentifierByType(identifier, 'AMRS Medical Record Number');
+          var ampathMrsUId=getIdentifierByType(identifier, 'AMRS Universal ID');
+          var cCC=getIdentifierByType(identifier, 'CCC');
+          if(angular.isUndefined(kenyaNationalId) && angular.isUndefined(amrsMrn) &&
+            angular.isUndefined(ampathMrsUId) && angular.isUndefined(cCC))
+          {
+            if (angular.isDefined(_identifier[0].identifier)) {
+              filteredIdentifiers = {'default': _identifier[0].identifier};
+            }
+            else{
+              filteredIdentifiers = {'default': 'Not Available'};
+            }
+          }
+          else {
+            filteredIdentifiers = {
+              'kenyaNationalId': kenyaNationalId,
+              'amrsMrn': amrsMrn,
+              'ampathMrsUId': ampathMrsUId,
+              'cCC': cCC
+            };
+          }
+          return filteredIdentifiers;
         }
         else{
-          return '';
+          return _identifier = 'Not Available';
         }
+
       };
 
-      modelDefinition.amrsMrn = function(value) {
-        var type='AMRS Medical Record Number';
-        if(_identifier.length > 0) {
-          return getIdentifierByType(_identifier, type);
-        }
-        else{
-          return '';
-        }
-      };
-
-      modelDefinition.kenyaNationalId = function(value) {
-        var type='KENYAN NATIONAL ID NUMBER';
-        if(_identifier.length > 0) {
-          return getIdentifierByType(_identifier, type);
-        }
-        else{
-          return '';
-        }
-      };
 
       modelDefinition.uuid = function(value){
         if(angular.isDefined(value)){
@@ -275,16 +281,6 @@
         }
       };
 
-      function getIdentifierByType(identifierObject, identifierUuid ) {
-        for (var e in identifierObject) {
-          var uuid = identifierObject[e].identifierType.name;
-          var id = identifierObject[e].identifier;
-          if (uuid ===identifierUuid) {
-            return id;
-          }
-        }
-      }
-
       modelDefinition.openmrsModel = function(value){
         return {
           uuid:_uuid,
@@ -334,7 +330,17 @@
         //Added the noAddress to aid in creating logic for hiding when the patient has no address
       } : {noAddress:'None'};
     }
-
+    function getIdentifierByType(identifierObject, type ) {
+      for (var e in identifierObject) {
+        if (angular.isDefined(identifierObject[e].identifierType)) {
+          var idType = identifierObject[e].identifierType.name;
+          var id = identifierObject[e].identifier;
+          if (idType === type) {
+            return id;
+          }
+        }
+      }
+    }
     //format dates
     function formatDate(dateString){
       var formattedDate='';
