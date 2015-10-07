@@ -18,9 +18,16 @@ jshint -W003, -W026
         };
     }
 
-    monthlyAppointmentController.$inject = ['$scope', '$rootScope', 'EtlRestService', 'MonthlyAppointmentModel', 'moment'];
+    monthlyAppointmentController.$inject = [
+        '$scope',
+        '$rootScope', 
+        'EtlRestService',
+        'MonthlyAppointmentVisitModel',
+        'moment'
+    ];
 
-    function monthlyAppointmentController($scope, $rootScope, EtlRestService, MonthlyAppointmentModel, moment) {
+    function monthlyAppointmentController($scope, $rootScope, EtlRestService,
+        MonthlyAppointmentVisitModel, moment) {
         var vm = this;
         vm.moment = moment;
         vm.loadSchedule = loadSchedule;
@@ -51,13 +58,18 @@ jshint -W003, -W026
             $scope.appointments = [];
 
             if ($scope.locationUuid && $scope.locationUuid !== '')
-                EtlRestService.getMonthlyAppointmentSchedule($scope.locationUuid, this.selectedMonth, onFetchAppointmentsScheduleSuccess, onFetchAppointmentScheduleFailed);
+                EtlRestService.getMonthlyAppointmentAndVisits($scope.locationUuid,
+                    this.selectedMonth, onFetchAppointmentsScheduleSuccess,
+                    onFetchAppointmentScheduleFailed);
         }
 
         function onFetchAppointmentsScheduleSuccess(appointmentSchedule) {
-            $scope.nextStartIndex = +appointmentSchedule.startIndex + appointmentSchedule.size;
+            $scope.nextStartIndex += 
+                appointmentSchedule.startIndex + appointmentSchedule.size;
             for (var e in appointmentSchedule.result) {
-                $scope.appointments.push(new MonthlyAppointmentModel.monthlyAppointment(appointmentSchedule.result[e]));
+                $scope.appointments.push(
+                    new MonthlyAppointmentVisitModel.MonthlyAppointmentVisit(
+                        appointmentSchedule.result[e]));
             }
             $scope.isBusy = false;
         }
