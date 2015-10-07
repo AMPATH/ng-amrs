@@ -18,7 +18,8 @@
       getAppointmentSchedule: getAppointmentSchedule,
       getMonthlyAppointmentSchedule: getMonthlyAppointmentSchedule,
       getMonthlyAppointmentAndVisits: getMonthlyAppointmentAndVisits,
-      getDefaultersList: getDefaultersList
+      getDefaultersList: getDefaultersList,
+      getDailyVisits: getDailyVisits
     };
     return serviceDefinition;
 
@@ -118,6 +119,33 @@
 
     }
 
+    function getDailyVisits(locationUuid, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
+      var resource = getResource('location/:uuid/daily-visits');
+
+      var params = { endDate: endDate, startDate: startDate, uuid: locationUuid };
+
+      if (startIndex !== undefined) {
+        params.startIndex = startIndex;
+      }
+
+      if (limit !== undefined) {
+        params.limit = limit;
+      }
+
+      console.log(params);
+      console.log(startIndex);
+
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+
+    }
+
     function getMonthlyAppointmentSchedule(locationUuid, monthDate, successCallback, failedCallback, startIndex, limit) {
       var resource = getResource('location/:uuid/monthly-appointment-schedule');
 
@@ -173,7 +201,7 @@
     }
 
     function getMonthlyAppointmentAndVisits(locationUuid, monthDate,
-        successCallback, failedCallback, startIndex, limit) {
+      successCallback, failedCallback, startIndex, limit) {
       var resource = getResource('location/:uuid/monthly-appointment-visits');
 
       var params = { startDate: monthDate, uuid: locationUuid };
