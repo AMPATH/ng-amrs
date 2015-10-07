@@ -9,7 +9,7 @@
   mod.run(function (formlyConfig) {
     formlyConfig.setType({
       name: 'concept-search-select',
-      wrapper: ['bootstrapLabel','validation'],
+      wrapper: ['bootstrapLabel','bootstrapHasError','validation'],
       extends: 'select',
       defaultOptions: {
         templateOptions: {

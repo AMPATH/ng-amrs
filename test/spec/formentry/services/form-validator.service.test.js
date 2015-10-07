@@ -126,6 +126,27 @@
       result = service.evaluateExpression(expression);
       expect(result).to.equal(false);
     });
+    
+    it('should invoke arrayContainsAny function when evaluateExpression is invoked with an expression containing arrayContainsAny', function () {
+      //non-array parameter
+      var expression = '(arrayContainsAny(["val", "val2", "val3"], "val"))';
+      var result = service.evaluateExpression(expression);
+      expect(result).to.equal(true);
+
+      expression = '(arrayContainsAny(["val", "val2", "val3"], "val4"))';
+      result = service.evaluateExpression(expression);
+      expect(result).to.equal(false);
+      
+      
+      //array parameter
+      expression = '(arrayContainsAny(["val2", "val3"], ["val","val3"]))';
+      result = service.evaluateExpression(expression);
+      expect(result).to.equal(true);
+
+      expression = '(arrayContainsAny(["val2", "val3"], ["val","val4"]))';
+      result = service.evaluateExpression(expression);
+      expect(result).to.equal(false);
+    });
   });
 
   describe('Form Validator Service: Generic Validation Logic Functions Unit Tests', function () {

@@ -49,6 +49,7 @@
             {
               "concept": "d9a414af-021b-459f-bcea-4c88b1382e39",
               "label": "Has the patient changed their residence?",
+              "id": "Residence",
               "answers": [
                 {
                   "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
@@ -116,6 +117,8 @@
               "concept": "a8a6619c-1350-11df-a1f1-0026b9348838",
               "label": "Height(CM):",
               "type": "number",
+              "max": "228",
+              "min": "10",
               "validators": []
             },
             {
@@ -163,7 +166,7 @@
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "3. Transfer in from other clinic (specify):",
                   "type": "text",
-                  "validators":{}
+                  "validators": {}
                 }
               ]
             }
@@ -199,9 +202,8 @@
               "type": "date",
               "validators": [
                 {
-                  "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q4a) && arrayContains(['a89ff816-1350-11df-a1f1-0026b9348838','a89ff8de-1350-11df-a1f1-0026b9348838'],q4a) && isEmpty(myValue)",
-                  "message": "Patient visit marked as unscheduled. Please provide the scheduled date."
+                  "type": "date",
+                  "allowFutureDates": "true"
                 }
               ]
             }
@@ -260,6 +262,7 @@
                   "concept": "a898c01e-1350-11df-a1f1-0026b9348838",
                   "required": "true",
                   "label": "6. Person Bringing Patient:",
+                  "id": "q6_",
                   "answers": [
                     {
                       "concept": "a898c0dc-1350-11df-a1f1-0026b9348838",
@@ -320,7 +323,7 @@
                     {
                       "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(q5b) && q5b==='a899b35c-1350-11df-a1f1-0026b9348838' && myValue==='a898c1a4-1350-11df-a1f1-0026b9348838'",
-                      "message": "Question 5a father is marked as deceased. Father cannot be answer to this question."
+                      "message": "Question 5b father is marked as deceased. Father cannot be answer to this question."
                     }
                   ]
                 }
@@ -384,6 +387,7 @@
             {
               "concept": "a8a0baa8-1350-11df-a1f1-0026b9348838",
               "label": "7b. If breastfeeding, is mother on ARVs",
+              "id": "q7b",
               "answers": [
                 {
                   "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
@@ -402,8 +406,13 @@
               "validators": [
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q7a) && !arrayContains(q7a, 'a89cca10-1350-11df-a1f1-0026b9348838') && !isEmpty(myValue)",
+                  "failsWhenExpression": "(isEmpty(q7a) || !arrayContainsAny(q7a, ['a89cca10-1350-11df-a1f1-0026b9348838', 'a89ad1ec-1350-11df-a1f1-0026b9348838'])) && !isEmpty(myValue)",
                   "message": "Question 7a current feeding not marked as breast/expressed breast milk. This question can only be answered if mother is breastfeeding."
+                },
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "!isEmpty(q7a) && arrayContainsAny(q7a, ['a89cca10-1350-11df-a1f1-0026b9348838', 'a89ad1ec-1350-11df-a1f1-0026b9348838']) && isEmpty(myValue)",
+                  "message": "Question 7a current feeding marked as breast/expressed breast milk. Please indicate if mother is on ARV's."
                 }
               ]
             },
@@ -450,12 +459,12 @@
               "validators": [
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q8a) && q8a!=='a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
+                  "failsWhenExpression": "q8a !== 'a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
                   "message": "Question 8a, no siblings indicated. This question can only be answered if patient has siblings less than 18 months."
                 },
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q8a) && q8a==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                  "failsWhenExpression": "!isEmpty(q8a) && q8a === 'a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                   "message": "Question 8a has siblings indicated. PLease indicate if patient is registered in Pediatric HIV clinic."
                 }
               ]
@@ -697,10 +706,11 @@
             {
               "concept": "a89b6ce2-1350-11df-a1f1-0026b9348838",
               "label": "13b. (If Yes then) Reason for ARV’s:",
+              "id": "q13b",
               "answers": [
                 {
                   "concept": "a89fbedc-1350-11df-a1f1-0026b9348838",
-                  "label": "pMTCT"
+                  "label": "PMTCT"
                 },
                 {
                   "concept": "a8a0be2c-1350-11df-a1f1-0026b9348838",
@@ -711,7 +721,7 @@
               "validators": [
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q13a) && q13a==='a899b42e-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
+                  "failsWhenExpression": "q13a !== 'a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
                   "message": "This question can only be answered if question 13a, ARVs use is marked as yes."
                 },
                 {
@@ -734,6 +744,7 @@
             {
               "concept": "04616f5d-b961-4f41-bbd7-bcc0dd235577",
               "label": "13d.Treatment Categories:",
+              "id": "q13d",
               "answers": [
                 {
                   "concept": "034047bd-3fa1-4b2a-b0f0-2787e9b9f7b3",
@@ -754,49 +765,34 @@
                   "type": "js_expression",
                   "failsWhenExpression": "!isEmpty(q13a) && q13a==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                   "message": "Patient on ARVs. Please provide regimen."
-                },
+                }
+              ],
+              "disableExpression": [
                 {
-                  "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q13a) && q13a!=='a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
-                  "message": "Patient not on ARVs. Regimen should not be provided."
+                  "disableWhenExpression": "q13a !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                 }
               ]
             },
             {
               "concept": "a899cf5e-1350-11df-a1f1-0026b9348838",
               "label": "13e. Current ARV drugs:",
+              "id": "q13e",
               "answers": [
-                {
-                  "concept": "b7735b8a-22f2-41d6-b450-65ec7588839c",
-                  "label": "Abacavir60/Lamivudine30"
-                },
-                {
-                  "concept": "a897e608-1350-11df-a1f1-0026b9348838",
-                  "label": "d4T12/3TC60/NVP100)T-jr"
-                },
-                {
-                  "concept": "a897e7c0-1350-11df-a1f1-0026b9348838",
-                  "label": "Lopinavir/Ritonavir"
-                },
-                {
-                  "concept": "a897e96e-1350-11df-a1f1-0026b9348838",
-                  "label": "Didanosine"
-                },
-                {
-                  "concept": "a896758e-1350-11df-a1f1-0026b9348838",
-                  "label": "Zidovudine60/Lamivudine30"
-                },
                 {
                   "concept": "a897e608-1350-11df-a1f1-0026b9348838",
                   "label": "d4T30/3TC150/NVP200"
+                },
+                {
+                  "concept": "3d587177-984e-4eeb-93f2-3223b6c1dd7c",
+                  "label": "D4T30/3TC150"
                 },
                 {
                   "concept": "a897e7c0-1350-11df-a1f1-0026b9348838",
                   "label": "LPV200/RIT50"
                 },
                 {
-                  "concept": "a8afbd64-1350-11df-a1f1-0026b9348838",
-                  "label": "Raltegravir"
+                  "concept": "1c4a75d0-cc91-4752-b0a5-4b833326ff7a",
+                  "label": "TDF300/3TC300/EFV600"
                 },
                 {
                   "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
@@ -807,85 +803,93 @@
                   "label": "ZDV300/3TC150"
                 },
                 {
-                  "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
-                  "label": "Ritonavir100mg"
-                },
-                {
-                  "concept": "a8afbe22-1350-11df-a1f1-0026b9348838",
-                  "label": "Darunavir"
-                },
-                {
                   "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
                   "label": "ZDV300/3TC150/NVP200"
                 },
                 {
-                  "concept": "3d587177-984e-4eeb-93f2-3223b6c1dd7c",
-                  "label": "D4T30/3TC150"
-                },
-                {
-                  "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
-                  "label": "Rit(Norvir sec100)"
-                },
-                {
-                  "concept": "a8afbf9e-1350-11df-a1f1-0026b9348838",
-                  "label": "atazanavir"
-                },
-                {
-                  "concept": "a8967656-1350-11df-a1f1-0026b9348838",
-                  "label": "Nevirapine"
-                },
-                {
-                  "concept": "a89cc876-1350-11df-a1f1-0026b9348838",
-                  "label": "Tenofovir/Lamivudine"
-                },
-                {
-                  "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
-                  "label": "Rit(Norvir 80)"
-                },
-                {
-                  "concept": "a8ac4904-1350-11df-a1f1-0026b9348838",
-                  "label": "Unknown Name"
-                },
-                {
-                  "concept": "a89677e6-1350-11df-a1f1-0026b9348838",
-                  "label": "Efavirenz"
-                },
-                {
-                  "concept": "1c4a75d0-cc91-4752-b0a5-4b833326ff7a",
-                  "label": "TDF300/3TC300/EFV600"
+                  "concept": "b7735b8a-22f2-41d6-b450-65ec7588839c",
+                  "label": "Abacavir60/Lamivudine30"
                 },
                 {
                   "concept": "a8afc066-1350-11df-a1f1-0026b9348838",
                   "label": "Atazanavir300/ritonavir100"
                 },
                 {
-                  "concept": "a8a87a86-1350-11df-a1f1-0026b9348838",
-                  "label": "Other"
+                  "concept": "a896758e-1350-11df-a1f1-0026b9348838",
+                  "label": "Zidovudine60/Lamivudine30"
                 },
                 {
-                  "concept": "a89673f4-1350-11df-a1f1-0026b9348838",
-                  "label": "Lamivudine"
+                  "concept": "a897e7c0-1350-11df-a1f1-0026b9348838",
+                  "label": "Lopinavir/Ritonavir"
+                },
+                {
+                  "concept": "a89cc876-1350-11df-a1f1-0026b9348838",
+                  "label": "Tenofovir/Lamivudine"
                 },
                 {
                   "concept": "a897f8a0-1350-11df-a1f1-0026b9348838",
                   "label": "Abacavir"
                 },
                 {
-                  "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                  "concept": "a8afbf9e-1350-11df-a1f1-0026b9348838",
+                  "label": "Atazanavir"
+                },
+                {
+                  "concept": "a897e96e-1350-11df-a1f1-0026b9348838",
+                  "label": "Didanosine"
+                },
+                {
+                  "concept": "a8afbe22-1350-11df-a1f1-0026b9348838",
+                  "label": "Darunavir"
+                },
+                {
+                  "concept": "a89677e6-1350-11df-a1f1-0026b9348838",
+                  "label": "Efavirenz"
+                },
+                {
+                  "concept": "a89673f4-1350-11df-a1f1-0026b9348838",
+                  "label": "Lamivudine"
+                },
+                {
+                  "concept": "a8967656-1350-11df-a1f1-0026b9348838",
+                  "label": "Nevirapine"
+                },
+                {
+                  "concept": "a8afbd64-1350-11df-a1f1-0026b9348838",
+                  "label": "Raltegravir"
+                },
+                {
+                  "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
+                  "label": "Ritonavir100mg"
+                },
+                {
+                  "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
+                  "label": "Rit(Norvir sec100)"
+                },
+                {
+                  "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
+                  "label": "Rit(Norvir 80)"
+                },
+                {
+                  "concept": "a8a87a86-1350-11df-a1f1-0026b9348838",
                   "label": "Other"
+                },
+                {
+                  "concept": "a8ac4904-1350-11df-a1f1-0026b9348838",
+                  "label": "Unknown Name"
                 }
               ],
               "type": "multiCheckbox",
               "validators": [
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q13a) && q13a==='a899b42e-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                  "failsWhenExpression": "!isEmpty(q13a) && q13a==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                   "message": "Patient on ARVs. Please provide ARV drugs."
-                },
+                }
+              ],
+              "disableExpression": [
                 {
-                  "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(q13a) && q13a!=='a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
-                  "message": "Patient not on ARVs. Regimen should not be provided."
+                  "disableWhenExpression": "q13a !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                 }
               ]
             }
@@ -897,7 +901,7 @@
             {
               "concept": "212fdebe-4745-4f60-aaa0-35f4193abaf8",
               "required": "true",
-              "id":"13f",
+              "id": "13f",
               "label": "13f.Opportunistic Infection(OI) Prophylaxis:",
               "answers": [
                 {
@@ -923,7 +927,7 @@
             {
               "concept": "a899e35e-1350-11df-a1f1-0026b9348838",
               "label": "13g.TB Prophylaxis",
-              "id":"13g",
+              "id": "13g",
               "required": "true",
               "answers": [
                 {
@@ -945,7 +949,7 @@
           "questions": [
             {
               "concept": "a8afcc82-1350-11df-a1f1-0026b9348838",
-              "id": "13h_Tb_Treatment",
+              "id": "q13h_treatment",
               "required": "true",
               "label": "13h. On TB treatment:",
               "answers": [
@@ -969,19 +973,20 @@
                   "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
                   "label": "Start Date of TB treatment",
                   "type": "date",
+                  "id": "q13h_date",
                   "validators": [
                     {
                       "type": "date"
                     },
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(13h_Tb_Treatment) && 13h_Tb_Treatment!=='a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
-                      "message": "Patient not on TB treatment. Start date not required."
-                    },
-                    {
-                      "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(13h_Tb_Treatment) && 13h_Tb_Treatment==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                      "failsWhenExpression": "!isEmpty(q13h_treatment) && q13h_treatment==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                       "message": "Patient on TB treatment. Please indicate start date."
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "q13h_treatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                     }
                   ]
                 }
@@ -994,7 +999,7 @@
                 {
                   "concept": "16db21cd-10cb-4c31-bb5a-b7619bfbea66",
                   "label": "13i. Site of TB meds pick-up:",
-                  "id": "q13i",
+                  "id": "q13i_Site",
                   "answers": [
                     {
                       "concept": "a89c2f42-1350-11df-a1f1-0026b9348838",
@@ -1012,16 +1017,17 @@
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "Other Specify:",
                   "type": "text",
+                  "id": "q13i_Other",
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(q13i) && q13i==='a8aaf3e2-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                      "failsWhenExpression": "!isEmpty(q13i_Site) && q13i_Site==='a8aaf3e2-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                       "message": "Please indicate other site of meds pickup."
-                    },
+                    }
+                  ],
+                  "disableExpression": [
                     {
-                      "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(q13i) && q13i==='a89c2f42-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue)",
-                      "message": "Please do not indicate other site of meds pickup."
+                      "disableWhenExpression": "q13i_Site !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
                     }
                   ]
                 }
@@ -1189,17 +1195,10 @@
                   "concept": "a8a060c6-1350-11df-a1f1-0026b9348838",
                   "label": "Other Drugs:",
                   "type": "drug",
-                  "validators": [
-                    {
-                      "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(13h_Tb_Treatment) && 13h_Tb_Treatment==='a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
-                      "message": "Patient on TB treatment. Please indicate start date."
-                    }
-                  ]
+                  "validators": []
                 }
               ]
             }
-
           ]
         }
       ]
@@ -1216,7 +1215,8 @@
               "questions": [
                 {
                   "concept": "a898c7b2-1350-11df-a1f1-0026b9348838",
-                  "label": "14a.Who has been giving the medicine to the patient (Please tick all that apply):",
+                  "label": "14a.Who has been giving the medicine to the patient:",
+                  "id": "q14a",
                   "answers": [
                     {
                       "concept": "a898c0dc-1350-11df-a1f1-0026b9348838",
@@ -1247,10 +1247,6 @@
                       "label": "SELF"
                     },
                     {
-                      "concept": "a898c6f4-1350-11df-a1f1-0026b9348838",
-                      "label": "PATIENT"
-                    },
-                    {
                       "concept": "a8a171a0-1350-11df-a1f1-0026b9348838",
                       "label": "CHILDREN'S HOME"
                     },
@@ -1263,21 +1259,23 @@
                       "label": "OTHER FAMILY MEMBER"
                     },
                     {
-                      "concept": "a8aaf234-1350-11df-a1f1-0026b9348838",
-                      "label": "OTHER RELATIVE"
-                    },
-                    {
                       "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
                       "label": "OTHER NON-CODED"
                     }
                   ],
-                  "type": "multiCheckbox",
+                  "type": "select",
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(q5a) && arrayContains(myValue,'a898c0dc-1350-11df-a1f1-0026b9348838')",
+                      "failsWhenExpression": "q5a === 'a899b35c-1350-11df-a1f1-0026b9348838' && myValue === 'a898c0dc-1350-11df-a1f1-0026b9348838'",
                       "message": "Question 5a mother is marked as deceased. Mother cannot be answer to this question."
-                    }]
+                    },
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "q5b === 'a899b35c-1350-11df-a1f1-0026b9348838' && myValue === 'a898c1a4-1350-11df-a1f1-0026b9348838'",
+                      "message": "Question 5b father is marked as deceased. Father cannot be answer to this question."
+                    }
+                  ]
                 }
               ]
             },
@@ -1544,6 +1542,7 @@
             {
               "concept": "768bfefe-9fd0-4065-a8b9-4de2a4475ee4",
               "label": "OI Prophylaxis:",
+              "id": "q14e_OI",
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -1567,11 +1566,18 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "!isEmpty(13f) && arrayContains(['a8989396-1350-11df-a1f1-0026b9348838', 'a890c9e0-1350-11df-a1f1-0026b9348838', 'a8971e12-1350-11df-a1f1-0026b9348838'], 13f) &&  isEmpty(myValue)",
+                  "message": "Patient on O/I Prophylaxis. Please provide adherence history."
+                }
+              ]
             },
             {
               "concept": "a89acb02-1350-11df-a1f1-0026b9348838",
               "label": "TB Prohylaxis:",
+              "id": "q14e_TB_Prophylaxis",
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -1595,11 +1601,18 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "!isEmpty(13g) && arrayContains(['a896cc00-1350-11df-a1f1-0026b9348838'], 13g) &&  isEmpty(myValue)",
+                  "message": "Patient on TB Prophylaxis. Please provide adherence history."
+                }
+              ]
             },
             {
               "concept": "a8af37a4-1350-11df-a1f1-0026b9348838",
               "label": "TB Treatment:",
+              "id": "q14e_Tb_Treatment",
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -1623,7 +1636,13 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "!isEmpty(q13h_treatment) && arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], q13h_treatment) &&  isEmpty(myValue)",
+                  "message": "Patient on TB Treatment. Please provide adherence history."
+                }
+              ]
             },
             {
               "concept": "a8a0720a-1350-11df-a1f1-0026b9348838",
@@ -1641,6 +1660,7 @@
             {
               "concept": "a89aca26-1350-11df-a1f1-0026b9348838",
               "label": "14e. During the last seven days how many of his/her pills did the patient take:ARVs",
+              "id": "q14e_arv",
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -1664,7 +1684,13 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "isEmpty(myValue) && q13a === 'a899b35c-1350-11df-a1f1-0026b9348838'",
+                  "message": "Patient on ARVs. Please provide adherence history."
+                }
+              ]
             }
           ]
         },
@@ -2028,6 +2054,7 @@
             {
               "concept": "a89ac184-1350-11df-a1f1-0026b9348838",
               "label": "15. Does the patient have any interval complaints If Yes,tick all that apply",
+              "id": "q15_Complaints",
               "answers": [
                 {
                   "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
@@ -2044,6 +2071,7 @@
             {
               "concept": "a8ad270c-1350-11df-a1f1-0026b9348838",
               "label": "Diarrhea:",
+              "id": "q15_Diarrhea",
               "answers": [
                 {
                   "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
@@ -2055,11 +2083,17 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q15_Complaints !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
+              ]
             },
             {
               "concept": "a8a0bf58-1350-11df-a1f1-0026b9348838",
               "label": "Abdominal Pain:",
+              "id": "q15_Abdominal",
               "answers": [
                 {
                   "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
@@ -2071,11 +2105,17 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q15_Complaints !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
+              ]
             },
             {
               "concept": "a8a0c2dc-1350-11df-a1f1-0026b9348838",
               "label": "Skin rash:",
+              "id": "q15_Skin",
               "answers": [
                 {
                   "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
@@ -2087,11 +2127,17 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q15_Complaints !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
+              ]
             },
             {
               "concept": "245edfef-d05b-48c1-9a72-e4de5d586a33",
               "label": "Sores:",
+              "id": "q15_Sores",
               "answers": [
                 {
                   "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
@@ -2103,11 +2149,17 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q15_Complaints !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
+              ]
             },
             {
               "concept": "a8a0c1b0-1350-11df-a1f1-0026b9348838",
               "label": "Sore throat:",
+              "id": "q15_throat",
               "answers": [
                 {
                   "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
@@ -2119,11 +2171,17 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q15_Complaints !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
+              ]
             },
             {
               "concept": "a8a0c084-1350-11df-a1f1-0026b9348838",
               "label": "Difficulty breathing:",
+              "id": "q15_breathing",
               "answers": [
                 {
                   "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
@@ -2135,11 +2193,17 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q15_Complaints !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
+              ]
             },
             {
               "concept": "a8ad2478-1350-11df-a1f1-0026b9348838",
               "label": "Vomiting:",
+              "id": "q15_Vomiting",
               "answers": [
                 {
                   "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
@@ -2151,11 +2215,17 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q15_Complaints !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
+              ]
             },
             {
               "concept": "a8a0c656-1350-11df-a1f1-0026b9348838",
               "label": "Swelling:",
+              "id": "q15_Swelling",
               "answers": [
                 {
                   "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
@@ -2167,11 +2237,17 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q15_Complaints !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
+              ]
             },
             {
               "concept": "a8ad1190-1350-11df-a1f1-0026b9348838",
               "label": "Cough:",
+              "id": "q15_Cough",
               "answers": [
                 {
                   "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
@@ -2183,11 +2259,17 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q15_Complaints !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
+              ]
             },
             {
               "concept": "a8a0c408-1350-11df-a1f1-0026b9348838",
               "label": "Fever:",
+              "id": "q15_Fever",
               "answers": [
                 {
                   "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
@@ -2199,11 +2281,17 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q15_Complaints !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
+              ]
             },
             {
               "concept": "a8a0c534-1350-11df-a1f1-0026b9348838",
               "label": "Ear discharge:",
+              "id": "q15_Ear",
               "answers": [
                 {
                   "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
@@ -2215,11 +2303,17 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q15_Complaints !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
+              ]
             },
             {
               "concept": "a8a0c9da-1350-11df-a1f1-0026b9348838",
               "label": "Other:",
+              "id": "q15_Other",
               "answers": [
                 {
                   "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
@@ -2231,7 +2325,12 @@
                 }
               ],
               "type": "select",
-              "validators": []
+              "validators": [],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q15_Complaints !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
+              ]
             }
           ]
         }
@@ -2441,7 +2540,7 @@
           ]
         },
         {
-          "label": "16 d. Tests Results and Test Date (Please Record date sample was drawn, rather than date test was run)",
+          "label": "17. Tests Results and Test Date (Please Record date sample was drawn, rather than date test was run)",
           "questions": [
             {
               "type": "group",
@@ -2991,7 +3090,7 @@
             {
               "concept": "a89b75d4-1350-11df-a1f1-0026b9348838",
               "label": "21a. ARV Plan:",
-              "id": "21a",
+              "id": "q21a",
               "required": "true",
               "answers": [
                 {
@@ -3035,13 +3134,13 @@
               "validators": [
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "q13a==='a899b35c-1350-11df-a1f1-0026b9348838' && arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'],myValue)",
+                  "failsWhenExpression": "q13a==='a899b35c-1350-11df-a1f1-0026b9348838' && arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'],myValue)",
                   "message": "Patient marked as on ARVs in question 14. Therefore plan can only be drug substitution, continue regimen, change dose, change regimen, change formulation, stop all."
                 },
                 {
                   "type": "js_expression",
                   "failsWhenExpression": "q13a==='a899b42e-1350-11df-a1f1-0026b9348838' && arrayContains(['a8a00158-1350-11df-a1f1-0026b9348838','a89b7908-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'],myValue)",
-                  "message": "Patient marked as not on ARVs in question 14. Therefore plan can only be not on ARVs, start ARVs or restart."
+                  "message": "Patient marked as not on ARVs in question 14. Therefore plan can only be not on ARVs', start ARVs or restart."
                 }
               ]
             },
@@ -3052,7 +3151,7 @@
                 {
                   "concept": "a89b7110-1350-11df-a1f1-0026b9348838",
                   "label": "21b.Reason for stop/change/re-dose",
-                  "id": "21b",
+                  "id": "q21b_reason",
                   "answers": [
                     {
                       "concept": "a8981934-1350-11df-a1f1-0026b9348838",
@@ -3103,8 +3202,13 @@
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "arrayContains(['a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'], 21a)",
+                      "failsWhenExpression": "isEmpty(myValue) && !isEmpty(q21a) && arrayContains(['a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'], q21a)",
                       "message": "You indicated patient is changing /changing dose/substituting/stopping arvs, reason for changing should be selected."
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "!arrayContains(['a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'], q21a)"
                     }
                   ]
                 }
@@ -3117,12 +3221,18 @@
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label": " Toxicity cause :",
+                  "id": "q21b_toxicity",
                   "type": "select-concept-answers",
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "isEmpty(myValue) && 21b === 'a890d1ba-1350-11df-a1f1-0026b9348838'",
+                      "failsWhenExpression": "isEmpty(myValue) && q21b_reason === 'a890d1ba-1350-11df-a1f1-0026b9348838'",
                       "message": "Reason for stop/change/re-dose is toxicity. Kindly indicate the toxicity cause."
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "q21b_reason !== 'a890d1ba-1350-11df-a1f1-0026b9348838'"
                     }
                   ]
                 },
@@ -3167,7 +3277,7 @@
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "21a!=='a899e0ac-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue) ",
+                      "failsWhenExpression": "q21a!=='a899e0ac-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue) ",
                       "message": "Based on the plan selected, please indicate eligibility reason."
                     }
                   ]
@@ -3207,39 +3317,23 @@
                 {
                   "concept": "a89b6a62-1350-11df-a1f1-0026b9348838",
                   "label": "21e.ARV drugs:",
-                  "id": "21e",
+                  "id": "q21e",
                   "answers": [
-                    {
-                      "concept": "b7735b8a-22f2-41d6-b450-65ec7588839c",
-                      "label": "Abacavir60/Lamivudine30"
-                    },
-                    {
-                      "concept": "a897e608-1350-11df-a1f1-0026b9348838",
-                      "label": "d4T12/3TC60/NVP100)T-jr"
-                    },
-                    {
-                      "concept": "a897e7c0-1350-11df-a1f1-0026b9348838",
-                      "label": "Lopinavir/Ritonavir"
-                    },
-                    {
-                      "concept": "a897e96e-1350-11df-a1f1-0026b9348838",
-                      "label": "Didanosine"
-                    },
-                    {
-                      "concept": "a896758e-1350-11df-a1f1-0026b9348838",
-                      "label": "Zidovudine60/Lamivudine30"
-                    },
                     {
                       "concept": "a897e608-1350-11df-a1f1-0026b9348838",
                       "label": "d4T30/3TC150/NVP200"
+                    },
+                    {
+                      "concept": "3d587177-984e-4eeb-93f2-3223b6c1dd7c",
+                      "label": "D4T30/3TC150"
                     },
                     {
                       "concept": "a897e7c0-1350-11df-a1f1-0026b9348838",
                       "label": "LPV200/RIT50"
                     },
                     {
-                      "concept": "a8afbd64-1350-11df-a1f1-0026b9348838",
-                      "label": "Raltegravir"
+                      "concept": "1c4a75d0-cc91-4752-b0a5-4b833326ff7a",
+                      "label": "TDF300/3TC300/EFV600"
                     },
                     {
                       "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
@@ -3250,86 +3344,90 @@
                       "label": "ZDV300/3TC150"
                     },
                     {
-                      "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
-                      "label": "Ritonavir100mg"
-                    },
-                    {
-                      "concept": "a8afbe22-1350-11df-a1f1-0026b9348838",
-                      "label": "Darunavir"
-                    },
-                    {
                       "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
                       "label": "ZDV300/3TC150/NVP200"
                     },
                     {
-                      "concept": "3d587177-984e-4eeb-93f2-3223b6c1dd7c",
-                      "label": "D4T30/3TC150"
-                    },
-                    {
-                      "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
-                      "label": "Rit(Norvir sec100)"
-                    },
-                    {
-                      "concept": "a8afbf9e-1350-11df-a1f1-0026b9348838",
-                      "label": "atazanavir"
-                    },
-                    {
-                      "concept": "a8967656-1350-11df-a1f1-0026b9348838",
-                      "label": "Nevirapine"
-                    },
-                    {
-                      "concept": "a89cc876-1350-11df-a1f1-0026b9348838",
-                      "label": "Tenofovir/Lamivudine"
-                    },
-                    {
-                      "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
-                      "label": "Rit(Norvir 80)"
-                    },
-                    {
-                      "concept": "a8ac4904-1350-11df-a1f1-0026b9348838",
-                      "label": "Unknown Name"
-                    },
-                    {
-                      "concept": "a89677e6-1350-11df-a1f1-0026b9348838",
-                      "label": "Efavirenz"
-                    },
-                    {
-                      "concept": "1c4a75d0-cc91-4752-b0a5-4b833326ff7a",
-                      "label": "TDF300/3TC300/EFV600"
+                      "concept": "b7735b8a-22f2-41d6-b450-65ec7588839c",
+                      "label": "Abacavir60/Lamivudine30"
                     },
                     {
                       "concept": "a8afc066-1350-11df-a1f1-0026b9348838",
                       "label": "Atazanavir300/ritonavir100"
                     },
                     {
-                      "concept": "a8a87a86-1350-11df-a1f1-0026b9348838",
-                      "label": "Other"
+                      "concept": "a896758e-1350-11df-a1f1-0026b9348838",
+                      "label": "Zidovudine60/Lamivudine30"
                     },
                     {
-                      "concept": "a89673f4-1350-11df-a1f1-0026b9348838",
-                      "label": "Lamivudine"
+                      "concept": "a897e7c0-1350-11df-a1f1-0026b9348838",
+                      "label": "Lopinavir/Ritonavir"
+                    },
+                    {
+                      "concept": "a89cc876-1350-11df-a1f1-0026b9348838",
+                      "label": "Tenofovir/Lamivudine"
                     },
                     {
                       "concept": "a897f8a0-1350-11df-a1f1-0026b9348838",
                       "label": "Abacavir"
                     },
                     {
-                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "concept": "a8afbf9e-1350-11df-a1f1-0026b9348838",
+                      "label": "Atazanavir"
+                    },
+                    {
+                      "concept": "a897e96e-1350-11df-a1f1-0026b9348838",
+                      "label": "Didanosine"
+                    },
+                    {
+                      "concept": "a8afbe22-1350-11df-a1f1-0026b9348838",
+                      "label": "Darunavir"
+                    },
+                    {
+                      "concept": "a89677e6-1350-11df-a1f1-0026b9348838",
+                      "label": "Efavirenz"
+                    },
+                    {
+                      "concept": "a89673f4-1350-11df-a1f1-0026b9348838",
+                      "label": "Lamivudine"
+                    },
+                    {
+                      "concept": "a8967656-1350-11df-a1f1-0026b9348838",
+                      "label": "Nevirapine"
+                    },
+                    {
+                      "concept": "a8afbd64-1350-11df-a1f1-0026b9348838",
+                      "label": "Raltegravir"
+                    },
+                    {
+                      "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
+                      "label": "Ritonavir100mg"
+                    },
+                    {
+                      "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
+                      "label": "Rit(Norvir sec100)"
+                    },
+                    {
+                      "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
+                      "label": "Rit(Norvir 80)"
+                    },
+                    {
+                      "concept": "a8a87a86-1350-11df-a1f1-0026b9348838",
                       "label": "Other"
                     },
                     {
-                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                      "label": "Other"
+                      "concept": "a8ac4904-1350-11df-a1f1-0026b9348838",
+                      "label": "Unknown Name"
                     }
                   ],
                   "type": "multiCheckbox",
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(21a) && isEmpty(myValue) && arrayContains(['a898c938-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'],21a)",
+                      "failsWhenExpression": "!isEmpty(q21a) && isEmpty(myValue) && arrayContains(['a898c938-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'],q21a)",
                       "message": "Based on the plan selected, please indicate a regimen."
                     }
-                    ]
+                  ]
                 }
               ]
             }
@@ -3341,7 +3439,7 @@
             {
               "concept": "8b181385-353a-4f51-9b81-1b5f7f267f5f",
               "label": "21f. OI Prophylaxis:",
-              "id":"21f",
+              "id": "q21f",
               "required": "true",
               "answers": [
                 {
@@ -3374,23 +3472,12 @@
                 }
               ],
               "type": "select",
-              "validators": [
-                {
-                  "type": "js_expression",
-                  "failsWhenExpression": "arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a89b7908-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'],21a) && myValue==='a899e0ac-1350-11df-a1f1-0026b9348838'",
-                  "message": "Based on the current OI prophylaxis marked, please indicate OI prophylaxis plan."
-                },
-                {
-                  "type": "js_expression",
-                  "failsWhenExpression": "arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838', 'a89b77aa-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'], myValue) && arrayContains(['a8989396-1350-11df-a1f1-0026b9348838','a890c9e0-1350-11df-a1f1-0026b9348838','a8971e12-1350-11df-a1f1-0026b9348838'], 13f)",
-                  "message": "Based on the current OI prophylaxis marked, please indicate OI prophylaxis plan."
-                }
-              ]
+              "validators": []
             },
             {
               "concept": "7e82e662-6bda-4b6f-9080-7662d35c39ca",
               "label": "21g. Reason for stop/change/re-dose:",
-              "id": "21g",
+              "id": "q21g_reason",
               "answers": [
                 {
                   "concept": "a898cfe6-1350-11df-a1f1-0026b9348838",
@@ -3405,7 +3492,7 @@
               "validators": [
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "isEmpty(myValue) && arrayContains([ 'a89b7c50-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'],21f)",
+                  "failsWhenExpression": "isEmpty(myValue) && arrayContains([ 'a89b7c50-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'],q21f)",
                   "message": "Based on the OI prophylaxis plan marked, please indicate reason for stop/change/re-dose"
                 }
               ]
@@ -3413,12 +3500,25 @@
             {
               "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
               "label": "Toxicity cause:",
+              "id": "q21g_toxicity",
               "type": "select-concept-answers",
-              "validators": []
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "q21g_reason === 'a890d1ba-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                  "message": "Reason for stop/change/re-dose is toxicity. Kindly indicate the toxicity cause."
+                }
+              ],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "q21g_reason !== 'a890d1ba-1350-11df-a1f1-0026b9348838'"
+                }
+              ]
             },
             {
               "concept": "d8b8a6b7-17ba-4a2e-9455-5ad562155531",
               "label": "21h. Drugs",
+              "id": "q21h",
               "answers": [
                 {
                   "concept": "a8989396-1350-11df-a1f1-0026b9348838",
@@ -3433,14 +3533,15 @@
               "validators": [
                 {
                   "type": "js_expression",
-                  "failsWhenExpression": "isEmpty(myValue) && 21g === 'a890d1ba-1350-11df-a1f1-0026b9348838'",
-                  "message": "Reason for stop/change/re-dose is toxicity. Kindly indicate the toxicity cause."
+                  "failsWhenExpression": "isEmpty(myValue) && !isEmpty(q21f) && arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838'], q21f)",
+                  "message": "Based on the plan selected, please indicate drugs."
                 }
               ]
             },
             {
               "concept": "a89c1e12-1350-11df-a1f1-0026b9348838",
               "label": "21i.TB Prophylaxis:",
+              "id": "q21i",
               "required": "true",
               "answers": [
                 {
@@ -3469,8 +3570,7 @@
                 }
               ],
               "type": "select",
-              "validators": [
-              ]
+              "validators": []
             },
             {
               "concept": "a8a0780e-1350-11df-a1f1-0026b9348838",
@@ -3479,6 +3579,7 @@
                 {
                   "concept": "a89c1e12-1350-11df-a1f1-0026b9348838",
                   "label": "21j. Reason for stop/change/re-dose",
+                  "id": "q21j_reason",
                   "answers": [
                     {
                       "concept": "a89c1ef8-1350-11df-a1f1-0026b9348838",
@@ -3505,22 +3606,39 @@
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838', 'a89b77aa-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'], 13g)",
-                      "message": "Based on the current OI prophylaxis marked, please indicate OI prophylaxis plan."
+                      "failsWhenExpression": "isEmpty(myValue) && !isEmpty(q21i) && arrayContains(['a89b7d36-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838'], q21i)",
+                      "message": "Based on the TB prophylaxis plan marked, please indicate reason for stop/change/re-dose."
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "!arrayContains(['a89b7d36-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838'], q21i)"
                     }
                   ]
                 },
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label": "Toxicity cause",
+                  "id": "q21j_toxicity",
                   "type": "select-concept-answers",
-                  "validators": []
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "q21j_reason !== 'a890d1ba-1350-11df-a1f1-0026b9348838'"
+                    }
+                  ]
                 },
                 {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "Other specifiy:",
+                  "id": "q21j_other",
                   "type": "text",
-                  "validators": []
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "q21j_reason !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
+                    }
+                  ]
                 }
               ]
             },
@@ -3560,7 +3678,6 @@
                 {
                   "concept": "a89c1fd4-1350-11df-a1f1-0026b9348838",
                   "label": "21l. TB Treatment:",
-                  "required": "true",
                   "id": "21l_Tb_Treatment",
                   "answers": [
                     {
@@ -3600,12 +3717,12 @@
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(13h_Tb_Treatment) && 13h_Tb_Treatment === 'a899e0ac-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue) && arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838', 'a89b7908-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838', 'a8a00158-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838', 'dd01765f-7e26-4704-a790-5eb049670571'], myValue)",
+                      "failsWhenExpression": "!isEmpty(q13h_treatment) && q13h_treatment === 'a899e0ac-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue) && arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838', 'a89b7908-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838', 'a8a00158-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838', 'dd01765f-7e26-4704-a790-5eb049670571'], myValue)",
                       "message": "You indicated patient is not on TB treatment in question 13h, therefore the selected option is invalid."
                     },
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(13h_Tb_Treatment) && 13h_Tb_Treatment === 'a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue) && arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838'], myValue)",
+                      "failsWhenExpression": "!isEmpty(q13h_treatment) && q13h_treatment === 'a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(myValue) && arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838'], myValue)",
                       "message": "You indicated patient already on TB treatment in question 13h, therefore treatment plan cannot be none, start or restart"
                     }
                   ]
@@ -3615,6 +3732,7 @@
             {
               "concept": "749d07cb-4994-4ce9-a39c-8a655a487fdd",
               "label": "21m. Reason for start:",
+              "id": "q21m",
               "answers": [
                 {
                   "concept": "769822b2-1f1f-4cbb-8371-0e3949e060cc",
@@ -3638,11 +3756,10 @@
                 }
               ],
               "type": "select",
-              "validators": [
+              "validators": [],
+              "disableExpression": [
                 {
-                  "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(myValue) && !isEmpty(21l_Tb_Treatment) && arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838', 'a89b7908-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'], 21l_Tb_Treatment)",
-                  "message": "Cannot answer since you did not indicate that plan is to start TB treatment in question 21l."
+                  "disableWhenExpression": "!isEmpty(21l_Tb_Treatment) && arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838', 'a89b7908-1350-11df-a1f1-0026b9348838','a898c938-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'], 21l_Tb_Treatment)"
                 }
               ]
             },
@@ -3671,36 +3788,36 @@
                       "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
                       "label": "Other"
                     }
-
                   ],
                   "type": "select",
                   "validators": [
                     {
                       "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(myValue) && !isEmpty(21l_Tb_Treatment) && !arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'], 21l_Tb_Treatment)",
-                      "message": "Cannot answer since you did not indicate that plan is to stop/change or redose TB treatment in question 21l."
-                    },
-                    {
-                      "type": "js_expression",
                       "failsWhenExpression": "isEmpty(myValue) && !isEmpty(21l_Tb_Treatment) && arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'], 21l_Tb_Treatment)",
                       "message": "Based on the TB treatment plan marked, please indicate reason for stop/change/re-dose."
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "!isEmpty(21l_Tb_Treatment) && !arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838', 'a89b7d36-1350-11df-a1f1-0026b9348838'], 21l_Tb_Treatment)"
                     }
                   ]
                 },
                 {
                   "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
                   "label": "Toxicity cause",
+                  "id": "21n_toxicity",
                   "type": "select-concept-answers",
                   "validators": [
                     {
                       "type": "js_expression",
                       "failsWhenExpression": "isEmpty(myValue) && !isEmpty(21n_ReasonStop) && 21n_ReasonStop === 'a890d1ba-1350-11df-a1f1-0026b9348838'",
                       "message": "Reason for stop/change/re-dose is toxicity. Kindly indicate the toxicity cause."
-                    },
+                    }
+                  ],
+                  "disableExpression": [
                     {
-                      "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(myValue) && (isEmpty(21n_ReasonStop) || 21n_ReasonStop !== 'a890d1ba-1350-11df-a1f1-0026b9348838')",
-                      "message": "Reason for stop/change/re-dose is not toxicity, therefore no toxicity cause."
+                      "disableWhenExpression": "21n_ReasonStop !== 'a890d1ba-1350-11df-a1f1-0026b9348838'"
                     }
                   ]
                 },
@@ -3713,11 +3830,11 @@
                       "type": "js_expression",
                       "failsWhenExpression": "isEmpty(myValue) && !isEmpty(21n_ReasonStop) && 21n_ReasonStop === 'a8aaf3e2-1350-11df-a1f1-0026b9348838'",
                       "message": "Reason for stop/change/re-dose is Other. Please indicate other cause."
-                    },
+                    }
+                  ],
+                  "disableExpression": [
                     {
-                      "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(myValue) && (isEmpty(21n_ReasonStop) || 21n_ReasonStop !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838')",
-                      "message": "Cannot answer since reason for stop/change/re-dose is blank or not Other"
+                      "disableWhenExpression": "21n_ReasonStop !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
                     }
                   ]
                 }
