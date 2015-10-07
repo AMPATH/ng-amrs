@@ -7,7 +7,7 @@ jshint -W003, -W026
 
     angular
         .module('app.clinicDashboard')
-        .directive('appointmentSchedule', appointmentSchedule);
+        .directive('dailyVisits', appointmentSchedule);
 
     function appointmentSchedule() {
         return {
@@ -17,7 +17,7 @@ jshint -W003, -W026
             },
             controller: appointmentScheduleController,
             link: appointmentScheduleLink,
-            templateUrl: "views/clinic-dashboard/appointment-schedule.html"
+            templateUrl: "views/clinic-dashboard/daily-visits.html"
         };
     }
 
@@ -33,8 +33,7 @@ jshint -W003, -W026
         $scope.currentPage = 1;
         $scope.loadSchedule = loadSchedule;
         $scope.loadPatient = loadPatient;
-        $scope.viewDayVisits = viewDayVisits;
-        $scope.$on('viewDayAppointments',onViewDayAppointmentBroadcast);
+        $scope.$on('viewDayVisits',onViewDayVisitsBroadcast);
         $scope.utcDateToLocal = utcDateToLocal;
         $scope.startDate = new Date();
         $scope.selectedDate = function (value) {
@@ -54,7 +53,8 @@ jshint -W003, -W026
 
         //end scope members region
 
-        function onViewDayAppointmentBroadcast(event, arg) {
+        function onViewDayVisitsBroadcast(event, arg) {
+            $scope.$parent.switchTabByIndex(4);
             $scope.selectedDate(arg);
         }
 
@@ -89,11 +89,7 @@ jshint -W003, -W026
             $scope.experiencedLoadingError = false;
 
             if ($scope.locationUuid && $scope.locationUuid !== '')
-                EtlRestService.getAppointmentSchedule($scope.locationUuid, moment($scope.startDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), moment($scope.startDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), onFetchAppointmentsScheduleSuccess, onFetchAppointmentScheduleFailed);
-        }
-        
-        function viewDayVisits(day) {
-            $rootScope.$broadcast('viewDayVisits', day);
+                EtlRestService.getDailyVisits($scope.locationUuid, moment($scope.startDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), moment($scope.startDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), onFetchAppointmentsScheduleSuccess, onFetchAppointmentScheduleFailed);
         }
 
         function onFetchAppointmentsScheduleSuccess(appointmentSchedule) {
@@ -101,7 +97,7 @@ jshint -W003, -W026
             for (var e in appointmentSchedule.result) {
                 $scope.patients.push(new AppointmentScheduleModel.appointmentSchedule(appointmentSchedule.result[e]));
             }
-          console.log("Appointment patient---", $scope.patients);
+          console.log("Actual Visits patient---", $scope.patients);
           $scope.customPatients =[];
           _.each($scope.patients, function(patient)
           {
