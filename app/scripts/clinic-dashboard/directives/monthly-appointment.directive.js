@@ -33,8 +33,6 @@ jshint -W003, -W026
         vm.moment = moment;
         vm.loadSchedule = loadSchedule;
         vm.selectedMonth = new Date();
-        $scope.previousMonth= previousMonth;
-        $scope.nextMonth= nextMonth;
         vm.loadSchedule = loadSchedule;
         $scope.loadSchedule = loadSchedule;
         vm.viewDaysAppointments = viewDaysAppointments;
@@ -43,21 +41,15 @@ jshint -W003, -W026
             $rootScope.$broadcast('viewDayAppointments', day);
         }
 
-        function nextMonth () {
-          $scope.selectedMonth(vm.selectedMonth.addMonths(1));
-          var selectedDateField = document.getElementById('appointment-date');
-          var element = angular.element(selectedDateField);
-          element.val($filter('date')(vm.selectedMonth, 'mediumDate'));
-          element.triggerHandler('input');
-        }
-
-        function previousMonth () {
-          $scope.selectedMonth(vm.selectedMonth.addMonths(-1));
-          var selectedDateField = document.getElementById('appointment-date');
-          var element = angular.element(selectedDateField);
-          element.val($filter('date')(vm.selectedMonth, 'mediumDate'));
-          element.triggerHandler('input');
-        }
+        $scope.navigateMonth=function (value) {
+          if (value) {
+            $scope.selectedMonth(vm.selectedMonth.addMonths(value));
+            var selectedDateField = document.getElementById('appointment-date');
+            var element = angular.element(selectedDateField);
+            element.val($filter('date')(vm.selectedMonth, 'mediumDate'));
+            element.triggerHandler('input');
+          }
+        };
 
         function loadSchedule() {
             if ($scope.isBusy === true) return;
