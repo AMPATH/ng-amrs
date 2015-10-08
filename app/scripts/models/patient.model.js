@@ -253,8 +253,7 @@
           for(var i in _attributes) {
             var attr = _attributes[i];
             _convertedAttributes.push(
-              { uuid:attr.uuid,
-                attributeType:attr.attributeType.uuid,
+              {uuid:attr.attributeType.uuid,
                 name:attr.attributeType.display,
                 value:attr.value,
                 size:_attributes.length
