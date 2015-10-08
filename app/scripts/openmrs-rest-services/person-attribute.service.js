@@ -72,11 +72,9 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
         }            
     }
 
-    function getPersonAttributeByUuid(personAttribute, successCallback, errorCallback) {
-      var personAttributeResource = getPersonAttributeResource()
-      var patient=personAttribute.person;      
-      var patientUuid=patient.uuid();
-      return personAttributeResource.get({uuid:patientUuid, personattributeuuid: personAttribute.attribute.uuid }).$promise
+    function getPersonAttributeByUuid(params, successCallback, errorCallback) {
+      var personAttributeResource = getPersonAttributeResource()     
+      return personAttributeResource.get({uuid:params.patientUuid, personattributeuuid: params.attributeuuid }).$promise
         .then(function (data) {
         successCallback(data);
       })
@@ -118,6 +116,8 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
     }       
    
   function getPersonAttributeValue(attributes,key){
+    var inp=JSON.stringify(attributes);
+    console.log(inp);
         var attributeType=key.split('_')[1].replace(/n/gi,'-');    
         var val = _.filter(attributes, function(attribute_){           
           if(key !== undefined){

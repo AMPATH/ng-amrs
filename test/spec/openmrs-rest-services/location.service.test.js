@@ -72,6 +72,10 @@
     it('should have Location service defined', function () {
       expect(locationService).to.exist;
     });
+    
+    it('should have EtlSettings Service defined', function () {
+      expect(etlSettingsService).to.exist;
+    });
 
     it('should make an api call to the location resource when getLocationByUuid is called with a uuid', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid').respond({});
@@ -168,6 +172,13 @@
       expect(callbacks.message).to.exist;
       expect(callbacks.message.trim()).not.to.equal('');
     });
-
+    
+    it('should make an api call to the  is called with a uuid', function () {               
+            httpBackend.expectGET(etlSettingsService.getCurrentRestUrlBase()+'custom_data/location/uuid/passed-uuid').respond({t:1,e:3});
+            locationService.getLocationByUuidFromEtl('passed-uuid', function (data){            
+         });
+         httpBackend.flush();
+      });
+      
   });
 })();

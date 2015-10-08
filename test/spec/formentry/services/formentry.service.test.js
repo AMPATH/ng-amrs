@@ -208,8 +208,8 @@
         var form = {encounterType:'xx1234'};
         var payLoadData;
         var payLoad;
-        var patient;
-        var params={uuid:'encounteruuid',visituuid:'visituuid'}
+        var patient;     
+        
         beforeEach(function(){
           schema = mockData.getMockSchema();
           model = mockData.getMockModel();
@@ -221,15 +221,22 @@
              console.log('FORMLY SCHEMAS');
              console.log(formly_schema);//, params
              payLoadData = formentryService.updateFormPayLoad(model,formly_schema,patient,form);
-             payLoad=payLoadData.formPayLoad;
-           
+             payLoad=payLoadData.formPayLoad;             
           });
 
         });
-
+        it('Should have form payLoadData as an object', function(){
+          expect(payLoadData).to.exist;          
+          expect(payLoadData).to.be.an('object');
+          expect(payLoadData).to.have.property('formPayLoad');
+          expect(payLoadData).to.have.property('personAttributes');
+        });
         it('Should have form payLoad as an object', function(){
           expect(payLoad).to.exist;
-          expect(payLoad).to.be.an('object');
+          expect(payLoad).to.be.an('object');          
+        });        
+        it('person attributes array should be a list of person attributes', function(){
+            expect(payLoadData.personAttributes).to.be.an('array');            
         });
         it('Should return a payLoad that has obs', function(){
           expect(payLoad).to.have.property('obs');
