@@ -246,7 +246,8 @@
     }
 
     function toWrapper(openmrsModel){
-      var obj = new Location(openmrsModel.name, openmrsModel.uuid,
+      if(openmrsModel!==undefined){
+            var obj = new Location(openmrsModel.name, openmrsModel.uuid,
         openmrsModel.description, openmrsModel.address1, openmrsModel.address2,
         openmrsModel.cityVillage, openmrsModel.stateProvince,
         openmrsModel.country, openmrsModel.postalCode, openmrsModel.latitude,
@@ -258,6 +259,9 @@
       );
 
       return obj;
+        
+      }
+  
     }
 
     function toArrayOfWrappers(openmrsLocationArray) {
