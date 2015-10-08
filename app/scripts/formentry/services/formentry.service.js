@@ -8,11 +8,14 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         .module('app.formentry')
         .factory('FormentryService', FormentryService);
 
-    FormentryService.$inject = ['$http', 'SearchDataService', 'moment',
-    'FormValidator', 'CurrentLoadedFormService', '$filter'];
+
+
+    FormentryService.$inject = ['$http', 'SearchDataService', 'moment', 
+    'FormValidator', 'CurrentLoadedFormService','$filter','PersonAttributesRestService'];
 
     function FormentryService( $http, SearchDataService, moment, FormValidator,
-        CurrentLoadedFormService, $filter) {
+     CurrentLoadedFormService, $filter, PersonAttributesRestService) {
+
         var service = {
             createForm: createForm,
             validateForm:validateForm,
@@ -136,7 +139,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         }
         return service;
 
-        function getFormSchema(formName, callback) {
+        function getFormSchema(formName, callback) {          
           var schema = {};
           // this should de dropped once we align all forms related issues
           if (formName !== undefined)
@@ -232,7 +235,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         /*
         Method to auto/prefill the form with existing data from OpenMRS
         */
-        function getEncounterHandler(enc_data, formlySchema)
+        function getEncounterHandler(enc_data,personAttributes, formlySchema)
         {
           /*
           Each page/tab has various sections
@@ -295,12 +298,25 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       //console.log(model);
                     }
                   }
-                  else if(_field.type === 'select' || _field.type === 'radio' || _field.type === 'ui-select-extended'|| _field.type==='concept-search-select')
+                  else if(_field.type === 'select' || _field.type === 'radio' || _field.type === 'ui-select-extended'|| _field.type==='location-attribute'|| _field.type==='concept-search-select')
                   {
                     field_key = _field.key;
                     // var val = getObsValue(field_key, obs_data);
                     var val = getObsValueSelect( _field, obs_data);
                     // console.log('initial value',val)
+                                        
+                    if(_field.key.startsWith('personAttribute')){
+                      var personAttribute=[];
+                          personAttribute=PersonAttributesRestService.getPersonAttributeValue(personAttributes,field_key);
+                        if(personAttribute !== undefined && personAttribute !== null && personAttribute.length>0){
+                          var tv=personAttribute[0].value.uuid;
+                           sec_data[field_key] =personAttribute[0].value.uuid;
+                          _field.data['init_val'] =personAttribute[0].value.uuid
+                          _field.data['uuid'] = personAttribute[0].uuid
+                        }
+                        
+                    }
+                    
                     if (val !== undefined)
                     {
                       if(val.value !== null)
@@ -646,10 +662,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           });
         }
 
-        /*
-        function to update the form with existing data
-        */
-        function getEncounter(encData, formlySchema){
+
+
+        function getEncounter(encData, personAttributes, formlySchema){
+          //cbce861a-790c-4b91-80e6-3d75e671a4de
+          //console.log('Sample data from REST API')
+          //console.log(uuid);
+
           /*
           Expected Encounter object format
           {encounterDatetime: 'date',
@@ -661,7 +680,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           provider:{},
           uuid:'encounter-uuid'
           */
-          getEncounterHandler(encData, formlySchema);
+
+
+          getEncounterHandler(encData, personAttributes, formlySchema);
         }
 
         function validateForm()
@@ -709,11 +730,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               console.log('Add this: "validators":[{"type":"date"}]')
             }
           }
-          else if (sel_field.concept === undefined || sel_field.concept === '')
+          else if ((sel_field.concept === undefined || sel_field.concept === '')&&(sel_field.attributeType === undefined || sel_field.attributeType === ''))
           {
             pass = false;
             console.log('This field is missing the concept attribute', sel_field);
-            console.log('Add this: "concept:concept_uuid')
+            console.log('Add this: "concept:concept_uuid" or "attributeType:attribute_type_uuid"  ')
           }
           else if (sel_field.type === undefined || sel_field.type === '')
           {
@@ -1076,6 +1097,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           */
           var sections = getFormSections(formly_schema);
           var formPayLoad = {};
+          var personAttributes=[];
           var obs = [];
           var val;
           var init_data;
@@ -1135,6 +1157,18 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       {
                         //add property to the payload
                         formPayLoad.location = val[key];
+                      }
+                    }
+                  }
+                    else if (key.startsWith('personAttribute') && val[key] !== undefined) {
+                    //get previous value
+                    init_data = getInitialFieldValue(key, section);
+                    if (typeof init_data === 'object')
+                    {
+                      if (init_data.init_val !== val[key])
+                      {
+                        //add property to the payload                        
+                       personAttributes.push({uuid:init_data.uuid, value:val[key], attributeType:{uuid:convertKey_to_uuid(key.split('_')[1])}});
                       }
                     }
                   }
@@ -1333,10 +1367,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             }
           }
 
+
           if(params !== undefined && angular.isDefined(params.visitUuid)) {
               formPayLoad['visit'] = params.visitUuid;
           }
-          return formPayLoad;
+          return {personAttributes:personAttributes,formPayLoad:formPayLoad};
         }
 
         /*
@@ -1953,6 +1988,31 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
          },
         hideExpression:hideExpression_,
         validators: compiledValidators
+      };
+    }
+     else if(obs_field.type === 'location-attribute'){
+      var required='false';
+      if (obs_field.required !== undefined) required=obs_field.required;
+      obsField = {
+        key: 'personAttribute' + obs_id + '_' + createFieldKey(obs_field.attributeType),
+        type: 'ui-select-extended',
+        defaultValue: defaultValue_,
+        data: {attributeType:obs_field.attributeType,
+          id:id_},
+        templateOptions: {
+          type: 'text',
+          label: obs_field.label,
+          valueProp: 'uuId',
+          labelProp:'display',
+          deferredFilterFunction: SearchDataService.findLocation,
+          getSelectedObjectFunction: SearchDataService.getLocationByUuid,
+          options:[]
+        },
+        expressionProperties: {
+          'templateOptions.disabled': disableExpression_,
+          'templateOptions.required': required
+         },
+         validators: compiledValidators
       };
     }
     // console.log('Obs field', obsField);

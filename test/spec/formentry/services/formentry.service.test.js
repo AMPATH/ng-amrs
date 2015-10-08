@@ -6,6 +6,7 @@
           module('app.formentry');
           module('mock.data');
           module('models');
+          module('app.etlRestServices');
       });
 
       var searchDataService;
@@ -14,6 +15,7 @@
       var moment;
       var formentryService;
       var patientModel;
+     
 
       beforeEach(inject(function ($injector) {
         moment = $injector.get('moment');
@@ -22,6 +24,7 @@
         mockData = $injector.get('mockData');
         formentryService = $injector.get('FormentryService');
         patientModel = $injector.get('PatientModel');
+       
 
         /*
         Apperently underscore.string is not loading in thr headless browser during the tests
@@ -202,8 +205,10 @@
         var schema;
         var formly_schema;
         var form = {encounterType:'xx1234'};
+        var payLoadData;
         var payLoad;
-        var patient;
+        var patient;     
+        
         beforeEach(function(){
           schema = mockData.getMockSchema();
           model = mockData.getMockModel();
@@ -212,16 +217,25 @@
           //console.log(model);
           formentryService.createForm(schema, model, function(data){
             formly_schema = data;
-            // console.log('FORMLY SCHEMAS');
-            // console.log(formly_schema);
-            payLoad = formentryService.updateFormPayLoad(model,formly_schema,patient,form);
+             console.log('FORMLY SCHEMAS');
+             console.log(formly_schema);//, params
+             payLoadData = formentryService.updateFormPayLoad(model,formly_schema,patient,form);
+             payLoad=payLoadData.formPayLoad;             
           });
 
         });
-
+        it('Should have form payLoadData as an object', function(){
+          expect(payLoadData).to.exist;          
+          expect(payLoadData).to.be.an('object');
+          expect(payLoadData).to.have.property('formPayLoad');
+          expect(payLoadData).to.have.property('personAttributes');
+        });
         it('Should have form payLoad as an object', function(){
           expect(payLoad).to.exist;
-          expect(payLoad).to.be.an('object');
+          expect(payLoad).to.be.an('object');          
+        });        
+        it('person attributes array should be a list of person attributes', function(){
+            expect(payLoadData.personAttributes).to.be.an('array');            
         });
         it('Should return a payLoad that has obs', function(){
           expect(payLoad).to.have.property('obs');

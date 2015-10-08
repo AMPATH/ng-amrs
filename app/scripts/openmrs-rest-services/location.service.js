@@ -8,9 +8,9 @@ jshint -W003,-W109, -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W11
     .module('app.openmrsRestServices')
     .service('LocationResService', LocationResService);
 
-  LocationResService.$inject = ['OpenmrsSettings', '$resource'];
+  LocationResService.$inject = ['OpenmrsSettings','EtlRestServicesSettings', '$resource'];
 
-  function LocationResService(OpenmrsSettings, $resource) {
+  function LocationResService(OpenmrsSettings, EtlRestServicesSettings, $resource) {
     var serviceDefinition;
 
     var cachedLocations = [];
@@ -22,6 +22,7 @@ jshint -W003,-W109, -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W11
       getListResource: getListResource,
       getLocations: getLocations,
       getLocationByUuid: getLocationByUuid,
+      getLocationByUuidFromEtl:getLocationByUuidFromEtl,
       findLocation: findLocation,
       cachedLocations: cachedLocations
     };
@@ -34,6 +35,11 @@ jshint -W003,-W109, -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W11
 
     function getResource() {
       return $resource(OpenmrsSettings.getCurrentRestUrlBase().trim() + 'location/:uuid',
+        { uuid: '@uuid' },
+        { query: { method: "GET", isArray: false } });
+    }
+     function getResourceFromEtl() {
+      return $resource(EtlRestServicesSettings.getCurrentRestUrlBase().trim() + 'custom_data/location/uuid/:uuid',
         { uuid: '@uuid' },
         { query: { method: "GET", isArray: false } });
     }
@@ -62,6 +68,18 @@ jshint -W003,-W109, -W106, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W11
         });
     }
 
+   function getLocationByUuidFromEtl(uuid, successCallback, failedCallback) {
+      var resource = getResourceFromEtl();
+      return resource.get({ uuid: uuid }).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          alert(JSON.stringify(error))
+          console.error(error);
+        });
+    }
+    
     function findLocation(searchText, successCallback, failedCallback) {
       var resource = searchResource();
       return resource.get({ search: searchText }).$promise
