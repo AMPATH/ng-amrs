@@ -66,13 +66,8 @@
        var personAttributesListMock=mockData.getMockPersonAttributesArray();
        var personAttributeFieldKeyMock='personAttribute121_8d87236cnc2ccn11den8d13n0010c6dffd0f';   
        var attribute=personAttributesService.getPersonAttributeValue(personAttributesListMock,personAttributeFieldKeyMock)
-       expect(attribute[0].uuid).to.equal('f123244d-8f1d-4430-9191-98ce60f3723b');
-            
-        
-        
+       expect(attribute[0].uuid).to.equal('f123244d-8f1d-4430-9191-98ce60f3723b');                
       });  
-     
-      
-     
+         
     });
 })();

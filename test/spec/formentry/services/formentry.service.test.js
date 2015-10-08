@@ -49,7 +49,6 @@
       }));
 
       afterEach(function() {
-        console.log('Verification -------------------------------------------------------')
         httpBackend.verifyNoOutstandingExpectation();
         //httpBackend.verifyNoOutstandingRequest();
       });
