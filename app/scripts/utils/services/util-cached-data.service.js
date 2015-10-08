@@ -17,9 +17,9 @@
 
         function getCachedLocations(searchText, callback) {
           var results = _.filter($rootScope.cachedLocations, function(l){
-            // console.log('location ', l);
             return (_.contains(l.name.toLowerCase(), searchText.toLowerCase()) ||
-                    _.contains(l.description.toLowerCase(), searchText.toLowerCase()));
+                    (l.description && _.contains(l.description.toLowerCase(),
+                                                    searchText.toLowerCase())));
           });
 
           callback(results);
