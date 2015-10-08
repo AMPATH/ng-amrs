@@ -1,6 +1,6 @@
 {
   "name": "ngamrs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "dependencies": {
     "api-check": "^7.5.0",
     "karma-html2js-preprocessor": "^0.1.0"
