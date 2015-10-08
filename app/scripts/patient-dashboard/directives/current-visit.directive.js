@@ -82,7 +82,8 @@ jshint -W003, -W026
          }
          
          $scope.cancelVisit = function(visit) {
-             var promise = dialogs.confirm('Confirm', 'Are you sure?');
+             var promise = dialogs.confirm('Warning', 'Canceling a visit ' +
+                            'deletes all encounters associated with it');
              promise.result.then(function yes(){
                  //void the visit.
                  var payload = {

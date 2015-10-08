@@ -203,7 +203,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                   }
               }
               else {
-                  var dlg=dialogs.notify('Info', 'No Changes to be Submitted. Please fill the form first....');
+                  var dlg=dialogs.notify('Info', 'Can\'t submit, no obs entered. ' +
+                    ' To submit enter some obs');
               }
             }
             else {
