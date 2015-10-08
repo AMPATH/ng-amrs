@@ -1515,7 +1515,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 key: 'sex',
                 type: 'select',
                 defaultValue: '',
-                data: {},
+                data: {id:'sex'},
                 templateOptions: {
                   label: 'sex',
                   type: 'text',
@@ -1525,6 +1525,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 hideExpression:'model.hide !== ""'
               }
               pageFields.push(field);
+              addFieldToValidationMetadata(field, '', [], '');
             }
             _.each(page.sections, function(section){
               sectionFields = [];
@@ -1752,6 +1753,11 @@ function addFieldToValidationMetadata(field, section, page, typeOfField){
     if(obs_field.disableExpression !== undefined){
        disableExpression_= FormValidator.getHideDisableExpressionFunction_JS(obs_field.disableExpression[0]);
     }
+    
+    if(obs_field.hideExpression !== undefined){
+       hideExpression_= FormValidator.getHideDisableExpressionFunction_JS(obs_field.hideExpression[0]);
+    }
+    
     var obsField = {};
     if (validateFieldFormat(obs_field) !== true)
     {

@@ -307,11 +307,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 var val = getFieldValueToValidate($viewValue, $modelValue, scope);
 
                 if (scope.options && scope.options.data && scope.options.data.id) {
-                    var fields = service.extractQuestionIds(params.disableWhenExpression, CurrentLoadedFormService.formValidationMetadata);
+                    var fields = service.extractQuestionIds(params.disableWhenExpression || params.hideWhenExpression, CurrentLoadedFormService.formValidationMetadata);
                     addToListenersMetadata(scope.options.data.id, fields);
                 }
 
-                var referencedQuestions = service.extractQuestionIds(params.disableWhenExpression, CurrentLoadedFormService.formValidationMetadata);
+                var referencedQuestions = service.extractQuestionIds(params.disableWhenExpression || params.hideWhenExpression, CurrentLoadedFormService.formValidationMetadata);
 
                 var keyValue = {};
 
@@ -323,7 +323,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     }
                 });
 
-                var expressionToEvaluate = service.replaceQuestionsPlaceholdersWithValue(params.disableWhenExpression, keyValue);
+                var expressionToEvaluate = service.replaceQuestionsPlaceholdersWithValue(params.disableWhenExpression || params.hideWhenExpression, keyValue);
 
                 expressionToEvaluate = service.replaceMyValuePlaceholdersWithActualValue(expressionToEvaluate, val);
                 console.log('Evaluates val', val);
@@ -332,7 +332,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                 var isDisabled = service.evaluateExpression(expressionToEvaluate);
 
-                console.log('isDisabled', isDisabled);
+                console.log('isDisabled/isHidden', isDisabled);
 
                 if (isDisabled === true) {
                     if (element) {

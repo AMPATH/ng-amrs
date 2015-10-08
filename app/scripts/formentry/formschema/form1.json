@@ -304,12 +304,9 @@
                   "type": "date"
                 }
               ],
-              "hide": [
+              "hideExpression": [
                 {
-                  "field": "gender",
-                  "value": [
-                    "F"
-                  ]
+                  "hideWhenExpression": "sex !== 'F'"
                 }
               ]
             },
@@ -328,12 +325,9 @@
               ],
               "type": "select",
               "validators": [],
-              "hide": [
+              "hideExpression": [
                 {
-                  "field": "gender",
-                  "value": [
-                    "F"
-                  ]
+                  "hideWhenExpression": "sex !== 'F'"
                 }
               ]
             },
@@ -352,12 +346,9 @@
               ],
               "type": "select",
               "validators": [],
-              "hide": [
+              "hideExpression": [
                 {
-                  "field": "gender",
-                  "value": [
-                    "F"
-                  ]
+                  "hideWhenExpression": "sex !== 'F'"
                 }
               ]
             },
