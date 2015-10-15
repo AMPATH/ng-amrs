@@ -23,7 +23,7 @@ module.exports = function (grunt) {
 
   // Define the configuration for all the tasks
   grunt.initConfig({
-
+    bower: grunt.file.readJSON('bower.json'),
     // Project settings
     yeoman: appConfig,
 
@@ -242,20 +242,6 @@ module.exports = function (grunt) {
         ]
       }
     },
-
-    // The following *-min tasks will produce minified files in the dist folder
-    // By default, your `index.html`'s <!-- Usemin block --> will take care of
-    // minification. These next options are pre-configured if you do not wish
-    // to use the Usemin blocks.
-    // cssmin: {
-    //   dist: {
-    //     files: {
-    //       '<%= yeoman.dist %>/styles/main.css': [
-    //         '.tmp/styles/{,*/}*.css'
-    //       ]
-    //     }
-    //   }
-    // },
     
     uglify: {
       // Uses preparations done by useminPrepare
@@ -263,10 +249,6 @@ module.exports = function (grunt) {
         mangle: false
       }
     },
-    
-    // concat: {
-    //   dist: {}
-    // },
 
     imagemin: {
       dist: {
@@ -333,6 +315,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
+            'version.json',
             'views/{,*/}*.html',
             'images/{,*/}*.{webp}',
             'styles/fonts/{,*/}*.*',
@@ -372,7 +355,29 @@ module.exports = function (grunt) {
         src: '{,*/}*.css'
       }
     },
-
+    
+    revision: {
+        options: {
+          property: 'meta.revision',
+          ref: 'HEAD',
+          short: true
+        }
+    },
+    
+    'file-creator': {
+        'tag-revision': {
+          'app/version.json': function(fs, fd, done) {
+            grunt.task.requires('revision');
+            fs.writeSync(fd, JSON.stringify({
+                version: grunt.config('bower.version'),
+                revision: grunt.config('meta.revision'),
+                date: grunt.template.today()
+            }));
+            done();
+          }
+        }
+    },
+    
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
@@ -405,6 +410,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'version',
       'wiredep',
       'concurrent:server',
       'autoprefixer:server',
@@ -421,9 +427,14 @@ module.exports = function (grunt) {
     'connect:test',
     'karma'
   ]);
-
+  
+  grunt.registerTask('version', 'Update the build number', function() {
+     grunt.task.run(['revision', 'file-creator']);
+  });
+  
   grunt.registerTask('build', [
     'clean:dist',
+    'version',
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
