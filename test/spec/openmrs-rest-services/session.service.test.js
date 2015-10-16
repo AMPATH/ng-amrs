@@ -60,7 +60,7 @@
       it('should make an api delete session call to the session resource when logout is called', function() {
         httpBackend.expect('DELETE', settingsService.getCurrentRestUrlBase()  + 'session').respond(mockAuthenticatedSession);
         sessionService.currentSession = null;
-        sessionService.logout(function() {});
+        sessionService.deleteSession(function() {});
 
         httpBackend.flush();
 
