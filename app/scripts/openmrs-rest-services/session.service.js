@@ -15,7 +15,7 @@
           getResource:getResource,
           getSession:getSession,
           currentSession:currentSession,
-          logout:logout
+          deleteSession:deleteSession
         };
         return serviceDefinition;
 
@@ -37,7 +37,7 @@
           });
         }
 
-        function logout(callback) {
+        function deleteSession(callback) {
           var resource = getResource();
           return resource.delete({}).$promise
           .then(function(response) {

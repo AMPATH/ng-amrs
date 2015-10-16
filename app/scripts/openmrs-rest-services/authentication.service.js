@@ -58,6 +58,7 @@
     }
 
     function logOut(){
+      session.deleteSession(function() {});
       clearCredentials();
       service.authenticated = false;
       $rootScope.$broadcast('onUserLoggedOut');
