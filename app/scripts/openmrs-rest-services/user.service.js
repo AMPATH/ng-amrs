@@ -20,7 +20,7 @@ jshint -W003, -W026, -W098
 
     function getResource() {
      var v = 'custom:(uuid,username,systemId,roles:(uuid,name,privileges),person:(uuid,preferredName))'; // avoid spaces in this string
-     var r = $resource(settings.getCurrentRestUrlBase() + 'user/:uuid',
+     var r = $resource(settings.getCurrentRestUrlBase().trim() + 'user/:uuid',
        {uuid: '@uuid', v: v},
        {query: {method: 'GET', isArray: false}}
      );
