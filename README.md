@@ -6,6 +6,11 @@ This project is generated with [yo angular generator](https://github.com/yeoman/
 version 0.11.1.
 
 ## Build & development
+1. Clone this respository.
+2. npm install
+3. node install
+
+All authentication is done through OpenMRS. To avoid cors issues, it's easiest to build the app and copy to your tomcat6 webapps directory. Otherwise, use a cors browser plugin to turn off cors when making requests.
 
 Run `grunt` for building and `grunt serve` for preview.
 
