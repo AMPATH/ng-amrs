@@ -22,11 +22,12 @@
 
 		beforeEach(inject(function ($injector, $rootScope, $compile, $httpBackend) {
 			elm = angular.element(
-				'<appointment-schedule location-uuid="{{location.uuid}}" selected="selected">' +
-				'</appointment-schedule>');
+				'<daily-visits location-uuid="{{location.uuid}}" selected="selected">' +
+				'</daily-visits>');
 			scope = $rootScope.$new();
 			scope.location = { uuid: 'uuid' };
 			element = $compile(elm)(scope);
+			scope.$parent.switchTabByIndex = function(){}
 			scope.$digest();
 			etlRestServiceMock = $injector.get('EtlRestService');
 		}));
@@ -38,14 +39,18 @@
 			expect(etlRestServiceMock.isMockService).to.equal(true);
 		});
 		
-		it('should call getAppointmentSchedule etl service method when loadSchedule is invoked', function () {
+		it('should call  getDailyVisits and getAppointmentSchedule etl service methods when loadSchedule is invoked', function () {
 			var isolateScope = scope.$$childHead;
+
+			var getDailyVisitsSpy = sinon.spy(etlRestServiceMock, 'getDailyVisits');
+
 			var getAppointmentsSpy = sinon.spy(etlRestServiceMock, 'getAppointmentSchedule');
-			
+
 			console.log("number of calls:" + getAppointmentsSpy.callCount)
 			isolateScope.loadSchedule();
 			
 			chai.expect(getAppointmentsSpy.callCount).to.equal(1);
+			chai.expect(getDailyVisitsSpy.callCount).to.equal(1);
 			
 		});
 		
