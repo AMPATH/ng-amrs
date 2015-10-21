@@ -315,14 +315,14 @@
 
       currentLoadedFormService.formModel = currentModel;
       
-      //mock getFieldById_KeyFunction
-      var getFieldById_KeyFunctionMock = function (qId) {
+      //mock getFieldByIdKeyFunction
+      var getFieldByIdKeyFunctionMock = function (qId) {
         return {
           key: 'key1'
         };
       };
 
-      var isRequiredExpressionFunction = service.getConditionalRequiredExpressionFunction(params, getFieldById_KeyFunctionMock);
+      var isRequiredExpressionFunction = service.getConditionalRequiredExpressionFunction(params, getFieldByIdKeyFunctionMock);
 
       var fieldScope = {
         model: currentModel
@@ -338,7 +338,7 @@
         key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
       };
       currentLoadedFormService.formModel = currentModel;
-      isRequiredExpressionFunction = service.getConditionalRequiredExpressionFunction(params, getFieldById_KeyFunctionMock);
+      isRequiredExpressionFunction = service.getConditionalRequiredExpressionFunction(params, getFieldByIdKeyFunctionMock);
       fieldScope = {
         model: currentModel
       };
@@ -375,14 +375,14 @@
 
       currentLoadedFormService.formModel = currentModel;
       
-      //mock getFieldById_KeyFunction
-      var getFieldById_KeyFunctionMock = function (qId) {
+      //mock getFieldByIdKeyFunction
+      var getFieldByIdKeyFunctionMock = function (qId) {
         return {
           key: 'key1'
         };
       };
 
-      var validator = service.getConditionalAnsweredValidatorObject(params, getFieldById_KeyFunctionMock);
+      var validator = service.getConditionalAnsweredValidatorObject(params, getFieldByIdKeyFunctionMock);
 
       var fieldScope = {
         model: currentModel
@@ -398,7 +398,7 @@
         key2: 'a899b35c-1350-11df-a1f1-0026b9348838'
       };
       currentLoadedFormService.formModel = currentModel;
-      validator = service.getConditionalAnsweredValidatorObject(params, getFieldById_KeyFunctionMock);
+      validator = service.getConditionalAnsweredValidatorObject(params, getFieldByIdKeyFunctionMock);
       fieldScope = {
         model: currentModel
       };

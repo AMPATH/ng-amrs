@@ -1,6 +1,9 @@
 /*
  jshint -W003, -W098, -W117, -W109
  */
+ /*
+ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma
+ */
 (function() {
   'use strict';
 
@@ -8,10 +11,12 @@
     .module('app.patientsearch')
     .controller('PatientSearchCtrl', PatientSearchCtrl);
 
-  PatientSearchCtrl.$inject = ['$rootScope', 'OpenmrsRestService', '$scope', '$log', 'filterFilter', '$state'];
+  PatientSearchCtrl.$inject = ['$rootScope', 'OpenmrsRestService', '$scope',
+  '$log', 'filterFilter', '$state'];
 
-  function PatientSearchCtrl($rootScope, OpenmrsRestService, $scope, $log, filterFilter, $state) {
-    $scope.filter = "";
+  function PatientSearchCtrl($rootScope, OpenmrsRestService, $scope, $log,
+    filterFilter, $state) {
+    $scope.filter = '';
     $scope.patients = [];
     $scope.isBusy = false;
     // pagination controls
@@ -19,7 +24,7 @@
     $scope.entryLimit = 10; // items per page
     $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
 
-    $scope.$watch('searchString', function (searchString) {
+    $scope.$watch('searchString', function(searchString) {
       $scope.patients = [];
       if (searchString && searchString.length > 2) {
         $scope.isBusy = true;
@@ -35,15 +40,16 @@
       }
     });
 
-    $scope.loadPatient = function (patientUuid){
+    $scope.loadPatient = function(patientUuid) {
       /*
        Get the selected patient and save the details in the root scope
        so that we don't do another round trip to get the patient details
        */
-      $rootScope.broadcastPatient = _.find($scope.patients, function(patient){
-        if(patient.uuid() === patientUuid)
+      $rootScope.broadcastPatient = _.find($scope.patients, function(patient) {
+        if (patient.uuid() === patientUuid)
         {return patient;}
       });
+
       $state.go('patient', {uuid:patientUuid});
     };
 
@@ -54,7 +60,7 @@
     $scope.items = [];
     // create empty search model (object) to trigger $watch on update
     $scope.search = {};
-    $scope.resetFilters = function () {
+    $scope.resetFilters = function() {
       // needs to be a function or it won't trigger a $watch
       $scope.search = {};
     };

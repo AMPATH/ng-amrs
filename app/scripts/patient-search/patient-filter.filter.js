@@ -13,7 +13,7 @@ jshint -W026, -W003
 
       function startFromFilter(input, start) {
         if (input) {
-          start = + start;
+          start = +start;
           return input.slice(start);
         }
 
