@@ -163,8 +163,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
           /*
           submit only if we have some obs
           */
+          
           if (payLoad.encounterType !== undefined) {
             isBusy(true);
+            payLoad.form=form.uuid;
             OpenmrsRestService.getEncounterResService().saveEncounter(JSON.stringify(payLoad),
               function (data) {
                 isBusy(false);

@@ -6,8 +6,10 @@
       beforeEach(function() {
           //debugger;
         module('ngAmrsApp');
+        module('app.formentry');
         module('app.openmrsRestServices');
         module('mock.sessionService');
+       
       });
 
       var callbacks;

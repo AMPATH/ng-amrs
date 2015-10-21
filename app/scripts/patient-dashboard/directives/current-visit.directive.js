@@ -36,29 +36,14 @@ jshint -W003, -W026
         $scope.currentVisit = initializeCurrentVisit();
         $scope.busy = true;
         $scope.visitTypesLoaded = false;
-        $scope.formsFilledStatus = [{
-                name: 'AMPATH Triage Encounter Form 1.0',
-                shortName: 'triage',
-                encounterType:'a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7',
-                filled: false
-            }, {
-                name: 'AMPATH Adult Return Encounter Form',
-                shortName: 'form1',
-                encounterType: '8d5b2be0-c2cc-11de-8d13-0010c6dffd0f',
-                filled: false
-            }, {
-                name: 'AMPATH Pediatric Return Encounter Form',
-                shortName: 'form2',
-                encounterType: '8d5b3108-c2cc-11de-8d13-0010c6dffd0f',
-                filled: false
-            }, {
-                name: 'AMPATH PMTCT Postnatal Care Encounter Form',
-                shortName: 'form3',
-                encounterType: 'b1e9ed0f-5222-4d47-98f7-5678b8a21ebd',
-                filled: false
-            }
-        ];
+        $scope.formsFilledStatus = [];
         
+        _.each($rootScope.cachedPocForms, function(form)
+          {
+              form.filled=false;
+              $scope.formsFilledStatus.push(form)
+          });
+          
         $scope.startNewVisit = function() {
              $scope.currentVisit.startDatetime = new Date();
              //Create visit

@@ -14,7 +14,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
   function CachedDataService($rootScope) {
       var service = {
         getCachedLocations: getCachedLocations,
-        getCachedLocationByUuid:getCachedLocationByUuid
+        getCachedLocationByUuid:getCachedLocationByUuid,
+        getCachedPocForms:getCachedPocForms,
+        getCachedPatient:getCachedPatient
       };
 
       return service;
@@ -44,5 +46,14 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
 
         callback(results);
       }
+      
+      function getCachedPocForms(){       
+        return $rootScope.cachedPocForms;
+      }
+      
+      function getCachedPatient(){       
+        return $rootScope.broadcastPatient;
+      }
+      
     }
 })();

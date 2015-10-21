@@ -71,7 +71,7 @@
             <div class="panel-body px-nested-panel-body">
                 <span data-ng-repeat="status in formsFilledStatus">
                     <p data-ng-hide="status.filled" class="form-list-item">
-                        <a href="#/form/{{status.shortName}}/patient/{{patientUuid}}/visit/{{currentVisit.uuid}}"> <span class="glyphicon glyphicon-plus-sign" /> {{status.name}}</a>
+                        <a href="#/form/{{status.name}}/patient/{{patientUuid}}/visit/{{currentVisit.uuid}}"> <span class="glyphicon glyphicon-plus-sign" /> {{status.name}}</a>
                     </p>
                 </span>
             </div>

@@ -19,7 +19,8 @@
             getMockPatient: getMockPatient,
             getMockObsField:getMockObsField,
             getMockLocations: getMockLocations,
-            getMockEtlLocations: getMockEtlLocations
+            getMockEtlLocations: getMockEtlLocations,
+            getMockedFormList:getMockedFormList
           };
 
     return mock;
@@ -68,7 +69,37 @@
           uuid: 'passed-uuid'}]
         };
       }
-
+    
+    function getMockedFormList(uuid){
+      return {
+              results: [
+                {
+                  uuid: "passed-uuid",
+                  name: "AMPATH POC Adult Return Visit Form v0.01",
+                  version: "0.01",
+                  encounterType: {
+                    uuid: "0010c6dffd0f",
+                    display: "ADULTRETURN",
+                    name: "ADULTRETURN",
+                    description: "Outpatient Adult Return Visit",
+                  }
+                },
+                {
+                  uuid: "f42f7c5f2ab",
+                  name: "AMPATH POC Pead Return Visit Form v0.01",
+                  version: "0.01",
+                  encounterType: {
+                    uuid: "8d5b2be0-c2cc-11de-8d13-0010c6dffd0f",
+                    display: "ADULTRETURN",
+                    name: "ADULTRETURN",
+                    description: "Outpatient Adult Return Visit"
+                  }
+                }
+              ]
+        };
+      
+    }
+    
     function getMockLocations() {
       var testLocations = [
         {

@@ -5,6 +5,7 @@
       beforeEach(function(){
           module('app.utils');
           module('mock.util-service');
+           module('app.openmrsRestServices');
       });
 
       var cachedDataService;

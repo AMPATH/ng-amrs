@@ -14,11 +14,11 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
 
   SearchDataService.$inject = ['ProviderResService', 'CachedDataService',
     'LocationModel', 'ProviderModel','ConceptResService', 'ConceptModel',
-    'DrugResService','DrugModel', '$rootScope'];
+    'DrugResService','DrugModel', '$rootScope', 'FormRestService'];
 
   function SearchDataService(ProviderResService, CachedDataService,
     LocationModelFactory, ProviderModelFactory, ConceptResService,
-    ConceptModelFactory, DrugResService, DrugModelFactory,$rootScope) {
+    ConceptModelFactory, DrugResService, DrugModelFactory,$rootScope, FormRestService) {
 
     var problemConceptClassesArray = ['Diagnosis','Symptom',
         'Symptom/Finding','Finding'];
@@ -34,7 +34,8 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
       getDrugConceptByUuid:getDrugConceptByUuid,
       findDrugs:findDrugs,
       findDrugByUuid:findDrugByUuid,
-      getConceptAnswers:getConceptAnswers
+      getConceptAnswers:getConceptAnswers,
+      findPocForms:findPocForms
     };
 
     return service;
@@ -163,6 +164,34 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
         function(error) {
           onError(onError);
         });
+    }
+
+    function findPocForms(searchText, onSuccess, onError) {
+        FormRestService.findPocForms(searchText,
+          function(forms) {
+            var wrapped = wrapForms(forms);
+            onSuccess(wrapped);
+          },
+          
+          function(error) {
+            onError(onError);
+          });
+      }
+    
+     function wrapForms(forms) {
+      var wrappedObjects = [];
+      for (var i = 0; i < forms.length; i++) {
+        var form = {
+          'uuid':forms[i].uuid,
+          'name': forms[i].name,
+          'encounterType': forms[i].encounterType.uuid,
+          'encounterTypeName': forms[i].encounterType.display,
+          'version': forms[i].version
+        };
+        wrappedObjects.push(form);
+      }
+      
+      return wrappedObjects;
     }
 
     function wrapDrug(drug) {

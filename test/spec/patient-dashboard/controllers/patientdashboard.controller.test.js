@@ -13,6 +13,7 @@ jshint -W098, -W117, -W030
 
     beforeEach(function() {
       module('app.patientdashboard');
+      module('app.formentry');
     });
 
     beforeEach(module('ui.router')); //to enable using stateparams

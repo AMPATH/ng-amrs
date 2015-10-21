@@ -6,9 +6,9 @@
         .module('app.openmrsRestServices')
         .factory('AuthService', AuthService);
 
-  AuthService.$inject = ['$base64', '$http', 'SessionResService', '$state', 'SessionModel', '$rootScope', 'LocationResService'];
+  AuthService.$inject = ['$base64', '$http', 'SessionResService', '$state', 'SessionModel', '$rootScope', 'LocationResService','SearchDataService'];
 
-  function AuthService(base64, $http, session, $state, SessionModel, $rootScope, LocationResService) {
+  function AuthService(base64, $http, session, $state, SessionModel, $rootScope, LocationResService,SearchDataService) {
     var service = {
       isAuthenticated: isAuthenticated,
       setCredentials: setCredentials,
@@ -37,6 +37,15 @@
           function(failedError){
             console.log(failedError);
           });
+          
+          //cache forms
+          var findFormsContaining='POC';
+           SearchDataService.findPocForms(findFormsContaining,function(results){
+           $rootScope.cachedPocForms = results;
+           }, function(error){
+            console.log(error);            
+          });
+                  
           //console.log('Resolved View');
           //console.log($state.go('home'));
         }
