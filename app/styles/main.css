@@ -51,6 +51,25 @@ html, body {
   border-top: 1px solid #e5e5e5;
 }
 
+#form-panel {
+   font-size: 18px;
+   line-height: 1.5;
+}
+
+#form-panel .checkbox-inline, #form-panel .checkbox{
+  line-height: 1.1;
+  font-size: 20px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.form-list-item {
+  font-size: large;
+  margin-top: 15px;
+}
+
+ 
+
 .container-narrow > hr {
   margin: 30px 0;
 }

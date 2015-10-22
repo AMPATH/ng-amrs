@@ -1,4 +1,4 @@
-<div class="panel panel-info" style="padding:4px;" dw-loading="formEntryLoader"  dw-loading-options="{text: 'Processing request..'}">
+<div class="panel panel-info" style="padding:4px;"  dw-loading="formEntryLoader"  dw-loading-options="{text: 'Processing request..'}">
   <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
   <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">
@@ -20,7 +20,7 @@
     <div style="color:red;" ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">{{vm.errorMessage}}</div>
     <div style="color:red;" >{{vm.errorSubmit}}</div>
     <form name="vm.form" novalidate>
-    <tabset>
+    <tabset id="form-panel">
       <tab ng-repeat="tab in vm.tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled" select="vm.tabSelected($index)">
         <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
       </tab>
