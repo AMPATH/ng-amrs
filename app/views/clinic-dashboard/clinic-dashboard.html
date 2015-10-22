@@ -29,9 +29,10 @@
 	<li ng-class="{active: activeTabId === 4}" style="cursor: pointer;" data-ng-click="switchTabByIndex(4)" >
 		<a data-target="#tab4" data-toggle="tab"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;Daily Visits</a>
 	</li>
-	<li ng-class="{active: activeTabId === 1}" style="cursor: pointer;" data-ng-click="switchTabByIndex(1)" >
+	<!-- Remove -->
+<!-- 	<li ng-class="{active: activeTabId === 1}" style="cursor: pointer;" data-ng-click="switchTabByIndex(1)" >
 		<a data-target="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;Daily Appointment</a>
-	</li>
+	</li> -->
 	<li ng-class="{active: activeTabId === 2}" style="cursor: pointer;" data-ng-click="switchTabByIndex(2)" >
 		<a data-target="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;Monthly Appointment</a>
 	</li>
@@ -40,12 +41,15 @@
 	</li>
 </ul>
 <div class="tab-content panel panel-default" style="margin-top:2px; margin-bottom: 8px; padding:2px;" ng-hide="selectedLocation.selected === undefined">
-	<div class="tab-pane " id="tab1" ng-class="{active: activeTabId === 1}">
+		<!-- Remove -->
+	<!-- <div class="tab-pane " id="tab1" ng-class="{active: activeTabId === 1}">
 		<appointment-schedule location-uuid="{{selectedLocation.selected.uuId()}}"  />
-	</div>
+	</div> -->
+
 	<div class="tab-pane " id="tab4" ng-class="{active: activeTabId === 4}">
 		<daily-visits location-uuid="{{selectedLocation.selected.uuId()}}" selected="selected"></daily-visits>
 	</div>
+
 	<div class="tab-pane " id="tab2" ng-class="{active: activeTabId === 2}">
 		<monthly-appointment location-uuid="{{selectedLocation.selected.uuId()}}" selected="selected"></monthly-appointment>
 	</div>
