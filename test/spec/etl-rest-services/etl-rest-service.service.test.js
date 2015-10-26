@@ -703,5 +703,164 @@
         expect(callbacks.message).to.exist;
         expect(callbacks.message.trim()).not.to.equal('');
       });
+    
+   //getPatientsCreatedByPeriod method unit tests
+    it('should make an api call to the patient creation statistics etl rest ' +
+        'endpoint when getPatientsCreatedByPeriod is called with a ' +
+        'start and a end date', function () {
+            
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+        'patient/creation/statistics?' +
+        'endDate=2015-08-05T21:00:00.000Z&startDate=2014-08-05T21:00:00.000Z').respond({});
+        
+      etlRestService.getPatientsCreatedByPeriod(
+        '2014-08-05T21:00:00.000Z','2015-08-05T21:00:00.000Z',function () { }, function () { });
+      httpBackend.flush();
+    });
+    
+    it('should make an api call to the patient creation statistics etl ' +
+        'rest endpoint when getPatientsCreatedByPeriod is called with ' +
+        'a start date,end date and paging parameters', function () {
+      
+      //case startIndex and limit are defined
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+        'patient/creation/statistics?' +
+        'endDate=2015-08-05T21:00:00.000Z&limit=10&startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
+        
+      etlRestService.getPatientsCreatedByPeriod(
+        '2014-08-05T21:00:00.000Z','2015-08-05T21:00:00.000Z', function () { }, function () { }, 0, 10);
+      httpBackend.flush();
+      
+      //case startIndex defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+        'patient/creation/statistics?' +
+        'endDate=2015-08-05T21:00:00.000Z&startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
+        
+      etlRestService.getPatientsCreatedByPeriod(
+        '2014-08-05T21:00:00.000Z','2015-08-05T21:00:00.000Z', function () { }, function () { },
+        0, undefined);
+      httpBackend.flush();
+      
+      //case limit defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+        'patient/creation/statistics?' +
+        'endDate=2015-08-05T21:00:00.000Z&limit=10&startDate=2014-08-05T21:00:00.000Z').respond({});
+        
+      etlRestService.getPatientsCreatedByPeriod(
+        '2014-08-05T21:00:00.000Z','2015-08-05T21:00:00.000Z', function () { }, function () { },
+        undefined, 10);
+      httpBackend.flush();
+    });
+
+     it('should call the onSuccess callback getPatientsCreatedByPeriod ' +
+        'request successfully returns', function () {
+            
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+        'patient/creation/statistics?' +
+        'endDate=2015-08-05T21:00:00.000Z&startDate=2014-08-05T21:00:00.000Z').respond({});
+      
+      etlRestService.getPatientsCreatedByPeriod(
+        '2014-08-05T21:00:00.000Z','2015-08-05T21:00:00.000Z', callbacks.onSuccess, callbacks.onFailure);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(true);
+      expect(callbacks.onFailedCalled).to.equal(false);
+    });
+
+    it('should call the onFailed callback when getPatientsCreatedByPeriod ' +
+        'request is not successfull', function () {
+            
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+        'patient/creation/statistics?' +
+        'endDate=2015-08-05T21:00:00.000Z&startDate=2014-08-05T21:00:00.000Z').respond(500);
+        
+      etlRestService.getPatientsCreatedByPeriod(
+        '2014-08-05T21:00:00.000Z','2015-08-05T21:00:00.000Z', callbacks.onSuccess, callbacks.onFailure);
+        
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(false);
+      expect(callbacks.onFailedCalled).to.equal(true);
+      expect(callbacks.message).to.exist;
+      expect(callbacks.message.trim()).not.to.equal('');
+    });    
+    
+    //getDetailsOfPatientsCreatedInLocation method unit tests
+    it('should make an api call to the Details Of Patients Created In Location etl rest ' +
+        'endpoint when getDetailsOfPatientsCreatedInLocation is called with a ' +
+        'start and a end date', function () {
+            
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+        'location/passed-uuid/patient/creation/statistics?' +
+        'endDate=2015-08-05T21:00:00.000Z&startDate=2014-08-05T21:00:00.000Z').respond({});
+        
+      etlRestService.getDetailsOfPatientsCreatedInLocation('passed-uuid',
+        '2014-08-05T21:00:00.000Z','2015-08-05T21:00:00.000Z',function () { }, function () { });
+      httpBackend.flush();
+    });
+    
+    it('should make an api call to the Details Of Patients Created In Location etl ' +
+        'rest endpoint when getDetailsOfPatientsCreatedInLocation is called with ' +
+        'a start date,end date and paging parameters', function () {
+      
+      //case startIndex and limit are defined
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+        'location/passed-uuid/patient/creation/statistics?' +
+        'endDate=2015-08-05T21:00:00.000Z&limit=10&startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
+        
+      etlRestService.getDetailsOfPatientsCreatedInLocation('passed-uuid',
+        '2014-08-05T21:00:00.000Z','2015-08-05T21:00:00.000Z', function () { }, function () { }, 0, 10);
+      httpBackend.flush();
+      
+      //case startIndex defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+        'location/passed-uuid/patient/creation/statistics?' +
+        'endDate=2015-08-05T21:00:00.000Z&startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
+        
+      etlRestService.getDetailsOfPatientsCreatedInLocation('passed-uuid',
+        '2014-08-05T21:00:00.000Z','2015-08-05T21:00:00.000Z', function () { }, function () { },
+        0, undefined);
+      httpBackend.flush();
+      
+      //case limit defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+        'location/passed-uuid/patient/creation/statistics?' +
+        'endDate=2015-08-05T21:00:00.000Z&limit=10&startDate=2014-08-05T21:00:00.000Z').respond({});
+        
+      etlRestService.getDetailsOfPatientsCreatedInLocation('passed-uuid',
+        '2014-08-05T21:00:00.000Z','2015-08-05T21:00:00.000Z', function () { }, function () { },
+        undefined, 10);
+      httpBackend.flush();
+    });
+
+     it('should call the onSuccess callback getDetailsOfPatientsCreatedInLocation ' +
+        'request successfully returns', function () {
+            
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+        'location/passed-uuid/patient/creation/statistics?' +
+        'endDate=2015-08-05T21:00:00.000Z&startDate=2014-08-05T21:00:00.000Z').respond({});
+      
+      etlRestService.getDetailsOfPatientsCreatedInLocation('passed-uuid',
+        '2014-08-05T21:00:00.000Z','2015-08-05T21:00:00.000Z', callbacks.onSuccess, callbacks.onFailure);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(true);
+      expect(callbacks.onFailedCalled).to.equal(false);
+    });
+
+    it('should call the onFailed callback when getDetailsOfPatientsCreatedInLocation ' +
+        'request is not successfull', function () {
+            
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+        'location/passed-uuid/patient/creation/statistics?' +
+        'endDate=2015-08-05T21:00:00.000Z&startDate=2014-08-05T21:00:00.000Z').respond(500);
+        
+      etlRestService.getDetailsOfPatientsCreatedInLocation('passed-uuid',
+        '2014-08-05T21:00:00.000Z','2015-08-05T21:00:00.000Z', callbacks.onSuccess, callbacks.onFailure);
+        
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(false);
+      expect(callbacks.onFailedCalled).to.equal(true);
+      expect(callbacks.message).to.exist;
+      expect(callbacks.message.trim()).not.to.equal('');
+    });    
+    
   });
 })();

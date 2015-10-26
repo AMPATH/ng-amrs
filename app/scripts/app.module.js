@@ -28,6 +28,7 @@
       'app.formentry',
       'app.utils',
       'ct.ui.router.extras',
+      'app.adminDashboard'
     ])
     .config(function($stateProvider, $stickyStateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');
