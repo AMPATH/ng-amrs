@@ -294,8 +294,8 @@
               "concept": "a89c60c0-1350-11df-a1f1-0026b9348838",
               "label": "BMI:Kg/M2",
               "type": "number",
-              "max": "60",
-              "min": "25",
+              "max": "100",
+              "min": "0",
               "validators": []
             }
           ]
