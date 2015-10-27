@@ -1,32 +1,77 @@
-<div class="panel panel-info" style="padding:4px;"  dw-loading="formEntryLoader"  dw-loading-options="{text: 'Processing request..'}">
+<div class="panel panel-info" style="padding:4px;" dw-loading="formEntryLoader" dw-loading-options="{text: 'Processing request..'}">
   <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
   <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">
 
-    <div class="breadcrumb">
-      <h2>{{vm.patient.fullNames() | titlecase}} | Sex: {{vm.patient.gender()}} | Age: {{vm.patient.age()}} | Identifier: {{vm.patient.identifierFormatted()}}</h2>{{vm.encounterType}}
-      - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}} {{vm.success}}</div>
-    <div data-ng-show='vm.isBusy'>
-      <h2>
+  <div class="breadcrumb">
+    <h2>{{vm.patient.fullNames() | titlecase}} | Sex: {{vm.patient.gender()}} | Age: {{vm.patient.age()}} | Identifier: {{vm.patient.identifierFormatted()}}</h2>{{vm.encounterType}} - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}} {{vm.success}}
+  </div>
+  <div class="panel panel-default" style="margin-top: -20px;">
+    <div class="panel-heading" style=" cursor: pointer;" data-ng-click="isSummaryExpanded = !isSummaryExpanded">
+      <span class="text-default" style="margin-left: 2px;"> Patient Summaries </span>
+      <!--<button class="btn btn-default btn-sm pull-right">V</button>-->
+      <span class="label label-default pull-right" style="margin-right: 4px;" ng-show="isSummaryExpanded"> 
+        <span class="glyphicon glyphicon-menu-up"> </span> 
+     </span>
+      <span class="label label-default pull-right" style="margin-right: 4px;" ng-hide="isSummaryExpanded">
+        <span class="glyphicon glyphicon-menu-down"></span> 
+     </span>
+    </div>
+    <div class="panel-body" collapse="!isSummaryExpanded" style="padding: 4px;">
+      <tabset>
+        <tab heading="HIV Summary">
+          <div class="panel">
+            <div style="margin-top: 2px; padding:2px;">
+              <hiv-summary patient-uuid="{{vm.patient.uuid()}}"></hiv-summary>
+            </div>
+            <accordion ng-show="showHivHistoricalSummary">
+              <accordion-group is-open="HivHistoricalExpanded">
+                <accordion-heading>
+                  <div style="padding:3px;">Historical Hiv Summary
+                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': HivHistoricalExpanded, 'glyphicon-chevron-right': !HivHistoricalExpanded}"></i>
+                  </div>
+                </accordion-heading>
+                <hiv-summary-historical patient-uuid="{{vm.patient.uuid()}}"></hiv-summary-historical>
+              </accordion-group>
+            </accordion>
+          </div>
+        </tab>
+        <tab heading="Labs">
+          <div class="panel">
+            <labs-summary patient-uuid="{{vm.patient.uuid()}}"></labs-summary>
+          </div>
+        </tab>
+        <tab heading="Vitals">
+          <div class="panel">
+            <vitals patient-uuid="{{vm.patient.uuid()}}"></vitals>
+          </div>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+  <div data-ng-show='vm.isBusy'>
+    <h2>
         <img data-ng-show="vm.isBusy" data-ng-src="images/ajax-loader.gif" autofocus />Loading Form...
       </h2>
-    </div>
-    <!-- Error messages Summary -->
+  </div>
+  <!-- Error messages Summary -->
+  <div class="panel panel-danger" data-ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">
     <div data-ng-repeat="tab in vm.formlyFields" data-ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">
       <h4 data-ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">Error(s) on {{tab.title}}</h4>
       <formly-error-summary form="vm.form" fields="tab.form.fields"></formly-error-summary>
     </div>
+  </div>
+  <div style="color:red;" ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">{{vm.errorMessage}}</div>
+  <div style="color:red;">{{vm.errorSubmit}}</div>
 
-    <div style="color:red;" ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">{{vm.errorMessage}}</div>
-    <div style="color:red;" >{{vm.errorSubmit}}</div>
-    <form name="vm.form" novalidate>
-    <tabset id="form-panel">
+  <form name="vm.form" novalidate>
+    <tabset>
       <tab ng-repeat="tab in vm.tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled" select="vm.tabSelected($index)">
         <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
       </tab>
     </tabset>
     <div style="color:red;" ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">{{vm.errorMessage}}</div>
-    <div style="color:red;" >{{vm.errorSubmit}}</div>
+    <div style="color:red;">{{vm.errorSubmit}}</div>
 
     <div style="text-align: center;">
       <button type="button" class="btn btn-default" ng-click="vm.activateTab('prev')" ng-disabled="vm.isFirstTab()">&lt;&lt;</button>
@@ -35,90 +80,104 @@
       <button type="button" class="btn btn-default" ng-click="vm.activateTab('next')" ng-disabled="vm.isLastTab()">&gt;&gt;</button>
     </div>
   </form>
-  <hr />
+
+  <div></div>
+
+
 
   <!--<h2>tabs</h2>
   <pre>{{vm.tabs | json}}</pre>-->
 
- <!--
+  <!--
    <h2>Model Value</h2>
   <pre>{{vm.model | json}}</pre>
   -->
 
-<!-- Put custom templates here -->
+  <!-- Put custom templates here -->
   <script type="text/ng-template" id="error-messages.html">
-        <formly-transclude></formly-transclude>
-        <div class="error-messages" ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched">
-          <div class="message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages" style="color:red;">
-            {{message(fc.$viewValue, fc.$modelValue, this)}}
-          </div>
-        </div>
+    <formly-transclude></formly-transclude>
+    <div class="error-messages" ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched">
+      <div class="message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages" style="color:red;">
+        {{message(fc.$viewValue, fc.$modelValue, this)}}
+      </div>
+    </div>
 
   </script>
   <!-- Custom template to allows representation of repeatSection in a form. -->
   <script type="text/ng-template" id="repeatSection.html">
     <div class="panel panel-default">
-            <div class="panel-heading">
-            {{to.label}}
-            </div>
-            <div class="panel-body">
-            <!--loop through each element in model array-->
-            <div class="{{hideRepeat}}">
-              <div class="repeatsection" ng-repeat="element in model[options.key]" ng-init="fields = copyFields(to.fields)">
-                <formly-form fields="fields"
-                             model="element"
-                             bind-name="'formly_ng_repeat' + index + $parent.$index">
-                </formly-form>
-                <p>
-                  <button type="button" class="btn btn-sm btn-danger" ng-click="model[options.key].splice($index, 1)">
-                    Remove
-                  </button>
-                </p>
-                <hr>
-            </div>
-            <p class="AddNewButton">
-              <button type="button" class="btn btn-primary" ng-click="addNew()" >{{to.btnText}}</button>
+      <div class="panel-heading">
+        {{to.label}}
+      </div>
+      <div class="panel-body">
+        <!--loop through each element in model array-->
+        <div class="{{hideRepeat}}">
+          <div class="repeatsection" ng-repeat="element in model[options.key]" ng-init="fields = copyFields(to.fields)">
+            <formly-form fields="fields" model="element" bind-name="'formly_ng_repeat' + index + $parent.$index">
+            </formly-form>
+            <p>
+              <button type="button" class="btn btn-sm btn-danger" ng-click="model[options.key].splice($index, 1)">
+                Remove
+              </button>
             </p>
-            </div>
+            <hr>
+          </div>
+          <p class="AddNewButton">
+            <button type="button" class="btn btn-primary" ng-click="addNew()">{{to.btnText}}</button>
+          </p>
+        </div>
 
-            </div>
+      </div>
   </script>
   <!-- sections template -->
   <script type="text/ng-template" id="section.html">
-  <div class="panel panel-primary">
+    <div class="panel panel-primary">
 
-    <div class="panel-heading px-nested-panel-heading clearfix">
-      <strong class="control-label" ng-if="to.label">
+      <div class="panel-heading px-nested-panel-heading clearfix">
+        <strong class="control-label" ng-if="to.label">
         {{to.label}}
         {{to.required ? '*' : ''}}
       </strong>
+      </div>
+
+      <div class="panel-body px-nested-panel-body">
+        <formly-transclude></formly-transclude>
+      </div>
+
     </div>
+  </script>
 
-    <div class="panel-body px-nested-panel-body">
-      <formly-transclude></formly-transclude>
-    </div>
-
-  </div>
-</script>
-
-<!-- Error summary template -->
+  <!-- Error summary template -->
   <script type="text/ng-template" id="formly-error-summary.html">
-  <style type="text/css">
-    body {margin: 20px}
-    .formly-field {margin-bottom: 16px;}
-    .formly-error-summary {margin-bottom: 20px;}
-    .color-error {color: red;}
-    .color-success {color: green}
-  </style>
-  <!-- The field here are the fields passed within the directives scope -->
+    <style type="text/css">
+      body {
+        margin: 20px
+      }
+      
+      .formly-field {
+        margin-bottom: 16px;
+      }
+      
+      .formly-error-summary {
+        margin-bottom: 20px;
+      }
+      
+      .color-error {
+        color: red;
+      }
+      
+      .color-success {
+        color: green
+      }
+    </style>
+    <!-- The field here are the fields passed within the directives scope -->
     <div class="formly-error-summary">
-    <!--
+      <!--
     Allow all validations to be run on form submit only and when its rendered
     Other custom validations will still run  when the field is touched anyway
      -->
-      <div data-ng-repeat="field in vm.pageFields" data-ng-if="vm.form.$invalid &amp;&amp; vm.form.$submitted"
-        ng-class="{'color-success': field.formControl.$valid, 'color-error': field.formControl.$invalid}">
-        <div data-ng-show="field.formControl.$invalid" >
+      <div data-ng-repeat="field in vm.pageFields" data-ng-if="vm.form.$invalid &amp;&amp; vm.form.$submitted" ng-class="{'color-success': field.formControl.$valid, 'color-error': field.formControl.$invalid}">
+        <div data-ng-show="field.formControl.$invalid">
           <i class="glyphicon glyphicon-{{field.formControl.$invalid ? 'remove' : 'ok'}}"></i>
           <span data-ng-if="field.formControl.$invalid">
               {{vm.getErrorAsList(field)}} ({{field.templateOptions.label}})
@@ -126,5 +185,5 @@
         </div>
       </div>
     </div>
-</script>
-</div>
+  </script>
+  </div>
