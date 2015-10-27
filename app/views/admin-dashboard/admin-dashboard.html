@@ -1,0 +1,55 @@
+<div class="panel" style="padding: 0px;">
+	<div class="panel-heading ">
+    <div class="container-fluid">
+      <div class="row" style="font-size:large">
+           <span>POC Administration</span>        
+      </div>
+    </div>
+	</div>
+</div>
+<div style="margin-top: 4px; margin-bottom:4px;">
+	<div class="row">
+		<div class="col-lg-2 " style="padding-left:13px; padding-right:13px; padding-top:4px; padding-bottom:4px;">		
+			<ul class="nav nav-pills nav-stacked hidden-sm hidden-md" style="cursor: pointer;">
+				<li active-tab-sync index="1" data-ng-glick="activeList(this, 1)" ng-class="{active: activeListId === 1}">
+					<a data-target="#tab1" data-toggle="tab"><span aria-hidden="true"></span>&nbsp;Data Entry Statistics</a>
+				</li>
+				<li active-tab-sync index="2" data-ng-glick="activeList(this, 2)" ng-class="{active: activeListId === 2}">
+					<a data-target="#tab2" data-toggle="tab"><span aria-hidden="true"></span>&nbsp;Hiv Summary Statistics</a>
+				</li>
+				<li active-tab-sync index="3" data-ng-glick="activeList(this, 3)" ng-class="{active: activeListId === 3}">
+					<a data-target="#tab3" data-toggle="tab"><span aria-hidden="true"></span>&nbsp;Patient Creation Statistics</a>
+				</li>       
+			</ul>
+			
+			<ul class="nav nav-pills hidden-xs hidden-lg hidden-xl " style="cursor: pointer;">
+				<li active-tab-sync index="1" data-ng-glick="activeList(this, 1)" ng-class="{active: activeListId === 1}">
+					<a data-target="#tab1" data-toggle="tab"><span aria-hidden="true"></span>&nbsp;Data Entry Statistics</a>
+				</li>
+				<li active-tab-sync index="2" data-ng-glick="activeList(this, 2)" ng-class="{active: activeListId === 2}">
+					<a data-target="#tab2" data-toggle="tab"><span aria-hidden="true"></span>&nbsp;Hiv Summary Statistics</a>
+				</li>
+				<li active-tab-sync index="3" data-ng-glick="activeList(this, 3)" ng-class="{active: activeListId === 3}">
+					<a data-target="#tab3" data-toggle="tab"><span  aria-hidden="true"></span>&nbsp;Patient Creation Statistics</a>
+				</li>       
+			</ul>			
+		</div>
+		<div class="tab-content col-lg-10 ">
+			<div class="tab-pane fade in active panel panel-default" style="padding:4px;" id="tab1">				
+				<div class="page-content">
+					Data entry statistics
+				</div>				
+			</div>			
+			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab2">
+				<div class="page-content">
+					Hiv summary statistics
+				</div>
+			</div>
+			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab3">
+				<div class="page-content">
+					<patient-creation-statistics></patient-creation-statistics>
+				</div>
+			</div>					   
+		</div>
+	</div>
+</div>

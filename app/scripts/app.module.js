@@ -92,6 +92,12 @@
           controller: 'DataEntryStatisticsCtrl',
           data: { requireLogin: true },
         })
+        .state('admin', {
+          url: '/admin-dashboard',
+          templateUrl: 'views/admin-dashboard/admin-dashboard.html',
+          controller: 'AdminDashboardCtrl',
+          data: { requireLogin: true }
+        })
         .state('url-selector', {
           url: '/url-selector',
           templateUrl: 'views/main/url-selector.html',
