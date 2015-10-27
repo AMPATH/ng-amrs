@@ -2,8 +2,9 @@
   <div class="form-group">
     <label for="search-textbox">Search by Patient Name</label>
     <div class="input-group">
-      <input type="text" id="search-textbox" class="form-control" ng-model="searchString" ng-model-options="{ debounce: 500 }" placeholder="Enter the Patient Name to search"
-             focus="true">
+      <input type="text" id="search-textbox" class="form-control" ng-model="searchString" 
+      ng-model-options="{ debounce: 500 }" placeholder="Enter the Patient Name to search"
+      focus="true">
       <div class="input-group-addon">
         <img ng-show="isBusy" src="images/ajax-loader.gif" />
         <span ng-hide="isBusy" class="glyphicon glyphicon-search"></span>
@@ -16,37 +17,37 @@
   <div class="panel panel-default">
     <table class="table table-striped table-hover">
       <thead>
-      <tr>
-        <th>#</th>
-        <th>Identifier(s)</th>
-        <th>Patient Name</th>
-        <th>Gender</th>
-        <th>Age</th>
-        <th></th>
-      </tr>
+        <tr>
+          <th>#</th>
+          <th>Identifier(s)</th>
+          <th>Patient Name</th>
+          <th>Gender</th>
+          <th>Age</th>
+          <th></th>
+        </tr>
       </thead>
       <tbody>
-      <tr style="cursor: pointer;" ng-click="loadPatient(patient.uuid())" ng-repeat="patient in patients = patients | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
-        <td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
-        <td><span ng-if="patient.commonIdentifiers().kenyaNationalId"> {{patient.commonIdentifiers().kenyaNationalId}}
-          <span ng-if="patient.commonIdentifiers().amrsMrn|| patient.commonIdentifiers().ampathMrsUId">,</span></span>
-          <span ng-if="patient.commonIdentifiers().amrsMrn">{{patient.commonIdentifiers().amrsMrn}}
-           <span ng-if="patient.commonIdentifiers().ampathMrsUId">,</span></span>
-          <span ng-if="patient.commonIdentifiers().ampathMrsUId">{{patient.commonIdentifiers().ampathMrsUId}}</span>
-          <span ng-if="patient.commonIdentifiers().default">{{patient.commonIdentifiers().default}}</span>
-        </td>
-        <td>{{patient.fullNames()}}</td>
-        <td>{{patient.gender()}}</td>
-        <td>{{patient.age()}}</td>
-        <td>
-          <a href="#/patient/{{patient.uuid()}}"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
-        </td>
-      </tr>
+        <tr style="cursor: pointer;" ng-click="loadPatient(patient.uuid())" ng-repeat="patient in patients = patients | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+          <td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
+          <td><span ng-if="patient.commonIdentifiers().kenyaNationalId"> {{patient.commonIdentifiers().kenyaNationalId}}
+            <span ng-if="patient.commonIdentifiers().amrsMrn|| patient.commonIdentifiers().ampathMrsUId">,</span></span>
+            <span ng-if="patient.commonIdentifiers().amrsMrn">{{patient.commonIdentifiers().amrsMrn}}
+             <span ng-if="patient.commonIdentifiers().ampathMrsUId">,</span></span>
+             <span ng-if="patient.commonIdentifiers().ampathMrsUId">{{patient.commonIdentifiers().ampathMrsUId}}</span>
+             <span ng-if="patient.commonIdentifiers().default">{{patient.commonIdentifiers().default}}</span>
+           </td>
+           <td>{{patient.fullNames()}}</td>
+           <td>{{patient.gender()}}</td>
+           <td>{{patient.age()}}</td>
+           <td>
+            <a href="#/patient/{{patient.uuid()}}"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
   <pagination boundary-links="true" ng-model="currentPage" max-size="4" total-items="totalItems" items-per-page="entryLimit"
-              ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" rotate="false"
-              style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;">
-  </pagination>
+  ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" rotate="false"
+  style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;">
+</pagination>
 </div>
