@@ -19,7 +19,9 @@
       getMonthlyAppointmentSchedule: getMonthlyAppointmentSchedule,
       getMonthlyAppointmentAndVisits: getMonthlyAppointmentAndVisits,
       getDefaultersList: getDefaultersList,
-      getDailyVisits: getDailyVisits
+      getDailyVisits: getDailyVisits,
+      getPatientListByIndicator:getPatientListByIndicator,
+      getHivSummaryIndicators:getHivSummaryIndicators
     };
     return serviceDefinition;
 
@@ -205,6 +207,59 @@
       var resource = getResource('location/:uuid/monthly-appointment-visits');
 
       var params = { startDate: monthDate, uuid: locationUuid };
+
+      if (startIndex !== undefined) {
+        params.startIndex = startIndex;
+      }
+
+      if (limit !== undefined) {
+        params.limit = limit;
+      }
+
+      console.log(params);
+      console.log(startIndex);
+
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+
+    }
+
+    function getPatientListByIndicator(locationUuid, startDate, endDate, indicator, successCallback, failedCallback, startIndex, limit) {
+      var resource = getResource('location/:uuid/patient-by-indicator');
+
+      var params = { endDate: endDate, indicator:indicator, startDate: startDate, uuid: locationUuid};
+
+      if (startIndex !== undefined) {
+        params.startIndex = startIndex;
+      }
+
+      if (limit !== undefined) {
+        params.limit = limit;
+      }
+
+      console.log(params);
+      console.log(startIndex);
+
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+
+    }
+    function getHivSummaryIndicators(startDate, endDate, report, countBy, successCallback, failedCallback, startIndex, limit) {
+      var resource = getResource('hiv-summary-indicators');
+
+      var params = { endDate: endDate, report:report, countBy:countBy, startDate: startDate};
 
       if (startIndex !== undefined) {
         params.startIndex = startIndex;

@@ -43,11 +43,11 @@
     });
 
 
-    //etl service definition 
+    //etl service definition
     it('should have ETL service defined', function () {
       expect(etlRestService).to.exist;
     });
-    
+
     //hiv summary methods
     it('should make an api call to the hiv summary etl rest endpoint when getHivSummary is called with a uuid', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/hiv-summary?limit=20&startIndex=0').respond({});
@@ -84,8 +84,8 @@
       etlRestService.getHivSummary('passed-uuid', 20, 5, function () { }, function () { });
       httpBackend.flush();
     });
-    
-    
+
+
     //getVitals methods unit tests
     it('should make an api call to the vitals etl rest endpoint when getVitals is called with a patient uuid', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/vitals?limit=20&startIndex=0').respond({});
@@ -121,8 +121,8 @@
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/vitals?limit=5&startIndex=20').respond({});
       etlRestService.getVitals('passed-uuid', 20, 5, function () { }, function () { });
       httpBackend.flush();
-    }); 
-    
+    });
+
     //getPatientTest methods unit tests
     it('should make an api call to the patientTest etl rest endpoint when getPatientTests is called with a patient uuid', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/data?limit=20&startIndex=0').respond({});
@@ -159,7 +159,7 @@
       etlRestService.getPatientTests('passed-uuid', 20, 5, function () { }, function () { });
       httpBackend.flush();
     });
-    
+
     //getAppointmentSchedule method unit tests
     it('should make an api call to the appointment schedule etl rest endpoint when getAppointmentSchedule is called with a location uuid and date range', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/appointment-schedule?endDate=2015-09-05T21:00:00.000Z&startDate=2014-08-05T21:00:00.000Z').respond({});
@@ -172,13 +172,13 @@
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/appointment-schedule?endDate=2015-09-05T21:00:00.000Z&limit=10&startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
       etlRestService.getAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z', function () { }, function () { }, 0, 10);
       httpBackend.flush();
-      
-      
+
+
       //case startIndex defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/appointment-schedule?endDate=2015-09-05T21:00:00.000Z&startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
       etlRestService.getAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z', function () { }, function () { }, 0, undefined);
       httpBackend.flush();
-      
+
       //case limit defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/appointment-schedule?endDate=2015-09-05T21:00:00.000Z&limit=10&startDate=2014-08-05T21:00:00.000Z').respond({});
       etlRestService.getAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z', function () { }, function () { }, undefined, 10);
@@ -202,8 +202,8 @@
       expect(callbacks.message).to.exist;
       expect(callbacks.message.trim()).not.to.equal('');
     });
-    
-    
+
+
     //getMonthlyAppointmentSchedule method unit tests
     it('should make an api call to the monthly appointment schedule etl rest endpoint when getMonthlyAppointmentSchedule is called with a location uuid and a date', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/monthly-appointment-schedule?startDate=2014-08-05T21:00:00.000Z').respond({});
@@ -216,13 +216,13 @@
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/monthly-appointment-schedule?limit=10&startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
       etlRestService.getMonthlyAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', function () { }, function () { }, 0, 10);
       httpBackend.flush();
-      
-      
+
+
       //case startIndex defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/monthly-appointment-schedule?startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
       etlRestService.getMonthlyAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', function () { }, function () { }, 0, undefined);
       httpBackend.flush();
-      
+
       //case limit defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/monthly-appointment-schedule?limit=10&startDate=2014-08-05T21:00:00.000Z').respond({});
       etlRestService.getMonthlyAppointmentSchedule('passed-uuid', '2014-08-05T21:00:00.000Z', function () { }, function () { }, undefined, 10);
@@ -246,7 +246,7 @@
       expect(callbacks.message).to.exist;
       expect(callbacks.message.trim()).not.to.equal('');
     });
-    
+
     //getDefaultersList method unit tests
     it('should make an api call to the defaulters etl rest endpoint when getDefaultersList is called with a location uuid and numberOfDaysDefaulted', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/defaulter-list?defaulterPeriod=30').respond({});
@@ -259,13 +259,13 @@
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/defaulter-list?defaulterPeriod=30&limit=10&startIndex=0').respond({});
       etlRestService.getDefaultersList('passed-uuid', 30, function () { }, function () { }, 0, 10);
       httpBackend.flush();
-      
-      
+
+
       //case startIndex defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/defaulter-list?defaulterPeriod=30&startIndex=0').respond({});
       etlRestService.getDefaultersList('passed-uuid', 30, function () { }, function () { }, 0, undefined);
       httpBackend.flush();
-      
+
       //case limit defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/defaulter-list?defaulterPeriod=30&limit=10').respond({});
       etlRestService.getDefaultersList('passed-uuid', 30, function () { }, function () { }, undefined, 10);
@@ -289,16 +289,16 @@
       expect(callbacks.message).to.exist;
       expect(callbacks.message.trim()).not.to.equal('');
     });
-    
+
     //getMonthlyAppointmentAndVisits method unit tests
     it('should make an api call to the monthly appointment schedule etl rest ' +
         'endpoint when getMonthlyAppointmentAndVisits is called with a ' +
         'location uuid and a date', function () {
-            
+
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
         'location/passed-uuid/monthly-appointment-visits?' +
         'startDate=2014-08-05T21:00:00.000Z').respond({});
-        
+
       etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
         '2014-08-05T21:00:00.000Z', function () { }, function () { });
       httpBackend.flush();
@@ -307,31 +307,31 @@
     it('should make an api call to the monthly appointment schedule etl ' +
         'rest endpoint when getMonthlyAppointmentAndVisits is called with ' +
         'a location uuid, date and paging parameters', function () {
-      
+
       //case startIndex and limit are defined
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
         'location/passed-uuid/monthly-appointment-visits?' +
         'limit=10&startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
-        
+
       etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
         '2014-08-05T21:00:00.000Z', function () { }, function () { }, 0, 10);
       httpBackend.flush();
-      
+
       //case startIndex defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
         'location/passed-uuid/monthly-appointment-visits?' +
         'startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
-        
+
       etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
         '2014-08-05T21:00:00.000Z', function () { }, function () { },
         0, undefined);
       httpBackend.flush();
-      
+
       //case limit defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
         'location/passed-uuid/monthly-appointment-visits?' +
         'limit=10&startDate=2014-08-05T21:00:00.000Z').respond({});
-        
+
       etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
         '2014-08-05T21:00:00.000Z', function () { }, function () { },
         undefined, 10);
@@ -340,11 +340,11 @@
 
     it('should call the onSuccess callback getMonthlyAppointmentAndVisits ' +
         'request successfully returns', function () {
-            
+
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
         'location/passed-uuid/monthly-appointment-visits?' +
         'startDate=2014-08-05T21:00:00.000Z').respond({});
-      
+
       etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
         '2014-08-05T21:00:00.000Z', callbacks.onSuccess, callbacks.onFailure);
       httpBackend.flush();
@@ -354,14 +354,134 @@
 
     it('should call the onFailed callback when getMonthlyAppointmentAndVisits ' +
         'request is not successfull', function () {
-            
+
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
         'location/passed-uuid/monthly-appointment-visits?' +
         'startDate=2014-08-05T21:00:00.000Z').respond(500);
-        
+
       etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
         '2014-08-05T21:00:00.000Z', callbacks.onSuccess, callbacks.onFailure);
-        
+
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(false);
+      expect(callbacks.onFailedCalled).to.equal(true);
+      expect(callbacks.message).to.exist;
+      expect(callbacks.message.trim()).not.to.equal('');
+    });
+
+    // getPatientListByIndicator method unit tests
+    it('should make an api call to the patient-by-indicator etl rest endpoint when getPatientListByIndicator is ' +
+      'called with location uuid report-indicator, and date range', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/patient-by-indicator?' +
+        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&startDate=2014-08-05T21:00:00.000Z').respond({});
+      etlRestService.getPatientListByIndicator('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
+        'passed-indicator', function () { }, function () { });
+      httpBackend.flush();
+    });
+
+    it('should make an api call to the patient-by-indicator etl rest endpoint when getPatientListByIndicator is ' +
+      'called with a location uuid, report-indicator, date range and paging parameters', function () {
+
+      //case startIndex and limit are defined
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/patient-by-indicator?' +
+        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&limit=10&startDate=2014-08-05T21:00:00.000Z' +
+        '&startIndex=0').respond({});
+      etlRestService.getPatientListByIndicator('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
+        'passed-indicator', function () { }, function () { }, 0, 10);
+      httpBackend.flush();
+
+      //case startIndex defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/patient-by-indicator?' +
+        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&startDate=2014-08-05T21:00:00.000Z&startIndex=0')
+        .respond({});
+      etlRestService.getPatientListByIndicator('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
+        'passed-indicator', function () { }, function () { }, 0, undefined);
+      httpBackend.flush();
+
+      //case limit defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/patient-by-indicator?' +
+        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&limit=10&startDate=2014-08-05T21:00:00.000Z')
+        .respond({});
+      etlRestService.getPatientListByIndicator('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
+        'passed-indicator', function () { }, function () { }, undefined, 10 );
+      httpBackend.flush();
+    });
+
+    it('should call the onSuccess callback getPatientListByIndicator request successfully returns', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/patient-by-indicator?' +
+        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&startDate=2014-08-05T21:00:00.000Z').respond({});
+      etlRestService.getPatientListByIndicator('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
+       'passed-indicator', callbacks.onSuccess, callbacks.onFailure);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(true);
+      expect(callbacks.onFailedCalled).to.equal(false);
+    });
+
+    it('should call the onFailed callback when getPatientListByIndicator request is not successful', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/patient-by-indicator?' +
+        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&startDate=2014-08-05T21:00:00.000Z').respond(500);
+      etlRestService.getPatientListByIndicator('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
+        'passed-indicator', callbacks.onSuccess, callbacks.onFailure);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(false);
+      expect(callbacks.onFailedCalled).to.equal(true);
+      expect(callbacks.message).to.exist;
+      expect(callbacks.message.trim()).not.to.equal('');
+    });
+
+    // getHivSummaryIndicators unit tests
+    it('should make an api call to the hiv-summary-indicators etl rest endpoint when getHivSummaryIndicators is ' +
+      'called with countBy, report, and date range', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'hiv-summary-indicators?countBy=passed-countBy&' +
+        'endDate=2015-09-05T21:00:00.000Z&report=passed-report&startDate=2014-08-05T21:00:00.000Z').respond({});
+      etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
+        'passed-report','passed-countBy', function () { }, function () { });
+      httpBackend.flush();
+    });
+
+    it('should make an api call to the hiv-summary-indicators etl rest endpoint when getHivSummaryIndicators is ' +
+      'called with a countBy, report-indicator, date range and paging parameters', function () {
+
+      //case startIndex and limit are defined
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'hiv-summary-indicators?countBy=passed-countBy&' +
+        'endDate=2015-09-05T21:00:00.000Z&limit=10&report=passed-report&startDate=2014-08-05T21:00:00.000Z' +
+        '&startIndex=0').respond({});
+      etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
+        'passed-report','passed-countBy', function () { }, function () { }, 0, 10);
+      httpBackend.flush();
+
+      //case startIndex defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'hiv-summary-indicators?countBy=passed-countBy&' +
+        'endDate=2015-09-05T21:00:00.000Z&report=passed-report&startDate=2014-08-05T21:00:00.000Z&startIndex=0')
+        .respond({});
+      etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
+        'passed-report', 'passed-countBy', function () { }, function () { }, 0, undefined);
+      httpBackend.flush();
+
+      //case limit defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'hiv-summary-indicators?countBy=passed-countBy&' +
+        'endDate=2015-09-05T21:00:00.000Z&limit=10&report=passed-report&startDate=2014-08-05T21:00:00.000Z')
+        .respond({});
+      etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
+        'passed-report', 'passed-countBy',function () { }, function () { }, undefined, 10 );
+      httpBackend.flush();
+    });
+
+    it('should call the onSuccess callback getHivSummaryIndicators request successfully returns', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'hiv-summary-indicators?countBy=passed-countBy&' +
+        'endDate=2015-09-05T21:00:00.000Z&report=passed-report&startDate=2014-08-05T21:00:00.000Z').respond({});
+      etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
+        'passed-report', 'passed-countBy', callbacks.onSuccess, callbacks.onFailure);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(true);
+      expect(callbacks.onFailedCalled).to.equal(false);
+    });
+
+    it('should call the onFailed callback when getHivSummaryIndicators request is not successful', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'hiv-summary-indicators?countBy=passed-countBy&' +
+        'endDate=2015-09-05T21:00:00.000Z&report=passed-report&startDate=2014-08-05T21:00:00.000Z').respond(500);
+      etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
+        'passed-report', 'passed-countBy', callbacks.onSuccess, callbacks.onFailure);
       httpBackend.flush();
       expect(callbacks.onSuccessCalled).to.equal(false);
       expect(callbacks.onFailedCalled).to.equal(true);
