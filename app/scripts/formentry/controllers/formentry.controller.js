@@ -127,12 +127,18 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
     var selectedForm; //= $stateParams.formuuid;
     if (params.uuid !== undefined) {
       $scope.vm.encounter = $rootScope.activeEncounter;
-      //var encForm = FormsMetaData.getForm($scope.vm.encounter.encounterTypeUuid());
-      selectedForm = FormsMetaData.getForm($scope.vm.encounter.encounterTypeUuid());
+      var encFormUuid = $scope.vm.encounter.formUuid();
+      if (encFormUuid === undefined || encFormUuid === '') {
+        encFormUuid = $scope.vm.encounter.encounterTypeUuid();
+      }
+
+      console.log('selected form', encFormUuid);
+      selectedForm = FormsMetaData.getForm(encFormUuid);
       $scope.vm.encounterType = $scope.vm.encounter.encounterTypeName();
     } else {
       selectedForm = FormsMetaData.getForm($stateParams.formuuid);
       $scope.vm.encounterType = selectedForm.encounterTypeName;
+      console.log('selected form', selectedForm);
     }
 
     //load the selected form
@@ -156,6 +162,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
       $scope.vm.savedOrUpdated = true;
       if ($scope.vm.form.$valid) {
         var form = selectedForm;
+        console.log('Selected form', form);
         var payLoadData = FormentryService.updateFormPayLoad($scope.vm.model, $scope.vm.formlyFields, $scope.vm.patient, form, params);
         var payLoad = payLoadData.formPayLoad;
         console.log(payLoad);
