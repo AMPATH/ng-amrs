@@ -21,11 +21,11 @@ jshint -W003, -W026
         };
     }
 
-    appointmentScheduleController.$inject = ['$scope', '$rootScope', 'EtlRestService', 
-    'AppointmentScheduleModel', 'moment', '$state','$filter'];
+    appointmentScheduleController.$inject = ['$scope', '$rootScope', 'EtlRestService',
+    'AppointmentScheduleModel', 'moment', '$state','$filter','ClinicDashboardService'];
 
-    function appointmentScheduleController($scope, $rootScope, EtlRestService, 
-        AppointmentScheduleModel, moment, $state, $filter) {
+    function appointmentScheduleController($scope, $rootScope, EtlRestService,
+        AppointmentScheduleModel, moment, $state, $filter,ClinicDashboardService) {
 
         //scope members region
         $scope.visitPatients = [];
@@ -43,7 +43,7 @@ jshint -W003, -W026
 
         $scope.$on('viewDayAppointments',onViewDayAppointmentBroadcast);
         $scope.utcDateToLocal = utcDateToLocal;
-        $scope.startDate = new Date();
+        $scope.startDate = ClinicDashboardService.getStartDate();
         $scope.showVisits = false;
         $scope.showAppointments = true;
         $scope.toggleAppointmentVisits = toggleAppointmentVisits;
@@ -51,6 +51,7 @@ jshint -W003, -W026
         $scope.selectedDate = function (value) {
             if (value) {
                 $scope.startDate = value;
+                ClinicDashboardService.setStartDate(value);
                 loadSchedule();
             }
             else {
@@ -84,7 +85,6 @@ jshint -W003, -W026
             }
         }
         function onViewDayAppointmentBroadcast(event, arg) {
-            $scope.$parent.switchTabByIndex(4);
             $scope.selectedDate(arg);
         }
 
@@ -123,14 +123,14 @@ jshint -W003, -W026
 
             if ($scope.locationUuid && $scope.locationUuid !== ''){
                 //Fetch Daily visits
-                EtlRestService.getDailyVisits($scope.locationUuid, 
-                    moment($scope.startDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), 
-                    moment($scope.startDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), 
+                EtlRestService.getDailyVisits($scope.locationUuid,
+                    moment($scope.startDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+                    moment($scope.startDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
                     onFetchDailyVisitsSuccess, onFetchDailyVisitsFailed);
                 //Fetch daily appointments
                  EtlRestService.getAppointmentSchedule($scope.locationUuid,
                     moment($scope.startDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-                    moment($scope.startDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), 
+                    moment($scope.startDate).endOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
                     onFetchAppointmentsScheduleSuccess, onFetchAppointmentScheduleFailed);
 
             }

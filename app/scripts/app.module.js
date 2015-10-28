@@ -1,5 +1,5 @@
 /*jshint -W098, -W030 */
-(function () {
+(function() {
   'use strict';
 
   /**
@@ -24,64 +24,81 @@
       'app.patientdashboard',
       'app.clinicDashboard',
       'app.formentry',
-      'app.utils'
+      'app.utils',
+      'ct.ui.router.extras',
     ])
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config(function($stateProvider, $stickyStateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');
       $stateProvider
         .state('home', {
           url: '/',
           templateUrl: 'views/main/main.html',
-          //controller: 'AboutCtrl',
-          data: { requireLogin: true }
+          data: { requireLogin: true },
         })
         .state('about', {
           url: '/about',
           templateUrl: 'views/main/about.html',
           controller: 'AboutCtrl',
-          data: { requireLogin: true }
+          data: { requireLogin: true },
         })
         .state('patientsearch', {
           url: '/patientsearch',
           templateUrl: 'views/patient-search/patient-search.html',
           controller: 'PatientSearchCtrl',
-          data: { requireLogin: true }
+          data: { requireLogin: true },
         })
         .state('patient', {
           url: '/patient/:uuid',
           templateUrl: 'views/patient-dashboard/patient-dashboard.html',
           controller: 'PatientDashboardCtrl',
-          data: { requireLogin: true }
+          data: { requireLogin: true },
         })
         .state('clinical-dashboard', {
           url: '/clinical-dashboard/:locationuuid',
           templateUrl: 'views/clinic-dashboard/clinic-dashboard.html',
           controller: 'ClinicDashboardCtrl',
-          data: { requireLogin: true }
+          data: { requireLogin: true },
+        })
+        .state('clinical-dashboard.defaulters-list', {
+          url: '/defaulters-list',
+          templateUrl: 'views/clinic-dashboard/defaulters-list-tab.html',
+          controller: 'ClinicDashboardCtrl',
+          data: { requireLogin: true },
+        })
+        .state('clinical-dashboard.daily-appointments', {
+          url: '/daily-appointments',
+          templateUrl: 'views/clinic-dashboard/daily-appointments-tab.html',
+          controller: 'ClinicDashboardCtrl',
+          data: { requireLogin: true },
+        })
+        .state('clinical-dashboard.monthly-appointments', {
+          url: '/monthly-appointments',
+          templateUrl: 'views/clinic-dashboard/monthly-appointments-tab.html',
+          controller: 'ClinicDashboardCtrl',
+          data: { requireLogin: true },
         })
         .state('encounter', {
           url: '/encounter/:encuuid/patient/:uuid',
           templateUrl: 'views/formentry/formentry.html',
           controller: 'FormentryCtrl',
-          data: { requireLogin: true }
+          data: { requireLogin: true },
         })
         .state('url-selector', {
           url: '/url-selector',
           templateUrl: 'views/main/url-selector.html',
           controller: 'UrlSelectorCtrl',
-          data: { requireLogin: false }
+          data: { requireLogin: false },
         })
         .state('login', {
           url: '/login',
           templateUrl: 'views/authentication/login.html',
           controller: 'LoginCtrl',
-          data: { requireLogin: false }
+          data: { requireLogin: false },
         });
 
+    }).run(function($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings, EtlRestServicesSettings, UtilRestService) {
 
-    }).run(function ($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings, EtlRestServicesSettings,UtilRestService) {
-
-      $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+      $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
 
         //check whether selection of url base is required first
         var hasPersistedCurrentUrl = OpenmrsSettings.hasCoockiePersistedCurrentUrlBase() && EtlRestServicesSettings.hasCoockiePersistedCurrentUrlBase();
@@ -93,6 +110,7 @@
         }
 
         //check whether loginis required
+
         var shouldLogin = toState.data !== undefined && toState.data.requireLogin && !OpenmrsRestService.getAuthService().authenticated;
         //console.log(shouldLogin);
         if (shouldLogin) {
@@ -114,7 +132,7 @@
       $rootScope.broadcastPatient;
       $rootScope.activeEncounter;
       $rootScope.cachedLocations = [];
-      
+
       $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
         $rootScope.previousState = from.name;
         $rootScope.currentState = to.name;
