@@ -33,7 +33,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
         return service;
 
-        function getFieldValidators(arrayOfValidations, getFieldByIdKeyFunction) {
+        function getFieldValidators(arrayOfValidations, getFieldById_KeyFunction) {
             var validator = {};
             var index = 1;
             _.each(arrayOfValidations, function (validate) {
@@ -43,12 +43,12 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     index++;
                 }
                 if (validate.type !== 'conditionalRequired')
-                    validator[key] = getFieldValidatorObject(validate, getFieldByIdKeyFunction);
+                    validator[key] = getFieldValidatorObject(validate, getFieldById_KeyFunction);
             });
             return validator;
         }
 
-        function getFieldValidatorObject(params, getFieldByIdKeyFunction) {
+        function getFieldValidatorObject(params, getFieldById_KeyFunction) {
             switch (params.type) {
                 case 'date':
                     return getDateValidatorObject(params);
@@ -57,10 +57,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                     return getJsExpressionValidatorObject(params);
                     break;
                 case 'conditionalAnswered':
-                    return getConditionalAnsweredValidatorObject(params, getFieldByIdKeyFunction);
+                    return getConditionalAnsweredValidatorObject(params, getFieldById_KeyFunction);
                     break;
                 case 'conditionalRequired':
-                    return getConditionalRequiredExpressionFunction(params, getFieldByIdKeyFunction);
+                    return getConditionalRequiredExpressionFunction(params, getFieldById_KeyFunction);
                     break;
             }
 
@@ -186,7 +186,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             return val;
         }
 
-        function getConditionalAnsweredValidatorObject(params, getFieldByIdKeyFunction) {
+        function getConditionalAnsweredValidatorObject(params, getFieldById_KeyFunction) {
             var validator = new Validator('"' + params.message + '"',
                 function (viewValue, modelValue, elementScope) {
                     var val = viewValue || modelValue;
@@ -210,7 +210,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
                     //question was asnwered, therefore establish that the reference questions have the required answers
                     var referenceQuestionkey = CurrentLoadedFormService.getFieldKeyFromGlobalById(params.referenceQuestionId);
-                    var referenceQuestion = getFieldByIdKeyFunction(params.referenceQuestionId);
+                    var referenceQuestion = getFieldById_KeyFunction(params.referenceQuestionId);
                     if (referenceQuestion !== undefined)
                         referenceQuestionkey = referenceQuestion.key
 
@@ -232,7 +232,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             return validator;
         }
 
-        function getConditionalRequiredExpressionFunction(params, getFieldByIdKeyFunction) {
+        function getConditionalRequiredExpressionFunction(params, getFieldById_KeyFunction) {
 
             return function ($viewValue, $modelValue, scope, element) {
                 var i = 0;
@@ -241,7 +241,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 var result;
 
                 var referenceQuestionkey = CurrentLoadedFormService.getFieldKeyFromGlobalById(params.referenceQuestionId);
-                var referenceQuestion = getFieldByIdKeyFunction(params.referenceQuestionId);
+                var referenceQuestion = getFieldById_KeyFunction(params.referenceQuestionId);
                 if (referenceQuestion !== undefined) referenceQuestionkey = referenceQuestion.key;
 
                 fkey = referenceQuestionkey;
@@ -363,10 +363,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             });
         }
 
-        function updateListeners(fieldId, getFieldByIdKey) {
+        function updateListeners(fieldId, getFieldById_Key) {
             if (CurrentLoadedFormService.listenersMetadata[fieldId] !== undefined) {
                 _.each(CurrentLoadedFormService.listenersMetadata[fieldId], function (listenerId) {
-                    var field = getFieldByIdKey(listenerId);
+                    var field = getFieldById_Key(listenerId);
                     if (field.runExpressions) {
                         field.runExpressions();
                     }
@@ -476,11 +476,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 return array.indexOf(members) !== -1;
             }
         }
-        
+
         function formatDate(value, format, offset) {
             var format = format || 'yyyy-MM-dd';
             var offset = offset || '+0300'
-            
+
             if(!(value instanceof Date)) {
                 value = new Date(value);
                 if(value === null || value === undefined) {
