@@ -46,14 +46,24 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
 
         callback(results);
       }
-      
-      function getCachedPocForms(){       
+
+      function getCachedFormByUuid(uuid, callback) {
+        var results = _.find($rootScope.cachedPocForms,
+          function(f) {
+          // console.log('location ', l);
+          return (f.uuid === uuid);
+        });
+
+        callback(results);
+      }
+
+      function getCachedPocForms() {
         return $rootScope.cachedPocForms;
       }
-      
-      function getCachedPatient(){       
+
+      function getCachedPatient() {
         return $rootScope.broadcastPatient;
       }
-      
+
     }
 })();

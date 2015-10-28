@@ -1,4 +1,5 @@
 /*jshint -W003, -W117, -W098 */
+/*jscs:disable disallowMixedSpacesAndTabs, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma*/
 (function() {
 'use strict';
 angular
@@ -16,8 +17,7 @@ function LoginCtrl($scope, OpenmrsRestService, $timeout) {
 
   $scope.isBusy = false;
 
-
-  $timeout(function () {
+  $timeout(function() {
     $scope.authenticate = function() {
       //to do authenticate
       //console.log('you clicked me');
@@ -29,13 +29,12 @@ function LoginCtrl($scope, OpenmrsRestService, $timeout) {
         {
           $scope.isVisible = true;
           $scope.errors = 'Invalid user name or password. Please try again';
-        }
-        else {
-            OpenmrsRestService.getUserService().getUser({q:$scope.CurrentUser.username},function(data){
-            console.log('Logged in user:',data);
+        } else {
+          OpenmrsRestService.getUserService().getUser({q:$scope.CurrentUser.username},
+              function(data) {
+                console.log('Logged in user:', data);
 
-
-          });
+              });
         }
 
       }); // authenticate user

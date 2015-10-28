@@ -1,4 +1,5 @@
 /*jshint -W098, -W030 */
+/*jscs:disable disallowMixedSpacesAndTabs, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma*/
 (function() {
   'use strict';
 
@@ -96,7 +97,7 @@
           data: { requireLogin: false },
         });
 
-    }).run(function($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings, EtlRestServicesSettings, UtilRestService) {
+    }).run(function($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings, EtlRestServicesSettings, UtilService) {
 
       $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
 
@@ -111,7 +112,8 @@
 
         //check whether loginis required
 
-        var shouldLogin = toState.data !== undefined && toState.data.requireLogin && !OpenmrsRestService.getAuthService().authenticated;
+        var shouldLogin = toState.data !== undefined &&
+        toState.data.requireLogin && !OpenmrsRestService.getAuthService().authenticated;
         //console.log(shouldLogin);
         if (shouldLogin) {
           $state.go('login', { onSuccessRout: toState, onSuccessParams: toParams });
@@ -122,7 +124,7 @@
         //else navigate to page
       });
 
-      UtilRestService.disableBackSpaceOnNoneInputElements();
+      UtilService.disableBackSpaceOnNoneInputElements();
 
       // add provision of tracking various states for easy navigation and public variables of interest
       $rootScope.previousState;
@@ -133,12 +135,11 @@
       $rootScope.activeEncounter;
       $rootScope.cachedLocations = [];
 
-      $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+      $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
         $rootScope.previousState = from.name;
         $rootScope.currentState = to.name;
         $rootScope.previousStateParams = fromParams;
         $rootScope.currentStateParams = toParams;
-
 
         console.log('Previous state:' + $rootScope.previousState);
         console.log('Previous state Params:' + $rootScope.previousStateParams);

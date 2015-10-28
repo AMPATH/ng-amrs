@@ -14,7 +14,7 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
 
   SearchDataService.$inject = ['ProviderResService', 'CachedDataService',
     'LocationModel', 'ProviderModel','ConceptResService', 'ConceptModel',
-    'DrugResService','DrugModel', '$rootScope', 'FormRestService'];
+    'DrugResService','DrugModel', '$rootScope'];
 
   function SearchDataService(ProviderResService, CachedDataService,
     LocationModelFactory, ProviderModelFactory, ConceptResService,
@@ -34,8 +34,7 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
       getDrugConceptByUuid:getDrugConceptByUuid,
       findDrugs:findDrugs,
       findDrugByUuid:findDrugByUuid,
-      getConceptAnswers:getConceptAnswers,
-      findPocForms:findPocForms
+      getConceptAnswers:getConceptAnswers
     };
 
     return service;
@@ -166,33 +165,33 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
         });
     }
 
-    function findPocForms(searchText, onSuccess, onError) {
-        FormRestService.findPocForms(searchText,
-          function(forms) {
-            var wrapped = wrapForms(forms);
-            onSuccess(wrapped);
-          },
-          
-          function(error) {
-            onError(onError);
-          });
-      }
-    
-     function wrapForms(forms) {
-      var wrappedObjects = [];
-      for (var i = 0; i < forms.length; i++) {
-        var form = {
-          'uuid':forms[i].uuid,
-          'name': forms[i].name,
-          'encounterType': forms[i].encounterType.uuid,
-          'encounterTypeName': forms[i].encounterType.display,
-          'version': forms[i].version
-        };
-        wrappedObjects.push(form);
-      }
-      
-      return wrappedObjects;
-    }
+    // function findPocForms(searchText, onSuccess, onError) {
+    //     FormRestService.findPocForms(searchText,
+    //       function(forms) {
+    //         var wrapped = wrapForms(forms);
+    //         onSuccess(wrapped);
+    //       },
+    //
+    //       function(error) {
+    //         onError(onError);
+    //       });
+    //   }
+
+    // function wrapForms(forms) {
+    //   var wrappedObjects = [];
+    //   for (var i = 0; i < forms.length; i++) {
+    //     var form = {
+    //       'uuid':forms[i].uuid,
+    //       'name': forms[i].name,
+    //       'encounterType': forms[i].encounterType.uuid,
+    //       'encounterTypeName': forms[i].encounterType.display,
+    //       'version': forms[i].version
+    //     };
+    //     wrappedObjects.push(form);
+    //   }
+    //
+    //   return wrappedObjects;
+    // }
 
     function wrapDrug(drug) {
       return DrugModelFactory.toWrapper(drug);

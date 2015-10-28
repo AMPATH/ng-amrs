@@ -1,14 +1,16 @@
 /*
 jshint -W098, -W117, -W003, -W026
 */
+/*jscs:disable disallowMixedSpacesAndTabs, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma*/
+
 (function() {
-  'use strict';
-  // Mocked Service
-  angular
+'use strict';
+// Mocked Service
+angular
   .module('mock.authentication', [])
   .factory('AuthService', AuthService);
-  AuthService.$inject = ['$q'];
-  function AuthService($q) {
+AuthService.$inject = ['$q'];
+function AuthService($q) {
     var service = {
       isAuthenticated: isAuthenticated
     };
@@ -19,8 +21,7 @@ jshint -W098, -W117, -W003, -W026
       if ((user.username === 'test') && (user.password === 'test'))
       {
         callback(true);
-      }
-      else {
+      } else {
         callback(false);
       }
     }

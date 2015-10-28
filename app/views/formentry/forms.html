@@ -1,7 +1,7 @@
 
 <div class="panel panel-info">
     <p class="panel-heading px-nested-panel-heading clearfix">Choose a Form to Fill:</p>
-	<div class="panel-body px-nested-panel-body" ng-repeat=" form in forms">	
+	<div class="panel-body px-nested-panel-body" ng-repeat="form in forms">
 		<p class="form-list-item">
 			<a href="#/form/{{form.name}}/patient/{{patient.uuid()}}"> <span class="glyphicon glyphicon-plus-sign" /> {{form.name}}</a>
 		</p>
