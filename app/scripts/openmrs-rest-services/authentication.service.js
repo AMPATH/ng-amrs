@@ -1,4 +1,5 @@
 /*jshint -W003, -W117, -W098, -W026 */
+/*jscs:disable safeContextKeyword, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma*/
 (function() {
   'use strict';
 
@@ -6,9 +7,11 @@
         .module('app.openmrsRestServices')
         .factory('AuthService', AuthService);
 
-  AuthService.$inject = ['$base64', '$http', 'SessionResService', '$state', 'SessionModel', '$rootScope', 'LocationResService'];
+  AuthService.$inject = ['$base64', '$http', 'SessionResService', '$state',
+  'SessionModel', '$rootScope', 'LocationResService','FormResService'];
 
-  function AuthService(base64, $http, session, $state, SessionModel, $rootScope, LocationResService) {
+  function AuthService(base64, $http, session, $state, SessionModel,
+    $rootScope, LocationResService, FormResService) {
     var service = {
       isAuthenticated: isAuthenticated,
       setCredentials: setCredentials,
@@ -31,16 +34,31 @@
           console.log('routing to the right page');
           //$location.path('/'); //go to the home page if user is authenticated or
           $state.go('patientsearch');
-          LocationResService.getLocations(function(results){
+          LocationResService.getLocations(function(results) {
             $rootScope.cachedLocations = results;
           },
-          function(failedError){
+
+          function(failedError) {
             console.log(failedError);
           });
-          //console.log('Resolved View');
-          //console.log($state.go('home'));
-        }
-        else{
+
+          //cache forms
+          var findFormsContaining = 'POC';
+          FormResService.findPocForms(findFormsContaining, function(forms) {
+              $rootScope.cachedPocForms = forms;
+            },
+
+            function(error) {
+              onsole.log(error);
+            });
+
+          // SearchDataService.findPocForms(findFormsContaining, function(results) {
+          //  $rootScope.cachedPocForms = results;
+          //  }, function(error){
+          //   console.log(error);
+          // });
+
+        } else {
           console.log('authentication Failed');
         }
 
@@ -57,8 +75,9 @@
 
     }
 
-    function logOut(){
+    function logOut() {
       session.deleteSession(function() {});
+
       clearCredentials();
       service.authenticated = false;
       $rootScope.$broadcast('onUserLoggedOut');

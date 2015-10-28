@@ -1,0 +1,316 @@
+{
+  "name": "AMPATH POC Lab Entry Encounter Form v0.01",
+  "uuid": "6e6a4eef-4387-413d-b313-d1fc8cd32fd6",
+  "processor": "postEncounterForm",
+  "pages": [
+    {
+      "label": "Page 1",
+      "sections": [
+           {
+          "label": "Encounter Details",
+          "questions": [
+            {
+              "label": "Visit Date",
+              "type": "encounterDate",
+              "required": "true",
+              "default": "today",
+              "validators": [
+                {
+                  "type": "date"
+                }
+              ]
+            },
+            {
+              "type": "encounterProvider",
+              "label": "Provider",
+              "required": "true"
+            },          
+            {
+              "type": "encounterLocation",
+              "label": "5. Facility name (site/satellite clinic required):",
+              "required": "true"
+            }
+          ]
+        },
+        {
+          "label": "Lab Results",
+          "questions": [
+            {
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "a896dea2-1350-11df-a1f1-0026b9348838",
+                  "label": "WBC/mm3",
+                  "type": "number",
+                  "max": "500",
+                  "min": "0",
+                  "showDate": "true",
+                  "validators": [
+                    {
+                      "type": "date"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8908a16-1350-11df-a1f1-0026b9348838",
+                  "label": "Hgb g/dL",
+                  "type": "number",
+                  "max": "50",
+                  "min": "0",
+                  "showDate": "true",
+                  "validators": [
+                    {
+                      "type": "date"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a898201e-1350-11df-a1f1-0026b9348838",
+                  "label": "MCV",
+                  "type": "number",
+                  "max": "500",
+                  "min": "0",
+                  "showDate": "true",
+                  "validators": [
+                    {
+                      "type": "date"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a898b20e-1350-11df-a1f1-0026b9348838",
+                  "label": "ALC/ mm3",
+                  "type": "number",
+                  "max": "500",
+                  "min": "0",
+                  "showDate": "true",
+                  "validators": [
+                    {
+                      "type": "date"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8a8bb18-1350-11df-a1f1-0026b9348838",
+                  "type": "number",
+                  "label": "CD4:",
+                  "showDate": "true",
+                  "validators": [
+                    {
+                      "type": "date"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8970a26-1350-11df-a1f1-0026b9348838",
+                  "type": "number",
+                  "label": "CD4%:",
+                  "max": "100",
+                  "min": "0",
+                  "showDate": "true",
+                  "validators": [
+                    {
+                      "type": "date"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8982474-1350-11df-a1f1-0026b9348838",
+                  "type": "number",
+                  "label": "Viral Load:",
+                  "max": "10000000",
+                  "min": "0",
+                  "showDate": "true",
+                  "validators": [
+                    {
+                      "type": "date"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a897e450-1350-11df-a1f1-0026b9348838",
+                  "type": "number",
+                  "label": "Creatinine mmol/L:",
+                  "showDate": "true",
+                  "max": "11050",
+                  "min": "0",
+                  "validators": [
+                    {
+                      "type": "date"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a896ca48-1350-11df-a1f1-0026b9348838",
+                  "type": "number",
+                  "label": "SGPT(ALT):",
+                  "max": "3500",
+                  "min": "0",
+                  "showDate": "true",
+                  "validators": [
+                    {
+                      "type": "date"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "741517cf-8bac-4755-b289-8dd2a2df7962",
+                  "label": "Sputum Gene xpert MTB:",
+                  "answers": [
+                    {
+                      "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                      "label": "Positive"
+                    },
+                    {
+                      "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                      "label": "Negative"
+                    },
+                    {
+                      "concept": "a89a7ae4-1350-11df-a1f1-0026b9348838",
+                      "label": "Indeterminate"
+                    },
+                    {
+                      "concept": "a89c3d8e-1350-11df-a1f1-0026b9348838",
+                      "label": "Poor sample quality"
+                    }
+                  ],
+                  "showDate": "true",
+                  "type": "select",
+                  "validators": [
+                    {
+                      "type": "date"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8945d4e-1350-11df-a1f1-0026b9348838",
+                  "label": "Sputum AFB Smear:",
+                  "answers": [
+                    {
+                      "concept": "a8a45ab4-1350-11df-a1f1-0026b9348838",
+                      "label": "1+"
+                    },
+                    {
+                      "concept": "a8a45bd6-1350-11df-a1f1-0026b9348838",
+                      "label": "2+"
+                    },
+                    {
+                      "concept": "a8a45ca8-1350-11df-a1f1-0026b9348838",
+                      "label": "3+"
+                    },
+                    {
+                      "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                      "label": "Positive"
+                    },
+                    {
+                      "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                      "label": "Negative"
+                    },
+                    {
+                      "concept": "a89a7ae4-1350-11df-a1f1-0026b9348838",
+                      "label": "Indeterminate"
+                    },
+                    {
+                      "concept": "a89c3d8e-1350-11df-a1f1-0026b9348838",
+                      "label": "Poor sample quality"
+                    }
+                  ],
+                  "showDate": "true",
+                  "type": "select",
+                  "validators": [
+                    {
+                      "type": "date"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8a462a2-1350-11df-a1f1-0026b9348838",
+                  "label": "Sputum Culture:",
+                  "answers": [
+                    {
+                      "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                      "label": "Positive"
+                    },
+                    {
+                      "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                      "label": "Negative"
+                    },
+                    {
+                      "concept": "a89c3d8e-1350-11df-a1f1-0026b9348838",
+                      "label": "Poor sample quality"
+                    },
+                    {
+                      "concept": "0b4e9aa1-e470-46d1-9d2d-0d8a475561b9",
+                      "label": "Mycobacterium tuberculosis"
+                    },
+                    {
+                      "concept": "a01149c4-7f0e-4d27-8f42-dc019e3330ec",
+                      "label": "NonTuberculosis mycobacteria"
+                    }
+                  ],
+                  "showDate": "true",
+                  "type": "select",
+                  "validators": [
+                    {
+                      "type": "date"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8908192-1350-11df-a1f1-0026b9348838",
+                  "label": "CXR Code:",
+                  "answers": [
+                    {
+                      "concept": "a899e7b4-1350-11df-a1f1-0026b9348838",
+                      "label": "Normal"
+                    },
+                    {
+                      "concept": "a8a6aa3a-1350-11df-a1f1-0026b9348838",
+                      "label": "Cardiomegaly"
+                    },
+                    {
+                      "concept": "a8ae8c1e-1350-11df-a1f1-0026b9348838",
+                      "label": "Cavitary"
+                    },
+                    {
+                      "concept": "a8ae8a66-1350-11df-a1f1-0026b9348838",
+                      "label": "Diffuse abn/non-miliary"
+                    },
+                    {
+                      "concept": "a8ae8980-1350-11df-a1f1-0026b9348838",
+                      "label": "Infiltrate"
+                    },
+                    {
+                      "concept": "a89a77ce-1350-11df-a1f1-0026b9348838",
+                      "label": "Milliary"
+                    },
+                    {
+                      "concept": "a89a76fc-1350-11df-a1f1-0026b9348838",
+                      "label": "PI Effusion"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    }
+                  ],
+                  "showDate": "true",
+                  "type": "select",
+                  "validators": [
+                    {
+                      "type": "date"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}	

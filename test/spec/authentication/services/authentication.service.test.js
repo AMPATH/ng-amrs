@@ -1,13 +1,16 @@
 /*jshint -W003, -W117, -W098, -W026, -W030 */
+/*jscs:disable disallowMixedSpacesAndTabs, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma*/
 (function() {
-    'use strict';
+  'use strict';
 
-    describe('Athentication Service Unit Tests', function() {
+  describe('Athentication Service Unit Tests', function() {
       beforeEach(function() {
-          //debugger;
+        //debugger;
         module('ngAmrsApp');
+        module('app.formentry');
         module('app.openmrsRestServices');
         module('mock.sessionService');
+
       });
 
       var callbacks;
@@ -28,7 +31,7 @@
       var httpBackend;
 
       //initialize the test states for ui-router
-      beforeEach(module(function ($stateProvider) {
+      beforeEach(module(function($stateProvider) {
         //$stateProvider.state('home', homeState);
       }));
 
@@ -71,27 +74,27 @@
         //debugger;
         sessionServiceMock.mockedResponse = {authenticated:true, sessionId:'sessionId'};
 
-        authenticationService.isAuthenticated(testUser,callbacks.callback);
+        authenticationService.isAuthenticated(testUser, callbacks.callback);
         expect(callbacks.callbackInvocked).to.equal(true);
         expect(callbacks.returnedValue).to.equal(true);
       });
 
       it('should have isAuthenticated change state to home when authentication  is successfull', function() {
         //debugger;
-        httpBackend.when('GET','views/main/main.html').respond('');//prevent test from failing
+        httpBackend.when('GET', 'views/main/main.html').respond('');//prevent test from failing
         sessionServiceMock.mockedResponse = {authenticated:true, sessionId:'sessionId'};
-        authenticationService.isAuthenticated(testUser,callbacks.callback);
+        authenticationService.isAuthenticated(testUser, callbacks.callback);
         //rootScope.$apply();
         //rootScope.$digest();
-        var isCurrentStateHome = state.$current.name === '' || state.$current.name ==='home';
+        var isCurrentStateHome = state.$current.name === '' || state.$current.name === 'home';
         expect(isCurrentStateHome).to.equal(true);
       });
 
-      it('should have isAuthenticated broadcast onUserAuthenticationDetermined when authentication is complete', function () {
+      it('should have isAuthenticated broadcast onUserAuthenticationDetermined when authentication is complete', function() {
         //using sinon spies
         //link: http://sinonjs.org/docs/
         var spy = sinon.spy(rootScope, '$broadcast');
-        authenticationService.isAuthenticated(testUser,callbacks.callback);
+        authenticationService.isAuthenticated(testUser, callbacks.callback);
         spy.calledWith('onUserAuthenticationDetermined');
       });
 

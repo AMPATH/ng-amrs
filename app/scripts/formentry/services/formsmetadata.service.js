@@ -1,72 +1,46 @@
 /*
 jshint -W098, -W026, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W069
 */
+/*
+jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma
+*/
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
+  angular
         .module('app.formentry')
         .factory('FormsMetaData', FormsMetaData);
 
-    FormsMetaData.$inject = [];
+  FormsMetaData.$inject = ['CachedDataService'];
 
-    function FormsMetaData() {
+  function FormsMetaData(CachedDataService) {
 
-        var forms = {};
-        forms['form1'] = {
-          name: 'form1',
-          uuid: 'form1',
-          encounterType:'8d5b2be0-c2cc-11de-8d13-0010c6dffd0f',
-          encounterTypeName:'ADULT RETURN'
-        };
+    var forms = {};
+    var  defaultForm = {
+           name: 'ampath_poc_adult_return_visit_form_v0.01',
+           uuid: '1339a535-e38f-44cd-8cf8-f42f7c5f2ab7',
+           encounterType:'8d5b2be0-c2cc-11de-8d13-0010c6dffd0f',
+           encounterTypeName:'ADULT RETURN'
+         };
 
-        forms['form2'] = {
-          name: 'form2',
-          uuid: 'form2',
-          encounterType:'8d5b3108-c2cc-11de-8d13-0010c6dffd0f',
-          encounterTypeName:'PEADS RETURN'
-        };
+    forms = CachedDataService.getCachedPocForms();
+    var service = {
+      getForm: getForm
+    };
 
-        forms['form3'] = {
-          name: 'form3',
-          uuid: 'form3',
-          encounterType:'b1e9ed0f-5222-4d47-98f7-5678b8a21ebd',
-          encounterTypeName:'POST ANTENATAL'
-        };
+    return service;
 
-        forms['form3'] = {
-          name: 'form3',
-          uuid: 'form3',
-          encounterType:'b1e9ed0f-5222-4d47-98f7-5678b8a21ebd',
-          encounterTypeName:'POST ANTENATAL'
-        };
+    function getForm(uuid) {
 
-        forms['triage'] = {
-          name: 'triage',
-          uuid: 'triage',
-          encounterType:'a44ad5e2-b3ec-42e7-8cfa-8ba3dbcf5ed7',
-          encounterTypeName:'TRIAGE'
-        };
-
-        var service = {
-            getForm: getForm
-        };
-
-        return service;
-
-
-        function getForm(uuid) {
-          //console.log('Available forms');
-          //console.log(forms);
-
-        var result =  _.find(forms,function(form) {
+      var result =  _.find(forms, function(form) {
             //console.log(form)
             if (form.uuid === uuid) return form;
             else if (form.encounterType === uuid) return form;
             else if (form.name === uuid) return form;
           });
-          if (result === undefined) return forms['form1']; //should be refactored once everything is well structured
-          else return result;
-        }
+
+      if (result === undefined) return defaultForm;
+      return result;
     }
+  }
 })();

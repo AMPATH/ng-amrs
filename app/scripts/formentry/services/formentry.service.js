@@ -125,8 +125,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
       return selectedField;
     }
 
+    function createValidFormName(formName){
+        return formName.replace(/ /gi, '_').toLowerCase();
+    }
+
     function getFormSchema(formName, callback) {
       var schema = {};
+      formName=createValidFormName(formName)
       // this should de dropped once we align all forms related issues
       if (formName !== undefined) {
         formName = formName + '.json';
@@ -341,8 +346,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                         if (val !== undefined) {
                           // console.log('Obs Date Key', _groupField.key);
                           // console.log('Obs Date value', val);
-                          groupVal[_groupField.key] = val.obsDatetime;
-                          _groupField.data['initialValue'] = val.obsDatetime;
+                          groupVal[_groupField.key] = new Date(val.obsDatetime);
+                          _groupField.data['initialValue'] =  val.obsDatetime;
                           _groupField.data['uuid'] = val.uuid; //obs uuid
                         }
                       } else {
