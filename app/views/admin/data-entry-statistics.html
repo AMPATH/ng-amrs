@@ -1,0 +1,77 @@
+<h2> <span style="font-size:20px;" class="glyphicon glyphicon-stats"></span><strong> Data Entry Statistics </strong> </h2>
+<hr style="margin: 0px;" />
+<div class="form-group" style="margin-top:12px; margin-bottom:8px;" collapse="selectedLocations.selectedAll">
+	<div class="input-group">
+		<div class="input-group-addon">
+			<span class="text-danger">
+				<img ng-show="isBusy" src="images/ajax-loader.gif" />
+			</span>
+			<span ng-hide="isBusy" class="glyphicon glyphicon-map-marker"></span>
+		</div>
+		<ui-select multiple ng-model="selectedLocations.locations" theme="bootstrap" ng-disabled="isBusy">
+			<ui-select-match placeholder="Select a location or type to search">{{$item.name()}}</ui-select-match>
+			<ui-select-choices repeat="location in locations | propsFilter: {name: $select.search, description: $select.search} ">
+				<div ng-bind-html="location.name() | highlight: $select.search"></div>
+				<small ng-bind-html="location.description() | highlight: $select.search" class="border-success"></small>
+			</ui-select-choices>
+		</ui-select>
+		<div class="input-group-addon" style="cursor: pointer;" ng-click="selectedLocations.selectedAll = true">
+			<span ng-hide="isBusy">All</span>
+		</div>
+	</div>
+</div>
+<div style="margin:4px;" collapse="!selectedLocations.selectedAll">
+	<span style="font-size:18px;" ng-hide="isBusy" class="glyphicon glyphicon-map-marker"></span>
+	<strong style="font-size:20px;">All Locations</strong>
+	<span style="font-size:18px; cursor: pointer; vertical-align: text-centre;" ng-hide="isBusy" data-ng-click="selectedLocations.selectedAll = false"
+	class="glyphicon glyphicon-remove-sign text-danger pull-right">
+	</span>
+</div>
+<hr style="margin: 0px;" />
+<!--<div> {{selectedLocations}} </div>-->
+<div class="container-fluid" style="margin-top: 30px;" collapse="!(selectedLocations.selectedAll || selectedLocations.locations.length > 0)">
+	<div class="row">
+		<div class="col-xs-6 col-md-3">
+			<a class="thumbnail" style="text-decoration:none;">
+				<div>
+					<strong><span class="glyphicon glyphicon-stats"></span> View 1</strong>
+				</div>
+				<div>
+					View by date <br/> by encounter type <br/> 
+				</div>
+			</a>
+		</div>
+		<div class="col-xs-6 col-md-3">
+			<a class="thumbnail" style="text-decoration:none;">
+				<div>
+					<strong><span class="glyphicon glyphicon-stats"></span> 
+					View 2</strong>
+				</div>
+				<div>
+					View by month <br/> by encounter type <br/> 
+				</div>
+			</a>
+		</div>
+		<div class="col-xs-6 col-md-3">
+			<a class="thumbnail" style="text-decoration:none;">
+				<div>
+					<strong><span class="glyphicon glyphicon-stats"></span> View 3</strong>
+				</div>
+				<div>
+					View by date <br/> by encounter type <br/> 
+				</div>
+			</a>
+		</div>
+		<div class="col-xs-6 col-md-3">
+			<a class="thumbnail" style="text-decoration:none;">
+				<div>
+					<strong><span class="glyphicon glyphicon-stats"></span> View 4</strong>
+				</div>
+				<div>
+				  View by date <br/> by encounter type <br/> 
+				</div>
+			</a>
+		</div>
+		
+	</div>
+</div>

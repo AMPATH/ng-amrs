@@ -1,4 +1,5 @@
-/* global afterEach */
+/* global expect */
+/* global inject */
 /*jshint -W026, -W030 */
 (function () {
   'use strict';
@@ -292,84 +293,84 @@
 
     //getMonthlyAppointmentAndVisits method unit tests
     it('should make an api call to the monthly appointment schedule etl rest ' +
-        'endpoint when getMonthlyAppointmentAndVisits is called with a ' +
-        'location uuid and a date', function () {
+      'endpoint when getMonthlyAppointmentAndVisits is called with a ' +
+      'location uuid and a date', function () {
 
-      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
-        'location/passed-uuid/monthly-appointment-visits?' +
-        'startDate=2014-08-05T21:00:00.000Z').respond({});
+        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+          'location/passed-uuid/monthly-appointment-visits?' +
+          'startDate=2014-08-05T21:00:00.000Z').respond({});
 
-      etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
-        '2014-08-05T21:00:00.000Z', function () { }, function () { });
-      httpBackend.flush();
-    });
+        etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
+          '2014-08-05T21:00:00.000Z', function () { }, function () { });
+        httpBackend.flush();
+      });
 
     it('should make an api call to the monthly appointment schedule etl ' +
-        'rest endpoint when getMonthlyAppointmentAndVisits is called with ' +
-        'a location uuid, date and paging parameters', function () {
+      'rest endpoint when getMonthlyAppointmentAndVisits is called with ' +
+      'a location uuid, date and paging parameters', function () {
+      
+        //case startIndex and limit are defined
+        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+          'location/passed-uuid/monthly-appointment-visits?' +
+          'limit=10&startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
 
-      //case startIndex and limit are defined
-      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
-        'location/passed-uuid/monthly-appointment-visits?' +
-        'limit=10&startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
+        etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
+          '2014-08-05T21:00:00.000Z', function () { }, function () { }, 0, 10);
+        httpBackend.flush();
+      
+        //case startIndex defined only
+        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+          'location/passed-uuid/monthly-appointment-visits?' +
+          'startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
 
-      etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
-        '2014-08-05T21:00:00.000Z', function () { }, function () { }, 0, 10);
-      httpBackend.flush();
+        etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
+          '2014-08-05T21:00:00.000Z', function () { }, function () { },
+          0, undefined);
+        httpBackend.flush();
+      
+        //case limit defined only
+        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+          'location/passed-uuid/monthly-appointment-visits?' +
+          'limit=10&startDate=2014-08-05T21:00:00.000Z').respond({});
 
-      //case startIndex defined only
-      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
-        'location/passed-uuid/monthly-appointment-visits?' +
-        'startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
-
-      etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
-        '2014-08-05T21:00:00.000Z', function () { }, function () { },
-        0, undefined);
-      httpBackend.flush();
-
-      //case limit defined only
-      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
-        'location/passed-uuid/monthly-appointment-visits?' +
-        'limit=10&startDate=2014-08-05T21:00:00.000Z').respond({});
-
-      etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
-        '2014-08-05T21:00:00.000Z', function () { }, function () { },
-        undefined, 10);
-      httpBackend.flush();
-    });
+        etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
+          '2014-08-05T21:00:00.000Z', function () { }, function () { },
+          undefined, 10);
+        httpBackend.flush();
+      });
 
     it('should call the onSuccess callback getMonthlyAppointmentAndVisits ' +
-        'request successfully returns', function () {
+      'request successfully returns', function () {
 
-      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
-        'location/passed-uuid/monthly-appointment-visits?' +
-        'startDate=2014-08-05T21:00:00.000Z').respond({});
+        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+          'location/passed-uuid/monthly-appointment-visits?' +
+          'startDate=2014-08-05T21:00:00.000Z').respond({});
 
-      etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
-        '2014-08-05T21:00:00.000Z', callbacks.onSuccess, callbacks.onFailure);
-      httpBackend.flush();
-      expect(callbacks.onSuccessCalled).to.equal(true);
-      expect(callbacks.onFailedCalled).to.equal(false);
-    });
+        etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
+          '2014-08-05T21:00:00.000Z', callbacks.onSuccess, callbacks.onFailure);
+        httpBackend.flush();
+        expect(callbacks.onSuccessCalled).to.equal(true);
+        expect(callbacks.onFailedCalled).to.equal(false);
+      });
 
     it('should call the onFailed callback when getMonthlyAppointmentAndVisits ' +
-        'request is not successfull', function () {
+      'request is not successfull', function () {
 
-      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
-        'location/passed-uuid/monthly-appointment-visits?' +
-        'startDate=2014-08-05T21:00:00.000Z').respond(500);
+        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+          'location/passed-uuid/monthly-appointment-visits?' +
+          'startDate=2014-08-05T21:00:00.000Z').respond(500);
 
-      etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
-        '2014-08-05T21:00:00.000Z', callbacks.onSuccess, callbacks.onFailure);
+        etlRestService.getMonthlyAppointmentAndVisits('passed-uuid',
+          '2014-08-05T21:00:00.000Z', callbacks.onSuccess, callbacks.onFailure);
 
-      httpBackend.flush();
-      expect(callbacks.onSuccessCalled).to.equal(false);
-      expect(callbacks.onFailedCalled).to.equal(true);
-      expect(callbacks.message).to.exist;
-      expect(callbacks.message.trim()).not.to.equal('');
-    });
-
-    // getPatientListByIndicator method unit tests
+        httpBackend.flush();
+        expect(callbacks.onSuccessCalled).to.equal(false);
+        expect(callbacks.onFailedCalled).to.equal(true);
+        expect(callbacks.message).to.exist;
+        expect(callbacks.message.trim()).not.to.equal('');
+      });
+      
+      // getPatientListByIndicator method unit tests
     it('should make an api call to the patient-by-indicator etl rest endpoint when getPatientListByIndicator is ' +
       'called with location uuid report-indicator, and date range', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/patient-by-indicator?' +
@@ -488,5 +489,219 @@
       expect(callbacks.message).to.exist;
       expect(callbacks.message.trim()).not.to.equal('');
     });
+
+    it('should build the correct query param object by sub-type when ' +
+      'getDataEntryStatisticsQueryParam is invoked with report params', function () {
+
+        var locationIds = 'id1,id2,id3';
+        var encounterTypes = 'type1,type2,type3,type4';
+        var formIds = 'form1,form2,form3,form4';
+        var providerUuid = 'providerUuid';
+        var creatorUuid = 'creatorUuid';
+        var startDate = '2015-01-01';
+        var endDate = '2015-06-01';
+        var subType;
+        var queryParam;
+        var expectedParam;
+        
+        //VIEW1
+        //subtype by-date-by-encounter-type
+        subType = 'by-date-by-encounter-type';
+        expectedParam = {
+          subType: subType,
+          startDate: startDate,
+          endDate: endDate,
+          locations: locationIds,
+          encounterTypeIds: encounterTypes,
+          formIds: formIds,
+          providerUuid: providerUuid
+        };
+
+        queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
+          endDate, locationIds, encounterTypes, formIds, providerUuid, creatorUuid);
+                
+        //assertions
+        expect(queryParam).to.deep.equal(expectedParam);
+        
+        //case missing parameter 
+        expectedParam = {
+          subType: subType,
+          startDate: startDate,
+          endDate: endDate,
+          locations: locationIds,
+          providerUuid: providerUuid
+        };
+
+        queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
+          endDate, locationIds, null, null, providerUuid, creatorUuid);
+                
+        //assertions
+        expect(queryParam).to.deep.equal(expectedParam);
+        
+        //VIEW2
+        //subtype by-month-by-encounter-type
+        subType = 'by-month-by-encounter-type';
+        expectedParam = {
+          subType: subType,
+          startDate: startDate,
+          endDate: endDate,
+          locations: locationIds,
+          encounterTypeIds: encounterTypes,
+          formIds: formIds,
+          providerUuid: providerUuid
+        };
+
+        queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
+          endDate, locationIds, encounterTypes, formIds, providerUuid, creatorUuid);
+                
+        //assertions
+        expect(queryParam).to.deep.equal(expectedParam);
+        
+        //case missing parameter 
+        expectedParam = {
+          subType: subType,
+          startDate: startDate,
+          endDate: endDate,
+          locations: locationIds,
+          providerUuid: providerUuid
+        };
+
+        queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
+          endDate, locationIds, null, null, providerUuid, creatorUuid);
+                
+        //assertions
+        expect(queryParam).to.deep.equal(expectedParam);
+        
+        
+        //VIEW3
+        //subtype by-provider-by-encounter-type
+        subType = 'by-provider-by-encounter-type';
+        expectedParam = {
+          subType: subType,
+          startDate: startDate,
+          endDate: endDate,
+          locations: locationIds,
+          encounterTypeIds: encounterTypes,
+          formIds: formIds,
+          providerUuid: providerUuid
+        };
+
+        queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
+          endDate, locationIds, encounterTypes, formIds, providerUuid, creatorUuid);
+                
+        //assertions
+        expect(queryParam).to.deep.equal(expectedParam);
+        
+        //case missing parameter 
+        expectedParam = {
+          subType: subType,
+          startDate: startDate,
+          endDate: endDate,
+          locations: locationIds,
+          providerUuid: providerUuid
+        };
+
+        queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
+          endDate, locationIds, null, null, providerUuid, creatorUuid);
+                
+        //assertions
+        expect(queryParam).to.deep.equal(expectedParam);
+        
+        //VIEW4
+        //by-creator-by-encounter-type
+        subType = 'by-creator-by-encounter-type';
+        expectedParam = {
+          subType: subType,
+          startDate: startDate,
+          endDate: endDate,
+          locations: locationIds,
+          encounterTypeIds: encounterTypes,
+          formIds: formIds,
+          creatorUuid: creatorUuid
+        };
+
+        queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
+          endDate, locationIds, encounterTypes, formIds, providerUuid, creatorUuid);
+                
+        //assertions
+        expect(queryParam).to.deep.equal(expectedParam);
+        
+        //case missing parameter 
+        expectedParam = {
+          subType: subType,
+          startDate: startDate,
+          endDate: endDate,
+          locations: locationIds,
+          creatorUuid: creatorUuid
+        };
+
+        queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
+          endDate, locationIds, null, null, providerUuid, creatorUuid);
+                
+        //assertions
+        expect(queryParam).to.deep.equal(expectedParam);
+
+
+      });
+
+    it('should make an api call to the data entry statistics etl ' +
+      'rest endpoint when getDataEntryStatistics is called with ' +
+      'a subType, date range, location uuid, and optional parameters', function () {
+        var locationIds = 'id1,id2,id3';
+        var startDate = '2015-01-01';
+        var endDate = '2015-06-01';
+
+        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+          'data-entry-statistics/by-date-by-encounter-type?' +
+          'endDate=' + endDate + '&locations=' + locationIds +
+          '&startDate=' + startDate).respond({});
+
+        etlRestService.getDataEntryStatistics('by-date-by-encounter-type',
+          startDate, endDate, locationIds, undefined, undefined, undefined,
+          undefined, function () { }, function () { });
+        httpBackend.flush();
+      });
+
+    it('should call the onSuccess callback getDataEntryStatistics ' +
+      'request successfully returns', function () {
+        var locationIds = 'id1,id2,id3';
+        var startDate = '2015-01-01';
+        var endDate = '2015-06-01';
+
+        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+          'data-entry-statistics/by-date-by-encounter-type?' +
+          'endDate=' + endDate + '&locations=' + locationIds +
+          '&startDate=' + startDate).respond({});
+
+        etlRestService.getDataEntryStatistics('by-date-by-encounter-type',
+          startDate, endDate, locationIds, undefined, undefined, undefined,
+          undefined, callbacks.onSuccess, callbacks.onFailure);
+        httpBackend.flush();
+        
+        expect(callbacks.onSuccessCalled).to.equal(true);
+        expect(callbacks.onFailedCalled).to.equal(false);
+      });
+
+    it('should call the onFailed callback when getDataEntryStatistics ' +
+      'request is not successfull', function () {
+        var locationIds = 'id1,id2,id3';
+        var startDate = '2015-01-01';
+        var endDate = '2015-06-01';
+
+        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
+          'data-entry-statistics/by-date-by-encounter-type?' +
+          'endDate=' + endDate + '&locations=' + locationIds +
+          '&startDate=' + startDate).respond(500);
+
+        etlRestService.getDataEntryStatistics('by-date-by-encounter-type',
+          startDate, endDate, locationIds, undefined, undefined, undefined,
+          undefined, callbacks.onSuccess, callbacks.onFailure);
+        httpBackend.flush(); 
+        
+        expect(callbacks.onSuccessCalled).to.equal(false);
+        expect(callbacks.onFailedCalled).to.equal(true);
+        expect(callbacks.message).to.exist;
+        expect(callbacks.message.trim()).not.to.equal('');
+      });
   });
 })();

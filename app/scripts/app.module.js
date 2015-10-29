@@ -24,6 +24,7 @@
       'app.patientsearch',
       'app.patientdashboard',
       'app.clinicDashboard',
+      'app.admin',
       'app.formentry',
       'app.utils',
       'ct.ui.router.extras',
@@ -82,6 +83,12 @@
           url: '/encounter/:encuuid/patient/:uuid',
           templateUrl: 'views/formentry/formentry.html',
           controller: 'FormentryCtrl',
+          data: { requireLogin: true },
+        })
+        .state('data-entry-statistics', {
+          url: '/data-entry-statistics',
+          templateUrl: 'views/admin/data-entry-statistics.html',
+          controller: 'DataEntryStatisticsCtrl',
           data: { requireLogin: true },
         })
         .state('url-selector', {
