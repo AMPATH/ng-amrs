@@ -1,0 +1,96 @@
+{
+	"startIndex": 0,
+	"size": 15,
+	"result": [
+		{
+			"date": "2015-07-06T21:00:00.000Z",
+			"encounter_type_id": 2,
+			"encounter_type": "ADULTRETURN",
+			"encounters_count": 1
+		},
+		{
+			"date": "2015-07-06T21:00:00.000Z",
+			"encounter_type_id": 32,
+			"encounter_type": "ANCINITIAL",
+			"encounters_count": 1
+		},
+		{
+			"date": "2015-07-13T21:00:00.000Z",
+			"encounter_type_id": 83,
+			"encounter_type": "HTNDMDISPENSARY",
+			"encounters_count": 2
+		},
+		{
+			"date": "2015-07-13T21:00:00.000Z",
+			"encounter_type_id": 32,
+			"encounter_type": "ANCINITIAL",
+			"encounters_count": 1
+		},
+		{
+			"date": "2015-07-21T21:00:00.000Z",
+			"encounter_type_id": 32,
+			"encounter_type": "ANCINITIAL",
+			"encounters_count": 1
+		},
+		{
+			"date": "2015-07-23T21:00:00.000Z",
+			"encounter_type_id": 32,
+			"encounter_type": "ANCINITIAL",
+			"encounters_count": 1
+		},
+		{
+			"date": "2015-07-26T21:00:00.000Z",
+			"encounter_type_id": 2,
+			"encounter_type": "ADULTRETURN",
+			"encounters_count": 1
+		},
+		{
+			"date": "2015-07-26T21:00:00.000Z",
+			"encounter_type_id": 83,
+			"encounter_type": "HTNDMDISPENSARY",
+			"encounters_count": 1
+		},
+		{
+			"date": "2015-07-30T21:00:00.000Z",
+			"encounter_type_id": 2,
+			"encounter_type": "ADULTRETURN",
+			"encounters_count": 5
+		},
+		{
+			"date": "2015-07-30T21:00:00.000Z",
+			"encounter_type_id": 83,
+			"encounter_type": "HTNDMDISPENSARY",
+			"encounters_count": 2
+		},
+		{
+			"date": "2015-07-31T21:00:00.000Z",
+			"encounter_type_id": 2,
+			"encounter_type": "ADULTRETURN",
+			"encounters_count": 2
+		},
+		{
+			"date": "2015-08-01T21:00:00.000Z",
+			"encounter_type_id": 2,
+			"encounter_type": "ADULTRETURN",
+			"encounters_count": 1
+		},
+		{
+			"date": "2015-08-02T21:00:00.000Z",
+			"encounter_type_id": 2,
+			"encounter_type": "ADULTRETURN",
+			"encounters_count": 2
+		},
+		{
+			"date": "2015-08-03T21:00:00.000Z",
+			"encounter_type_id": 2,
+			"encounter_type": "ADULTRETURN",
+			"encounters_count": 5
+		},
+		{
+			"date": "2015-08-05T21:00:00.000Z",
+			"encounter_type_id": 2,
+			"encounter_type": "ADULTRETURN",
+			"encounters_count": 1
+		}
+	]
+}

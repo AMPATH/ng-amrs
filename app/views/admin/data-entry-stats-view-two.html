@@ -1,0 +1,49 @@
+<div style="margin: 2px;">
+	<stats-data-entry-filters enabled-controls="controls" start-month="startMonth" selected-provider="selectedProvider" selected-forms="selectedForms"
+	selected-encounter-types="selectedEncounterTypes">
+	</stats-data-entry-filters>
+	<div ng-show='!isBusy'>
+		<button class="btn btn-info" ng-click="loadStatsFromServer()">
+			Load
+		</button>
+		<button class="btn btn-default" ng-click="getPreviousStartMonth()">
+			Previous 12 Months
+		</button>
+		<button class="btn btn-default" ng-click="getNextStartMonth()">
+			Next 12 Months
+		</button>
+	</div>
+	<div ng-show='isBusy'>
+		<img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+		<b>Loading data...</b>
+	</div>
+	<div ng-show='experiencedLoadingErrors' style="margin-top: 2px;">
+		<p class="bg-danger" style="padding:4px;">
+			<b>
+				<span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
+			<p>
+	</div>
+	<div ng-hide="needsRefresh">
+		<h3 class="text-primary" style="magin-top: 0px; margin-bottom:0px;"> <strong> View 2 </strong> <small class="text-primary">({{startMonth | date:'MMM, yyyy'}} to {{endMonth | date:'MMM, yyyy'}})</small> </h3>
+		<!--<hr style="margin-top: 2px; margin-bottom: 2px;"/>-->
+
+		<div class="panel panel-primary" style="padding:2px; margin:0px;">
+			<table class='table table-responsive'>
+				<thead>
+					<tr>
+						<th>Encounter Types</th>
+						<th ng-repeat="header in columnHeaderRow">{{header}}</th>
+					</tr>
+				</thead>
+				<tr ng-repeat="item in groupedItems">
+					<td>
+						{{item.encounter_type}}
+					</td>
+					<td ng-repeat="cell in item.value">
+						{{cell.value.encounters_count}}
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

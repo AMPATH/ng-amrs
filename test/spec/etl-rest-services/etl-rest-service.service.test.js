@@ -546,9 +546,9 @@
     it('should build the correct query param object by sub-type when ' +
       'getDataEntryStatisticsQueryParam is invoked with report params', function () {
 
-        var locationIds = 'id1,id2,id3';
-        var encounterTypes = 'type1,type2,type3,type4';
-        var formIds = 'form1,form2,form3,form4';
+        var locationUuids = 'id1,id2,id3';
+        var encounterTypeUuids = 'type1,type2,type3,type4';
+        var formUuids = 'form1,form2,form3,form4';
         var providerUuid = 'providerUuid';
         var creatorUuid = 'creatorUuid';
         var startDate = '2015-01-01';
@@ -564,15 +564,14 @@
           subType: subType,
           startDate: startDate,
           endDate: endDate,
-          locations: locationIds,
-          encounterTypeIds: encounterTypes,
-          formIds: formIds,
+          locationUuids: locationUuids,
+          encounterTypeUuids: encounterTypeUuids,
+          formUuids: formUuids,
           providerUuid: providerUuid
         };
 
         queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-          endDate, locationIds, encounterTypes, formIds, providerUuid, creatorUuid);
-
+          endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid);
         //assertions
         expect(queryParam).to.deep.equal(expectedParam);
 
@@ -581,13 +580,12 @@
           subType: subType,
           startDate: startDate,
           endDate: endDate,
-          locations: locationIds,
+          locationUuids: locationUuids,
           providerUuid: providerUuid
         };
 
         queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-          endDate, locationIds, null, null, providerUuid, creatorUuid);
-
+          endDate, locationUuids, null, null, providerUuid, creatorUuid);
         //assertions
         expect(queryParam).to.deep.equal(expectedParam);
 
@@ -598,15 +596,15 @@
           subType: subType,
           startDate: startDate,
           endDate: endDate,
-          locations: locationIds,
-          encounterTypeIds: encounterTypes,
-          formIds: formIds,
+          locationUuids: locationUuids,
+          encounterTypeUuids: encounterTypeUuids,
+          formUuids: formUuids,
           providerUuid: providerUuid
         };
 
         queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-          endDate, locationIds, encounterTypes, formIds, providerUuid, creatorUuid);
-
+          endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid);
+                
         //assertions
         expect(queryParam).to.deep.equal(expectedParam);
 
@@ -615,13 +613,13 @@
           subType: subType,
           startDate: startDate,
           endDate: endDate,
-          locations: locationIds,
+          locationUuids: locationUuids,
           providerUuid: providerUuid
         };
 
         queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-          endDate, locationIds, null, null, providerUuid, creatorUuid);
-
+          endDate, locationUuids, null, null, providerUuid, creatorUuid);
+                
         //assertions
         expect(queryParam).to.deep.equal(expectedParam);
 
@@ -633,15 +631,15 @@
           subType: subType,
           startDate: startDate,
           endDate: endDate,
-          locations: locationIds,
-          encounterTypeIds: encounterTypes,
-          formIds: formIds,
+          locationUuids: locationUuids,
+          encounterTypeUuids: encounterTypeUuids,
+          formUuids: formUuids,
           providerUuid: providerUuid
         };
 
         queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-          endDate, locationIds, encounterTypes, formIds, providerUuid, creatorUuid);
-
+          endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid);
+                
         //assertions
         expect(queryParam).to.deep.equal(expectedParam);
 
@@ -650,13 +648,13 @@
           subType: subType,
           startDate: startDate,
           endDate: endDate,
-          locations: locationIds,
+          locationUuids: locationUuids,
           providerUuid: providerUuid
         };
 
         queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-          endDate, locationIds, null, null, providerUuid, creatorUuid);
-
+          endDate, locationUuids, null, null, providerUuid, creatorUuid);
+                
         //assertions
         expect(queryParam).to.deep.equal(expectedParam);
 
@@ -667,15 +665,15 @@
           subType: subType,
           startDate: startDate,
           endDate: endDate,
-          locations: locationIds,
-          encounterTypeIds: encounterTypes,
-          formIds: formIds,
+          locationUuids: locationUuids,
+          encounterTypeUuids: encounterTypeUuids,
+          formUuids: formUuids,
           creatorUuid: creatorUuid
         };
 
         queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-          endDate, locationIds, encounterTypes, formIds, providerUuid, creatorUuid);
-
+          endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid);
+                
         //assertions
         expect(queryParam).to.deep.equal(expectedParam);
 
@@ -684,13 +682,13 @@
           subType: subType,
           startDate: startDate,
           endDate: endDate,
-          locations: locationIds,
+          locationUuids: locationUuids,
           creatorUuid: creatorUuid
         };
 
         queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-          endDate, locationIds, null, null, providerUuid, creatorUuid);
-
+          endDate, locationUuids, null, null, providerUuid, creatorUuid);
+                
         //assertions
         expect(queryParam).to.deep.equal(expectedParam);
 
@@ -700,34 +698,34 @@
     it('should make an api call to the data entry statistics etl ' +
       'rest endpoint when getDataEntryStatistics is called with ' +
       'a subType, date range, location uuid, and optional parameters', function () {
-        var locationIds = 'id1,id2,id3';
+        var locationUuids = 'id1,id2,id3';
         var startDate = '2015-01-01';
         var endDate = '2015-06-01';
 
         httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
           'data-entry-statistics/by-date-by-encounter-type?' +
-          'endDate=' + endDate + '&locations=' + locationIds +
+          'endDate=' + endDate + '&locationUuids=' + locationUuids +
           '&startDate=' + startDate).respond({});
 
         etlRestService.getDataEntryStatistics('by-date-by-encounter-type',
-          startDate, endDate, locationIds, undefined, undefined, undefined,
+          startDate, endDate, locationUuids, undefined, undefined, undefined,
           undefined, function () { }, function () { });
         httpBackend.flush();
       });
 
     it('should call the onSuccess callback getDataEntryStatistics ' +
       'request successfully returns', function () {
-        var locationIds = 'id1,id2,id3';
+        var locationUuids = 'id1,id2,id3';
         var startDate = '2015-01-01';
         var endDate = '2015-06-01';
 
         httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
           'data-entry-statistics/by-date-by-encounter-type?' +
-          'endDate=' + endDate + '&locations=' + locationIds +
+          'endDate=' + endDate + '&locationUuids=' + locationUuids +
           '&startDate=' + startDate).respond({});
 
         etlRestService.getDataEntryStatistics('by-date-by-encounter-type',
-          startDate, endDate, locationIds, undefined, undefined, undefined,
+          startDate, endDate, locationUuids, undefined, undefined, undefined,
           undefined, callbacks.onSuccess, callbacks.onFailure);
         httpBackend.flush();
 
@@ -737,17 +735,17 @@
 
     it('should call the onFailed callback when getDataEntryStatistics ' +
       'request is not successfull', function () {
-        var locationIds = 'id1,id2,id3';
+        var locationUuids = 'id1,id2,id3';
         var startDate = '2015-01-01';
         var endDate = '2015-06-01';
 
         httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
           'data-entry-statistics/by-date-by-encounter-type?' +
-          'endDate=' + endDate + '&locations=' + locationIds +
+          'endDate=' + endDate + '&locationUuids=' + locationUuids +
           '&startDate=' + startDate).respond(500);
 
         etlRestService.getDataEntryStatistics('by-date-by-encounter-type',
-          startDate, endDate, locationIds, undefined, undefined, undefined,
+          startDate, endDate, locationUuids, undefined, undefined, undefined,
           undefined, callbacks.onSuccess, callbacks.onFailure);
         httpBackend.flush();
 

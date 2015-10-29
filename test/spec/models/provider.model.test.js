@@ -45,7 +45,7 @@ jshint -W030
         testProviderOpenmrsObject = 
         {identifier: '_identifier',
          person: testPersonOpenmrsObject,
-         uuId: '_uuId',
+         uuid: '_uuId',
          display: '_display',
          attributes: '_attributes',
          retired: '_retired'};
@@ -66,7 +66,7 @@ jshint -W030
 
         expect(model.identifier()).to.equal(testProviderOpenmrsObject.identifier);
         expect(model.person().openmrsModel()).to.deep.equal(testProviderOpenmrsObject.person);
-        expect(model.uuId()).to.equal(testProviderOpenmrsObject.uuId);
+        expect(model.uuId()).to.equal(testProviderOpenmrsObject.uuid);
         expect(model.display()).to.equal(testProviderOpenmrsObject.display);
         expect(model.attributes()).to.equal(testProviderOpenmrsObject.attributes);
         expect(model.retired()).to.equal(testProviderOpenmrsObject.retired);
