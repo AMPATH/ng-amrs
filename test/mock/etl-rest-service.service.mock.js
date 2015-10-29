@@ -376,25 +376,20 @@ function getDailyVisits(locationUuid, startDate, endDate, successCallback, faile
       return defaulterEtl;
     }
 
-    function getPatientRecord(index) {
+    function getPatientEtlRecord(index) {
       /* jshint ignore:start */
-      var defaulterEtl = {
+      var patientEtl = {
         person_id: 'person_id' + index,
         encounter_id: 'encounter_id' + index,
-        encounter_datetime: 'encounter_datetime',
-        encounter_type: 'encounter_type',
         location_id: '_location_id',
         location_uuid: 'location_uuid',
-        rtc_date: 'rtc_date',
-        arv_start_date: 'arv_start_date',
-        encounter_type_name: 'encounter_type_name',
+        patient_uuid: 'patient_uuid' + index,
         person_name: 'person_name',
-        phone_number: 'phone_number',
         identifiers: 'identifiers',
-        patient_uuid: 'patient_uuid' + index
+
       };
       /* jshint ignore:end */
-      return defaulterEtl;
+      return patientEtl;
     }
 
     function getAppointmentScheduleRecord(index) {
@@ -579,7 +574,7 @@ function getDailyVisits(locationUuid, startDate, endDate, successCallback, faile
       }
 
       for (var i = startIndex; i < (startIndex + numberOfRecords); i++) {
-        patients.push(getPatientRecord(i));
+        patients.push(getPatientEtlRecord(i));
       }
 
       successCallback({

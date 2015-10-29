@@ -24,12 +24,9 @@
       //initialize private members
       var _personId = patientEtl.person_id ? patientEtl.person_id : '';
       var _encounterId = patientEtl.encounter_id ? patientEtl.encounter_id : '';
-      var _encounterDatetime = patientEtl.encounter_datetime ? patientEtl.encounter_datetime : '';
-      var _encounterType = patientEtl.encounter_type ? patientEtl.encounter_type : '';
       var _locationId = patientEtl.location_id ? patientEtl.location_id : '';
       var _locationUuid = patientEtl.location_uuid ? patientEtl.location_uuid : '';
       var _personName = patientEtl.person_name ? patientEtl.person_name : '';
-      var _phoneNumber = patientEtl.phone_number ? patientEtl.phone_number : '';
       var _identifiers = patientEtl.identifiers ? patientEtl.identifiers : '';
       var _patientUuid = patientEtl.patient_uuid ? patientEtl.patient_uuid : '';
 
@@ -50,25 +47,6 @@
           return _encounterId;
         }
       };
-
-      modelDefinition.encounterDatetime = function (value) {
-        if (angular.isDefined(value)) {
-          _encounterDatetime = value;
-        }
-        else {
-          return _encounterDatetime;
-        }
-      };
-
-      modelDefinition.encounterType = function (value) {
-        if (angular.isDefined(value)) {
-          _encounterType = value;
-        }
-        else {
-          return _encounterType;
-        }
-      };
-
       modelDefinition.locationId = function (value) {
         if (angular.isDefined(value)) {
           _locationId = value;
@@ -95,16 +73,6 @@
           return _personName;
         }
       };
-
-      modelDefinition.phoneNumber = function (value) {
-        if (angular.isDefined(value)) {
-          _phoneNumber = value;
-        }
-        else {
-          return _phoneNumber;
-        }
-      };
-
       modelDefinition.identifiers = function (value) {
         if (angular.isDefined(value)) {
           _identifiers = value;

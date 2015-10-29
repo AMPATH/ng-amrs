@@ -25,42 +25,34 @@ jshint -W030
 		beforeEach(inject(function () {
 			/* jshint ignore:start */
 			patientEtl = {
-				person_id: 'person_id',
+
+        person_id: 'person_id',
 				encounter_id: 'encounter_id',
-				encounter_datetime: 'encounter_datetime',
-				encounter_type: 'encounter_type',
 				location_id: '_location_id',
 				location_uuid: 'location_uuid',
+        patient_uuid: 'patient_uuid',
 				person_name: 'person_name',
-				phone_number: 'phone_number',
-				identifiers: 'identifiers',
-				patient_uuid: 'patient_uuid'
+        identifiers: 'identifiers'
 			};
 
 			patientsEtl = [
 				{
           person_id: 'person_id',
           encounter_id: 'encounter_id',
-          encounter_datetime: 'encounter_datetime',
-          encounter_type: 'encounter_type',
           location_id: '_location_id',
           location_uuid: 'location_uuid',
+          patient_uuid: 'patient_uuid',
           person_name: 'person_name',
-          phone_number: 'phone_number',
-          identifiers: 'identifiers',
-          patient_uuid: 'patient_uuid'
+          identifiers: 'identifiers'
 				},
 				{
           person_id: 'person_id',
           encounter_id: 'encounter_id',
-          encounter_datetime: 'encounter_datetime',
-          encounter_type: 'encounter_type',
           location_id: '_location_id',
           location_uuid: 'location_uuid',
+          patient_uuid: 'patient_uuid',
           person_name: 'person_name',
-          phone_number: 'phone_number',
-          identifiers: 'identifiers',
-          patient_uuid: 'patient_uuid'
+          identifiers: 'identifiers'
 				}
 			];
 
@@ -78,12 +70,9 @@ jshint -W030
 
 			expect(model.personId()).to.equal(patientEtl.person_id);
 			expect(model.encounterId()).to.equal(patientEtl.encounter_id);
-			expect(model.encounterDatetime()).to.equal(patientEtl.encounter_datetime);
-			expect(model.encounterType()).to.equal(patientEtl.encounter_type);
 			expect(model.locationId()).to.equal(patientEtl.location_id);
 			expect(model.locationUuid()).to.equal(patientEtl.location_uuid);
 			expect(model.personName()).to.equal(patientEtl.person_name);
-			expect(model.phoneNumber()).to.equal(patientEtl.phone_number);
 			expect(model.identifiers()).to.equal(patientEtl.identifiers);
 			expect(model.patientUuid()).to.equal(patientEtl.patient_uuid);
 
