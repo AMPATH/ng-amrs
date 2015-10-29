@@ -99,10 +99,11 @@ module.exports = function (config) {
     preprocessors: {
       'app/views/patient-dashboard/**/*.html': ['ng-html2js'],
       'app/views/clinic-dashboard/**/*.html': ['ng-html2js'],
+      'app/views/admin/**/*.html': ['ng-html2js'],
     },
     ngHtml2JsPreprocessor: {
       stripPrefix: 'app/',
-      moduleName: 'my.templates' 
+      moduleName: 'my.templates'
     },
 
     // Continuous Integration mode
