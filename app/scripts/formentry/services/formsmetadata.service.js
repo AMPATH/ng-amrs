@@ -35,7 +35,7 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
       var result =  _.find(forms, function(form) {
             //console.log(form)
             if (form.uuid === uuid) return form;
-            else if (form.encounterType === uuid) return form;
+            else if (form.encounterTypeUuid === uuid) return form;
             else if (form.name === uuid) return form;
           });
 
