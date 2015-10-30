@@ -39,7 +39,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
     $scope.vm.updatedFailed = false;
     $scope.vm.voidFailed = false;
     $scope.vm.currentTab = 0;
-
+    $scope.vm.displayedTabs = [];
     //BEGIN PATIENT SUMMARY
     $scope.HivHistoricalExpanded = true;
 
@@ -51,10 +51,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
       $scope.showHivHistoricalSummary = true;
     }
     //END PATIENT SUMMARY
-
     $scope.vm.tabSelected = function($index) {
       $scope.vm.currentTab = $index;
-      console.log('Page ', $index);
+      if ($scope.vm.displayedTabs.indexOf($index) == -1) {
+        $scope.vm.displayedTabs.push($index);
+      }
+
       $scope.vm.tabs[$index]['form'] = $scope.vm.formlyFields[$index].form;
     };
 
@@ -158,9 +160,24 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
     };
 
     $scope.vm.submit = function() {
-      console.log('form', $scope.vm.form);
       $scope.vm.savedOrUpdated = true;
+      var undisplayedTabs = [];
+      angular.copy($scope.vm.tabs, undisplayedTabs);
+      var removeDisplayedTabsByIndex = $scope.vm.displayedTabs;
+      var tabReviewMessage = '';
+      for (var i = removeDisplayedTabsByIndex.length - 1; i >= 0; i--)
+         undisplayedTabs.splice(removeDisplayedTabsByIndex[i], 1);
+
+      tabReviewMessage = 'Please review The following tabs';
+      for (var i = 0, len = undisplayedTabs.length; i < len; i++) {
+        var index = _.findIndex($scope.vm.tabs, {title: undisplayedTabs[i]['title']});
+        tabReviewMessage = tabReviewMessage + '<br>' + undisplayedTabs[i]['title'];
+
+        //$scope.vm.tabs[index]['form'] = $scope.vm.formlyFields[index].form;
+      }
+
       if ($scope.vm.form.$valid) {
+        if ($scope.vm.displayedTabs.length === $scope.vm.tabs.length) {
         var form = selectedForm;
         console.log('Selected form', form);
         var payLoadData = FormentryService.updateFormPayLoad($scope.vm.model, $scope.vm.formlyFields, $scope.vm.patient, form, params);
@@ -224,10 +241,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 $scope.vm.errorSubmit = 'An Error occured while trying to save the form';
               }
               );
-          }
-        } else {
-          var dlg = dialogs.notify('Info', 'Can\'t submit, no obs entered. ' +
+            }
+          } else {
+            var dlg = dialogs.notify('Info', 'Can\'t submit, no obs entered. ' +
             ' To submit enter some obs');
+          }
+        }else {
+          var dlg = dialogs.notify('Info', tabReviewMessage);
         }
       } else {
         //only activate this for debugging purposes
@@ -242,6 +262,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
           }
         }
       }
+
     };
 
     function activate() {
