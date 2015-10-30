@@ -32,6 +32,9 @@ jshint -W098, -W117, -W003, -W026
       getDefaultersList: getDefaultersList,
       numberOfDefaultersToReturn: 20,
 
+      getPatientListByIndicator:getPatientListByIndicator,
+      numberOfPatientsToReturn: 20,
+
       returnErrorOnNextCall: false
     };
     //debugger;
@@ -373,6 +376,27 @@ function getDailyVisits(locationUuid, startDate, endDate, successCallback, faile
       return defaulterEtl;
     }
 
+    function getPatientRecord(index) {
+      /* jshint ignore:start */
+      var defaulterEtl = {
+        person_id: 'person_id' + index,
+        encounter_id: 'encounter_id' + index,
+        encounter_datetime: 'encounter_datetime',
+        encounter_type: 'encounter_type',
+        location_id: '_location_id',
+        location_uuid: 'location_uuid',
+        rtc_date: 'rtc_date',
+        arv_start_date: 'arv_start_date',
+        encounter_type_name: 'encounter_type_name',
+        person_name: 'person_name',
+        phone_number: 'phone_number',
+        identifiers: 'identifiers',
+        patient_uuid: 'patient_uuid' + index
+      };
+      /* jshint ignore:end */
+      return defaulterEtl;
+    }
+
     function getAppointmentScheduleRecord(index) {
       /* jshint ignore:start */
       var appointmentScheduleEtl = {
@@ -520,8 +544,50 @@ function getDailyVisits(locationUuid, startDate, endDate, successCallback, faile
 
       return hivSummaryEtl;
     }
+    function getPatientListByIndicator(locationUuid, startDate, endDate, indicator, successCallback, failedCallback,
+     startIndex, limit) {
+      console.log('calling mock getPatientListByIndicator');
+      if (!startIndex) {
+        startIndex = 0;
+      }
 
+      if (!limit) {
+        limit = service.numberOfPatientsToReturn;
+      }
+      if (service.returnErrorOnNextCall === true) {
+        console.log('returning error on getPatientListByIndicator');
+        failedCallback({ message: 'An error occured' });
+        return;
+      }
 
+      var patients = [];
+      var numberOfRecords = limit;
+      if (startIndex >= service.numberOfPatientsToReturn) {
+        successCallback({
+          startIndex: startIndex,
+          size: 0,
+          result: []
+        });
+        return;
+      }
+
+      if ((startIndex + limit) > service.numberOfPatientsToReturn) {
+        numberOfRecords = service.numberOfPatientsToReturn - (startIndex + limit);
+      }
+      else {
+        numberOfRecords = limit;
+      }
+
+      for (var i = startIndex; i < (startIndex + numberOfRecords); i++) {
+        patients.push(getPatientRecord(i));
+      }
+
+      successCallback({
+        startIndex: startIndex,
+        size: numberOfRecords,
+        result: patients
+      });
+    }
 
   }
 })();
