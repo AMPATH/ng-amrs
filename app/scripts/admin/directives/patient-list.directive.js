@@ -39,28 +39,13 @@ jshint -W003, -W026
         $scope.loadPatient = loadPatient;
 
         function loadPatient(patientUuid) {
-            /*
-            Get the selected patient and save the details in the root scope
-            so that we don't do another round trip to get the patient details
-            */
-            _.find($scope.patients, function (patient) {
-                if (patient.patientUuid() === patientUuid)
-                {
-                  $rootScope.broadcastPatient = patient;
-                  $state.go('patient', { uuid: patientUuid });
-                }
-                else
-                {
-                 OpenmrsRestService.getPatientService().getPatientByUuid({ uuid: patientUuid },
-                    function (data) {
-                      $rootScope.broadcastPatient = data;
-                      $state.go('patient', { uuid: patientUuid });
+           OpenmrsRestService.getPatientService().getPatientByUuid({ uuid: patientUuid },
+              function (data) {
+                $rootScope.broadcastPatient = data;
+                $state.go('patient', { uuid: patientUuid });
 
-                    });
-                }
-            });
-
-        }
+              });
+          }
 
         function loadPatientList() {
             $scope.experiencedLoadingErrors = false;
