@@ -1,0 +1,11 @@
+<stats-hiv-summary-filters enabled-controls="'start-date, end-date'" start-date="startDate" end-date="endDate"
+ >
+</stats-hiv-summary-filters>
+<br>
+<div class="well" style="padding:2px; cursor:pointer;">
+  <div class="panel panel-default" style="padding: 4px; margin: 2px;"  collapse="isExpanded">
+    <patient-list indicator="{{selectedIndicatorBox}}" start-date="{{startDate| date:'shortDate'}}" end-date="{{endDate| date:'shortDate'}}"
+                  location-uuid="{{selectedLocation}}"></patient-list>
+  </div>
+</div>
+

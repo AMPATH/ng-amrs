@@ -11,7 +11,7 @@ jshint -W003, -W026
 
     function directive() {
         return {
-            restict: "E",
+            restrict: "E",
             scope: { locationUuid: "@",
                       startDate: "@",
                       endDate:"@",
@@ -24,9 +24,11 @@ jshint -W003, -W026
     }
 
 	patientListController.$inject =
-    ['$scope', '$rootScope', 'EtlRestService', 'PatientEtlModel', 'moment', '$state', 'OpenmrsRestService'];
+    ['$scope', '$rootScope', 'EtlRestService', 'PatientEtlModel', '$state', 'OpenmrsRestService', 'moment',
+      'HivSummaryIndicatorService'];
 
-    function patientListController($scope, $rootScope, EtlRestService, PatientEtlModel, $state, OpenmrsRestService) {
+    function patientListController($scope, $rootScope, EtlRestService, PatientEtlModel, $state, OpenmrsRestService,
+                                   moment, HivSummaryIndicatorService) {
 
         //non-function types scope members
         $scope.patients = [];
@@ -37,6 +39,11 @@ jshint -W003, -W026
         //function types scope members
         $scope.loadPatientList = loadPatientList;
         $scope.loadPatient = loadPatient;
+        $scope.loadIndicatorView=loadIndicatorView;
+        $scope.getIndicatorDetails = getIndicatorDetails;
+
+        //load data
+        loadPatientList();
 
         function loadPatient(patientUuid) {
            OpenmrsRestService.getPatientService().getPatientByUuid({ uuid: patientUuid },
@@ -46,17 +53,26 @@ jshint -W003, -W026
 
               });
           }
-
+        function loadIndicatorView ()
+        {
+          $state.go('admin.hiv-summary-indicators.indicator');
+        }
         function loadPatientList() {
             $scope.experiencedLoadingErrors = false;
             if($scope.isBusy === true) return;
             $scope.isBusy = true;
             $scope.patients = [];
             if ($scope.locationUuid && $scope.locationUuid !== '' && $scope.indicator && $scope.indicator!==''
-              && $scope.startDate && $scope.startDate!=='' )
-
-                EtlRestService.getPatientListByIndicator($scope.locationUuid, $scope.startDate, $scope.endDate,
-                  $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError);
+              && $scope.startDate && $scope.startDate!=='' ) {
+              EtlRestService.getPatientListByIndicator($scope.locationUuid,
+                moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+                moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+                $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError);
+            }
+            else{
+              $scope.experiencedLoadingErrors = true;
+              $scope.isBusy = false;
+              }
         }
 
         function onFetchPatientsListSuccess(patients) {
@@ -65,19 +81,18 @@ jshint -W003, -W026
         }
 
         function onFetchPatientsListError(error) {
+          console.log('Aww! something wrong happened', error);
              $scope.isBusy = false;
              $scope.experiencedLoadingErrors = true;
+        }
+        function getIndicatorDetails() {
+            return HivSummaryIndicatorService.getIndicatorDetails();
         }
 	}
 
         function patientListLink(scope, element, attrs, vm) {
-              attrs.$observe('locationUuid', onLocationUuidChanged);
-              function onLocationUuidChanged(newVal, oldVal) {
-                  if (newVal && newVal != "") {
-                      scope.isBusy = false;
-                      scope.patients = [];
-                      scope.loadPatientList();
-                  }
+              scope.onLoadPatientList= function() {
+
               }
           }
 })();
