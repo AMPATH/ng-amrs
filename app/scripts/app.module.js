@@ -27,8 +27,7 @@
       'app.admin',
       'app.formentry',
       'app.utils',
-      'ct.ui.router.extras',
-      'app.adminDashboard'
+      'ct.ui.router.extras'
     ])
     .config(function($stateProvider, $stickyStateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');
@@ -94,7 +93,7 @@
         })
         .state('admin', {
           url: '/admin-dashboard',
-          templateUrl: 'views/admin-dashboard/admin-dashboard.html',
+          templateUrl: 'views/admin/admin-dashboard.html',
           controller: 'AdminDashboardCtrl',
           data: { requireLogin: true }
         })

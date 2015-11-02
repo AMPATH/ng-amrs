@@ -6,7 +6,7 @@ jshint -W003, -W026
     'use strict';
 
     angular
-        .module('app.adminDashboard')
+        .module('app.admin')
         .directive('patientCreationStatistics', patientCreationStatistics);
 
     function patientCreationStatistics() {
@@ -16,15 +16,15 @@ jshint -W003, -W026
               location: "@", period: "@"
             },
             controller: patientCreationStatisticsController,
-            templateUrl: "views/admin-dashboard/patient-creation-statistics.html"
+            templateUrl: "views/admin/patient-creation-statistics.html"
         };
     }
 
     patientCreationStatisticsController.$inject = ['$scope', '$rootScope', 'EtlRestService', 
-      'moment', '$state','$filter'];
+      'moment', '$state', '$filter', 'OpenmrsRestService'];
 
     function patientCreationStatisticsController($scope, $rootScope, EtlRestService, 
-          moment, $state, $filter) { 
+          moment, $state, $filter, OpenmrsRestService) { 
         $scope.startDate = new Date();
         $scope.endDate = new Date();                     
         $scope.currentPage = 1;        
@@ -44,6 +44,8 @@ jshint -W003, -W026
         $scope.patientInLocationSearchString='';
         $scope.patientDetails=false;
         $scope.selectedLocationId='';
+        $scope.loadPatient ='';
+        $scope.dateRangeError=false;
                        
         $scope.selectedDate = function (value) {
             if (value) {                
@@ -89,27 +91,30 @@ jshint -W003, -W026
              $scope.endDateControlStatus.startOpened = true;
         };
 
-        $scope.loadPatientCreationStats=function(){  
+        $scope.loadPatientCreationStats=function(){
+            $scope.showStatistics=true;   
           if ($scope.isBusyStatisticsDetails === true || $scope.isBusyStatistics) return;              
            $scope.isBusyStatistics = true;
            $scope.patientCreationStatisticsLoadError=false;
            
             if ($scope.endDate<$scope.startDate){
                 $scope.dateRangeError="The selected end date Must be greater than start date";
+                 $scope.isBusyStatistics = false;
                 return;
             }            
                       
-           if ($scope.endDate && $scope.endDate !== '' && $scope.startDate && $scope.startDate !== '')
+           if ($scope.endDate && $scope.endDate !== '' && $scope.startDate && $scope.startDate !== '') {
+           $scope.isBusyStatistics = true;
            EtlRestService.getPatientsCreatedByPeriod(
                 moment($scope.startDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
                 moment($scope.endDate).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
                 onSuccessPatientStatisticsQuery,
                 onFailedPatientStatisticsQuery
            );
+           }
         };
         
-        function onSuccessPatientStatisticsQuery(data){                   
-            $scope.showStatistics=true;                   
+        function onSuccessPatientStatisticsQuery(data){                                       
             $scope.patientStatistics=data;
             $scope.nextStartIndex = +data.startIndex + data.size;
             $scope.isBusyStatistics = false;
@@ -122,7 +127,9 @@ jshint -W003, -W026
             $scope.isBusyStatistics=false;                                             
         }
         
-            $scope.loadPatientDetails =function (locationId,locationName) { 
+            $scope.loadPatientDetails =function (locationId,locationName) {
+            $scope.showCreationDetails=true;
+            $scope.showStatistics=false;  
             if ($scope.isBusyStatisticsDetails === true || $scope.isBusyStatistics) return;           
             $scope.showPatientsInLocation=true;                 
             $scope.selectedLocation=locationName;
@@ -147,8 +154,7 @@ jshint -W003, -W026
             
        function onSuccessDetailsOfPatientsCreatedInLocationQuery(data){ 
            if($scope.showStatistics) 
-           $scope.showStatistics=false;
-           $scope.showCreationDetails=true;                
+           $scope.showStatistics=false;                         
            $scope.patientInLocation=data;
            $scope.nextStartIndex = +data.startIndex + data.size;
            $scope.experiencedStatisticsDetailLoadError=false;
@@ -158,7 +164,21 @@ jshint -W003, -W026
         function onFailedDetailsOfPatientsCreatedInLocationQuery(error){
                    $scope.experiencedStatisticsDetailLoadError=true;
                    $scope.isBusyStatisticsDetails=false;                              
-        }   
+        } 
+        
+        $scope.loadPatient = loadPatient;
+        function loadPatient(patientUuid) {
+          /*
+            Get the selected patient and save the details in the root scope
+            so that we don't do another round trip to get the patient details
+            */
+          OpenmrsRestService.getPatientService().getPatientByUuid({ uuid: patientUuid },
+                 function(data) {
+                   $rootScope.broadcastPatient = data;
+                   $state.go('patient', { uuid: patientUuid });
+                 }
+            );
+        }  
 
         
         

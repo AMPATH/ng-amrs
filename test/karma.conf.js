@@ -97,7 +97,6 @@ module.exports = function (config) {
       'karma-ng-html2js-preprocessor'
     ],
     preprocessors: {
-      'app/views/admin-dashboard/**/*.html': ['ng-html2js'],
       'app/views/patient-dashboard/**/*.html': ['ng-html2js'],
       'app/views/clinic-dashboard/**/*.html': ['ng-html2js'],
       'app/views/admin/**/*.html': ['ng-html2js'],

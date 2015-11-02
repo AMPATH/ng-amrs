@@ -50,7 +50,7 @@
         <span>Reload</span>
       </button>
   </div>  
-      
+     
   <div ng-show='isBusyStatistics'>
       <img ng-show="isBusyStatistics" src="images/ajax-loader.gif" autofocus />
       <b>Loading patient creation statistics...</b>
@@ -128,11 +128,14 @@
                 <th>Last Name</th>
               </tr>
               </thead>
-              <tr  ng-repeat="patient in patientInLocation.result | filter:patientInLocationSearchString | startFrom:(currentPage-1)*10 | limitTo:10">
+              <tr  ng-repeat="patient in patientInLocation.result | filter:patientInLocationSearchString | startFrom:(currentPage-1)*10 | limitTo:10" data-ng-click="loadPatient(patient.patientUuid)">
                 <td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
                 <td>{{patient.given_name  | titlecase}}</td>
                 <td>{{patient.middle_name | titlecase}}</td>
-                <td>{{patient.family_name | titlecase}}</td>                   
+                <td>{{patient.family_name | titlecase}}</td> 
+                <td>
+                  <a href="#"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
+                </td>                  
               </tr>
               </table>
               <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />

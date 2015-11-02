@@ -13,7 +13,7 @@
 		beforeEach(function () {
 			//debugger;
 			module('ngAmrsApp');
-			module('app.adminDashboard');
+			module('app.admin');
 			module('mock.etlRestServices');
 			module('my.templates');
 		});
