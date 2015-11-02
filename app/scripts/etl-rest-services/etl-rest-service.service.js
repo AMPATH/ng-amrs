@@ -24,7 +24,9 @@
       getHivSummaryIndicators: getHivSummaryIndicators,
       getDataEntryStatisticsTypes: getDataEntryStatisticsTypes,
       getDataEntryStatisticsQueryParam: getDataEntryStatisticsQueryParam,
-      getDataEntryStatistics: getDataEntryStatistics
+      getDataEntryStatistics: getDataEntryStatistics,
+      getPatientsCreatedByPeriod:getPatientsCreatedByPeriod,
+      getDetailsOfPatientsCreatedInLocation:getDetailsOfPatientsCreatedInLocation
     };
     return serviceDefinition;
 
@@ -232,7 +234,7 @@
         });
 
     }
-
+    
     function getPatientListByIndicator(locationUuid, startDate, endDate, indicator, successCallback, failedCallback, startIndex, limit) {
       var resource = getResource('location/:uuid/patient-by-indicator');
 
@@ -365,5 +367,58 @@
 
       return param;
     }
+    
+    function getPatientsCreatedByPeriod(startDate, endDate, successCallback, failedCallback, startIndex, limit) {
+      var resource = getResource('patient/creation/statistics');
+
+      var params = { startDate: startDate, endDate: endDate };
+
+      if (startIndex !== undefined) {
+        params.startIndex = startIndex;
+      }
+
+      if (limit !== undefined) {
+        params.limit = limit;
+      }
+
+      console.log(params);
+      console.log(startIndex);
+
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+
+    }
+    
+    function getDetailsOfPatientsCreatedInLocation(location,startDate, endDate, successCallback, failedCallback, startIndex, limit) {
+      var resource = getResource('location/:location/patient/creation/statistics');
+      var params = {location:location, startDate: startDate, endDate: endDate };
+      
+      if (startIndex !== undefined) {
+        params.startIndex = startIndex;
+      }
+
+      if (limit !== undefined) {
+        params.limit = limit;
+      }
+
+      console.log(params);
+      console.log(startIndex);
+
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+
+    }    
   }
 })();

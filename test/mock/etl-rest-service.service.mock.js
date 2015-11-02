@@ -31,6 +31,12 @@ jshint -W098, -W117, -W003, -W026
 
       getDefaultersList: getDefaultersList,
       numberOfDefaultersToReturn: 20,
+      
+      getPatientsCreatedByPeriod:getPatientsCreatedByPeriod,
+      numberOfPatientCreationRowsToReturn:20,
+            
+      getDetailsOfPatientsCreatedInLocation:getDetailsOfPatientsCreatedInLocation,
+      numberOfPatientCreationInLocationRowsToReturn:20,    
 
       getPatientListByIndicator:getPatientListByIndicator,
       numberOfPatientsToReturn: 20,
@@ -316,6 +322,101 @@ function getDailyVisits(locationUuid, startDate, endDate, successCallback, faile
       });
 
     }
+ 
+ function getPatientsCreatedByPeriod(startDate, endDate, successCallback, failedCallback, startIndex, limit) {
+      console.log('calling mock getPatientsCreatedByPeriod');
+      var patientCreationRecords = [];
+      if (!startIndex) {
+        startIndex = 0;
+      }
+
+      if (!limit) {
+        limit = service.numberOfPatientCreationRowsToReturn;
+      }
+      if (service.returnErrorOnNextCall === true) {
+        console.log('returning error on getPatientsCreatedByPeriod');
+        failedCallback({ message: 'An error occured' });
+        return;
+      }      
+
+      var numberOfRecords = limit;
+
+      if (startIndex >= service.numberOfPatientCreationRowsToReturn) {
+        successCallback({
+          startIndex: startIndex,
+          size: 0,
+          result: []
+        });
+        return;
+      }
+
+      if ((startIndex + limit) > service.numberOfPatientCreationRowsToReturn) {
+        numberOfRecords = service.numberOfPatientCreationRowsToReturn - (startIndex + limit);
+      }
+      else {
+        numberOfRecords = limit;
+      }
+
+      for (var i = startIndex; i < (startIndex + numberOfRecords); i++) {
+        patientCreationRecords.push(getPatientCreationRecord(i));
+      }
+
+      successCallback({
+        startIndex: startIndex,
+        size: numberOfRecords,
+        result:patientCreationRecords
+      });
+
+    }
+    
+    function getDetailsOfPatientsCreatedInLocation(location, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
+      console.log('calling mock getDetailsOfPatientsCreatedInLocation');
+      var patientCreationRecordsDetails = [];
+      if (!startIndex) {
+        startIndex = 0;
+      }
+
+      if (!limit) {
+        limit = service.numberOfPatientCreationInLocationRowsToReturn;
+      }
+      if (service.returnErrorOnNextCall === true) {
+        console.log('returning error on getDetailsOfPatientsCreatedInLocation');
+        failedCallback({ message: 'An error occured' });
+        return;
+      }      
+
+      var numberOfRecords = limit;
+
+      if (startIndex >= service.numberOfPatientCreationRowsToReturn) {
+        successCallback({
+          startIndex: startIndex,
+          size: 0,
+          result: []
+        });
+        return;
+      }
+
+      if ((startIndex + limit) > service.numberOfPatientCreationRowsToReturn) {
+        numberOfRecords = service.numberOfPatientCreationRowsToReturn - (startIndex + limit);
+      }
+      else {
+        numberOfRecords = limit;
+      }
+
+      for (var i = startIndex; i < (startIndex + numberOfRecords); i++) {
+        patientCreationRecordsDetails.push(getDetailsOfPatientCreationInLocationRecord(i));
+      }
+
+      successCallback({
+        startIndex: startIndex,
+        size: numberOfRecords,
+        result:patientCreationRecordsDetails
+      });
+
+
+    }
+    
+    
     function getVitalRecord(index) {
       var vitalRecord = {
         person_id: 'person_id',
@@ -492,6 +593,7 @@ function getDailyVisits(locationUuid, startDate, endDate, successCallback, faile
       /* jshint ignore:end */
       return appointmentScheduleEtl;
     }
+    
     function getHivSummaryRecord(index) {
       /* jshint ignore:start */
       var hivSummaryEtl = {
@@ -539,6 +641,7 @@ function getDailyVisits(locationUuid, startDate, endDate, successCallback, faile
 
       return hivSummaryEtl;
     }
+
     function getPatientListByIndicator(locationUuid, startDate, endDate, indicator, successCallback, failedCallback,
      startIndex, limit) {
       console.log('calling mock getPatientListByIndicator');
@@ -582,6 +685,23 @@ function getDailyVisits(locationUuid, startDate, endDate, successCallback, faile
         size: numberOfRecords,
         result: patients
       });
+    }
+        
+    function getPatientCreationRecord(index) {
+      return {
+        location_id:'location '+index, 
+        name:'Clinic '+index,
+        total:'Total'+index
+      }
+    }
+    
+    function getDetailsOfPatientCreationInLocationRecord(index) {
+      return {
+        patient_id:'patient_id '+index,
+        given_name:'given_name '+index,
+        middle_name:'middle_name '+index,
+        family_name:'family_name '+index
+      }
     }
 
   }

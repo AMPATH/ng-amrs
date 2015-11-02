@@ -1,0 +1,151 @@
+<div ng-disabled="isBusy">
+  <div class="well" style="padding:2px;">
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label for="start-date">Start Date</label>
+        <div>
+          <p class="input-group">
+            <input type="text" id="start-date" class="form-control" datepicker-popup="mediumDate" ng-model="selectedDate" ng-model-options="{getterSetter: true}"
+                   is-open="dateControlStatus.startOpened" />
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="openDatePopup($event)">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </button>
+            </span>
+          </p>
+          </div>
+          <label for="end-date">End Date</label>
+          <div>
+            <p class="input-group">
+              <input type="text" id="end-date" class="form-control" datepicker-popup="mediumDate" ng-model="selectedEndDate" ng-model-options="{getterSetter: true}"
+                    is-open="endDateControlStatus.startOpened" />
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openEndDatePopup($event)">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+              </span>
+            </p>                       
+          </div>
+          <div style="padding-bottom: 23px">
+            <button class="btn btn-info next" style="float:left" ng-click="loadPatientCreationStats()">View Patient Creation Statistics</button>
+          </div>
+      </div>
+    </div>   
+  </div>
+</div>
+<div>
+
+ <div ng-show="showStatistics">
+  <div ng-show='experiencedStatisticsLoadError'>
+        <p class="bg-danger" style="padding:4px;">
+          <b>
+            <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>
+            An error occured while loading statistics. Please try again.</b>
+      </p>
+  </div>   
+
+  <div ng-show='!isBusyStatistics && patientCreationStatisticsLoadError'>
+      <button class="btn btn-info" ng-click="loadPatientCreationStats()">
+        <span class="glyphicon glyphicon-refresh"></span>
+        <span>Reload</span>
+      </button>
+  </div>  
+     
+  <div ng-show='isBusyStatistics'>
+      <img ng-show="isBusyStatistics" src="images/ajax-loader.gif" autofocus />
+      <b>Loading patient creation statistics...</b>
+  </div>
+  <div ng-show='!isBusyStatistics && !patientCreationStatisticsLoadError' style="margin-bottom:2px"><span style="font-size:24px;">Patient Creation Statistics<small style="font-size:14px;">
+        (Patients Created In {{patientStatistics.result.length}} Locations)</small>
+  </div> 
+  <div ng-show="patientStatistics.result.length > 0">   
+  <div class="panel panel-default">
+       <!-- Default panel contents -->
+       <div class="panel-heading">
+          <div class="input-group">  
+            <input class="form-control"  placeholder="Filter..." type="text" ng-model="statisticSearchString"/>
+             <div class="input-group-btn">
+              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+             </div>  
+          </div>
+       </div>     
+          <table class='table table-hover table-striped table-responsive'>
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>Clinic</th>
+                <th>Patients</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr  ng-repeat="statistic in patientStatistics.result | filter:statisticSearchString | startFrom:(currentPage-1)*10 | limitTo:10"  data-ng-click="loadPatientDetails(statistic.location_id,statistic.name)">
+                <td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
+                <td>{{statistic.name | titlecase}}</td>
+                <td>{{statistic.total}}</td>
+                <td>
+                  <a href="#"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+        </div>  
+         <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
+        <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="patientStatistics.result.length" items-per-page="10"
+                  ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
+                  last-text="&raquo;" rotate="false">
+        </pagination>
+  </div>
+</div>
+
+<div ng-show="showCreationDetails">
+      <div ng-show='experiencedStatisticsDetailLoadError'>
+            <p class="bg-danger" style="padding:4px;">
+              <b>
+                <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>
+                An error occured while loading patient details. Please try again.</b>
+          </p>
+        </div>       
+       <div ng-show='showPatientsInLocation'>
+        <div style="margin-bottom:2px"><span style="font-size:24px;">{{selectedLocation | titlecase}} Patient Details<small style="font-size:14px;">(Patients: {{patientInLocation.result.length}})</small>
+        </div>
+        <div ng-show="patientInLocation.result.length > 0">
+          <div class="panel panel-default">
+            <!-- Default panel contents -->
+              <div class="panel-heading">
+                <div class="input-group">      
+                  <input class="form-control"  placeholder="Filter..." type="text" ng-model="patientInLocationSearchString"/>
+                  <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                  </div>      
+                </div>
+              </div>          
+              <table class='table table-hover table-striped table-responsive'>
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+              </tr>
+              </thead>
+              <tr  ng-repeat="patient in patientInLocation.result | filter:patientInLocationSearchString | startFrom:(currentPage-1)*10 | limitTo:10" data-ng-click="loadPatient(patient.patientUuid)">
+                <td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
+                <td>{{patient.given_name  | titlecase}}</td>
+                <td>{{patient.middle_name | titlecase}}</td>
+                <td>{{patient.family_name | titlecase}}</td> 
+                <td>
+                  <a href="#"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
+                </td>                  
+              </tr>
+              </table>
+              <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
+              <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="patientInLocation.result.length" items-per-page="10"
+                        ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
+                        last-text="&raquo;" rotate="false">
+              </pagination>
+            </div>       
+        </div>
+       </div>
+  </div>
+
+    
