@@ -1,6 +1,6 @@
 /*jshint -W098, -W030 */
 /*jscs:disable disallowMixedSpacesAndTabs, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma*/
-(function() {
+(function () {
   'use strict';
 
   /**
@@ -29,7 +29,7 @@
       'app.utils',
       'ct.ui.router.extras'
     ])
-    .config(function($stateProvider, $stickyStateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $stickyStateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');
       $stateProvider
         .state('home', {
@@ -85,17 +85,28 @@
           controller: 'FormentryCtrl',
           data: { requireLogin: true },
         })
-        .state('data-entry-statistics', {
-          url: '/data-entry-statistics',
-          templateUrl: 'views/admin/data-entry-statistics.html',
-          controller: 'DataEntryStatisticsCtrl',
-          data: { requireLogin: true },
-        })
+      
         .state('admin', {
           url: '/admin-dashboard',
           templateUrl: 'views/admin/admin-dashboard.html',
           controller: 'AdminDashboardCtrl',
           data: { requireLogin: true }
+        })
+        .state('admin.view-selection', {
+          url: '/view-selection',
+          templateUrl: 'views/admin/admin-dashboard-view-selector.html',
+          data: { requireLogin: true }
+        })
+        .state('admin.patient-creation-statistics', {
+          url: '/patient-creation-statistics',
+          templateUrl: 'views/admin/patient-creation-statistics-container.html',
+          data: { requireLogin: true }
+        })
+        .state('admin.data-entry-statistics', {
+          url: '/data-entry-statistics',
+          templateUrl: 'views/admin/data-entry-statistics.html',
+          controller: 'DataEntryStatisticsCtrl',
+          data: { requireLogin: true },
         })
         .state('url-selector', {
           url: '/url-selector',
@@ -110,9 +121,9 @@
           data: { requireLogin: false },
         });
 
-    }).run(function($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings, EtlRestServicesSettings, UtilService) {
+    }).run(function ($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings, EtlRestServicesSettings, UtilService) {
 
-      $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
+      $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 
         //check whether selection of url base is required first
         var hasPersistedCurrentUrl = OpenmrsSettings.hasCoockiePersistedCurrentUrlBase() && EtlRestServicesSettings.hasCoockiePersistedCurrentUrlBase();
@@ -126,7 +137,7 @@
         //check whether loginis required
 
         var shouldLogin = toState.data !== undefined &&
-        toState.data.requireLogin && !OpenmrsRestService.getAuthService().authenticated;
+          toState.data.requireLogin && !OpenmrsRestService.getAuthService().authenticated;
         //console.log(shouldLogin);
         if (shouldLogin) {
           $state.go('login', { onSuccessRout: toState, onSuccessParams: toParams });
@@ -148,7 +159,7 @@
       $rootScope.activeEncounter;
       $rootScope.cachedLocations = [];
 
-      $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+      $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
         $rootScope.previousState = from.name;
         $rootScope.currentState = to.name;
         $rootScope.previousStateParams = fromParams;
