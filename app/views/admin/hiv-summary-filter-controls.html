@@ -1,0 +1,130 @@
+<div class="well" style="padding:2px; cursor:pointer; margin-bottom: 2px !important;">
+	<div data-ng-click="isExpanded = !isExpanded" style="margin: 2px;">
+		<strong>Report Filters</strong>
+		<span class="label label-default pull-right" style="margin-right: 4px;" ng-show="isExpanded">
+        <span class="glyphicon glyphicon-menu-up"> </span>
+		</span>
+		<span class="label label-default pull-right" style="margin-right: 4px;" ng-hide="isExpanded">
+        <span class="glyphicon glyphicon-menu-down"></span>
+		</span>
+	</div>
+	<hr style="margin:1px;" />
+	<div class="panel panel-default" style="padding: 4px; margin: 2px;" collapse="isExpanded">
+		<div class="row" style="padding: 1px;">
+			<div class="form-group col-md-6" ng-show="canView('start-date')">
+				<label for="start-date">Start Date</label>
+				<div class="input-group">
+					<input type="text" id="start-date" class="form-control" is-open="startDateIsOpen"  date-parser="short"
+                 datepicker-popup="mediumDate" ng-model="startDate">
+					<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="startDateIsOpen = !startDateIsOpen">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+            			</span>
+				</div>
+			</div>
+			<div class="form-group col-md-6" ng-show="canView('start-date')">
+				<label for="end-date">End Date</label>
+				<div class="input-group">
+					<input type="text" id="end-date" class="form-control" is-open="endDateIsOpen"  date-parser="short"
+                 datepicker-popup="mediumDate" ng-model="endDate">
+					<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="endDateIsOpen = !endDateIsOpen">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+            			</span>
+				</div>
+			</div>
+			<div class="form-group col-md-6" ng-show="canView('start-month')">
+				<label for="start-month">Start Month</label>
+				<div class="input-group">
+					<input type="text" id="start-month" class="form-control" is-open="startMonthIsOpen" datepicker-options="{ 'minMode': 'month' }"
+					datepicker-popup="MM, yyyy" datepicker-mode="'month'" ng-model="startMonth">
+					<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="startMonthIsOpen = !startMonthIsOpen">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+            			</span>
+				</div>
+			</div>
+			<div class="form-group col-md-6" ng-show="canView('end-month')">
+				<label for="end-month">End Month</label>
+				<div class="input-group">
+					<input type="text" id="end-month" class="form-control" is-open="endMonthIsOpen" datepicker-options="{ 'minMode': 'month' }"
+					datepicker-popup="MM, yyyy" datepicker-mode="'month'" ng-model="endMonth">
+					<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="endMonthIsOpen = !endMonthIsOpen">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+            			</span>
+				</div>
+			</div>
+      <div class="form-group animate-show " style="padding-right: 15px; padding-left: 15px;" ng-show="canView('location')">
+        <label for="location">Location</label>
+        <div class="input-group">
+          <div class="input-group-addon">
+            <span class="text-danger">
+              <img ng-show="isBusy" src="images/ajax-loader.gif" />
+            </span>
+            <span ng-hide="isBusy" class="glyphicon glyphicon-map-marker"></span>
+          </div>
+          <ui-select id="location" ng-model="selectedLocation" theme="bootstrap" ng-disabled="isBusy">
+            <ui-select-match placeholder="Select a location or type to search">{{$select.selected.name()}}</ui-select-match>
+            <ui-select-choices repeat="location in locations | propsFilter: {name: $select.search, description: $select.search} ">
+              <div ng-bind-html="location.name() | highlight: $select.search"></div>
+              <small ng-bind-html="location.description() | highlight: $select.search" class="border-success"></small>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+			<div class="form-group col-md-6" ng-show="canView('selected-provider')">
+				<label for="end-month">Provider</label>
+				<div class="input-group">
+					<ui-select ng-model="selectedProvider.selected" ng-disabled="findingProvider" reset-search-input="false" theme="bootstrap">
+						<ui-select-match placeholder="Type to search for a provider"> {{$select.selected.display()}} </ui-select-match>
+						<ui-select-choices refresh="findProviders($select.search)" repeat="provider in providers">
+							<div ng-bind-html="provider.display() | highlight: $select.search"></div>
+						</ui-select-choices>
+					</ui-select>
+					<div class="input-group-addon" >
+						<span class="text-danger">
+							<img ng-show="findingProvider" src="images/ajax-loader.gif" />
+						</span>
+					</div>
+				</div>
+
+			</div>
+			<div class="form-group col-md-6" ng-show="canView('selected-encounter')">
+				<label for="end-month">Encounter Type</label>
+				<div class="input-group">
+					<ui-select multiple ng-model="selectedEncounterTypes.selected" theme="bootstrap">
+						<ui-select-match placeholder="Select a form or type to search">{{$item.encounterTypeName}}</ui-select-match>
+						<ui-select-choices repeat="form in forms | propsFilter: {encounterTypeName: $select.search}">
+							<div ng-bind-html="form.encounterTypeName | highlight: $select.search"></div>
+						</ui-select-choices>
+					</ui-select>
+					<div class="input-group-addon" style="cursor: pointer;" ng-click="selectAllEncounterTypes()">
+						<span ng-hide="isBusy">All</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group col-md-6" ng-show="canView('selected-form')">
+				<label for="form">Form</label>
+				<div class="input-group">
+					<ui-select multiple ng-model="selectedForms.selected" theme="bootstrap">
+						<ui-select-match placeholder="Select a form or type to search">{{$item.name}}</ui-select-match>
+						<ui-select-choices repeat="form in forms | propsFilter: {name: $select.search}">
+							<div ng-bind-html="form.name | highlight: $select.search"></div>
+						</ui-select-choices>
+					</ui-select>
+					<div class="input-group-addon" style="cursor: pointer;" ng-click="selectAllForms()">
+						<span ng-hide="isBusy">All</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>

@@ -318,7 +318,7 @@
           '2014-08-05T21:00:00.000Z','2014-08-05T21:00:00.000Z', function () { }, function () { }, 0, 10);
         httpBackend.flush();
 
-        // //case startIndex defined only
+        //case startIndex defined only
         httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
           'location/passed-uuid/monthly-appointment-visits?' +
           'endDate=2014-08-05T21:00:00.000Z&startDate=2014-08-05T21:00:00.000Z&startIndex=0').respond({});
@@ -489,6 +489,59 @@
       expect(callbacks.message).to.exist;
       expect(callbacks.message.trim()).not.to.equal('');
     });
+
+    ////  getIndicatorsSchema unit tests
+    it('should make an api call to the indicators-schema etl rest endpoint when getIndicatorsSchema is ' +
+      'called with report params', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'indicators-schema?report=passed-report')
+        .respond({});
+      etlRestService.getIndicatorsSchema('passed-report', function () { }, function () { });
+      httpBackend.flush();
+    });
+
+    it('should make an api call to the indicators-schema etl rest endpoint when getIndicatorsSchema is ' +
+      'called with a report and paging parameters', function () {
+
+      //case startIndex and limit are defined
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'indicators-schema?limit=10&report=passed-report'+
+        '&startIndex=0').respond({});
+      etlRestService.getIndicatorsSchema('passed-report', function () { }, function () { }, 0, 10);
+      httpBackend.flush();
+
+      //case startIndex defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'indicators-schema?report=passed-report&startIndex=0')
+        .respond({});
+      etlRestService.getIndicatorsSchema('passed-report', function () { }, function () { }, 0, undefined);
+      httpBackend.flush();
+
+      //case limit defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'indicators-schema?limit=10&report=passed-report')
+        .respond({});
+      etlRestService.getIndicatorsSchema('passed-report', function () { }, function () { }, undefined, 10 );
+      httpBackend.flush();
+    });
+
+    it('should call the onSuccess callback getIndicatorsSchema request successfully returns', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'indicators-schema?report=passed-report')
+        .respond({});
+      etlRestService.getIndicatorsSchema('passed-report', callbacks.onSuccess, callbacks.onFailure);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(true);
+      expect(callbacks.onFailedCalled).to.equal(false);
+    });
+
+    it('should call the onFailed callback when getIndicatorsSchema request is not successful', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'indicators-schema?report=passed-report')
+        .respond(500);
+      etlRestService.getIndicatorsSchema('passed-report', callbacks.onSuccess, callbacks.onFailure);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(false);
+      expect(callbacks.onFailedCalled).to.equal(true);
+      expect(callbacks.message).to.exist;
+      expect(callbacks.message.trim()).not.to.equal('');
+    });
+
+    //END getIndicatorsSchema Unit Test
 
     it('should build the correct query param object by sub-type when ' +
       'getDataEntryStatisticsQueryParam is invoked with report params', function () {

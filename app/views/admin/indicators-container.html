@@ -1,0 +1,111 @@
+<stats-hiv-summary-filters enabled-controls="'start-date, end-date'"  start-date="startDate" end-date="endDate" >
+</stats-hiv-summary-filters>
+<br>
+<div  class="well" style="padding:2px; margin-bottom: 5px !important; ">
+  <div style="cursor: pointer;" class="alert alert-danger" ng-click="loadHivSummaryIndicators()" ng-show='experiencedLoadingErrors' >
+				<span class="glyphicon glyphicon-exclamation-sign">
+        </span> An error occurred while generating indicators. Please try again.</b>
+    <button class="btn btn-info pull-right" style="padding: 2px!important;" ng-click="loadHivSummaryIndicators()">
+      <span class="glyphicon glyphicon-refresh"></span>
+      <span>Re-Load</span>
+    </button>
+  </div>
+  <div style="height: 35px" ng-show='!isBusy && !experiencedLoadingErrors'>
+    <button class="btn btn-info pull-right" ng-click="loadHivSummaryIndicators()">
+      <span class="glyphicon glyphicon-refresh"></span>
+      <span>Generate Report</span>
+    </button>
+  </div>
+  <div  ng-show='isBusy'>
+    <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+    <b> Generating Indicators, Please wait...</b>
+  </div>
+</div>
+
+<div collapse="!indicators.length"  class="well" style="padding:4px; margin-bottom: 0px !important; width:inherit">
+  <hr style="margin: 1px;" />
+  <div class="form-group" style="margin-top:1px; margin-bottom:1px;" collapse="selectedIndicatorTags.selectedAll">
+    <div class="input-group">
+      <div class="input-group-addon">
+            <span class="text-danger">
+              <img ng-show="isBusy" src="images/ajax-loader.gif" />
+            </span>
+        <span ng-hide="isBusy" class="glyphicon glyphicon-tags"></span>
+      </div>
+      <ui-select multiple ng-model="selectedIndicatorTags.indicatorTags" theme="bootstrap"  ng-disabled="isBusy"
+                 on-select="onSelectedIndicatorTagChanged($select.search)"
+                 on-remove="onSelectedIndicatorTagChanged($select.search)">
+        <ui-select-match placeholder="Select Report Indicator or type to search">{{$item.name}}</ui-select-match>
+        <ui-select-choices repeat="indicatorTag in indicatorTags | propsFilter: {name: $select.search, label: $select.search} ">
+          <div ng-bind-html="indicatorTag.name | highlight: $select.search"></div>
+          <small ng-bind-html="indicatorTag.label | highlight: $select.search" class="border-success"></small>
+        </ui-select-choices>
+      </ui-select>
+      <div class="input-group-addon" ng-click="clearSelectedTags()" style="cursor: pointer;" >
+        <span  class="glyphicon glyphicon-trash"></span>
+        <span >Clear</span>
+      </div>
+    </div>
+  </div>
+
+  <hr style="margin: 0px;" />
+  <!-- DATATABLE -->
+  <div class="datatable" id="datatable" >
+    <table class="table table-striped table-condensed table-hover" >
+      <thead>
+      <tr>
+        <th>
+          Location
+        </th>
+        <th style="text-align: center!important;" ng-repeat="header in selectedIndicatorTags.indicatorTags " >
+          {{header.name.toString().split('_').join(' ')|titlecase}}
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="indicator in indicators | startFrom:(currentPage-1)*10 | limitTo:10" >
+        <td><span class="text-info">{{indicator.location}}</span></td>
+        <td ng-repeat="(key,val) in indicator "
+            ng-hide="key=='location_uuid'||key=='location'"
+            ng-class="{success: (selectedPosition.parent == $parent.$index && selectedPosition.index == $index
+                            && selectedPosition.page==currentPage && selectedPosition.key==key)}"
+          ><a class="btn btn-large btn-default" style="display: block;  padding: inherit; "
+
+              title="{{ getIndicatorLabelByName(key)+' in '+indicator.location }}" data-toggle="tooltip"
+              data-placement="top" tooltip
+              ng-click="loadPatientList(key, indicator.location_uuid,$parent.$index, $index, currentPage, key)">{{val}}
+        </a></td>
+      </tr>
+      </tbody>
+      <tfoot>
+
+      </tfoot>
+    </table>
+    <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
+    <pagination boundary-links="true" ng-model="currentPage"  max-size="10"
+                total-items="indicators.length" items-per-page="10"
+                ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;"
+                first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
+                last-text="&raquo;" rotate="false"></pagination>
+
+  </div>
+  <!-- END DATATABLE -->
+  <hr style="margin: 4px;" />
+  <div style="height: 20px">
+    <div class="btn-group pull-right" data-toggle="buttons" data-toggle-default-class="btn-default">
+      <label class="btn btn-xs btn-default"  ng-class="{'btn-success active':countBy=='encounter'}"
+             ng-click="setCountType('encounter')" >
+        <input type="radio">
+        <span class="glyphicon glyphicon-list"></span>
+        <span>Encounter</span>
+      </label>
+      <label class="btn btn-xs btn-default"  ng-class="{'btn-success active':countBy=='person'}"
+             ng-click="setCountType('person')" >
+        <input type="radio">
+        <span class="glyphicon glyphicon-user"></span>
+        <span>Person</span>
+      </label>
+    </div>
+    <div class="text-left pull-right  control-label"> Count By: &nbsp;</div>
+  </div>
+</div>

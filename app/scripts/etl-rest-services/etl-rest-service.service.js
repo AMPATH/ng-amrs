@@ -26,7 +26,9 @@
       getDataEntryStatisticsQueryParam: getDataEntryStatisticsQueryParam,
       getDataEntryStatistics: getDataEntryStatistics,
       getPatientsCreatedByPeriod:getPatientsCreatedByPeriod,
-      getDetailsOfPatientsCreatedInLocation:getDetailsOfPatientsCreatedInLocation
+      getDetailsOfPatientsCreatedInLocation:getDetailsOfPatientsCreatedInLocation,
+      getIndicatorsSchema:getIndicatorsSchema
+
     };
     return serviceDefinition;
 
@@ -276,6 +278,30 @@
       console.log(params);
       console.log(startIndex);
 
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+
+    }
+
+    function getIndicatorsSchema( report,  successCallback, failedCallback, startIndex, limit) {
+      var resource = getResource('indicators-schema');
+
+      var params = { report: report };
+      if (startIndex !== undefined) {
+        params.startIndex = startIndex;
+      }
+
+      if (limit !== undefined) {
+        params.limit = limit;
+      }
+
+      console.log(params);
       return resource.get(params).$promise
         .then(function (response) {
           successCallback(response);
