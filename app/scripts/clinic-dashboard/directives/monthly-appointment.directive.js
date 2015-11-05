@@ -41,7 +41,6 @@ jshint -W003, -W026
     $scope.locationUuid = ClinicDashboardService.getSelectedLocation().Uuid;
     $scope.loadSchedule = loadSchedule;
     _this.viewDaysAppointments = viewDaysAppointments;
-
     function viewDaysAppointments(day) {
           ClinicDashboardService.setStartDate(day);
           $rootScope.$broadcast('viewDayAppointments', day);
@@ -50,7 +49,7 @@ jshint -W003, -W026
 
     $scope.navigateMonth = function(value) {
           if (value) {
-            $scope.selectedMonth(_this.selectedMonth.addMonths(value));
+            $scope.selectedMonth(new Date(_this.selectedMonth).addMonths(value));
             var selectedDateField = document.getElementById('appointment-date');
             var element = angular.element(selectedDateField);
             element.val($filter('date')(_this.selectedMonth, 'mediumDate'));
@@ -67,8 +66,12 @@ jshint -W003, -W026
           $scope.appointments = [];
 
           if ($scope.locationUuid && $scope.locationUuid !== '')
+          var endDate = this.moment(this.selectedMonth).endOf('month').toDate().toISOString();
+          var startDate = this.moment(this.selectedMonth).startOf('month').toDate();
+          startDate = $filter('date')(startDate, 'yyyy-MM-dd', '+0300');
+          endDate = $filter('date')(endDate, 'yyyy-MM-dd', '+0300');
                    EtlRestService.getMonthlyAppointmentAndVisits($scope.locationUuid,
-                    this.selectedMonth, onFetchAppointmentsScheduleSuccess,
+                    startDate,endDate, onFetchAppointmentsScheduleSuccess,
                     onFetchAppointmentScheduleFailed);
         }
 
@@ -121,7 +124,7 @@ jshint -W003, -W026
     scope.selectedMonth = function(value) {
           if (value) {
             _this.selectedMonth = value;
-            _this.ClinicDashboardService.setSelectedMonth(value);
+            _this.ClinicDashboardService.setSelectedMonth(new _this.moment(value));
             _this.ClinicDashboardService.setMonth(new _this.moment(value));
             _this.loadSchedule();
             scope.bringCurrentMonthIntoView(new _this.moment(value));
@@ -131,16 +134,17 @@ jshint -W003, -W026
         };
 
     //calender view
-    console.log('Selected==============>' + _this.moment());
     scope.selected = _removeTime(scope.selected || _this.ClinicDashboardService.getMonth() || _this.moment());
     scope.month = scope.selected.clone();
     var start = scope.selected.clone();
-    start.date(1);
-    _removeTime(start.day(0));
+    scope.month_title = _this.selectedMonth;
+    scope.month.date();
+    start.date();
+    _removeTime(start.day());
     _buildMonth(scope, start, scope.month);
     scope.select = function(day) {
       this.ClinicDashboardService.setStartDate(day);
-      scope.selected = day.date;
+      scope.selected = day;
 
     };
 
@@ -164,9 +168,10 @@ jshint -W003, -W026
 
     scope.bringCurrentMonthIntoView = function(day) {
           scope.selected = day;
+          scope.month_title = _this.selectedMonth;
           scope.month = scope.selected.clone();
           var start = scope.selected.clone();
-          start.date(1);
+          start.date();
           _removeTime(start.day(0));
 
           _buildMonth(scope, start, scope.month);

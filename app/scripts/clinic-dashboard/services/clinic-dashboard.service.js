@@ -5,14 +5,14 @@
   angular
     .module('app.clinicDashboard')
     .factory('ClinicDashboardService', ClinicDashboardService);
-  ClinicDashboardService.$inject = [];
-  function ClinicDashboardService() {
+  ClinicDashboardService.$inject = ['$filter','moment'];
+  function ClinicDashboardService($filter,moment) {
       var selectedLocation = {selected:undefined};
       var serviceDefinition;
       var locationSelectionEnabled = true;
       var startDate = new Date();
-      var selectedMonth = new Date();
-      var month;
+      var selectedMonth = new moment();
+      var month = new moment();
       serviceDefinition = {
           getSelectedLocation: getSelectedLocation,
           setSelectedLocation: setSelectedLocation,
@@ -48,12 +48,10 @@
       }
 
       function getStartDate() {
-        console.log('Fettching Start date======>' + startDate);
         return startDate;
       }
 
       function setStartDate(date) {
-          console.log('Start date======>' + date);
           startDate = date;
         }
 
@@ -62,10 +60,11 @@
           }
 
       function getSelectedMonth() {
-          return selectedMonth;
+          return selectedMonth.format('YYYY-MM-DD');
         }
 
       function getMonth() {
+        console.log('Getting Month=======>',month);
         return month;
       }
 

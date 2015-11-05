@@ -207,11 +207,10 @@
 
     }
 
-    function getMonthlyAppointmentAndVisits(locationUuid, monthDate,
+    function getMonthlyAppointmentAndVisits(locationUuid, monthDate,endDate,
       successCallback, failedCallback, startIndex, limit) {
       var resource = getResource('location/:uuid/monthly-appointment-visits');
-
-      var params = { startDate: monthDate, uuid: locationUuid };
+      var params = { startDate: monthDate,endDate: endDate, uuid: locationUuid };
 
       if (startIndex !== undefined) {
         params.startIndex = startIndex;
@@ -234,7 +233,7 @@
         });
 
     }
-    
+
     function getPatientListByIndicator(locationUuid, startDate, endDate, indicator, successCallback, failedCallback, startIndex, limit) {
       var resource = getResource('location/:uuid/patient-by-indicator');
 
@@ -367,7 +366,7 @@
 
       return param;
     }
-    
+
     function getPatientsCreatedByPeriod(startDate, endDate, successCallback, failedCallback, startIndex, limit) {
       var resource = getResource('patient/creation/statistics');
 
@@ -394,11 +393,11 @@
         });
 
     }
-    
+
     function getDetailsOfPatientsCreatedInLocation(location,startDate, endDate, successCallback, failedCallback, startIndex, limit) {
       var resource = getResource('location/:location/patient/creation/statistics');
       var params = {location:location, startDate: startDate, endDate: endDate };
-      
+
       if (startIndex !== undefined) {
         params.startIndex = startIndex;
       }
@@ -419,6 +418,6 @@
           console.error(error);
         });
 
-    }    
+    }
   }
 })();
