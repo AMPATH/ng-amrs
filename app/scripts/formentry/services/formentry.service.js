@@ -1084,7 +1084,8 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           });
                         });
                       }
-                    } else if (Object.keys(groupValues).length > 0) {
+                    } else if (groupValues !== null &&
+                      Object.keys(groupValues).length > 0) {
                       groupMembers = [];
                       _.each(Object.keys(groupValues), function(_groupMember) {
                         if (groupValues[_groupMember] !== undefined)
