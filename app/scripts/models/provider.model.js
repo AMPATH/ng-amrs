@@ -97,7 +97,7 @@
 
     function toWrapper(openmrsModel) {
       //provider(person_, identifier_, uuId_,  display_, attributes_)
-        return new provider(openmrsModel.person, openmrsModel.identifier, openmrsModel.uuId, openmrsModel.display,
+        return new provider(openmrsModel.person, openmrsModel.identifier, openmrsModel.uuid, openmrsModel.display,
           openmrsModel.attributes, openmrsModel.retired);
     }
   }

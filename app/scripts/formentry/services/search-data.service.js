@@ -5,49 +5,50 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
 jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma
 */
 
-(function() {
+(function () {
   'use strict';
 
   angular
-        .module('app.formentry')
-        .factory('SearchDataService', SearchDataService);
+    .module('app.formentry')
+    .factory('SearchDataService', SearchDataService);
 
   SearchDataService.$inject = ['ProviderResService', 'CachedDataService',
-    'LocationModel', 'ProviderModel','ConceptResService', 'ConceptModel',
-    'DrugResService','DrugModel', '$rootScope'];
+    'LocationModel', 'ProviderModel', 'ConceptResService', 'ConceptModel',
+    'DrugResService', 'DrugModel', '$rootScope'];
 
   function SearchDataService(ProviderResService, CachedDataService,
     LocationModelFactory, ProviderModelFactory, ConceptResService,
-    ConceptModelFactory, DrugResService, DrugModelFactory,$rootScope, FormRestService) {
+    ConceptModelFactory, DrugResService, DrugModelFactory, $rootScope, FormRestService) {
 
-    var problemConceptClassesArray = ['Diagnosis','Symptom',
-        'Symptom/Finding','Finding'];
+    var problemConceptClassesArray = ['Diagnosis', 'Symptom',
+      'Symptom/Finding', 'Finding'];
     var drugConceptClassesArray = ['Drug'];
     var service = {
       findProvider: findProvider,
       getProviderByUuid: getProviderByPersonUuid,
+      getProviderByProviderUuid: getProviderByProviderUuid,
       findLocation: findLocation,
       getLocationByUuid: getLocationByUuid,
-      findProblem:findProblem,
-      getProblemByUuid:getProblemByUuid,
-      findDrugConcepts:findDrugConcepts,
-      getDrugConceptByUuid:getDrugConceptByUuid,
-      findDrugs:findDrugs,
-      findDrugByUuid:findDrugByUuid,
-      getConceptAnswers:getConceptAnswers
+      findProblem: findProblem,
+      getProblemByUuid: getProblemByUuid,
+      findDrugConcepts: findDrugConcepts,
+      getDrugConceptByUuid: getDrugConceptByUuid,
+      findDrugs: findDrugs,
+      findDrugByUuid: findDrugByUuid,
+      getConceptAnswers: getConceptAnswers
     };
 
     return service;
 
     function findLocation(searchText, onSuccess, onError) {
-      CachedDataService.getCachedLocations(searchText, function(results) {
+      CachedDataService.getCachedLocations(searchText, function (results) {
         var wrapped = wrapLocations(results);
         onSuccess(wrapped);
       });
     }
 
     function getLocationByUuid(uuid, onSuccess, onError) {
-      CachedDataService.getCachedLocationByUuid(uuid, function(results) {
+      CachedDataService.getCachedLocationByUuid(uuid, function (results) {
         var wrapped = wrapLocation(results);
         onSuccess(wrapped);
       });
@@ -55,144 +56,128 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
 
     function findProblem(searchText, onSuccess, onError) {
       ConceptResService.findConcept(searchText,
-          function(concepts) {
-            var filteredConcepts = ConceptResService.filterResultsByConceptClassesName(concepts,
-              problemConceptClassesArray);
-            var wrapped = wrapConcepts(filteredConcepts);
-            onSuccess(wrapped);
-          },
+        function (concepts) {
+          var filteredConcepts = ConceptResService.filterResultsByConceptClassesName(concepts,
+            problemConceptClassesArray);
+          var wrapped = wrapConcepts(filteredConcepts);
+          onSuccess(wrapped);
+        },
 
-          function(error) {
-            onError(onError);
-          });
+        function (error) {
+          onError(onError);
+        });
     }
 
     function getProblemByUuid(uuid, onSuccess, onError) {
       ConceptResService.getConceptByUuid(uuid,
-        function(concept) {
+        function (concept) {
           var wrapped = wrapConcept(concept);
           onSuccess(wrapped);
         },
 
-        function(error) {
+        function (error) {
           onError(onError);
         });
     }
 
     function findProvider(searchText, onSuccess, onError) {
       ProviderResService.findProvider(searchText,
-          function(providers) {
-            var wrapped = wrapProviders(providers);
-            onSuccess(wrapped);
-          },
+        function (providers) {
+          var wrapped = wrapProviders(providers);
+          onSuccess(wrapped);
+        },
 
-          function(error) {
-            onError(onError);
-          });
+        function (error) {
+          onError(onError);
+        });
     }
 
     function getProviderByPersonUuid(uuid, onSuccess, onError) {
       ProviderResService.getProviderByPersonUuid(uuid,
-        function(provider) {
-            var wrapped = wrapProvider(provider);
-            onSuccess(wrapped);
-          },
+        function (provider) {
+          var wrapped = wrapProvider(provider);
+          onSuccess(wrapped);
+        },
 
-          function(error) {
-            onError(onError);
-          });
+        function (error) {
+          onError(onError);
+        });
+    }
+
+    function getProviderByProviderUuid(uuid, onSuccess, onError) {
+      ProviderResService.getProviderByUuid(uuid,
+        function (provider) {
+          var wrapped = wrapProvider(provider);
+          onSuccess(wrapped);
+        },
+
+        function (error) {
+          onError(onError);
+        });
     }
 
     function findDrugConcepts(searchText, onSuccess, onError) {
       ConceptResService.findConcept(searchText,
-      function(concepts) {
-        var filteredConcepts = ConceptResService.filterResultsByConceptClassesName(concepts,
-          drugConceptClassesArray);
-        var wrapped = wrapConcepts(filteredConcepts);
-        onSuccess(wrapped);
-      },
+        function (concepts) {
+          var filteredConcepts = ConceptResService.filterResultsByConceptClassesName(concepts,
+            drugConceptClassesArray);
+          var wrapped = wrapConcepts(filteredConcepts);
+          onSuccess(wrapped);
+        },
 
-      function(error) {
-        onError(onError);
-      });
+        function (error) {
+          onError(onError);
+        });
     }
 
     function getDrugConceptByUuid(uuid, onSuccess, onError) {
       ConceptResService.getConceptByUuid(uuid,
-        function(concept) {
+        function (concept) {
           var wrapped = wrapConcept(concept);
           onSuccess(wrapped);
         },
 
-        function(error) {
+        function (error) {
           onError(onError);
         });
     }
 
     function findDrugs(searchText, onSuccess, onError) {
       DrugResService.findDrugs(searchText,
-        function(drugs) {
+        function (drugs) {
           var wrapped = wrapDrugs(drugs);
           onSuccess(wrapped);
         },
 
-        function(error) {
+        function (error) {
           onError(onError);
         });
     }
 
     function findDrugByUuid(uuid, onSuccess, onError) {
       DrugResService.findDrugByUuid(uuid,
-        function(drug) {
+        function (drug) {
           var wrapped = wrapDrug(drug);
           onSuccess(wrapped);
         },
 
-        function(error) {
+        function (error) {
           onError(onError);
         });
     }
 
     function getConceptAnswers(uuid, onSuccess, onError) {
       ConceptResService.getConceptAnswers(uuid,
-        function(concept) {
+        function (concept) {
           var wrapped = wrapConceptsWithLabels(concept.answers);
           onSuccess(wrapped);
         },
 
-        function(error) {
+        function (error) {
           onError(onError);
         });
     }
-
-    // function findPocForms(searchText, onSuccess, onError) {
-    //     FormRestService.findPocForms(searchText,
-    //       function(forms) {
-    //         var wrapped = wrapForms(forms);
-    //         onSuccess(wrapped);
-    //       },
-    //
-    //       function(error) {
-    //         onError(onError);
-    //       });
-    //   }
-
-    // function wrapForms(forms) {
-    //   var wrappedObjects = [];
-    //   for (var i = 0; i < forms.length; i++) {
-    //     var form = {
-    //       'uuid':forms[i].uuid,
-    //       'name': forms[i].name,
-    //       'encounterType': forms[i].encounterType.uuid,
-    //       'encounterTypeName': forms[i].encounterType.display,
-    //       'version': forms[i].version
-    //     };
-    //     wrappedObjects.push(form);
-    //   }
-    //
-    //   return wrappedObjects;
-    // }
-
+    
     function wrapDrug(drug) {
       return DrugModelFactory.toWrapper(drug);
     }
@@ -249,7 +234,7 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
       var wrappedObjects = [];
       for (var i = 0; i < concepts.length; i++) {
         var concept = {
-          'concept':concepts[i].uuid,
+          'concept': concepts[i].uuid,
           'label': concepts[i].display
         };
         wrappedObjects.push(concept);

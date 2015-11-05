@@ -5,7 +5,8 @@
 	angular
 		.module('app.admin')
 		.controller('DataEntryStatisticsCtrl', DataEntryStatisticsCtrl);
-	DataEntryStatisticsCtrl.$nject = ['$rootScope', '$scope', '$stateParams', 'OpenmrsRestService', 'LocationModel'];
+	DataEntryStatisticsCtrl.$nject = ['$rootScope', '$scope', '$stateParams', 
+	'OpenmrsRestService', 'LocationModel'];
 
 	function DataEntryStatisticsCtrl($rootScope, $scope, $stateParams,
 		OpenmrsRestService, LocationModel) {
@@ -15,22 +16,29 @@
 		$scope.selectedLocations.selectedAll = false;
 		$scope.selectedLocations.locations = [];
 		$scope.locations = [];
+		$scope.selectingLocation = true;
+		$scope.selectedView = '';
 
 		$scope.isBusy = false;
+		$scope.locationSelected = locationSelected;
 
 		activate();
 
 		function activate() {
 			fetchLocations();
 		}
-
-		function onLocationSelection($event) {
-			$scope.locationSelectionEnabled = false;
+		
+		function locationSelected() {
+			$scope.selectingLocation = false;
+			
+			//broadcast here
+			$rootScope.$broadcast('dataEntryStatsLocationSelected', true);
 		}
-
+		
 		function fetchLocations() {
 			$scope.isBusy = true;
-			locationService.getLocations(onGetLocationsSuccess, onGetLocationsError, false);
+			locationService.getLocations(onGetLocationsSuccess, 
+			onGetLocationsError, false);
 		}
 
 		function onGetLocationsSuccess(locations) {

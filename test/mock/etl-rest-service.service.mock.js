@@ -1,3 +1,4 @@
+/* global readJSON */
 /*
 jshint -W098, -W117, -W003, -W026
 */
@@ -38,8 +39,10 @@ jshint -W098, -W117, -W003, -W026
       getDetailsOfPatientsCreatedInLocation:getDetailsOfPatientsCreatedInLocation,
       numberOfPatientCreationInLocationRowsToReturn:20,    
 
-      getPatientListByIndicator:getPatientListByIndicator,
+      getPatientListByIndicator: getPatientListByIndicator,
       numberOfPatientsToReturn: 20,
+
+      getDataEntryStatistics: getDataEntryStatistics,
 
       returnErrorOnNextCall: false
     };
@@ -232,6 +235,23 @@ jshint -W098, -W117, -W003, -W026
 
     }
 
+    function getDataEntryStatistics(subType, startDate, endDate, locationUuids,
+      encounterTypeUuids, formUuids, providerUuid, creatorUuid, successCallback, failedCallback) {
+      switch (subType) {
+        case 'by-date-by-encounter-type':
+          if(service.returnErrorOnNextCall === true){
+            if(failedCallback)
+            failedCallback('simulating error!');
+          }else {
+            var mockData = readJSON('test/mock/data-entry-stats-view1.json');
+            if(successCallback)
+            successCallback(mockData);
+          }
+          break;
+      }
+      return  readJSON('test/mock/data-entry-stats-view1.json');
+    }
+
     function getAppointmentSchedule(locationUuid, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
       if (!startIndex) {
         startIndex = 0;
@@ -277,7 +297,7 @@ jshint -W098, -W117, -W003, -W026
       });
 
     }
-function getDailyVisits(locationUuid, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
+    function getDailyVisits(locationUuid, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
       if (!startIndex) {
         startIndex = 0;
       }
@@ -543,7 +563,7 @@ function getDailyVisits(locationUuid, startDate, endDate, successCallback, faile
       /* jshint ignore:end */
       return appointmentScheduleEtl;
     }
-     function getDailyVisitRecord(index) {
+    function getDailyVisitRecord(index) {
       /* jshint ignore:start */
       var appointmentScheduleEtl = {
         person_id: 'person_id',
@@ -643,7 +663,7 @@ function getDailyVisits(locationUuid, startDate, endDate, successCallback, faile
     }
 
     function getPatientListByIndicator(locationUuid, startDate, endDate, indicator, successCallback, failedCallback,
-     startIndex, limit) {
+      startIndex, limit) {
       console.log('calling mock getPatientListByIndicator');
       if (!startIndex) {
         startIndex = 0;

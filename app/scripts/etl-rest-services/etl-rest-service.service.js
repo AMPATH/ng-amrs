@@ -313,12 +313,12 @@
 
     }
 
-    function getDataEntryStatistics(subType, startDate, endDate, locationIds, encounterTypes,
-      formIds, providerUuid, creatorUuid, successCallback, failedCallback) {
+    function getDataEntryStatistics(subType, startDate, endDate, locationUuids,
+      encounterTypeUuids, formUuids, providerUuid, creatorUuid, successCallback, failedCallback) {
       var resource = getResource('data-entry-statistics/:subType');
 
-      var params = getDataEntryStatisticsQueryParam(subType, startDate, endDate, locationIds, encounterTypes,
-        formIds, providerUuid, creatorUuid);
+      var params = getDataEntryStatisticsQueryParam(subType, startDate, endDate, locationUuids, encounterTypeUuids,
+        formUuids, providerUuid, creatorUuid);
 
       return resource.get(params).$promise
         .then(function (response) {
@@ -351,7 +351,7 @@
       ];
     }
 
-    function getDataEntryStatisticsQueryParam(subType, startDate, endDate, locationIds, encounterTypeIds, formIds, providerUuid, creatorUuid) {
+    function getDataEntryStatisticsQueryParam(subType, startDate, endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid) {
       var param = {
         subType: subType, //mandatory params
         startDate: startDate,
@@ -370,23 +370,23 @@
 
       switch (subType) {
         case 'by-date-by-encounter-type':
-          paramConfig = getParamConfigObj(['locations', 'encounterTypeIds', 'formIds', 'providerUuid']);
+          paramConfig = getParamConfigObj(['locationUuids', 'encounterTypeUuids', 'formUuids', 'providerUuid']);
           break;
         case 'by-month-by-encounter-type':
-          paramConfig = getParamConfigObj(['locations', 'encounterTypeIds', 'formIds', 'providerUuid']);
+          paramConfig = getParamConfigObj(['locationUuids', 'encounterTypeUuids', 'formUuids', 'providerUuid']);
           break;
         case 'by-provider-by-encounter-type':
-          paramConfig = getParamConfigObj(['locations', 'encounterTypeIds', 'formIds', 'providerUuid']);
+          paramConfig = getParamConfigObj(['locationUuids', 'encounterTypeUuids', 'formUuids', 'providerUuid']);
           break;
         case 'by-creator-by-encounter-type':
-          paramConfig = getParamConfigObj(['locations', 'encounterTypeIds', 'formIds', 'creatorUuid']);
+          paramConfig = getParamConfigObj(['locationUuids', 'encounterTypeUuids', 'formUuids', 'creatorUuid']);
           break;
       }
 
       //set-up the param object
-      if (locationIds && paramConfig.locations) { param.locations = locationIds; }
-      if (encounterTypeIds && paramConfig.encounterTypeIds) { param.encounterTypeIds = encounterTypeIds; }
-      if (formIds && paramConfig.formIds) { param.formIds = formIds; }
+      if (locationUuids && paramConfig.locationUuids) { param.locationUuids = locationUuids; }
+      if (encounterTypeUuids && paramConfig.encounterTypeUuids) { param.encounterTypeUuids = encounterTypeUuids; }
+      if (formUuids && paramConfig.formUuids) { param.formUuids = formUuids; }
       if (providerUuid && paramConfig.providerUuid) { param.providerUuid = providerUuid; }
       if (creatorUuid && paramConfig.creatorUuid) { param.creatorUuid = creatorUuid; }
 
