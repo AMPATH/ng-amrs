@@ -4,6 +4,7 @@
     angular
         .module('app.admin', [
             'app.openmrsRestServices',
+            'app.formentry',
             'app.etlRestServices',
             'models',
             'ui.bootstrap'

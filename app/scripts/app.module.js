@@ -85,7 +85,7 @@
           controller: 'FormentryCtrl',
           data: { requireLogin: true },
         })
-      
+
         .state('admin', {
           url: '/admin-dashboard',
           templateUrl: 'views/admin/admin-dashboard.html',
@@ -106,6 +106,24 @@
           url: '/data-entry-statistics',
           templateUrl: 'views/admin/data-entry-statistics.html',
           controller: 'DataEntryStatisticsCtrl',
+          data: { requireLogin: true },
+        })
+        .state('admin.hiv-summary-indicators', {
+          url: '/hiv-summary-indicators',
+          templateUrl: 'views/admin/hiv-summary-indicators.html',
+          controller: 'HivSummaryIndicatorsCtrl',
+          data: { requireLogin: true},
+        })
+        .state('admin.hiv-summary-indicators.indicator', {
+          url: '/indicator',
+          templateUrl: 'views/admin/indicators-container.html',
+          controller: 'HivSummaryIndicatorsCtrl',
+          data: { requireLogin: true},
+        })
+        .state('admin.hiv-summary-indicators.patients', {
+          url: '/location/:locationuuid/indicator/:indicator',
+          templateUrl: 'views/admin/patient-list-container.html',
+          controller: 'HivSummaryIndicatorsCtrl',
           data: { requireLogin: true },
         })
         .state('url-selector', {

@@ -12,7 +12,6 @@ jshint -W098, -W117, -W030
 		var locationModel;
 		var clinicDashboardService;
 		var locationService;
-
 		beforeEach(function () {
 			module('app.clinicDashboard');
 			module('models');
@@ -20,7 +19,7 @@ jshint -W098, -W117, -W030
 		});
 
 		beforeEach(module('ui.router')); //to enable using stateparams
-
+		beforeEach(module('angularMoment'));
 		beforeEach(inject(function ($controller, $injector, _$stateParams_, $rootScope) {
 			/*
 			When testing controllers it not wise to inject them as it is done when testing services
@@ -33,7 +32,9 @@ jshint -W098, -W117, -W030
 			clinicDashboardService = $injector.get('ClinicDashboardService');
 			controllerScope = $rootScope.$new();
 			stateParams = _$stateParams_;
-			controller = $controller('ClinicDashboardCtrl', { $rootScope: $rootScope, $scope: controllerScope, $stateParams: stateParams, OpenmrsRestService: OpenmrsRestService, LocationModel: locationModel, ClinicDashboardService: clinicDashboardService });
+			controller = $controller('ClinicDashboardCtrl', { $rootScope: $rootScope, $scope: controllerScope,
+				 $stateParams: stateParams, OpenmrsRestService: OpenmrsRestService,
+				 LocationModel: locationModel, ClinicDashboardService: clinicDashboardService });
 
 		}));
 

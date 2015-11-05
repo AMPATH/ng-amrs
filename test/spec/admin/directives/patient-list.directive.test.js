@@ -162,12 +162,5 @@
 			isolateScope.loadPatientList();
 			expect(isolateScope.patients.length).to.equal(40);
 		});
-
-		it('should call loadPatientList etl service method when location uuid changes', function () {
-			var getPatientsSpy = sinon.spy(etlRestServiceMock, 'getPatientListByIndicator');
-			scope.location.uuid = 'uuid2';
-			scope.$digest();
-			chai.expect(getPatientsSpy.callCount).to.equal(1);
-		});
 	});
 })();
