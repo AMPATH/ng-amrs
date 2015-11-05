@@ -10,7 +10,7 @@
 
   function HivSummaryIndicatorsCtrl($rootScope, $scope, $stateParams,EtlRestService, HivSummaryIndicatorService, moment,$filter,$state) {
     //Patient List Directive Properties & Methods
-    $scope.startDate = new Date("October 13, 2012 11:13:00");
+    $scope.startDate = new Date("January 1, 2015 12:00:00");
     $scope.endDate = new Date();
     $scope.selectedLocation=$stateParams.locationuuid||'';
     $scope.selectedIndicatorBox=$stateParams.indicator||'';
