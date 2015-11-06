@@ -2041,6 +2041,14 @@
                 {
                   "concept": "a89b289a-1350-11df-a1f1-0026b9348838",
                   "label": "WHO stage 4"
+                },
+                {
+                  "concept": "a89fbedc-1350-11df-a1f1-0026b9348838",
+                  "label": "PMTCT"
+                },
+                {
+                  "concept": "a8909060-1350-11df-a1f1-0026b9348838",
+                  "label": "Hepatitis"
                 }
               ],
               "type": "select",
@@ -3337,11 +3345,11 @@
                     },
                     {
                       "concept": "a8a8b352-1350-11df-a1f1-0026b9348838",
-                      "label": "Cardiology"
+                      "label": "Adherence counselling"
                     },
                     {
                       "concept": "a2187952-59e0-449b-895f-5102b7aed49c",
-                      "label": "Adherence counselling"
+                      "label": "Cardiology"
                     },
                     {
                       "concept": "0fa18f9a-95c8-4ab3-81ed-a1bac69063fa",
@@ -3378,6 +3386,14 @@
                     {
                       "concept": "a8a8b26c-1350-11df-a1f1-0026b9348838",
                       "label": "TB/DOT Program"
+                    },
+                    {
+                      "concept": "a8a00d6a-1350-11df-a1f1-0026b9348838",
+                      "label": "Antenatal Care Service"
+                    },
+                    {
+                      "concept": "a89e2d1a-1350-11df-a1f1-0026b9348838",
+                      "label": "Social Work"
                     },
                     {
                       "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
