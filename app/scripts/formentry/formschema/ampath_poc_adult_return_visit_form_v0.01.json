@@ -1650,32 +1650,15 @@
               "validators": []
             },
             {
-              "concept":"a89b2606-1350-11df-a1f1-0026b9348838",
-              "label":"Select Stage 1 Criteria:",
-              "type":"select-concept-answers"
+              "concept": "a8ae88a4-1350-11df-a1f1-0026b9348838",
+              "required": "true",
+              "label": "Criteria:",
+              "type": "select-concept-answers",
+              "validators": []
             },
-
-            {
-              "concept":"a89b26d8-1350-11df-a1f1-0026b9348838",
-              "label":"Select Stage 2 Criteria:",
-              "type":"select-concept-answers"
-            },
-
-            {
-              "concept":"a89b27be-1350-11df-a1f1-0026b9348838",
-              "label":"Select Stage 3 Criteria:",
-              "type":"select-concept-answers"
-            },
-
-            {
-              "concept":"a89b289a-1350-11df-a1f1-0026b9348838",
-              "label":"Select Stage 4 Criteria:",
-              "type":"select-concept-answers"
-            },
-
             {
               "concept": "a89b67d8-1350-11df-a1f1-0026b9348838",
-              "label": "Is this a new stage?",
+              "label": "New stage:",
               "answers": [
                 {
                   "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
