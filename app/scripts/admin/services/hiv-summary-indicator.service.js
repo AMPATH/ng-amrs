@@ -13,6 +13,7 @@
       var selectedIndicatorTags;
       var locationSelectionEnabled = true;
       var startDate = new Date();
+      var endDate = new Date();
       var indicatorTags;
       var indicators;
       var defaultIndicators;
@@ -25,6 +26,8 @@
           getLocationSelectionEnabled: getLocationSelectionEnabled,
           getStartDate: getStartDate,
           setStartDate: setStartDate,
+          getEndDate: getEndDate,
+          setEndDate: setEndDate,
           getIndicatorDetails: getIndicatorDetails,
           setIndicatorDetails: setIndicatorDetails,
           getSelectedIndicatorTags:getSelectedIndicatorTags,
@@ -113,6 +116,14 @@
       function setStartDate(date) {
           startDate = date;
         }
+
+      function getEndDate() {
+        return endDate;
+      }
+
+      function setEndDate(date) {
+        endDate = date;
+      }
 
     }
 

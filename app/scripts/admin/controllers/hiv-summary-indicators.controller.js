@@ -17,8 +17,8 @@
     $scope.loadPatientList=loadPatientList;
 
     //Hiv Summary Indicators Service Properties & Methods
-    $scope.reportName='hiv-summery-report';
-    $scope.countBy='person';
+    $scope.reportName='hiv-summary-report';
+    $scope.countBy='num_persons';
     $scope.loadHivSummaryIndicators=loadHivSummaryIndicators;
     $scope.getIndicatorLabelByName =getIndicatorLabelByName;
 
@@ -69,6 +69,7 @@
     function onFetchHivSummaryIndicatorsSuccess(result) {
       $scope.isBusy = false;
       $scope.defaultIndicators = result.result;
+      console.log("Sql query for HivSummaryIndicators request=======>", result.sql, result.sqlParams);
       if($scope.defaultIndicators)$scope.indicators=$scope.defaultIndicators.slice(0, 6);
       //Select default indicator tags if not set
       if(!$scope.selectedIndicatorTags.indicatorTags.length)
@@ -120,7 +121,6 @@
     }
 
     function onSelectedIndicatorTagChanged(tag) {
-      console.log('hey the indicator tag that has been selected:',  $scope.selectedIndicatorTags, tag);
       filterIndicators();
     }
 
@@ -142,7 +142,6 @@
         });
         $scope.indicators.push(result);
       });
-      console.log('Filtered Report Indicator is:', $scope.indicators);
     }
 
     function getIndicatorLabelByName(name) {
@@ -164,6 +163,8 @@
         $scope.indicatorTags = HivSummaryIndicatorService.getIndicatorTags();
         $scope.selectedIndicatorTags.indicatorTags = HivSummaryIndicatorService.getSelectedIndicatorTags();
         $scope.selectedPosition=HivSummaryIndicatorService.getSelectedPosition();
+        $scope.startDate=HivSummaryIndicatorService.getStartDate();
+        $scope.endDate=HivSummaryIndicatorService.getEndDate();
         filterIndicators();
         return true;
       }
@@ -177,6 +178,8 @@
       HivSummaryIndicatorService.setIndicatorTags($scope.indicatorTags);
       HivSummaryIndicatorService.setIndicators($scope.indicators);
       HivSummaryIndicatorService.setSelectedPosition($scope.selectedPosition);
+      HivSummaryIndicatorService.setStartDate($scope.startDate);
+      HivSummaryIndicatorService.setEndDate($scope.endDate);
     }
 
   }

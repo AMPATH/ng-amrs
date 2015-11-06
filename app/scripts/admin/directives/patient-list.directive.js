@@ -35,6 +35,8 @@ jshint -W003, -W026
         $scope.isBusy = false;
         $scope.experiencedLoadingErrors = false;
         $scope.currentPage = 1;
+        $scope.startDate=HivSummaryIndicatorService.getStartDate();
+        $scope.endDate=HivSummaryIndicatorService.getEndDate();
 
         //function types scope members
         $scope.loadPatientList = loadPatientList;
@@ -62,6 +64,7 @@ jshint -W003, -W026
             if($scope.isBusy === true) return;
             $scope.isBusy = true;
             $scope.patients = [];
+
             if ($scope.locationUuid && $scope.locationUuid !== '' && $scope.indicator && $scope.indicator!==''
               && $scope.startDate && $scope.startDate!=='' ) {
               EtlRestService.getPatientListByIndicator($scope.locationUuid,
@@ -77,6 +80,7 @@ jshint -W003, -W026
 
         function onFetchPatientsListSuccess(patients) {
              $scope.isBusy = false;
+              console.log("Sql query for PatientList request=======>", patients.sql, patients.sqlParams);
             $scope.patients = PatientEtlModel.toArrayOfModels(patients.result);
         }
 
