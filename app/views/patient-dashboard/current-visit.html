@@ -14,7 +14,7 @@
         </form>
         </div>
         <div class="panel-footer px-nested-panel-footer">
-            <button class="btn btn-primary" data-ng-click="startNewVisit()" data-ng-disabled="!currentVisit.visitType">
+            <button class="btn btn-primary" data-ng-click="startNewVisit()" data-ng-disabled="!currentVisit.visitType || busy">
                 Start New Visit
             </button>
         </div>

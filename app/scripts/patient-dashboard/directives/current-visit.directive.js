@@ -53,7 +53,10 @@ jshint -W003, -W026
                  startDatetime: getFormattedDate($scope.currentVisit.startDatetime)
              };
 
+             $scope.busy = true;
+
              vService.saveVisit(newVisit, function(data) {
+                 $scope.busy = false;
                  $scope.currentVisit.uuid = data.uuid;
                  $scope.visitStarted = true;
                  console.info('New visit instance created');
