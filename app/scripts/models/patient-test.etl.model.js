@@ -8,9 +8,9 @@
     .module('models')
     .factory('PatientTestModel', factory);
 
-  factory.$inject = [];
+  factory.$inject = ['UtilService'];
 
-  function factory() {
+  function factory(UtilService) {
     var service = {
       patientTest: patientTest
     };
@@ -22,22 +22,37 @@
       var modelDefinition = this;
       
       //initialize private members
-      var _personId = labEtl.person_id ? labEtl.person_id : '';
-      var _uuid = labEtl.uuid ? labEtl.uuid : '';
-      var _encounterId = labEtl.encounter_id ? labEtl.encounter_id : '';
-      var _encounterDatetime = labEtl.encounter_datetime ? labEtl.encounter_datetime : '';
-      var _encounterType = labEtl.encounter_type ? labEtl.encounter_type : '';
-      var _locationId = labEtl.location_id ? labEtl.location_id : '';
-      var _locationUuid = labEtl.location_uuid ? labEtl.location_uuid : '';
+      var _personId = !UtilService.isNullOrUndefined(labEtl.person_id) ?
+       labEtl.person_id : '';
+      var _uuid = !UtilService.isNullOrUndefined(labEtl.uuid) ?
+       labEtl.uuid : '';
+      var _encounterId = !UtilService.isNullOrUndefined(labEtl.encounter_id) ?
+       labEtl.encounter_id : '';
+      var _encounterDatetime = !UtilService.isNullOrUndefined(labEtl.encounter_datetime) ?
+       labEtl.encounter_datetime : '';
+      var _encounterType = !UtilService.isNullOrUndefined(labEtl.encounter_type) ?
+       labEtl.encounter_type : '';
+      var _locationId = !UtilService.isNullOrUndefined(labEtl.location_id) ?
+       labEtl.location_id : '';
+      var _locationUuid = !UtilService.isNullOrUndefined(labEtl.location_uuid) ?
+       labEtl.location_uuid : '';
 
-      var _hivViralLoad = labEtl.hiv_viral_load ? labEtl.hiv_viral_load : '';
-      var _cd4Count = labEtl.cd4_count ? labEtl.cd4_count : '';
-      var _cd4Percent = labEtl.cd4_percent ? labEtl.cd4_percent : '';
-      var _hemoglobin = labEtl.hemoglobin ? labEtl.hemoglobin : '';
-      var _ast = labEtl.ast ? labEtl.ast : '';
-      var _creatinine = labEtl.creatinine ? labEtl.creatinine : '';
-      var _chestXray = labEtl.chest_xray ? labEtl.chest_xray : '';
-      var _testsOrdered = labEtl.tests_ordered ? labEtl.tests_ordered : '';
+      var _hivViralLoad = !UtilService.isNullOrUndefined(labEtl.hiv_viral_load) ?
+       labEtl.hiv_viral_load : '';
+      var _cd4Count = !UtilService.isNullOrUndefined(labEtl.cd4_count) ?
+       labEtl.cd4_count : '';
+      var _cd4Percent = !UtilService.isNullOrUndefined(labEtl.cd4_percent) ?
+       labEtl.cd4_percent : '';
+      var _hemoglobin = !UtilService.isNullOrUndefined(labEtl.hemoglobin) ?
+       labEtl.hemoglobin : '';
+      var _ast = !UtilService.isNullOrUndefined(labEtl.ast) ?
+       labEtl.ast : '';
+      var _creatinine = !UtilService.isNullOrUndefined(labEtl.creatinine) ?
+       labEtl.creatinine : '';
+      var _chestXray = !UtilService.isNullOrUndefined(labEtl.chest_xray) ?
+       labEtl.chest_xray : '';
+      var _testsOrdered = !UtilService.isNullOrUndefined(labEtl.tests_ordered) ?
+       labEtl.tests_ordered : '';
 
       modelDefinition.personId = function (value) {
         if (angular.isDefined(value)) {
