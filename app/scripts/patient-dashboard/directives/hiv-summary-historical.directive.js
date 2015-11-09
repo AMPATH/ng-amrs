@@ -19,8 +19,8 @@ jshint -W003, -W026
         };
     }
 
-    hivSummaryHistoricalController.$inject = ['$scope', 'EtlRestService', 'HivSummaryModel'];
-    function hivSummaryHistoricalController($scope, EtlRestService, HivSummaryModel) {
+    hivSummaryHistoricalController.$inject = ['$scope', 'EtlRestService', 'HivSummaryModel', 'UtilService'];
+    function hivSummaryHistoricalController($scope, EtlRestService, HivSummaryModel, UtilService) {
 		    //non-function types scope members
         $scope.hivSummaries = [];
         $scope.isBusy = false;
@@ -62,7 +62,8 @@ jshint -W003, -W026
             $scope.summaryLength=0;
             for (var e in records.result) {
               var testData =records.result[e];
-              if(testData.cd4_1_date||testData.vl_1_date)
+              //check curArvMeds cd4_1 vl_1
+              if(!UtilService.hasAllMembersUndefinedOrNull(testData, ['cur_arv_meds','cd4_1','vl_1']))
               {
                 $scope.summaryLength= $scope.summaryLength+1;
                 $scope.hivSummaries.push(new HivSummaryModel.hivSummary(records.result[e]));
