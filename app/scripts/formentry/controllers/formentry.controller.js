@@ -23,6 +23,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
     FormentryService.currentFormModel = {};
     $scope.vm = {};
     $scope.vm.isBusy = true;
+    $scope.vm.submittingForm = false;
     $scope.vm.errorSubmit = '';
     $scope.vm.errorMessage = 'The form has some validation errors, see the list above';
     $scope.vm.model = {};
@@ -190,10 +191,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
           if (payLoad.encounterType !== undefined) {
             isBusy(true);
+            $scope.vm.submittingForm = true;
             payLoad.form = form.uuid;
             OpenmrsRestService.getEncounterResService().saveEncounter(JSON.stringify(payLoad),
               function(data) {
                 isBusy(false);
+                $scope.vm.submittingForm = false;
                 if (data) {
                   if ($scope.vm.submitLabel === 'Update') {
                     $scope.vm.savedOrUpdated = true;
@@ -238,6 +241,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
               function(error) {
                 // body...
                 isBusy(false);
+                $scope.vm.submittingForm = false;
                 $scope.vm.errorSubmit = 'An Error occured while trying to save the form';
               }
               );

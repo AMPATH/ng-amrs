@@ -75,8 +75,8 @@
 
     <div style="text-align: center;">
       <button type="button" class="btn btn-default" ng-click="vm.activateTab('prev')" ng-disabled="vm.isFirstTab()">&lt;&lt;</button>
-      <button type="submit" class="btn btn-primary submit-button" ng-click="vm.submit()">{{vm.submitLabel}}</button>
-      <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
+      <button type="submit" class="btn btn-primary submit-button" ng-click="vm.submit()" ng-disabled="vm.submittingForm">{{vm.submitLabel}}</button>
+      <button type="button" class="btn btn-default" ng-click="vm.cancel()" ng-disabled="vm.submittingForm">Cancel</button>
       <button type="button" class="btn btn-default" ng-click="vm.activateTab('next')" ng-disabled="vm.isLastTab()">&gt;&gt;</button>
     </div>
   </form>
