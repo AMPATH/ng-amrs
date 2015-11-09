@@ -8,9 +8,9 @@
     .module('models')
     .factory('VitalModel', factory);
 
-  factory.$inject = [];
+  factory.$inject = ['UtilService'];
 
-  function factory() {
+  function factory(UtilService) {
     var service = {
       vital: vital
     };
@@ -22,20 +22,27 @@
       var modelDefinition = this;
       
       //initialize private members
-      var _personId = vitalEtl.person_id ? vitalEtl.person_id : '';
-      var _uuid = vitalEtl.uuid ? vitalEtl.uuid : '';
-      var _encounterId = vitalEtl.encounter_id ? vitalEtl.encounter_id : '';
-      var _encounterDatetime = vitalEtl.encounter_datetime ? vitalEtl.encounter_datetime : '';
-      var _locationId = vitalEtl.location_id ? vitalEtl.location_id : '';
+      var _personId = !UtilService.isNullOrUndefined(vitalEtl.person_id) ?
+       vitalEtl.person_id : '';
+      var _uuid = !UtilService.isNullOrUndefined(vitalEtl.uuid) ? vitalEtl.uuid : '';
+      var _encounterId = !UtilService.isNullOrUndefined(vitalEtl.encounter_id) ?
+       vitalEtl.encounter_id : '';
+      var _encounterDatetime = !UtilService.isNullOrUndefined(vitalEtl.encounter_datetime) ?
+       vitalEtl.encounter_datetime : '';
+      var _locationId = !UtilService.isNullOrUndefined(vitalEtl.location_id) ?
+       vitalEtl.location_id : '';
 
-      var _weight = vitalEtl.weight ? vitalEtl.weight : '';
-      var _height = vitalEtl.height ? vitalEtl.height : '';
-      var _temperature = vitalEtl.temp ? vitalEtl.temp : '';
-      var _oxygenSat = vitalEtl.oxygen_sat ? vitalEtl.oxygen_sat : '';
-      var _systolicBp = vitalEtl.systolic_bp ? vitalEtl.systolic_bp : '';
-      var _diastolicBp = vitalEtl.diastolic_bp ? vitalEtl.diastolic_bp : '';
+      var _weight = !UtilService.isNullOrUndefined(vitalEtl.weight) ? vitalEtl.weight : '';
+      var _height = !UtilService.isNullOrUndefined(vitalEtl.height) ? vitalEtl.height : '';
+      var _temperature = !UtilService.isNullOrUndefined(vitalEtl.temp) ? vitalEtl.temp : '';
+      var _oxygenSat = !UtilService.isNullOrUndefined(vitalEtl.oxygen_sat) ?
+       vitalEtl.oxygen_sat : '';
+      var _systolicBp = !UtilService.isNullOrUndefined(vitalEtl.systolic_bp) ? 
+      vitalEtl.systolic_bp : '';
+      var _diastolicBp = !UtilService.isNullOrUndefined(vitalEtl.diastolic_bp) ? 
+      vitalEtl.diastolic_bp : '';
 
-      var _pulse = vitalEtl.pulse ? vitalEtl.pulse : '';
+      var _pulse = !UtilService.isNullOrUndefined(vitalEtl.pulse) ? vitalEtl.pulse : '';
 
       modelDefinition.personId = function (value) {
         if (angular.isDefined(value)) {
