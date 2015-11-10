@@ -242,7 +242,7 @@ module.exports = function (grunt) {
         ]
       }
     },
-    
+
     uglify: {
       // Uses preparations done by useminPrepare
       options: {
@@ -355,7 +355,7 @@ module.exports = function (grunt) {
         src: '{,*/}*.css'
       }
     },
-    
+
     revision: {
         options: {
           property: 'meta.revision',
@@ -363,7 +363,7 @@ module.exports = function (grunt) {
           short: true
         }
     },
-    
+
     'file-creator': {
         'tag-revision': {
           'app/version.json': function(fs, fd, done) {
@@ -377,7 +377,7 @@ module.exports = function (grunt) {
           }
         }
     },
-    
+
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       server: [
@@ -427,11 +427,11 @@ module.exports = function (grunt) {
     'connect:test',
     'karma'
   ]);
-  
+
   grunt.registerTask('version', 'Update the build number', function() {
      grunt.task.run(['revision', 'file-creator']);
   });
-  
+
   grunt.registerTask('build', [
     'clean:dist',
     'version',

@@ -17,52 +17,52 @@ jshint -W003, -W026
 			},
 			controller: dataEntryStatsViewOneController,
 			link: dataEntryStatsViewOneLink,
-			templateUrl: "views/admin/data-entry-stats-view-Four.html"
+			templateUrl: "views/admin/data-entry-stats-view-four.html"
 		};
 	}
 
-	dataEntryStatsViewOneController.$inject = ['$scope', '$rootScope', 'moment', 
+	dataEntryStatsViewOneController.$inject = ['$scope', '$rootScope', 'moment',
 	'$state', '$filter', 'EtlRestService', 'DataEntryStatsHelpersService', 'UserResService'];
 
-    function dataEntryStatsViewOneController($scope, $rootScope, moment, 
+    function dataEntryStatsViewOneController($scope, $rootScope, moment,
 	$state, $filter, EtlRestService, helperService, UserResService) {
 		//filter configurations
 		$scope.reportSubType = 'by-creator-by-encounter-type';
-		$scope.controls = 
+		$scope.controls =
 		'start-date,end-date,selected-encounter,selected-form,selected-creator';
 		$scope.numberOfColumns = 6;
-		
+
 		//params
 		$scope.selectedCreator = { selected: null };
 		$scope.selectedEncounterTypes = { selected: [] };
 		$scope.selectedForms = { selected: [] };
 		$scope.startDate = moment().startOf('day').toDate();
 		$scope.endDate = helperService.generateEndDate($scope.startDate, 7).toDate();
-		
-		
-		//items	
+
+
+		//items
 		$scope.groupedItems = [];
 		$scope.unGroupedItems = [];
 		$scope.columnHeaderRow = [];
 		$scope.firstColumnItems = [];
-		
-		
+
+
 		//params processors
 		$scope.getSelectedLocations = helperService.getSelectedLocations;
 		$scope.getSelectedEncounterTypes = helperService.getSelectedEncounterTypes;
 		$scope.getSelectedForms = helperService.getSelectedForms;
-		$rootScope.$on('dataEntryStatsLocationSelected', 
+		$rootScope.$on('dataEntryStatsLocationSelected',
 		function () { $scope.needsRefresh = true; });
-		
+
 		//query etl functionality
 		$scope.isBusy = false;
 		$scope.needsRefresh = true;
 		$scope.experiencedLoadingErrors = false;
 		$scope.loadStatsFromServer = loadStatsFromServer;
 		$scope.getCreator = getCreator;
-		
+
 		//grouping functionality
-		$scope.extractUniqueElementsByProperty = 
+		$scope.extractUniqueElementsByProperty =
 		helperService.extractUniqueElementsByProperty;
 		$scope.groupByX_ThenByY = helperService.groupByX_ThenByY;
 		$scope.findItemByXandY = helperService.findItemByXandY;
@@ -71,9 +71,9 @@ jshint -W003, -W026
 		function activate() {
 			//loadStatsFromServer();
 		}
-		
+
 		//query etl functionality
-		
+
 		function loadStatsFromServer() {
 
 			if ($scope.isBusy === true || $scope.startDate === null || $scope.startDate === undefined) {
@@ -87,21 +87,21 @@ jshint -W003, -W026
 			$scope.firstColumnItems = [];
 			$scope.unGroupedItems = [];
 
-			var startDate = 
+			var startDate =
 			moment($scope.startDate).startOf('day').format('YYYY-MM-DDTHH:MM:SSZZ');
 			console.log('Date data stats', startDate);
 
-			var endDate = 
+			var endDate =
 			moment($scope.endDate).endOf('day').format('YYYY-MM-DDTHH:MM:SSZZ');
 			console.log('Date data stats', endDate);
-			
+
 			console.log('locations data stats', $scope.selectedLocations);
-			var locationUuids = 
+			var locationUuids =
 			helperService.getSelectedLocations($scope.selectedLocations);
-			
-			var encounterTypeUuids = 
+
+			var encounterTypeUuids =
 			helperService.getSelectedEncounterTypes($scope.selectedEncounterTypes);
-			
+
 			var formUuids = helperService.getSelectedForms($scope.selectedForms);
 			var creatorUuid = helperService.getSelectedCreator($scope.selectedCreator);
 
@@ -126,29 +126,29 @@ jshint -W003, -W026
 
 
 		function processResults() {
-			$scope.columnHeaderRow = 
+			$scope.columnHeaderRow =
 			helperService.extractUniqueElementsByProperty($scope.unGroupedItems, 'encounter_type');
-			
-			$scope.firstColumnItems = 
+
+			$scope.firstColumnItems =
 			helperService.extractUniqueElementsByProperty($scope.unGroupedItems, 'creator_id');
-			
-			$scope.groupedItems = 
+
+			$scope.groupedItems =
 			helperService.groupByX_ThenByY($scope.columnHeaderRow, $scope.firstColumnItems,
 				'encounter_type', 'creator_id', $scope.unGroupedItems, 'user_uuid');
-				
+
 			for(var i = 0; i < $scope.groupedItems.length; i++){
 				getCreator($scope.groupedItems[i]);
 			}
 		}
 		//end etl functionality
-		
+
 		//resolvers
 		function getCreator(item) {
 			item.provider = 'loading creator...';
-			UserResService.getUserByUuid(item.user_uuid, 
+			UserResService.getUserByUuid(item.user_uuid,
 			function(user){
 				item.creator = user.person.display;
-			}, 
+			},
 			function(error){
 				item.creator = 'error loading creator..';
 			});
@@ -160,8 +160,8 @@ jshint -W003, -W026
         // attrs.$observe('selectedLocations', onSelectedLocationsChanged);
         // function onSelectedLocationsChanged(newVal, oldVal) {
         //     if (newVal) {
-				
+
         //     }
         // }
     }
-})();	
+})();

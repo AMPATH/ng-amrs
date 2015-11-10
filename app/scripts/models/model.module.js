@@ -3,5 +3,6 @@
 
   angular
         .module('models', [
+          'app.utils'
         ]);
 })();

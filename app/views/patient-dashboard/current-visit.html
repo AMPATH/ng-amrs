@@ -12,9 +12,9 @@
                 </span>
             </div>
         </form>
-        </div> 
+        </div>
         <div class="panel-footer px-nested-panel-footer">
-            <button class="btn btn-primary" data-ng-click="startNewVisit()" data-ng-disabled="!currentVisit.visitType">
+            <button class="btn btn-primary" data-ng-click="startNewVisit()" data-ng-disabled="!currentVisit.visitType || busy">
                 Start New Visit
             </button>
         </div>
@@ -23,9 +23,9 @@
     <div class="panel panel-info" data-ng-show="visitStarted">
         <div class="panel-heading px-nested-panel-heading clearfix">
             Visit Started at: <strong>{{currentVisit.startDatetime | date: 'hh:mm:ss a MMM, dd yyyy'}}</strong>
-            <span data-ng-show="currentVisit.ended"> | Ended at: 
+            <span data-ng-show="currentVisit.ended"> | Ended at:
                 <strong>{{currentVisit.stopDatetime | date: 'hh:mm:ss a MMM, dd yyyy'}}</strong>
-            </span>    
+            </span>
         </div>
         <div class="panel-body px-nested-panel-body">
             <div  style="padding:2px;">
@@ -71,11 +71,12 @@
             <div class="panel-body px-nested-panel-body">
                 <span data-ng-repeat="status in formsFilledStatus">
                     <p data-ng-hide="status.filled" class="form-list-item">
-                        <a href="#/form/{{status.name}}/patient/{{patientUuid}}/visit/{{currentVisit.uuid}}"> <span class="glyphicon glyphicon-plus-sign" /> {{status.name}}</a>
+                        <a href="#/form/{{status.name}}/patient/{{patientUuid}}/visit/{{currentVisit.uuid}}">
+                          <span class="glyphicon glyphicon-plus-sign" style="letter-spacing: normal;"/><span style="font-family:Arial, Helvetica, sans-serif;"> {{status.name}}</span></a>
                     </p>
                 </span>
             </div>
-        </div>    
+        </div>
         <div class="panel-footer">
             <button class="btn btn-danger" data-ng-click="cancelVisit(currentVisit)">
                 Cancel this Visit

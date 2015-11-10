@@ -14,14 +14,14 @@ jshint -W003, -W026
             restict: "E",
             scope: { patientUuid: "@" },
             controller: vitalsController,
-            link:vitalsLink,
+            link: vitalsLink,
             templateUrl: "views/patient-dashboard/vitals-pane.html"
         };
     }
 
-    vitalsController.$inject = ['$scope', 'EtlRestService', 'VitalModel'];
+    vitalsController.$inject = ['$scope', 'EtlRestService', 'VitalModel', 'UtilService'];
 
-    function vitalsController($scope, EtlRestService, vitalModel) {
+    function vitalsController($scope, EtlRestService, vitalModel, UtilService) {
         $scope.injectedEtlRestService = EtlRestService;
         $scope.encounters = [];
         $scope.isBusy = false;
@@ -37,13 +37,19 @@ jshint -W003, -W026
             $scope.experiencedLoadingError = false;
 
             if ($scope.patientUuid && $scope.patientUuid !== '')
-                EtlRestService.getVitals($scope.patientUuid, $scope.nextStartIndex, 10, onFetchVitalsSuccess, onFetchVitalsFailed);
+                EtlRestService.getVitals($scope.patientUuid, $scope.nextStartIndex, 10,
+                    onFetchVitalsSuccess, onFetchVitalsFailed);
         }
 
         function onFetchVitalsSuccess(vitalsData) {
             $scope.nextStartIndex = +vitalsData.startIndex + vitalsData.size;
             for (var e in vitalsData.result) {
-                $scope.encounters.push(new vitalModel.vital(vitalsData.result[e]));
+                var membersToCheck = ['weight', 'height', 'temp', 'oxygen_sat',
+                    'systolic_bp', 'diastolic_bp', 'pulse'];
+                var vital = vitalsData.result[e];
+                if (!UtilService.hasAllMembersUndefinedOrNull(vital, membersToCheck)) {
+                    $scope.encounters.push(new vitalModel.vital(vitalsData.result[e]));
+                }
             }
             if (vitalsData.size !== 0) {
                 $scope.isBusy = false;

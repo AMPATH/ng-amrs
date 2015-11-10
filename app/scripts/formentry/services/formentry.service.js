@@ -1260,7 +1260,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             key: 'sex',
             type: 'select',
             defaultValue: '',
-            data: {},
+            data: {id:'sex'},
             templateOptions: {
               label: 'sex',
               type: 'text',
@@ -1271,6 +1271,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           };
 
           pageFields.push(field);
+          addFieldToValidationMetadata(field, {}, pageFields, 'text');
         }
 
         _.each(page.sections, function(section) {
