@@ -104,7 +104,7 @@
         })
         .state('admin.data-entry-statistics', {
           url: '/data-entry-statistics',
-          templateUrl: 'views/admin/data-entry-statistics.html',
+          templateUrl: 'views/data-analytics/data-entry-statistics.html',
           controller: 'DataEntryStatisticsCtrl',
           data: { requireLogin: true },
         })

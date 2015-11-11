@@ -8,7 +8,7 @@
   'use strict';
   describe('Data Entry Stats Helpers Service Unit Tests', function () {
     beforeEach(function () {
-      module('app.admin');
+      module('app.dataAnalytics');
 	  module('models');
 	  module('mock.etlRestServices');
     });

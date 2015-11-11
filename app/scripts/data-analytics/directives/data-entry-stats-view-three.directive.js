@@ -6,7 +6,7 @@ jshint -W003, -W026
     'use strict';
 
 	angular
-		.module('app.admin')
+		.module('app.dataAnalytics')
 		.directive('statsDataEntryStatsViewThree', directive);
 
 	function directive() {
@@ -17,7 +17,7 @@ jshint -W003, -W026
 			},
 			controller: dataEntryStatsViewOneController,
 			link: dataEntryStatsViewOneLink,
-			templateUrl: "views/admin/data-entry-stats-view-three.html"
+			templateUrl: "views/data-analytics/data-entry-stats-view-three.html"
 		};
 	}
 

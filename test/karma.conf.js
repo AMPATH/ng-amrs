@@ -104,6 +104,7 @@ module.exports = function (config) {
       'app/views/patient-dashboard/**/*.html': ['ng-html2js'],
       'app/views/clinic-dashboard/**/*.html': ['ng-html2js'],
       'app/views/admin/**/*.html': ['ng-html2js'],
+      'app/views/data-analytics/**/*.html': ['ng-html2js'],
     },
     ngHtml2JsPreprocessor: {
       stripPrefix: 'app/',

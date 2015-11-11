@@ -6,8 +6,8 @@ jshint -W003, -W026
     'use strict';
 
 	angular
-		.module('app.admin')
-		.directive('statsDataEntryStatsViewFour', directive);
+		.module('app.dataAnalytics')
+		.directive('statsDataEntryStatsViewOne', directive);
 
 	function directive() {
 		return {
@@ -17,63 +17,70 @@ jshint -W003, -W026
 			},
 			controller: dataEntryStatsViewOneController,
 			link: dataEntryStatsViewOneLink,
-			templateUrl: "views/admin/data-entry-stats-view-four.html"
+			templateUrl: "views/data-analytics/data-entry-stats-view-one.html"
 		};
 	}
 
-	dataEntryStatsViewOneController.$inject = ['$scope', '$rootScope', 'moment',
-	'$state', '$filter', 'EtlRestService', 'DataEntryStatsHelpersService', 'UserResService'];
+	dataEntryStatsViewOneController.$inject = ['$scope', '$rootScope', 'moment', 
+	'$state', '$filter', 'EtlRestService', 'DataEntryStatsHelpersService'];
 
-    function dataEntryStatsViewOneController($scope, $rootScope, moment,
-	$state, $filter, EtlRestService, helperService, UserResService) {
+    function dataEntryStatsViewOneController($scope, $rootScope, moment, 
+	$state, $filter, EtlRestService, helperService) {
 		//filter configurations
-		$scope.reportSubType = 'by-creator-by-encounter-type';
-		$scope.controls =
-		'start-date,end-date,selected-encounter,selected-form,selected-creator';
+		$scope.reportSubType = 'by-date-by-encounter-type';
+		$scope.controls = 
+		'start-date,selected-encounter,selected-form,selected-provider';
 		$scope.numberOfColumns = 6;
-
+		
 		//params
-		$scope.selectedCreator = { selected: null };
+		$scope.selectedProvider = { selected: null };
 		$scope.selectedEncounterTypes = { selected: [] };
 		$scope.selectedForms = { selected: [] };
 		$scope.startDate = moment().startOf('day').toDate();
-		$scope.endDate = helperService.generateEndDate($scope.startDate, 7).toDate();
-
-
-		//items
+		$scope.endDate = 
+		helperService.generateEndDate($scope.startDate, $scope.numberOfColumns).toDate();
+		
+		
+		//items	
 		$scope.groupedItems = [];
 		$scope.unGroupedItems = [];
-		$scope.columnHeaderRow = [];
+		$scope.columnHeaderRow = 
+		helperService.getDateArrayFrom($scope.startDate, $scope.numberOfColumns);
 		$scope.firstColumnItems = [];
-
-
+		
+		
 		//params processors
 		$scope.getSelectedLocations = helperService.getSelectedLocations;
 		$scope.getSelectedEncounterTypes = helperService.getSelectedEncounterTypes;
 		$scope.getSelectedForms = helperService.getSelectedForms;
-		$rootScope.$on('dataEntryStatsLocationSelected',
+		$scope.generateEndDate = helperService.generateEndDate;
+		$scope.getNextStartDate = getNextStartDate;
+		$scope.getPreviousStartDate = getPreviousStartDate;
+		$rootScope.$on('dataEntryStatsLocationSelected', 
 		function () { $scope.needsRefresh = true; });
-
+		
 		//query etl functionality
 		$scope.isBusy = false;
 		$scope.needsRefresh = true;
 		$scope.experiencedLoadingErrors = false;
 		$scope.loadStatsFromServer = loadStatsFromServer;
-		$scope.getCreator = getCreator;
-
+		
+		
 		//grouping functionality
-		$scope.extractUniqueElementsByProperty =
+		$scope.groupByDateByEncounterType = helperService.groupByDateByEncounterType;
+		$scope.extractUniqueElementsByProperty = 
 		helperService.extractUniqueElementsByProperty;
 		$scope.groupByX_ThenByY = helperService.groupByX_ThenByY;
 		$scope.findItemByXandY = helperService.findItemByXandY;
+		$scope.getDateArrayFrom = helperService.getDateArrayFrom;
 
 		activate();
 		function activate() {
 			//loadStatsFromServer();
 		}
-
+		
 		//query etl functionality
-
+		
 		function loadStatsFromServer() {
 
 			if ($scope.isBusy === true || $scope.startDate === null || $scope.startDate === undefined) {
@@ -87,27 +94,27 @@ jshint -W003, -W026
 			$scope.firstColumnItems = [];
 			$scope.unGroupedItems = [];
 
-			var startDate =
+			var startDate = 
 			moment($scope.startDate).startOf('day').format('YYYY-MM-DDTHH:MM:SSZZ');
 			console.log('Date data stats', startDate);
-
-			var endDate =
+			
+			$scope.endDate = 
+			helperService.generateEndDate($scope.startDate, $scope.numberOfColumns).toDate();
+			var endDate = 
 			moment($scope.endDate).endOf('day').format('YYYY-MM-DDTHH:MM:SSZZ');
 			console.log('Date data stats', endDate);
-
+			
 			console.log('locations data stats', $scope.selectedLocations);
-			var locationUuids =
-			helperService.getSelectedLocations($scope.selectedLocations);
-
-			var encounterTypeUuids =
+			var locationUuids = helperService.getSelectedLocations($scope.selectedLocations);
+			var encounterTypeUuids = 
 			helperService.getSelectedEncounterTypes($scope.selectedEncounterTypes);
-
 			var formUuids = helperService.getSelectedForms($scope.selectedForms);
-			var creatorUuid = helperService.getSelectedCreator($scope.selectedCreator);
+			var providerUuid = 
+			helperService.getSelectedProvider($scope.selectedProvider);
 
 			EtlRestService.getDataEntryStatistics($scope.reportSubType,
-				startDate, endDate, locationUuids, encounterTypeUuids, formUuids, undefined,
-				creatorUuid, onLoadStatsFromServerSuccess, onLoadStatsFromServerError);
+				startDate, endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid,
+				undefined, onLoadStatsFromServerSuccess, onLoadStatsFromServerError);
 		}
 
 		function onLoadStatsFromServerSuccess(results) {
@@ -126,42 +133,33 @@ jshint -W003, -W026
 
 
 		function processResults() {
-			$scope.columnHeaderRow =
-			helperService.extractUniqueElementsByProperty($scope.unGroupedItems, 'encounter_type');
-
-			$scope.firstColumnItems =
-			helperService.extractUniqueElementsByProperty($scope.unGroupedItems, 'creator_id');
-
-			$scope.groupedItems =
+			$scope.columnHeaderRow = 
+			helperService.extractUniqueElementsByProperty($scope.unGroupedItems, 'date');
+			
+			$scope.firstColumnItems = 
+			helperService.extractUniqueElementsByProperty($scope.unGroupedItems, 'encounter_type_id');
+			$scope.groupedItems = 
 			helperService.groupByX_ThenByY($scope.columnHeaderRow, $scope.firstColumnItems,
-				'encounter_type', 'creator_id', $scope.unGroupedItems, 'user_uuid');
-
-			for(var i = 0; i < $scope.groupedItems.length; i++){
-				getCreator($scope.groupedItems[i]);
-			}
+				'date', 'encounter_type_id', $scope.unGroupedItems, 'encounter_type');
 		}
 		//end etl functionality
 
-		//resolvers
-		function getCreator(item) {
-			item.provider = 'loading creator...';
-			UserResService.getUserByUuid(item.user_uuid,
-			function(user){
-				item.creator = user.person.display;
-			},
-			function(error){
-				item.creator = 'error loading creator..';
-			});
+		function getNextStartDate() {
+			$scope.startDate = 
+			moment($scope.startDate).startOf('day').add($scope.numberOfColumns + 1, 'days').toDate();
+			loadStatsFromServer();
 		}
+
+		function getPreviousStartDate() {
+			$scope.startDate = 
+			moment($scope.startDate).startOf('day').subtract($scope.numberOfColumns + 1, 'days').toDate();
+			loadStatsFromServer();
+		}
+
 
 	}
 
 	function dataEntryStatsViewOneLink(scope, element, attrs, vm) {
-        // attrs.$observe('selectedLocations', onSelectedLocationsChanged);
-        // function onSelectedLocationsChanged(newVal, oldVal) {
-        //     if (newVal) {
 
-        //     }
-        // }
     }
-})();
+})();	
