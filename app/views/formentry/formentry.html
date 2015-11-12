@@ -64,7 +64,7 @@
   <div style="color:red;" ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">{{vm.errorMessage}}</div>
   <div style="color:red;">{{vm.errorSubmit}}</div>
 
-  <form name="vm.form" novalidate>
+  <form id="form-panel" name="vm.form" novalidate>
     <tabset>
       <tab ng-repeat="tab in vm.tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled" select="vm.tabSelected($index)">
         <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
