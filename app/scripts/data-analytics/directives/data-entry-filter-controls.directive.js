@@ -21,7 +21,8 @@ jshint -W003, -W026
 				selectedProvider: "=",
 				selectedCreator: "=",
 				selectedEncounterTypes: "=",
-				enabledControls: "="
+				enabledControls: "=",
+				selectedLocations: "="
 			},
 			controller: dataEntryFilterController,
 			link: dataEntryFilterLink,
@@ -31,10 +32,11 @@ jshint -W003, -W026
 
 	dataEntryFilterController.$inject = ['$scope', '$rootScope', 
 	'SearchDataService', 'moment', '$state', '$filter', 'CachedDataService', 
-	'UserResService'];
+	'UserResService','OpenmrsRestService', 'LocationModel'];
 
     function dataEntryFilterController($scope, $rootScope, SearchDataService, 
-	moment, $state, $filter, CachedDataService, UserResService) {
+	moment, $state, $filter, CachedDataService, UserResService,
+	OpenmrsRestService, LocationModel) {
 		$scope.forms = [];
 		$scope.selectedForms = {};
 		$scope.selectedForms.selected = [];
@@ -42,6 +44,9 @@ jshint -W003, -W026
 		$scope.selectedEncounterTypes.selected = [];
 		$scope.selectAllForms = selectAllForms;
 		$scope.selectAllEncounterTypes = selectAllEncounterTypes;
+		$scope.selectedLocations = {};
+		$scope.selectedLocations.selectedAll = false;
+		$scope.selectedLocations.locations = [];
 
 		$scope.providers = [];
 		$scope.creators = [];
@@ -54,9 +59,12 @@ jshint -W003, -W026
 		$scope.findCreators = findCreators;
 		$scope.findingCreator = false;
 		$scope.canView = canView;
+		var locationService = OpenmrsRestService.getLocationResService();
 
 
 		loadForms();
+		fetchLocations();
+		
 		function loadForms() {
 			$scope.forms = CachedDataService.getCachedPocForms();
 		}
@@ -111,6 +119,44 @@ jshint -W003, -W026
 
 		function onProviderSearchError(error) {
 			$scope.findingProvider = false;
+		}
+		
+				function locationSelected() {
+			$scope.selectingLocation = false;
+			
+			//broadcast here
+			$rootScope.$broadcast('dataEntryStatsLocationSelected', true);
+		}
+		
+		function fetchLocations() {
+			$scope.isBusy = true;
+			locationService.getLocations(onGetLocationsSuccess, 
+			onGetLocationsError, false);
+		}
+
+		function onGetLocationsSuccess(locations) {
+			$scope.isBusy = false;
+			$scope.locations = wrapLocations(locations);
+			//$scope.selectedLocations.locations = $scope.locations;
+		}
+
+		function onGetLocationsError(error) {
+			$scope.isBusy = false;
+		}
+
+		function wrapLocations(locations) {
+			var wrappedLocations = [];
+			for (var i = 0; i < locations.length; i++) {
+				var wrapped = wrapLocation(locations[i]);
+				wrapped.index = i;
+				wrappedLocations.push(wrapped);
+			}
+
+			return wrappedLocations;
+		}
+
+		function wrapLocation(location) {
+			return LocationModel.toWrapper(location);
 		}
 	}
 

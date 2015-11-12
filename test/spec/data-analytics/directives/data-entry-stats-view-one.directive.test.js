@@ -14,13 +14,21 @@
 			module('ngAmrsApp');
 			module('app.dataAnalytics');
 			module('models');
+			module('models');
 			module('mock.etlRestServices');
 			module('my.templates');
+			module('app.openmrsRestServices');
 		});
 
-		var elm, element, scope, etlRestServiceMock, locationModelFactory, locationModels, moment;
+		var elm, element, scope, etlRestServiceMock, locationModelFactory, locationModels, moment, settingsService;
+		
+		beforeEach(function(){
+			
+		});
 
 		beforeEach(inject(function ($injector, $rootScope, $compile, $httpBackend) {
+			settingsService = $injector.get('OpenmrsSettings');
+			$httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location?v=default').respond({});
 			elm = angular.element(
 				'<stats-data-entry-stats-view-one selected-locations="selectedLocations">' +
 				'</stats-data-entry-stats-view-one>');
