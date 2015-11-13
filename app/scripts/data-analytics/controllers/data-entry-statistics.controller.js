@@ -3,7 +3,7 @@
 	'use strict';
 
 	angular
-		.module('app.admin')
+		.module('app.dataAnalytics')
 		.controller('DataEntryStatisticsCtrl', DataEntryStatisticsCtrl);
 	DataEntryStatisticsCtrl.$nject = ['$rootScope', '$scope', '$stateParams', 
 	'OpenmrsRestService', 'LocationModel'];

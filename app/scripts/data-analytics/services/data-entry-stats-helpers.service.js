@@ -3,7 +3,7 @@
 	'use strict';
 
 	angular
-		.module('app.admin')
+		.module('app.dataAnalytics')
 		.factory('DataEntryStatsHelpersService', DataEntryStatsHelpersService);
 	DataEntryStatsHelpersService.$inject = ['moment'];
 	function DataEntryStatsHelpersService(moment) {
