@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-   
+
   </div>
   <div ng-show='showVisits'>
    <div ng-show='!isBusyVisits && experiencedVisitsLoadingError'>
@@ -34,7 +34,7 @@
       <b>Loading visits...</b>
     </div>
   <div style="margin-bottom:2px"><span style="font-size:24px;">Actual Visits List <small style="font-size:14px; color:grey;">(Number of Patients: {{visitPatients.length}})</small> <a class="btn btn-info pull-right" href ng-click="toggleAppointmentVisits()">Show Appointments</a></span></div>
- 
+
   <div ng-show='experiencedVisitsLoadingError'>
     <p class="bg-danger" style="padding:4px;">
       <b>
@@ -75,7 +75,7 @@
       </table>
 
       <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
-      <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="patients.length" items-per-page="10"
+      <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="customPatients.length" items-per-page="10"
                   ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
                   last-text="&raquo;" rotate="false"></pagination>
     </div>
@@ -135,7 +135,7 @@
       </table>
 
       <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
-      <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="patients.length" items-per-page="10"
+      <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="customAppointmentPatients.length" items-per-page="10"
                   ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
                   last-text="&raquo;" rotate="false"></pagination>
     </div>
