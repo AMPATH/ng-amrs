@@ -19,13 +19,14 @@
 
 		function MonthlyAppointmentVisit(monthlyAppointmentVisitEtl) {
 			var modelDefinition = this;
-      
+
 			//initialize private members
 			var _rtcDate = monthlyAppointmentVisitEtl.rtc_date || '';
 			var _dayOfWeek = monthlyAppointmentVisitEtl.day_of_week || '';
 			var _total = monthlyAppointmentVisitEtl.total || '';
 			var _totalVisited = monthlyAppointmentVisitEtl.total_visited || '';
-			
+			var _totalNotReturned = monthlyAppointmentVisitEtl.has_not_returned || '';
+
 			modelDefinition.rtcDate = function (value) {
 				if (angular.isDefined(value)) {
 					_rtcDate = value;
@@ -52,7 +53,7 @@
 					return _total;
 				}
 			};
-			
+
 			modelDefinition.totalVisited = function (value) {
 				if (angular.isDefined(value)) {
 					_totalVisited = value;
@@ -61,13 +62,21 @@
 					return _totalVisited;
 				}
 			};
+			modelDefinition.totalNotReturned = function (value) {
+    				if (angular.isDefined(value)) {
+    					_totalNotReturned = value;
+    				}
+    				else {
+    					return _totalNotReturned;
+    				}
+    			};
 		}
-		
+
 		function toArrayOfModels(openmrsModels){
-			var wrappedObjects = [];		
+			var wrappedObjects = [];
 			for(var i = 0; i < openmrsModels.length; i++){
 				wrappedObjects.push(new MonthlyAppointmentVisit(openmrsModels[i]));
-			}			
+			}
 			return wrappedObjects;
 		}
 	}

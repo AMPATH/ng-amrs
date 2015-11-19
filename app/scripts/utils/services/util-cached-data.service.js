@@ -13,6 +13,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
 
   function CachedDataService($rootScope) {
       var service = {
+      //locations retrieved  from the  etl server
+        getCachedEtlLocations: getCachedEtlLocations,
+      getCachedEtlLocationsByUuid: getCachedEtlLocationsByUuid,
         getCachedLocations: getCachedLocations,
         getCachedLocationByUuid:getCachedLocationByUuid,
         getCachedPocForms:getCachedPocForms,
@@ -20,6 +23,14 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
       };
 
       return service;
+
+   function getCachedEtlLocationsByUuid(locationUuid, callback) {
+      var result=[];
+           angular.forEach($rootScope.cachedEtlLocations,function(value, key) {
+            if(value.uuid===locationUuid){result=value}
+                });
+            callback(result);
+      }
 
       function getCachedLocations(searchText, callback) {
         var results = _.filter($rootScope.cachedLocations,
@@ -64,6 +75,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W026, -W030, -W117
       function getCachedPatient() {
         return $rootScope.broadcastPatient;
       }
+      function getCachedEtlLocations() {
+           return $rootScope.cachedEtlLocations;
+
+            }
 
     }
 })();

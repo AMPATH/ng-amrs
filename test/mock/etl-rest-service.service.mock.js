@@ -16,7 +16,7 @@ jshint -W098, -W117, -W003, -W026
     var service = {
       isMockService: true,
       getVitals: getVitals,
-      numberOfVitalsToReturn: numberOfVitalsToReturn,
+      numberOfVitalsToReturn:numberOfVitalsToReturn,
 
       getHivSummary: getHivSummary,
       numberOfHivSummaryRecordsToReturn: 20,
@@ -25,6 +25,7 @@ jshint -W098, -W117, -W003, -W026
       numberOfPatientTestsToReturn: numberOfPatientTestsToReturn,
 
       getDailyVisits: getDailyVisits,
+      getDailyNotReturnedVisits:getDailyNotReturnedVisits,
 
 
       getAppointmentSchedule: getAppointmentSchedule,
@@ -32,12 +33,12 @@ jshint -W098, -W117, -W003, -W026
 
       getDefaultersList: getDefaultersList,
       numberOfDefaultersToReturn: 20,
-      
+
       getPatientsCreatedByPeriod:getPatientsCreatedByPeriod,
       numberOfPatientCreationRowsToReturn:20,
-            
+
       getDetailsOfPatientsCreatedInLocation:getDetailsOfPatientsCreatedInLocation,
-      numberOfPatientCreationInLocationRowsToReturn:20,    
+      numberOfPatientCreationInLocationRowsToReturn:20,
 
       getPatientListByIndicator: getPatientListByIndicator,
       numberOfPatientsToReturn: 20,
@@ -297,7 +298,9 @@ jshint -W098, -W117, -W003, -W026
       });
 
     }
-    function getDailyVisits(locationUuid, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
+    //getDailyNotReturnedVisits Mock
+
+    function getDailyNotReturnedVisits(locationUuid, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
       if (!startIndex) {
         startIndex = 0;
       }
@@ -342,7 +345,58 @@ jshint -W098, -W117, -W003, -W026
       });
 
     }
- 
+
+
+ function getDailyVisits(locationUuid, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
+      if (!startIndex) {
+        startIndex = 0;
+      }
+
+      if (!limit) {
+        limit = 20;
+      }
+      if (service.returnErrorOnNextCall === true) {
+        console.log('returning error on get vitals');
+        failedCallback({ message: 'An error occured' });
+        return;
+      }
+
+      var appointments = [];
+
+      var numberOfRecords = limit;
+
+      if (startIndex >= service.numberOfAppointmentsToReturn) {
+        successCallback({
+          startIndex: startIndex,
+          size: 0,
+          result: []
+        });
+        return;
+      }
+
+      if ((startIndex + limit) > service.numberOfAppointmentsToReturn) {
+        numberOfRecords = service.numberOfAppointmentsToReturn - (startIndex + limit);
+      }
+      else {
+        numberOfRecords = limit;
+      }
+
+      for (var i = startIndex; i < (startIndex + numberOfRecords); i++) {
+        appointments.push(getDailyVisitRecord(i));
+      }
+
+      successCallback({
+        startIndex: startIndex,
+        size: numberOfRecords,
+        result: appointments
+      });
+
+    }
+
+
+
+
+
  function getPatientsCreatedByPeriod(startDate, endDate, successCallback, failedCallback, startIndex, limit) {
       console.log('calling mock getPatientsCreatedByPeriod');
       var patientCreationRecords = [];
@@ -357,7 +411,7 @@ jshint -W098, -W117, -W003, -W026
         console.log('returning error on getPatientsCreatedByPeriod');
         failedCallback({ message: 'An error occured' });
         return;
-      }      
+      }
 
       var numberOfRecords = limit;
 
@@ -388,7 +442,7 @@ jshint -W098, -W117, -W003, -W026
       });
 
     }
-    
+
     function getDetailsOfPatientsCreatedInLocation(location, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
       console.log('calling mock getDetailsOfPatientsCreatedInLocation');
       var patientCreationRecordsDetails = [];
@@ -403,7 +457,7 @@ jshint -W098, -W117, -W003, -W026
         console.log('returning error on getDetailsOfPatientsCreatedInLocation');
         failedCallback({ message: 'An error occured' });
         return;
-      }      
+      }
 
       var numberOfRecords = limit;
 
@@ -435,8 +489,8 @@ jshint -W098, -W117, -W003, -W026
 
 
     }
-    
-    
+
+
     function getVitalRecord(index) {
       var vitalRecord = {
         person_id: 'person_id',
@@ -613,7 +667,7 @@ jshint -W098, -W117, -W003, -W026
       /* jshint ignore:end */
       return appointmentScheduleEtl;
     }
-    
+
     function getHivSummaryRecord(index) {
       /* jshint ignore:start */
       var hivSummaryEtl = {
@@ -706,15 +760,15 @@ jshint -W098, -W117, -W003, -W026
         result: patients
       });
     }
-        
+
     function getPatientCreationRecord(index) {
       return {
-        location_id:'location '+index, 
+        location_id:'location '+index,
         name:'Clinic '+index,
         total:'Total'+index
       }
     }
-    
+
     function getDetailsOfPatientCreationInLocationRecord(index) {
       return {
         patient_id:'patient_id '+index,
