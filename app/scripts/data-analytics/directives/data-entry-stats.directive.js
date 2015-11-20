@@ -28,7 +28,7 @@ jshint -W003, -W026
 		$state, $filter, EtlRestService, helperService, UserResService, SearchDataService) {
 		//view configurations
 		$scope.viewConfigurations = helperService.getViewConfigurationObjects();
-		$scope.currentViewConfiguration = $scope.viewConfigurations[2];
+		$scope.currentViewConfiguration = $scope.viewConfigurations[0];
 		$scope.canView = canView;
 		//
 		$scope.changeView = changeView;
