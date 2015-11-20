@@ -1,40 +1,47 @@
 <!doctype html>
 <html class="no-js">
-    <head>
-        <meta charset="utf-8">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <!-- build:css(.) styles/vendor.css -->
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="bower_components/angular-loading/angular-loading.css" />
-        <!-- <link rel="stylesheet" href="bower_components/bootstrap-vertical-tabs/bootstrap.vertical-tabs.css"> -->
-        <!-- bower:css -->
-        <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
-        <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css" />
-        <link rel="stylesheet" href="bower_components/pivottable/dist/pivot.css" />
-        <link rel="stylesheet" href="bower_components/c3/c3.css" />
-        <!-- endbower -->
-        <!-- endbuild -->
-        <!-- build:css(.tmp) styles/main.css -->
-        <link rel="stylesheet" href="styles/main.css">
-        <link rel="stylesheet" href="styles/calender.css">
-        <link rel="stylesheet" href="styles/medical-icons/wfmi-style.css">
-        <!-- endbuild -->
-    </head>
-    <body ng-app="ngAmrsApp">
-        <!--[if lt IE 7]>
-          <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-          <![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-loading/angular-loading.css" />
+    <!-- <link rel="stylesheet" href="bower_components/bootstrap-vertical-tabs/bootstrap.vertical-tabs.css"> -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+    <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css" />
+    <link rel="stylesheet" href="bower_components/pivottable/dist/pivot.css" />
+    <link rel="stylesheet" href="bower_components/c3/c3.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-table/dist/bootstrap-table.min.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/calender.css">
+    <link rel="stylesheet" href="styles/medical-icons/wfmi-style.css">
+    <!-- endbuild -->
+</head>
+<body ng-app="ngAmrsApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
 
-        <!-- Add your site or application content here -->
-    <main-navigation-bar>
+      <!-- Add your site or application content here -->
+      <main-navigation-bar>
 
-    </main-navigation-bar>
+  </main-navigation-bar>
 
-    <div class="container-fluid " id="main-content">
-        <div ui-view></div>
+  <div class="container-fluid " id="main-content">
+    <div ui-view></div>
+</div>
+
+
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="footer container-fluid">
+        <span class="pull-right"><version/> </span>
     </div>
 
 
@@ -43,7 +50,7 @@
             <span class="pull-right"><version/> </span>
         </div>
     </div>
-
+</div>
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
 <script>
  !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
@@ -99,6 +106,15 @@
 <script src="bower_components/c3/c3.js"></script>
 <script src="bower_components/jsnlog.js/jsnlog.js"></script>
 <script src="bower_components/angular-environment/dist/angular-environment.js"></script>
+<script src="bower_components/bootstrap-table/dist/bootstrap-table.min.js"></script>
+<script src="bower_components/bootstrap-table/dist/extensions/angular/bootstrap-table-angular.min.js"></script>
+<script src="bower_components/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
+<script src="bower_components/bootstrap-table/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
+<script src="bower_components/file-saver.js/FileSaver.js"></script>
+<script src="bower_components/html2canvas/build/html2canvas.js"></script>
+<script src="bower_components/jspdf/dist/jspdf.min.js"></script>
+<script src="bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.js"></script>
+<script src="bower_components/tableExport.jquery.plugin/tableExport.min.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -201,7 +217,7 @@
 <script src="scripts/data-analytics/directives/data-entry-stats-view-four.directive.js"></script>
 <script src="scripts/data-analytics/directives/data-entry-stats.directive.js"></script>
 <script src="scripts/admin/directives/hiv-summary-visual-filter-controls.directive.js"></script>
-  
+
 <!-- Controllers -->
 <script src="scripts/patient-dashboard/controllers/patient-dashboard.controller.js"></script>
 <script src="scripts/patient-dashboard/controllers/encounter.controller.js"></script>
