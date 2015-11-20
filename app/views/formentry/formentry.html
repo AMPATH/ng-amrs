@@ -55,22 +55,22 @@
       </h2>
   </div>
   <!-- Error messages Summary -->
-  <div class="panel panel-danger" data-ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">
-    <div data-ng-repeat="tab in vm.formlyFields" data-ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">
-      <h4 data-ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">Error(s) on {{tab.title}}</h4>
+  <div class="panel panel-danger" data-ng-show="(vm.form.$valid === false && vm.hasClickedSubmit)">
+    <div data-ng-repeat="tab in vm.formlyFields" data-ng-show="(vm.form.$valid === false && vm.hasClickedSubmit)">
+      <h4 data-ng-show="(vm.form.$valid === false && vm.hasClickedSubmit)">Error(s) on {{tab.title}}</h4>
       <formly-error-summary form="vm.form" fields="tab.form.fields"></formly-error-summary>
     </div>
   </div>
-  <div style="color:red;" ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">{{vm.errorMessage}}</div>
+  <div style="color:red;" ng-show="(vm.form.$valid === false && vm.hasClickedSubmit)">{{vm.errorMessage}}</div>
   <div style="color:red;">{{vm.errorSubmit}}</div>
 
-  <form name="vm.form" novalidate>
+  <form id="form-panel" name="vm.form" novalidate>
     <tabset>
       <tab ng-repeat="tab in vm.tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled" select="vm.tabSelected($index)">
         <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
       </tab>
     </tabset>
-    <div style="color:red;" ng-show="vm.form.$invalid &amp;&amp; vm.form.$submitted">{{vm.errorMessage}}</div>
+    <div style="color:red;" ng-show="(vm.form.$valid === false && vm.hasClickedSubmit)">{{vm.errorMessage}}</div>
     <div style="color:red;">{{vm.errorSubmit}}</div>
 
     <div style="text-align: center;">
@@ -176,7 +176,7 @@
     Allow all validations to be run on form submit only and when its rendered
     Other custom validations will still run  when the field is touched anyway
      -->
-      <div data-ng-repeat="field in vm.pageFields" data-ng-if="vm.form.$invalid &amp;&amp; vm.form.$submitted" ng-class="{'color-success': field.formControl.$valid, 'color-error': field.formControl.$invalid}">
+      <div data-ng-repeat="field in vm.pageFields" ng-class="{'color-success': field.formControl.$valid, 'color-error': field.formControl.$invalid}">
         <div data-ng-show="field.formControl.$invalid">
           <i class="glyphicon glyphicon-{{field.formControl.$invalid ? 'remove' : 'ok'}}"></i>
           <span data-ng-if="field.formControl.$invalid">

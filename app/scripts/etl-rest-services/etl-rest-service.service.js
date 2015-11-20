@@ -249,8 +249,6 @@
         params.limit = limit;
       }
 
-      console.log(params);
-      console.log(startIndex);
       return resource.get(params).$promise
         .then(function (response) {
           successCallback(response);

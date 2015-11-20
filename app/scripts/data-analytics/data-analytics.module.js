@@ -2,12 +2,11 @@
     'use strict';
 
     angular
-        .module('app.admin', [
+        .module('app.dataAnalytics', [
             'app.openmrsRestServices',
             'app.formentry',
             'app.etlRestServices',
             'models',
-            'ui.bootstrap',
-            'app.dataAnalytics'
+            'ui.bootstrap'
         ]);
 })();

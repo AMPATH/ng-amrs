@@ -54,6 +54,8 @@ module.exports = function (config) {
     'bower_components/angular-loading/angular-loading.js',
     'bower_components/ui-router-extras/release/ct-ui-router-extras.js',
     'bower_components/karma-read-json/karma-read-json.js',
+    'bower_components/jsnlog.js/jsnlog.js',
+    'bower_components/angular-environment/dist/angular-environment.js',
     'bower_components/angular-mocks/angular-mocks.js',
     // endbower
       'app/scripts/**/*.module.js',
@@ -104,6 +106,7 @@ module.exports = function (config) {
       'app/views/patient-dashboard/**/*.html': ['ng-html2js'],
       'app/views/clinic-dashboard/**/*.html': ['ng-html2js'],
       'app/views/admin/**/*.html': ['ng-html2js'],
+      'app/views/data-analytics/**/*.html': ['ng-html2js'],
     },
     ngHtml2JsPreprocessor: {
       stripPrefix: 'app/',
