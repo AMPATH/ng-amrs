@@ -3,9 +3,11 @@
   "version": "0.4.0",
   "license": "UNLICENSED",
   "dependencies": {
+    "angular-environment": "^1.0.3",
     "api-check": "^7.5.0",
     "karma-html2js-preprocessor": "^0.1.0",
-    "pivottable": "^1.6.3"
+    "pivottable": "^1.6.3",
+    "stacktrace-js": "^1.0.1"
   },
   "repository": {},
   "devDependencies": {

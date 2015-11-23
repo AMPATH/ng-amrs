@@ -32,7 +32,7 @@
     $scope.addingUrl = false;
 
     $scope.addingEtlUrl = false;
-    
+
     //methods
     $scope.addUrlToList = addUrlToList;
     $scope.addEtlUrlToList = addEtlUrlToList;
