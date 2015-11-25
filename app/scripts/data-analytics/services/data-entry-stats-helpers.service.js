@@ -21,9 +21,68 @@
 			getDateArrayFrom: getDateArrayFrom,
 			areDateObjectsEqual: areDateObjectsEqual,
 			generateEndMonth: generateEndMonth,
-			getMonthArrayFrom: getMonthArrayFrom
+			getMonthArrayFrom: getMonthArrayFrom,
+			getViewConfigurationObjects: getViewConfigurationObjects
         };
 		return serviceDefinition;
+		
+		function getViewConfigurationObjects(){
+			return [
+				{
+					display:'Encounter Types Per Day',
+					reportSubType: 'by-date-by-encounter-type',
+					description: "Row as Encounter Type, Column as Date",
+					column: 'date',
+					columnTitle: 'Date',
+					row: 'encounter_type_id',
+					rowTitle: 'Encounter Type',
+					additionalRowMember: 'encounter_type',
+					numberOfColumns: 6,
+					controls: 
+					'start-date,end-date,selected-encounter,selected-form,selected-provider'
+				},
+				{
+					display:'Encounter Types Per Month',
+					reportSubType: 'by-month-by-encounter-type',
+					description: "Row as Encounter Type, Column as Month",
+					column: 'month',
+					columnTitle: 'Month',
+					row: 'encounter_type_id',
+					rowTitle: 'Encounter Type',
+					additionalRowMember: 'encounter_type',
+					numberOfColumns: 12,
+					controls: 
+					'start-month,end-month,selected-encounter,selected-form,selected-provider'
+				},
+				{
+					display:'Encounter Types Per Provider',
+					reportSubType: 'by-provider-by-encounter-type',
+					description: "Row as Provider, Column as Encounter Type",
+					column: 'encounter_type',
+					columnTitle: 'Encounter Type',
+					row: 'provider_id',
+					rowTitle: 'Provider',
+					additionalRowMember: 'provider_uuid',
+					numberOfColumns: 6,
+					controls: 
+					'start-date,end-date,selected-encounter,selected-form,selected-provider'
+				},
+				{
+					display:'Encounter Types Per Creator',
+					reportSubType: 'by-creator-by-encounter-type',
+					description: "Row as Creator, Column as Encounter Type",
+					column: 'encounter_type',
+					columnTitle: 'Encounter Type',
+					row: 'creator_id',
+					rowTitle: 'Creator',
+					additionalRowMember: 'user_uuid',
+					numberOfColumns: 6,
+					controls: 
+					'start-date,end-date,selected-encounter,selected-form,selected-creator'
+				}
+			];
+		}
+		
 
 		function generateEndDate(startDate, daysToAdd) {
 			var day = moment(startDate).startOf('day');

@@ -11,6 +11,24 @@
 	<hr style="margin:1px;" />
 	<div class="panel panel-default" style="padding: 4px; margin: 2px;" collapse="isExpanded">
 		<div class="row" style="padding: 1px;">
+			<div class="form-group col-md-12">
+				<label for="start-date">Location</label>
+				<div class="input-group" ng-hide="selectedLocations.selectedAll === true">
+					<div class="input-group-addon">
+						<span class="text-danger">
+							<img ng-show="isBusy" src="images/ajax-loader.gif" />
+						</span>
+						<span ng-hide="isBusy" class="glyphicon glyphicon-map-marker"></span>
+					</div>
+					<ui-select multiple ng-model="selectedLocations.locations" theme="bootstrap" ng-disabled="isBusy === true">
+						<ui-select-match placeholder="Select a location or type to search">{{$item.name()}}</ui-select-match>
+						<ui-select-choices repeat="location in locations | propsFilter: {name: $select.search, description: $select.search} ">
+							<div ng-bind-html="location.name() | highlight: $select.search"></div>
+							<small ng-bind-html="location.description() | highlight: $select.search" class="border-success"></small>
+						</ui-select-choices>
+					</ui-select>
+				</div>
+			</div>
 			<div class="form-group col-md-6" ng-show="canView('start-date')">
 				<label for="start-date">Start Date</label>
 				<div class="input-group">
@@ -33,7 +51,7 @@
             			</span>
 				</div>
 			</div>
-			<div class="form-group col-md-6"  ng-show="canView('start-month')">
+			<div class="form-group col-md-6" ng-show="canView('start-month')">
 				<label for="start-month">Start Month</label>
 				<div class="input-group">
 					<input type="text" id="start-month" class="form-control" is-open="startMonthIsOpen" datepicker-options="{ 'minMode': 'month' }"
@@ -45,7 +63,7 @@
             			</span>
 				</div>
 			</div>
-			<div class="form-group col-md-6"  ng-show="canView('end-month')">
+			<div class="form-group col-md-6" ng-show="canView('end-month')">
 				<label for="end-month">End Month</label>
 				<div class="input-group">
 					<input type="text" id="end-month" class="form-control" is-open="endMonthIsOpen" datepicker-options="{ 'minMode': 'month' }"
@@ -66,14 +84,14 @@
 							<div ng-bind-html="provider.display() | highlight: $select.search"></div>
 						</ui-select-choices>
 					</ui-select>
-					<div class="input-group-addon" >
+					<div class="input-group-addon">
 						<span class="text-danger">
 							<img ng-show="findingProvider" src="images/ajax-loader.gif" />
 						</span>
 						<span class="glyphicon glyphicon-remove-circle" ng-click="selectedProvider.selected = null"></span>
 					</div>
 				</div>
-				
+
 			</div>
 			<div class="form-group col-md-6" ng-show="canView('selected-creator')">
 				<label for="end-month">Creator</label>
@@ -84,14 +102,14 @@
 							<div ng-bind-html="creator.person.display | highlight: $select.search"></div>
 						</ui-select-choices>
 					</ui-select>
-					<div class="input-group-addon" >
+					<div class="input-group-addon">
 						<span class="text-danger">
 							<img ng-show="findingCreator" src="images/ajax-loader.gif" />
 						</span>
 						<span class="glyphicon glyphicon-remove-circle" ng-click="selectedCreator.selected = null"></span>
 					</div>
 				</div>
-				
+
 			</div>
 			<div class="form-group col-md-6" ng-show="canView('selected-encounter')">
 				<label for="end-month">Encounter Type</label>

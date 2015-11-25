@@ -1,0 +1,84 @@
+<div style="margin: 2px;">
+	<hr style="margin:0px;" />
+		<div style="margin:2px;" class="btn-group" dropdown dropdown-append-to-body>
+		<button id="btn-append-to-body" type="button" class="btn btn-primary" dropdown-toggle>
+			View By: <span class="caret"></span>
+		</button>
+		
+		<ul class="dropdown-menu" role="menu" aria-labelledby="btn-append-to-body">
+			<li ng-repeat="item in viewConfigurations" role="menuitem"><a ng-click="changeView(item)">{{item.display}} <br/> <small style="color: gray;">{{item.description}}</small></a></li>
+		</ul>
+		</div>
+		<span class="text-primary" style="font-size: 20px; vertical-align: middle; ">  {{currentViewConfiguration.display}}</span>
+	<hr style="margin-top:0px; margin-bottom:2px;" />
+	<stats-data-entry-filters enabled-controls="currentViewConfiguration.controls" start-date="startDate" end-date="endDate"
+	start-month="startMonth" end-month="endMonth" 
+	selected-provider="selectedProvider" selected-locations="selectedLocations"
+	selected-creator="selectedCreator" selected-forms="selectedForms"
+	selected-encounter-types="selectedEncounterTypes">
+	</stats-data-entry-filters>
+	<div ng-show='!isBusy'>
+		<button class="btn btn-info" ng-click="loadStatsFromServer()">
+			Load
+		</button>
+		<button class="btn btn-default" ng-click="getPreviousStartDate()" ng-show="canView('start-date')">
+			Previous 7 Days
+		</button>
+		<button class="btn btn-default" ng-click="getNextStartDate()" ng-show="canView('start-date')">
+			Next 7 Days
+		</button>
+		<button class="btn btn-default" ng-click="getPreviousStartMonth()" ng-show="canView('start-month')">
+			Previous 12 Months
+		</button>
+		<button class="btn btn-default" ng-click="getNextStartMonth()" ng-show="canView('start-month')">
+			Next 12 Months
+		</button>
+	</div>
+	<div ng-show='isBusy'>
+		<img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+		<b>Loading data...</b>
+	</div>
+	<div ng-show='experiencedLoadingErrors' style="margin-top: 2px;">
+		<p class="bg-danger" style="padding:4px;">
+			<b>
+				<span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
+			<p>
+	</div>
+	<div ng-hide="needsRefresh">
+		<h3 class="text-primary" style="magin-top: 0px; margin-bottom:0px;"> <strong>{{currentViewConfiguration.display}} </strong> <small class="text-primary">({{startDate | date:'dd-MM-yyyy'}} to {{endDate | date:'dd-MM-yyyy'}})</small> </h3>
+		<!--<hr style="margin-top: 2px; margin-bottom: 2px;"/>-->
+
+		<div class="panel panel-primary" style="padding:2px; margin:0px;">
+			<table class='table table-responsive'>
+				<thead>
+					<tr>
+						<th>{{currentViewConfiguration.rowTitle}}</th>
+						<th ng-if="currentViewConfiguration.column === 'date'" ng-repeat="header in columnHeaderRow">{{header | date:'EEE'}}
+							<br/> {{header | date:'dd-MM-yyyy'}}</th>
+						<th ng-if="currentViewConfiguration.column !== 'date'" ng-repeat="header in columnHeaderRow">{{header}}</th>
+					</tr>
+				</thead>
+				<tr ng-repeat="item in groupedItems | startFrom:(currentPage-1)*20 | limitTo:20">
+					<td ng-if="currentViewConfiguration.row === 'encounter_type_id'">
+						{{item.encounter_type}}
+					</td>
+					<td ng-if="currentViewConfiguration.row === 'provider_id'">
+						{{item.provider | titlecase}}
+					</td>
+					<td ng-if="currentViewConfiguration.row === 'creator_id'">
+						{{item.creator | titlecase}}
+					</td>
+
+					<!--cell doesn't change' -->
+					<td ng-repeat="cell in item.value">
+						{{cell.value.encounters_count}}
+					</td>
+				</tr>
+			</table>
+			<pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="groupedItems.length" items-per-page="20"
+			ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 4px; margin-bottom: 0px; margin-left:2px;"
+			last-text="&raquo;" rotate="false"></pagination>
+		</div>
+
+	</div>
+</div>

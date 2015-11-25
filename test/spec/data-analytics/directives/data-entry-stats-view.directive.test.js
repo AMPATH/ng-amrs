@@ -8,7 +8,7 @@
 /* global describe */
 (function () {
 	'use strict';
-	describe('Data Entry Stats View One Directive Unit Tests', function () {
+	describe('Data Entry Stats View Directive Unit Tests', function () {
 		beforeEach(function () {
 			//debugger;
 			module('ngAmrsApp');
@@ -20,18 +20,16 @@
 			module('app.openmrsRestServices');
 		});
 
-		var elm, element, scope, etlRestServiceMock, locationModelFactory, locationModels, moment, settingsService;
-		
-		beforeEach(function(){
-			
-		});
+		var elm, element, scope, etlRestServiceMock, locationModelFactory, 
+		locationModels, moment, settingsService;
 
 		beforeEach(inject(function ($injector, $rootScope, $compile, $httpBackend) {
 			settingsService = $injector.get('OpenmrsSettings');
-			$httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location?v=default').respond({});
+			$httpBackend.expectGET(settingsService.getCurrentRestUrlBase() 
+			+ 'location?v=default').respond({});
 			elm = angular.element(
-				'<stats-data-entry-stats-view-one selected-locations="selectedLocations">' +
-				'</stats-data-entry-stats-view-one>');
+				'<stats-data-entry-stats>' +
+				'</stats-data-entry-stats>');
 			scope = $rootScope.$new();
 			scope.selectedLocations = { selectedAll: true, locations: [] };
 			element = $compile(elm)(scope);
@@ -62,22 +60,6 @@
 			//ensure that mock services are injected
 			expect(etlRestServiceMock.isMockService).to.equal(true);
 		});
-
-		it('should have required public members exposed on the scope on load',
-			function () {
-				var isolateScope = element.isolateScope();
-				expect(isolateScope.getSelectedLocations).to.exist;
-				// expect(isolateScope.isBusy).to.exist;
-				// expect(isolateScope.experiencedLoadingErrors).to.exist;
-				// expect(isolateScope.loadPatientList).to.exist;
-			});
-
-		
-			
-			
-			
-			
-			
 			
 			it('should invoke the getDataEntryStatistics etl method when loadStatsFromServer is invoked' +
 			' with required params', 
@@ -98,21 +80,6 @@
 				chai.expect(loadStatsFromServerSpy.callCount).to.equal(0);
 			});
 			
-			 it('should not call getPatientListByIndicator when loadPatientList is called and startDate not' +
-			' supplied or empty', function () {
-				var isolateScope = scope.$$childHead;
-				var loadStatsFromServerSpy = sinon.spy(etlRestServiceMock, 'getDataEntryStatistics');
-		
-				//case undefined
-				isolateScope.startDate= undefined;
-				isolateScope.loadStatsFromServer();
-				chai.expect(loadStatsFromServerSpy.callCount).to.equal(0);
-			
-				//case empty
-				isolateScope.startDate = null;
-				isolateScope.loadStatsFromServer();
-				chai.expect(loadStatsFromServerSpy.callCount).to.equal(0);
-			});
 			it('should set isBusy to false when loadStatsFromServer is invoked, and callbacks return',
 			function () {
 					var isolateScope = scope.$$childHead;
