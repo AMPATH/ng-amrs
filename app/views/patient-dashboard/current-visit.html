@@ -1,5 +1,14 @@
 <div>
-    <div class="panel panel-default" data-ng-show="visitTypesLoaded && !visitStarted">
+    <div data-ng-show="loadingVisitTypes || checkingIfVisitStarted">
+        <img data-ng-src="images/ajax-loader.gif" autofocus />
+        <b>Loading...</b>
+    </div>
+    <div class="alert alert-danger" role="alert" data-ng-show="errorLoadingVisitTypes || errorLoadingPatientVisits">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Error:</span>
+          Sorry, a network error has occured! Please try again later.
+    </div>
+    <div class="panel panel-default" data-ng-show="visitTypesLoaded && !visitStarted && !checkingIfVisitStarted">
         <div class="panel-heading px-nested-panel-heading clearfix">
             Choose Visit type to start.
         </div>
@@ -7,14 +16,14 @@
         <form  class="form-inline">
             <div class="form-group">
                 <span data-ng-repeat="visitType in visitTypes">
-                    <input type="radio" data-ng-model="currentVisit.visitType" value="{{visitType.uuid}}" id={{visitType.uuid}}>
+                    <input type="radio" data-ng-model="currentVisit.visitType" name="visitType" value="{{visitType.uuid}}" id={{visitType.uuid}}>
                     <label for="{{visitType.uuid}}" style="font-size:large;  margin-top: 15px;">{{visitType.name}}</label><br/>
                 </span>
             </div>
         </form>
         </div>
         <div class="panel-footer px-nested-panel-footer">
-            <button class="btn btn-primary" data-ng-click="startNewVisit()" data-ng-disabled="!currentVisit.visitType || busy">
+            <button class="btn btn-primary" data-ng-click="startNewVisit()" data-ng-disabled="!currentVisit.visitType">
                 Start New Visit
             </button>
         </div>
@@ -33,6 +42,11 @@
                 <div class="panel-heading px-nested-panel-heading">
                     <p data-ng-show="currentVisit.hasCompletedEncounters">Completed Encounters</p>
                     <p data-ng-hide="currentVisit.hasCompletedEncounters">No encounters Completed</p>
+                    <div class="alert alert-danger" role="alert" data-ng-show="errorLoadingEncounters">
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                      <span class="sr-only">Error:</span>
+                      Sorry, An error occured while loading encounters!
+                    </div>
                 </div>
                 <table class="table table-striped table-hover">
                   <thead>
