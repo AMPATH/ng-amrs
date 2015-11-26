@@ -148,7 +148,7 @@
             }else{
                 $scope.$parent.selectedSearchLocations=[];
                 angular.forEach($scope.selectedLocations.locations,function(value,key){
-                    $scope.$parent.selectedSearchLocations.push(CachedDataService.getCachedEtlLocations()[value.uuId()].location_id);
+                $scope.$parent.selectedSearchLocations.push(CachedDataService.getCachedEtlLocations()[value.uuId()].location_id);
                 });
             }
             $scope.$parent.startDate=$scope.startDate;

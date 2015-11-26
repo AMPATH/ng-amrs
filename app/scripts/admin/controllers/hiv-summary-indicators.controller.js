@@ -80,6 +80,7 @@
         function onFetchHivSummaryFlatTableSuccess(result) {
             $scope.summaryVisualizationDone = true;
             $scope.isBusy = false;
+        
             if (result.result.length >0) {
                 $scope.hivSummaryTableData = result.result;
                 //get the json  keys

@@ -27,7 +27,7 @@
     <!--Pivot Table Visualization -->
     <div data-ng-hide="!hivSummaryTableData.length" id="pivottable">
     </div>
-    <div data-ng-show="noresults" style="cursor: pointer;" class="alert alert-danger" ng-click="loadHivSummaryFlatTable()" ng-show='experiencedLoadingErrors' >
+    <div data-ng-show="!hivSummaryTableData.length" style="cursor: pointer;" class="alert alert-danger" ng-click="loadHivSummaryFlatTable()" ng-show='experiencedLoadingErrors' >
         <span class="glyphicon glyphicon-exclamation-sign">
         </span>No Data Found.Change your search parameters and try again.</b>
     </div>
