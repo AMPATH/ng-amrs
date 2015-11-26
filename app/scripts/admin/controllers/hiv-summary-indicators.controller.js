@@ -145,18 +145,18 @@
          angular.forEach(reportIndicator, function(value, key) {
          if(key==indicatorTag.name||key=='location_uuid'||key=='location') {
          result[key] = value;
-         
+
          } else {
          $scope.noresults = true;
          console.log('empty  result  was  returned');
          }
-         
+
          });
          });
          $scope.indicators.push(result);
          });
          }
-         
+
          */
 
         function getIndicatorDetails(name) {

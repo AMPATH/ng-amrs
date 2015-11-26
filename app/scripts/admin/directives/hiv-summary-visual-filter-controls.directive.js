@@ -36,6 +36,7 @@
         $scope.selectAllForms = selectAllForms;
         $scope.selectAllEncounterTypes = selectAllEncounterTypes;
         $scope.locationSelected = locationSelected;
+        $scope.handleSelectAllTongle = handleSelectAllTongle;
 
         $scope.providers = [];
         $scope.selectedProvider = {};
@@ -152,8 +153,18 @@
             }
             $scope.$parent.startDate = $scope.startDate;
             $scope.$parent.endDate = $scope.endDate;
-            $scope.$parent.enableSubmitButton = true
+            //enable  button  only  when all  or  a  given  location has  been   selected
+            if ($scope.selectedLocations.selectedAll === true || $scope.selectedLocations.locations.length > 0) {
+                $scope.$parent.enableSubmitButton = true;
+            } else {
+                $scope.$parent.enableSubmitButton = false;
+            }
         }
+        function handleSelectAllTongle() {
+            $scope.selectedLocations.selectedAll = !$scope.selectedLocations.selectedAll;
+            locationSelected();
+        }
+
 
     }
 
@@ -166,6 +177,7 @@
         //     }
         // }
     }
+
 
 
 })();
