@@ -80,11 +80,11 @@
         function onFetchHivSummaryFlatTableSuccess(result) {
             $scope.summaryVisualizationDone = true;
             $scope.isBusy = false;
-            if (result.result.length > 1) {
+            if (result.result.length >0) {
                 $scope.hivSummaryTableData = result.result;
                 //get the json  keys
                 angular.forEach($scope.hivSummaryTableData[0], function (value, key) {
-                    $scope.hivSummaryDefaultColumns.push(key)
+                    $scope.hivSummaryDefaultColumns.push(key);
                 });
                 //renders  the  pivot  table
                 createVisualSummary();

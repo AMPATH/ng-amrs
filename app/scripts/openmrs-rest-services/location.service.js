@@ -82,10 +82,10 @@
                                 .then(function (response) {
                                     //catch the location uuid  and  location etl id to $rootScope.cachedEtlLocations
                                     if (angular.isUndefined($rootScope.cachedEtlLocations)) {
-                                        $rootScope.cachedEtlLocations = [];
+                                        $rootScope.cachedEtlLocations ={};
                                     }
                                     angular.forEach(response.result, function (value, key) {
-                                        $rootScope.cachedEtlLocations.push(value);
+                                        $rootScope.cachedEtlLocations[uuid]=value;
                                     });
                                     successCallback(response);
                                 }).catch(function (error) {
