@@ -8,6 +8,7 @@
             'app.etlRestServices',
             'models',
             'ui.bootstrap',
-            'app.dataAnalytics'
+            'app.dataAnalytics',
+            'bsTable'
         ]);
 })();

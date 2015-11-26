@@ -64,7 +64,6 @@ jshint -W003, -W026
             if($scope.isBusy === true) return;
             $scope.isBusy = true;
             $scope.patients = [];
-
             if ($scope.locationUuid && $scope.locationUuid !== '' && $scope.indicator && $scope.indicator!==''
               && $scope.startDate && $scope.startDate!=='' ) {
               EtlRestService.getPatientListByIndicator($scope.locationUuid,
