@@ -141,7 +141,7 @@
         });
 
     }) .config(['$httpProvider', function($httpProvider) {
-        $httpProvider.interceptors.push('LogToServerInterceptor');
+        //$httpProvider.interceptors.push('LogToServerInterceptor');
     }])
     .run(function($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings,
        EtlRestServicesSettings, UtilService) {
