@@ -49,7 +49,7 @@
             },
 
             function(error) {
-              onsole.log(error);
+              console.log(error);
             });
 
           // SearchDataService.findPocForms(findFormsContaining, function(results) {

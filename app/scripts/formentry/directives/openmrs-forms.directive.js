@@ -16,7 +16,6 @@ jshint -W003, -W026, -W033, -W098
         templateUrl: 'views/formentry/forms.html',
         controller: OpemrsFormsCtrl
       };
-
       return opemrsFormsDefinition;
     }
 

@@ -21,6 +21,7 @@
 				<span>Key:
 				<span class="label label-info">scheduled</span>
 				<span class="label label-success">attended</span>
+          <span class="label label-warning">no return</span>
 				</span>
 			</div>
 		</div>
@@ -60,14 +61,19 @@
 		<div class="day" ng-click="viewDaysAppointments(day)" style="padding: 2px; margin-bottom: 2px; cursor: pointer;" ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected), 'col-xs-1': $index === 0 || $index === 6, 'col-xs-2' : $index !== 0 && $index !== 6 }"
 		ng-repeat="day in week.days">
 			<div class="panel panel-default" style="padding: 1px; horizontal-alignment: center;">{{day.number}}
-				<div>
+				<div style="height:20px">
 					<span class="label" ng-class="{'label-info':((appointments | datesFilter: day) != 0) }">{{appointments | datesFilter: day}}
 						<span class="glyphicon glyphicon-list-alt hidden-xs"></span>
 					</span>
 					<span class="label" ng-class="{'label-success':((appointments | visitDatesFilter: day) != 0) }">{{appointments | visitDatesFilter: day}}
 						<span class="glyphicon glyphicon-list-alt hidden-xs"></span>
 					</span>
-				</div>
+          <!--has  not  returned  indicator -->
+          <span  class="label" ng-class="{'label-warning':((appointments |notReturnedDatesFilter: day) != 0) }">{{appointments|notReturnedDatesFilter: day}}
+						<span class="glyphicon glyphicon-list-alt hidden-xs"></span>
+					</span>
+
+        </div>
 			</div>
 		</div>
 	</div>

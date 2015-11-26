@@ -1,0 +1,38 @@
+<stats-hiv-summary-visual-filters enabled-controls="'start-date, end-date'"  start-date="startDate" end-date="endDate" >
+</stats-hiv-summary-visual-filters>
+
+<br>
+<div  class="well" style="padding:2px; margin-bottom: 5px !important; ">
+    <div style="cursor: pointer;" class="alert alert-danger" ng-click="loadHivSummaryFlatTable()" ng-show='experiencedLoadingErrors' >
+        <span class="glyphicon glyphicon-exclamation-sign">
+        </span> An error occurred while generating indicators. Please try again.</b>
+        <button ng-disabled="!enableSubmitButton" class="btn btn-info pull-right" style="padding: 2px!important;" ng-click="loadHivSummaryFlatTable()">
+            <span class="glyphicon glyphicon-refresh"></span>
+            <span>Re-Load</span>
+        </button>
+    </div>
+    <div style="height: 35px" ng-show='!isBusy && !experiencedLoadingErrors'>
+        <button ng-disabled="!enableSubmitButton" class="btn btn-info pull-right" ng-click="loadHivSummaryFlatTable()">
+            <span class="glyphicon glyphicon-refresh"></span>
+            <span>Fetch Data</span>
+        </button>
+    </div>
+    <div  ng-show='isBusy'>
+        <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+        <b> Fetch Data, Please wait...</b>
+    </div>
+</div>
+
+<div collapse="!summaryVisualizationDone"  class="well" style="padding:4px; margin-bottom: 0px !important; width:inherit">
+    <!--Pivot Table Visualization -->
+    <div data-ng-hide="!hivSummaryTableData.length" id="pivottable">
+    </div>
+    <div data-ng-show="!hivSummaryTableData.length" style="cursor: pointer;" class="alert alert-danger" ng-click="loadHivSummaryFlatTable()" ng-show='experiencedLoadingErrors' >
+        <span class="glyphicon glyphicon-exclamation-sign">
+        </span>No Data Found.Change your search parameters and try again.</b>
+    </div>
+
+    <!-- END OF Pivot Table Visualization -->
+    <hr style="margin: 4px;" />
+
+</div>
