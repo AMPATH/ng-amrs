@@ -1626,12 +1626,13 @@
           ]
         },
         {
-          "label": "WHO staging",
+          "label": "WHO Staging",
           "questions": [
             {
               "concept": "a8a8331e-1350-11df-a1f1-0026b9348838",
-              "required": "true",
-              "label": "WHO stage:",
+              "label": "If you are assigning a new WHO stage to patient today, select new WHO stage:",
+              "type": "select",
+              "id":"newWhoStage",
               "answers": [
                 {
                   "concept": "a89b2606-1350-11df-a1f1-0026b9348838",
@@ -1650,31 +1651,20 @@
                   "label": "4"
                 }
               ],
-              "type": "select",
               "validators": []
             },
             {
               "concept": "a8ae88a4-1350-11df-a1f1-0026b9348838",
-              "required": "true",
-              "label": "Criteria:",
+              "label": "Select criteria for new WHO stage:",
               "type": "select-concept-answers",
-              "validators": []
-            },
-            {
-              "concept": "a89b67d8-1350-11df-a1f1-0026b9348838",
-              "label": "New stage:",
-              "answers": [
+              "validators": [
                 {
-                  "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
-                  "label": "Yes"
-                },
-                {
-                  "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                  "label": "No"
+                  "type": "conditionalRequired",
+                  "message": "Patient marked as receiving new WHO stage. Please select stage.",
+                  "referenceQuestionId": "newWHOStage",
+                  "referenceQuestionAnswers": ["a89b2606-1350-11df-a1f1-0026b9348838"]
                 }
-              ],
-              "type": "select",
-              "validators": []
+              ]
             }
           ]
         }
