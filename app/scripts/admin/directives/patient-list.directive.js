@@ -84,8 +84,7 @@ jshint -W003, -W026
         }
 
         function onFetchPatientsListError(error) {
-          console.log('Aww! something wrong happened', error);
-             $scope.isBusy = false;
+               $scope.isBusy = false;
              $scope.experiencedLoadingErrors = true;
         }
         function getIndicatorDetails() {

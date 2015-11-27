@@ -19,6 +19,7 @@
 
   var locationService = OpenmrsRestService.getLocationResService();
   $scope.selectedLocation = ClinicDashboardService.getSelectedLocation();
+  $scope.selected='';
   $scope.locations = [];
 
   $scope.isBusy = false;

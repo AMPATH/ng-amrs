@@ -14,7 +14,7 @@
             scope: {locationUuid: '@', selected: '='},
             controller: monthlyAppointmentController,
             link: monthlyAppointmentLink,
-            templateUrl: 'views/clinic-dashboard/monthly-appointment.html',
+            templateUrl: 'views/clinic-dashboard/monthly-appointment.html'
         };
     }
 
@@ -26,7 +26,7 @@
         'MonthlyAppointmentVisitModel',
         'moment',
         '$filter',
-        'ClinicDashboardService',
+        'ClinicDashboardService'
     ];
 
     function monthlyAppointmentController($scope, $rootScope, $state, EtlRestService,
