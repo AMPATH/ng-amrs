@@ -1448,6 +1448,7 @@
             {
               "concept": "a8a660ca-1350-11df-a1f1-0026b9348838",
               "label": "Weight(Kg):",
+              "id":"weight",
               "type": "number",
               "max": "150",
               "min": "0",
@@ -1457,6 +1458,11 @@
               "concept": "a8a6619c-1350-11df-a1f1-0026b9348838",
               "label": "Height(CM):",
               "type": "number",
+              "id":"height",
+              "calculated":{
+                "resultField":"bmi",
+                "expression": "weight/((height/100) * (height/100))"
+                },
               "validators": []
             },
             {
@@ -1471,6 +1477,7 @@
               "concept": "a89c60c0-1350-11df-a1f1-0026b9348838",
               "label": "BMI:Kg/M2",
               "type": "number",
+              "id":"bmi",
               "max": "100",
               "min": "0",
               "validators": []
