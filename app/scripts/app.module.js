@@ -124,7 +124,7 @@
         .state('admin.hiv-summary-indicators.visual', {
                   url: '/indicator_visual',
                   templateUrl: 'views/admin/visual-indicators-container.html',
-                  controller: 'HivSummaryIndicatorsCtrl',
+                  controller: 'HivVisualSummaryIndicatorsCtrl',
                   data: { requireLogin: true},
                 })
 
