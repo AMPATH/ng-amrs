@@ -9,10 +9,12 @@
     .factory('LogToServerInterceptor', LogToServerInterceptor);
   $log.$inject = ['envService'];
   LogToServerInterceptor.$inject = ['$q'];
+  $exceptionHandler.$inject = ['envService'];
 
   // Make AngularJS do JavaScript logging through JSNLog so we can log to
   //the server by replacing the $log service
   function $log(envService) {
+    var beforeSendExample =
           this.log = function(msg) {
               JL('Angular').trace(msg);
             };
@@ -36,18 +38,20 @@
           var appender = JL.createAjaxAppender('appender');
           var consoleAppender = JL.createConsoleAppender('consoleAppender');
           appender.setOptions({url: envService.read('loggerUrl'),
+            beforeSend: beforeSendExample
           });
           JL().setOptions({requestId:'35F7446D-86F1-47FA-A9EC-547FFF510086', appenders: [appender]});
-        }
+  }
 
   // Replace the factory that creates the standard $exceptionHandler service
 
-  function $exceptionHandler() {
-          return function(exception, cause) {
+  function $exceptionHandler(envService) {
+    return function(exception, cause) {
               JL('Angular').fatalException(cause, exception);
-              throw exception;
+              if (envService.is('development'))
+                throw exception;
             };
-        }
+  }
 
   // Add a factory to create the interceptor to the logToServer module
 
@@ -85,5 +89,26 @@
           };
           return myInterceptor;
         }
+
+  function beforeSend(xhr) {
+    // Replace send function with one that saves the message in the xhr, for
+    // use when response indicates failure.
+    xhr.originalSend = xhr.send;
+    xhr.send = function(msg) {
+      xhr.msg = msg; // Store message in xhr
+      xhr.originalSend(msg);
+    };
+
+    // Set response handler that checks if response received (readyState == 4)
+    // and response status is not 200 (OK). In that case, do something to deal with
+    // failure to log the message.
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState != 4) { return; }
+
+      if (xhr.status == 200) { return; }
+
+      console.log('Cannot log to server. Status: ' + xhr.status + '. Messsage: ' + xhr.msg);
+    };
+  };
 
 })();

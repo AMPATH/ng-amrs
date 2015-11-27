@@ -13,7 +13,7 @@
           },
         vars: {
             development: {
-                loggerUrl: '//localhost:8002/javascript-errors',
+                loggerUrl: '//test1.ampath.or.ke:8002/javascript-errors',
               },
             testing: {
                 loggerUrl: '//test1.ampath.or.ke:8002/javascript-errors',
