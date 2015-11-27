@@ -6,15 +6,16 @@
   <div class="breadcrumb">
     <h2>{{vm.patient.fullNames() | titlecase}} | Sex: {{vm.patient.gender()}} | Age: {{vm.patient.age()}} | Identifier: {{vm.patient.identifierFormatted()}}</h2>{{vm.encounterType}} - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}} {{vm.success}}
   </div>
+  <a id="top"></a>
   <div class="panel panel-default" style="margin-top: -20px;">
     <div class="panel-heading" style=" cursor: pointer;" data-ng-click="isSummaryExpanded = !isSummaryExpanded">
       <span class="text-default" style="margin-left: 2px;"> Patient Summaries </span>
       <!--<button class="btn btn-default btn-sm pull-right">V</button>-->
-      <span class="label label-default pull-right" style="margin-right: 4px;" ng-show="isSummaryExpanded"> 
-        <span class="glyphicon glyphicon-menu-up"> </span> 
+      <span class="label label-default pull-right" style="margin-right: 4px;" ng-show="isSummaryExpanded">
+        <span class="glyphicon glyphicon-menu-up"> </span>
      </span>
       <span class="label label-default pull-right" style="margin-right: 4px;" ng-hide="isSummaryExpanded">
-        <span class="glyphicon glyphicon-menu-down"></span> 
+        <span class="glyphicon glyphicon-menu-down"></span>
      </span>
     </div>
     <div class="panel-body" collapse="!isSummaryExpanded" style="padding: 4px;">
@@ -153,19 +154,19 @@
       body {
         margin: 20px
       }
-      
+
       .formly-field {
         margin-bottom: 16px;
       }
-      
+
       .formly-error-summary {
         margin-bottom: 20px;
       }
-      
+
       .color-error {
         color: red;
       }
-      
+
       .color-success {
         color: green
       }
