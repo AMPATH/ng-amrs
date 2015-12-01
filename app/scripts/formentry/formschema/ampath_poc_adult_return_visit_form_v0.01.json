@@ -41,7 +41,7 @@
                 },
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "No"
+                  "label": "NO"
                 }
               ],
               "validators": []
@@ -112,6 +112,71 @@
       "label": "Medical History",
       "sections": [
         {
+          "label": "PWPs",
+          "questions": [
+            {
+              "concept": "93aa3f1d-1c39-4196-b5e6-8adc916cd5d6",
+              "label": "Prevention With Positives: At risk population:",
+              "answers": [
+                {
+                  "concept": "5da55301-e28e-4fdf-8b64-02622dedc8b0",
+                  "label": "Client of sex worker"
+                },
+                {
+                  "concept": "a89ff438-1350-11df-a1f1-0026b9348838",
+                  "label": "Commercial sex worker"
+                },
+                {
+                  "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
+                  "label": "Discordant couple"
+                },
+                {
+                  "concept": "a890d57a-1350-11df-a1f1-0026b9348838",
+                  "label": "IV drug use"
+                },
+                {
+                  "concept": "e19c35f0-12f0-46c2-94ea-97050f37b811",
+                  "label": "MSM"
+                },
+                {
+                  "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
+                  "label": "N/A"
+                }
+              ],
+              "type": "select",
+              "validators": []
+            },
+            {
+              "concept": "9ce5dbf0-a141-4ad8-8c9d-cd2bf84fe72b",
+              "label": "Prevention With Positives: PWP Services:",
+              "answers": [
+                {
+                  "concept": "f0a280e8-eb88-41a8-837a-f9949ed1b9cd0",
+                  "label": "Condom promotion/provision"
+                },
+                {
+                  "concept": "bf51f71e-937c-4da5-ae07-654acf59f5bb",
+                  "label": "Couple counseling"
+                },
+                {
+                  "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
+                  "label": "Needle exchange"
+                },
+                {
+                  "concept": "05656545-86be-4605-9527-34fb580534b1",
+                  "label": "Targeted risk reduction"
+                },
+                {
+                  "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
+                  "label": "N/A"
+                }
+              ],
+              "type": "select",
+              "validators": []
+            }
+          ]
+        },
+        {
           "label": "Recent Hospitalizations",
           "questions": [
             {
@@ -129,7 +194,7 @@
                     },
                     {
                       "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                      "label": "No"
+                      "label": "NO"
                     }
                   ],
                   "type": "select",
@@ -162,7 +227,7 @@
           ]
         },
         {
-          "label":"Ob/Gyn History",
+          "label": "Ob/Gyn History",
           "questions": [
             {
               "concept": "a89ff758-1350-11df-a1f1-0026b9348838",
@@ -185,7 +250,7 @@
               "answers": [
                 {
                   "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                  "label": "No"
+                  "label": "NO"
                 },
                 {
                   "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
@@ -210,7 +275,7 @@
                 },
                 {
                   "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                  "label": "No"
+                  "label": "NO"
                 }
               ],
               "type": "select",
@@ -225,7 +290,7 @@
 
         },
         {
-          "label":"Social History",
+          "label": "Social History",
           "questions": [
             {
               "concept": "a899a9f2-1350-11df-a1f1-0026b9348838",
@@ -273,7 +338,7 @@
                 },
                 {
                   "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                  "label": "No"
+                  "label": "NO"
                 },
                 {
                   "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
@@ -298,7 +363,7 @@
                 },
                 {
                   "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                  "label": "No"
+                  "label": "NO"
                 }
               ],
               "type": "select",
@@ -422,7 +487,7 @@
                 },
                 {
                   "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                  "label": "No"
+                  "label": "NO"
                 }
               ],
               "type": "select",
@@ -435,6 +500,11 @@
               "validators": [
                 {
                   "type": "date"
+                }
+              ],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                 }
               ]
             },
@@ -463,9 +533,13 @@
                   "failsWhenExpression": "isEmpty(myValue) && !isEmpty(onArt) && onArt === 'a899b35c-1350-11df-a1f1-0026b9348838'",
                   "message": "Patient previously marked as on ART. Please provide the treatment category."
                 }
+              ],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
               ]
             },
-
 
             {
               "concept": "a8a08344-1350-11df-a1f1-0026b9348838",
@@ -538,7 +612,7 @@
                     },
                     {
                       "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                      "label": "None"
+                      "label": "NONE"
                     },
                     {
                       "concept": "a8a87a86-1350-11df-a1f1-0026b9348838",
@@ -584,11 +658,17 @@
                       "failsWhenExpression": "!isEmpty(onArt) && onArt === 'a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                       "message": "Patient on ARVs. Please provide adherence history."
                     }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                    }
                   ]
                 },
                 {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
                   "label": "Adherence (ARVS) Reason for Poor/Fair:",
+                  "id": "artReasonPoorFair",
                   "answers": [
                     {
                       "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
@@ -644,13 +724,23 @@
                     }
                   ],
                   "type": "multiCheckbox",
-                  "validators": []
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], artAdherence) "
+                    }
+                  ]
                 },
                 {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "Adherence (ARVS): Other (specify):",
                   "type": "text",
-                  "validators": []
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], artAdherence)"
+                    }
+                  ]
                 }
               ]
             }
@@ -675,7 +765,7 @@
                 },
                 {
                   "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                  "label": "No"
+                  "label": "NO"
                 }
               ],
               "type": "select",
@@ -694,10 +784,16 @@
                 {
                   "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
                   "label": "Start Date of TB treatment:",
+                  "id": "startDateOfTbTreatment",
                   "type": "date",
                   "validators": [
                     {
                       "type": "date"
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                     }
                   ]
                 }
@@ -710,6 +806,7 @@
                 {
                   "concept": "16db21cd-10cb-4c31-bb5a-b7619bfbea66",
                   "label": "Site of TB meds pick-up",
+                  "id": "siteOfTbMedsPickup",
                   "type": "select",
                   "answers": [
                     {
@@ -720,12 +817,23 @@
                       "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
                       "label": "Other"
                     }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                    }
                   ]
                 },
                 {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "Other Site (Specify)",
-                  "type": "text"
+                  "id": "siteOfTbMedsOther",
+                  "type": "text",
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                    }
+                  ]
                 }
               ]
             },
@@ -754,8 +862,8 @@
                       "label": "RHE"
                     },
                     {
-                      "concept":"a89b1ca6-1350-11df-a1f1-0026b9348838",
-                      "label":"RH"
+                      "concept": "a89b1ca6-1350-11df-a1f1-0026b9348838",
+                      "label": "RH"
                     },
                     {
                       "concept": "a899e19c-1350-11df-a1f1-0026b9348838",
@@ -788,6 +896,11 @@
                     {
                       "concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4",
                       "label": "Rifabutin"
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                     }
                   ]
                 },
@@ -889,11 +1002,17 @@
                   "failsWhenExpression": "!isEmpty(onTbTreatment) && onTbTreatment === 'a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
                   "message": "Patient on TB Treament. Please provide adherence history."
                 }
+              ],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                }
               ]
             },
             {
               "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
               "label": "Adherence (TB Treatment) Reasons for Poor/Fair:",
+              "id": "adherenceTbTreatment",
               "answers": [
                 {
                   "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
@@ -949,24 +1068,35 @@
                 }
               ],
               "type": "multiCheckbox",
-              "validators": []
+              "validators": [],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], tb_adherence)"
+                }
+              ]
             },
             {
               "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
               "label": "Adherence (TB Treatment): Other (specify):",
               "type": "text",
-              "validators": []
+              "id": "adherenceTbOther",
+              "validators": [],
+              "disableExpression": [
+                {
+                  "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], tb_adherence)"
+                }
+              ]
             }
           ]
         }
       ]
     },
     {
-      "label": "Other Medications",
+      "label": "Other Medications History",
       "sections": [
         {
-          "label":"Other Medications",
-          "questions":[
+          "label": "Other Medications",
+          "questions": [
             {
               "concept": "a8a072c8-1350-11df-a1f1-0026b9348838",
               "type": "group_repeating",
@@ -994,7 +1124,7 @@
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "None"
+                  "label": "NONE"
                 },
                 {
                   "concept": "a8989396-1350-11df-a1f1-0026b9348838",
@@ -1037,11 +1167,17 @@
                       "failsWhenExpression": "!isEmpty(pcpProphylaxisCurrent) && arrayContains(['a8989396-1350-11df-a1f1-0026b9348838', 'a890c9e0-1350-11df-a1f1-0026b9348838'], pcpProphylaxisCurrent) && isEmpty(myValue)",
                       "message": "Patient on PCP Prophylaxis. Please provide adherence history"
                     }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838'"
+                    }
                   ]
                 },
                 {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
                   "label": "Adherence (PCP) Reasons for Poor/Fair:",
+                  "id": "pcpAdherence",
                   "answers": [
                     {
                       "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
@@ -1097,13 +1233,24 @@
                     }
                   ],
                   "type": "multiCheckbox",
-                  "validators": []
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], pcpProphylaxisAdherence)"
+                    }
+                  ]
                 },
                 {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "Adherence (PCP): Other (specify):",
                   "type": "text",
-                  "validators": []
+                  "id": "pcpOtherAdherence",
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], pcpProphylaxisAdherence)"
+                    }
+                  ]
                 }
               ]
             }
@@ -1120,7 +1267,7 @@
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "None"
+                  "label": "NONE"
                 },
                 {
                   "concept": "a896cc00-1350-11df-a1f1-0026b9348838",
@@ -1159,11 +1306,17 @@
                       "failsWhenExpression": "!isEmpty(onTbProphylaxis) && arrayContains(['a896cc00-1350-11df-a1f1-0026b9348838'], onTbProphylaxis) && isEmpty(myValue)",
                       "message": "Patient on TB Prophylaxis. Please provide adherence history."
                     }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838'"
+                    }
                   ]
                 },
                 {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
                   "label": "Adherence (TB Prophylaxis) Reasons for Poor/Fair:",
+                  "id": "tbProphylaxisAdherence",
                   "answers": [
                     {
                       "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
@@ -1219,21 +1372,32 @@
                     }
                   ],
                   "type": "multiCheckbox",
-                  "validators": []
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], q16c)"
+                    }
+                  ]
                 },
                 {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "label": "Adherence (TB Prophylaxis): Other (specify):",
                   "type": "text",
-                  "validators": []
+                  "id": "tbProphylaxisOtherAdherence",
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], q16c)"
+                    }
+                  ]
                 }
               ]
             }
           ]
         },
         {
-          "label":"Cryptococcal Secondary Prevention",
-          "questions":[
+          "label": "Cryptococcal Secondary Prevention",
+          "questions": [
             {
 
               "concept": "a899e516-1350-11df-a1f1-0026b9348838",
@@ -1241,7 +1405,7 @@
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "None"
+                  "label": "NONE"
                 },
                 {
                   "concept": "a8971e12-1350-11df-a1f1-0026b9348838",
@@ -1275,7 +1439,7 @@
                     },
                     {
                       "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                      "label": "No"
+                      "label": "NO"
                     }
                   ],
                   "type": "select",
@@ -1448,7 +1612,7 @@
             {
               "concept": "a8a660ca-1350-11df-a1f1-0026b9348838",
               "label": "Weight(Kg):",
-              "id":"weight",
+              "id": "weight",
               "type": "number",
               "max": "150",
               "min": "0",
@@ -1458,11 +1622,11 @@
               "concept": "a8a6619c-1350-11df-a1f1-0026b9348838",
               "label": "Height(CM):",
               "type": "number",
-              "id":"height",
-              "calculated":{
-                "resultField":"bmi",
+              "id": "height",
+              "calculated": {
+                "resultField": "bmi",
                 "expression": "weight/((height/100) * (height/100))"
-                },
+              },
               "validators": []
             },
             {
@@ -1477,7 +1641,7 @@
               "concept": "a89c60c0-1350-11df-a1f1-0026b9348838",
               "label": "BMI:Kg/M2",
               "type": "number",
-              "id":"bmi",
+              "id": "bmi",
               "max": "100",
               "min": "0",
               "validators": []
@@ -1530,7 +1694,7 @@
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "None"
+                  "label": "NONE"
                 },
                 {
                   "concept": "a8ad1276-1350-11df-a1f1-0026b9348838",
@@ -1639,7 +1803,7 @@
               "concept": "a8a8331e-1350-11df-a1f1-0026b9348838",
               "label": "If you are assigning a new WHO stage to patient today, select new WHO stage:",
               "type": "select",
-              "id":"newWhoStage",
+              "id": "newWhoStage",
               "answers": [
                 {
                   "concept": "a89b2606-1350-11df-a1f1-0026b9348838",
@@ -1669,7 +1833,9 @@
                   "type": "conditionalRequired",
                   "message": "Patient marked as receiving new WHO stage. Please select stage.",
                   "referenceQuestionId": "newWHOStage",
-                  "referenceQuestionAnswers": ["a89b2606-1350-11df-a1f1-0026b9348838"]
+                  "referenceQuestionAnswers": [
+                    "a89b2606-1350-11df-a1f1-0026b9348838"
+                  ]
                 }
               ]
             }
@@ -2398,7 +2564,7 @@
                 },
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "None"
+                  "label": "NONE"
                 },
                 {
                   "concept": "a89b77aa-1350-11df-a1f1-0026b9348838",
@@ -2584,7 +2750,7 @@
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "None"
+                  "label": "NONE"
                 },
                 {
                   "concept": "a89b7908-1350-11df-a1f1-0026b9348838",
@@ -2701,7 +2867,7 @@
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "None"
+                  "label": "NONE"
                 },
                 {
                   "concept": "a89b7908-1350-11df-a1f1-0026b9348838",
@@ -2728,7 +2894,7 @@
               "answers": [
                 {
                   "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "None"
+                  "label": "NONE"
                 },
                 {
                   "concept": "a89b7908-1350-11df-a1f1-0026b9348838",
@@ -3045,8 +3211,8 @@
                       "label": "RHE"
                     },
                     {
-                      "concept":"a89b1ca6-1350-11df-a1f1-0026b9348838",
-                      "label":"RH"
+                      "concept": "a89b1ca6-1350-11df-a1f1-0026b9348838",
+                      "label": "RH"
                     },
                     {
                       "concept": "a899e19c-1350-11df-a1f1-0026b9348838",
@@ -3176,73 +3342,8 @@
       ]
     },
     {
-      "label":"Plan",
+      "label": "Plan",
       "sections": [
-        {
-          "label": "PWPs",
-          "questions": [
-            {
-              "concept": "93aa3f1d-1c39-4196-b5e6-8adc916cd5d6",
-              "label": "Prevention With Positives: At risk population:",
-              "answers": [
-                {
-                  "concept": "5da55301-e28e-4fdf-8b64-02622dedc8b0",
-                  "label": "Client of sex worker"
-                },
-                {
-                  "concept": "a89ff438-1350-11df-a1f1-0026b9348838",
-                  "label": "Commercial sex worker"
-                },
-                {
-                  "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
-                  "label": "Discordant couple"
-                },
-                {
-                  "concept": "a890d57a-1350-11df-a1f1-0026b9348838",
-                  "label": "IV drug use"
-                },
-                {
-                  "concept": "e19c35f0-12f0-46c2-94ea-97050f37b811",
-                  "label": "MSM"
-                },
-                {
-                  "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
-                  "label": "N/A"
-                }
-              ],
-              "type": "select",
-              "validators": []
-            },
-            {
-              "concept": "9ce5dbf0-a141-4ad8-8c9d-cd2bf84fe72b",
-              "label": "Prevention With Positives: PWP Services:",
-              "answers": [
-                {
-                  "concept": "f0a280e8-eb88-41a8-837a-f9949ed1b9cd0",
-                  "label": "Condom promotion/provision"
-                },
-                {
-                  "concept": "bf51f71e-937c-4da5-ae07-654acf59f5bb",
-                  "label": "Couple counseling"
-                },
-                {
-                  "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
-                  "label": "Needle exchange"
-                },
-                {
-                  "concept": "05656545-86be-4605-9527-34fb580534b1",
-                  "label": "Targeted risk reduction"
-                },
-                {
-                  "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
-                  "label": "N/A"
-                }
-              ],
-              "type": "select",
-              "validators": []
-            }
-          ]
-        },
 
         {
           "label": "Test Orders:",
@@ -3460,7 +3561,6 @@
                   "type": "multiCheckbox",
                   "validators": []
                 }
-
               ]
             },
             {
@@ -3471,7 +3571,6 @@
             }
           ]
         },
-
         {
           "label": "Next appointment",
           "questions": [
