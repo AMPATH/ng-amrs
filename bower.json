@@ -24,7 +24,7 @@
     "angular-ui-select": "~0.12.1",
     "datejs": "~1.0.0-rc3",
     "angular-moment": "~0.10.2",
-    "angular-dialog-service": "~5.2.8",
+    "angular-dialog-service": "5.2.8",
     "bootstrap-ui-datetime-picker": "~1.2.5",
     "angular-loading": "~0.1.4",
     "ui-router-extras": "~0.1.0",
