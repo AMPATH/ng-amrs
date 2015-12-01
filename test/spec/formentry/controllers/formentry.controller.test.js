@@ -24,6 +24,7 @@ jshint -W098, -W117, -W030
         module('app.openmrsRestServices');
         module('app.formentry');
         module('mock.data');
+        module('dialogs.main');
 
       });
 
