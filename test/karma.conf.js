@@ -74,6 +74,8 @@ module.exports = function (config) {
     'bower_components/tableExport.jquery.plugin/tableExport.min.js',
     'bower_components/matchmedia/matchMedia.js',
     'bower_components/ngSticky/lib/sticky.js',
+    'bower_components/pdfmake/build/pdfmake.js',
+    'bower_components/pdfmake/build/vfs_fonts.js',
     'bower_components/angular-mocks/angular-mocks.js',
     // endbower
       'app/scripts/**/*.module.js',

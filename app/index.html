@@ -67,6 +67,7 @@
 
 
 
+
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -121,6 +122,8 @@
     <script src="bower_components/tableExport.jquery.plugin/tableExport.min.js"></script>
     <script src="bower_components/matchmedia/matchMedia.js"></script>
     <script src="bower_components/ngSticky/lib/sticky.js"></script>
+    <script src="bower_components/pdfmake/build/pdfmake.js"></script>
+    <script src="bower_components/pdfmake/build/vfs_fonts.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -172,7 +175,7 @@
     <script src="scripts/data-analytics/services/data-entry-stats-helpers.service.js"></script>
     <script src="scripts/admin/services/hiv-monthly-summary-indicator.service.js"></script>
     <script src="scripts/authentication/services/authentication-interceptor.service.js"></script>
-
+    <script src="scripts/admin/services/moh-731-report.service.js"></script>
     <!--models-->
     <script src="scripts/models/session.model.js"></script>
     <script src="scripts/models/patient.model.js"></script>
@@ -187,6 +190,7 @@
     <script src="scripts/models/concept.model.js"></script>
     <script src="scripts/models/drug.model.js"></script>
     <script src="scripts/models/today-vital.model.js"></script>
+
 
     <!-- etl models -->
     <script src="scripts/models/hiv-summary.etl.model.js"></script>
@@ -231,6 +235,8 @@
     <script src="scripts/log-to-server/directives/toggle-logging.directive.js"></script>
     <script src="scripts/patient-dashboard/directives/current-visit-vitals.directive.js"></script>
     <script src="scripts/admin/directives/hiv-monthly-summary-filter-controls.directive.js"></script>
+    <script src="scripts/admin/directives/moh731report.directive.js"></script>
+  
 
     <!-- Controllers -->
     <script src="scripts/patient-dashboard/controllers/patient-dashboard.controller.js"></script>
@@ -247,7 +253,8 @@
     <script src="scripts/admin/controllers/hiv-visual-summary-indicators.controller.js"></script>
     <script src="scripts/admin/controllers/hiv-monthly-summary-indicators.controller.js"></script>
     <script src="scripts/admin/controllers/patient-register.controller.js"></script>
-
+    <script src="scripts/admin/controllers/moh-731-report.controller.js"></script>
+    
     <!--tabs controller drop after test -->
     <script src="scripts/formentry/controllers/tabs.controller.js"></script>
     <script src="scripts/clinic-dashboard/controllers/clinic-dashboard.controller.js"></script>

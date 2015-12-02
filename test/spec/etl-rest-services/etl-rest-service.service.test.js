@@ -498,7 +498,7 @@
 
 
     // getHivSummaryIndicators unit tests
-    it('should make an api call to the hiv-summary-indicators etl rest endpoint when getHivSummaryIndicators is ' +
+    it('should make an api call to the hiv etl rest endpoint when getHivSummaryIndicators is ' +
       'called with countBy, report, and date range', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?countBy=passed-countBy&' +
         'endDate=2015-09-05T21:00:00.000Z&groupBy=passed-groupBy&indicators=passed-indicators&locationUuids=' +

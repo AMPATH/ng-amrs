@@ -36,7 +36,8 @@
     "angular-environment": "~1.0.3",
     "bootstrap-table": "~1.9.1",
     "tableExport.jquery.plugin": "https://github.com/hhurz/tableExport.jquery.plugin.git#~1.2.4",
-    "ngSticky": "~1.8.7"
+    "ngSticky": "~1.8.7",
+    "pdfmake": "~0.1.20"
   },
   "devDependencies": {
     "angular-mocks": "^1.3.0"

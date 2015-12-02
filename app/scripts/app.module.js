@@ -1,5 +1,6 @@
 /*jshint -W098, -W030 */
 /*jscs:disable disallowMixedSpacesAndTabs, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma*/
+
 (function() {
   'use strict';
 
@@ -180,7 +181,16 @@
           url: '/patient/:uuid',
           templateUrl: 'views/admin/patient-register.html',
           data: { requireLogin: true}
-        });
+        }).state('admin.moh-731-report',{
+            url:'/moh-731-report',
+            templateUrl:'views/admin/moh-731-report-container.html',
+            controller:'moh731ReportCtrl',
+            data:{requireLogin:true}
+         }).state('moh-731-generate-pdf',{
+           url:'/moh-731-generate-pdf',
+           templateUrl:'views/authentication/login.html',
+           data:{requireLogin:false},
+                        });
 
     }) .config(['$httpProvider', function($httpProvider) {
         $httpProvider.interceptors.push('authenticationErrorInterceptor');
@@ -189,7 +199,14 @@
        EtlRestServicesSettings, UtilService) {
 
       $rootScope.$on('$stateChangeStart',function(event, toState, toParams) {
-
+          
+                 //checking if  pdf report generation  path
+         if(toState.url==='/moh-731-generate-pdf'){
+                        //call renerate report
+                       // console.log('preventing default');
+                        $rootScope.$broadcast('generate-moh-731-pdf-report', {item:{} });
+                        event.preventDefault(); //prevent the change  from happening
+                    }
         //check whether selection of url base is required first
         var hasPersistedCurrentUrl = OpenmrsSettings.hasCoockiePersistedCurrentUrlBase() && EtlRestServicesSettings.hasCoockiePersistedCurrentUrlBase();
 
