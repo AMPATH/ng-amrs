@@ -168,7 +168,6 @@
 
         var shouldLogin = toState.data !== undefined &&
           toState.data.requireLogin && !OpenmrsRestService.getAuthService().authenticated;
-        //console.log(shouldLogin);
         if (shouldLogin) {
           $state.go('login', { onSuccessRout: toState, onSuccessParams: toParams });
           event.preventDefault();
@@ -194,13 +193,6 @@
         $rootScope.currentState = to.name;
         $rootScope.previousStateParams = fromParams;
         $rootScope.currentStateParams = toParams;
-
-        console.log('Previous state:' + $rootScope.previousState);
-        console.log('Previous state Params:' + $rootScope.previousStateParams);
-        console.log($rootScope.previousStateParams);
-        console.log('Current state:' + $rootScope.currentState);
-        console.log('Current Param Params:' + $rootScope.currentStateParams);
-        console.log($rootScope.currentStateParams);
       });
 
     });

@@ -27,7 +27,7 @@
         <ul style="cursor: pointer;" class="nav navbar-nav navbar-right">
           <li ui-sref-active="active" ui-sref="admin.view-selection" ng-click="isCollapsed = true">
             <a href="#/admin-dashboard/view-selection">
-            
+
             <b><span class="glyphicon glyphicon-stats"></span></b> Data Analytics
             <span style="font-size:9px;"></span>
           </a>
@@ -37,7 +37,7 @@
           </li>
           <li ui-sref-active="active" class="dropdown" ng-show="isUserLoggedIn" ng-class="{ open : dd1 }" ng-init="dd1 = false" ng-click="dd1 = !dd1">
             <a data-toggle="dropdown" class="dropdown-toggle">
-              <span class="glyphicon glyphicon-user"></span> {{username}} 
+              <span class="glyphicon glyphicon-user"></span> {{username}}
                </a>
             <ul role="menu" class="dropdown-menu">
               <li>
@@ -47,14 +47,20 @@
               <li ui-sref-active="active" ng-click="isCollapsed = true">
                 <a ui-sref="url-selector" ng-href="#/url-selector">
                   <span class="glyphicon glyphicon-hdd"></span> Switch Servers
-                  
+
                 </a>
+              </li>
+              <li ui-sref-active="active" ng-click="isCollapsed = true" >
+                <a><span class="glyphicon glyphicon-warning-sign"> Logging</span></a>
+              <center>
+                <span log-switcher ng-model="switchStatus"></span>
+              </center>
               </li>
               <li class="divider"></li>
               <li ui-sref-active="active" ng-click="isCollapsed = true" >
                 <a ui-sref="login" ng-href="#/dashboard" data-ng-click="logOut()">
                   <span class="glyphicon glyphicon-log-out"></span> Logout
-                  
+
                 </a>
               </li>
             </ul>
