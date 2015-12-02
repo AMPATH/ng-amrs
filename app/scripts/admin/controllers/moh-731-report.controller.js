@@ -66,7 +66,8 @@
 
         //scope methods
         function init(){
-            if(!Moh731ReportService.isSetUp())loadIndicatorsSchema();
+
+            //    if(!Moh731ReportService.isSetUp())loadIndicatorsSchema();
             buildColumns();
             buildTableControls();
             var bsTable=document.getElementById('bsTable');
@@ -250,7 +251,6 @@
 
         function getReportData(){
             //clean bSData table
-
             $scope.experiencedLoadingErrors=false;
             $scope.noresults=false;
             $scope.reportGeneration=false;
@@ -270,6 +270,9 @@
             $scope.reportGeneration=true;
             $scope.isBusy=false;
             $scope.dataSortedByLocation={};
+
+            $scope.LocationData={};
+
             if(angular.isDefined(result.result)&&result.result.length>0){
 
                 $scope.moh731ReportData=result.result;

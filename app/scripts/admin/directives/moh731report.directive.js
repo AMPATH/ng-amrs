@@ -152,7 +152,10 @@
             $scope.$parent.reportGeneratione=false;
             $scope.$parentnoresults=false;
             //test  if  all  locations  were  selected
+
             if($scope.selectedLocations.selectedAll===true){
+
+
                 $scope.$parent.selectedSearchLocations=[];
                 angular.forEach(CachedDataService.getCachedEtlLocations(),function(value,key){
                     $scope.$parent.selectedSearchLocations.push(value.location_id);
