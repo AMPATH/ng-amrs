@@ -55,7 +55,7 @@
         preLoad();
 
         function preLoad(){
-            loadForms();
+           // loadForms();
             fetchLocations();
 
         }

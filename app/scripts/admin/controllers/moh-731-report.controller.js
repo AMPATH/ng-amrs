@@ -323,7 +323,7 @@
                     if(angular.isDefined(actualkey)){
                         if(actualkey!=="location_uuid"){
                             $scope.columns.push({
-                                field:"fields",
+                                field:actualkey,
                                 title:actualkey,
                                 align:'center',
                                 valign:'bottom',
@@ -405,6 +405,8 @@
                 $rootScope.selectedPdfIndex=index;
             });
             var html=[];
+             html.push('<div class="well well-sm " style="padding:2px; margin-bottom: 5px !important; ">'+
+                        '<a href="#/moh-731-generate-pdf" class="btn btn-info">Generate Pdf</a></div>');
             _.each(row,function(value,key){
                 if(key==='location_uuid'||key==='state')return;
                 var label="label";
@@ -414,8 +416,7 @@
                         '<p><b>'+key+'</b></p>'+value+'</div>');
             });
             //adding a get pdf  report  link
-            html.push('<a href="#/moh-731-generate-pdf" class="btn btn-info pull-left"><span class="glyphicon glyphicon-refresh"></span><span>Generate Pdf</span></a>');
-            return html.join('');
+                return html.join('');
         }
 
         /**
