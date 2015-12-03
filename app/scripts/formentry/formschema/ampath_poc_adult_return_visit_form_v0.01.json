@@ -285,72 +285,6 @@
                   "disableWhenExpression": "sex !== 'F'"
                 }
               ]
-            }
-          ]
-
-        },
-        {
-          "label": "Social History",
-          "questions": [
-            {
-              "concept": "a899a9f2-1350-11df-a1f1-0026b9348838",
-              "label": "Civil Status:",
-              "answers": [
-                {
-                  "concept": "a899af10-1350-11df-a1f1-0026b9348838",
-                  "label": "Cohabitating"
-                },
-                {
-                  "concept": "a899af10-1350-11df-a1f1-0026b9348838",
-                  "label": "Divorced"
-                },
-                {
-                  "concept": "a8aa76b0-1350-11df-a1f1-0026b9348838",
-                  "label": "Married monogamous"
-                },
-                {
-                  "concept": "a8b03712-1350-11df-a1f1-0026b9348838",
-                  "label": "Married polygamous"
-                },
-                {
-                  "concept": "a899aba0-1350-11df-a1f1-0026b9348838",
-                  "label": "Separated"
-                },
-                {
-                  "concept": "a899ac7c-1350-11df-a1f1-0026b9348838",
-                  "label": "Single"
-                },
-                {
-                  "concept": "a899ae34-1350-11df-a1f1-0026b9348838",
-                  "label": "Widowed"
-                }
-              ],
-              "type": "select",
-              "validators": []
-            },
-            {
-              "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
-              "label": "Discordant couple:",
-              "answers": [
-                {
-                  "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
-                  "label": "Yes"
-                },
-                {
-                  "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                  "label": "NO"
-                },
-                {
-                  "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
-                  "label": "Unknown"
-                },
-                {
-                  "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
-                  "label": "N/A"
-                }
-              ],
-              "type": "select",
-              "validators": []
             },
             {
               "concept": "774961c6-232f-4332-8a9f-f5c55ebe86d0",
@@ -464,6 +398,72 @@
                   "disableWhenExpression": "onFamilyPlanning !== 'a899b42e-1350-11df-a1f1-0026b9348838'"
                 }
               ]
+            }
+          ]
+
+        },
+        {
+          "label": "Social History",
+          "questions": [
+            {
+              "concept": "a899a9f2-1350-11df-a1f1-0026b9348838",
+              "label": "Civil Status:",
+              "answers": [
+                {
+                  "concept": "a899af10-1350-11df-a1f1-0026b9348838",
+                  "label": "Cohabitating"
+                },
+                {
+                  "concept": "a899af10-1350-11df-a1f1-0026b9348838",
+                  "label": "Divorced"
+                },
+                {
+                  "concept": "a8aa76b0-1350-11df-a1f1-0026b9348838",
+                  "label": "Married monogamous"
+                },
+                {
+                  "concept": "a8b03712-1350-11df-a1f1-0026b9348838",
+                  "label": "Married polygamous"
+                },
+                {
+                  "concept": "a899aba0-1350-11df-a1f1-0026b9348838",
+                  "label": "Separated"
+                },
+                {
+                  "concept": "a899ac7c-1350-11df-a1f1-0026b9348838",
+                  "label": "Single"
+                },
+                {
+                  "concept": "a899ae34-1350-11df-a1f1-0026b9348838",
+                  "label": "Widowed"
+                }
+              ],
+              "type": "select",
+              "validators": []
+            },
+            {
+              "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
+              "label": "Discordant couple:",
+              "answers": [
+                {
+                  "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                  "label": "Yes"
+                },
+                {
+                  "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                  "label": "NO"
+                },
+                {
+                  "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                  "label": "Unknown"
+                },
+                {
+                  "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
+                  "label": "N/A"
+                }
+              ],
+              "type": "select",
+              "validators": []
             }
           ]
         }
