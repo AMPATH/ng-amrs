@@ -15,7 +15,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
         scope: {},
         bindToController: {
           form: '=',
-          fields: '='
+          fields: '=',
+          pageFields: '='
         },
         controllerAs: 'vm',
         controller: Controller
@@ -23,8 +24,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
       };
     return directive;
   }
-
-  function Controller() {
+  Controller.$inject =['$scope'];
+  function Controller($scope) {
     var vm = this;
     // console.log('directive Scope', vm);
     vm.pageFields = [];
@@ -63,6 +64,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
           }
         });
       }
+      $scope.pageFields = vm.pageFields;
     }
 
     function getErrorAsList(field) {

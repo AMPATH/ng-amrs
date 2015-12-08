@@ -58,8 +58,8 @@
   <!-- Error messages Summary -->
   <div class="panel panel-danger" data-ng-show="(vm.form.$valid === false && vm.hasClickedSubmit)">
     <div data-ng-repeat="tab in vm.formlyFields" data-ng-show="(vm.form.$valid === false && vm.hasClickedSubmit)">
-      <h4 data-ng-show="(vm.form.$valid === false && vm.hasClickedSubmit)">Error(s) on {{tab.title}}</h4>
-      <formly-error-summary form="vm.form" fields="tab.form.fields"></formly-error-summary>
+      <h4 data-ng-show="(vm.form.$valid === false && vm.hasClickedSubmit && vm.anyFieldsInError(tab.currentFields))">Error(s) on {{tab.title}}</h4>
+      <formly-error-summary form="vm.form" fields="tab.form.fields" page-fields="tab.currentFields"></formly-error-summary>
     </div>
   </div>
   <div style="color:red;" ng-show="(vm.form.$valid === false && vm.hasClickedSubmit)">{{vm.errorMessage}}</div>
