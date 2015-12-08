@@ -2,9 +2,9 @@
   <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
   <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">
-
   <div class="breadcrumb">
     <h2>{{vm.patient.fullNames() | titlecase}} | Sex: {{vm.patient.gender()}} | Age: {{vm.patient.age()}} | Identifier: {{vm.patient.identifierFormatted()}}</h2>{{vm.encounterType}} - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}} {{vm.success}}
+    <strong><current-visit-vitals patient-uuid="{{vm.patient.uuid()}}"></current-visit-vitals></strong>
   </div>
   <a id="top"></a>
   <div class="panel panel-default" style="margin-top: -20px;">

@@ -159,7 +159,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W004, -W033, -W030, -W117
             ]
         };
         /* jshint ignore:end */
-        var defaultRep = 'custom:(encounters:(uuid,patient:(uuid,uuid),' +
+        var defaultRep = 'custom:(encounters:(obs,uuid,patient:(uuid,uuid),' +
                 'encounterDatetime,form:(uuid,name),encounterType:(uuid,name),' +
                 'encounterProviders:(uuid,uuid,provider:(uuid,name),' +
                 'encounterRole:(uuid,name)),location:(uuid,name),' +

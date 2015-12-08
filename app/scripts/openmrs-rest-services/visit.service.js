@@ -113,7 +113,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
 
       //Get encounters for a given Visit
       function getVisitEncounters(params, successCallback, errorCallBack) {
-          var rep = 'custom:(encounters:(uuid,patient:(uuid,uuid),' +
+          var rep = 'custom:(encounters:(obs,uuid,patient:(uuid,uuid),' +
                   'encounterDatetime,form:(uuid,name),encounterType:(uuid,name),' +
                   'encounterProviders:(uuid,uuid,provider:(uuid,name),' +
                   'encounterRole:(uuid,name)),location:(uuid,name),' +
