@@ -133,15 +133,15 @@
         });
 
         it('Should be able to add fields of type date to sections in a page', function() {
-          expect(tabs[0].form.fields[1].data.fields[0].type).to.equal('datetimepicker');
+          expect(tabs[0].form.fields[1].data.fields[1].type).to.equal('datetimepicker');
         });
 
         it('Should be able to add fields of type select/dropdown to sections in a page', function() {
-          expect(tabs[1].form.fields[0].data.fields[0].type).to.equal('select');
+          expect(tabs[1].form.fields[0].data.fields[1].type).to.equal('select');
         });
 
         it('Should be able to add repeating section to sections in a page', function() {
-          expect(tabs[1].form.fields[1].data.fields[0].type).to.equal('repeatSection');
+          expect(tabs[1].form.fields[1].data.fields[1].type).to.equal('repeatSection');
         });
       });
 

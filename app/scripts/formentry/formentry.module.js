@@ -17,7 +17,8 @@
             'pascalprecht.translate',
             'dialogs.default-translations',
             'darthwade.dwLoading',
-            'app.utils'
+            'app.utils',
+            'sticky'
         ])
     .config(function($stateProvider) {
       $stateProvider

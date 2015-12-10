@@ -28,7 +28,8 @@
       'app.formentry',
       'app.utils',
       'app.logToServer',
-      'ct.ui.router.extras'
+      'ct.ui.router.extras',
+      'sticky'
     ])
     .config(function($stateProvider, $stickyStateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');

@@ -16,6 +16,7 @@ html, body {
 
 #main-content {
     position: fixed;
+    display: block;
     top: 54px;
     bottom: 54px;
     left: 0;

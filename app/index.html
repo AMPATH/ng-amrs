@@ -1,5 +1,6 @@
 <!doctype html>
 <html class="no-js">
+
 <head>
     <meta charset="utf-8">
     <title></title>
@@ -25,242 +26,243 @@
     <link rel="stylesheet" href="styles/ng-switcher.css">
     <!-- endbuild -->
 </head>
+
 <body ng-app="ngAmrsApp">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]-->
 
-      <!-- Add your site or application content here -->
-      <main-navigation-bar>
+    <!-- Add your site or application content here -->
+    <main-navigation-bar>
 
-  </main-navigation-bar>
+    </main-navigation-bar>
 
-  <div class="container-fluid " id="main-content">
-    <div ui-view></div>
-</div>
-
-
-<div class="navbar navbar-default navbar-fixed-bottom">
-    <div class="footer container-fluid">
-        <span class="pull-right"><version/> </span>
-    </div>
+    <sticky-scroll class="container-fluid " id="main-content">
+        <div ui-view></div>
+    </sticky-scroll>
 
 
     <div class="navbar navbar-default navbar-fixed-bottom">
         <div class="footer container-fluid">
             <span class="pull-right"><version/> </span>
         </div>
+
+
+        <div class="navbar navbar-default navbar-fixed-bottom">
+            <div class="footer container-fluid">
+                <span class="pull-right"><version/> </span>
+            </div>
+        </div>
     </div>
-</div>
-<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-<script>
- !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+    <script>
+        !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
      (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
      r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
  }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
  ga('create', 'UA-XXXXX-X');
  ga('send', 'pageview');
-</script>
+    </script>
 
 
-<!-- build:js(.) scripts/vendor.js -->
-<!-- bower:js -->
-<script src="bower_components/jquery/dist/jquery.js"></script>
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-<script src="bower_components/angular-animate/angular-animate.js"></script>
-<script src="bower_components/angular-cookies/angular-cookies.js"></script>
-<script src="bower_components/angular-resource/angular-resource.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-<script src="bower_components/angular-touch/angular-touch.js"></script>
-<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script src="bower_components/angular-base64/angular-base64.js"></script>
-<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script src="bower_components/api-check/dist/api-check.js"></script>
-<script src="bower_components/angular-formly/dist/formly.js"></script>
-<script src="bower_components/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap.js"></script>
-<script src="bower_components/underscore/underscore.js"></script>
-<script src="bower_components/underscore.string/dist/underscore.string.js"></script>
-<script src="bower_components/angular-messages/angular-messages.js"></script>
-<script src="bower_components/lodash/lodash.js"></script>
-<script src="bower_components/restangular/dist/restangular.js"></script>
-<script src="bower_components/angular-ui-select/dist/select.js"></script>
-<script src="bower_components/datejs/build/production/date.min.js"></script>
-<script src="bower_components/moment/moment.js"></script>
-<script src="bower_components/angular-moment/angular-moment.js"></script>
-<script src="bower_components/angular-translate/angular-translate.js"></script>
-<script src="bower_components/angular-dialog-service/dist/dialogs.js"></script>
-<script src="bower_components/angular-dialog-service/dist/dialogs-default-translations.js"></script>
-<script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.min.js"></script>
-<script src="bower_components/spin.js/spin.js"></script>
-<script src="bower_components/angular-loading/angular-loading.js"></script>
-<script src="bower_components/ui-router-extras/release/ct-ui-router-extras.js"></script>
-<script src="bower_components/karma-read-json/karma-read-json.js"></script>
-<script src="bower_components/jqueryui/jquery-ui.js"></script>
-<script src="bower_components/pivottable/dist/pivot.js"></script>
-<script src="bower_components/pivottable/dist/c3_renderers.min.js"></script>
-<script src="bower_components/pivottable/dist/gchart_renderers.min.js"></script>
-<script src="bower_components/pivottable/dist/export_renderers.min.js"></script>
-<script src="bower_components/d3/d3.js"></script>
-<script src="bower_components/c3/c3.js"></script>
-<script src="bower_components/jsnlog.js/jsnlog.js"></script>
-<script src="bower_components/angular-environment/dist/angular-environment.js"></script>
-<script src="bower_components/bootstrap-table/dist/bootstrap-table.min.js"></script>
-<script src="bower_components/bootstrap-table/dist/extensions/angular/bootstrap-table-angular.min.js"></script>
-<script src="bower_components/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
-<script src="bower_components/bootstrap-table/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
-<script src="bower_components/file-saver.js/FileSaver.js"></script>
-<script src="bower_components/html2canvas/build/html2canvas.js"></script>
-<script src="bower_components/jspdf/dist/jspdf.min.js"></script>
-<script src="bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.js"></script>
-<script src="bower_components/tableExport.jquery.plugin/tableExport.min.js"></script>
-<!-- endbower -->
-<!-- endbuild -->
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/angular-base64/angular-base64.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/api-check/dist/api-check.js"></script>
+    <script src="bower_components/angular-formly/dist/formly.js"></script>
+    <script src="bower_components/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/underscore.string/dist/underscore.string.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/restangular/dist/restangular.js"></script>
+    <script src="bower_components/angular-ui-select/dist/select.js"></script>
+    <script src="bower_components/datejs/build/production/date.min.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-moment/angular-moment.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-dialog-service/dist/dialogs.js"></script>
+    <script src="bower_components/angular-dialog-service/dist/dialogs-default-translations.js"></script>
+    <script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.min.js"></script>
+    <script src="bower_components/spin.js/spin.js"></script>
+    <script src="bower_components/angular-loading/angular-loading.js"></script>
+    <script src="bower_components/ui-router-extras/release/ct-ui-router-extras.js"></script>
+    <script src="bower_components/karma-read-json/karma-read-json.js"></script>
+    <script src="bower_components/jqueryui/jquery-ui.js"></script>
+    <script src="bower_components/pivottable/dist/pivot.js"></script>
+    <script src="bower_components/pivottable/dist/c3_renderers.min.js"></script>
+    <script src="bower_components/pivottable/dist/gchart_renderers.min.js"></script>
+    <script src="bower_components/pivottable/dist/export_renderers.min.js"></script>
+    <script src="bower_components/d3/d3.js"></script>
+    <script src="bower_components/c3/c3.js"></script>
+    <script src="bower_components/jsnlog.js/jsnlog.js"></script>
+    <script src="bower_components/angular-environment/dist/angular-environment.js"></script>
+    <script src="bower_components/bootstrap-table/dist/bootstrap-table.min.js"></script>
+    <script src="bower_components/bootstrap-table/dist/extensions/angular/bootstrap-table-angular.min.js"></script>
+    <script src="bower_components/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
+    <script src="bower_components/bootstrap-table/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
+    <script src="bower_components/file-saver.js/FileSaver.js"></script>
+    <script src="bower_components/html2canvas/build/html2canvas.js"></script>
+    <script src="bower_components/jspdf/dist/jspdf.min.js"></script>
+    <script src="bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.js"></script>
+    <script src="bower_components/tableExport.jquery.plugin/tableExport.min.js"></script>
+    <script src="bower_components/matchmedia/matchMedia.js"></script>
+    <script src="bower_components/ngSticky/lib/sticky.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
 
-<!-- build:js({.tmp,app}) scripts/scripts.js -->
-<!-- Modules -->
-<script src="scripts/app.module.js"></script>
-<script src="scripts/authentication/authentication.module.js"></script>
-<script src="scripts/models/model.module.js"></script>
-<script src="scripts/patient-search/patient-search.module.js"></script>
-<script src="scripts/openmrs-rest-services/openmrs-rest-services.module.js"></script>
-<script src="scripts/patient-dashboard/patient-dashboard.module.js"></script>
-<script src="scripts/formentry/formentry.module.js"></script>
-<script src="scripts/etl-rest-services/etl-rest-services.module.js"></script>
-<script src="scripts/clinic-dashboard/clinic-dashboard.module.js"></script>
-<script src="scripts/utils/utils.module.js"></script>
-<script src="scripts/admin/admin.module.js"></script>
-<script src="scripts/log-to-server/log-to-server.module.js"></script>
-<script src="scripts/data-analytics/data-analytics.module.js"></script>
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <!-- Modules -->
+    <script src="scripts/app.module.js"></script>
+    <script src="scripts/authentication/authentication.module.js"></script>
+    <script src="scripts/models/model.module.js"></script>
+    <script src="scripts/patient-search/patient-search.module.js"></script>
+    <script src="scripts/openmrs-rest-services/openmrs-rest-services.module.js"></script>
+    <script src="scripts/patient-dashboard/patient-dashboard.module.js"></script>
+    <script src="scripts/formentry/formentry.module.js"></script>
+    <script src="scripts/etl-rest-services/etl-rest-services.module.js"></script>
+    <script src="scripts/clinic-dashboard/clinic-dashboard.module.js"></script>
+    <script src="scripts/utils/utils.module.js"></script>
+    <script src="scripts/admin/admin.module.js"></script>
+    <script src="scripts/log-to-server/log-to-server.module.js"></script>
+    <script src="scripts/data-analytics/data-analytics.module.js"></script>
 
-<!-- Services -->
-<script src="scripts/openmrs-rest-services/openmrs-settings.service.js"></script>
-<script src="scripts/openmrs-rest-services/session.service.js"></script>
-<script src="scripts/openmrs-rest-services/authentication.service.js"></script>
-<script src="scripts/openmrs-rest-services/openmrs-patient.service.js"></script>
-<script src="scripts/openmrs-rest-services/user.service.js"></script>
-<script src="scripts/openmrs-rest-services/location.service.js"></script>
-<script src="scripts/openmrs-rest-services/provider.service.js"></script>
-<script src="scripts/openmrs-rest-services/encounter.service.js"></script>
-<script src="scripts/openmrs-rest-services/obs.service.js"></script>
-<script src="scripts/openmrs-rest-services/person-attribute.service.js"></script>
-<script src="scripts/openmrs-rest-services/openmrs-form.service.js"></script>
-<script src="scripts/formentry/services/formentry.service.js"></script>
-<script src="scripts/openmrs-rest-services/openmrs-rest.service.js"></script>
-<script src="scripts/formentry/services/formsmetadata.service.js"></script>
-<script src="scripts/formentry/services/search-data.service.js"></script>
-<script src="scripts/etl-rest-services/etl-rest-service.service.js"></script>
-<script src="scripts/etl-rest-services/etl-rest-services-settings.service.js"></script>
-<script src="scripts/openmrs-rest-services/concept.service.js"></script>
-<script src="scripts/openmrs-rest-services/drug.service.js"></script>
-<script src="scripts/formentry/services/form-validator.service.js"></script>
-<script src="scripts/formentry/services/current-loaded-form.service.js"></script>
-<script src="scripts/openmrs-rest-services/visit.service.js"></script>
-<script src="scripts/patient-search/services/patient-search.service.js"></script>
-<script src="scripts/clinic-dashboard/services/clinic-dashboard.service.js"></script>
-<script src="scripts/admin/services/hiv-summary-indicator.service.js"></script>
-<script src="scripts/log-to-server/services/log-to-server.service.js"></script>
-<script src="scripts/data-analytics/services/data-entry-stats-helpers.service.js"></script>
+    <!-- Services -->
+    <script src="scripts/openmrs-rest-services/openmrs-settings.service.js"></script>
+    <script src="scripts/openmrs-rest-services/session.service.js"></script>
+    <script src="scripts/openmrs-rest-services/authentication.service.js"></script>
+    <script src="scripts/openmrs-rest-services/openmrs-patient.service.js"></script>
+    <script src="scripts/openmrs-rest-services/user.service.js"></script>
+    <script src="scripts/openmrs-rest-services/location.service.js"></script>
+    <script src="scripts/openmrs-rest-services/provider.service.js"></script>
+    <script src="scripts/openmrs-rest-services/encounter.service.js"></script>
+    <script src="scripts/openmrs-rest-services/obs.service.js"></script>
+    <script src="scripts/openmrs-rest-services/person-attribute.service.js"></script>
+    <script src="scripts/openmrs-rest-services/openmrs-form.service.js"></script>
+    <script src="scripts/formentry/services/formentry.service.js"></script>
+    <script src="scripts/openmrs-rest-services/openmrs-rest.service.js"></script>
+    <script src="scripts/formentry/services/formsmetadata.service.js"></script>
+    <script src="scripts/formentry/services/search-data.service.js"></script>
+    <script src="scripts/etl-rest-services/etl-rest-service.service.js"></script>
+    <script src="scripts/etl-rest-services/etl-rest-services-settings.service.js"></script>
+    <script src="scripts/openmrs-rest-services/concept.service.js"></script>
+    <script src="scripts/openmrs-rest-services/drug.service.js"></script>
+    <script src="scripts/formentry/services/form-validator.service.js"></script>
+    <script src="scripts/formentry/services/current-loaded-form.service.js"></script>
+    <script src="scripts/openmrs-rest-services/visit.service.js"></script>
+    <script src="scripts/patient-search/services/patient-search.service.js"></script>
+    <script src="scripts/clinic-dashboard/services/clinic-dashboard.service.js"></script>
+    <script src="scripts/admin/services/hiv-summary-indicator.service.js"></script>
+    <script src="scripts/log-to-server/services/log-to-server.service.js"></script>
+    <script src="scripts/data-analytics/services/data-entry-stats-helpers.service.js"></script>
 
-<!-- models -->
-<script src="scripts/models/session.model.js"></script>
-<script src="scripts/models/patient.model.js"></script>
-<script src="scripts/models/user.model.js"></script>
-<script src="scripts/models/encounter.model.js"></script>
-<script src="scripts/models/location.model.js"></script>
-<script src="scripts/models/provider.model.js"></script>
-<script src="scripts/models/person.model.js"></script>
-<script src="scripts/models/name.model.js"></script>
-<script src="scripts/models/concept-name.model.js"></script>
-<script src="scripts/models/concept-class.model.js"></script>
-<script src="scripts/models/concept.model.js"></script>
-<script src="scripts/models/drug.model.js"></script>
-<script src="scripts/models/today-vital.model.js"></script>
+    <script src="scripts/models/session.model.js"></script>
+    <script src="scripts/models/patient.model.js"></script>
+    <script src="scripts/models/user.model.js"></script>
+    <script src="scripts/models/encounter.model.js"></script>
+    <script src="scripts/models/location.model.js"></script>
+    <script src="scripts/models/provider.model.js"></script>
+    <script src="scripts/models/person.model.js"></script>
+    <script src="scripts/models/name.model.js"></script>
+    <script src="scripts/models/concept-name.model.js"></script>
+    <script src="scripts/models/concept-class.model.js"></script>
+    <script src="scripts/models/concept.model.js"></script>
+    <script src="scripts/models/drug.model.js"></script>
+    <script src="scripts/models/today-vital.model.js"></script>
 
-<!-- etl models -->
-<script src="scripts/models/hiv-summary.etl.model.js"></script>
-<script src="scripts/models/vital.etl.model.js"></script>
-<script src="scripts/models/patient-test.etl.model.js"></script>
-<script src="scripts/models/appointment-schedule.etl.model.js"></script>
-<script src="scripts/models/monthly-appointment.etl.model.js"></script>
-<script src="scripts/models/defaulter.etl.model.js"></script>
-<script src="scripts/models/monthly-appointment-visit.etl.model.js"></script>
-<script src="scripts/models/patient.etl.model.js"></script>
+    <!-- etl models -->
+    <script src="scripts/models/hiv-summary.etl.model.js"></script>
+    <script src="scripts/models/vital.etl.model.js"></script>
+    <script src="scripts/models/patient-test.etl.model.js"></script>
+    <script src="scripts/models/appointment-schedule.etl.model.js"></script>
+    <script src="scripts/models/monthly-appointment.etl.model.js"></script>
+    <script src="scripts/models/defaulter.etl.model.js"></script>
+    <script src="scripts/models/monthly-appointment-visit.etl.model.js"></script>
+    <script src="scripts/models/patient.etl.model.js"></script>
 
-<!-- directives -->
-<script src="scripts/main/directives/main-navigation.directive.js"></script>
-<script src="scripts/main/directives/version.directive.js"></script>
-<script src="scripts/patient-dashboard/directives/patient-demographics.directive.js"></script>
-<script src="scripts/patient-dashboard/directives/hiv-summary.directive.js"></script>
-<script src="scripts/patient-dashboard/directives/encounters.directive.js"></script>
-<script src="scripts/patient-dashboard/directives/vitals.directive.js"></script>
-<script src="scripts/patient-dashboard/directives/labs-summary.directive.js"></script>
-<script src="scripts/patient-dashboard/directives/hiv-summary-historical.directive.js"></script>
-<script src="scripts/patient-dashboard/directives/active-tab-sync.directive.js"></script>
-<script src="scripts/clinic-dashboard/directives/daily-visits.directive.js"></script>
-<script src="scripts/clinic-dashboard/directives/monthly-appointment.directive.js"></script>
-<script src="scripts/formentry/directives/custom-expression.directive.js"></script>
-<script src="scripts/formentry/directives/error-summary-directive.js"></script>
-<script src="scripts/clinic-dashboard/directives/defaulter-list.directive.js"></script>
-<script src="scripts/patient-search/directives/focus.directive.js"></script>
-<script src="scripts/patient-dashboard/directives/current-visit.directive.js"></script>
-<script src="scripts/formentry/directives/openmrs-forms.directive.js"></script>
-<script src="scripts/admin/directives/patient-list.directive.js"></script>
-<script src="scripts/admin/directives/patient-creation-statistics.directive.js"></script>
-<script src="scripts/admin/directives/hiv-summary-filter-controls.directive.js"></script>
-<script src="scripts/admin/directives/tooltip.directive.js"></script>
-<script src="scripts/data-analytics/directives/data-entry-filter-controls.directive.js"></script>
-<script src="scripts/data-analytics/directives/data-entry-stats-view-one.directive.js"></script>
-<script src="scripts/data-analytics/directives/data-entry-stats-view-two.directive.js"></script>
-<script src="scripts/data-analytics/directives/data-entry-stats-view-three.directive.js"></script>
-<script src="scripts/data-analytics/directives/data-entry-stats-view-four.directive.js"></script>
-<script src="scripts/data-analytics/directives/data-entry-stats.directive.js"></script>
-<script src="scripts/admin/directives/hiv-summary-visual-filter-controls.directive.js"></script>
-<script src="scripts/log-to-server/directives/toggle-logging.directive.js"></script>
-<script src="scripts/patient-dashboard/directives/current-visit-vitals.directive.js"></script>
-<!-- Controllers -->
-<script src="scripts/patient-dashboard/controllers/patient-dashboard.controller.js"></script>
-<script src="scripts/patient-dashboard/controllers/encounter.controller.js"></script>
-<script src="scripts/patient-search/controllers/patient-search.controller.js"></script>
-<script src="scripts/authentication/controllers/login.controller.js"></script>
-<script src="scripts/formentry/controllers/formentry.controller.js"></script>
-<script src="scripts/formentry/controllers/tabs.controller.js"></script>
-<script src="scripts/main/controllers/url-selector.controller.js"></script>
-<script src="scripts/data-analytics/controllers/data-entry-statistics.controller.js"></script>
-<script src="scripts/admin/controllers/admin-dashboard.controller.js"></script>
-<script src="scripts/admin/controllers/hiv-summary-indicators.controller.js"></script>
-<script src="scripts/admin/controllers/hiv-visual-summary-indicators.controller.js"></script>
+    <script src="scripts/main/directives/main-navigation.directive.js"></script>
+    <script src="scripts/main/directives/version.directive.js"></script>
+    <script src="scripts/patient-dashboard/directives/patient-demographics.directive.js"></script>
+    <script src="scripts/patient-dashboard/directives/hiv-summary.directive.js"></script>
+    <script src="scripts/patient-dashboard/directives/encounters.directive.js"></script>
+    <script src="scripts/patient-dashboard/directives/vitals.directive.js"></script>
+    <script src="scripts/patient-dashboard/directives/labs-summary.directive.js"></script>
+    <script src="scripts/patient-dashboard/directives/hiv-summary-historical.directive.js"></script>
+    <script src="scripts/patient-dashboard/directives/active-tab-sync.directive.js"></script>
+    <script src="scripts/clinic-dashboard/directives/daily-visits.directive.js"></script>
+    <script src="scripts/clinic-dashboard/directives/monthly-appointment.directive.js"></script>
+    <script src="scripts/formentry/directives/custom-expression.directive.js"></script>
+    <script src="scripts/formentry/directives/error-summary-directive.js"></script>
+    <script src="scripts/clinic-dashboard/directives/defaulter-list.directive.js"></script>
+    <script src="scripts/patient-search/directives/focus.directive.js"></script>
+    <script src="scripts/patient-dashboard/directives/current-visit.directive.js"></script>
+    <script src="scripts/formentry/directives/openmrs-forms.directive.js"></script>
+    <script src="scripts/admin/directives/patient-list.directive.js"></script>
+    <script src="scripts/admin/directives/patient-creation-statistics.directive.js"></script>
+    <script src="scripts/admin/directives/hiv-summary-filter-controls.directive.js"></script>
+    <script src="scripts/admin/directives/tooltip.directive.js"></script>
+    <script src="scripts/data-analytics/directives/data-entry-filter-controls.directive.js"></script>
+    <script src="scripts/data-analytics/directives/data-entry-stats-view-one.directive.js"></script>
+    <script src="scripts/data-analytics/directives/data-entry-stats-view-two.directive.js"></script>
+    <script src="scripts/data-analytics/directives/data-entry-stats-view-three.directive.js"></script>
+    <script src="scripts/data-analytics/directives/data-entry-stats-view-four.directive.js"></script>
+    <script src="scripts/data-analytics/directives/data-entry-stats.directive.js"></script>
+    <script src="scripts/admin/directives/hiv-summary-visual-filter-controls.directive.js"></script>
+    <script src="scripts/log-to-server/directives/toggle-logging.directive.js"></script>
+    <script src="scripts/patient-dashboard/directives/current-visit-vitals.directive.js"></script>
+    <!-- Controllers -->
+    <script src="scripts/patient-dashboard/controllers/patient-dashboard.controller.js"></script>
+    <script src="scripts/patient-dashboard/controllers/encounter.controller.js"></script>
+    <script src="scripts/patient-search/controllers/patient-search.controller.js"></script>
+    <script src="scripts/authentication/controllers/login.controller.js"></script>
+    <script src="scripts/formentry/controllers/formentry.controller.js"></script>
+    <script src="scripts/formentry/controllers/tabs.controller.js"></script>
+    <script src="scripts/main/controllers/url-selector.controller.js"></script>
+    <script src="scripts/data-analytics/controllers/data-entry-statistics.controller.js"></script>
+    <script src="scripts/admin/controllers/admin-dashboard.controller.js"></script>
+    <script src="scripts/admin/controllers/hiv-summary-indicators.controller.js"></script>
+    <script src="scripts/admin/controllers/hiv-visual-summary-indicators.controller.js"></script>
+    <!--tabs controller drop after test -->
+    <script src="scripts/formentry/controllers/tabs.controller.js"></script>
+    <script src="scripts/clinic-dashboard/controllers/clinic-dashboard.controller.js"></script>
 
-<!--tabs controller drop after test -->
-<script src="scripts/formentry/controllers/tabs.controller.js"></script>
-<script src="scripts/clinic-dashboard/controllers/clinic-dashboard.controller.js"></script>
-
-<!-- Filters -->
-<script src="scripts/clinic-dashboard/filters/props.filter.js"></script>
-<script src="scripts/clinic-dashboard/filters/day-appointments.filter.js"></script>
-<script src="scripts/clinic-dashboard/filters/visit-date-appointments.filter.js"></script>
-<script src="scripts/clinic-dashboard/filters/not-returned-date-appointments.filter.js"></script>
-
-
-<!-- Others -->
-<script src="scripts/main/controllers/about.js"></script>
-<script src="scripts/patient-search/patient-filter.filter.js"></script>
-<script src="scripts/utils/filters/title-case.filter.js"></script>
-<script src="scripts/utils/services/util.service.js"></script>
-<script src="scripts/utils/services/util-cached-data.service.js"></script>
+    <!-- Filters -->
+    <script src="scripts/clinic-dashboard/filters/props.filter.js"></script>
+    <script src="scripts/clinic-dashboard/filters/day-appointments.filter.js"></script>
+    <script src="scripts/clinic-dashboard/filters/visit-date-appointments.filter.js"></script>
+    <script src="scripts/clinic-dashboard/filters/not-returned-date-appointments.filter.js"></script>
 
 
-<!-- Formly -->
-<script src="scripts/formentry/formly-controls/datepicker.formly.js"></script>
-<script src="scripts/formentry/formly-controls/datetimepicker.formly.js"></script>
-<script src="scripts/formentry/formly-controls/ui-select.formly.js"></script>
-<script src="scripts/formentry/formly-controls/labelled-button-field.formly.js"></script>
-<script src="scripts/formentry/formly-controls/repeating-section.formly.js"></script>
-<script src="scripts/formentry/formly-controls/anchor.formly.js"></script>
-<script src="scripts/formentry/formly-controls/sections.js"></script>
-<script src="scripts/formentry/formly-controls/concept-search-select.js"></script>
-<!-- endbuild -->
+    <!-- Others -->
+    <script src="scripts/main/controllers/about.js"></script>
+    <script src="scripts/patient-search/patient-filter.filter.js"></script>
+    <script src="scripts/utils/filters/title-case.filter.js"></script>
+    <script src="scripts/utils/services/util.service.js"></script>
+    <script src="scripts/utils/services/util-cached-data.service.js"></script>
+
+
+    <!-- Formly -->
+    <script src="scripts/formentry/formly-controls/datepicker.formly.js"></script>
+    <script src="scripts/formentry/formly-controls/datetimepicker.formly.js"></script>
+    <script src="scripts/formentry/formly-controls/ui-select.formly.js"></script>
+    <script src="scripts/formentry/formly-controls/labelled-button-field.formly.js"></script>
+    <script src="scripts/formentry/formly-controls/repeating-section.formly.js"></script>
+    <script src="scripts/formentry/formly-controls/anchor.formly.js"></script>
+    <script src="scripts/formentry/formly-controls/sections.js"></script>
+    <script src="scripts/formentry/formly-controls/concept-search-select.js"></script>
+    <!-- endbuild -->
 </body>
+
 </html>

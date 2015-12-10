@@ -180,6 +180,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         });
     };
 
+    $scope.vm.scrollToTop = function () {
+      $location.hash('top');
+      $anchorScroll();
+    };
+
     $scope.vm.scrollToAnchorByKey = function (key) {
       //var newHash = 'obs120_a8a666ban1350n11dfna1f1n0026b9348838';
       if ($location.hash() !== key) {
@@ -220,7 +225,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
     };
 
     $scope.vm.submit = function () {
-      if($scope.vm.form.$valid === false){
+      if ($scope.vm.form.$valid === false) {
         $location.hash('top');
         $anchorScroll();
       }

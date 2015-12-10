@@ -340,6 +340,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 fieldKey = _field.key;
                 var groupVal = {};
                 _.each(_field.fieldGroup, function(_groupField) {
+                  if(_groupField.type === 'anchor') {
+                    return;
+                  }
+                  
                   // body...
                   if (_.contains(fieldKey, 'unamed')) {
                     // using the grouping fields
