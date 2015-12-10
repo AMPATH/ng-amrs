@@ -57,9 +57,10 @@
   </div>
   <!-- Error messages Summary -->
   <div class="panel panel-danger" data-ng-show="(vm.form.$valid === false && vm.hasClickedSubmit)">
-    <div data-ng-repeat="tab in vm.formlyFields" data-ng-show="(vm.form.$valid === false && vm.hasClickedSubmit)">
-      <h4 data-ng-show="(vm.form.$valid === false && vm.hasClickedSubmit && vm.anyFieldsInError(tab.currentFields))">Error(s) on {{tab.title}}</h4>
-      <formly-error-summary form="vm.form" fields="tab.form.fields" page-fields="tab.currentFields"></formly-error-summary>
+    <div><h3 style="margin-left:4px; margin-top: 0px" class="text-danger">Validation Errors</h3></div>
+    <div style="margin-left:4px; margin-top: 0px" data-ng-repeat="tab in vm.formlyFields" data-ng-show="(vm.form.$valid === false && vm.hasClickedSubmit)">
+      <h4 data-ng-show="(vm.form.$valid === false && vm.hasClickedSubmit && vm.anyFieldsInError(tab.currentFields))">{{tab.title}}</h4>
+      <formly-error-summary form="vm.form" fields="tab.form.fields" page-fields="tab.currentFields" tab-title="tab.title"></formly-error-summary>
     </div>
   </div>
   <div style="color:red;" ng-show="(vm.form.$valid === false && vm.hasClickedSubmit)">{{vm.errorMessage}}</div>
@@ -177,11 +178,12 @@
     Allow all validations to be run on form submit only and when its rendered
     Other custom validations will still run  when the field is touched anyway
      -->
-      <div data-ng-repeat="field in vm.pageFields" ng-class="{'color-success': field.formControl.$valid, 'color-error': field.formControl.$invalid}">
-        <div data-ng-show="field.formControl.$invalid">
-          <i class="glyphicon glyphicon-{{field.formControl.$invalid ? 'remove' : 'ok'}}"></i>
+      <div style="margin-left:4px; margin-bottom: 4px;" data-ng-repeat="field in vm.pageFields" ng-class="{'color-success': field.formControl.$valid, 'color-error': field.formControl.$invalid}">
+        <div ng-click="vm.navigateToQuestion(vm.tabTitle, field.key, field)" data-ng-show="field.formControl.$invalid">
+          <span class="text-primary"><i class="glyphicon glyphicon-zoom-in"></i> {{field.templateOptions.label}} </span> <br/>
+          <i style="margin-left:10px;" class="glyphicon glyphicon-{{field.formControl.$invalid ? 'remove' : 'ok'}}"></i>
           <span data-ng-if="field.formControl.$invalid">
-              {{vm.getErrorAsList(field)}} ({{field.templateOptions.label}})
+              {{vm.getErrorAsList(field)}} 
           </span>
         </div>
       </div>

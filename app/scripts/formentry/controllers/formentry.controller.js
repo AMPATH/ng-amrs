@@ -97,16 +97,16 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
       }
     };
     $scope.vm.anyFieldsInError = function (fields) {
-       if(fields && fields.length !== 0){
-         var hasError = false;
-          _.each(fields, function(field){
-            if(field.formControl && field.formControl.$error && Object.keys(field.formControl.$error).length > 0){
-              hasError = true;
-            }
-          });
-          return hasError;
-       }
-       return false;
+      if (fields && fields.length !== 0) {
+        var hasError = false;
+        _.each(fields, function (field) {
+          if (field.formControl && field.formControl.$error && Object.keys(field.formControl.$error).length > 0) {
+            hasError = true;
+          }
+        });
+        return hasError;
+      }
+      return false;
     };
 
     //Checking user navigations
@@ -180,12 +180,38 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         });
     };
 
-    $scope.vm.scroll = function () {
-      var newHash = 'obs120_a8a666ban1350n11dfna1f1n0026b9348838';
-      if ($location.hash() !== newHash) {
+    $scope.vm.scrollToAnchorByKey = function (key) {
+      //var newHash = 'obs120_a8a666ban1350n11dfna1f1n0026b9348838';
+      if ($location.hash() !== key) {
         // set the $location.hash to `newHash` and
         // $anchorScroll will automatically scroll to it
-        $location.hash(newHash);
+        $location.hash(key);
+      } else {
+        // call $anchorScroll() explicitly,
+        // since $location.hash hasn't changed
+        $anchorScroll();
+      }
+    };
+
+    $scope.vm.selectTabByTitle = function (title) {
+      _.each($scope.vm.tabs, function (tab) {
+        if (tab.title === title) {
+          tab.active = true;
+        }
+      });
+    };
+
+    $rootScope.$on("navigateToQuestion", function (args, param) {
+      $scope.vm.selectTabByTitle(param.tabTitle);
+      $scope.vm.scrollToAnchorByKey(param.questionKey);
+    });
+
+    $scope.vm.scrollToElementByKey = function (key) {
+      //var newHash = 'obs120_a8a666ban1350n11dfna1f1n0026b9348838';
+      if ($location.hash() !== key) {
+        // set the $location.hash to `newHash` and
+        // $anchorScroll will automatically scroll to it
+        $location.hash(key);
       } else {
         // call $anchorScroll() explicitly,
         // since $location.hash hasn't changed
@@ -194,6 +220,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
     };
 
     $scope.vm.submit = function () {
+      if($scope.vm.form.$valid === false){
+        $location.hash('top');
+        $anchorScroll();
+      }
+
       $scope.vm.hasClickedSubmit = true;
       $scope.vm.savedOrUpdated = true;
       var undisplayedTabs = [];
