@@ -128,7 +128,24 @@
                   controller: 'HivVisualSummaryIndicatorsCtrl',
                   data: { requireLogin: true},
                 })
-
+        .state('admin.hiv-monthly-summary-indicators', {
+          url: '/hiv-monthly-summary-indicators',
+          templateUrl: 'views/admin/hiv-monthly-summary-indicators.html',
+          controller: 'HivMonthlySummaryIndicatorsCtrl',
+          data: { requireLogin: true},
+        })
+        .state('admin.hiv-monthly-summary-indicators.monthly', {
+          url: '/monthly_summary',
+          templateUrl: 'views/admin/hiv-monthly-summary-indicators-container.html',
+          controller: 'HivMonthlySummaryIndicatorsCtrl',
+          data: { requireLogin: true},
+        })
+        .state('admin.hiv-monthly-summary-indicators.patients', {
+          url: '/location/:locationuuid/indicator/:indicator',
+          templateUrl: 'views/admin/patient-monthly-list-container.html',
+          controller: 'HivMonthlySummaryIndicatorsCtrl',
+          data: { requireLogin: true },
+        })
         .state('admin.hiv-summary-indicators.patients', {
           url: '/location/:locationuuid/indicator/:indicator',
           templateUrl: 'views/admin/patient-list-container.html',

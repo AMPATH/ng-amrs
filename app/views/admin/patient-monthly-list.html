@@ -1,0 +1,56 @@
+<div ng-disabled="isBusy">
+  <div class="well" style="padding:4px; margin-bottom: 10px !important;" ng-hide="!locationUuid">
+
+    <div class="alert alert-danger" ng-click="loadPatientList()" ng-show='experiencedLoadingErrors' >
+
+				<span class="glyphicon glyphicon-exclamation-sign">
+        </span> An error occurred while loading. Please try again.</b>
+      <button class="btn btn-info pull-right" style="padding: 2px!important;" ng-click="loadPatientList()">
+        <span class="glyphicon glyphicon-refresh"></span>
+        <span>Re-Load</span>
+      </button>
+    </div>
+    <span ng-show='!isBusy && !experiencedLoadingErrors' ng-click="loadIndicatorView()">
+      <button class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>
+        <span>Back</span>
+      </button>
+    </span>
+    <span style="height: 35px" ng-show='!isBusy && !experiencedLoadingErrors'>
+      <button class="btn btn-info pull-right" ng-click="loadPatientList()">
+        <span class="glyphicon glyphicon-refresh"></span>
+        <span>Re-Load</span>
+      </button>
+    </span>
+    <div  ng-show='isBusy'>
+      <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+      <b>Loading data...</b>
+    </div>
+  </div >
+  <h3 class="text-warning">Patient List: {{getIndicatorDetails().label.replace('# of', '')|titlecase  }}</h3>
+  <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
+	<table class='table table-hover table-striped'>
+		<thead>
+			<tr>
+				<td>#</td>
+				<th>Identifiers</th>
+				<th>Name</th>
+        <th></th>
+			</tr>
+		</thead>
+		<tr ng-repeat="patient in patients | startFrom:(currentPage-1)*10 | limitTo:10"
+        data-ng-click="loadPatient(patient.patientUuid())"
+		style="cursor: pointer;">
+			<td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
+			<td>{{patient.identifiers()}}</td>
+			<td>{{patient.personName() | titlecase}}</td>
+			<td>
+				<a href="#/patient/{{patient.uuid()}}"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
+			</td>
+		</tr>
+	</table>
+	<hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
+	<pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="patients.length" items-per-page="10"
+	ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
+	last-text="&raquo;" rotate="false"></pagination>
+</div>
