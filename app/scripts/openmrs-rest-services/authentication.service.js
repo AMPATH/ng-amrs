@@ -4,11 +4,12 @@
   'use strict';
 
   angular
-        .module('app.openmrsRestServices')
-        .factory('AuthService', AuthService);
+    .module('app.openmrsRestServices')
+    .factory('AuthService', AuthService);
 
   AuthService.$inject = ['$base64', '$http', 'SessionResService', '$state',
-  'SessionModel', '$rootScope', 'LocationResService', 'FormResService', 'UserDefaultPropertiesService'];
+    'SessionModel', '$rootScope', 'LocationResService', 'FormResService', 'UserDefaultPropertiesService'
+  ];
 
   function AuthService(base64, $http, session, $state, SessionModel,
     $rootScope, LocationResService, FormResService, UserDefaultPropertiesService) {
@@ -26,62 +27,61 @@
       //authenticate user
       setCredentials(CurrentUser);
       session.getSession(function(data) {
-        //console.log(data);
-        var session = new SessionModel.session(data.sessionId, data.authenticated);
-        service.authenticated = session.isAuthenticated();
-        if (service.authenticated)
-        {
-               //find out if the user has set the default location          
-          UserDefaultPropertiesService.setAuthenticatedUser(CurrentUser.username);
-          var userDefaultLocation = UserDefaultPropertiesService.getCurrentUserDefaultLocation();         
-           LocationResService.getLocations(function(results) {
-            $rootScope.cachedLocations = results;
-          },
+          //console.log(data);
+          var session = new SessionModel.session(data.sessionId, data.authenticated);
+          service.authenticated = session.isAuthenticated();
+          if (service.authenticated) {
+            //find out if the user has set the default location
+            UserDefaultPropertiesService.setAuthenticatedUser(CurrentUser.username);
+            var userDefaultLocation = UserDefaultPropertiesService.getCurrentUserDefaultLocation();
+            LocationResService.getLocations(function(results) {
+                $rootScope.cachedLocations = results;
+              },
 
-          function(failedError) {
-            console.log(failedError);
-          });
-               console.log('routing to the right page');
-          if(angular.isDefined(userDefaultLocation)) {
-             //$location.path('/'); //go to the home page if user is authenticated and has defined default location
-               $state.go('patientsearch');
-               //broadcast the aunthenticated user location
-               $rootScope.$broadcast('defaultUserLocationBroadcast', userDefaultLocation); 
-              } else{
-                //Allow user to set the default location
+              function(failedError) {
+                console.log(failedError);
+              });
+            console.log('routing to the right page');
+            if (angular.isDefined(userDefaultLocation)) {
+              //$location.path('/'); //go to the home page if user is authenticated and has defined default location
+              $state.go('patientsearch');
+              //broadcast the aunthenticated user location
+              $rootScope.$broadcast('defaultUserLocationBroadcast', userDefaultLocation);
+            } else {
+              //Allow user to set the default location
               $state.go('user-default-properties');
-              }
+            }
 
-          //cache forms
-          var findFormsContaining = 'POC';
-          FormResService.findPocForms(findFormsContaining, function(forms) {
-              $rootScope.cachedPocForms = forms;
-            },
+            //cache forms
+            var findFormsContaining = 'POC';
+            FormResService.findPocForms(findFormsContaining, function(forms) {
+                $rootScope.cachedPocForms = forms;
+              },
 
-            function(error) {
-              console.log(error);
-            });
+              function(error) {
+                console.log(error);
+              });
 
-          // SearchDataService.findPocForms(findFormsContaining, function(results) {
-          //  $rootScope.cachedPocForms = results;
-          //  }, function(error){
-          //   console.log(error);
-          // });
+            // SearchDataService.findPocForms(findFormsContaining, function(results) {
+            //  $rootScope.cachedPocForms = results;
+            //  }, function(error){
+            //   console.log(error);
+            // });
 
-        } else {
-          console.log('authentication Failed');
-        }
+          } else {
+            console.log('authentication Failed');
+          }
 
-        $rootScope.$broadcast('onUserAuthenticationDetermined');
-        callback(data.authenticated); //return authentication status (true/false)
+          $rootScope.$broadcast('onUserAuthenticationDetermined');
+          callback(data.authenticated); //return authentication status (true/false)
 
-        //console.log(service.authenticated);
-      },
+          //console.log(service.authenticated);
+        },
 
-      function(error) {
-        console.log(error);
-        callback(error);
-      });
+        function(error) {
+          console.log(error);
+          callback(error);
+        });
 
     }
 

@@ -1,21 +1,22 @@
 /*jshint -W003, -W098, -W033 */
-(function () {
+(function() {
   'use strict';
 
-	/**
-	 * @ngdoc function
-	 * @name ngAmrsApp.controller:MainCtrl
-	 * @description
-	 * # MainCtrl
-	 * Controller of the ngAmrsApp
-	 */
+  /**
+   * @ngdoc function
+   * @name ngAmrsApp.controller:MainCtrl
+   * @description
+   * # MainCtrl
+   * Controller of the ngAmrsApp
+   */
   angular
     .module('ngAmrsApp')
     .controller('UserDefaultPropertiesCtrl', UserDefaultPropertiesCtrl);
-  UserDefaultPropertiesCtrl.$nject = ['$rootScope', '$scope', '$stateParams', 'LocationResService', 'LocationModel', 'UserDefaultPropertiesService'];
+  UserDefaultPropertiesCtrl.$nject = ['$rootScope', '$scope', '$stateParams', 'LocationResService', 'LocationModel', 'UserDefaultPropertiesService', '$state'];
 
   function UserDefaultPropertiesCtrl($rootScope, $scope, $stateParams,
-    LocationResService, LocationModel, UserDefaultPropertiesService) {
+    LocationResService, LocationModel, UserDefaultPropertiesService, $state) {
+
     $scope.username = '';
     $scope.defaultLocation = '';
 
@@ -31,6 +32,7 @@
 
     $scope.locationSelectionEnabled = UserDefaultPropertiesService.getLocationSelectionEnabled();
 
+    $scope.goToPatientSearch = goToPatientSearch;
     activate();
 
     function activate() {
@@ -57,14 +59,14 @@
       }
     }
 
-    function fetchLocations() {
-      $scope.isBusy = true;
-      LocationResService.getLocations(onGetLocationsSuccess, onGetLocationsError, false);
-    }
-
     function onGetLocationsSuccess(locations) {
       $scope.isBusy = false;
       $scope.locations = wrapLocations(locations);
+    }
+
+    function fetchLocations() {
+      $scope.isBusy = true;
+      LocationResService.getLocations(onGetLocationsSuccess, onGetLocationsError, false);
     }
 
     function onGetLocationsError(error) {
@@ -98,6 +100,10 @@
         $scope.selectedLocationName = $scope.defaultLocation.name;
       }
 
+    }
+
+    function goToPatientSearch() {
+      $state.go('patientsearch');
     }
   }
 })();
