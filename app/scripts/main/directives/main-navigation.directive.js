@@ -28,9 +28,12 @@
 
   Controller.$inject = ['$scope', 'OpenmrsRestService'];
 
-  function Controller($scope, OpenmrsRestService) {
-    var vm = this;
 
+    Controller.$inject = ['$scope', 'OpenmrsRestService', 'UserDefaultPropertiesService'];
+
+    function Controller($scope, OpenmrsRestService, UserDefaultPropertiesService) {
+    var vm = this;
+     
     var authenticationService = OpenmrsRestService.getAuthService();
 
     $scope.showNavigationBar = false;
@@ -47,10 +50,17 @@
 
     $scope.logOut = logOut;
 
-    $scope.$on('loggedUser', function() {
-      $scope.username = OpenmrsRestService.getUserService().user.userName();
-      $scope.role = OpenmrsRestService.getUserService().user.userRole()[0].name;
-    });
+    $scope.$on('loggedUser', function () {
+            console.log(OpenmrsRestService.getUserService().user.openmrsModel());
+            $scope.username = OpenmrsRestService.getUserService().user.userName();
+            $scope.role = OpenmrsRestService.getUserService().user.userRole()[0].name;
+            $scope.location = UserDefaultPropertiesService.getCurrentUserDefaultLocation().name;
+            $scope.$on('defaultUserLocationBroadcast', function(event, location) {
+            $scope.location = location.name;     
+           });
+
+        });
+
 
     $scope.$on('onUserAuthenticationDetermined', onUserAuthentionChanged);
 

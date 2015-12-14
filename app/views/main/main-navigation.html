@@ -57,6 +57,12 @@
               </center>
               </li>
               <li class="divider"></li>
+              <li ui-sref-active="active" ng-click="isCollapsed = true">
+                <a ui-sref="user-default-properties" ng-href="#/user-default-properties">
+                  <span class="glyphicon glyphicon-user"></span> User Default Properties                 
+                </a>
+              </li>
+              <li class="divider"></li>
               <li ui-sref-active="active" ng-click="isCollapsed = true" >
                 <a ui-sref="login" ng-href="#/dashboard" data-ng-click="logOut()">
                   <span class="glyphicon glyphicon-log-out"></span> Logout

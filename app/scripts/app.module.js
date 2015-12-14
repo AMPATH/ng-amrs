@@ -141,6 +141,12 @@
           controller: 'UrlSelectorCtrl',
           data: { requireLogin: false },
         })
+        .state('user-default-properties', {
+          url: '/user-default-properties',
+          templateUrl: 'views/main/user-default-properties.html',
+          controller: 'UserDefaultPropertiesCtrl',
+          data: { requireLogin: true },
+        })
         .state('login', {
           url: '/login',
           templateUrl: 'views/authentication/login.html',

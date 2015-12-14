@@ -1,0 +1,32 @@
+<div class="form-group animate-show " style="margin-top:12px; margin-bottom:8px;">
+	<h3 class="text-primary"><span class="glyphicon glyphicon-user"></span> User Default Properties</h3>
+	<hr/>
+	<div class="input-group" ng-show="locationSelectionEnabled">
+		<div class="input-group-addon">
+			<span class="text-danger">
+				<img ng-show="isBusy" src="images/ajax-loader.gif" />
+			</span>
+			<span ng-hide="isBusy" class="glyphicon glyphicon-map-marker"></span>
+		</div>
+		<ui-select ng-model="selectedLocation.selected" theme="bootstrap" on-select="onDefaultLocationSelection({name:selectedLocation.selected.name(),uuid:selectedLocation.selected.uuId()})"
+		ng-disabled="isBusy">
+			<ui-select-match placeholder="Select a location or type to search">{{$select.selected.name()}}</ui-select-match>
+			<ui-select-choices repeat="location in locations | propsFilter: {name: $select.search, description: $select.search} ">
+				<div ng-bind-html="location.name() | highlight: $select.search"></div>
+				<small ng-bind-html="location.description() | highlight: $select.search" class="border-success"></small>
+			</ui-select-choices>
+		</ui-select>
+	</div>
+</div>
+<hr style="margin: 0px;" />
+<div style="padding: 4px;" ng-show="defaultLocationSelected">
+	<div style="margin-top:2px; cursor: pointer;" ng-click="locationSelectionEnabled = !locationSelectionEnabled">
+		<span ng-show="selectedLocationName" style="font-size:24px; font-weight:bold;">{{username | titlecase}}  Current Location: {{selectedLocationName}}</span>
+		<span ng-hide="selectedLocationName" style="font-size:24px; font-weight:bold;">{{username | titlecase}}  please select your current location</span>
+		<div class="pull-right" style="vertical-align: middle;">
+			<span style="font-size:20px; font-weight:bold; vertical-align: middle;" class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+		</div>
+	</div>
+	<hr style="margin: -4px;" />
+</div>
+</div>
