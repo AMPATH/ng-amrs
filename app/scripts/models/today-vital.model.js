@@ -33,6 +33,8 @@
           modelDefinition.height = ob.value;
         } else if (ob.concept.uuid === 'a8a660ca-1350-11df-a1f1-0026b9348838') {
           modelDefinition.weight = ob.value;
+        } else if (ob.concept.uuid === 'a89c60c0-1350-11df-a1f1-0026b9348838') {
+          modelDefinition.bmi = ob.value;
         }
       }
 

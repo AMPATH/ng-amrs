@@ -26,7 +26,8 @@
                 <span ng-if="vital.temperature">Temperature : {{vital.temperature}} |</span>
                 <span ng-if="vital.oxygenSaturation">Oxygen Sat : {{vital.oxygenSaturation}} |</span>
                 <span ng-if="vital.height">Height : {{vital.height}} |</span>
-                <span ng-if="vital.vital.weight">Weight : {{vital.weight}} </span>
+                <span ng-if="vital.weight">Weight : {{vital.weight}} |</span>
+                <span ng-if="vital.bmi">BMI:Kg/M2 : {{vital.bmi}} </span>
                 </strong>
               </li>
               <li class="list-group-item" ng-show="!currentVisit.vitals.length">No vitals taken for the patient today</li>
