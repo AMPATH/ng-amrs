@@ -15,7 +15,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
         scope: {},
         bindToController: {
           form: '=',
-          fields: '='
+          fields: '=',
+          pageFields: '=',
+          tabTitle: '='
         },
         controllerAs: 'vm',
         controller: Controller
@@ -23,8 +25,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
       };
     return directive;
   }
-
-  function Controller() {
+  Controller.$inject =['$scope', '$rootScope'];
+  function Controller($scope, $rootScope) {
     var vm = this;
     // console.log('directive Scope', vm);
     vm.pageFields = [];
@@ -32,6 +34,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
     updateFields();
     // console.log('Total fields loaded: ', vm.page_fields.length)
     vm.getErrorAsList = getErrorAsList;
+    
+    vm.navigateToQuestion = navigateToQuestion;
 
     function updateFields() {
       //create field list acceptable to the error summary directive
@@ -63,6 +67,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
           }
         });
       }
+      $scope.pageFields = vm.pageFields;
     }
 
     function getErrorAsList(field) {
@@ -88,6 +93,16 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
           return msg;
         }).join(', ');
       }
+    }
+    
+    function navigateToQuestion(tabTitle, questionKey, field) {
+      if(field && field.formControl && 
+      field.formControl.$setTouched && 
+      typeof field.formControl.$setTouched === 'function') {
+        field.formControl.$setTouched();
+      }
+      
+      $rootScope.$broadcast("navigateToQuestion", {tabTitle: tabTitle, questionKey: questionKey}); 
     }
   }
 })();

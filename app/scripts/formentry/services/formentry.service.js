@@ -258,6 +258,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             //loop through the individual fields in the section and update accordingly
             _.each(_section.data.fields, function(_field) {
               var fieldKey;
+              if (_field.type === 'anchor') {
+                return;
+              }
               if (_field.key === 'encounterDate') {
                 sectionData['encounterDate'] = _encounterData.encounterDatetime;
                 _field.data['initialValue'] = _encounterData.encounterDatetime;
@@ -337,12 +340,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 fieldKey = _field.key;
                 var groupVal = {};
                 _.each(_field.fieldGroup, function(_groupField) {
+                  if(_groupField.type === 'anchor') {
+                    return;
+                  }
+                  
                   // body...
                   if (_.contains(fieldKey, 'unamed')) {
                     // using the grouping fields
                     if (_groupField.type !== 'multiCheckbox') {
                       if (_.contains(_groupField.key, 'obsDate')) {
-                        var val = getObsValue(_groupField.key, obsData);
+                        var val = _groupField.type !== 'anchor'? getObsValue(_groupField.key, obsData) : undefined;
                         if (val !== undefined) {
                           // console.log('Obs Date Key', _groupField.key);
                           // console.log('Obs Date value', val);
@@ -351,7 +358,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                           _groupField.data['uuid'] = val.uuid; //obs uuid
                         }
                       } else {
-                        var val = getObsValue(_groupField.key, obsData);
+                        var val = _groupField.type !== 'anchor'? getObsValue(_groupField.key, obsData) : undefined;
                         if (val !== undefined) {
                           if (typeof val.value === 'object') {
                             groupVal[_groupField.key] = val.value.uuid;
@@ -506,6 +513,9 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 if (groupData !== undefined) {
                   _.each(_field.templateOptions.fields[0].fieldGroup,
                     function(_repeatingField) {
+                      if(_repeatingField.type === 'anchor') {
+                        return;
+                      }
                       // body...
                       // console.log('getting Here ',_repeatingField)
                       fieldKeys[convertKeyToUuid(_repeatingField.key.split('_')[1])] = {key:_repeatingField.key, type:_repeatingField.type};
@@ -593,7 +603,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 // console.log(_field)
 
                 fieldKey = _field.key;
-                var val = getObsValue(fieldKey, obsData);
+                var val = _field.type !== 'anchor'? getObsValue(fieldKey, obsData) : undefined;
 
                 if (val !== undefined) {
                   if (typeof val.value === 'object') {
@@ -1364,6 +1374,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
               field = createFormlyField(sectionField);
             }
 
+            sectionFields.push(createAnchorField(field.key));
             sectionFields.push(field);
             addToReadyFields(field);
             addFieldToValidationMetadata(field, section, pageFields, sectionField.type);
@@ -1457,6 +1468,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
     function convertKeyToUuid(key)
     {
       return key.replace(/n/gi, '-');
+    }
+    
+    function createAnchorField(ownerKey){
+      return {
+          type: 'anchor',
+          data: {id: 'anchor'},
+          templateOptions: {
+            ownerKey: ownerKey
+          }
+      };
     }
 
     /*
@@ -1764,6 +1785,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         // process the fields the normal way
         var selField = createFormlyField(curField);
         //selField['key'] = selField['key'] + '@obs_' + sectionKey;
+        groupingFields.push(createAnchorField(selField.key));
         groupingFields.push(selField);
         if (curField.showDate === 'true') {
           if (_obsField.hide !== undefined) {
@@ -1827,6 +1849,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         var selField = createFormlyField(curField);
         //selField['className'] = 'col-md-2';
         //selfField['key'] = selfField['key']
+        repeatingFields.push(createAnchorField(selField.key));
         repeatingFields.push(selField);
         if (curField.showDate === 'true')
         {

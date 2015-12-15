@@ -72,6 +72,8 @@ module.exports = function (config) {
     'bower_components/jspdf/dist/jspdf.min.js',
     'bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.js',
     'bower_components/tableExport.jquery.plugin/tableExport.min.js',
+    'bower_components/matchmedia/matchMedia.js',
+    'bower_components/ngSticky/lib/sticky.js',
     'bower_components/angular-mocks/angular-mocks.js',
     // endbower
       'app/scripts/**/*.module.js',
