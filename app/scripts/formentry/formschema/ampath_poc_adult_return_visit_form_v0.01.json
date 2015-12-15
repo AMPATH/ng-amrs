@@ -788,7 +788,14 @@
                   "type": "date",
                   "validators": [
                     {
-                      "type": "date"
+                      "type": "js_expression",
+                      "failsWhenExpression": "!isEmpty(onTbTreatment) && arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], onTbTreatment) && isEmpty(myValue)",
+                      "message": "You indicated patient on tb treatment, indicate start date."
+                    },
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(isEmpty(onTbTreatment) || !arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], onTbTreatment)) && !isEmpty(myValue)",
+                      "message": "You indicated patient is not on tb treatment, therefore start date should not be indicated."
                     }
                   ],
                   "disableExpression": [
@@ -3121,32 +3128,6 @@
                       "type": "js_expression",
                       "failsWhenExpression": "(isEmpty(tbTreatmentPlan) || !arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838'], tbTreatmentPlan)) && !isEmpty(myValue)",
                       "message": "You did not indicate re/start tb medication, therefore reason should not be selected."
-                    }
-                  ]
-                },
-                {
-                  "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
-                  "label": "If on treatment: start date:",
-                  "type": "date",
-                  "id": "26dStartDate",
-                  "validators": [
-                    {
-                      "type": "date"
-                    },
-                    {
-                      "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(onTbTreatment) && arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], onTbTreatment) && isEmpty(myValue)",
-                      "message": "You indicated patient on tb treatment, indicate start date."
-                    },
-                    {
-                      "type": "js_expression",
-                      "failsWhenExpression": "(isEmpty(onTbTreatment) || !arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], onTbTreatment)) && !isEmpty(myValue)",
-                      "message": "You indicated patient is not on tb treatment, therefore start date should not be indicated."
-                    }
-                  ],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "!arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], onTbTreatment)"
                     }
                   ]
                 }
