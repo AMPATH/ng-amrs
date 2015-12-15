@@ -87,7 +87,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069
           } else if (error === 'min') {
             msg = 'The minimum value allowed is ' + field.templateOptions.min;
           } else {
-            msg = field.validation.messages[error]();
+            
+            if(typeof field.validation.messages[error] === 'function') {
+              msg = field.validation.messages[error]();
+            }
           }
 
           return msg;
