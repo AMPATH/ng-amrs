@@ -18,9 +18,9 @@
     return service;
 
     function vital(vitalEtl) {
-      
+
       var modelDefinition = this;
-      
+
       //initialize private members
       var _personId = !UtilService.isNullOrUndefined(vitalEtl.person_id) ?
        vitalEtl.person_id : '';
@@ -37,9 +37,9 @@
       var _temperature = !UtilService.isNullOrUndefined(vitalEtl.temp) ? vitalEtl.temp : '';
       var _oxygenSat = !UtilService.isNullOrUndefined(vitalEtl.oxygen_sat) ?
        vitalEtl.oxygen_sat : '';
-      var _systolicBp = !UtilService.isNullOrUndefined(vitalEtl.systolic_bp) ? 
+      var _systolicBp = !UtilService.isNullOrUndefined(vitalEtl.systolic_bp) ?
       vitalEtl.systolic_bp : '';
-      var _diastolicBp = !UtilService.isNullOrUndefined(vitalEtl.diastolic_bp) ? 
+      var _diastolicBp = !UtilService.isNullOrUndefined(vitalEtl.diastolic_bp) ?
       vitalEtl.diastolic_bp : '';
 
       var _pulse = !UtilService.isNullOrUndefined(vitalEtl.pulse) ? vitalEtl.pulse : '';
