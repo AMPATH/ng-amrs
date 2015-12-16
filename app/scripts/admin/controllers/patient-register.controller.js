@@ -4,23 +4,23 @@
 
   angular
     .module('app.admin')
-    .controller('HivSummaryIndicatorsCtrl', HivSummaryIndicatorsCtrl);
-  HivSummaryIndicatorsCtrl.$nject =
-    ['$rootScope', '$scope', '$stateParams', 'EtlRestService', 'HivSummaryIndicatorService', 'moment', '$filter', '$state'];
+    .controller('PatientRegisterCtrl', PatientRegisterCtrl);
+  PatientRegisterCtrl.$inject =
+    ['$rootScope', '$scope', '$stateParams', 'EtlRestService', 'moment', '$filter', '$state',
+      'OpenmrsRestService'];
 
-  function HivSummaryIndicatorsCtrl($rootScope, $scope, $stateParams, EtlRestService, HivSummaryIndicatorService, moment, $filter, $state) {
+  function PatientRegisterCtrl($rootScope, $scope, $stateParams, EtlRestService,  moment, $filter,
+                               $state, OpenmrsRestService) {
+
     //Patient List Directive Properties & Methods
     $scope.startDate = new Date("January 1, 2015 12:00:00");
     $scope.endDate = new Date();
-    $scope.selectedLocation = $stateParams.locationuuid || '';
-    $scope.selectedIndicatorBox = $stateParams.indicator || '';
-    $scope.loadPatientList = loadPatientList;
 
     //Hiv Summary Indicators Service Properties & Methods
-    $scope.reportName = 'hiv-summary-report';
+    $scope.reportName = 'patient-register-report';
     $scope.countBy = 'num_persons';
-    $scope.groupBy = 'groupByLocation';
-    $scope.loadHivSummaryIndicators = loadHivSummaryIndicators;
+    $scope.groupBy = 'groupByEncounter';
+    $scope.loadIndicators = loadIndicators;
     $scope.getIndicatorLabelByName = getIndicatorLabelByName;
 
     //UX Scope Params
@@ -57,31 +57,38 @@
 
     //scope methods
     function init() {
-      if (!loadCachedData())loadIndicatorsSchema();
+    loadIndicatorsSchema();
     }
 
-    function loadHivSummaryIndicators() {
+    function loadIndicators() {
       $scope.experiencedLoadingErrors = false;
       if ($scope.isBusy === true) return;
       $scope.indicators = [];
       $scope.isBusy = true;
-      if ($scope.countBy && $scope.countBy !== '' && $scope.reportName && $scope.reportName !== ''
-        && $scope.startDate && $scope.startDate !== '')
+      if ($scope.groupBy && $scope.groupBy !== '' && $scope.reportName && $scope.reportName !== ''
+        && $scope.startDate && $scope.startDate !== '' && $scope.selectedIndicatorTags.indicatorTags
+        && $scope.selectedIndicatorTags.indicatorTags !== []) {
+        var locations = getSelectedLocations($scope.selectedLocations);
+        var indicators = getSelectedIndicators($scope.selectedIndicatorTags);
         EtlRestService.getHivSummaryIndicators(
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-          $scope.reportName, $scope.countBy, onFetchHivSummaryIndicatorsSuccess, onFetchHivSummaryIndicatorsError,
-          $scope.groupBy);
+          $scope.reportName, $scope.countBy, onFetchIndicatorsSuccess, onFetchIndicatorsError, $scope.groupBy,
+          locations, indicators);
+
+      } else {
+        $scope.isBusy = false;
+      }
     }
 
-    function onFetchHivSummaryIndicatorsSuccess(result) {
+    function onFetchIndicatorsSuccess(result) {
       $scope.isBusy = false;
       console.log("Sql query for HivSummaryIndicators request=======>", result.sql, result.sqlParams);
       $scope.indicators = result.result;
       buildDataTable();
     }
 
-    function onFetchHivSummaryIndicatorsError(error) {
+    function onFetchIndicatorsError(error) {
       $scope.isBusy = false;
       $scope.experiencedLoadingErrors = true;
     }
@@ -94,14 +101,14 @@
       if ($scope.reportName && $scope.reportName !== '')
         EtlRestService.getIndicatorsSchema($scope.reportName, onFetchIndicatorsSchemaSuccess,
           onFetchIndicatorsSchemaError);
-
     }
 
     function onFetchIndicatorsSchemaSuccess(result) {
       $scope.isBusy = false;
       $scope.indicatorTags = result.result;
-      $scope.indicatorTags.unshift({name: 'state'}, {name: 'location'}, {name: 'location_uuid'})
-
+      //push non indicator columns
+      $scope.indicatorTags.unshift({name: 'state'}, {name: 'identifiers'},{name: 'person_name'},{name: 'encounter_date'},
+        {name: 'location'},  {name: 'location_uuid'})
     }
 
     function onFetchIndicatorsSchemaError(error) {
@@ -111,15 +118,15 @@
 
     $rootScope.$on('$stateChangeStart',
       function (event, toState, toParams, fromState, fromParams) {
-        loadPatientList(toParams.indicator, toParams.locationuuid)
+        if ((toState.name === 'admin.patient-register.patient' && fromState.name === 'admin.patient-register')
+        ||(toState.name === 'admin.patient-register.patient' && fromState.name === 'admin.patient-register.patient')) {
+          OpenmrsRestService.getPatientService().getPatientByUuid({uuid: toParams.uuid},
+            function (data) {
+              $rootScope.broadcastPatient = data;
+              $state.go('patient', {uuid: toParams.uuid});
+            });
+        }
       });
-
-    function loadPatientList(indicator, location) {
-      $scope.selectedIndicatorBox = indicator;
-      $scope.selectedLocation = location;
-      HivSummaryIndicatorService.setIndicatorDetails(getIndicatorDetails(indicator));
-      cacheResource(); //cache report before changing view/state
-    }
 
     /**
      * Filters indicator by $scope.selectedIndicatorTags using key value pairs.
@@ -131,35 +138,6 @@
       if (found)return found.label;
     }
 
-    function getIndicatorDetails(name) {
-      var found = $filter('filter')($scope.indicatorTags, {name: name})[0];
-      if (found)return found;
-    }
-
-    /**
-     * Method to fetch cached data to avoid round trips.
-     */
-    function loadCachedData() {
-      if (HivSummaryIndicatorService.getIndicatorTags()) {
-        $scope.indicators = HivSummaryIndicatorService.getIndicators();
-        $scope.indicatorTags = HivSummaryIndicatorService.getIndicatorTags();
-        $scope.startDate = HivSummaryIndicatorService.getStartDate();
-        $scope.endDate = HivSummaryIndicatorService.getEndDate();
-        buildDataTable();
-        return true;
-      }
-    }
-
-    /**
-     * Function to cache data in order to prevent app from hitting the server when a resource is requested
-     */
-    function cacheResource() {
-      HivSummaryIndicatorService.setIndicatorTags($scope.indicatorTags);
-      HivSummaryIndicatorService.setIndicators($scope.indicators);
-      HivSummaryIndicatorService.setStartDate($scope.startDate);
-      HivSummaryIndicatorService.setEndDate($scope.endDate);
-    }
-
     /**
      * Functions to populate and define bootstrap data table
      */
@@ -168,23 +146,32 @@
       buildTableControls();
     }
 
+    function buildSingleColumn(header) {
+      var checkbox = (header.name === 'state');
+      var sortable = (header.name !== 'state');
+      $scope.columns.push({
+        field: header.name.toString(),
+        title: $filter('titlecase')(header.name.toString().split('_').join(' ')),
+        align: 'center',
+        valign: 'bottom',
+        sortable: sortable,
+        visible: true,
+        checkbox: checkbox,
+        tooltip: true,
+        formatter: function (value, row, index) {
+          return cellFormatter(value, row, index, header);
+        }
+      });
+    }
+
     function buildColumns() {
       $scope.columns = [];
       _.each($scope.indicatorTags, function (header) {
-        var visible = (header.name !== 'location_uuid');
-        var checkbox = (header.name === 'state');
-        var sortable = (header.name !== 'state');
-        $scope.columns.push({
-          field: header.name.toString(),
-          title: $filter('titlecase')(header.name.toString().split('_').join(' ')),
-          align: 'center',
-          valign: 'bottom',
-          sortable: sortable,
-          visible: visible,
-          checkbox: checkbox,
-          tooltip: true,
-          formatter: function (value, row, index) {
-            return cellFormatter(value, row, index, header);
+        if (header.name === 'location' || header.name === 'state' || header.name === 'person_name' || header.name === 'encounter_date'
+          || header.name === 'identifiers') buildSingleColumn(header);
+        _.each($scope.selectedIndicatorTags.indicatorTags, function (selectedIndicator) {
+          if (selectedIndicator.name === header.name) {
+            buildSingleColumn(header);
           }
         });
       });
@@ -257,9 +244,18 @@
         label = $filter('titlecase')(label.toString().split('_').join(' '));
         var key = $filter('titlecase')(key.toString().split('_').join(' '));
         html.push('<div class="well well-sm " style="padding:2px; margin-bottom: 5px !important; ">' +
-          '<p><b>' + key + '</b> (<span class="text-info">' + label + '</span>): ' + value + '</p></div>');
+          '<p><b>' + key + '</b> (<span class="text-info">' + label + '</span>): ' + valueToBooleanFormatter(value) + '</p></div>');
       });
       return html.join('');
+    }
+
+    /**
+     * Converts 0 or 1 to true or false else return value (Fromats
+     */
+    function valueToBooleanFormatter(value) {
+      if (value === 1)return '<span class="text-success">True</span>';
+      if (value === 0)return '<span class="text-warning">False</span>';
+      return value
     }
 
     /**
@@ -267,13 +263,48 @@
      */
     function cellFormatter(value, row, index, header) {
       if (header.name === 'location') return '<span class="text-info text-capitalize">' + value + '</span>';
+      if (header.name === 'encounter_date') return '<span class="text-info text-capitalize">' +
+        $filter('date')(value, 'dd, MMM, y') + '</span>';
       if (header.name === 'state') return;
-      return ['<a class="btn btn-large btn-default" style="padding: inherit; width:100%; max-width: 300px"',
-        'title="' + getIndicatorLabelByName(header.name) + ' (in ' + row.location + ')" data-toggle="tooltip"',
-        'data-placement="top"',
-        'href="#/admin-dashboard/hiv-summary-indicators/location/' + row.location_uuid + '/indicator/' + header.name
-        + '">' + value + '</a>'
-      ].join('');
+      if (header.name === 'person_name')
+        return '<a href="#/admin-dashboard/patient-register/patient/' + row.person_uuid + '" class="btn btn-link" >' +
+          '<span class="text-info text-capitalize">' + value + '</span><a/>';
+      return valueToBooleanFormatter(value);
+    }
+
+    /**
+     * converts wrapped selected indicators and locations to comma separated strings
+     */
+    function getSelectedIndicators(selectedIndicatorObject) {
+      var indicators;
+      if (selectedIndicatorObject.indicatorTags)
+        for (var i = 0; i < selectedIndicatorObject.indicatorTags.length; i++) {
+          if (i === 0) {
+            indicators = '' + selectedIndicatorObject.indicatorTags[i].name;
+          }
+          else {
+            indicators =
+              indicators + ',' + selectedIndicatorObject.indicatorTags[i].name;
+          }
+        }
+      return indicators;
+    }
+
+    function getSelectedLocations(selectedLocationObject) {
+      if (selectedLocationObject.selectedAll === true)
+        return;
+      var locations;
+      if (selectedLocationObject.locations)
+        for (var i = 0; i < selectedLocationObject.locations.length; i++) {
+          if (i === 0) {
+            locations = '' + selectedLocationObject.locations[i].uuId();
+          }
+          else {
+            locations =
+              locations + ',' + selectedLocationObject.locations[i].uuId();
+          }
+        }
+      return locations;
     }
   }
 })();

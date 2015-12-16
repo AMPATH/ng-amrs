@@ -169,6 +169,17 @@
           templateUrl: 'views/authentication/login.html',
           controller: 'LoginCtrl',
           data: { requireLogin: false },
+        })
+        .state('admin.patient-register', {
+          url: '/patient-register',
+          templateUrl: 'views/admin/patient-register.html',
+          controller: 'PatientRegisterCtrl',
+          data: { requireLogin: true}
+        })
+        .state('admin.patient-register.patient', {
+          url: '/patient/:uuid',
+          templateUrl: 'views/admin/patient-register.html',
+          data: { requireLogin: true}
         });
 
     }) .config(['$httpProvider', function($httpProvider) {

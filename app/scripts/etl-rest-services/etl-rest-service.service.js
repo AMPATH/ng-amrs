@@ -291,10 +291,40 @@
         });
 
     }
-    function getPatientByIndicatorAndLocation(locationIds, startDate, endDate, indicator, successCallback, failedCallback, startIndex, limit) {
-      var resource = getResource('location/:uuid/patient-by-indicator');
 
-      var params = { endDate: endDate, indicator: indicator, startDate: startDate, locations: locationIds };
+    function getPatientByIndicatorAndLocation(locationIds, startDate, endDate, indicator, successCallback,
+                                              failedCallback, locationUuids, startIndex, limit) {
+      var resource = getResource('patient-by-indicator');
+      var params = { endDate: endDate, indicator: indicator, startDate: startDate, locationIds: locationIds,
+        locationUuids:locationUuids};
+      if (startIndex !== undefined) {
+        params.startIndex = startIndex;
+      }
+
+      if (limit !== undefined) {
+        params.limit = limit;
+      }
+
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+        });
+
+    }
+     function getHivSummaryFlatTable(startDate, endDate,locations, successCallback, failedCallback) {
+          var resource = getResource('hiv-summary-data');
+          var params = { startDate: startDate,endDate: endDate,locations:locations.toString()};
+          return resource.get(params).$promise
+            .then(function (response) {
+            successCallback(response);
+            })
+            .catch(function (error) {
+              failedCallback('Error processing request', error);
+              console.error(error);
+            });
 
       if (startIndex !== undefined) {
         params.startIndex = startIndex;
@@ -330,11 +360,12 @@
     }
 
 
-    function getHivSummaryIndicators(startDate, endDate, report, countBy, successCallback, failedCallback, groupBy,locationUuids,
-                                     startIndex, limit) {
+    function getHivSummaryIndicators(startDate, endDate, report, countBy, successCallback, failedCallback,
+                                     groupBy, locationUuids, indicators, startIndex, limit) {
       var resource = getResource('get-report-by-report-name');
 
-      var params = { endDate: endDate, report: report, countBy: countBy, startDate: startDate,groupBy:groupBy,locationUuids: locationUuids };
+      var params = { endDate: endDate, report: report, countBy: countBy, startDate: startDate, groupBy:groupBy,
+        locationUuids: locationUuids, indicators:indicators };
 
       if (startIndex !== undefined) {
         params.startIndex = startIndex;
@@ -358,7 +389,7 @@
 
     }
 
-    function getIndicatorsSchema( report,  successCallback, failedCallback, startIndex, limit) {
+    function getIndicatorsSchema(report,  successCallback, failedCallback, startIndex, limit) {
       var resource = getResource('indicators-schema');
 
       var params = { report: report };
