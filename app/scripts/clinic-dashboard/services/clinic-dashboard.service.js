@@ -11,7 +11,7 @@
       var serviceDefinition;
       var locationSelectionEnabled = true;
       var startDate = new Date();
-      var selectedMonth = new moment();
+      var selectedMonth = new moment().startOf('month');;
       var month = new moment();
       serviceDefinition = {
           getSelectedLocation: getSelectedLocation,
@@ -64,7 +64,6 @@
         }
 
       function getMonth() {
-        console.log('Getting Month=======>',month);
         return month;
       }
 
