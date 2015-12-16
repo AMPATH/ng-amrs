@@ -48,8 +48,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
             var containingObject = getContainingObjectForQuestionKey(formlyModel, key);
             if (containingObject) {
                 //containingObject[key] = null;
-                if (Array.isArray(containingObject[key])) {
-                    console.log('is array')
+                if(containingObject[key] === null) {
+                    return;
+                }
+                else if (Array.isArray(containingObject[key])) {
+                    console.log('is array');
                     containingObject[key] = [];
                 }
                 else if (typeof containingObject[key] === 'number') {
