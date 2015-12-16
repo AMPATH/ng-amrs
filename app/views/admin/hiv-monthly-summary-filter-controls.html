@@ -1,0 +1,82 @@
+<div class="well" style="padding:2px; cursor:pointer; margin-bottom: 2px !important;">
+  <div data-ng-click="isExpanded = !isExpanded" style="margin: 2px;">
+    <strong>Report Filters</strong>
+        <span class="label label-default pull-right" style="margin-right: 4px;" ng-show="isExpanded">
+            <span class="glyphicon glyphicon-menu-up"> </span>
+        </span>
+        <span class="label label-default pull-right" style="margin-right: 4px;" ng-hide="isExpanded">
+            <span class="glyphicon glyphicon-menu-down"></span>
+        </span>
+  </div>
+  <hr style="margin:1px;" />
+  <div class="panel panel-default" style="padding: 4px; margin: 2px;" collapse="isExpanded">
+    <div class="row" style="padding: 1px;">
+      <div class="form-group col-md-6" ng-show="canView('start-date')">
+        <label for="start-date">Start Date</label>
+        <div class="input-group">
+          <input type="text" id="start-date" class="form-control" is-open="startDateIsOpen"  date-parser="short"
+                 datepicker-popup="mediumDate" ng-model="startDate">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="startDateIsOpen = !startDateIsOpen">
+                          <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+        </div>
+      </div>
+      <div class="form-group col-md-6" ng-show="canView('start-date')">
+        <label for="end-date">End Date</label>
+        <div class="input-group">
+          <input type="text" id="end-date" class="form-control" is-open="endDateIsOpen"  date-parser="short"
+                 datepicker-popup="mediumDate" ng-model="endDate">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="endDateIsOpen = !endDateIsOpen">
+                          <i class="glyphicon glyphicon-calendar"></i>
+                        </button>
+                    </span>
+        </div>
+      </div>
+
+      <!--Start  Of Location  Select-->
+
+      <div class="form-group col-md-12" ng-show="canView('location')">
+        <label for="start-date">Location</label>
+        <div ng-hide="selectedLocations.selectedAll" class="input-group" >
+          <div class="input-group-addon">
+						<span class="text-danger">
+							<img ng-show="isBusy" src="images/ajax-loader.gif" />
+						</span>
+            <span ng-hide="isBusy" class="glyphicon glyphicon-map-marker"></span>
+          </div>
+          <ui-select  multiple ng-model="selectedLocations.locations"
+                      theme="bootstrap" ng-disabled="isBusy === true">
+            <ui-select-match placeholder="Select a location or type to search">{{$item.name()}}</ui-select-match>
+            <ui-select-choices repeat="location in locations | propsFilter: {name: $select.search, description: $select.search} ">
+              <div ng-bind-html="location.name() | highlight: $select.search"></div>
+              <small ng-bind-html="location.description() | highlight: $select.search" class="border-success"></small>
+            </ui-select-choices>
+          </ui-select>
+          <div class="input-group-addon" ng-click="selectAllLocations()" style="cursor: pointer;" >
+            <span ng-show="selectedLocations.selectedAll" class="glyphicon glyphicon-trash"></span>
+            <span ng-hide="selectedLocations.selectedAll" class="glyphicon glyphicon-pushpin"></span>
+            <span  ng-hide="selectedLocations.selectedAll">Select All</span>
+            <span  ng-hide="!selectedLocations.selectedAll">Select None</span>
+          </div>
+
+        </div>
+        <div ng-show="selectedLocations.selectedAll" class="input-group">
+          <strong class="text-info">All Locations selected</strong>
+        </div>
+        <div ng-show="selectedLocations.selectedAll" class="input-group">
+          <button class="btn btn-default"  ng-click="selectAllLocations()" style="margin-top: 2px;">
+            <span ng-show="selectedLocations.selectedAll" class="glyphicon glyphicon-trash"></span>
+            <span>Select None</span>
+          </button>
+        </div>
+      </div>
+      <!--End  of  Location Select -->
+
+    </div>
+
+  </div>
+
+</div>
