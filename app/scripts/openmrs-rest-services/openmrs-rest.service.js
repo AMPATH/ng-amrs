@@ -20,7 +20,7 @@ jshint -W117, -W098, -W116, -W003, -W026
 
   function OpenmrsRestService(session, authService, PatientResService,
               UserResService, EncounterResService, LocationResService,
-              ProviderResService, ObsResService,DrugResService) {
+              ProviderResService, ObsResService, DrugResService, UserDefaultPropertiesService) {
     var service = {
           getSession: getSession,
           getAuthService: getAuthService,
@@ -30,7 +30,8 @@ jshint -W117, -W098, -W116, -W003, -W026
           getEncounterResService: getEncounterService,
           getProviderResService:getProviderResService,
           getObsResService:getObsResService,
-          getDrugResService:getDrugResService
+          getDrugResService:getDrugResService,
+          getUserDefaultPropertiesService:getUserDefaultPropertiesService
         };
 
     return service;
@@ -70,5 +71,9 @@ jshint -W117, -W098, -W116, -W003, -W026
     function getDrugResService() {
       return DrugResService;
     }
+    
+    function getUserDefaultPropertiesService() {
+      return UserDefaultPropertiesService;
+    }    
   }
 }) ();

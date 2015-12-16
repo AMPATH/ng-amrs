@@ -8,10 +8,10 @@
         .factory('AuthService', AuthService);
 
   AuthService.$inject = ['$base64', '$http', 'SessionResService', '$state',
-  'SessionModel', '$rootScope', 'LocationResService','FormResService'];
+  'SessionModel', '$rootScope', 'LocationResService', 'FormResService', 'UserDefaultPropertiesService'];
 
   function AuthService(base64, $http, session, $state, SessionModel,
-    $rootScope, LocationResService, FormResService) {
+    $rootScope, LocationResService, FormResService, UserDefaultPropertiesService) {
     var service = {
       isAuthenticated: isAuthenticated,
       setCredentials: setCredentials,
@@ -31,16 +31,26 @@
         service.authenticated = session.isAuthenticated();
         if (service.authenticated)
         {
-          console.log('routing to the right page');
-          //$location.path('/'); //go to the home page if user is authenticated or
-          $state.go('patientsearch');
-          LocationResService.getLocations(function(results) {
+               //find out if the user has set the default location          
+          UserDefaultPropertiesService.setAuthenticatedUser(CurrentUser.username);
+          var userDefaultLocation = UserDefaultPropertiesService.getCurrentUserDefaultLocation();         
+           LocationResService.getLocations(function(results) {
             $rootScope.cachedLocations = results;
           },
 
           function(failedError) {
             console.log(failedError);
           });
+               console.log('routing to the right page');
+          if(angular.isDefined(userDefaultLocation)) {
+             //$location.path('/'); //go to the home page if user is authenticated and has defined default location
+               $state.go('patientsearch');
+               //broadcast the aunthenticated user location
+               $rootScope.$broadcast('defaultUserLocationBroadcast', userDefaultLocation); 
+              } else{
+                //Allow user to set the default location
+              $state.go('user-default-properties');
+              }
 
           //cache forms
           var findFormsContaining = 'POC';

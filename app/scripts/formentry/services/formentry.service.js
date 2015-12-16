@@ -11,10 +11,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
         .factory('FormentryService', FormentryService);
 
   FormentryService.$inject = ['$http', 'SearchDataService', 'moment',
-  'FormValidator', 'CurrentLoadedFormService', '$filter','PersonAttributesRestService'];
+  'FormValidator', 'CurrentLoadedFormService', '$filter', 'PersonAttributesRestService', 'UserDefaultPropertiesService'];
 
   function FormentryService($http, SearchDataService, moment, FormValidator,
-        CurrentLoadedFormService, $filter, PersonAttributesRestService) {
+    CurrentLoadedFormService, $filter, PersonAttributesRestService, UserDefaultPropertiesService) {
     var service = {
       createForm: createForm,
       validateForm:validateForm,
@@ -293,9 +293,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   if (personAttribute !== undefined &&
                     personAttribute !== null &&
                     personAttribute.length > 0) {
-                    var tv = personAttribute[0].value.uuid;
-                    sectionData[fieldKey] = personAttribute[0].value.uuid;
-                    _field.data['initValue'] = personAttribute[0].value.uuid;
+                    var existingFormLocation = personAttribute[0].value.uuid;                    
+                    // var definedDefaultUserLocation=UserDefaultPropertiesService.getCurrentUserDefaultLocation();                       
+                    // if(angular.isDefined(definedDefaultUserLocation)){  
+                    //   //use defined default user location to prefill the form                       
+                    //     if(!angular.isDefined(existingFormLocation)){
+                    //     existingFormLocation=definedDefaultUserLocation.uuid;
+                    //     }                       
+                    // }
+                     sectionData[fieldKey] = existingFormLocation;
+                    _field.data['initValue'] = existingFormLocation;
                     _field.data['uuid'] = personAttribute[0].uuid;
                   }
 
@@ -1344,6 +1351,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
               addToReadyFields(field);
             } else if (sectionField.type === 'encounterLocation') {
+              
+              //set encounter location to the default user location
+              var definedDefaultUserLocation = UserDefaultPropertiesService.getCurrentUserDefaultLocation();
+                    if(angular.isDefined(definedDefaultUserLocation)) {  
+                      //use defined default user location to prefill the form                       
+                        if(!angular.isDefined(defaultValue_) || defaultValue_ === '') {
+                          defaultValue_ = definedDefaultUserLocation.uuid;
+                        }                       
+                    }                    
+                    
               var required = false;
               if (sectionField.required !== undefined) required = Boolean(sectionField.required);
               field = {
