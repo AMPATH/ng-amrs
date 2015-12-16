@@ -136,6 +136,7 @@
 
         scope.selectedMonth = function (value) {
             if (value) {
+               console.log('Selected Date',value)
                 _this.selectedMonth = value;
                 _this.ClinicDashboardService.setSelectedMonth(new _this.moment(value));
                 _this.ClinicDashboardService.setMonth(new _this.moment(value));
@@ -152,8 +153,8 @@
         var start = scope.selected.clone();
         scope.month_title = _this.selectedMonth;
         scope.month.date();
-        start.date();
-        _removeTime(start.day());
+        start.date(1);
+        _removeTime(start.day(0));
         _buildMonth(scope, start, scope.month);
         scope.select = function (day) {
             this.ClinicDashboardService.setStartDate(day);
@@ -184,7 +185,7 @@
             scope.month_title = _this.selectedMonth;
             scope.month = scope.selected.clone();
             var start = scope.selected.clone();
-            start.date();
+            start.date(1);
             _removeTime(start.day(0));
 
             _buildMonth(scope, start, scope.month);
