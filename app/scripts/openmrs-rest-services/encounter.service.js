@@ -19,7 +19,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
     }
 
     return service;
-    
+
     function voidEncounter(uuid, successCallback, errorCallback) {
         Restangular.one('encounter', uuid).remove().then(function(response) {
             if(typeof successCallback === 'function') {
@@ -31,7 +31,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
             }
         });
     }
-    
+
     function getEncounterByUuid(params, successCallback, errorCallback) {
       var objParams = {};
       var _customDefaultRep = 'custom:(uuid,encounterDatetime,' +
@@ -139,7 +139,6 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
         ' results');
         return;
       }
-
       successCallback(data);
     }
   }
