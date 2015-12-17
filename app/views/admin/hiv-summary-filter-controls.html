@@ -18,11 +18,11 @@
           <div class="input-group">
             <div class="input-group-addon">
             <span class="text-danger">
-              <img ng-show="isBusy" src="images/ajax-loader.gif" />
+              <img ng-show="indicatorTags.length===0" src="images/ajax-loader.gif" />
             </span>
-              <span ng-hide="isBusy" class="glyphicon glyphicon-tags"></span>
+              <span ng-show="indicatorTags.length>0" class="glyphicon glyphicon-tags"></span>
             </div>
-            <ui-select multiple ng-model="selectedIndicatorTags.indicatorTags" theme="bootstrap"  ng-disabled="isBusy"
+            <ui-select multiple ng-model="selectedIndicatorTags.indicatorTags" theme="bootstrap"
                        on-select="onSelectedIndicatorTagChanged($select.search)"
                        on-remove="onSelectedIndicatorTagChanged($select.search)">
               <ui-select-match placeholder="Select Report Indicator or type to search">{{$item.name}}</ui-select-match>
@@ -31,7 +31,7 @@
                 <small ng-bind-html="indicatorTag.label | highlight: $select.search" class="border-success"></small>
               </ui-select-choices>
             </ui-select>
-            <div class="input-group-addon" ng-disabled="selectedIndicatorTags.indicatorTags.length===0"
+            <div class="input-group-addon" ng-hide="indicatorTags.length===0"
                  ng-click="selectAllTags()" style="cursor: pointer;" >
               <span ng-show="selectedIndicatorTags.selectedAll" class="glyphicon glyphicon-trash"></span>
               <span ng-hide="selectedIndicatorTags.selectedAll" class="glyphicon glyphicon-pushpin"></span>
