@@ -465,7 +465,7 @@
               ]
             }
           ]
-        }       
+        }
       ]
     },
     {
@@ -2862,31 +2862,6 @@
           ]
         },
         {
-          "label": "Cryptococcal Secondary Prophylaxis Plan",
-          "questions": [
-            {
-              "concept": "a89c2790-1350-11df-a1f1-0026b9348838",
-              "label": "Crypto Prophylaxis Plan:",
-              "answers": [
-                {
-                  "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "NONE"
-                },
-                {
-                  "concept": "a89b7908-1350-11df-a1f1-0026b9348838",
-                  "label": "Continue Fluconazole"
-                },
-                {
-                  "concept": "a89b77aa-1350-11df-a1f1-0026b9348838",
-                  "label": "Start Fluconazole"
-                }
-              ],
-              "type": "select",
-              "validators": []
-            }
-          ]
-        },
-        {
           "label": "TB Treatment plan",
           "questions": [
             {
@@ -3295,6 +3270,31 @@
                   ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "label": "Cryptococcal Secondary Prophylaxis Plan",
+          "questions": [
+            {
+              "concept": "a89c2790-1350-11df-a1f1-0026b9348838",
+              "label": "Crypto Prophylaxis Plan:",
+              "answers": [
+                {
+                  "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                  "label": "NONE"
+                },
+                {
+                  "concept": "a89b7908-1350-11df-a1f1-0026b9348838",
+                  "label": "Continue Fluconazole"
+                },
+                {
+                  "concept": "a89b77aa-1350-11df-a1f1-0026b9348838",
+                  "label": "Start Fluconazole"
+                }
+              ],
+              "type": "select",
+              "validators": []
             }
           ]
         },
