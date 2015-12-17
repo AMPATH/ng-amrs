@@ -112,6 +112,71 @@
       "label": "Medical History",
       "sections": [
         {
+          "label": "Social History",
+          "questions": [
+            {
+              "concept": "a899a9f2-1350-11df-a1f1-0026b9348838",
+              "label": "Civil Status:",
+              "answers": [
+                {
+                  "concept": "a899af10-1350-11df-a1f1-0026b9348838",
+                  "label": "Cohabitating"
+                },
+                {
+                  "concept": "a899af10-1350-11df-a1f1-0026b9348838",
+                  "label": "Divorced"
+                },
+                {
+                  "concept": "a8aa76b0-1350-11df-a1f1-0026b9348838",
+                  "label": "Married monogamous"
+                },
+                {
+                  "concept": "a8b03712-1350-11df-a1f1-0026b9348838",
+                  "label": "Married polygamous"
+                },
+                {
+                  "concept": "a899aba0-1350-11df-a1f1-0026b9348838",
+                  "label": "Separated"
+                },
+                {
+                  "concept": "a899ac7c-1350-11df-a1f1-0026b9348838",
+                  "label": "Single"
+                },
+                {
+                  "concept": "a899ae34-1350-11df-a1f1-0026b9348838",
+                  "label": "Widowed"
+                }
+              ],
+              "type": "select",
+              "validators": []
+            },
+            {
+              "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
+              "label": "Discordant couple:",
+              "answers": [
+                {
+                  "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                  "label": "Yes"
+                },
+                {
+                  "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                  "label": "NO"
+                },
+                {
+                  "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                  "label": "Unknown"
+                },
+                {
+                  "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
+                  "label": "N/A"
+                }
+              ],
+              "type": "select",
+              "validators": []
+            }
+          ]
+        },
+        {
           "label": "PWPs",
           "questions": [
             {
@@ -285,73 +350,6 @@
                   "disableWhenExpression": "sex !== 'F'"
                 }
               ]
-
-            }
-          ]
-
-        },
-        {
-          "label": "Social History",
-          "questions": [
-            {
-              "concept": "a899a9f2-1350-11df-a1f1-0026b9348838",
-              "label": "Civil Status:",
-              "answers": [
-                {
-                  "concept": "a899af10-1350-11df-a1f1-0026b9348838",
-                  "label": "Cohabitating"
-                },
-                {
-                  "concept": "a899af10-1350-11df-a1f1-0026b9348838",
-                  "label": "Divorced"
-                },
-                {
-                  "concept": "a8aa76b0-1350-11df-a1f1-0026b9348838",
-                  "label": "Married monogamous"
-                },
-                {
-                  "concept": "a8b03712-1350-11df-a1f1-0026b9348838",
-                  "label": "Married polygamous"
-                },
-                {
-                  "concept": "a899aba0-1350-11df-a1f1-0026b9348838",
-                  "label": "Separated"
-                },
-                {
-                  "concept": "a899ac7c-1350-11df-a1f1-0026b9348838",
-                  "label": "Single"
-                },
-                {
-                  "concept": "a899ae34-1350-11df-a1f1-0026b9348838",
-                  "label": "Widowed"
-                }
-              ],
-              "type": "select",
-              "validators": []
-            },
-            {
-              "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
-              "label": "Discordant couple:",
-              "answers": [
-                {
-                  "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
-                  "label": "Yes"
-                },
-                {
-                  "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                  "label": "NO"
-                },
-                {
-                  "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
-                  "label": "Unknown"
-                },
-                {
-                  "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
-                  "label": "N/A"
-                }
-              ],
-              "type": "select",
-              "validators": []
             },
             {
               "concept": "774961c6-232f-4332-8a9f-f5c55ebe86d0",
@@ -465,71 +463,6 @@
                   "disableWhenExpression": "onFamilyPlanning !== 'a899b42e-1350-11df-a1f1-0026b9348838'"
                 }
               ]
-            }
-          ]
-        },
-        {
-          "label": "Social History",
-          "questions": [
-            {
-              "concept": "a899a9f2-1350-11df-a1f1-0026b9348838",
-              "label": "Civil Status:",
-              "answers": [
-                {
-                  "concept": "a899af10-1350-11df-a1f1-0026b9348838",
-                  "label": "Cohabitating"
-                },
-                {
-                  "concept": "a899af10-1350-11df-a1f1-0026b9348838",
-                  "label": "Divorced"
-                },
-                {
-                  "concept": "a8aa76b0-1350-11df-a1f1-0026b9348838",
-                  "label": "Married monogamous"
-                },
-                {
-                  "concept": "a8b03712-1350-11df-a1f1-0026b9348838",
-                  "label": "Married polygamous"
-                },
-                {
-                  "concept": "a899aba0-1350-11df-a1f1-0026b9348838",
-                  "label": "Separated"
-                },
-                {
-                  "concept": "a899ac7c-1350-11df-a1f1-0026b9348838",
-                  "label": "Single"
-                },
-                {
-                  "concept": "a899ae34-1350-11df-a1f1-0026b9348838",
-                  "label": "Widowed"
-                }
-              ],
-              "type": "select",
-              "validators": []
-            },
-            {
-              "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
-              "label": "Discordant couple:",
-              "answers": [
-                {
-                  "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
-                  "label": "Yes"
-                },
-                {
-                  "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                  "label": "NO"
-                },
-                {
-                  "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
-                  "label": "Unknown"
-                },
-                {
-                  "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
-                  "label": "N/A"
-                }
-              ],
-              "type": "select",
-              "validators": []
             }
           ]
         }
@@ -814,500 +747,8 @@
       ]
     },
     {
-      "label": "TB History",
+      "label": "PCP & TB Prophylaxis History",
       "sections": [
-        {
-          "label": "Tuberculosis History",
-          "questions": [
-            {
-              "concept": "a8afcc82-1350-11df-a1f1-0026b9348838",
-              "id": "onTbTreatment",
-              "label": "Is patient on TB treatment?",
-              "answers": [
-                {
-                  "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
-                  "label": "Yes"
-                },
-                {
-                  "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                  "label": "NO"
-                }
-              ],
-              "type": "select",
-              "validators": [
-                {
-                  "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(myValue) && myValue === 'a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(onTbProphylaxis) && onTbProphylaxis === 'a896cc00-1350-11df-a1f1-0026b9348838'",
-                  "message": "Patient cannot be on TB Prophylaxis and TB Treatment. Please choose one or the other."
-                }
-              ]
-            },
-            {
-              "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
-              "type": "group",
-              "questions": [
-                {
-                  "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
-                  "label": "Start Date of TB treatment:",
-                  "id": "startDateOfTbTreatment",
-                  "type": "date",
-                  "validators": [
-                    {
-                      "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(onTbTreatment) && arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], onTbTreatment) && isEmpty(myValue)",
-                      "message": "You indicated patient on tb treatment, indicate start date."
-                    },
-                    {
-                      "type": "js_expression",
-                      "failsWhenExpression": "(isEmpty(onTbTreatment) || !arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], onTbTreatment)) && !isEmpty(myValue)",
-                      "message": "You indicated patient is not on tb treatment, therefore start date should not be indicated."
-                    }
-                  ],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
-                    }
-                  ],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",
-              "type": "group",
-              "questions": [
-                {
-                  "concept": "16db21cd-10cb-4c31-bb5a-b7619bfbea66",
-                  "label": "Site of TB meds pick-up",
-                  "id": "siteOfTbMedsPickup",
-                  "type": "select",
-                  "answers": [
-                    {
-                      "concept": "a89c2f42-1350-11df-a1f1-0026b9348838",
-                      "label": "This Ampath site"
-                    },
-                    {
-                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                      "label": "Other"
-                    }
-                  ],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
-                    }
-                  ]
-                },
-                {
-                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
-                  "label": "Other Site (Specify)",
-                  "id": "siteOfTbMedsOther",
-                  "type": "text",
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
-              "type": "group_repeating",
-              "label": "Current TB Regimen",
-              "questions": [
-                {
-                  "concept": "a899e444-1350-11df-a1f1-0026b9348838",
-                  "label": "Current TB Regimen",
-                  "type": "select",
-                  "id": "tb_current",
-                  "validators": [],
-                  "answers": [
-                    {
-                      "concept": "a899f51a-1350-11df-a1f1-0026b9348838",
-                      "label": "RHZE"
-                    },
-                    {
-                      "concept": "a897d1a4-1350-11df-a1f1-0026b9348838",
-                      "label": "RHZ"
-                    },
-                    {
-                      "concept": "a8a382ba-1350-11df-a1f1-0026b9348838",
-                      "label": "RHE"
-                    },
-                    {
-                      "concept": "a89b1ca6-1350-11df-a1f1-0026b9348838",
-                      "label": "RH"
-                    },
-                    {
-                      "concept": "a899e19c-1350-11df-a1f1-0026b9348838",
-                      "label": "EH"
-                    },
-                    {
-                      "concept": "a8971c64-1350-11df-a1f1-0026b9348838",
-                      "label": "Ethambutol"
-                    },
-                    {
-                      "concept": "a8a3243c-1350-11df-a1f1-0026b9348838",
-                      "label": "MDR drugs"
-                    },
-                    {
-                      "concept": "a896cc00-1350-11df-a1f1-0026b9348838",
-                      "label": "INH"
-                    },
-                    {
-                      "concept": "a8ac5f2a-1350-11df-a1f1-0026b9348838",
-                      "label": "Pyrazinamide"
-                    },
-                    {
-                      "concept": "a8952e4a-1350-11df-a1f1-0026b9348838",
-                      "label": "Streptomycin"
-                    },
-                    {
-                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                      "label": "Other"
-                    },
-                    {
-                      "concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4",
-                      "label": "Rifabutin"
-                    }
-                  ],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
-                    }
-                  ]
-                },
-                {
-                  "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
-                  "label": "tabs/day",
-                  "max": "30",
-                  "min": "0",
-                  "type": "number",
-                  "hide": [
-                    {
-                      "field": "tb_current",
-                      "value": [
-                        "a899f51a-1350-11df-a1f1-0026b9348838",
-                        "a897d1a4-1350-11df-a1f1-0026b9348838",
-                        "a8a382ba-1350-11df-a1f1-0026b9348838"
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
-                  "label": "mg",
-                  "max": "1000",
-                  "min": "0",
-                  "type": "number",
-                  "hide": [
-                    {
-                      "field": "tb_current",
-                      "value": [
-                        "a899e19c-1350-11df-a1f1-0026b9348838",
-                        "a8ac5f2a-1350-11df-a1f1-0026b9348838",
-                        "a8952e4a-1350-11df-a1f1-0026b9348838"
-                      ]
-
-                    }
-                  ]
-                },
-                {
-                  "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
-                  "label": "mg/day",
-                  "max": "2000",
-                  "min": "0",
-                  "type": "number",
-                  "hide": [
-                    {
-                      "field": "tb_current",
-                      "value": [
-                        "a896cc00-1350-11df-a1f1-0026b9348838",
-                        "a8971c64-1350-11df-a1f1-0026b9348838"
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "concept": "a8a0630a-1350-11df-a1f1-0026b9348838",
-                  "label": "tabs",
-                  "max": "180",
-                  "min": "0",
-                  "type": "number",
-                  "hide": [
-                    {
-                      "field": "tb_current",
-                      "value": [
-                        "b8aa06ca-93c6-40ea-b144-c74f841926f4"
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "concept": "2a4b87dd-977d-4ce8-a321-1f13df4a31b2",
-              "type": "group",
-              "questions": [
-                {
-                  "concept": "479decbd-e964-41c3-9576-98b39089ebd3",
-                  "label": "Patient adherence to TB medications:",
-                  "id": "tb_adherence",
-                  "answers": [
-                    {
-                      "concept": "a8b0f882-1350-11df-a1f1-0026b9348838",
-                      "label": "Good"
-                    },
-                    {
-                      "concept": "a73d20b3-d721-4763-a362-14a0c41a6b5e",
-                      "label": "Fair"
-                    },
-                    {
-                      "concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b",
-                      "label": "Poor"
-                    }
-                  ],
-                  "type": "select",
-                  "validators": [
-                    {
-                      "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(onTbTreatment) && onTbTreatment === 'a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
-                      "message": "Patient on TB Treament. Please provide adherence history."
-                    }
-                  ],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
-                    }
-                  ]
-                },
-                {
-                  "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
-                  "label": "Adherence (TB Treatment) Reasons for Poor/Fair:",
-                  "id": "adherenceTbTreatment",
-                  "answers": [
-                    {
-                      "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
-                      "label": "Alcohol"
-                    },
-                    {
-                      "concept": "a8935fde-1350-11df-a1f1-0026b9348838",
-                      "label": "Depression"
-                    },
-                    {
-                      "concept": "a89eac04-1350-11df-a1f1-0026b9348838",
-                      "label": "Felt well"
-                    },
-                    {
-                      "concept": "a89eacc2-1350-11df-a1f1-0026b9348838",
-                      "label": "Forgot"
-                    },
-                    {
-                      "concept": "7211031b-0685-44bc-a5e9-5a018d0173ea",
-                      "label": "Gave away"
-                    },
-                    {
-                      "concept": "a8af4cee-1350-11df-a1f1-0026b9348838",
-                      "label": "Lost/Ran out of pills"
-                    },
-                    {
-                      "concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46",
-                      "label": "Pill Burden"
-                    },
-                    {
-                      "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
-                      "label": "Side Effects"
-                    },
-                    {
-                      "concept": "a89eba46-1350-11df-a1f1-0026b9348838",
-                      "label": "Stigma"
-                    },
-                    {
-                      "concept": "c0c9eab3-46f6-453c-b29d-dc1c242317c5",
-                      "label": "Stock out"
-                    },
-                    {
-                      "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
-                      "label": "Too ill"
-                    },
-                    {
-                      "concept": "a897fdaa-1350-11df-a1f1-0026b9348838",
-                      "label": "Travel Problems"
-                    },
-                    {
-                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                      "label": "Other"
-
-                    }
-                  ],
-                  "type": "multiCheckbox",
-                  "validators": [],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], tb_adherence)"
-                    }
-                  ]
-                },
-                {
-                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
-                  "label": "Adherence (TB Treatment): Other (specify):",
-                  "type": "text",
-                  "id": "adherenceTbOther",
-                  "validators": [],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], tb_adherence)"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-
-        },
-        {
-          "concept": "2a4b87dd-977d-4ce8-a321-1f13df4a31b2",
-          "type": "group",
-          "questions": [
-            {
-              "concept": "479decbd-e964-41c3-9576-98b39089ebd3",
-              "label": "Patient adherence to TB medications:",
-              "id": "tb_adherence",
-              "answers": [
-                {
-                  "concept": "a8b0f882-1350-11df-a1f1-0026b9348838",
-                  "label": "Good"
-                },
-                {
-                  "concept": "a73d20b3-d721-4763-a362-14a0c41a6b5e",
-                  "label": "Fair"
-                },
-                {
-                  "concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b",
-                  "label": "Poor"
-                }
-              ],
-              "type": "select",
-              "validators": [
-                {
-                  "type": "js_expression",
-                  "failsWhenExpression": "!isEmpty(onTbTreatment) && onTbTreatment === 'a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
-                  "message": "Patient on TB Treament. Please provide adherence history."
-                }
-              ],
-              "disableExpression": [
-                {
-                  "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
-                }
-              ]
-            },
-            {
-              "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
-              "label": "Adherence (TB Treatment) Reasons for Poor/Fair:",
-              "id": "adherenceTbTreatment",
-              "answers": [
-                {
-                  "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
-                  "label": "Alcohol"
-                },
-                {
-                  "concept": "a8935fde-1350-11df-a1f1-0026b9348838",
-                  "label": "Depression"
-                },
-                {
-                  "concept": "a89eac04-1350-11df-a1f1-0026b9348838",
-                  "label": "Felt well"
-                },
-                {
-                  "concept": "a89eacc2-1350-11df-a1f1-0026b9348838",
-                  "label": "Forgot"
-                },
-                {
-                  "concept": "7211031b-0685-44bc-a5e9-5a018d0173ea",
-                  "label": "Gave away"
-                },
-                {
-                  "concept": "a8af4cee-1350-11df-a1f1-0026b9348838",
-                  "label": "Lost/Ran out of pills"
-                },
-                {
-                  "concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46",
-                  "label": "Pill Burden"
-                },
-                {
-                  "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
-                  "label": "Side Effects"
-                },
-                {
-                  "concept": "a89eba46-1350-11df-a1f1-0026b9348838",
-                  "label": "Stigma"
-                },
-                {
-                  "concept": "c0c9eab3-46f6-453c-b29d-dc1c242317c5",
-                  "label": "Stock out"
-                },
-                {
-                  "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
-                  "label": "Too ill"
-                },
-                {
-                  "concept": "a897fdaa-1350-11df-a1f1-0026b9348838",
-                  "label": "Travel Problems"
-                },
-                {
-                  "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                  "label": "Other"
-                }
-              ],
-              "type": "multiCheckbox",
-              "validators": [],
-              "disableExpression": [
-                {
-                  "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], tb_adherence)"
-                }
-              ]
-            },
-            {
-              "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
-              "label": "Adherence (TB Treatment): Other (specify):",
-              "type": "text",
-              "id": "adherenceTbOther",
-              "validators": [],
-              "disableExpression": [
-                {
-                  "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], tb_adherence)"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "label": "Other Medications History",
-      "sections": [
-        {
-          "label": "Other Medications",
-          "questions": [
-            {
-              "concept": "a8a072c8-1350-11df-a1f1-0026b9348838",
-              "type": "group_repeating",
-              "label": "Please add any other medications the patient is taking:",
-              "questions": [
-                {
-                  "concept": "a8a060c6-1350-11df-a1f1-0026b9348838",
-                  "label": "Other Drugs:",
-                  "type": "drug",
-                  "validators": []
-                }
-              ]
-            }
-          ]
-        },
         {
           "label": "PCP Prophylaxis",
           "questions": [
@@ -1588,7 +1029,362 @@
               ]
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "label": "TB History",
+      "sections": [
+        {
+          "label": "Tuberculosis History",
+          "questions": [
+            {
+              "concept": "a8afcc82-1350-11df-a1f1-0026b9348838",
+              "id": "onTbTreatment",
+              "label": "Is patient on TB treatment?",
+              "answers": [
+                {
+                  "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                  "label": "Yes"
+                },
+                {
+                  "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                  "label": "NO"
+                }
+              ],
+              "type": "select",
+              "validators": [
+                {
+                  "type": "js_expression",
+                  "failsWhenExpression": "!isEmpty(myValue) && myValue === 'a899b35c-1350-11df-a1f1-0026b9348838' && !isEmpty(onTbProphylaxis) && onTbProphylaxis === 'a896cc00-1350-11df-a1f1-0026b9348838'",
+                  "message": "Patient cannot be on TB Prophylaxis and TB Treatment. Please choose one or the other."
+                }
+              ]
+            },
+            {
+              "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
+                  "label": "Start Date of TB treatment:",
+                  "id": "startDateOfTbTreatment",
+                  "type": "date",
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "!isEmpty(onTbTreatment) && arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], onTbTreatment) && isEmpty(myValue)",
+                      "message": "You indicated patient on tb treatment, indicate start date."
+                    },
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(isEmpty(onTbTreatment) || !arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], onTbTreatment)) && !isEmpty(myValue)",
+                      "message": "You indicated patient is not on tb treatment, therefore start date should not be indicated."
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "16db21cd-10cb-4c31-bb5a-b7619bfbea66",
+                  "label": "Site of TB meds pick-up",
+                  "id": "siteOfTbMedsPickup",
+                  "type": "select",
+                  "answers": [
+                    {
+                      "concept": "a89c2f42-1350-11df-a1f1-0026b9348838",
+                      "label": "This Ampath site"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label": "Other Site (Specify)",
+                  "id": "siteOfTbMedsOther",
+                  "type": "text",
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
+              "type": "group_repeating",
+              "label": "Current TB Regimen",
+              "questions": [
+                {
+                  "concept": "a899e444-1350-11df-a1f1-0026b9348838",
+                  "label": "Current TB Regimen",
+                  "type": "select",
+                  "id": "tb_current",
+                  "validators": [],
+                  "answers": [
+                    {
+                      "concept": "a899f51a-1350-11df-a1f1-0026b9348838",
+                      "label": "RHZE"
+                    },
+                    {
+                      "concept": "a897d1a4-1350-11df-a1f1-0026b9348838",
+                      "label": "RHZ"
+                    },
+                    {
+                      "concept": "a8a382ba-1350-11df-a1f1-0026b9348838",
+                      "label": "RHE"
+                    },
+                    {
+                      "concept": "a89b1ca6-1350-11df-a1f1-0026b9348838",
+                      "label": "RH"
+                    },
+                    {
+                      "concept": "a899e19c-1350-11df-a1f1-0026b9348838",
+                      "label": "EH"
+                    },
+                    {
+                      "concept": "a8971c64-1350-11df-a1f1-0026b9348838",
+                      "label": "Ethambutol"
+                    },
+                    {
+                      "concept": "a8a3243c-1350-11df-a1f1-0026b9348838",
+                      "label": "MDR drugs"
+                    },
+                    {
+                      "concept": "a896cc00-1350-11df-a1f1-0026b9348838",
+                      "label": "INH"
+                    },
+                    {
+                      "concept": "a8ac5f2a-1350-11df-a1f1-0026b9348838",
+                      "label": "Pyrazinamide"
+                    },
+                    {
+                      "concept": "a8952e4a-1350-11df-a1f1-0026b9348838",
+                      "label": "Streptomycin"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    },
+                    {
+                      "concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4",
+                      "label": "Rifabutin"
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
+                  "label": "tabs/day",
+                  "max": "30",
+                  "min": "0",
+                  "type": "number",
+                  "hide": [
+                    {
+                      "field": "tb_current",
+                      "value": [
+                        "a899f51a-1350-11df-a1f1-0026b9348838",
+                        "a897d1a4-1350-11df-a1f1-0026b9348838",
+                        "a8a382ba-1350-11df-a1f1-0026b9348838"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
+                  "label": "mg",
+                  "max": "1000",
+                  "min": "0",
+                  "type": "number",
+                  "hide": [
+                    {
+                      "field": "tb_current",
+                      "value": [
+                        "a899e19c-1350-11df-a1f1-0026b9348838",
+                        "a8ac5f2a-1350-11df-a1f1-0026b9348838",
+                        "a8952e4a-1350-11df-a1f1-0026b9348838"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
+                  "label": "mg/day",
+                  "max": "2000",
+                  "min": "0",
+                  "type": "number",
+                  "hide": [
+                    {
+                      "field": "tb_current",
+                      "value": [
+                        "a896cc00-1350-11df-a1f1-0026b9348838",
+                        "a8971c64-1350-11df-a1f1-0026b9348838"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8a0630a-1350-11df-a1f1-0026b9348838",
+                  "label": "tabs",
+                  "max": "180",
+                  "min": "0",
+                  "type": "number",
+                  "hide": [
+                    {
+                      "field": "tb_current",
+                      "value": [
+                        "b8aa06ca-93c6-40ea-b144-c74f841926f4"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "concept": "2a4b87dd-977d-4ce8-a321-1f13df4a31b2",
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "479decbd-e964-41c3-9576-98b39089ebd3",
+                  "label": "Patient adherence to TB medications:",
+                  "id": "tb_adherence",
+                  "answers": [
+                    {
+                      "concept": "a8b0f882-1350-11df-a1f1-0026b9348838",
+                      "label": "Good"
+                    },
+                    {
+                      "concept": "a73d20b3-d721-4763-a362-14a0c41a6b5e",
+                      "label": "Fair"
+                    },
+                    {
+                      "concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b",
+                      "label": "Poor"
+                    }
+                  ],
+                  "type": "select",
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "!isEmpty(onTbTreatment) && onTbTreatment === 'a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
+                      "message": "Patient on TB Treament. Please provide adherence history."
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
+                  "label": "Adherence (TB Treatment) Reasons for Poor/Fair:",
+                  "id": "adherenceTbTreatment",
+                  "answers": [
+                    {
+                      "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
+                      "label": "Alcohol"
+                    },
+                    {
+                      "concept": "a8935fde-1350-11df-a1f1-0026b9348838",
+                      "label": "Depression"
+                    },
+                    {
+                      "concept": "a89eac04-1350-11df-a1f1-0026b9348838",
+                      "label": "Felt well"
+                    },
+                    {
+                      "concept": "a89eacc2-1350-11df-a1f1-0026b9348838",
+                      "label": "Forgot"
+                    },
+                    {
+                      "concept": "7211031b-0685-44bc-a5e9-5a018d0173ea",
+                      "label": "Gave away"
+                    },
+                    {
+                      "concept": "a8af4cee-1350-11df-a1f1-0026b9348838",
+                      "label": "Lost/Ran out of pills"
+                    },
+                    {
+                      "concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46",
+                      "label": "Pill Burden"
+                    },
+                    {
+                      "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
+                      "label": "Side Effects"
+                    },
+                    {
+                      "concept": "a89eba46-1350-11df-a1f1-0026b9348838",
+                      "label": "Stigma"
+                    },
+                    {
+                      "concept": "c0c9eab3-46f6-453c-b29d-dc1c242317c5",
+                      "label": "Stock out"
+                    },
+                    {
+                      "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
+                      "label": "Too ill"
+                    },
+                    {
+                      "concept": "a897fdaa-1350-11df-a1f1-0026b9348838",
+                      "label": "Travel Problems"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    }
+                  ],
+                  "type": "multiCheckbox",
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], tb_adherence)"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label": "Adherence (TB Treatment): Other (specify):",
+                  "type": "text",
+                  "id": "adherenceTbOther",
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], tb_adherence)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Other Medications History",
+      "sections": [
         {
           "label": "Cryptococcal Secondary Prevention",
           "questions": [
@@ -1607,6 +1403,24 @@
               ],
               "type": "select",
               "validators": []
+            }
+          ]
+        },
+        {
+          "label": "Other Medications",
+          "questions": [
+            {
+              "concept": "a8a072c8-1350-11df-a1f1-0026b9348838",
+              "type": "group_repeating",
+              "label": "Please add any other medications the patient is taking:",
+              "questions": [
+                {
+                  "concept": "a8a060c6-1350-11df-a1f1-0026b9348838",
+                  "label": "Other Drugs:",
+                  "type": "drug",
+                  "validators": []
+                }
+              ]
             }
           ]
         }
@@ -3053,31 +2867,6 @@
           ]
         },
         {
-          "label": "Cryptococcal Secondary Prophylaxis Plan",
-          "questions": [
-            {
-              "concept": "a89c2790-1350-11df-a1f1-0026b9348838",
-              "label": "Crypto Prophylaxis Plan:",
-              "answers": [
-                {
-                  "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "NONE"
-                },
-                {
-                  "concept": "a89b7908-1350-11df-a1f1-0026b9348838",
-                  "label": "Continue Fluconazole"
-                },
-                {
-                  "concept": "a89b77aa-1350-11df-a1f1-0026b9348838",
-                  "label": "Start Fluconazole"
-                }
-              ],
-              "type": "select",
-              "validators": []
-            }
-          ]
-        },
-        {
           "label": "TB Treatment plan",
           "questions": [
             {
@@ -3486,6 +3275,31 @@
                   ]
                 }
               ]
+            }
+          ]
+        },
+        {
+          "label": "Cryptococcal Secondary Prophylaxis Plan",
+          "questions": [
+            {
+              "concept": "a89c2790-1350-11df-a1f1-0026b9348838",
+              "label": "Crypto Prophylaxis Plan:",
+              "answers": [
+                {
+                  "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                  "label": "NONE"
+                },
+                {
+                  "concept": "a89b7908-1350-11df-a1f1-0026b9348838",
+                  "label": "Continue Fluconazole"
+                },
+                {
+                  "concept": "a89b77aa-1350-11df-a1f1-0026b9348838",
+                  "label": "Start Fluconazole"
+                }
+              ],
+              "type": "select",
+              "validators": []
             }
           ]
         },
