@@ -747,6 +747,292 @@
       ]
     },
     {
+      "label": "PCP & TB Prophylaxis History",
+      "sections": [
+        {
+          "label": "PCP Prophylaxis",
+          "questions": [
+            {
+              "concept": "a899e282-1350-11df-a1f1-0026b9348838",
+              "label": "PCP Prophylaxis:",
+              "id": "pcpProphylaxisCurrent",
+              "required": "true",
+              "answers": [
+                {
+                  "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                  "label": "NONE"
+                },
+                {
+                  "concept": "a8989396-1350-11df-a1f1-0026b9348838",
+                  "label": "Septrin"
+                },
+                {
+                  "concept": "a890c9e0-1350-11df-a1f1-0026b9348838",
+                  "label": "Dapsone 100mg"
+                }
+              ],
+              "type": "select",
+              "validators": []
+            },
+            {
+              "concept": "275eee16-c358-4f3a-ac16-e8f24659df87",
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "115c744a-cf54-469f-bd5f-820352ffe9be",
+                  "label": "Patient's adherence on PCP Prophylaxis:",
+                  "id": "pcpProphylaxisAdherence",
+                  "answers": [
+                    {
+                      "concept": "a8b0f882-1350-11df-a1f1-0026b9348838",
+                      "label": "Good"
+                    },
+                    {
+                      "concept": "a73d20b3-d721-4763-a362-14a0c41a6b5e",
+                      "label": "Fair"
+                    },
+                    {
+                      "concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b",
+                      "label": "Poor"
+                    }
+                  ],
+                  "type": "select",
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "!isEmpty(pcpProphylaxisCurrent) && arrayContains(['a8989396-1350-11df-a1f1-0026b9348838', 'a890c9e0-1350-11df-a1f1-0026b9348838'], pcpProphylaxisCurrent) && isEmpty(myValue)",
+                      "message": "Patient on PCP Prophylaxis. Please provide adherence history"
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838'"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
+                  "label": "Adherence (PCP) Reasons for Poor/Fair:",
+                  "id": "pcpAdherence",
+                  "answers": [
+                    {
+                      "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
+                      "label": "Alcohol"
+                    },
+                    {
+                      "concept": "a8935fde-1350-11df-a1f1-0026b9348838",
+                      "label": "Depression"
+                    },
+                    {
+                      "concept": "a89eac04-1350-11df-a1f1-0026b9348838",
+                      "label": "Felt well"
+                    },
+                    {
+                      "concept": "a89eacc2-1350-11df-a1f1-0026b9348838",
+                      "label": "Forgot"
+                    },
+                    {
+                      "concept": "7211031b-0685-44bc-a5e9-5a018d0173ea",
+                      "label": "Gave away"
+                    },
+                    {
+                      "concept": "a8af4cee-1350-11df-a1f1-0026b9348838",
+                      "label": "Lost/Ran out of pills"
+                    },
+                    {
+                      "concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46",
+                      "label": "Pill Burden"
+                    },
+                    {
+                      "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
+                      "label": "Side Effects"
+                    },
+                    {
+                      "concept": "a89eba46-1350-11df-a1f1-0026b9348838",
+                      "label": "Stigma"
+                    },
+                    {
+                      "concept": "c0c9eab3-46f6-453c-b29d-dc1c242317c5",
+                      "label": "Stock out"
+                    },
+                    {
+                      "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
+                      "label": "Too ill"
+                    },
+                    {
+                      "concept": "a897fdaa-1350-11df-a1f1-0026b9348838",
+                      "label": "Travel Problems"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    }
+                  ],
+                  "type": "multiCheckbox",
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], pcpProphylaxisAdherence)"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label": "Adherence (PCP): Other (specify):",
+                  "type": "text",
+                  "id": "pcpOtherAdherence",
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], pcpProphylaxisAdherence)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "label": "TB Prophylaxis",
+          "questions": [
+            {
+              "concept": "a899e35e-1350-11df-a1f1-0026b9348838",
+              "label": "Is patient on TB Prophylaxis?",
+              "id": "onTbProphylaxis",
+              "answers": [
+                {
+                  "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                  "label": "NONE"
+                },
+                {
+                  "concept": "a896cc00-1350-11df-a1f1-0026b9348838",
+                  "label": "Isoniazid 300mg"
+                }
+              ],
+              "type": "select",
+              "validators": []
+            },
+            {
+              "concept": "3a69cfcf-f129-4702-a8dd-d061d2a16b9d",
+              "type": "group",
+              "questions": [
+                {
+                  "concept": "ebfdb93a-9292-4245-9a27-0faf49545720",
+                  "label": "Patient's adherence on TB prophylaxis:",
+                  "id": "q16c",
+                  "answers": [
+                    {
+                      "concept": "a8b0f882-1350-11df-a1f1-0026b9348838",
+                      "label": "Good"
+                    },
+                    {
+                      "concept": "a73d20b3-d721-4763-a362-14a0c41a6b5e",
+                      "label": "Fair"
+                    },
+                    {
+                      "concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b",
+                      "label": "Poor"
+                    }
+                  ],
+                  "type": "select",
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "!isEmpty(onTbProphylaxis) && arrayContains(['a896cc00-1350-11df-a1f1-0026b9348838'], onTbProphylaxis) && isEmpty(myValue)",
+                      "message": "Patient on TB Prophylaxis. Please provide adherence history."
+                    }
+                  ],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838'"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
+                  "label": "Adherence (TB Prophylaxis) Reasons for Poor/Fair:",
+                  "id": "tbProphylaxisAdherence",
+                  "answers": [
+                    {
+                      "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
+                      "label": "Alcohol"
+                    },
+                    {
+                      "concept": "a8935fde-1350-11df-a1f1-0026b9348838",
+                      "label": "Depression"
+                    },
+                    {
+                      "concept": "a89eac04-1350-11df-a1f1-0026b9348838",
+                      "label": "Felt well"
+                    },
+                    {
+                      "concept": "a89eacc2-1350-11df-a1f1-0026b9348838",
+                      "label": "Forgot"
+                    },
+                    {
+                      "concept": "7211031b-0685-44bc-a5e9-5a018d0173ea",
+                      "label": "Gave away"
+                    },
+                    {
+                      "concept": "a8af4cee-1350-11df-a1f1-0026b9348838",
+                      "label": "Lost/Ran out of pills"
+                    },
+                    {
+                      "concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46",
+                      "label": "Pill Burden"
+                    },
+                    {
+                      "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
+                      "label": "Side Effects"
+                    },
+                    {
+                      "concept": "a89eba46-1350-11df-a1f1-0026b9348838",
+                      "label": "Stigma"
+                    },
+                    {
+                      "concept": "c0c9eab3-46f6-453c-b29d-dc1c242317c5",
+                      "label": "Stock out"
+                    },
+                    {
+                      "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
+                      "label": "Too ill"
+                    },
+                    {
+                      "concept": "a897fdaa-1350-11df-a1f1-0026b9348838",
+                      "label": "Travel Problems"
+                    },
+                    {
+                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                      "label": "Other"
+                    }
+                  ],
+                  "type": "multiCheckbox",
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], q16c)"
+                    }
+                  ]
+                },
+                {
+                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                  "label": "Adherence (TB Prophylaxis): Other (specify):",
+                  "type": "text",
+                  "id": "tbProphylaxisOtherAdherence",
+                  "validators": [],
+                  "disableExpression": [
+                    {
+                      "disableWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], q16c)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "label": "TB History",
       "sections": [
         {
@@ -1100,305 +1386,6 @@
       "label": "Other Medications History",
       "sections": [
         {
-          "label": "Other Medications",
-          "questions": [
-            {
-              "concept": "a8a072c8-1350-11df-a1f1-0026b9348838",
-              "type": "group_repeating",
-              "label": "Please add any other medications the patient is taking:",
-              "questions": [
-                {
-                  "concept": "a8a060c6-1350-11df-a1f1-0026b9348838",
-                  "label": "Other Drugs:",
-                  "type": "drug",
-                  "validators": []
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "label": "PCP Prophylaxis",
-          "questions": [
-            {
-              "concept": "a899e282-1350-11df-a1f1-0026b9348838",
-              "label": "PCP Prophylaxis:",
-              "id": "pcpProphylaxisCurrent",
-              "required": "true",
-              "answers": [
-                {
-                  "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "NONE"
-                },
-                {
-                  "concept": "a8989396-1350-11df-a1f1-0026b9348838",
-                  "label": "Septrin"
-                },
-                {
-                  "concept": "a890c9e0-1350-11df-a1f1-0026b9348838",
-                  "label": "Dapsone 100mg"
-                }
-              ],
-              "type": "select",
-              "validators": []
-            },
-            {
-              "concept": "275eee16-c358-4f3a-ac16-e8f24659df87",
-              "type": "group",
-              "questions": [
-                {
-                  "concept": "115c744a-cf54-469f-bd5f-820352ffe9be",
-                  "label": "Patient's adherence on PCP Prophylaxis:",
-                  "id": "pcpProphylaxisAdherence",
-                  "answers": [
-                    {
-                      "concept": "a8b0f882-1350-11df-a1f1-0026b9348838",
-                      "label": "Good"
-                    },
-                    {
-                      "concept": "a73d20b3-d721-4763-a362-14a0c41a6b5e",
-                      "label": "Fair"
-                    },
-                    {
-                      "concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b",
-                      "label": "Poor"
-                    }
-                  ],
-                  "type": "select",
-                  "validators": [
-                    {
-                      "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(pcpProphylaxisCurrent) && arrayContains(['a8989396-1350-11df-a1f1-0026b9348838', 'a890c9e0-1350-11df-a1f1-0026b9348838'], pcpProphylaxisCurrent) && isEmpty(myValue)",
-                      "message": "Patient on PCP Prophylaxis. Please provide adherence history"
-                    }
-                  ],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838'"
-                    }
-                  ]
-                },
-                {
-                  "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
-                  "label": "Adherence (PCP) Reasons for Poor/Fair:",
-                  "id": "pcpAdherence",
-                  "answers": [
-                    {
-                      "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
-                      "label": "Alcohol"
-                    },
-                    {
-                      "concept": "a8935fde-1350-11df-a1f1-0026b9348838",
-                      "label": "Depression"
-                    },
-                    {
-                      "concept": "a89eac04-1350-11df-a1f1-0026b9348838",
-                      "label": "Felt well"
-                    },
-                    {
-                      "concept": "a89eacc2-1350-11df-a1f1-0026b9348838",
-                      "label": "Forgot"
-                    },
-                    {
-                      "concept": "7211031b-0685-44bc-a5e9-5a018d0173ea",
-                      "label": "Gave away"
-                    },
-                    {
-                      "concept": "a8af4cee-1350-11df-a1f1-0026b9348838",
-                      "label": "Lost/Ran out of pills"
-                    },
-                    {
-                      "concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46",
-                      "label": "Pill Burden"
-                    },
-                    {
-                      "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
-                      "label": "Side Effects"
-                    },
-                    {
-                      "concept": "a89eba46-1350-11df-a1f1-0026b9348838",
-                      "label": "Stigma"
-                    },
-                    {
-                      "concept": "c0c9eab3-46f6-453c-b29d-dc1c242317c5",
-                      "label": "Stock out"
-                    },
-                    {
-                      "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
-                      "label": "Too ill"
-                    },
-                    {
-                      "concept": "a897fdaa-1350-11df-a1f1-0026b9348838",
-                      "label": "Travel Problems"
-                    },
-                    {
-                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                      "label": "Other"
-                    }
-                  ],
-                  "type": "multiCheckbox",
-                  "validators": [],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], pcpProphylaxisAdherence)"
-                    }
-                  ]
-                },
-                {
-                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
-                  "label": "Adherence (PCP): Other (specify):",
-                  "type": "text",
-                  "id": "pcpOtherAdherence",
-                  "validators": [],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], pcpProphylaxisAdherence)"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "label": "TB Prophylaxis",
-          "questions": [
-            {
-              "concept": "a899e35e-1350-11df-a1f1-0026b9348838",
-              "label": "Is patient on TB Prophylaxis?",
-              "id": "onTbProphylaxis",
-              "answers": [
-                {
-                  "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                  "label": "NONE"
-                },
-                {
-                  "concept": "a896cc00-1350-11df-a1f1-0026b9348838",
-                  "label": "Isoniazid 300mg"
-                }
-              ],
-              "type": "select",
-              "validators": []
-            },
-            {
-              "concept": "3a69cfcf-f129-4702-a8dd-d061d2a16b9d",
-              "type": "group",
-              "questions": [
-                {
-                  "concept": "ebfdb93a-9292-4245-9a27-0faf49545720",
-                  "label": "Patient's adherence on TB prophylaxis:",
-                  "id": "q16c",
-                  "answers": [
-                    {
-                      "concept": "a8b0f882-1350-11df-a1f1-0026b9348838",
-                      "label": "Good"
-                    },
-                    {
-                      "concept": "a73d20b3-d721-4763-a362-14a0c41a6b5e",
-                      "label": "Fair"
-                    },
-                    {
-                      "concept": "fdaf8b47-ea14-4d28-80fa-e1da58a30e8b",
-                      "label": "Poor"
-                    }
-                  ],
-                  "type": "select",
-                  "validators": [
-                    {
-                      "type": "js_expression",
-                      "failsWhenExpression": "!isEmpty(onTbProphylaxis) && arrayContains(['a896cc00-1350-11df-a1f1-0026b9348838'], onTbProphylaxis) && isEmpty(myValue)",
-                      "message": "Patient on TB Prophylaxis. Please provide adherence history."
-                    }
-                  ],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838'"
-                    }
-                  ]
-                },
-                {
-                  "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
-                  "label": "Adherence (TB Prophylaxis) Reasons for Poor/Fair:",
-                  "id": "tbProphylaxisAdherence",
-                  "answers": [
-                    {
-                      "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
-                      "label": "Alcohol"
-                    },
-                    {
-                      "concept": "a8935fde-1350-11df-a1f1-0026b9348838",
-                      "label": "Depression"
-                    },
-                    {
-                      "concept": "a89eac04-1350-11df-a1f1-0026b9348838",
-                      "label": "Felt well"
-                    },
-                    {
-                      "concept": "a89eacc2-1350-11df-a1f1-0026b9348838",
-                      "label": "Forgot"
-                    },
-                    {
-                      "concept": "7211031b-0685-44bc-a5e9-5a018d0173ea",
-                      "label": "Gave away"
-                    },
-                    {
-                      "concept": "a8af4cee-1350-11df-a1f1-0026b9348838",
-                      "label": "Lost/Ran out of pills"
-                    },
-                    {
-                      "concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46",
-                      "label": "Pill Burden"
-                    },
-                    {
-                      "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
-                      "label": "Side Effects"
-                    },
-                    {
-                      "concept": "a89eba46-1350-11df-a1f1-0026b9348838",
-                      "label": "Stigma"
-                    },
-                    {
-                      "concept": "c0c9eab3-46f6-453c-b29d-dc1c242317c5",
-                      "label": "Stock out"
-                    },
-                    {
-                      "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
-                      "label": "Too ill"
-                    },
-                    {
-                      "concept": "a897fdaa-1350-11df-a1f1-0026b9348838",
-                      "label": "Travel Problems"
-                    },
-                    {
-                      "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                      "label": "Other"
-                    }
-                  ],
-                  "type": "multiCheckbox",
-                  "validators": [],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], q16c)"
-                    }
-                  ]
-                },
-                {
-                  "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
-                  "label": "Adherence (TB Prophylaxis): Other (specify):",
-                  "type": "text",
-                  "id": "tbProphylaxisOtherAdherence",
-                  "validators": [],
-                  "disableExpression": [
-                    {
-                      "disableWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], q16c)"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
           "label": "Cryptococcal Secondary Prevention",
           "questions": [
             {
@@ -1416,6 +1403,24 @@
               ],
               "type": "select",
               "validators": []
+            }
+          ]
+        },
+        {
+          "label": "Other Medications",
+          "questions": [
+            {
+              "concept": "a8a072c8-1350-11df-a1f1-0026b9348838",
+              "type": "group_repeating",
+              "label": "Please add any other medications the patient is taking:",
+              "questions": [
+                {
+                  "concept": "a8a060c6-1350-11df-a1f1-0026b9348838",
+                  "label": "Other Drugs:",
+                  "type": "drug",
+                  "validators": []
+                }
+              ]
             }
           ]
         }
