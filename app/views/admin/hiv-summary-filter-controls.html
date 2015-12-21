@@ -11,36 +11,35 @@
 	<hr style="margin:1px;" />
 	<div class="panel panel-default" style="padding: 4px; margin: 2px;"  collapse="isExpanded">
 		<div class="row" style="padding: 1px;">
-      <div class="form-group col-md-12" ng-show="canView('indicator')" >
-        <hr style="margin: 1px;" />
-        <div class="form-group" style="margin-top:1px; margin-bottom:1px;" >
-          <label for="start-date">Indicator</label>
-          <div class="input-group">
-            <div class="input-group-addon">
-            <span class="text-danger">
-              <img ng-show="indicatorTags.length===0" src="images/ajax-loader.gif" />
-            </span>
-              <span ng-show="indicatorTags.length>0" class="glyphicon glyphicon-tags"></span>
-            </div>
-            <ui-select multiple ng-model="selectedIndicatorTags.indicatorTags" theme="bootstrap"
-                       on-select="onSelectedIndicatorTagChanged($select.search)"
-                       on-remove="onSelectedIndicatorTagChanged($select.search)">
-              <ui-select-match placeholder="Select Report Indicator or type to search">{{$item.name}}</ui-select-match>
-              <ui-select-choices repeat="indicatorTag in indicatorTags | propsFilter: {name: $select.search, label: $select.search} ">
-                <div ng-bind-html="indicatorTag.name | highlight: $select.search"></div>
-                <small ng-bind-html="indicatorTag.label | highlight: $select.search" class="border-success"></small>
-              </ui-select-choices>
-            </ui-select>
-            <div class="input-group-addon" ng-hide="indicatorTags.length===0"
-                 ng-click="selectAllTags()" style="cursor: pointer;" >
-              <span ng-show="selectedIndicatorTags.selectedAll" class="glyphicon glyphicon-trash"></span>
-              <span ng-hide="selectedIndicatorTags.selectedAll" class="glyphicon glyphicon-pushpin"></span>
-              <span  ng-hide="selectedIndicatorTags.selectedAll">Select All</span>
-              <span  ng-hide="!selectedIndicatorTags.selectedAll">Select None</span>
-            </div>
+      <hr style="margin: 1px;" />
+      <div class="form-group col-md-12" ng-show="canView('indicator')"  >
+        <label for="indicator-control">Indicator</label>
+        <div class="input-group">
+          <div class="input-group-addon">
+          <span class="text-danger">
+            <img ng-show="indicatorTags.length===0" src="images/ajax-loader.gif" />
+          </span>
+            <span ng-show="indicatorTags.length>0" class="glyphicon glyphicon-tags"></span>
+          </div>
+          <ui-select id="indicator-control" multiple ng-model="selectedIndicatorTags.indicatorTags" theme="bootstrap"
+                     on-select="onSelectedIndicatorTagChanged($select.search)"
+                     on-remove="onSelectedIndicatorTagChanged($select.search)">
+            <ui-select-match placeholder="Select Report Indicator or type to search">{{$item.name}}</ui-select-match>
+            <ui-select-choices repeat="indicatorTag in indicatorTags | propsFilter: {name: $select.search, label: $select.search} ">
+              <div ng-bind-html="indicatorTag.name | highlight: $select.search"></div>
+              <small ng-bind-html="indicatorTag.label | highlight: $select.search" class="border-success"></small>
+            </ui-select-choices>
+          </ui-select>
+          <div class="input-group-addon"
+               ng-click="selectAllTags()" style="cursor: pointer;" >
+            <span ng-show="selectedIndicatorTags.selectedAll" class="glyphicon glyphicon-trash"></span>
+            <span ng-hide="selectedIndicatorTags.selectedAll" class="glyphicon glyphicon-pushpin"></span>
+            <span  ng-hide="selectedIndicatorTags.selectedAll">Select All</span>
+            <span  ng-hide="!selectedIndicatorTags.selectedAll">Select None</span>
           </div>
         </div>
       </div>
+
 			<div class="form-group col-md-6" ng-show="canView('start-date')">
 				<label for="start-date">Start Date</label>
 				<div class="input-group">

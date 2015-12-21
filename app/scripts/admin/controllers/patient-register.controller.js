@@ -268,7 +268,8 @@
       if (header.name === 'state') return;
       if (header.name === 'person_name')
         return '<a href="#/admin-dashboard/patient-register/patient/' + row.person_uuid + '" class="btn btn-link" >' +
-          '<span class="text-info text-capitalize">' + value + '</span><a/>';
+          '<span class="text-info text-capitalize">' + value + '  </span>' +
+          '<span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span><a/>';
       return valueToBooleanFormatter(value);
     }
 
