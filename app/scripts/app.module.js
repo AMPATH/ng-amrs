@@ -181,32 +181,32 @@
           url: '/patient/:uuid',
           templateUrl: 'views/admin/patient-register.html',
           data: { requireLogin: true}
-        }).state('admin.moh-731-report',{
-            url:'/moh-731-report',
-            templateUrl:'views/admin/moh-731-report-container.html',
-            controller:'moh731ReportCtrl',
-            data:{requireLogin:true}
-         }).state('moh-731-generate-pdf',{
-           url:'/moh-731-generate-pdf',
-           templateUrl:'views/authentication/login.html',
-           data:{requireLogin:false},
-                        });
+        }).state('admin.moh-731-report', {
+          url:'/moh-731-report',
+          templateUrl:'views/admin/moh-731-report-container.html',
+          controller:'moh731ReportCtrl',
+          data:{requireLogin:true}
+        }).state('moh-731-generate-pdf', {
+          url:'/moh-731-generate-pdf',
+          templateUrl:'views/authentication/login.html',
+          data:{requireLogin:false},
+        });
 
     }) .config(['$httpProvider', function($httpProvider) {
-        $httpProvider.interceptors.push('authenticationErrorInterceptor');
+      $httpProvider.interceptors.push('authenticationErrorInterceptor');
     }])
     .run(function($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings,
        EtlRestServicesSettings, UtilService) {
 
-      $rootScope.$on('$stateChangeStart',function(event, toState, toParams) {
-          
-                 //checking if  pdf report generation  path
-         if(toState.url==='/moh-731-generate-pdf'){
-                        //call renerate report
-                       // console.log('preventing default');
-                        $rootScope.$broadcast('generate-moh-731-pdf-report', {item:{} });
-                        event.preventDefault(); //prevent the change  from happening
-                    }
+      $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
+
+        //checking if  pdf report generation  path
+        if (toState.url === '/moh-731-generate-pdf') {
+          //call renerate report
+          // console.log('preventing default');
+          $rootScope.$broadcast('generate-moh-731-pdf-report', {item:{} });
+          event.preventDefault(); //prevent the change  from happening
+        }
         //check whether selection of url base is required first
         var hasPersistedCurrentUrl = OpenmrsSettings.hasCoockiePersistedCurrentUrlBase() && EtlRestServicesSettings.hasCoockiePersistedCurrentUrlBase();
 
@@ -247,5 +247,15 @@
         $rootScope.currentStateParams = toParams;
       });
 
+      //try and register a service worker (sw);
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('script/sw.js')
+        .then(function(registration) {
+          console.log('Service worker registered!');
+        })
+        .catch(function(error) {
+          console.log('Registration Failed! There was an error!');
+        });
+      }
     });
 })();
