@@ -177,13 +177,15 @@ jshint -W003, -W026
       }
     }
     function selectAllTags() {
-      if ( $scope.selectedIndicatorTags.selectedAll === false){
-        $scope.selectedIndicatorTags.selectedAll = true;
-        $scope.selectedIndicatorTags.indicatorTags = $scope.indicatorTags;
-      }
-      else{
-        $scope.selectedIndicatorTags.selectedAll = false;
-        $scope.selectedIndicatorTags.indicatorTags = [];
+      if($scope.indicatorTags.length>0){
+        if ( $scope.selectedIndicatorTags.selectedAll === false){
+          $scope.selectedIndicatorTags.selectedAll = true;
+          $scope.selectedIndicatorTags.indicatorTags = $scope.indicatorTags;
+        }
+        else{
+          $scope.selectedIndicatorTags.selectedAll = false;
+          $scope.selectedIndicatorTags.indicatorTags = [];
+        }
       }
     }
 	}
