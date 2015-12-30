@@ -73,7 +73,7 @@
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           $scope.reportName, $scope.countBy, onFetchHivSummaryIndicatorsSuccess, onFetchHivSummaryIndicatorsError,
-          $scope.groupBy,locations);
+          $scope.groupBy,locations,'encounter_datetime|asc');
     }
 
     function getSelectedLocations(selectedLocationObject) {
@@ -121,7 +121,7 @@
     function onFetchIndicatorsSchemaSuccess(result) {
       $scope.isBusy = false;
       $scope.indicatorTags =result.result;
-      $scope.indicatorTags.unshift({name:'state'},{name:'encounter_datetime'},{name:'location_uuid'} )
+      $scope.indicatorTags.unshift({name:'state'},{name:'month'},{name:'location_uuid'} )
 
     }
 
@@ -282,7 +282,7 @@
      * Function to add button on each cell
      */
     function cellFormatter(value, row, index, header) {
-      if(header.name==='encounter_datetime') return '<span class="text-info text-capitalize">'+
+      if(header.name==='month') return '<span class="text-info text-capitalize">'+
         $filter('date')(value, 'MMM, y')+'</span>';
       if(header.name==='state') return ;
       return ['<a class="btn btn-large btn-default" style="padding: inherit; width:100%; max-width: 300px"',

@@ -502,9 +502,11 @@
       'called with countBy, report, and date range', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?countBy=passed-countBy&' +
         'endDate=2015-09-05T21:00:00.000Z&groupBy=passed-groupBy&indicators=passed-indicators&locationUuids=' +
-        'passed-locations&report=passed-report&startDate=2014-08-05T21:00:00.000Z').respond({});
+        'passed-locations&order=passed-encounter-date&report=passed-report&startDate=2014-08-05T21:00:00.000Z').respond({});
       etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
-        'passed-report','passed-countBy', function () { }, function () { },'passed-groupBy','passed-locations','passed-indicators');
+        'passed-report','passed-countBy', function () { }, function () { },'passed-groupBy','passed-locations',
+        'passed-encounter-date','passed-indicators');
+
       httpBackend.flush();
     });
 
@@ -514,31 +516,34 @@
       //case startIndex and limit are defined
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?countBy=passed-countBy&' +
         'endDate=2015-09-05T21:00:00.000Z&groupBy=passed-groupBy&indicators=passed-indicators&limit=10&locationUuids=' +
-        'passed-locations&report=passed-report&startDate=2014-08-05T21:00:00.000Z' +
+        'passed-locations&order=passed-encounter-date&report=passed-report&startDate=2014-08-05T21:00:00.000Z' +
         '&startIndex=0').respond({});
       etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-report','passed-countBy', function () { }, function () { },'passed-groupBy','passed-locations',
-        'passed-indicators', 0, 10);
+        'passed-encounter-date','passed-indicators', 0, 10);
+
       httpBackend.flush();
 
       //case startIndex defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?countBy=passed-countBy&' +
         'endDate=2015-09-05T21:00:00.000Z&groupBy=passed-groupBy&indicators=passed-indicators&locationUuids=passed-' +
-        'locations&report=passed-report&startDate=2014-08-05T21:00:00.000Z&startIndex=0')
+        'locations&order=passed-encounter-date&report=passed-report&startDate=2014-08-05T21:00:00.000Z&startIndex=0')
         .respond({});
       etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-report', 'passed-countBy', function () { }, function () { },'passed-groupBy','passed-locations',
-        'passed-indicators', 0, undefined);
+        'passed-encounter-date','passed-indicators', 0, undefined);
+
       httpBackend.flush();
 
       //case limit defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?countBy=passed-countBy&' +
         'endDate=2015-09-05T21:00:00.000Z&groupBy=passed-groupBy&indicators=passed-indicators&limit=10&locationUuids=' +
-        'passed-locations&report=passed-report&startDate=2014-08-05T21:00:00.000Z')
+        'passed-locations&order=passed-encounter-date&report=passed-report&startDate=2014-08-05T21:00:00.000Z')
         .respond({});
       etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-report', 'passed-countBy',function () { }, function () { },'passed-groupBy','passed-locations',
-        'passed-indicators', undefined, 10 );
+        'passed-encounter-date','passed-indicators', undefined, 10 );
+
       httpBackend.flush();
     });
 
