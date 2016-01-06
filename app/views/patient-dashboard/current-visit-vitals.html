@@ -13,14 +13,20 @@
       <span class="sr-only">Error:</span>
       Sorry, An error occured while loading vitals!
     </div>
+    
+    <p data-ng-show='visitStarted'>
+      <span>Today's Vitals</span> 
+      <small class="text-warning">  (Visit Started At {{currentVisit.startDatetime | date: 'hh:mm:ss a MMM, dd yyyy'}} )</small>
+     </p>
      <p>
-       Today's Vitals
+       
      </p>
            <ul class="list-group" data-ng-show='visitStarted'>
 
                 <li class="list-group-item"
                 data-ng-repeat="vital in currentVisit.vitals">
                 <strong>
+                
                 <span ng-if="vital.systolic || vital.diastolic" >BP : {{vital.systolic}} / {{vital.diastolic}} |</span>
                 <span ng-if="vital.pulse">Pulse : {{vital.pulse}} |</span>
                 <span ng-if="vital.temperature">Temperature : {{vital.temperature}} |</span>
@@ -28,6 +34,7 @@
                 <span ng-if="vital.height">Height : {{vital.height}} |</span>
                 <span ng-if="vital.weight">Weight : {{vital.weight}} |</span>
                 <span ng-if="vital.bmi">BMI:Kg/M2 : {{vital.bmi}} </span>
+                
                 </strong>
               </li>
               <li class="list-group-item" ng-show="!currentVisit.vitals.length">No vitals taken for the patient today</li>
