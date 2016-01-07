@@ -71,7 +71,7 @@
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           $scope.reportName, $scope.countBy, onFetchHivSummaryIndicatorsSuccess, onFetchHivSummaryIndicatorsError,
-          $scope.groupBy);
+          $scope.groupBy,'');
     }
 
     function onFetchHivSummaryIndicatorsSuccess(result) {
