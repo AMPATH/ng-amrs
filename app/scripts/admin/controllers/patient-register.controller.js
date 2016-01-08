@@ -84,7 +84,7 @@
 
     function onFetchIndicatorsSuccess(result) {
       $scope.isBusy = false;
-      console.log("Sql query for HivSummaryIndicators request=======>", result.sql, result.sqlParams);
+      console.log('Sql query for HivSummaryIndicators request=======>', result.sql, result.sqlParams);
       $scope.indicators = result.result;
       buildDataTable();
     }
@@ -108,7 +108,7 @@
       $scope.isBusy = false;
       $scope.indicatorTags = result.result;
       //push non indicator columns
-      $scope.indicatorTags.unshift({name: 'state'}, {name: 'identifiers'},{name: 'person_name'},{name: 'encounter_date'},
+      $scope.indicatorTags.unshift({name: 'person_name'},{name: 'identifiers'},{name: 'encounter_date'},
         {name: 'location'},  {name: 'location_uuid'})
     }
 
@@ -145,20 +145,19 @@
     function buildDataTable() {
       buildColumns();
       buildTableControls();
+
     }
 
     function buildSingleColumn(header) {
-      var checkbox = (header.name === 'state');
-      var sortable = (header.name !== 'state');
       $scope.columns.push({
         field: header.name.toString(),
         title: $filter('titlecase')(header.name.toString().split('_').join(' ')),
         align: 'center',
-        valign: 'bottom',
-        sortable: sortable,
+        valign: 'center',
+        class:header.name==='person_name'?'bst-table-min-width':undefined,
         visible: true,
-        checkbox: checkbox,
         tooltip: true,
+        sortable:true,
         formatter: function (value, row, index) {
           return cellFormatter(value, row, index, header);
         }
@@ -168,7 +167,7 @@
     function buildColumns() {
       $scope.columns = [];
       _.each($scope.indicatorTags, function (header) {
-        if (header.name === 'location' || header.name === 'state' || header.name === 'person_name' || header.name === 'encounter_date'
+        if (header.name === 'location' ||  header.name === 'person_name' || header.name === 'encounter_date'
           || header.name === 'identifiers') buildSingleColumn(header);
         _.each($scope.selectedIndicatorTags.indicatorTags, function (selectedIndicator) {
           if (selectedIndicator.name === header.name) {
@@ -182,14 +181,11 @@
       $scope.bsTableControl = {
         options: {
           data: $scope.indicators,
-          rowStyle: function (row, index) {
-            return {classes: 'none'};
-          },
           tooltip: true,
           classes: 'table table-hover',
           cache: false,
           height: 550,
-          detailView: true,
+          detailView: false,
           detailFormatter: detailFormatter,
           striped: true,
           selectableRows: true,
@@ -208,9 +204,9 @@
           idField: 'location',
           minimumCountColumns: 2,
           clickToSelect: true,
-          showToggle: true,
+          showToggle: false,
           maintainSelected: true,
-          showExport: true,
+          showExport: false,
           toolbar: '#toolbar',
           toolbarAlign: 'left',
           exportTypes: ['json', 'xml', 'csv', 'txt', 'png', 'sql', 'doc', 'excel', 'powerpoint', 'pdf'],
@@ -229,11 +225,12 @@
             minus: 'glyphicon-minus',
             detailOpen: 'glyphicon-plus',
             detailClose: 'glyphicon-minus'
-          }
+          },
+          fixedColumns: true,
+          fixedNumber:1
         }
       };
     }
-
     /**
      * Function to format detailed view
      */
@@ -263,14 +260,13 @@
      * Function to add button on each cell
      */
     function cellFormatter(value, row, index, header) {
-      if (header.name === 'location') return '<span class="text-info text-capitalize">' + value + '</span>';
+      if (header.name === 'location') return '<div  style="height:inherit!important;" >' +
+        '<span class="text-info text-capitalize">' + value + '</span></div>';
       if (header.name === 'encounter_date') return '<span class="text-info text-capitalize">' +
-        $filter('date')(value, 'dd, MMM, y') + '</span>';
-      if (header.name === 'state') return;
+        $filter('date')(value, 'dd, MMM, y') + '</span></div>';
       if (header.name === 'person_name')
-        return '<a href="#/admin-dashboard/patient-register/patient/' + row.person_uuid + '" class="btn btn-link" >' +
-          '<span class="text-info text-capitalize">' + value + '  </span>' +
-          '<span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span><a/>';
+        return '<div class="text-center" style="height:43px!important; " ><a href="#/admin-dashboard/patient-register/patient/'
+          + row.person_uuid + '"><span class="text-info text-capitalize">' + value + '  </span><a/></div>';
       return valueToBooleanFormatter(value);
     }
 
