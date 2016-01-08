@@ -13,8 +13,9 @@
                                $state, OpenmrsRestService) {
 
     //Patient List Directive Properties & Methods
-    $scope.startDate = new Date("January 1, 2015 12:00:00");
-    $scope.endDate = new Date();
+    var date = new Date();
+    $scope.startDate = new Date(date.getFullYear(), date.getMonth()-1, 1);
+    $scope.endDate  = date;
 
     //Hiv Summary Indicators Service Properties & Methods
     $scope.reportName = 'patient-register-report';
