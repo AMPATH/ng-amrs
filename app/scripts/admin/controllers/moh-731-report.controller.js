@@ -83,20 +83,18 @@
         });
         function buildColumns(){
             $scope.columns=[];
-            $scope.titles=['Location','unscheduled_visits','on_art','starting_art_total','on_pcp_prophylaxis'
+            $scope.titles=['location','unscheduled_visits','on_art','starting_art_total','on_pcp_prophylaxis'
                         ,'condoms_provided',
                 'using_modern_contracept_methods','female_gte_18yo_visits',];
             _.each($scope.titles,function(header){
                 var visible=(header.location_uuid!=='location_uuid');
-                var checkbox=(header.name==='state');
-                var sortable=(header.name!=='state');
                 $scope.columns.push({
                     field:"fields",
                     title:header,
                     align:'center',
                     valign:'bottom',
-                    sortable:sortable,
-                    checkbox:checkbox,
+                    class:header.name==='location'?'bst-table-min-width':undefined,
+                    visible:visible,
                     tooltip:true,
                     formatter:function(value,row,index){
                         return cellFormatter(value,row,index,header);
@@ -134,7 +132,7 @@
                     idField:'location',
                     minimumCountColumns:2,
                     clickToSelect:true,
-                    showToggle:true,
+                    showToggle:false,
                     maintainSelected:true,
                     showExport:true,
                     toolbar:'#toolbar',
@@ -155,14 +153,25 @@
                         minus:'glyphicon-minus',
                         detailOpen:'glyphicon-plus',
                         detailClose:'glyphicon-minus'
-                    }
+                    },
+                  fixedColumns: true,
+                  fixedNumber:2,
+                  onExpandRow:function onExpandRow(index, row, $detail) {
+                    var result = document.getElementsByClassName("fixed-table-body-columns");
+                    result[0].style.visibility= 'hidden';
+                  },
+                  onCollapseRow:function onCollapseRow(index, row, $detail) {
+
+                    var result = document.getElementsByClassName("fixed-table-body-columns");
+                    result[0].style.visibility= 'visible';
+                  }
                 }
             };
 
 
         }
         /**
-         * generate Pdf report  from rowdata and  Location 
+         * generate Pdf report  from rowdata and  Location
          * @param {type} locationName
          * @param {type} rowData
          * @returns {undefined}
@@ -175,7 +184,7 @@
                 county:"county",
                 facility:$scope.facilityData.description+"",startDate:$filter('date')($scope.startDate,"M/yy"),endDate:$filter('date')($scope.endDate,"M/yy")};
             var mainReportjson=Moh731ReportService.generatePdfReportSchema(params);
-            //generate Pdf  report 
+            //generate Pdf  report
             $scope.indicatorNumber=0;
             $scope.sectionNumber=0;
             //$scope.indicatorNumber=0;
@@ -274,7 +283,7 @@
             $scope.LocationData={};
 
             if(angular.isDefined(result.result)&&result.result.length>0){
-
+                console.log('Sql query for MOH-731 Report Request=======>', result.sql, result.sqlParams);
                 $scope.moh731ReportData=result.result;
                 angular.forEach(result.result,function(resultRow,key){
                     //test location  of  the  result  row
@@ -284,12 +293,12 @@
                         $scope.dataSortedByLocation[resultRow.location_uuid].push(resultRow)
                     }else{
                         //  console.log("dataSortedByLocation Creating  array for  location  id",resultRow.location_uuid)
-                        //define  it  as an array 
+                        //define  it  as an array
                         $scope.dataSortedByLocation[resultRow.location_uuid]=[];
                         $scope.dataSortedByLocation[resultRow.location_uuid].push(resultRow);
                     }
                 },[]);
-                //processs dataSortedLocation 
+                //processs dataSortedLocation
                 angular.forEach($scope.dataSortedByLocation,function(LocationRow,key){
                     // console.log("entering second loop",LocationRow)
                     $scope.LocationData[key]={};
@@ -325,6 +334,7 @@
                             $scope.columns.push({
                                 field:actualkey,
                                 title:actualkey,
+                                class:actualkey==='location'?'bst-table-min-width-mid':undefined,
                                 align:'center',
                                 valign:'bottom',
                                 tooltip:true,
@@ -340,7 +350,7 @@
 
                 $scope.dataSortedByLocation=null;
                 /**
-                 * This sections is  for  
+                 * This sections is  for
                  */
 
                 if(false){
@@ -357,10 +367,8 @@
             angular.forEach(Moh731ReportService.setSectionSchema(),function(value,key){
                 try{
                     if(value.label===sectionKey){
-                        console.log("about  to return"+value.description);
                         return value.description;
                     }else{
-                        console.log(value.label+"The  section Key"+sectionKey+"Missing  match")
                     }
                 }catch(e){
                     console.log(e);
@@ -412,7 +420,7 @@
                 var label="label";
                 label=$filter('titlecase')(label.toString().split('_').join(' '));
                 var key=$filter('titlecase')(key.toString().split('_').join(' '));
-                html.push('<div class="well well-sm " style="padding:2px; margin-bottom: 5px !important; ">'+
+                html.push('<div class="well well-sm " style="padding:2px; height:43px!important;margin-bottom: 5px !important; ">'+
                         '<p><b>'+key+'</b></p>'+value+'</div>');
             });
             //adding a get pdf  report  link

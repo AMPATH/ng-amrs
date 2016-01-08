@@ -33,6 +33,7 @@
     $scope.indicators = [];  //set filtered indicators to []
     $scope.currentPage = 1;
     $scope.counter = 0;
+    $scope.fixedColumns=true;
     $scope.setCountType= function(val) {
       $scope.countBy= val;
       loadHivSummaryIndicators()
@@ -97,7 +98,7 @@
 
     function onFetchHivSummaryIndicatorsSuccess(result) {
       $scope.isBusy = false;
-      console.log("Sql query for HivSummaryIndicators request=======>", result.sql, result.sqlParams);
+      console.log('Sql query for HivSummaryIndicators request=======>', result.sql, result.sqlParams);
       $scope.indicators = result.result;
       //
       buildDataTable();
@@ -122,8 +123,7 @@
     function onFetchIndicatorsSchemaSuccess(result) {
       $scope.isBusy = false;
       $scope.indicatorTags =result.result;
-      $scope.indicatorTags.unshift({name:'state'},{name:'month'},{name:'location_uuid'} )
-
+      $scope.indicatorTags.unshift({name:'month'},{name:'location_uuid'} );
     }
 
     function onFetchIndicatorsSchemaError(error) {
@@ -191,16 +191,13 @@
       $scope.columns = [];
       _.each($scope.indicatorTags, function (header) {
         var visible =(header.name!=='location_uuid');
-        var checkbox=(header.name==='state');
-        var sortable=(header.name!=='state');
         $scope.columns.push({
           field: header.name.toString(),
           title:  $filter('titlecase')(header.name.toString().split('_').join(' ')) ,
           align: 'center',
-          valign: 'bottom',
-          sortable: sortable,
+          valign: 'center',
           visible:visible,
-          checkbox:checkbox,
+          sortable:true,
           tooltip: true,
           formatter: function (value, row, index) {
             return cellFormatter(value, row, index, header);
@@ -219,7 +216,7 @@
           classes: 'table table-hover',
           cache: false,
           height: 550,
-          detailView:true,
+          detailView:false,
           detailFormatter:detailFormatter,
           striped: true,
           selectableRows:true,
@@ -238,7 +235,7 @@
           idField:'location',
           minimumCountColumns: 2,
           clickToSelect: true,
-          showToggle: true,
+          showToggle: false,
           maintainSelected: true,
           showExport: true,
           toolbar:'#toolbar',
@@ -259,7 +256,9 @@
             minus: 'glyphicon-minus',
             detailOpen: 'glyphicon-plus',
             detailClose: 'glyphicon-minus'
-          }
+          },
+          fixedColumns: $scope.fixedColumns,
+          fixedNumber:1
         }
       };
     }
@@ -283,8 +282,8 @@
      * Function to add button on each cell
      */
     function cellFormatter(value, row, index, header) {
-      if(header.name==='month') return '<span class="text-info text-capitalize">'+
-        $filter('date')(value, 'MMM, y')+'</span>';
+      if(header.name==='month') return '<div class="text-center" style="height:43px!important;" ><span ' +
+        'class="text-info text-capitalize">'+ $filter('date')(value, 'MMM, y')+'</span></div>';
       if(header.name==='state') return ;
       return ['<a class="btn btn-large btn-default" style="padding: inherit; width:100%; max-width: 300px"',
         'title="'+getIndicatorLabelByName(header.name)+' " data-toggle="tooltip"' ,
