@@ -1,62 +1,71 @@
 <div class="container-fluid" collapse="addingUrl || addingEtlUrl">
-	<h3 class="text-primary"><span class="glyphicon glyphicon-hdd"></span> Server Settings</h3>
-	<hr/>
-	<form>
-		<div class="form-group">
-			<label for="urlRest">AMRS REST Server Address</label>
-			<div class="input-group">
-				<select class="form-control" id="urlRest" ng-model="currentRestBaseUrl" placeholder="Enter Url">
-					<option ng-repeat="url in urlRestBaseList">{{url}}</option>
-				</select>
-				<span class="input-group-addon" ng-click="addUrlToList()">
+    <h3 class="text-primary"><span class="glyphicon glyphicon-hdd"></span> Server Settings</h3>
+    <hr/>
+    <div style="margin:2px;" class="btn-group" dropdown dropdown-append-to-body>
+        <button id="btn-append-to-body" type="button" class="btn btn-primary" dropdown-toggle>
+            <span class="glyphicon glyphicon-hdd"></span> Templates: <span class="caret"></span>
+        </button>
+
+        <ul class="dropdown-menu" role="menu" aria-labelledby="btn-append-to-body">
+            <li style="cursor: pointer;" ng-repeat="item in preConfiguredSettings" role="menuitem"><a ng-click="selectConfiguration(item)">{{item.name}} </a></li>
+        </ul>
+    </div>
+    <br/>
+    <br />
+    <form>
+        <div class="form-group">
+            <label for="urlamrsRest">AMRS REST Server Address</label>
+            <div class="input-group">
+                <select class="form-control" id="urlamrsRest" ng-model="currentRestBaseUrl" ng-options="url for url in urlRestBaseList" placeholder="Enter Url">
+                </select>
+                <span class="input-group-addon" ng-click="addUrlToList()">
 					<span class="glyphicon glyphicon-plus text-primary"></span>
-				</span>
-			</div>
-		</div>
-		<div class="form-group">
-			<label for="urlRest">ETL Server Address</label>
-			<div class="input-group">
-				<select class="form-control" id="urlRest" ng-model="currentEtlRestBaseUrl" placeholder="Enter Url">
-					<option ng-repeat="url in urlEtlRestBaseList">{{url}}</option>
-				</select>
-				<span class="input-group-addon" ng-click="addEtlUrlToList()">
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="urlRest">ETL Server Address</label>
+            <div class="input-group">
+                <select class="form-control" id="urlRest" ng-model="currentEtlRestBaseUrl" ng-options="url for url in urlEtlRestBaseList" placeholder="Enter Url">
+                </select>
+                <span class="input-group-addon" ng-click="addEtlUrlToList()">
 					<span class="glyphicon glyphicon-plus text-primary"></span>
-				</span>
-			</div>
-		</div>
-	</form>
-	<hr/>
-	<div class="form-group">
-		<button class="btn btn-primary" ng-click="saveSettings()">{{currentMode === 'SetMode' ? 'Save' : 'Update'}}</button>
-	</div>
+                </span>
+            </div>
+        </div>
+    </form>
+    <hr/>
+    <div class="form-group">
+        <button class="btn btn-primary" ng-click="saveSettings()">{{currentMode === 'SetMode' ? 'Save' : 'Update'}}</button>
+    </div>
 </div>
 <div class="container-fluid" collapse="!addingUrl">
-	<h3 class="text-primary">Server Settings</h3>
-	<hr/>
-	<form>
-		<div class="form-group">
-			<label for="urlRest">AMRS REST Server Address</label>
-			<input type="text" class="form-control" placeholder="Url" ng-model="urlToAdd">
-		</div>
-	</form>
-	<hr/>
-	<div class="form-group">
-		<button class="btn btn-primary" ng-click="addUrlToList()">Add</button>
-		<button class="btn bt-default" ng-click="cancelAddingUrl()">Cancel</button>
-	</div>
+    <h3 class="text-primary">Server Settings</h3>
+    <hr/>
+    <form>
+        <div class="form-group">
+            <label for="urlRest">AMRS REST Server Address</label>
+            <input type="text" class="form-control" placeholder="Url" ng-model="urlToAdd">
+        </div>
+    </form>
+    <hr/>
+    <div class="form-group">
+        <button class="btn btn-primary" ng-click="addUrlToList()">Add</button>
+        <button class="btn bt-default" ng-click="cancelAddingUrl()">Cancel</button>
+    </div>
 </div>
 <div class="container-fluid" collapse="!addingEtlUrl">
-	<h3 class="text-primary">Server Settings</h3>
-	<hr/>
-	<form>
-		<div class="form-group">
-			<label for="urlRest">ETL Server Address</label>
-			<input type="text" class="form-control" placeholder="Url" ng-model="urlEtlToAdd">
-		</div>
-	</form>
-	<hr/>
-	<div class="form-group">
-		<button class="btn btn-primary" ng-click="addEtlUrlToList()">Add</button>
-		<button class="btn bt-default" ng-click="cancelAddingUrl()">Cancel</button>
-	</div>
+    <h3 class="text-primary">Server Settings</h3>
+    <hr/>
+    <form>
+        <div class="form-group">
+            <label for="urlRest">ETL Server Address</label>
+            <input type="text" class="form-control" placeholder="Url" ng-model="urlEtlToAdd">
+        </div>
+    </form>
+    <hr/>
+    <div class="form-group">
+        <button class="btn btn-primary" ng-click="addEtlUrlToList()">Add</button>
+        <button class="btn bt-default" ng-click="cancelAddingUrl()">Cancel</button>
+    </div>
 </div>
