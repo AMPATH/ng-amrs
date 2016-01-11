@@ -21,7 +21,7 @@
     //Hiv Summary Indicators Service Properties & Methods
     $scope.reportName='hiv-summary-report';
     $scope.countBy='num_persons';
-    $scope.groupBy='groupByMonth';
+    $scope.groupBy='groupByYear,groupByMonth';
     $scope.loadHivSummaryIndicators=loadHivSummaryIndicators;
     $scope.getIndicatorLabelByName =getIndicatorLabelByName;
 
