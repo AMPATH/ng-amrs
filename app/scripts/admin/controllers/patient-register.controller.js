@@ -7,10 +7,10 @@
     .controller('PatientRegisterCtrl', PatientRegisterCtrl);
   PatientRegisterCtrl.$inject =
     ['$rootScope', '$scope', '$stateParams', 'EtlRestService', 'moment', '$filter', '$state',
-      'OpenmrsRestService'];
+      'OpenmrsRestService','$timeout'];
 
   function PatientRegisterCtrl($rootScope, $scope, $stateParams, EtlRestService,  moment, $filter,
-                               $state, OpenmrsRestService) {
+                               $state, OpenmrsRestService,$timeout) {
 
     //Patient List Directive Properties & Methods
     var date = new Date();
@@ -143,8 +143,10 @@
      * Functions to populate and define bootstrap data table
      */
     function buildDataTable() {
-      buildColumns();
-      buildTableControls();
+      $timeout(function() {
+        buildColumns();
+        buildTableControls();
+      }, 500);
 
     }
 
@@ -261,13 +263,14 @@
      */
     function cellFormatter(value, row, index, header) {
       if (header.name === 'location') return '<div  style="height:inherit!important;" >' +
-        '<span class="text-info text-capitalize">' + value + '</span></div>';
-      if (header.name === 'encounter_date') return '<span class="text-info text-capitalize">' +
+        '<span class="text-info text-capitalize" style="white-space: nowrap;">' + value + '</span></div>';
+      if (header.name === 'encounter_date') return '<span class="text-info text-capitalize" style="white-space: nowrap;">' +
         $filter('date')(value, 'dd, MMM, y') + '</span></div>';
       if (header.name === 'person_name')
         return '<div class="text-center" style="height:43px!important; " ><a href="#/admin-dashboard/patient-register/patient/'
           + row.person_uuid + '"><span class="text-info text-capitalize">' + value + '  </span><a/></div>';
-      return valueToBooleanFormatter(value);
+      return '<div class="text-center" style="height:43px!important;width:100% " ><span style="white-space: nowrap;">'
+        +valueToBooleanFormatter(value)+ '</span></div>';
     }
 
     /**
