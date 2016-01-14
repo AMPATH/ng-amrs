@@ -1112,7 +1112,6 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                             // array object
                             var ArrayVal = groupValues[_groupMember];
                             // console.log('length',Object.keys(ArrayVal).length)
-                            groupMembers = [];
                             if (ArrayVal !== undefined &&
                               Object.keys(ArrayVal).length === 0) {
                               //handling items in an obs group
