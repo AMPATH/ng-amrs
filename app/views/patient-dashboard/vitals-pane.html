@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tr ng-repeat="encounter in encounters">
-      <td>{{encounter.encounterDatetime().substring(0,10)}}</td>
+      <td>{{encounter.encounterDatetime() | date:'dd-MM-yyyy'}}</td>
       <td>{{encounter.systolicBp()}} / {{encounter.diastolicBp()}}</td>
       <td>{{encounter.pulse()}}</td>
       <td>{{encounter.temperature()}}</td>
