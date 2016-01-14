@@ -1073,6 +1073,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   //this is the case when we have obs groups that are not repeating
                   var groupValues = val[key];
                   var groupMembers = [];
+                  var initialDataArray = [];
                   //  console.log('OBJECT TYPES')
                   // console.log(key);
                   //  console.log(groupValues);
@@ -1134,6 +1135,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                     //multiCheckbox field
                                     //console.log('Multi ValKey: '+ _groupMember,'  Value: '+ groupValues[_groupMember])
                                     initData = getInitialFieldValue(_groupMember, section);
+                                    initialDataArray.push(initData);
                                   } else {
                                     // console.log('Calling createPayloadObsGroupArray method -2');
                                     // console.log('Traversed Objects -2',traversedObjects);
@@ -1141,6 +1143,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                                       arrKey, obs, groupMembers,
                                       section, traversedObjects);
                                     initData = getInitialFieldValue(arrKey, section);
+                                    initialDataArray.push(initData);
                                   }
                                 }
                               });
@@ -1167,8 +1170,10 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                               //multiCheckbox field
                               // console.log('Multi ValKey--1192: '+ _groupMember,'  Value: '+ groupValues[_groupMember])
                               initData = getInitialFieldValue(key, section);
+                              initialDataArray.push(initData);
                             } else {
                               initData = getInitialFieldValue(_groupMember, section);
+                              initialDataArray.push(initData);
                               var concept_ = convertKeyToUuid(_groupMember.split('_')[1]);
                               var value_ = getFormattedValue(groupValues[_groupMember]);
 
@@ -1199,19 +1204,21 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                       // console.log('All Items', initData.initialValue)
                       // //Droping items in the list array that left out
                       if (traversedObjects.length > 0) {
-                        if (!_.isEmpty(initData)) {
-                          console.log('init date b4 delete ', initData);
-                          if (angular.isArray(initData.initialValue)) {
-                            _.each(initData.initialValue, function(item) {
-                              if (traversedObjects.indexOf(item) === -1) {
-                                var  obsIndex = initData.initialValue.indexOf(item);
-                                console.log('Executing Obs to void -- 1354');
-                                console.log('b4 delete xx ', initData.initialValue);
-                                obs.push({voided:true, uuid:initData.uuid[ obsIndex]});
-                              }
-                            });
-                          }
-                        }
+                          _.each(initialDataArray, function(initVal){
+                            if (!_.isEmpty(initVal)) {
+                            console.log('init date b4 delete ', initVal);
+                            if (angular.isArray(initVal.initialValue)) {
+                                _.each(initVal.initialValue, function(item) {
+                                if (traversedObjects.indexOf(item) === -1) {
+                                    var  obsIndex = initVal.initialValue.indexOf(item);
+                                    console.log('Executing Obs to void -- 1354');
+                                    console.log('b4 delete xx ', initVal.initialValue);
+                                    obs.push({voided:true, uuid:initVal.uuid[ obsIndex]});
+                                }
+                                });
+                            }
+                            }
+                          });
                       }
 
                       if (groupMembers.length > 0) {
