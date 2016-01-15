@@ -164,7 +164,7 @@
           return _address4;
         }
       };
-                  
+
       modelDefinition.address5 = function(value) {
         if (angular.isDefined(value)) {
           _address5 = value;
@@ -173,7 +173,7 @@
           return _address5;
         }
       };
-                                    
+
       modelDefinition.address6 = function(value) {
         if (angular.isDefined(value)) {
           _address6 = value;
@@ -259,9 +259,9 @@
       );
 
       return obj;
-        
+
       }
-  
+
     }
 
     function toArrayOfWrappers(openmrsLocationArray) {

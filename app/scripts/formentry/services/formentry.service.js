@@ -293,13 +293,13 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   if (personAttribute !== undefined &&
                     personAttribute !== null &&
                     personAttribute.length > 0) {
-                    var existingFormLocation = personAttribute[0].value.uuid;                    
-                    // var definedDefaultUserLocation=UserDefaultPropertiesService.getCurrentUserDefaultLocation();                       
-                    // if(angular.isDefined(definedDefaultUserLocation)){  
-                    //   //use defined default user location to prefill the form                       
+                    var existingFormLocation = personAttribute[0].value.uuid;
+                    // var definedDefaultUserLocation=UserDefaultPropertiesService.getCurrentUserDefaultLocation();
+                    // if(angular.isDefined(definedDefaultUserLocation)){
+                    //   //use defined default user location to prefill the form
                     //     if(!angular.isDefined(existingFormLocation)){
                     //     existingFormLocation=definedDefaultUserLocation.uuid;
-                    //     }                       
+                    //     }
                     // }
                      sectionData[fieldKey] = existingFormLocation;
                     _field.data['initValue'] = existingFormLocation;
@@ -350,7 +350,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   if(_groupField.type === 'anchor') {
                     return;
                   }
-                  
+
                   // body...
                   if (_.contains(fieldKey, 'unamed')) {
                     // using the grouping fields
@@ -1357,16 +1357,16 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
 
               addToReadyFields(field);
             } else if (sectionField.type === 'encounterLocation') {
-              
+
               //set encounter location to the default user location
               var definedDefaultUserLocation = UserDefaultPropertiesService.getCurrentUserDefaultLocation();
-                    if(angular.isDefined(definedDefaultUserLocation)) {  
-                      //use defined default user location to prefill the form                       
+                    if(angular.isDefined(definedDefaultUserLocation)) {
+                      //use defined default user location to prefill the form
                         if(!angular.isDefined(defaultValue_) || defaultValue_ === '') {
                           defaultValue_ = definedDefaultUserLocation.uuid;
-                        }                       
-                    }                    
-                    
+                        }
+                    }
+
               var required = false;
               if (sectionField.required !== undefined) required = Boolean(sectionField.required);
               field = {
@@ -1378,7 +1378,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                   type: 'text',
                   label: sectionField.label,
                   valueProp: 'uuId',
-                  labelProp:'display',
+                  labelProp:'name',
                   deferredFilterFunction: SearchDataService.findLocation,
                   getSelectedObjectFunction: SearchDataService.getLocationByUuid,
                   required:required,
@@ -1492,7 +1492,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
     {
       return key.replace(/n/gi, '-');
     }
-    
+
     function createAnchorField(ownerKey){
       return {
           type: 'anchor',
@@ -1777,7 +1777,7 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
           type: 'text',
           label: _obsField.label,
           valueProp: 'uuId',
-          labelProp:'display',
+          labelProp:'name',
           deferredFilterFunction: SearchDataService.findLocation,
           getSelectedObjectFunction: SearchDataService.getLocationByUuid,
           options:[]

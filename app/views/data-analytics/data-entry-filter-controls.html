@@ -1,7 +1,7 @@
 <div class="well" style="padding:2px; cursor:pointer;">
 	<div data-ng-click="isExpanded = !isExpanded" style="margin: 2px;">
 		<strong>Filters</strong>
-		<span class="label label-default pull-right" style="margin-right: 4px;" ng-show="isExpanded"> 
+		<span class="label label-default pull-right" style="margin-right: 4px;" ng-show="isExpanded">
         <span class="glyphicon glyphicon-menu-up"> </span>
 		</span>
 		<span class="label label-default pull-right" style="margin-right: 4px;" ng-hide="isExpanded">
@@ -24,7 +24,6 @@
 						<ui-select-match placeholder="Select a location or type to search">{{$item.name()}}</ui-select-match>
 						<ui-select-choices repeat="location in locations | propsFilter: {name: $select.search, description: $select.search} ">
 							<div ng-bind-html="location.name() | highlight: $select.search"></div>
-							<small ng-bind-html="location.description() | highlight: $select.search" class="border-success"></small>
 						</ui-select-choices>
 					</ui-select>
 				</div>
