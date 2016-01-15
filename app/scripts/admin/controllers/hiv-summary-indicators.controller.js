@@ -10,8 +10,9 @@
 
   function HivSummaryIndicatorsCtrl($rootScope, $scope, $stateParams, EtlRestService, HivSummaryIndicatorService, moment, $filter, $state) {
     //Patient List Directive Properties & Methods
-    $scope.startDate = new Date("January 1, 2015 12:00:00");
-    $scope.endDate = new Date();
+    var date = new Date();
+    $scope.startDate = new Date(date.getFullYear(), date.getMonth()-1, 1);
+    $scope.endDate  = date;
     $scope.selectedLocation = $stateParams.locationuuid || '';
     $scope.selectedIndicatorBox = $stateParams.indicator || '';
     $scope.loadPatientList = loadPatientList;
@@ -71,12 +72,12 @@
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           $scope.reportName, $scope.countBy, onFetchHivSummaryIndicatorsSuccess, onFetchHivSummaryIndicatorsError,
-          $scope.groupBy);
+          $scope.groupBy,'');
     }
 
     function onFetchHivSummaryIndicatorsSuccess(result) {
       $scope.isBusy = false;
-      console.log("Sql query for HivSummaryIndicators request=======>", result.sql, result.sqlParams);
+      console.log('Sql query for HivSummaryIndicators request=======>', result.sql, result.sqlParams);
       $scope.indicators = result.result;
       buildDataTable();
     }
@@ -100,7 +101,7 @@
     function onFetchIndicatorsSchemaSuccess(result) {
       $scope.isBusy = false;
       $scope.indicatorTags = result.result;
-      $scope.indicatorTags.unshift({name: 'state'}, {name: 'location'}, {name: 'location_uuid'})
+      $scope.indicatorTags.unshift( {name: 'location'}, {name: 'location_uuid'})
 
     }
 
@@ -166,22 +167,21 @@
     function buildDataTable() {
       buildColumns();
       buildTableControls();
+
     }
 
     function buildColumns() {
       $scope.columns = [];
       _.each($scope.indicatorTags, function (header) {
-        var visible = (header.name !== 'location_uuid');
-        var checkbox = (header.name === 'state');
-        var sortable = (header.name !== 'state');
+        var visible =(header.name!=='location_uuid');
         $scope.columns.push({
           field: header.name.toString(),
           title: $filter('titlecase')(header.name.toString().split('_').join(' ')),
           align: 'center',
-          valign: 'bottom',
-          sortable: sortable,
-          visible: visible,
-          checkbox: checkbox,
+          valign: 'center',
+          class:header.name==='location'?'bst-table-min-width':undefined,
+          sortable:true,
+          visible:visible,
           tooltip: true,
           formatter: function (value, row, index) {
             return cellFormatter(value, row, index, header);
@@ -201,7 +201,7 @@
           classes: 'table table-hover',
           cache: false,
           height: 550,
-          detailView: true,
+          detailView: false,
           detailFormatter: detailFormatter,
           striped: true,
           selectableRows: true,
@@ -220,7 +220,7 @@
           idField: 'location',
           minimumCountColumns: 2,
           clickToSelect: true,
-          showToggle: true,
+          showToggle: false,
           maintainSelected: true,
           showExport: true,
           toolbar: '#toolbar',
@@ -241,6 +241,13 @@
             minus: 'glyphicon-minus',
             detailOpen: 'glyphicon-plus',
             detailClose: 'glyphicon-minus'
+          },
+          fixedColumns: true,
+          fixedNumber:1,
+          onExpandRow:function onExpandRow(index, row, $detail) {
+            //$scope.fixedColumns=false;
+            //$('#bsTable').bootstrapTable('hideColumn','encounter_datetime');
+
           }
         }
       };
@@ -266,7 +273,8 @@
      * Function to add button on each cell
      */
     function cellFormatter(value, row, index, header) {
-      if (header.name === 'location') return '<span class="text-info text-capitalize">' + value + '</span>';
+      if (header.name === 'location') return '<div class="text-center" style="height:43px!important;" >' +
+        '<span class="text-info text-capitalize">' + value + '</span></div>';
       if (header.name === 'state') return;
       return ['<a class="btn btn-large btn-default" style="padding: inherit; width:100%; max-width: 300px"',
         'title="' + getIndicatorLabelByName(header.name) + ' (in ' + row.location + ')" data-toggle="tooltip"',

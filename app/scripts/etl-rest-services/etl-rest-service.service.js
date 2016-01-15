@@ -1,5 +1,7 @@
 /*jshint -W003, -W098, -W117, -W026 */
 
+
+
 (function(){
     'use strict';
 
@@ -160,6 +162,7 @@
                         console.error(error);
                     });
 
+
         }
 
 
@@ -246,6 +249,7 @@
         }
 
 
+
         function getMonthlyAppointmentAndVisits(locationUuid,monthDate,endDate,
                 successCallback,failedCallback,startIndex,limit){
             var resource=getResource('location/:uuid/monthly-appointment-visits');
@@ -286,6 +290,7 @@
                 params.limit=limit;
             }
 
+
             return resource.get(params).$promise
                     .then(function(response){
                         successCallback(response);
@@ -320,6 +325,9 @@
                     });
 
         }
+
+
+
         function getHivSummaryFlatTable(startDate,endDate,locations,successCallback,failedCallback){
             var resource=getResource('hiv-summary-data');
             var params={startDate:startDate,endDate:endDate,locations:locations.toString()};
@@ -333,43 +341,14 @@
                     });
         }
 
-        function getHivSummaryFlatTable(startDate,endDate,locations,successCallback,failedCallback){
-            var resource=getResource('hiv-summary-data');
-            var params={startDate:startDate,endDate:endDate,locations:locations.toString()};
-            return resource.get(params).$promise
-                    .then(function(response){
-                        successCallback(response);
-                    })
-                    .catch(function(error){
-                        failedCallback('Error processing request',error);
-                        console.error(error);
-                    });
-
-            if(startIndex!==undefined){
-                params.startIndex=startIndex;
-            }
-
-            if(limit!==undefined){
-                params.limit=limit;
-            }
-
-            return resource.get(params).$promise
-                    .then(function(response){
-                        successCallback(response);
-                    })
-                    .catch(function(error){
-                        failedCallback('Error processing request',error);
-                        console.error(error);
-                    });
-
-        }
 
         function getHivSummaryIndicators(startDate,endDate,report,countBy,successCallback,failedCallback,
-                groupBy,locationUuids,indicators,startIndex,limit){
+                groupBy,locationUuids,orderBy,indicators,startIndex,limit){
             var resource=getResource('get-report-by-report-name');
 
             var params={endDate:endDate,report:report,countBy:countBy,startDate:startDate,groupBy:groupBy,
-                locationUuids:locationUuids,indicators:indicators};
+                locationUuids:locationUuids,indicators:indicators,order:orderBy};
+
 
             if(startIndex!==undefined){
                 params.startIndex=startIndex;
@@ -443,6 +422,7 @@
         function getDataEntryStatistics(subType,startDate,endDate,locationUuids,
                 encounterTypeUuids,formUuids,providerUuid,creatorUuid,successCallback,failedCallback){
             var resource=getResource('data-entry-statistics/:subType');
+
 
             var params=getDataEntryStatisticsQueryParam(subType,startDate,endDate,locationUuids,encounterTypeUuids,
                     formUuids,providerUuid,creatorUuid);

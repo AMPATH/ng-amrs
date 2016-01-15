@@ -20,10 +20,10 @@ jshint -W098, -W117, -W003, -W026
 			getMockLocations:getMockLocations
 		}
 		return service;
-		
+
 		function getLocations(successCallback, failedCallback, refreshCache){
 			service.getLocationsCalled = true;
-			
+
 			if(service.returnFailureOnNextCall===false){
 				successCallback(getMockLocations());
 			}
@@ -31,7 +31,7 @@ jshint -W098, -W117, -W003, -W026
 				successCallback('mock error!');
 			}
 		}
-		
+
 		function getMockLocations(){
 			var testLocations = [{name: '_name',
                       description: '_description',
@@ -50,8 +50,8 @@ jshint -W098, -W117, -W003, -W026
                       tags: '_tags',
                       parentLocation: undefined,
                       childLocations: [],
-                      attributes: '_attributes'}, 
-                      
+                      attributes: '_attributes'},
+
                       {name: '_name2',
                       description: '_description2',
                       address1: '_address12',
@@ -70,7 +70,7 @@ jshint -W098, -W117, -W003, -W026
                       parentLocation:undefined,
                       childLocations: [],
                       attributes: '_attributes2'}];
-					  
+
 					  return testLocations;
 
 		}

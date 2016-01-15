@@ -399,9 +399,164 @@ module.exports = function (grunt) {
         configFile: 'test/karma.conf.js',
         singleRun: true
       }
+    },
+    
+    /**
+     * The next three tasks namely release, gitcommit & gitpush have been added
+     * to facilitate release automation and preparing the repository for next
+     * release cycles (i.e updating the tree with appropriate version)
+     *
+     * IMPORTANT: There is really no need to use these tasks independently, so 
+     * if you feel like using them be very sure that you know what you are doing
+     * (Otherwise hell is gonna break loose when you do!)
+     */
+    release: {
+        options: {
+          npm: false,
+          indentation: '\t', 
+          tagMessage: 'Tagging version <%= version %>', //default: 'Version <%= version %>',
+          additionalFiles: ['bower.json']
+        }
+    },
+    
+    gitcommit: {
+        snapshot: {
+            options: {
+                message: 'Committing version change to SNAPSHOT version',
+                noVerify: false,
+                noStatus: false
+            },
+            files: {
+                src: ['package.json', 'bower.json']
+            }
+        }
+    },
+    
+    gitpush: {
+        snapshot: {
+            options: {
+                remote: 'upstream'
+            }
+        }
     }
   });
 
+  /**
+   * The custom tasks maintenance-branch, snapshot and release-prepare are 
+   * created to automate releases. However the only task that ties up all 
+   * activities together is 'release-prepare'. That means whoever doing releases
+   * needs to invoke only this task with appropriate target.
+   */
+  grunt.registerTask('maintenance-branch', function(upstream) {
+      var upstream = upstream || 'upstream';
+      var npmProps = grunt.file.readJSON('package.json');
+      var versionParts = _splitVersionNumber(npmProps.version);
+      
+      var branch = versionParts.major + '.' + versionParts.minor + '.x';
+      
+      //Create the maintenance branch.      
+      grunt.log.writeln('Creating maintenance branch => ', branch);
+      
+      //Make native calls 
+      var exec = require('sync-exec');
+      
+      // Cache current branch which will mostly be 'master'
+      var curBranch = exec('git symbolic-ref HEAD --short').stdout;
+      var ret = exec('git checkout -b ' + branch);
+      if(ret.stdout !== '') grunt.log.writeln(ret.stdout);
+      if(ret.stderr !== '') grunt.log.errorlns(ret.stderr);
+      
+      if(ret.status === 0) {
+          // Update version to SNAPSHOT on the maintenance branch
+          exec('grunt snapshot');
+          
+          grunt.log.writeln('Setting ' + branch + ' to track '+ upstream 
+                            + '/' + branch);
+          ret = exec('git push -u ' + upstream + ' ' + branch);
+          if(ret.stdout !== '') grunt.log.writeln(ret.stdout);
+          if(ret.stderr !== '') grunt.log.errorlns(ret.stderr);
+          
+          //Switch back to the original branch
+          exec('git checkout ' + curBranch);
+      }      
+  });
+  
+  grunt.registerTask('snapshot', function(target) {
+      //Here we update the master to snapshot version.
+      var npmProps = grunt.file.readJSON('package.json');
+      
+      var vParts = _splitVersionNumber(npmProps.version);
+      var minor = Number(vParts.minor);
+      var patch = 0;
+      if(target === 'minor') {
+          minor++;
+      } else {  //Patch version is to be upgraded
+          if(!isNaN(vParts.patch)) {
+              patch = Number(vParts.patch) + 1;
+          } else {
+              // Try to get the initial part.
+              var i=0;
+              var num = '';
+              while(i < vParts.patch.length) {
+                  if(isNaN(vParts.patch[i])){
+                      break;
+                  }
+                  num = num.concat(vParts.patch[i]);
+                  i++;
+              }
+              patch = num.length>0 ? Number(num) + 1 : 0;
+          }
+      }
+      var snapshotVersion = vParts.major + '.' + minor + '.' + patch + '-SNAPSHOT';
+
+      //Update package.json & bower.json
+      var bower = grunt.file.readJSON('bower.json');
+      bower.version = npmProps.version = snapshotVersion;
+      grunt.file.write('package.json', JSON.stringify(npmProps, null, 2));
+      grunt.file.write('bower.json', JSON.stringify(bower, null, 2));
+    //   grunt.task.run(['jsonprettify']);
+      
+      //Commit the changes & push to remote
+      grunt.task.run(['gitcommit:snapshot']);
+  });
+  
+  /**
+   * Invoke release-prepare to release major, minor and patches using relevant 
+   * targets as per example shown below. 
+   * $ grunt release-prepare:major (Releases major version)
+   *
+   * Major & Minor releases creates maintenance branch and update both master &
+   * the newly created branch to SNAPSHOT versions.
+   *
+   * IMPORTANT: Be sure to be on master branch for major/minor releases and on
+   *            maintenance branch for patches/maintenance releases.
+   */
+  grunt.registerTask('release-prepare', function(target) {
+      // release
+      if(target) {
+          grunt.task.run('release:'+target);
+      } else {
+          grunt.task.run('release');
+      }
+      
+      // build
+      grunt.task.run('build');
+      
+      // Create maintenance branch if minor or major 
+      if(target === 'major' || target === 'minor') {
+          grunt.task.run('maintenance-branch');
+      }
+      
+      // Update versions to snapshot.
+      if(target === 'major' || target === 'minor') { //Both update minor version
+          grunt.task.run('snapshot:minor');
+      } else {
+          grunt.task.run('snapshot');
+      }
+      
+      // Push snapshot version
+      grunt.task.run('gitpush:snapshot') 
+  });
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
@@ -455,4 +610,14 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+  
+  function _splitVersionNumber(version) {
+      var parts = version.split('.');
+      return {
+          array: parts,
+          major: parts[0],
+          minor: parts[1],
+          patch: parts[2]
+      };
+  }
 };

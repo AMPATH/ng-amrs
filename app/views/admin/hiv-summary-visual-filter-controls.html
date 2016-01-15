@@ -51,7 +51,6 @@
                         <ui-select-match placeholder="Select a location or type to search">{{$item.name()}}</ui-select-match>
                         <ui-select-choices repeat="location in locations | propsFilter: {name: $select.search, description: $select.search} ">
                             <div ng-bind-html="location.name() | highlight: $select.search"></div>
-                            <small ng-bind-html="location.description() | highlight: $select.search" class="border-success"></small>
                         </ui-select-choices>
                     </ui-select>
                 </div>

@@ -36,8 +36,8 @@ jshint -W030
                       tags: '_tags',
                       parentLocation: undefined,
                       childLocations: [],
-                      attributes: '_attributes'}, 
-                      
+                      attributes: '_attributes'},
+
                       {name: '_name2',
                       description: '_description2',
                       address1: '_address12',
@@ -121,11 +121,11 @@ jshint -W030
       expect(model.tags()).to.equal(testLocationOpenmrsObject.tags);
       expect(model.parentLocation().openmrsModel()).to.deep.equal(testLocationOpenmrsObject.parentLocation);
       expect(model.attributes()).to.equal(testLocationOpenmrsObject.attributes);
-      
+
     });
 
     it('should always create location model that returns a valid openmrs location payload', function () {
-      
+
       var model = locationModelFactory.toWrapper(testLocationOpenmrsObject);
       expect(model.openmrsModel()).to.deep.equal(testLocationOpenmrsObject);
     });

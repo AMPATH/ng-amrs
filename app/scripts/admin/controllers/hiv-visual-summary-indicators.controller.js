@@ -10,8 +10,9 @@
 
     function HivVisualSummaryIndicatorsCtrl($rootScope,$scope,$stateParams,EtlRestService,moment,$filter,$state){
         //Patient List Directive Properties & Methods
-        $scope.startDate=new Date("January 1, 2015 12:00:00");
-        $scope.endDate=new Date();
+        var date = new Date();
+        $scope.startDate = new Date(date.getFullYear(), date.getMonth()-1, 1);
+        $scope.endDate  = date;
         $scope.selectedLocation=$stateParams.locationuuid||'';
         $scope.selectedIndicatorBox=$stateParams.indicator||'';
         $scope.selectedSearchLocations=[];
@@ -20,7 +21,7 @@
         //Hiv Summary Indicators Service Properties & Methods
         $scope.reportName='hiv-summary-report';
         $scope.countBy='num_persons';
-     
+
         $scope.getIndicatorLabelByName=getIndicatorLabelByName;
 
 
@@ -36,7 +37,7 @@
         $scope.currentPage=1;
         $scope.defaultIndicators=[]; //initialize unfiltered indicators to []
         $scope.counter=0;
-       
+
 
         ///Multi-Select Properties/ Params
         $scope.selectedIndicatorTags={};
@@ -121,8 +122,8 @@
             if(found)
                 return found;
         }
-       
-       
+
+
         //get  Hiv  summary  flat table  error
         function onFetchHivSummaryFlatTableError(error){
             $scope.isBusy=false;
@@ -134,14 +135,14 @@
 
 
 
-      
-       
 
-      
 
-       
 
-       
+
+
+
+
+
         /**
          * Filters indicator by $scope.selectedIndicatorTags using key value pairs.
          * @property $scope.defaultIndicators, $scope.indicators $scope.selectedIndicatorTags.
@@ -180,7 +181,7 @@
 
         }
 
-        
+
 
     }
 })();
