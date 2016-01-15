@@ -339,24 +339,6 @@
                         failedCallback('Error processing request',error);
                         console.error(error);
                     });
-
-            if(startIndex!==undefined){
-                params.startIndex=startIndex;
-            }
-
-            if(limit!==undefined){
-                params.limit=limit;
-            }
-
-            return resource.get(params).$promise
-                    .then(function(response){
-                        successCallback(response);
-                    })
-                    .catch(function(error){
-                        failedCallback('Error processing request',error);
-                        console.error(error);
-                    });
-
         }
 
 
