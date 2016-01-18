@@ -1072,6 +1072,9 @@
                   "type": "date",
                   "validators": [
                     {
+                      "type": "date"
+                    },
+                    {
                       "type": "js_expression",
                       "failsWhenExpression": "!isEmpty(onTbTreatment) && arrayContains(['a899b35c-1350-11df-a1f1-0026b9348838'], onTbTreatment) && isEmpty(myValue)",
                       "message": "You indicated patient on tb treatment, indicate start date."
