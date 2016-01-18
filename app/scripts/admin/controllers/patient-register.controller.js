@@ -63,6 +63,11 @@
         exportDataType: $scope.exportDataType.value
       });
     };
+
+    //Pagination Params
+    $scope.nextStartIndex = 0;
+    $scope.allDataLoaded = false;
+
     //Start Initialization
     init();
 
@@ -71,10 +76,10 @@
       loadIndicatorsSchema();
     }
 
-    function loadIndicators() {
+    function loadIndicators(loadNextOffset) {
       $scope.experiencedLoadingErrors = false;
       if ($scope.isBusy === true) return;
-      $scope.indicators = [];
+      if (loadNextOffset !== true)resetPaging();
       $scope.isBusy = true;
       if ($scope.groupBy && $scope.groupBy !== '' && $scope.reportName && $scope.reportName !== '' && $scope.startDate && $scope.startDate !== '' && $scope.selectedIndicatorTags.indicatorTags && $scope.selectedIndicatorTags.indicatorTags !== []) {
         console.log('Location', $scope.selectedLocation);
@@ -89,17 +94,29 @@
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           $scope.reportName, $scope.countBy, onFetchIndicatorsSuccess, onFetchIndicatorsError, $scope.groupBy,
-          locations, '', indicators);
-
+          locations, '', indicators, $scope.nextStartIndex, 300);
       } else {
         $scope.isBusy = false;
       }
     }
 
+    function resetPaging() {
+      $scope.nextStartIndex = 0;
+      $scope.indicators = [];
+      $scope.allDataLoaded = false;
+    }
+
     function onFetchIndicatorsSuccess(result) {
       $scope.isBusy = false;
       console.log('Sql query for HivSummaryIndicators request=======>', result.sql, result.sqlParams);
-      $scope.indicators = result.result;
+
+      //update pagination parameters
+      if (result.size === 0) {
+        $scope.allDataLoaded = true;
+      } else {
+        $scope.indicators.length != 0 ? $scope.indicators.push.apply($scope.indicators, result.result) : $scope.indicators = result.result;
+        $scope.nextStartIndex += result.size;
+      }
       buildDataTable();
     }
 
@@ -180,7 +197,7 @@
      * Functions to populate and define bootstrap data table
      */
     function buildDataTable() {
-      $timeout(function() {
+      $timeout(function () {
         buildColumns();
         buildTableControls();
       }, 500);
@@ -197,7 +214,7 @@
         visible: true,
         tooltip: true,
         sortable: true,
-        formatter: function(value, row, index) {
+        formatter: function (value, row, index) {
           return cellFormatter(value, row, index, header);
         }
       });
@@ -205,9 +222,10 @@
 
     function buildColumns() {
       $scope.columns = [];
-      _.each($scope.indicatorTags, function(header) {
-        if (header.name === 'location' || header.name === 'person_name' || header.name === 'encounter_date' || header.name === 'identifiers') buildSingleColumn(header);
-        _.each($scope.selectedIndicatorTags.indicatorTags, function(selectedIndicator) {
+      _.each($scope.indicatorTags, function (header) {
+        if (header.name === 'location' || header.name === 'person_name' || header.name === 'encounter_date'
+          || header.name === 'identifiers') buildSingleColumn(header);
+        _.each($scope.selectedIndicatorTags.indicatorTags, function (selectedIndicator) {
           if (selectedIndicator.name === header.name) {
             buildSingleColumn(header);
           }
@@ -271,6 +289,7 @@
         }
       };
     }
+
     /**
      * Function to format detailed view
      */
@@ -291,8 +310,8 @@
      * Converts 0 or 1 to true or false else return value (Fromats
      */
     function valueToBooleanFormatter(value) {
-      if (value === 1) return '<span class="text-success">True</span>';
-      if (value === 0) return '<span class="text-warning">False</span>';
+      if (value === 1) return '<span class="text-success"><i style="position:static  !important;" class="glyphicon glyphicon-ok"/></span>';
+      if (value === 0) return '<span class="text-warning"><i style="position: static !important;"class="glyphicon glyphicon-remove"/></span>';
       return value
     }
 
@@ -305,8 +324,10 @@
       if (header.name === 'encounter_date') return '<span class="text-info text-capitalize" style="white-space: nowrap;">' +
         $filter('date')(value, 'dd, MMM, y') + '</span></div>';
       if (header.name === 'person_name')
-        return '<div class="text-center" style="height:43px!important; " ><a href="#/admin-dashboard/patient-register/patient/' + row.person_uuid + '"><span class="text-info text-capitalize">' + value + '  </span><a/></div>';
-      return '<div class="text-center" style="height:43px!important;width:100% " ><span style="white-space: nowrap;">' + valueToBooleanFormatter(value) + '</span></div>';
+        return '<div class="text-center" style="height:43px!important; " ><a href="#/admin-dashboard/patient-register/patient/'
+          + row.person_uuid + '"><span class="text-info text-capitalize">' + value + '  </span><a/></div>';
+      return '<div class="text-center" style="height:43px!important;width:100% " ><span style="white-space: nowrap;">'
+        + valueToBooleanFormatter(value) + '</span></div>';
     }
 
     /**

@@ -24,7 +24,7 @@
           <ui-select id="indicator-control" multiple ng-model="selectedIndicatorTags.indicatorTags" theme="bootstrap"
                      on-select="onSelectedIndicatorTagChanged($select.search)"
                      on-remove="onSelectedIndicatorTagChanged($select.search)">
-            <ui-select-match placeholder="Select Report Indicator or type to search">{{$item.name}}</ui-select-match>
+            <ui-select-match placeholder="Select desired Indicator(s) or type to search">{{$item.name}}</ui-select-match>
             <ui-select-choices repeat="indicatorTag in indicatorTags | propsFilter: {name: $select.search, label: $select.search} ">
               <div ng-bind-html="indicatorTag.name | highlight: $select.search"></div>
               <small ng-bind-html="indicatorTag.label | highlight: $select.search" class="border-success"></small>

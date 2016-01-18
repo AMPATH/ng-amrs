@@ -41,5 +41,21 @@
   </div>
   <!-- END DATATABLE -->
   <hr style="margin: 4px;" />
-
+  <div style="padding:2px; margin-bottom: 30px !important; ">
+  <div ng-show='!isBusy && !allDataLoaded'>
+    <span class="text-success">{{indicators.length}} Records Loaded. Click 'Load More' to fetch more records</span>
+    <button class="btn btn-info pull-right " ng-click="loadIndicators(true)">
+      <span class="glyphicon glyphicon-refresh"></span> Load More</button>
+  </div>
+  <div ng-show='isBusy && !allDataLoaded'>
+    <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+    <b>Loading data...</b>
+  </div>
+  <div ng-show='allDataLoaded' >
+    <p class="bg-info" style="padding:4px;">
+      <b>
+        <span style="color:green;" class="glyphicon glyphicon-ok" />All data loaded {{'[ ' + indicators.length + ' ]'}}</b>
+    <p>
+  </div>
+  </div>
 </div>

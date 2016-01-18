@@ -301,7 +301,7 @@
 
 			isolateScope.loadPatientDetails(1,'Test location');
 
-			expect(isolateScope.patientInLocation.result.length).to.equal(20);
+			expect(isolateScope.patientInLocation.length).to.equal(20);
 
 
 

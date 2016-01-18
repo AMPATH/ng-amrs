@@ -45,6 +45,10 @@
     $scope.loadIndicatorView = loadIndicatorView;
     $scope.getIndicatorDetails = getIndicatorDetails;
 
+    //Pagination Params
+    $scope.nextStartIndex = 0;
+    $scope.allDataLoaded = false;
+
     //load data
     loadPatientList();
 
@@ -61,17 +65,17 @@
       $state.go('admin.hiv-summary-indicators.indicator');
     }
 
-    function loadPatientList() {
+    function loadPatientList(loadNextOffset) {
       $scope.experiencedLoadingErrors = false;
       if ($scope.isBusy === true) return;
+      if(loadNextOffset!==true)resetPaging();
       $scope.isBusy = true;
-      $scope.patients = [];
       if ($scope.locationUuid && $scope.locationUuid !== '' && $scope.indicator && $scope.indicator !== ''
         && $scope.startDate && $scope.startDate !== '') {
         EtlRestService.getPatientListByIndicator($scope.locationUuid,
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-          $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError);
+          $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError, $scope.nextStartIndex, 300);
       }
       else {
         $scope.experiencedLoadingErrors = true;
@@ -79,10 +83,25 @@
       }
     }
 
+    function resetPaging(){
+      $scope.nextStartIndex = 0;
+      $scope.patients = [];
+      $scope.allDataLoaded = false;
+    }
+
+
     function onFetchPatientsListSuccess(patients) {
       $scope.isBusy = false;
       console.log("Sql query for PatientList request=======>", patients.sql, patients.sqlParams);
-      $scope.patients = PatientEtlModel.toArrayOfModels(patients.result);
+
+      //update pagination parameters
+      if (patients.size === 0){
+        $scope.allDataLoaded = true;
+      }else{
+        $scope.patients.length!=0?$scope.patients.push.apply($scope.patients,PatientEtlModel.toArrayOfModels(patients.result)):
+          $scope.patients = PatientEtlModel.toArrayOfModels(patients.result);
+        $scope.nextStartIndex +=  patients.size;
+      }
     }
 
     function onFetchPatientsListError(error) {

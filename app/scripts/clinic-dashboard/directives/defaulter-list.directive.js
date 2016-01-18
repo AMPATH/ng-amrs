@@ -38,6 +38,10 @@ jshint -W003, -W026
 
     $scope.utcDateToLocal = utcDateToLocal;
 
+    //Pagination Params
+    $scope.nextStartIndex = 0;
+    $scope.allDataLoaded = false;
+
     activate();
 
     function activate() {
@@ -63,22 +67,33 @@ jshint -W003, -W026
       return day;
     }
 
-    function loadDefaulterList() {
+    function loadDefaulterList(loadNextOffset) {
           $scope.experiencedLoadingErrors = false;
 
           if ($scope.isBusy === true) return;
-
+          if(loadNextOffset!==true)resetPaging();
           $scope.isBusy = true;
-          $scope.patients = [];
 
           if ($scope.locationUuid && $scope.locationUuid !== '')
-                EtlRestService.getDefaultersList($scope.locationUuid, $scope.defaulterThreshold, onFetchDefaultersListSuccess, onFetchDefaultersListError);
+                EtlRestService.getDefaultersList($scope.locationUuid, $scope.defaulterThreshold,
+                  onFetchDefaultersListSuccess, onFetchDefaultersListError, $scope.nextStartIndex, 300);
 
         }
+    function resetPaging(){
+      $scope.nextStartInts = [];
+      $scope.allDataLoaded = false;
+    }
 
     function onFetchDefaultersListSuccess(defaulters) {
       $scope.isBusy = false;
-      $scope.patients = DefaulterModel.toArrayOfModels(defaulters.result);
+      //update pagination parameters
+      if (defaulters.size === 0){
+        $scope.allDataLoaded = true;
+      }else{
+        $scope.patients.length!=0?$scope.patients.push.apply($scope.patients,DefaulterModel.toArrayOfModels(defaulters.result)):
+          $scope.patients = DefaulterModel.toArrayOfModels(defaulters.result);
+        $scope.nextStartIndex +=  defaulters.size;
+      }
     }
 
     function onFetchDefaultersListError(error) {
