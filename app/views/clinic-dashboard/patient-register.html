@@ -1,0 +1,45 @@
+<h2 style=" margin-top: 0px !important; "> <span style="font-size:20px;" class="glyphicon glyphicon-user text-info"></span><strong> Patient Register Report</strong> </h2>
+
+<stats-clinic-dashboard-hiv-summary-filters enabled-controls="'start-date, end-date, location, indicator'" start-date="startDate"
+                           selected-locations="selectedLocations" selected-indicator-tags="selectedIndicatorTags"
+                           end-date="endDate" report-name="reportName">
+</stats-clinic-dashboard-hiv-summary-filters>
+<br>
+<div  class="well" style="padding:2px; margin-bottom: 5px !important; ">
+  <div style="cursor: pointer;" class="alert alert-danger" ng-click="loadIndicators()" ng-show='experiencedLoadingErrors' >
+				<span class="glyphicon glyphicon-exclamation-sign">
+        </span> An error occurred while generating indicators. Please try again.</b>
+    <button class="btn btn-info pull-right" style="padding: 2px!important;" ng-click="loadIndicators()">
+      <span class="glyphicon glyphicon-refresh"></span>
+      <span>Re-Load</span>
+    </button>
+  </div>
+  <div style="height: 35px" ng-show='!isBusy && !experiencedLoadingErrors'>
+    <button data-ng-disabled="selectedIndicatorTags.indicatorTags.length===0" class="btn btn-info pull-right" ng-click="loadIndicators()">
+      <span class="glyphicon glyphicon-refresh"></span>
+      <span>Generate Report</span>
+    </button>
+  </div>
+  <div  ng-show='isBusy'>
+    <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+    <b> Generating Indicators, Please wait...</b>
+  </div>
+</div>
+
+<div collapse="!indicators.length"  class="well" style="padding:4px; margin-bottom: 0px !important; width:inherit">
+  <hr style="margin: 0px;" />
+  <!-- DATATABLE -->
+  <div>
+
+    <div id="toolbar">
+      <select ng-model='exportDataType' style="margin-left: 5px" class="form-control"
+              ng-options="l.name for l in exportList" ng-change="updateSelectedType()">
+      </select>
+    </div>
+    <table id="bsTable" class="table table-striped table-condensed table-hover" bs-table-control="bsTableControl" >
+    </table>
+  </div>
+  <!-- END DATATABLE -->
+  <hr style="margin: 4px;" />
+
+</div>

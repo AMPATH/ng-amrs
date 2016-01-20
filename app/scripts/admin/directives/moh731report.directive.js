@@ -98,54 +98,36 @@
         /**
          Location  related  methods
          **/
-        function fetchLocations(){
-            $scope.isBusy=true;
-            locationService.getLocations(onGetLocationsSuccess,
-                    onGetLocationsError,true);
-        }
-        function onGetLocationsSuccess(locations){
-            //  $scope.isBusy=false;
-            $scope.locations=wrapLocations(locations);
+         function fetchLocations() {
+           $scope.isBusy = true;
+           locationService.getLocations(onGetLocationsSuccess,
+             onGetLocationsError, false);
+         }
 
-        }
-        function onGetLocationsError(error){
-            $scope.isBusy=false;
-            console.log("error on locations called");
-            //$scope.$parent.experiencedLoadingErrors=true;
-           // $scope.experiencedLoadingErrors=true;
-        }
-        function wrapLocations(locations){
-            var wrappedLocations=[];
-            var locationsFetched=1;
-            for(var i=0;i<locations.length;i++){
-                locationService.getLocationByUuidFromEtlOrCatch(locations[i].uuid,true,function(success){
-                  //  console.log("Success on  position"+locationsFetched+"OF"+locations.length)
+         function onGetLocationsSuccess(locations) {
+           $scope.isBusy = false;
+           $scope.locations = wrapLocations(locations);
+           //$scope.selectedLocations.locations = $scope.locations;
+         }
 
-                    if(locations.length===locationsFetched){
-                        $scope.isBusy=false;
+         function onGetLocationsError(error) {
+           $scope.isBusy = false;
+         }
 
-                    }
-                    locationsFetched++;
-                },function(error){
+         function wrapLocations(locations) {
+           var wrappedLocations = [];
+           for (var i = 0; i < locations.length; i++) {
+             var wrapped = wrapLocation(locations[i]);
+             wrapped.index = i;
+             wrappedLocations.push(wrapped);
+           }
 
-                    if(locations.length===locationsFetched){
+           return wrappedLocations;
+         }
 
-                        $scope.isBusy=false;
-                    }
-                  //  console.log("Error on  position"+locationsFetched+"OF"+locations.length)
-                    locationsFetched++;
-                });
-                var wrapped=wrapLocation(locations[i]);
-                wrapped.index=i;
-                wrappedLocations.push(wrapped);
-            }
-
-            return wrappedLocations;
-        }
-
-        function wrapLocation(location){
-            return new LocationModel.toWrapper(location);
-        }
+         function wrapLocation(location) {
+           return LocationModel.toWrapper(location);
+         }
         //signifies    location  selection   copleat
         //set  selected  parameters  to parent  scope
         function locationSelected(){
@@ -158,12 +140,12 @@
 
                 $scope.$parent.selectedSearchLocations=[];
                 angular.forEach(CachedDataService.getCachedEtlLocations(),function(value,key){
-                    $scope.$parent.selectedSearchLocations.push(value.location_id);
+                    $scope.$parent.selectedSearchLocations.push(value);
                 });
             }else{
                 $scope.$parent.selectedSearchLocations=[];
                 angular.forEach($scope.selectedLocations.locations,function(value,key){
-                    $scope.$parent.selectedSearchLocations.push(CachedDataService.getCachedEtlLocations()[value.uuId()].location_id);
+                    $scope.$parent.selectedSearchLocations.push(value.uuId());
                 });
             }
             $scope.$parent.startDate=$scope.startDate;

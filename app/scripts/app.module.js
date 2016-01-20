@@ -63,6 +63,7 @@
           templateUrl: 'views/clinic-dashboard/clinic-dashboard.html',
           controller: 'ClinicDashboardCtrl',
           data: { requireLogin: true },
+           reloadOnSearch: false,
         })
         .state('clinical-dashboard.defaulters-list', {
           url: '/defaulters-list',
@@ -80,6 +81,18 @@
           url: '/monthly-appointments',
           templateUrl: 'views/clinic-dashboard/monthly-appointments-tab.html',
           controller: 'ClinicDashboardCtrl',
+          data: { requireLogin: true },
+        })
+        .state('clinical-dashboard.moh-731', {
+          url: '/moh-731',
+          templateUrl: 'views/clinic-dashboard/moh-731.html',
+          controller: 'moh731ReportCtrl',
+          data: { requireLogin: true },
+        })
+        .state('clinical-dashboard.patient-register', {
+          url: '/patient-register',
+          templateUrl: 'views/clinic-dashboard/patient-register.html',
+          controller: 'PatientRegisterCtrl',
           data: { requireLogin: true },
         })
         .state('encounter', {
@@ -199,7 +212,7 @@
        EtlRestServicesSettings, UtilService) {
 
       $rootScope.$on('$stateChangeStart',function(event, toState, toParams) {
-          
+
                  //checking if  pdf report generation  path
          if(toState.url==='/moh-731-generate-pdf'){
                         //call renerate report
