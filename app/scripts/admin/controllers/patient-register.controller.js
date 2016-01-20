@@ -1,21 +1,21 @@
 /*jshint -W003, -W098, -W033 */
-(function () {
+(function() {
   'use strict';
 
   angular
     .module('app.admin')
     .controller('PatientRegisterCtrl', PatientRegisterCtrl);
-  PatientRegisterCtrl.$inject =
-    ['$rootScope', '$scope', '$stateParams', 'EtlRestService', 'moment', '$filter', '$state',
-      'OpenmrsRestService','$timeout'];
+  PatientRegisterCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'EtlRestService', 'moment', '$filter', '$state',
+    'OpenmrsRestService', '$timeout'
+  ];
 
-  function PatientRegisterCtrl($rootScope, $scope, $stateParams, EtlRestService,  moment, $filter,
-                               $state, OpenmrsRestService,$timeout) {
+  function PatientRegisterCtrl($rootScope, $scope, $stateParams, EtlRestService, moment, $filter,
+    $state, OpenmrsRestService, $timeout) {
 
     //Patient List Directive Properties & Methods
     var date = new Date();
-    $scope.startDate = new Date(date.getFullYear(), date.getMonth()-1, 1);
-    $scope.endDate  = date;
+    $scope.startDate = new Date(date.getFullYear(), date.getMonth() - 1, 1);
+    $scope.endDate = date;
 
     //Hiv Summary Indicators Service Properties & Methods
     $scope.reportName = 'patient-register-report';
@@ -29,23 +29,33 @@
     $scope.experiencedLoadingError = false;
 
     //Dynamic DataTable Params
-    $scope.indicators = [];  //set filtered indicators to []
+    $scope.indicators = []; //set filtered indicators to []
     $scope.currentPage = 1;
     $scope.counter = 0;
-    $scope.setCountType = function (val) {
+    //This is used by the clinic dashboard
+    $scope.selectedLocation = '';
+    $scope.setCountType = function(val) {
       $scope.countBy = val;
       loadHivSummaryIndicators()
     };
 
     //DataTable Options
     $scope.columns = [];
-    $scope.bsTableControl = {options: {}};
-    $scope.exportList = [
-      {name: 'Export Basic', value: ''},
-      {name: 'Export All', value: 'all'},
-      {name: 'Export Selected', value: 'selected'}];
+    $scope.bsTableControl = {
+      options: {}
+    };
+    $scope.exportList = [{
+      name: 'Export Basic',
+      value: ''
+    }, {
+      name: 'Export All',
+      value: 'all'
+    }, {
+      name: 'Export Selected',
+      value: 'selected'
+    }];
     $scope.exportDataType = $scope.exportList[1];
-    $scope.updateSelectedType = function () {
+    $scope.updateSelectedType = function() {
       console.log($scope.exportDataType.value, $scope.exportDataType.name);
       var bsTable = document.getElementById('bsTable');
       var element = angular.element(bsTable);
@@ -58,7 +68,7 @@
 
     //scope methods
     function init() {
-    loadIndicatorsSchema();
+      loadIndicatorsSchema();
     }
 
     function loadIndicators() {
@@ -66,16 +76,20 @@
       if ($scope.isBusy === true) return;
       $scope.indicators = [];
       $scope.isBusy = true;
-      if ($scope.groupBy && $scope.groupBy !== '' && $scope.reportName && $scope.reportName !== ''
-        && $scope.startDate && $scope.startDate !== '' && $scope.selectedIndicatorTags.indicatorTags
-        && $scope.selectedIndicatorTags.indicatorTags !== []) {
-        var locations = getSelectedLocations($scope.selectedLocations);
+      if ($scope.groupBy && $scope.groupBy !== '' && $scope.reportName && $scope.reportName !== '' && $scope.startDate && $scope.startDate !== '' && $scope.selectedIndicatorTags.indicatorTags && $scope.selectedIndicatorTags.indicatorTags !== []) {
+        console.log('Location', $scope.selectedLocation);
+        var locations = '';
+        if ($scope.selectedLocation !== '') {
+          locations = $scope.selectedLocation;
+        } else {
+          locations = getSelectedLocations($scope.selectedLocations);
+        }
         var indicators = getSelectedIndicators($scope.selectedIndicatorTags);
         EtlRestService.getHivSummaryIndicators(
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           $scope.reportName, $scope.countBy, onFetchIndicatorsSuccess, onFetchIndicatorsError, $scope.groupBy,
-          locations,'', indicators);
+          locations, '', indicators);
 
       } else {
         $scope.isBusy = false;
@@ -108,8 +122,17 @@
       $scope.isBusy = false;
       $scope.indicatorTags = result.result;
       //push non indicator columns
-      $scope.indicatorTags.unshift({name: 'person_name'},{name: 'identifiers'},{name: 'encounter_date'},
-        {name: 'location'},  {name: 'location_uuid'})
+      $scope.indicatorTags.unshift({
+        name: 'person_name'
+      }, {
+        name: 'identifiers'
+      }, {
+        name: 'encounter_date'
+      }, {
+        name: 'location'
+      }, {
+        name: 'location_uuid'
+      })
     }
 
     function onFetchIndicatorsSchemaError(error) {
@@ -118,13 +141,25 @@
     }
 
     $rootScope.$on('$stateChangeStart',
-      function (event, toState, toParams, fromState, fromParams) {
-        if ((toState.name === 'admin.patient-register.patient' && fromState.name === 'admin.patient-register')
-        ||(toState.name === 'admin.patient-register.patient' && fromState.name === 'admin.patient-register.patient')) {
-          OpenmrsRestService.getPatientService().getPatientByUuid({uuid: toParams.uuid},
-            function (data) {
+      function(event, toState, toParams, fromState, fromParams) {
+        console.log('ToState',toState);
+        console.log('FromState',fromState);
+        if ((toState.name === 'admin.patient-register.patient' &&
+        fromState.name === 'admin.patient-register') ||
+        ((toState.name === 'admin.patient-register.patient' &&
+        fromState.name === 'clinical-dashboard.patient-register'))||
+        (toState.name === 'admin.patient-register.patient' &&
+        fromState.name === 'admin.patient-register.patient'))
+
+        {
+          OpenmrsRestService.getPatientService().getPatientByUuid({
+              uuid: toParams.uuid
+            },
+            function(data) {
               $rootScope.broadcastPatient = data;
-              $state.go('patient', {uuid: toParams.uuid});
+              $state.go('patient', {
+                uuid: toParams.uuid
+              });
             });
         }
       });
@@ -135,8 +170,10 @@
      */
 
     function getIndicatorLabelByName(name) {
-      var found = $filter('filter')($scope.indicatorTags, {name: name})[0];
-      if (found)return found.label;
+      var found = $filter('filter')($scope.indicatorTags, {
+        name: name
+      })[0];
+      if (found) return found.label;
     }
 
     /**
@@ -156,11 +193,11 @@
         title: $filter('titlecase')(header.name.toString().split('_').join(' ')),
         align: 'center',
         valign: 'center',
-        class:header.name==='person_name'?'bst-table-min-width':undefined,
+        class: header.name === 'person_name' ? 'bst-table-min-width' : undefined,
         visible: true,
         tooltip: true,
-        sortable:true,
-        formatter: function (value, row, index) {
+        sortable: true,
+        formatter: function(value, row, index) {
           return cellFormatter(value, row, index, header);
         }
       });
@@ -168,10 +205,9 @@
 
     function buildColumns() {
       $scope.columns = [];
-      _.each($scope.indicatorTags, function (header) {
-        if (header.name === 'location' ||  header.name === 'person_name' || header.name === 'encounter_date'
-          || header.name === 'identifiers') buildSingleColumn(header);
-        _.each($scope.selectedIndicatorTags.indicatorTags, function (selectedIndicator) {
+      _.each($scope.indicatorTags, function(header) {
+        if (header.name === 'location' || header.name === 'person_name' || header.name === 'encounter_date' || header.name === 'identifiers') buildSingleColumn(header);
+        _.each($scope.selectedIndicatorTags.indicatorTags, function(selectedIndicator) {
           if (selectedIndicator.name === header.name) {
             buildSingleColumn(header);
           }
@@ -213,7 +249,9 @@
           toolbarAlign: 'left',
           exportTypes: ['json', 'xml', 'csv', 'txt', 'png', 'sql', 'doc', 'excel', 'powerpoint', 'pdf'],
           columns: $scope.columns,
-          exportOptions: {fileName: 'hivSummaryIndicators'},
+          exportOptions: {
+            fileName: 'hivSummaryIndicators'
+          },
           iconSize: undefined,
           iconsPrefix: 'glyphicon', // glyphicon of fa (font awesome)
           icons: {
@@ -229,7 +267,7 @@
             detailClose: 'glyphicon-minus'
           },
           fixedColumns: true,
-          fixedNumber:1
+          fixedNumber: 1
         }
       };
     }
@@ -238,7 +276,7 @@
      */
     function detailFormatter(index, row) {
       var html = [];
-      _.each(row, function (value, key) {
+      _.each(row, function(value, key) {
         if (key === 'location_uuid' || key === 'state') return;
         var label = getIndicatorLabelByName(key) || key;
         label = $filter('titlecase')(label.toString().split('_').join(' '));
@@ -253,8 +291,8 @@
      * Converts 0 or 1 to true or false else return value (Fromats
      */
     function valueToBooleanFormatter(value) {
-      if (value === 1)return '<span class="text-success">True</span>';
-      if (value === 0)return '<span class="text-warning">False</span>';
+      if (value === 1) return '<span class="text-success">True</span>';
+      if (value === 0) return '<span class="text-warning">False</span>';
       return value
     }
 
@@ -267,10 +305,8 @@
       if (header.name === 'encounter_date') return '<span class="text-info text-capitalize" style="white-space: nowrap;">' +
         $filter('date')(value, 'dd, MMM, y') + '</span></div>';
       if (header.name === 'person_name')
-        return '<div class="text-center" style="height:43px!important; " ><a href="#/admin-dashboard/patient-register/patient/'
-          + row.person_uuid + '"><span class="text-info text-capitalize">' + value + '  </span><a/></div>';
-      return '<div class="text-center" style="height:43px!important;width:100% " ><span style="white-space: nowrap;">'
-        +valueToBooleanFormatter(value)+ '</span></div>';
+        return '<div class="text-center" style="height:43px!important; " ><a href="#/admin-dashboard/patient-register/patient/' + row.person_uuid + '"><span class="text-info text-capitalize">' + value + '  </span><a/></div>';
+      return '<div class="text-center" style="height:43px!important;width:100% " ><span style="white-space: nowrap;">' + valueToBooleanFormatter(value) + '</span></div>';
     }
 
     /**
@@ -282,8 +318,7 @@
         for (var i = 0; i < selectedIndicatorObject.indicatorTags.length; i++) {
           if (i === 0) {
             indicators = '' + selectedIndicatorObject.indicatorTags[i].name;
-          }
-          else {
+          } else {
             indicators =
               indicators + ',' + selectedIndicatorObject.indicatorTags[i].name;
           }
@@ -299,8 +334,7 @@
         for (var i = 0; i < selectedLocationObject.locations.length; i++) {
           if (i === 0) {
             locations = '' + selectedLocationObject.locations[i].uuId();
-          }
-          else {
+          } else {
             locations =
               locations + ',' + selectedLocationObject.locations[i].uuId();
           }
