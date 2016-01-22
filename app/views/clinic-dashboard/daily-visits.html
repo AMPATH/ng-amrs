@@ -96,6 +96,24 @@
       <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="customPatients.length" items-per-page="10"
                   ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
                   last-text="&raquo;" rotate="false"></pagination>
+      <!-- END DATATABLE -->
+      <hr style="margin: 4px;" />
+      <div style="padding:2px; margin-bottom: 30px !important; ">
+        <div ng-show='!isBusy && !allDataLoaded4DailyVisits'>
+          <span class="text-success">{{visitPatients.length}} Records Loaded. Click 'Load More' to fetch more records</span>
+          <button class="btn btn-info pull-right " ng-click="loadSchedule(true)">
+            <span class="glyphicon glyphicon-refresh"></span> Load More</button>
+        </div>
+        <div ng-show='isBusy && !allDataLoaded4DailyVisits'>
+          <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+          <b>Loading data...</b>
+        </div>
+        <div ng-show='allDataLoaded4DailyVisits' >
+          <p class="bg-info" style="padding:4px;">
+            <b>
+              <span style="color:green;" class="glyphicon glyphicon-ok" />All data loaded {{'[ ' + visitPatients.length + ' ]'}}</b>
+          <p>
+        </div>
     </div>
   </div>
   </div>
@@ -161,9 +179,28 @@
       </table>
 
       <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
-      <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="patients.length" items-per-page="10"
+      <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="customPatientsNotReturned.length" items-per-page="10"
                   ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
                   last-text="&raquo;" rotate="false"></pagination>
+      <!-- END DATATABLE -->
+      <hr style="margin: 4px;" />
+      <div style="padding:2px; margin-bottom: 30px !important; ">
+        <div ng-show='!isBusy && !allDataLoaded4DailyNotReturnedVisits'>
+          <span class="text-success">{{notReturnedVisitPatients.length}} Records Loaded. Click 'Load More' to fetch more records</span>
+          <button class="btn btn-info pull-right " ng-click="loadSchedule(true)">
+            <span class="glyphicon glyphicon-refresh"></span> Load More</button>
+        </div>
+        <div ng-show='isBusy && !allDataLoaded4DailyNotReturnedVisits'>
+          <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+          <b>Loading data...</b>
+        </div>
+        <div ng-show='allDataLoaded4DailyNotReturnedVisits' >
+          <p class="bg-info" style="padding:4px;">
+            <b>
+              <span style="color:green;" class="glyphicon glyphicon-ok" />All data loaded {{'[ ' + notReturnedVisitPatients.length + ' ]'}}</b>
+          <p>
+        </div>
+      </div>
     </div>
     </div>
   </div>
@@ -233,6 +270,25 @@
       <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="customAppointmentPatients.length" items-per-page="10"
                   ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
                   last-text="&raquo;" rotate="false"></pagination>
+      <!-- END DATATABLE -->
+      <hr style="margin: 4px;" />
+      <div style="padding:2px; margin-bottom: 30px !important; ">
+        <div ng-show='!isBusy && !allDataLoaded4AppointmentSchedule'>
+          <span class="text-success">{{appointmentPatients.length}} Records Loaded. Click 'Load More' to fetch more records</span>
+          <button class="btn btn-info pull-right " ng-click="loadSchedule(true)">
+            <span class="glyphicon glyphicon-refresh"></span> Load More</button>
+        </div>
+        <div ng-show='isBusy && !allDataLoaded4AppointmentSchedule'>
+          <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+          <b>Loading data...</b>
+        </div>
+        <div ng-show='allDataLoaded4AppointmentSchedule' >
+          <p class="bg-info" style="padding:4px;">
+            <b>
+              <span style="color:green;" class="glyphicon glyphicon-ok" />All data loaded {{'[ ' + appointmentPatients.length + ' ]'}}</b>
+          <p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -191,14 +191,9 @@ jshint -W098, -W117, -W003, -W026
 
     function getDefaultersList(locationUuid, defaulterThreshold, successCallback, failedCallback, startIndex, limit) {
       console.log('calling mock getDefaultersList');
+       startIndex = 0;
+       limit = service.numberOfDefaultersToReturn;
 
-      if (!startIndex) {
-        startIndex = 0;
-      }
-
-      if (!limit) {
-        limit = service.numberOfDefaultersToReturn;
-      }
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on getDefaultersList');
         failedCallback({ message: 'An error occured' });
@@ -216,13 +211,6 @@ jshint -W098, -W117, -W003, -W026
           result: []
         });
         return;
-      }
-
-      if ((startIndex + limit) > service.numberOfDefaultersToReturn) {
-        numberOfRecords = service.numberOfDefaultersToReturn - (startIndex + limit);
-      }
-      else {
-        numberOfRecords = limit;
       }
 
       for (var i = startIndex; i < (startIndex + numberOfRecords); i++) {
@@ -452,9 +440,8 @@ jshint -W098, -W117, -W003, -W026
         startIndex = 0;
       }
 
-      if (!limit) {
-        limit = service.numberOfPatientCreationInLocationRowsToReturn;
-      }
+       limit = service.numberOfPatientCreationInLocationRowsToReturn;
+
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on getDetailsOfPatientsCreatedInLocation');
         failedCallback({ message: 'An error occured' });
@@ -470,13 +457,6 @@ jshint -W098, -W117, -W003, -W026
           result: []
         });
         return;
-      }
-
-      if ((startIndex + limit) > service.numberOfPatientCreationRowsToReturn) {
-        numberOfRecords = service.numberOfPatientCreationRowsToReturn - (startIndex + limit);
-      }
-      else {
-        numberOfRecords = limit;
       }
 
       for (var i = startIndex; i < (startIndex + numberOfRecords); i++) {
@@ -720,13 +700,9 @@ jshint -W098, -W117, -W003, -W026
     function getPatientByIndicatorAndLocation(locationUuid, startDate, endDate, indicator, successCallback, failedCallback,
                                               startIndex, limit, locationIds){
       console.log('calling mock getPatientByIndicatorAndLocation');
-      if (!startIndex) {
-        startIndex = 0;
-      }
-
-      if (!limit) {
+        startIndex = startIndex;
         limit = service.numberOfPatientsToReturn;
-      }
+
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on getPatientByIndicatorAndLocation');
         failedCallback({ message: 'An error occurred' });
@@ -744,13 +720,6 @@ jshint -W098, -W117, -W003, -W026
         return;
       }
 
-      if ((startIndex + limit) > service.numberOfPatientsToReturn) {
-        numberOfRecords = service.numberOfPatientsToReturn - (startIndex + limit);
-      }
-      else {
-        numberOfRecords = limit;
-      }
-
       for (var i = startIndex; i < (startIndex + numberOfRecords); i++) {
         patients.push(getPatientEtlRecord(i));
       }
@@ -764,13 +733,9 @@ jshint -W098, -W117, -W003, -W026
     function getPatientListByIndicator(locationUuid, startDate, endDate, indicator, successCallback, failedCallback,
       startIndex, limit) {
       console.log('calling mock getPatientListByIndicator');
-      if (!startIndex) {
-        startIndex = 0;
-      }
 
-      if (!limit) {
+        startIndex = startIndex;
         limit = service.numberOfPatientsToReturn;
-      }
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on getPatientListByIndicator');
         failedCallback({ message: 'An error occured' });
@@ -786,13 +751,6 @@ jshint -W098, -W117, -W003, -W026
           result: []
         });
         return;
-      }
-
-      if ((startIndex + limit) > service.numberOfPatientsToReturn) {
-        numberOfRecords = service.numberOfPatientsToReturn - (startIndex + limit);
-      }
-      else {
-        numberOfRecords = limit;
       }
 
       for (var i = startIndex; i < (startIndex + numberOfRecords); i++) {
