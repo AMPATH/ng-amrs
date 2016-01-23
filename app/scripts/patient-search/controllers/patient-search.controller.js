@@ -67,10 +67,5 @@
       // needs to be a function or it won't trigger a $watch
       $scope.search = {};
     };
-
-    $scope.resetSearchList = function() {
-        PatientSearchService.resetPatients();
-        $scope.searchString = '';
-    };
   }
 })();
