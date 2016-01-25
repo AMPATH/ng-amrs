@@ -697,8 +697,8 @@ jshint -W098, -W117, -W003, -W026
 
       return hivSummaryEtl;
     }
-    function getPatientByIndicatorAndLocation(locationUuid, startDate, endDate, indicator, successCallback, failedCallback,
-                                              startIndex, limit, locationIds){
+    function getPatientByIndicatorAndLocation(locationIds,startDate,endDate,indicator,successCallback,
+                                              failedCallback,locationUuids,startIndex,limit){
       console.log('calling mock getPatientByIndicatorAndLocation');
         startIndex = startIndex;
         limit = service.numberOfPatientsToReturn;

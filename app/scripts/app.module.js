@@ -155,7 +155,7 @@
           data: { requireLogin: true},
         })
         .state('admin.hiv-monthly-summary-indicators.patients', {
-          url: '/location/:locationuuid/indicator/:indicator',
+          url: '/month/:month/indicator/:indicator',
           templateUrl: 'views/admin/patient-monthly-list-container.html',
           controller: 'HivMonthlySummaryIndicatorsCtrl',
           data: { requireLogin: true },

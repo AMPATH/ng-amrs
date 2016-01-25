@@ -1,5 +1,5 @@
 <div ng-disabled="isBusy">
-  <div class="well" style="padding:4px; margin-bottom: 10px !important;" ng-hide="!locationUuid">
+  <div class="well" style="padding:4px; margin-bottom: 10px !important;">
 
     <div class="alert alert-danger" ng-click="loadPatientList()" ng-show='experiencedLoadingErrors' >
 
@@ -27,7 +27,9 @@
       <b>Loading data...</b>
     </div>
   </div >
-  <h3 class="text-warning">Patient List: {{getIndicatorDetails().label.replace('# of', '')|titlecase  }}</h3>
+  <h3 class="text-warning">Patient List: {{getIndicatorDetails().label.replace('# of', '')|titlecase  }}
+  For the Month Of {{ selectedMonth |  date: 'MMMM, y'}}
+  </h3>
   <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
 	<table class='table table-hover table-striped'>
 		<thead>

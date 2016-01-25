@@ -48,7 +48,6 @@
       {name: 'Export Selected', value: 'selected'}];
     $scope.exportDataType=$scope.exportList[1];
     $scope.updateSelectedType = function() {
-      console.log($scope.exportDataType.value, $scope.exportDataType.name);
       var bsTable= document.getElementById('bsTable');
       var element = angular.element(bsTable);
       element.bootstrapTable('refreshOptions', {
@@ -68,8 +67,8 @@
       if($scope.isBusy === true) return;
       $scope.indicators =[];
       $scope.isBusy = true;
-      if ($scope.selectedLocations.locations && $scope.selectedLocations.locations !== [] && $scope.countBy && $scope.countBy !== '' && $scope.reportName && $scope.reportName!==''
-        && $scope.startDate && $scope.startDate!=='' )
+      if ($scope.countBy && $scope.countBy !== '' && $scope.reportName && $scope.reportName!=='' && $scope.startDate
+        && $scope.startDate!=='' )
         var locations =getSelectedLocations($scope.selectedLocations);
         EtlRestService.getHivSummaryIndicators(
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
@@ -79,19 +78,22 @@
     }
 
     function getSelectedLocations(selectedLocationObject) {
-      if (selectedLocationObject.selectedAll === true)
-        return;
       var locations;
-      if (selectedLocationObject.locations)
-        for (var i = 0; i < selectedLocationObject.locations.length; i++) {
-          if (i === 0) {
-            locations = '' + selectedLocationObject.locations[i].uuId();
-          }
-          else {
-            locations =
-              locations + ',' + selectedLocationObject.locations[i].uuId();
+      try {
+        if (angular.isDefined(selectedLocationObject.locations)) {
+          for (var i = 0; i < selectedLocationObject.locations.length; i++) {
+            if (i === 0) {
+              locations = '' + selectedLocationObject.locations[i].uuId();
+            }
+            else {
+              locations =
+                locations + ',' + selectedLocationObject.locations[i].uuId();
+            }
           }
         }
+      } catch (e) {
+
+      }
       return locations;
     }
 
@@ -133,12 +135,12 @@
 
     $rootScope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams){
-        loadPatientList(toParams.indicator, toParams.locationuuid)
+        loadPatientList(toParams.indicator, toParams.month)
       });
 
-    function loadPatientList(indicator, location) {
+    function loadPatientList(indicator, month) {
       $scope.selectedIndicatorBox=indicator;
-      $scope.selectedLocation=location;
+      HivMonthlySummaryIndicatorService.setSelectedMonth(moment(month*1000));
       HivMonthlySummaryIndicatorService.setIndicatorDetails(getIndicatorDetails(indicator));
       cacheResource(); //cache report before changing view/state
     }
@@ -176,6 +178,7 @@
     function cacheResource() {
       HivMonthlySummaryIndicatorService.setIndicatorTags($scope.indicatorTags);
       HivMonthlySummaryIndicatorService.setIndicators($scope.indicators);
+      HivMonthlySummaryIndicatorService.setSelectedLocation(getSelectedLocations($scope.selectedLocations));
       HivMonthlySummaryIndicatorService.setStartDate($scope.startDate);
       HivMonthlySummaryIndicatorService.setEndDate($scope.endDate);
     }
@@ -288,7 +291,7 @@
       return ['<a class="btn btn-large btn-default" style="padding: inherit; width:100%; max-width: 300px"',
         'title="'+getIndicatorLabelByName(header.name)+' " data-toggle="tooltip"' ,
         'data-placement="top"',
-        'href="#/admin-dashboard/hiv-monthly-summary-indicators/location/'+row.location_uuid+'/indicator/'+header.name
+        'href="#/admin-dashboard/hiv-monthly-summary-indicators/month/'+ Date.parse(new Date(row.month))/1000+'/indicator/'+header.name
         +'">'+value+'</a>'
       ].join('');
     }
