@@ -261,7 +261,12 @@
             detailClose: 'glyphicon-minus'
           },
           fixedColumns: $scope.fixedColumns,
-          fixedNumber:1
+          fixedNumber:1,
+          onPostBody:function(){
+            //please make sure you calibrate results[0].style.maxHeight with relation to height (550)
+            var results = document.getElementsByClassName("fixed-table-body-columns");
+            results[0].style.maxHeight='380px';
+          }
         }
       };
     }

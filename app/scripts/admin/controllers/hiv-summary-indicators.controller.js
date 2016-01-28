@@ -244,6 +244,11 @@
           },
           fixedColumns: true,
           fixedNumber:1,
+          onPostBody:function(){
+            //please make sure you calibrate results[0].style.maxHeight with relation to height (550)
+            var results = document.getElementsByClassName("fixed-table-body-columns");
+            results[0].style.maxHeight='380px';
+          },
           onExpandRow:function onExpandRow(index, row, $detail) {
             //$scope.fixedColumns=false;
             //$('#bsTable').bootstrapTable('hideColumn','encounter_datetime');
