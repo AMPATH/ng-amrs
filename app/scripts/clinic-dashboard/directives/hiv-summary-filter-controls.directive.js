@@ -69,6 +69,7 @@ jshint -W003, -W026
       //expose member to scope
       $scope.loadIndicatorsSchema= loadIndicatorsSchema;
       $scope.fetchLocations=fetchLocations;
+      $scope.reInitialize =  init;
       $rootScope.$on('location:change', function(){
         $scope.$parent.selectedLocation=ClinicDashboardService.
             getSelectedLocation().selected.uuId();
@@ -96,12 +97,24 @@ jshint -W003, -W026
     }
 
     function onFetchIndicatorsSchemaSuccess(result) {
-      $scope.isBusy = false;
       $scope.indicatorTags =result.result;
+      $scope.indicatorSelectOptions = {
+        placeholder: 'Select desired Indicator(s) or type to search...',
+        dataTextField: 'name',
+        dataValueField: 'name',
+        filter: 'contains',
+        autoClose: false,
+        itemTemplate: '<span></span>' +
+        '<span><strong>#: data.name #</strong><br/><span><small>#: data.label #</small></span></span>',
+        tagTemplate:  '<span class="selected-value"></span><span>#:data.name#</span>',
+        dataSource:result.result
+      };
+      $scope.isBusy = false;
     }
 
     function onFetchIndicatorsSchemaError(error) {
       $scope.isBusy = false;
+      $scope.indicatorSelectOptions = {};
       $scope.experiencedLoadingErrors = true;
     }
     function onSelectedIndicatorTagChanged(tag) {

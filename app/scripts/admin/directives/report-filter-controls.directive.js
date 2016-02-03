@@ -7,7 +7,7 @@ jshint -W003, -W026
 
 	angular
 		.module('app.admin')
-		.directive('statsHivSummaryFilters', directive);
+		.directive('reportFilters', directive);
 
 	function directive() {
 		return {
@@ -23,16 +23,16 @@ jshint -W003, -W026
         reportName:"="
 
     },
-			controller: hivSummaryFilterController,
-			link: hivSummaryFilterLink,
-			templateUrl: "views/admin/hiv-summary-filter-controls.html"
+			controller: reportFiltersController,
+			link: reportFiltersLink,
+			templateUrl: "views/admin/report-filter-controls.html"
 		};
 	}
 
-  hivSummaryFilterController.$inject = ['$scope', '$rootScope', 'SearchDataService', 'moment', '$state', '$filter',
+  reportFiltersController.$inject = ['$scope', '$rootScope', 'SearchDataService', 'moment', '$state', '$filter',
     'CachedDataService', 'LocationModel','OpenmrsRestService', 'EtlRestService'];
 
-    function hivSummaryFilterController($scope, $rootScope, SearchDataService, moment, $state, $filter, CachedDataService,
+    function reportFiltersController($scope, $rootScope, SearchDataService, moment, $state, $filter, CachedDataService,
   LocationModel, OpenmrsRestService, EtlRestService) {
 		$scope.forms = [];
 		$scope.selectedForms = {};
@@ -63,10 +63,13 @@ jshint -W003, -W026
     $scope.indicatorTags = [];
     $scope.onSelectedIndicatorTagChanged=onSelectedIndicatorTagChanged;
     $scope.selectAllTags= selectAllTags;
+    $scope.locationsOptions = {};
+
 
       //expose member to scope
       $scope.loadIndicatorsSchema= loadIndicatorsSchema;
       $scope.fetchLocations=fetchLocations;
+      $scope.reInitialize =  init;
 
       //pre-load data
     init();
@@ -89,12 +92,24 @@ jshint -W003, -W026
     }
 
     function onFetchIndicatorsSchemaSuccess(result) {
-      $scope.isBusy = false;
       $scope.indicatorTags =result.result;
+      $scope.indicatorSelectOptions = {
+        placeholder: 'Select desired Indicator(s) or type to search...',
+        dataTextField: 'name',
+        dataValueField: 'name',
+        filter: 'contains',
+        autoClose: false,
+        itemTemplate: '<span></span>' +
+        '<span><strong>#: data.name #</strong><br/><span><small>#: data.label #</small></span></span>',
+        tagTemplate:  '<span class="selected-value"></span><span>#:data.name#</span>',
+        dataSource:result.result
+      };
+      $scope.isBusy = false;
     }
 
     function onFetchIndicatorsSchemaError(error) {
       $scope.isBusy = false;
+      $scope.indicatorSelectOptions = {};
       $scope.experiencedLoadingErrors = true;
     }
     function onSelectedIndicatorTagChanged(tag) {
@@ -143,23 +158,41 @@ jshint -W003, -W026
     }
 
     function onGetLocationsSuccess(locations) {
-      $scope.isBusy = false;
       $scope.locations = wrapLocations(locations);
+      $scope.locationsOptions = {
+        placeholder: 'Select a location or type to search...',
+        dataTextField: 'name()',
+        filter: 'contains',
+        dataSource:wrapLocations(locations)
+      };
+      $scope.isBusy = false;
       //$scope.selectedLocations.locations = $scope.locations;
     }
 
     function onGetLocationsError(error) {
       $scope.isBusy = false;
+      $scope.locationsOptions = {};
     }
 
     function wrapLocations(locations) {
       var wrappedLocations = [];
+      var locationsFetched = 1;
       for (var i = 0; i < locations.length; i++) {
+        locationService.getLocationByUuidFromEtlOrCatch(locations[i].uuid, true, function (success) {
+          if (locations.length === locationsFetched) {
+            $scope.isBusy = false;
+          }
+          locationsFetched++;
+        }, function (error) {
+          if (locations.length === locationsFetched) {
+            $scope.isBusy = false;
+          }
+          locationsFetched++;
+        });
         var wrapped = wrapLocation(locations[i]);
         wrapped.index = i;
         wrappedLocations.push(wrapped);
       }
-
       return wrappedLocations;
     }
 
@@ -190,6 +223,6 @@ jshint -W003, -W026
     }
 	}
 
-	function hivSummaryFilterLink(scope, element, attrs, vm) {
+	function reportFiltersLink(scope, element, attrs, vm) {
     }
 })();

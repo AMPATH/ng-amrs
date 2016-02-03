@@ -81,7 +81,9 @@
       if ($scope.isBusy === true) return;
       if (loadNextOffset !== true)resetPaging();
       $scope.isBusy = true;
-      if ($scope.groupBy && $scope.groupBy !== '' && $scope.reportName && $scope.reportName !== '' && $scope.startDate && $scope.startDate !== '' && $scope.selectedIndicatorTags.indicatorTags && $scope.selectedIndicatorTags.indicatorTags !== []) {
+      if ($scope.groupBy && $scope.groupBy !== '' && $scope.reportName && $scope.reportName !== '' &&
+        $scope.startDate && $scope.startDate !== '' && $scope.selectedIndicatorTags.indicatorTags &&
+        $scope.selectedIndicatorTags.indicatorTags !== []) {
         console.log('Location', $scope.selectedLocation);
         var locations = '';
         if ($scope.selectedLocation !== '') {

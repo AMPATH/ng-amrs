@@ -28,6 +28,7 @@
     //UX Scope Params
     $scope.isBusy = false;
     $scope.experiencedLoadingError = false;
+    $scope.resultIsEmpty= false;
 
     //Dynamic DataTable Params
     $scope.indicators = [];  //set filtered indicators to []
@@ -64,6 +65,7 @@
 
     function loadHivSummaryIndicators() {
       $scope.experiencedLoadingErrors = false;
+      $scope.resultIsEmpty= false;
       if($scope.isBusy === true) return;
       $scope.indicators =[];
       $scope.isBusy = true;
@@ -102,6 +104,7 @@
       $scope.isBusy = false;
       console.log('Sql query for HivSummaryIndicators request=======>', result.sql, result.sqlParams);
       $scope.indicators = result.result;
+      if(result.result.length===0)  $scope.resultIsEmpty= true;
       //
       buildDataTable();
     }

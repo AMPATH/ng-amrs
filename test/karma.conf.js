@@ -87,6 +87,7 @@ module.exports = function (config) {
     'bower_components/datatables-responsive/js/dataTables.responsive.js',
     'bower_components/flot.tooltip/js/jquery.flot.tooltip.js',
     'bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js',
+    'bower_components/kendo-ui/js/kendo.ui.core.min.js',
     'bower_components/angular-mocks/angular-mocks.js',
     // endbower
       'app/scripts/**/*.module.js',

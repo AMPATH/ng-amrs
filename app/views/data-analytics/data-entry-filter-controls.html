@@ -20,12 +20,10 @@
 						</span>
 						<span ng-hide="isBusy" class="glyphicon glyphicon-map-marker"></span>
 					</div>
-					<ui-select multiple ng-model="selectedLocations.locations" theme="bootstrap" ng-disabled="isBusy === true">
-						<ui-select-match placeholder="Select a location or type to search">{{$item.name()}}</ui-select-match>
-						<ui-select-choices repeat="location in locations | propsFilter: {name: $select.search, description: $select.search} ">
-							<div ng-bind-html="location.name() | highlight: $select.search"></div>
-						</ui-select-choices>
-					</ui-select>
+          <select ng-disabled="isBusy" multiple="multiple"  kendo-multi-select
+                  k-ng-model="selectedLocations.locations"
+                  k-options="locationsOptions"
+            ></select>
 				</div>
 			</div>
 			<div class="form-group col-md-6" ng-show="canView('start-date')">
@@ -113,12 +111,10 @@
 			<div class="form-group col-md-6" ng-show="canView('selected-encounter')">
 				<label for="end-month">Encounter Type</label>
 				<div class="input-group">
-					<ui-select multiple ng-model="selectedEncounterTypes.selected" theme="bootstrap">
-						<ui-select-match placeholder="Select a form or type to search">{{$item.encounterTypeName}}</ui-select-match>
-						<ui-select-choices repeat="form in forms | propsFilter: {encounterTypeName: $select.search}">
-							<div ng-bind-html="form.encounterTypeName | highlight: $select.search"></div>
-						</ui-select-choices>
-					</ui-select>
+          <select ng-disabled="isBusy" multiple="multiple"  kendo-multi-select
+                  k-ng-model="selectedEncounterTypes.selected"
+                  k-options="encounterTypesOptions"
+            ></select>
 					<div class="input-group-addon" style="cursor: pointer;" ng-click="selectAllEncounterTypes()">
 						<span ng-hide="isBusy">All</span>
 					</div>
@@ -128,12 +124,10 @@
 			<div class="form-group col-md-6" ng-show="canView('selected-form')">
 				<label for="form">Form</label>
 				<div class="input-group">
-					<ui-select multiple ng-model="selectedForms.selected" theme="bootstrap">
-						<ui-select-match placeholder="Select a form or type to search">{{$item.name}}</ui-select-match>
-						<ui-select-choices repeat="form in forms | propsFilter: {name: $select.search}">
-							<div ng-bind-html="form.name | highlight: $select.search"></div>
-						</ui-select-choices>
-					</ui-select>
+          <select ng-disabled="isBusy" multiple="multiple"  kendo-multi-select
+                  k-ng-model="selectedForms.selected"
+                  k-options="FormsTypesOptions"
+            ></select>
 					<div class="input-group-addon" style="cursor: pointer;" ng-click="selectAllForms()">
 						<span ng-hide="isBusy">All</span>
 					</div>

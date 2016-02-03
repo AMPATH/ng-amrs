@@ -9,6 +9,7 @@
             'models',
             'ui.bootstrap',
             'app.dataAnalytics',
-            'bsTable'
+            'bsTable',
+            'kendo.directives'
         ]);
 })();
