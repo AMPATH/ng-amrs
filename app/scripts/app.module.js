@@ -31,6 +31,7 @@
       'ct.ui.router.extras',
       'sticky',
       'mwl.calendar',
+      'app.offline'
     ])
     .config(function($stateProvider, $stickyStateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');
