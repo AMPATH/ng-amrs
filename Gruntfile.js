@@ -343,7 +343,13 @@ module.exports = function (grunt) {
           cwd: 'bower_components/bootstrap/dist',
           src: 'fonts/*',
           dest: '<%= yeoman.dist %>'
-        }]
+        }, {
+            expand: true,
+            cwd: 'bower_components/kendo-ui/styles/Default',
+            src: ['*'],
+            dest: '<%= yeoman.dist %>/styles/Bootstrap'
+          }
+        ]
       },
       json: {
         files: [{

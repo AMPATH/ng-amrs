@@ -30,13 +30,18 @@ jshint -W003, -W026
 		};
 	}
 
-	dataEntryFilterController.$inject = ['$scope', '$rootScope', 
-	'SearchDataService', 'moment', '$state', '$filter', 'CachedDataService', 
+	dataEntryFilterController.$inject = ['$scope', '$rootScope',
+	'SearchDataService', 'moment', '$state', '$filter', 'CachedDataService',
 	'UserResService','OpenmrsRestService', 'LocationModel'];
 
-    function dataEntryFilterController($scope, $rootScope, SearchDataService, 
+    function dataEntryFilterController($scope, $rootScope, SearchDataService,
 	moment, $state, $filter, CachedDataService, UserResService,
 	OpenmrsRestService, LocationModel) {
+
+    $scope.locationsOptions = {};
+    $scope.encounterTypesOptions = {};
+    $scope.FormsTypesOptions = {};
+
 		$scope.forms = [];
 		$scope.selectedForms = {};
 		$scope.selectedForms.selected = [];
@@ -64,11 +69,25 @@ jshint -W003, -W026
 
 		loadForms();
 		fetchLocations();
-		
+
 		function loadForms() {
 			$scope.forms = CachedDataService.getCachedPocForms();
+      $scope.encounterTypesOptions = {
+        placeholder: 'Select a form or type to search...',
+        dataTextField: 'encounterTypeName',
+        dataValueField: 'uuid',
+        filter: 'contains',
+        dataSource:$scope.forms
+      };
+      $scope.FormsTypesOptions = {
+        placeholder: 'Select a form or type to search...',
+        dataTextField: 'name',
+        dataValueField: 'uuid',
+        filter: 'contains',
+        dataSource:$scope.forms
+      };
 		}
-		
+
 		function canView(param){
 			return $scope.enabledControls.indexOf(param) > -1;
 		}
@@ -88,7 +107,7 @@ jshint -W003, -W026
 			$scope.creators = [];
 			if (searchText && searchText !== ' ') {
 				$scope.findingCreator = true;
-				UserResService.findUser(searchText, 
+				UserResService.findUser(searchText,
 				onCreatorSearchSuccess, onCreatorSearchError);
 			}
 		}
@@ -101,13 +120,13 @@ jshint -W003, -W026
 		function onCreatorSearchError(error) {
 			$scope.findingCreator = false;
 		}
-		
+
 		function findProviders(searchText) {
 
 			$scope.providers = [];
 			if (searchText && searchText !== ' ') {
 				$scope.findingProvider = true;
-				SearchDataService.findProvider(searchText, 
+				SearchDataService.findProvider(searchText,
 				onProviderSearchSuccess, onProviderSearchError);
 			}
 		}
@@ -120,23 +139,29 @@ jshint -W003, -W026
 		function onProviderSearchError(error) {
 			$scope.findingProvider = false;
 		}
-		
+
 				function locationSelected() {
 			$scope.selectingLocation = false;
-			
+
 			//broadcast here
 			$rootScope.$broadcast('dataEntryStatsLocationSelected', true);
 		}
-		
+
 		function fetchLocations() {
 			$scope.isBusy = true;
-			locationService.getLocations(onGetLocationsSuccess, 
+			locationService.getLocations(onGetLocationsSuccess,
 			onGetLocationsError, false);
 		}
 
 		function onGetLocationsSuccess(locations) {
-			$scope.isBusy = false;
 			$scope.locations = wrapLocations(locations);
+      $scope.locationsOptions = {
+        placeholder: 'Select a location or type to search...',
+        dataTextField: 'name()',
+        filter: 'contains',
+        dataSource:wrapLocations(locations)
+      };
+      $scope.isBusy = false;
 			//$scope.selectedLocations.locations = $scope.locations;
 		}
 
@@ -161,6 +186,6 @@ jshint -W003, -W026
 	}
 
 	function dataEntryFilterLink(scope, element, attrs, vm) {
-        
+
     }
-})();	
+})();

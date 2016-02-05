@@ -1,20 +1,22 @@
  <h2 style=" margin-top: 0px !important; "> <span style="font-size:20px;" class="glyphicon glyphicon-signal text-info"></span><strong> HIV Indicators Visualization</strong> </h2>
 
-<stats-hiv-summary-visual-filters enabled-controls="'start-date, end-date'"  start-date="startDate" end-date="endDate" >
-</stats-hiv-summary-visual-filters>
+<report-filters enabled-controls="'start-date, end-date, location'" start-date="startDate"
+                selected-locations="selectedLocations"
+                end-date="endDate"  >
+</report-filters>
 
 <br>
 <div  class="well" style="padding:2px; margin-bottom: 5px !important; ">
     <div style="cursor: pointer;" class="alert alert-danger" ng-click="loadHivSummaryFlatTable()" ng-show='experiencedLoadingErrors' >
         <span class="glyphicon glyphicon-exclamation-sign">
         </span> An error occurred while generating indicators. Please try again.</b>
-        <button ng-disabled="!enableSubmitButton" class="btn btn-info pull-right" style="padding: 2px!important;" ng-click="loadHivSummaryFlatTable()">
+        <button  class="btn btn-info pull-right" style="padding: 2px!important;" ng-click="loadHivSummaryFlatTable()">
             <span class="glyphicon glyphicon-refresh"></span>
             <span>Re-Load</span>
         </button>
     </div>
     <div style="height: 35px" ng-show='!isBusy && !experiencedLoadingErrors'>
-        <button ng-disabled="!enableSubmitButton" class="btn btn-info pull-right" ng-click="loadHivSummaryFlatTable()">
+        <button class="btn btn-info pull-right" ng-click="loadHivSummaryFlatTable()">
             <span class="glyphicon glyphicon-refresh"></span>
             <span>Fetch Data</span>
         </button>

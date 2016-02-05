@@ -1,12 +1,18 @@
 <div class="well" style="padding:2px; cursor:pointer; margin-bottom: 2px !important;">
-	<div data-ng-click="isExpanded = !isExpanded" style="margin: 2px;">
+	<div style="margin: 2px;">
 		<strong>Report Filters</strong>
-		<span class="label label-default pull-right" style="margin-right: 4px;" ng-show="isExpanded">
-        <span class="glyphicon glyphicon-menu-up"> </span>
+    <span ng-click="reInitialize()" class="label label-default pull-right" style="margin-right: 4px;">
+        <span  ng-show="!isBusy" class="glyphicon glyphicon-refresh"> </span>
+      <span  ng-show="isBusy"><img src="images/ajax-loader.gif" /></span>
 		</span>
-		<span class="label label-default pull-right" style="margin-right: 4px;" ng-hide="isExpanded">
-        <span class="glyphicon glyphicon-menu-down"></span>
-		</span>
+    <span data-ng-click="isExpanded = !isExpanded">
+      <span class="label label-default pull-right" style="margin-right: 4px;" ng-show="isExpanded">
+          <span class="glyphicon glyphicon-menu-up"> </span>
+      </span>
+      <span class="label label-default pull-right" style="margin-right: 4px;" ng-hide="isExpanded">
+          <span class="glyphicon glyphicon-menu-down"></span>
+      </span>
+    </span>
 	</div>
 	<hr style="margin:1px;" />
 	<div class="panel panel-default" style="padding: 4px; margin: 2px;"  collapse="isExpanded">
@@ -16,20 +22,15 @@
         <label for="indicator-control">Indicator</label>
         <div class="input-group">
           <div class="input-group-addon">
-          <span class="text-danger">
-            <img ng-show="indicatorTags.length===0" src="images/ajax-loader.gif" />
-          </span>
-            <span ng-show="indicatorTags.length>0" class="glyphicon glyphicon-tags"></span>
+						<span class="text-danger">
+							<img ng-show="indicatorTags.length==0" src="images/ajax-loader.gif" />
+						</span>
+            <span ng-hide="indicatorTags.length==0" class="glyphicon glyphicon-map-marker"></span>
           </div>
-          <ui-select id="indicator-control" multiple ng-model="selectedIndicatorTags.indicatorTags" theme="bootstrap"
-                     on-select="onSelectedIndicatorTagChanged($select.search)"
-                     on-remove="onSelectedIndicatorTagChanged($select.search)">
-            <ui-select-match placeholder="Select desired Indicator(s) or type to search">{{$item.name}}</ui-select-match>
-            <ui-select-choices repeat="indicatorTag in indicatorTags | propsFilter: {name: $select.search, label: $select.search} ">
-              <div ng-bind-html="indicatorTag.name | highlight: $select.search"></div>
-              <small ng-bind-html="indicatorTag.label | highlight: $select.search" class="border-success"></small>
-            </ui-select-choices>
-          </ui-select>
+          <select id="indicator-control" ng-disabled="isBusy" multiple="multiple"  kendo-multi-select
+                  k-ng-model="selectedIndicatorTags.indicatorTags"
+                  k-options="indicatorSelectOptions"
+            ></select>
           <div class="input-group-addon"
                ng-click="selectAllTags()" style="cursor: pointer;" >
             <span ng-show="selectedIndicatorTags.selectedAll" class="glyphicon glyphicon-trash"></span>
@@ -69,17 +70,14 @@
         <div ng-hide="selectedLocations.selectedAll" class="input-group" >
           <div class="input-group-addon">
 						<span class="text-danger">
-							<img ng-show="isBusy" src="images/ajax-loader.gif" />
+							<img ng-show="locations.length==0" src="images/ajax-loader.gif" />
 						</span>
-            <span ng-hide="isBusy" class="glyphicon glyphicon-map-marker"></span>
+            <span ng-hide="locations.length==0" class="glyphicon glyphicon-map-marker"></span>
           </div>
-          <ui-select  multiple ng-model="selectedLocations.locations"
-                     theme="bootstrap" ng-disabled="isBusy === true">
-            <ui-select-match placeholder="Select a location or type to search">{{$item.name()}}</ui-select-match>
-            <ui-select-choices repeat="location in locations | propsFilter: {name: $select.search, description: $select.search} ">
-              <div ng-bind-html="location.name() | highlight: $select.search"></div>
-            </ui-select-choices>
-          </ui-select>
+          <select ng-disabled="isBusy" multiple="multiple"  kendo-multi-select
+                  k-ng-model="selectedLocations.locations"
+                  k-options="locationsOptions"
+            ></select>
           <div class="input-group-addon" ng-disabled="selectedLocations.locations.length===0" ng-click="selectAllLocations()" style="cursor: pointer;" >
             <span ng-show="selectedLocations.selectedAll" class="glyphicon glyphicon-trash"></span>
             <span ng-hide="selectedLocations.selectedAll" class="glyphicon glyphicon-pushpin"></span>

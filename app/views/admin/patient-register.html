@@ -1,9 +1,9 @@
 <h2 style=" margin-top: 0px !important; "> <span style="font-size:20px;" class="glyphicon glyphicon-user text-info"></span><strong> Patient Register Report</strong> </h2>
 
-<stats-hiv-summary-filters enabled-controls="'start-date, end-date, location, indicator'" start-date="startDate"
+<report-filters enabled-controls="'start-date, end-date, location, indicator'" start-date="startDate"
                            selected-locations="selectedLocations" selected-indicator-tags="selectedIndicatorTags"
                            end-date="endDate" report-name="reportName">
-</stats-hiv-summary-filters>
+</report-filters>
 <br>
 <div  class="well" style="padding:2px; margin-bottom: 5px !important; ">
   <div style="cursor: pointer;" class="alert alert-danger" ng-click="loadIndicators()" ng-show='experiencedLoadingErrors' >
@@ -13,6 +13,10 @@
       <span class="glyphicon glyphicon-refresh"></span>
       <span>Re-Load</span>
     </button>
+  </div>
+  <div style="cursor: pointer;" class="alert alert-warning" ng-click="loadIndicators()" ng-show='resultIsEmpty' >
+        <span class="glyphicon glyphicon-exclamation-sign">
+        </span> Empty report data returned. Please check your Report Filters and try again.</b>
   </div>
   <div style="height: 35px" ng-show='!isBusy && !experiencedLoadingErrors'>
     <button data-ng-disabled="selectedIndicatorTags.indicatorTags.length===0" class="btn btn-info pull-right" ng-click="loadIndicators()">

@@ -39,7 +39,8 @@
     "ngSticky": "~1.8.7",
     "pdfmake": "~0.1.20",
     "bootstrap-table-fixed-columns": "https://github.com/wenzhixin/bootstrap-table-fixed-columns.git#~1.0.0",
-    "startbootstrap-sb-admin-2": "~1.0.8"
+    "startbootstrap-sb-admin-2": "~1.0.8",
+    "kendo-ui": "kendo-ui-core#^2016.1.125"
   },
   "devDependencies": {
     "angular-mocks": "^1.3.0"
@@ -91,6 +92,13 @@
       "main": [
         "bootstrap-table-fixed-columns.css",
         "bootstrap-table-fixed-columns.js"
+      ]
+    },
+    "kendo-ui": {
+      "main": [
+        "styles/kendo.common.min.css",
+        "styles/kendo.bootstrap.min.css",
+        "js/kendo.ui.core.min.js"
       ]
     }
   }

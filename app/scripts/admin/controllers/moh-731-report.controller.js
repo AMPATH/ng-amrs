@@ -177,7 +177,6 @@
          * @returns {undefined}
          */
         function generateMoh731PdfReport(locationName,rowData){
-
             $scope.facilityData=CachedDataService.getCachedEtlLocations()[rowData["location_uuid"]];
             var params={facilityName:$scope.facilityData.description+"",
                 district:$scope.facilityData.county_district+"",
