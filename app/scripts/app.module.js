@@ -28,6 +28,7 @@
       'app.admin',
       'app.formentry',
       'app.utils',
+    //   'app.logToServer',
       'ct.ui.router.extras',
       'sticky',
       'mwl.calendar',
