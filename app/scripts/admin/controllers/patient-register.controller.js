@@ -81,7 +81,9 @@
       if ($scope.isBusy === true) return;
       if (loadNextOffset !== true)resetPaging();
       $scope.isBusy = true;
-      if ($scope.groupBy && $scope.groupBy !== '' && $scope.reportName && $scope.reportName !== '' && $scope.startDate && $scope.startDate !== '' && $scope.selectedIndicatorTags.indicatorTags && $scope.selectedIndicatorTags.indicatorTags !== []) {
+      if ($scope.groupBy && $scope.groupBy !== '' && $scope.reportName && $scope.reportName !== '' &&
+        $scope.startDate && $scope.startDate !== '' && $scope.selectedIndicatorTags.indicatorTags &&
+        $scope.selectedIndicatorTags.indicatorTags !== []) {
         console.log('Location', $scope.selectedLocation);
         var locations = '';
         if ($scope.selectedLocation !== '') {
@@ -285,7 +287,12 @@
             detailClose: 'glyphicon-minus'
           },
           fixedColumns: true,
-          fixedNumber: 1
+          fixedNumber: 1,
+          onPostBody:function(){
+            //please make sure you calibrate results[0].style.maxHeight with relation to height (550)
+            var results = document.getElementsByClassName("fixed-table-body-columns");
+            results[0].style.maxHeight='380px';
+          }
         }
       };
     }

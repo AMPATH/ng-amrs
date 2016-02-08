@@ -1,0 +1,85 @@
+<script id="customMonthCell.html" type="text/ng-template">
+  <div class="cal-month-day">
+
+    <span
+      class="pull-right"
+      data-cal-date
+      ng-click="dateClicked(day.date)"
+      ng-bind="day.label">
+    </span>
+
+    <p style="position: absolute; bottom: 10px; left: 5px">
+      <span
+       ng-repeat="event in day.events | orderBy:'startsAt' track by event.$id">
+       <span class="pull-left label label-{{event.labelType}}" style="margin-right:2px;">{{event.title}}</span>
+       </span>
+    </p>
+
+  </div>
+</script>
+<script id="calendarSlideBox.html" type="text/ng-template">
+<div class="cal-slide-box" uib-collapse="vm.isCollapsed" mwl-collapse-fallback="vm.isCollapsed">
+  <div class="cal-slide-content cal-event-list">
+    <ul class="unstyled list-unstyled">
+
+      <li
+        ng-repeat="event in vm.events | orderBy:'startsAt' track by event.$id"
+        ng-class="event.cssClass"
+        mwl-draggable="event.draggable === true"
+        drop-data="{event: event}">
+        <a
+          href="javascript:;"
+          class="event-item"
+          ng-click="vm.onEventClick({calendarEvent: event})">
+         <span class="label label-{{event.labelType}}">{{event.title}} Patient(s)</span>
+        </a>
+
+        <a
+          href="javascript:;"
+          class="event-item-edit"
+          ng-if="vm.editEventHtml && event.editable !== false"
+          ng-bind-html="vm.$sce.trustAsHtml(vm.editEventHtml)"
+          ng-click="vm.onEditEventClick({calendarEvent: event})">
+        </a>
+
+        <a
+          href="javascript:;"
+          class="event-item-delete"
+          ng-if="vm.deleteEventHtml && event.deletable !== false"
+          ng-bind-html="vm.$sce.trustAsHtml(vm.deleteEventHtml)"
+          ng-click="vm.onDeleteEventClick({calendarEvent: event})">
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</div>
+</script>
+<div>
+  <span>Key:
+  <span class="label label-info">scheduled</span>
+  <span class="label label-success">attended</span>
+    <span class="label label-warning">no return</span>
+    <span class="label label-danger">defaulted</span>
+  </span>
+</div>
+<div class="row">
+  <h2 class="text-center">{{ calendarTitle }}</h2>
+  <div class="text-center">
+    <div class="btn-group pull-right">
+
+      <button ng-disabled="isBusy" ng-click='getAppointments()' class="btn btn-primary" mwl-date-modifier date="viewDate" decrement="calendarView">
+        Previous Month
+      </button>
+      <button ng-disabled="isBusy" ng-click='getAppointments()' class="btn btn-default" mwl-date-modifier date="viewDate" set-to-today>
+        This Month
+      </button>
+      <button ng-disabled="isBusy" ng-click='getAppointments()' class="btn btn-primary" mwl-date-modifier date="viewDate" increment="calendarView">
+        Next Month
+      </button>
+    </div>
+  </div>
+</div>
+<mwl-calendar events="events" view="calendarView" view-title="calendarTitle"
+on-event-click="eventClicked(calendarEvent)" view-date="viewDate">
+</mwl-calendar>

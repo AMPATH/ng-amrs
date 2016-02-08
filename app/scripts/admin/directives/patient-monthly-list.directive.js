@@ -13,8 +13,6 @@ jshint -W003, -W026
         return {
             restrict: "E",
             scope: { locationUuid: "@",
-                      startDate: "@",
-                      endDate:"@",
                       indicator:"@"
             },
             controller: patientMonthlyListController,
@@ -35,9 +33,9 @@ jshint -W003, -W026
         $scope.isBusy = false;
         $scope.experiencedLoadingErrors = false;
         $scope.currentPage = 1;
-        $scope.startDate=HivMonthlySummaryIndicatorService.getStartDate();
-        $scope.endDate=HivMonthlySummaryIndicatorService.getEndDate();
-
+        $scope.selectedMonth=new Date(HivMonthlySummaryIndicatorService.getSelectedMonth());
+        $scope.startDate= new Date($scope.selectedMonth.getFullYear(), $scope.selectedMonth.getMonth(), 1);
+        $scope.endDate= new Date($scope.selectedMonth.getFullYear(), $scope.selectedMonth.getMonth()+1, 1)-1;
         //function types scope members
         $scope.loadPatientList = loadPatientList;
         $scope.loadPatient = loadPatient;
@@ -64,17 +62,18 @@ jshint -W003, -W026
         {
           $state.go('admin.hiv-monthly-summary-indicators.monthly');
         }
+
         function loadPatientList(loadNextOffset) {
             $scope.experiencedLoadingErrors = false;
             if($scope.isBusy === true) return;
+            $scope.locationUuid=HivMonthlySummaryIndicatorService.getSelectedLocation();
             $scope.isBusy = true;
-          if(loadNextOffset!==true)resetPaging();
-            if ($scope.locationUuid && $scope.locationUuid !== '' && $scope.indicator && $scope.indicator!==''
-              && $scope.startDate && $scope.startDate!=='' ) {
-              EtlRestService.getPatientListByIndicator($scope.locationUuid,
+            if(loadNextOffset!==true)resetPaging();
+            if ($scope.indicator && $scope.indicator!=='' && $scope.startDate && $scope.startDate!=='' ) {
+              EtlRestService.getPatientByIndicatorAndLocation($scope.locationUuid,
                 moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
                 moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-                $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError, $scope.nextStartIndex, 300);
+                $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError,$scope.locationUuid, $scope.nextStartIndex, 300);
             }
             else{
               $scope.experiencedLoadingErrors = true;

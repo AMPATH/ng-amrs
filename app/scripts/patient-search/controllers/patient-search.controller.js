@@ -19,6 +19,9 @@
     $scope.filter = '';
     $scope.patients = PatientSearchService.getPatients();
     $scope.isBusy = false;
+    $scope.isResetButton = true;
+    $scope.isSearchButton = true;
+    $scope.loaderButton = false;
     // pagination controls
     $scope.currentPage = 1;
     $scope.entryLimit = 10; // items per page
@@ -27,10 +30,15 @@
     $scope.$watch('searchString', function(searchString) {
       $scope.patients = PatientSearchService.getPatients();
       if (searchString && searchString.length > 2) {
+        $scope.isSearchButton = false;
+        $scope.loaderButton = true;
         $scope.isBusy = true;
         OpenmrsRestService.getPatientService().getPatientQuery({q:searchString},
           function(data) {
+            $scope.isSearchButton = true;
+            $scope.loaderButton = false;
             $scope.isBusy = false;
+            $scope.isResetButton = false;
             $scope.patients = data;
             PatientSearchService.resetPatients();
             PatientSearchService.setPatients(data);
@@ -66,6 +74,12 @@
     $scope.resetFilters = function() {
       // needs to be a function or it won't trigger a $watch
       $scope.search = {};
+    };
+
+    $scope.resetSearchList = function() {
+      $scope.isResetButton = true;
+      PatientSearchService.resetPatients();
+      $scope.searchString = '';
     };
   }
 })();

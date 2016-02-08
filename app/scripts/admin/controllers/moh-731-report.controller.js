@@ -7,9 +7,10 @@
             .controller('moh731ReportCtrl',moh731ReportCtrl);
     moh731ReportCtrl.$nject=
             ['$rootScope','$scope','$stateParams','EtlRestService','moment',
-                '$filter','$state','Moh731ReportService','CachedDataService'];
+                '$filter','$state','Moh731ReportService','CachedDataService','$timeout'];
 
-    function moh731ReportCtrl($rootScope,$scope,$stateParams,EtlRestService,moment,$filter,$state,Moh731ReportService,CachedDataService){
+    function moh731ReportCtrl($rootScope,$scope,$stateParams,EtlRestService,moment,$filter,$state,Moh731ReportService,
+                              CachedDataService,$timeout){
         //Patient List Directive Properties & Methods
         $scope.endDate=new Date();
         $scope.startDate=new Date(moment().subtract(1,'months').calendar());
@@ -37,6 +38,7 @@
         $scope.currentPage=1;
         $scope.defaultIndicators=[]; //initialize unfiltered indicators to []
         $scope.counter=0;
+        $scope.fixedColumns=true;
         //DataTable Options
         $scope.columns=[];
         $scope.bsTableControl={options:{}};
@@ -63,17 +65,12 @@
         $scope.isBusy=false;
 
 
-        init();
+         init();
 
         //scope methods
         function init(){
             buildColumns();
             buildTableControls();
-            var bsTable=document.getElementById('bsTable');
-            var element=angular.element(bsTable);
-            element.bootstrapTable('refreshOptions',{
-                exportDataType:$scope.exportDataType.value
-            });
         }
         $scope.$on('generate-moh-731-pdf-report',function(event,args){
 
@@ -152,16 +149,21 @@
                         detailOpen:'glyphicon-plus',
                         detailClose:'glyphicon-minus'
                     },
-                    fixedColumns:true,
+                    fixedColumns: $scope.fixedColumns,
                     fixedNumber:2,
                     onExpandRow:function onExpandRow(index,row,$detail){
-                        var result=document.getElementsByClassName("fixed-table-body-columns");
-                        result[0].style.visibility='hidden';
+                      var result=document.getElementsByClassName("fixed-table-body-columns");
+                      result[0].style.visibility='hidden';
                     },
-                    onCollapseRow:function onCollapseRow(index,row,$detail){
+                    onCollapseRow:function onCollapseRow(index,row,$detail) {
+                      var result = document.getElementsByClassName("fixed-table-body-columns");
+                      result[0].style.visibility = 'visible';
+                    },
 
-                        var result=document.getElementsByClassName("fixed-table-body-columns");
-                        result[0].style.visibility='visible';
+                    onPostBody:function(){
+                      //please make sure you calibrate results[0].style.maxHeight with relation to height (550)
+                      var results = document.getElementsByClassName("fixed-table-body-columns");
+                      results[0].style.maxHeight='380px';
                     }
                 }
             };
@@ -175,7 +177,6 @@
          * @returns {undefined}
          */
         function generateMoh731PdfReport(locationName,rowData){
-
             $scope.facilityData=CachedDataService.getCachedEtlLocations()[rowData["location_uuid"]];
             var params={facilityName:$scope.facilityData.description+"",
                 district:$scope.facilityData.county_district+"",
@@ -266,7 +267,23 @@
                         moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
                         $scope.selectedSearchLocations,$scope.countBy,onFetchMoh731ReportSuccess,onFetchMoh731ReportError);
         }
+      function sortReportByLocation(result){
+        angular.forEach(result.result,function(resultRow,key){
+          //test location  of  the  result  row
 
+          if(angular.isDefined($scope.dataSortedByLocation[resultRow.location_uuid])){
+            $scope.dataSortedByLocation[resultRow.location_uuid].push(resultRow)
+          }else{
+            $scope.dataSortedByLocation[resultRow.location_uuid]=[];
+            $scope.dataSortedByLocation[resultRow.location_uuid].push(resultRow);
+          }
+        },[]);
+      }
+        function buildReport () {
+          $timeout(function () {
+            buildTableControls();
+          }, 500);
+        }
         function onFetchMoh731ReportSuccess(result){
 
             $scope.reportGeneration=true;
@@ -277,16 +294,7 @@
 
             if(angular.isDefined(result.result)&&result.result.length>0){
                 $scope.moh731ReportData=result.result;
-                angular.forEach(result.result,function(resultRow,key){
-                    //test location  of  the  result  row
-
-                    if(angular.isDefined($scope.dataSortedByLocation[resultRow.location_uuid])){
-                          $scope.dataSortedByLocation[resultRow.location_uuid].push(resultRow)
-                    }else{
-                           $scope.dataSortedByLocation[resultRow.location_uuid]=[];
-                        $scope.dataSortedByLocation[resultRow.location_uuid].push(resultRow);
-                    }
-                },[]);
+                sortReportByLocation(result)
                 //processs dataSortedLocation
                 angular.forEach($scope.dataSortedByLocation,function(LocationRow,key){
                       $scope.LocationData[key]={};
@@ -311,7 +319,7 @@
                 },[]);
 
                 //start  of variable  names  to  label  names  change  on the  report  table
-                //generate Pdf  report 
+                //generate Pdf  report
                 $scope.indicatorNumber=0;
                 $scope.sectionNumber=0;
                 //$scope.indicatorNumber=0;
@@ -367,9 +375,13 @@
                 }else{
 
                 }
+              buildReport();
                 $scope.reportData=Moh731ReportService.generateReport(result.result[0]);
 
             }
+
+
+
         }
         function getReportSectionLabel(sectionKey){
             angular.forEach(Moh731ReportService.setSectionSchema(),function(value,key){

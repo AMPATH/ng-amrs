@@ -18,6 +18,15 @@
     <link rel="stylesheet" href="bower_components/c3/c3.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-table/dist/bootstrap-table.min.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-table-fixed-columns/bootstrap-table-fixed-columns.css" />
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css" />
+    <link rel="stylesheet" href="bower_components/datatables/media/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/metisMenu/dist/metisMenu.css" />
+    <link rel="stylesheet" href="bower_components/morrisjs/morris.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-social/bootstrap-social.css" />
+    <link rel="stylesheet" href="bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css" />
+    <link rel="stylesheet" href="bower_components/kendo-ui/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="bower_components/kendo-ui/styles/kendo.bootstrap.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -126,6 +135,18 @@
     <script src="bower_components/pdfmake/build/pdfmake.js"></script>
     <script src="bower_components/pdfmake/build/vfs_fonts.js"></script>
     <script src="bower_components/bootstrap-table-fixed-columns/bootstrap-table-fixed-columns.js"></script>
+    <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
+    <script src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
+    <script src="bower_components/flot/jquery.flot.js"></script>
+    <script src="bower_components/holderjs/holder.js"></script>
+    <script src="bower_components/metisMenu/dist/metisMenu.js"></script>
+    <script src="bower_components/raphael/raphael.js"></script>
+    <script src="bower_components/mocha/mocha.js"></script>
+    <script src="bower_components/morrisjs/morris.js"></script>
+    <script src="bower_components/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script src="bower_components/flot.tooltip/js/jquery.flot.tooltip.js"></script>
+    <script src="bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js"></script>
+    <script src="bower_components/kendo-ui/js/kendo.ui.core.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -205,7 +226,8 @@
     <script src="scripts/models/patient.etl.model.js"></script>
 
     <!-- directives -->
-    <script src="scripts/main/directives/main-navigation.directive.js"></script>
+    <script src="scripts/clinic-dashboard/directives/appointments-calendar.directive.js"></script>
+      <script src="scripts/main/directives/main-navigation.directive.js"></script>
     <script src="scripts/main/directives/version.directive.js"></script>
     <script src="scripts/patient-dashboard/directives/patient-demographics.directive.js"></script>
     <script src="scripts/patient-dashboard/directives/hiv-summary.directive.js"></script>
@@ -225,7 +247,7 @@
     <script src="scripts/admin/directives/patient-list.directive.js"></script>
     <script src="scripts/admin/directives/patient-monthly-list.directive.js"></script>
     <script src="scripts/admin/directives/patient-creation-statistics.directive.js"></script>
-    <script src="scripts/admin/directives/hiv-summary-filter-controls.directive.js"></script>
+    <script src="scripts/admin/directives/report-filter-controls.directive.js"></script>
     <script src="scripts/admin/directives/tooltip.directive.js"></script>
     <script src="scripts/data-analytics/directives/data-entry-filter-controls.directive.js"></script>
     <script src="scripts/data-analytics/directives/data-entry-stats-view-one.directive.js"></script>
@@ -233,11 +255,8 @@
     <script src="scripts/data-analytics/directives/data-entry-stats-view-three.directive.js"></script>
     <script src="scripts/data-analytics/directives/data-entry-stats-view-four.directive.js"></script>
     <script src="scripts/data-analytics/directives/data-entry-stats.directive.js"></script>
-    <script src="scripts/admin/directives/hiv-summary-visual-filter-controls.directive.js"></script>
     <script src="scripts/log-to-server/directives/toggle-logging.directive.js"></script>
     <script src="scripts/patient-dashboard/directives/current-visit-vitals.directive.js"></script>
-    <script src="scripts/admin/directives/hiv-monthly-summary-filter-controls.directive.js"></script>
-    <script src="scripts/admin/directives/moh731report.directive.js"></script>
     <script src="scripts/clinic-dashboard/directives/moh731report.directive.js"></script>
    <script src="scripts/clinic-dashboard/directives/hiv-summary-filter-controls.directive.js"></script>
     <!-- Controllers -->

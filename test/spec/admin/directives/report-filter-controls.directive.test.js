@@ -7,7 +7,7 @@
 /* global describe */
 (function () {
   'use strict';
-  describe('stats HivSummary Filters Unit Tests', function () {
+  describe('Data Analytics Report Filters Unit Tests', function () {
     beforeEach(function () {
       //debugger;
       module('ngAmrsApp');
@@ -20,9 +20,9 @@
 
     beforeEach(inject(function ($injector, $rootScope, $compile, $httpBackend) {
       elm = angular.element(
-        '<stats-hiv-summary-filters enabled-controls="\'start-date, end-date\'" ' +
+        '<report-filters enabled-controls="\'start-date, end-date\'" ' +
         'start-date="2015-04-01" end-date="2015-04-01" report-name="hiv-summary-report">  ' +
-        '</stats-hiv-summary-filters>'
+        '</report-filters>'
       );
       scope = $rootScope.$new();
       scope.location = {uuid: 'uuid'};

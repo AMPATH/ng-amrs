@@ -27,8 +27,13 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
           $timeout(function() {
             el[0].focus();
           });
+          el.on('blur', function() {
+            el[0].focus();
+          });
         }
       });
     }
+
+
   }
 })();

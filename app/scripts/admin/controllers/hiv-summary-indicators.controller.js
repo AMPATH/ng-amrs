@@ -27,6 +27,7 @@
     //UX Scope Params
     $scope.isBusy = false;
     $scope.experiencedLoadingError = false;
+    $scope.resultIsEmpty= false;
 
     //Dynamic DataTable Params
     $scope.indicators = [];  //set filtered indicators to []
@@ -62,6 +63,7 @@
     }
 
     function loadHivSummaryIndicators() {
+      $scope.resultIsEmpty= false;
       $scope.experiencedLoadingErrors = false;
       if ($scope.isBusy === true) return;
       $scope.indicators = [];
@@ -79,6 +81,7 @@
       $scope.isBusy = false;
       console.log('Sql query for HivSummaryIndicators request=======>', result.sql, result.sqlParams);
       $scope.indicators = result.result;
+      if(result.result.length===0)  $scope.resultIsEmpty= true;
       buildDataTable();
     }
 
@@ -244,6 +247,11 @@
           },
           fixedColumns: true,
           fixedNumber:1,
+          onPostBody:function(){
+            //please make sure you calibrate results[0].style.maxHeight with relation to height (550)
+            var results = document.getElementsByClassName("fixed-table-body-columns");
+            results[0].style.maxHeight='380px';
+          },
           onExpandRow:function onExpandRow(index, row, $detail) {
             //$scope.fixedColumns=false;
             //$('#bsTable').bootstrapTable('hideColumn','encounter_datetime');

@@ -57,43 +57,43 @@
 			expect(isolateScope.experiencedLoadingErrors).to.equal(false);
 		});
 
-		it('should call getPatientListByIndicator etl service method when loadPatientList is invoked',
+		it('should call getPatientByIndicatorAndLocation etl service method when loadPatientList is invoked',
       function () {
 			var isolateScope = scope.$$childHead;
-			var getPatientsSpy = sinon.spy(etlRestServiceMock, 'getPatientListByIndicator');
+			var getPatientsSpy = sinon.spy(etlRestServiceMock, 'getPatientByIndicatorAndLocation');
 			isolateScope.loadPatientList();
 			chai.expect(getPatientsSpy.callCount).to.equal(1);
 		});
 
-		it('should not call getPatientListByIndicator when another request is in progress when ' +
+		it('should not call getPatientByIndicatorAndLocation when another request is in progress when ' +
       'loadPatientList is called', function () {
 			var isolateScope = scope.$$childHead;
-			var getPatientsSpy = sinon.spy(etlRestServiceMock, 'getPatientListByIndicator');
+			var getPatientsSpy = sinon.spy(etlRestServiceMock, 'getPatientByIndicatorAndLocation');
 			isolateScope.isBusy = true;
 			isolateScope.loadPatientList();
 			chai.expect(getPatientsSpy.callCount).to.equal(0);
 		});
 
-		it('should not call getPatientListByIndicator when loadPatientList is called and location uuid not' +
-      ' supplied or empty', function () {
+		it('should make a call getPatientByIndicatorAndLocation when loadPatientList is called with empty location uuid not',
+      function () {
 			var isolateScope = scope.$$childHead;
-			var getPatientsSpy = sinon.spy(etlRestServiceMock, 'getPatientListByIndicator');
+			var getPatientsSpy = sinon.spy(etlRestServiceMock, 'getPatientByIndicatorAndLocation');
 
 			//case undefined
 			isolateScope.locationUuid = undefined;
 			isolateScope.loadPatientList();
-			chai.expect(getPatientsSpy.callCount).to.equal(0);
+			chai.expect(getPatientsSpy.callCount).to.equal(1);
 
 			//case empty
 			isolateScope.locationUuid = '';
 			isolateScope.loadPatientList();
-			chai.expect(getPatientsSpy.callCount).to.equal(0);
+			chai.expect(getPatientsSpy.callCount).to.equal(2);
 		});
 
-    it('should not call getPatientListByIndicator when loadPatientList is called and indicator not' +
+    it('should not call getPatientByIndicatorAndLocation when loadPatientList is called and indicator not' +
       ' supplied or empty', function () {
       var isolateScope = scope.$$childHead;
-      var getPatientsSpy = sinon.spy(etlRestServiceMock, 'getPatientListByIndicator');
+      var getPatientsSpy = sinon.spy(etlRestServiceMock, 'getPatientByIndicatorAndLocation');
 
       //case undefined
       isolateScope.indicator = undefined;
@@ -106,10 +106,10 @@
       chai.expect(getPatientsSpy.callCount).to.equal(0);
     });
 
-    it('should not call getPatientListByIndicator when loadPatientList is called and startDate not' +
+    it('should not call getPatientByIndicatorAndLocation when loadPatientList is called and startDate not' +
       ' supplied or empty', function () {
       var isolateScope = scope.$$childHead;
-      var getPatientsSpy = sinon.spy(etlRestServiceMock, 'getPatientListByIndicator');
+      var getPatientsSpy = sinon.spy(etlRestServiceMock, 'getPatientByIndicatorAndLocation');
 
       //case undefined
       isolateScope.startDate= undefined;
@@ -152,13 +152,13 @@
 			var isolateScope = scope.$$childHead;
 			etlRestServiceMock.returnErrorOnNextCall = false;
 			etlRestServiceMock.numberOfPatientsToReturn = 20;
-			isolateScope.patients = [];
+      isolateScope.patients = [];
 			isolateScope.loadPatientList();
 			expect(isolateScope.patients.length).to.equal(20);
 
 			//another test
 			etlRestServiceMock.numberOfPatientsToReturn = 40;
-			isolateScope.patients = [];
+      isolateScope.patients = [];
 			isolateScope.loadPatientList();
 			expect(isolateScope.patients.length).to.equal(40);
 		});

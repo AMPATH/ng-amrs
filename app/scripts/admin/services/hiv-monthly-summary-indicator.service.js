@@ -18,6 +18,7 @@
     var indicators;
     var defaultIndicators;
     var selectedPosition;
+    var selectedMonth;
     serviceDefinition = {
       getSelectedLocation: getSelectedLocation,
       setSelectedLocation: setSelectedLocation,
@@ -39,7 +40,9 @@
       getDefaultIndicators:getDefaultIndicators,
       setDefaultIndicators:setDefaultIndicators,
       getSelectedPosition:getSelectedPosition,
-      setSelectedPosition:setSelectedPosition
+      setSelectedPosition:setSelectedPosition,
+      getSelectedMonth:getSelectedMonth,
+      setSelectedMonth:setSelectedMonth
     };
     return serviceDefinition;
     function getSelectedLocation() {
@@ -50,12 +53,20 @@
       selectedLocation = location;
     }
 
+    function setSelectedMonth(value) {
+      selectedMonth = value;
+    }
+    function getSelectedMonth() {
+      return selectedMonth;
+    }
+
     function setSelectedPosition(value) {
       selectedPosition = value;
     }
     function getSelectedPosition() {
       return selectedPosition;
     }
+
 
     function getSelectedIndicatorTags() {
       return selectedIndicatorTags;
