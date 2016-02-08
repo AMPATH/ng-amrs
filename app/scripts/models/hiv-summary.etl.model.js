@@ -29,14 +29,14 @@
        hivSummaryEtl.uuid : '';
       var _encounterId = !UtilService.isNullOrUndefined(hivSummaryEtl.encounter_id) ?
        hivSummaryEtl.encounter_id : '';
-      var _encounterDatetime = !UtilService.isNullOrUndefined(hivSummaryEtl.encounter_datetime) ? 
+      var _encounterDatetime = !UtilService.isNullOrUndefined(hivSummaryEtl.encounter_datetime) ?
       hivSummaryEtl.encounter_datetime : '';
       var _locationId = !UtilService.isNullOrUndefined(hivSummaryEtl.location_id) ?
        hivSummaryEtl.location_id : '';
-      var _locationUuid = !UtilService.isNullOrUndefined(hivSummaryEtl.location_uuid) ? 
+      var _locationUuid = !UtilService.isNullOrUndefined(hivSummaryEtl.location_uuid) ?
       hivSummaryEtl.location_uuid : '';
 
-      var _visitNum = !UtilService.isNullOrUndefined(hivSummaryEtl.visit_num) ? 
+      var _visitNum = !UtilService.isNullOrUndefined(hivSummaryEtl.visit_num) ?
       hivSummaryEtl.visit_num : '';
       var _deathDate = hivSummaryEtl.death_date ? hivSummaryEtl.death_date : '';
       var _scheduledVisit = !UtilService.isNullOrUndefined(hivSummaryEtl.scheduled_visit) ?
@@ -58,7 +58,7 @@
        hivSummaryEtl.cur_arv_meds : '';
       var _curArvLine = !UtilService.isNullOrUndefined(hivSummaryEtl.cur_arv_line) ?
        hivSummaryEtl.cur_arv_line : '';
-      var _firstEvidencePatientPregnant = 
+      var _firstEvidencePatientPregnant =
       !UtilService.isNullOrUndefined(hivSummaryEtl.first_evidence_patient_pregnant) ?
        hivSummaryEtl.first_evidence_patient_pregnant : '';
 
@@ -67,7 +67,7 @@
        hivSummaryEtl.screened_for_tb : '';
       var _tbTxStartDate = !UtilService.isNullOrUndefined(hivSummaryEtl.tb_tx_start_date) ?
        hivSummaryEtl.tb_tx_start_date : '';
-      var _pcpProphylaxisStartDate = 
+      var _pcpProphylaxisStartDate =
       !UtilService.isNullOrUndefined(hivSummaryEtl.pcp_prophylaxis_start_date) ?
        hivSummaryEtl.pcp_prophylaxis_start_date : '';
       var _cd4Resulted = !UtilService.isNullOrUndefined(hivSummaryEtl.cd4_resulted) ?
@@ -88,8 +88,8 @@
       var _cd4Percent_2 = !UtilService.isNullOrUndefined(hivSummaryEtl.cd4_percent_2) ?
        hivSummaryEtl.cd4_percent_2 : '';
 
-      var _cd4Percent_2Date = 
-      !UtilService.isNullOrUndefined(hivSummaryEtl.cd4_percent_2_date) ? 
+      var _cd4Percent_2Date =
+      !UtilService.isNullOrUndefined(hivSummaryEtl.cd4_percent_2_date) ?
       hivSummaryEtl.cd4_percent_2_date : '';
       var _vlResulted = !UtilService.isNullOrUndefined(hivSummaryEtl.vl_resulted) ?
        hivSummaryEtl.vl_resulted : '';
@@ -108,7 +108,8 @@
        hivSummaryEtl.vl_order_date : '';
       var _cd4OrderDate = !UtilService.isNullOrUndefined(hivSummaryEtl.cd4_order_date) ?
        hivSummaryEtl.cd4_order_date : '';
-
+      var _enrollmentDate = !UtilService.isNullOrUndefined(hivSummaryEtl.enrollment_date) ?
+        hivSummaryEtl.enrollment_date : '';
 
       modelDefinition.personId = function (value) {
         if (angular.isDefined(value)) {
@@ -460,6 +461,16 @@
           return _cd4OrderDate;
         }
       };
+
+      modelDefinition.enrollmentDate = function (value) {
+        if (angular.isDefined(value)) {
+          _enrollmentDate = value;
+        }
+        else {
+          return _enrollmentDate;
+        }
+      };
+
 
     }
 

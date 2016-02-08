@@ -23,6 +23,9 @@
   <li class="list-group-item" style="font-size:large">Last Viral Load: {{hivSummary.vl_1()}} ({{hivSummary.vl_1Date() | date:'dd-MM-yyyy'}})</li>
   <li class="list-group-item" style="font-size:large">Last CD4 Count: {{hivSummary.cd4_1()}} ({{hivSummary.cd4_1Date()| date:'dd-MM-yyyy'}})</li>
   <li class="list-group-item" style="font-size:large">Current ARV Regimen: {{hivSummary.curArvMeds()}}</li>
+  <li class="list-group-item" style="font-size:large">Enrollment Date: {{hivSummary.enrollmentDate()| date:'dd-MM-yyyy'}}</li>
+  <li class="list-group-item" style="font-size:large">ARV Start Date: {{hivSummary.arvStartDate()| date:'dd-MM-yyyy'}}</li>
+
 </ul>
 <div>
   <button class="btn btn-info" ng-click="openHistoricalSection()" ng-show="!showingHistoricalSummary && hasSummary">
