@@ -77,6 +77,7 @@ module.exports = function (config) {
     'bower_components/pdfmake/build/pdfmake.js',
     'bower_components/pdfmake/build/vfs_fonts.js',
     'bower_components/bootstrap-table-fixed-columns/bootstrap-table-fixed-columns.js',
+    'bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js',
     'bower_components/datatables/media/js/jquery.dataTables.js',
     'bower_components/flot/jquery.flot.js',
     'bower_components/holderjs/holder.js',

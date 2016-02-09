@@ -28,9 +28,9 @@
       'app.admin',
       'app.formentry',
       'app.utils',
-      'app.logToServer',
       'ct.ui.router.extras',
-      'sticky'
+      'sticky',
+      'mwl.calendar',
     ])
     .config(function($stateProvider, $stickyStateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');

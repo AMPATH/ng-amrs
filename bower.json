@@ -39,6 +39,7 @@
     "ngSticky": "~1.8.7",
     "pdfmake": "~0.1.20",
     "bootstrap-table-fixed-columns": "https://github.com/wenzhixin/bootstrap-table-fixed-columns.git#~1.0.0",
+    "angular-bootstrap-calendar": "~0.18.4",
     "startbootstrap-sb-admin-2": "~1.0.8",
     "kendo-ui": "kendo-ui-core#^2016.1.125"
   },

@@ -43,6 +43,7 @@
     function onLocationSelection($event) {
       $scope.locationSelectionEnabled = false;
       ClinicDashboardService.setLocationSelectionEnabled(false);
+      //ClinicDashboardService.setSelectedLocation($scope.selected);
       $rootScope.$emit('location:change');
     }
 
