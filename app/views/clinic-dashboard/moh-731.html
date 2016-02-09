@@ -1,105 +1,48 @@
 
 <h2 style=" margin-top: 0px !important; "> <span style="font-size:20px;" class="glyphicon glyphicon-file text-info"></span><strong> MOH-731 Report</strong> </h2>
 
-<moh731-clinic-dashboard-report-filters enabled-controls="'start-date, end-date'"
+<stats-clinic-dashboard-hiv-summary-filters enabled-controls="'start-date, end-date'"
  start-date="startDate" end-date="endDate" >
-</moh731-clinic-dashboard-report-filters>
+</stats-clinic-dashboard-hiv-summary-filters>
+
 
 <br>
 <div  class="well" style="padding:2px; margin-bottom: 5px !important; ">
-    <div style="cursor: pointer;" class="alert alert-danger" ng-click="getReportData()"
-    ng-show='experiencedLoadingErrors' >
+  <div style="cursor: pointer;" class="alert alert-danger" ng-click="generateMoh731Report()" ng-show='experiencedLoadingErrors' >
         <span class="glyphicon glyphicon-exclamation-sign">
-            <button ng-disabled="!enableSubmitButton" class="btn btn-info pull-right"
-            style="padding: 2px!important;" ng-click="getReportData()">
-                <span class="glyphicon glyphicon-refresh"></span>
-                <span>Re-Load</span>
-            </button>
-    </div>
-
-
-
-    <div style="height: 35px" ng-show='!isBusy&&!experiencedLoadingErrors'>
-        <button  class="btn btn-info pull-right"
-        ng-click="getReportData()">
-            <span class="glyphicon glyphicon-refresh"></span>
-            <span>Fetch Data</span>
-        </button>
-    </div>
-
-
-    <div  ng-show='isBusy'>
-        <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
-        <b> Fetching Data, Please wait...</b>
-    </div>
+        </span> An error occurred while generating report. Please try again.</b>
+    <button  class="btn btn-info pull-right" style="padding: 2px!important;" ng-click="generateMoh731Report()">
+      <span class="glyphicon glyphicon-refresh"></span>
+      <span>Re-Load</span>
+    </button>
+  </div>
+  <div style="cursor: pointer;" class="alert alert-warning" ng-click="generateMoh731Report()" ng-show='resultIsEmpty' >
+        <span class="glyphicon glyphicon-exclamation-sign">
+        </span> Empty report data returned. Please check your Report Filters and try again.</b>
+  </div>
+  <div style="height: 35px" ng-show='!isBusy && !experiencedLoadingErrors'>
+    <button  class="btn btn-info pull-right"
+             ng-click="generateMoh731Report()">
+      <span class="glyphicon glyphicon-refresh"></span>
+      <span>Generate Report</span>
+    </button>
+  </div>
+  <div  ng-show='isBusy'>
+    <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+    <b> Fetching Data, Please wait...</b>
+  </div>
 </div>
-
-<div collapse="!reportGeneration"  class="well" style="padding:4px; margin-bottom: 0px !important; width:inherit">
-    <!--Pivot Table Visualization -->
-    <div data-ng-hide="!moh731ReportData.length">
-        <style>
-    .hvalue{
-        border-style: solid;
-        border-width: 1px;
-        border-top-color: black;
-        border-bottom-color: black;
-        border-right-color: black;
-        font-size:10px;
-
-
-    }
-    .dvalue{
-        border-style: solid;
-        border-width: 1px;
-        border-top-color: black;
-        border-right-style:none;
-        border-bottom-color: black;
-        font-size:10px;
-        vertical-align:bottom;
-
-    }
-    .report-section{
-        border: solid 1px black;
-        margin-bottom: 10px;
-    }
-    .report-header-title{
-        font-size: 10px;
-    }
-    .report-section{
-        border-left-color: black;
-        border-right-color:black;
-        border-bottom-color: black;
-    }
-
-</style>
-<!--MOH 731 Report Html Table-->
-
-<!--End MOH 731 Report Html Table-->
-
-<!--MOH 731 DataTable -->
+<div collapse="!indicators.length"  class="well" style="padding:4px; margin-bottom: 0px !important; width:inherit">
+  <hr style="margin: 0px;" />
   <!-- DATATABLE -->
-  <div >
+  <div>
 
     <div id="toolbar">
-      <select ng-model='exportDataType' style="margin-left: 5px" class="form-control"
-        ng-options="l.name for l in exportList" ng-change="updateSelectedType()">
+      <select ng-model='selectedReportMode' style="margin-left: 5px" class="form-control"
+              ng-options="l.name for l in reportModeList" ng-change="updateReportMode()">
       </select>
     </div>
-      <table  id="bsTable" class="table table-striped table-condensed table-hover" bs-table-control="bsTableControl" >
+    <table id="bsTable" class="table table-striped table-condensed table-hover" bs-table-control="bsTableControl" >
     </table>
   </div>
-  <!-- END DATATABLE -->
-<!--End  of  MOH DataTable-->
-
-
-
-    </div>
-    <div data-ng-show="!moh731ReportData.length" style="cursor: pointer;" class="alert alert-danger" ng-click="getReportData()" ng-show='experiencedLoadingErrors' >
-        <span class="glyphicon glyphicon-exclamation-sign">
-        </span>No Data Found.Change your search parameters and try again.</b>
-    </div>
-
-    <!-- END OF Pivot Table Visualization -->
-    <hr style="margin: 4px;" />
-
 </div>

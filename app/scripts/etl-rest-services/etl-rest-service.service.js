@@ -328,9 +328,9 @@
 
 
 
-        function getHivSummaryFlatTable(startDate,endDate,locations,successCallback,failedCallback){
+        function getHivSummaryFlatTable(startDate,endDate,locationUuids,successCallback,failedCallback){
             var resource=getResource('hiv-summary-data');
-            var params={startDate:startDate,endDate:endDate,locations:locations};
+            var params={startDate:startDate,endDate:endDate,locationUuids:locationUuids};
             return resource.get(params).$promise
                     .then(function(response){
                         successCallback(response);
@@ -565,9 +565,9 @@
         }
 
 
-        function getMoh731Report(report,startDate,endDate,locations,countBy,successCallback,failedCallback){
+        function getMoh731Report(report,startDate,endDate,locations,countBy,successCallback,failedCallback,groupBy){
             var resource=getResource('get-report-by-report-name');
-            var params={startDate:startDate,endDate:endDate,locationUuids:locations,countBy:countBy,report:report};
+            var params={startDate:startDate,endDate:endDate,locationUuids:locations,countBy:countBy,report:report,groupBy:groupBy};
             return resource.get(params).$promise
                     .then(function(response){
                         successCallback(response);

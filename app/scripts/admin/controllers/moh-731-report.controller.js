@@ -1,474 +1,484 @@
 /*jshint -W003, -W098, -W033 */
-(function(){
-    'use strict';
+(function() {
+  'use strict';
 
-    angular
-            .module('app.admin')
-            .controller('moh731ReportCtrl',moh731ReportCtrl);
-    moh731ReportCtrl.$nject=
-            ['$rootScope','$scope','$stateParams','EtlRestService','moment',
-                '$filter','$state','Moh731ReportService','CachedDataService','$timeout'];
+  angular
+    .module('app.admin')
+    .controller('moh731ReportCtrl', moh731ReportCtrl);
+  moh731ReportCtrl.$nject = ['$rootScope', '$scope', '$stateParams',
+    'EtlRestService', 'moment',
+    '$filter', '$state', 'Moh731ReportService', 'CachedDataService',
+    '$timeout'
+  ];
 
-    function moh731ReportCtrl($rootScope,$scope,$stateParams,EtlRestService,moment,$filter,$state,Moh731ReportService,
-                              CachedDataService,$timeout){
-        //Patient List Directive Properties & Methods
-        $scope.endDate=new Date();
-        $scope.startDate=new Date(moment().subtract(1,'months').calendar());
+  function moh731ReportCtrl($rootScope, $scope, $stateParams, EtlRestService,
+    moment, $filter, $state, Moh731ReportService,
+    CachedDataService, $timeout) {
 
-        $scope.selectedLocation=$stateParams.locationuuid||'';
-        $scope.selectedIndicatorBox=$stateParams.indicator||'';
-        $scope.selectedSearchLocations=[];
-        $scope.reportGeneration=false;
-        $scope.reportName='MOH-731';
-        $scope.countBy='num_persons';
-        $scope.dataSortedByLocation=[];
+    $scope.endDate = new Date();
+    $scope.startDate = new Date(moment().subtract(1, 'months').calendar());
 
-        $scope.reportData=[];
-        $scope.getReportData=getReportData;
-        $scope.LocationData={};
-        $scope.getReportSectionLabel=getReportSectionLabel;
-        $scope.generateMoh731PdfReport=generateMoh731PdfReport;
-        $scope.TableData=[];
-        //UX Scope Params
-        $scope.isBusy=false;
-        $scope.experiencedLoadingError=false;
+    $scope.reportGeneration = false;
+    $scope.reportName = 'MOH-731';
+    $scope.countBy = 'num_persons';
+    $scope.groupBy = 'groupByLocation';
+    $scope.generateMoh731Report = generateMoh731Indicators;
+    $scope.selectedLocation = '';
 
-        //Dynamic DataTable Params
-        $scope.indicators=[];  //set filtered indicators to []
-        $scope.currentPage=1;
-        $scope.defaultIndicators=[]; //initialize unfiltered indicators to []
-        $scope.counter=0;
-        $scope.fixedColumns=true;
-        //DataTable Options
-        $scope.columns=[];
-        $scope.bsTableControl={options:{}};
-        $scope.exportList=[
-            {name:'Export Basic',value:''},
-            {name:'Export All',value:'all'},
-            {name:'Export Selected',value:'selected'}];
-        $scope.exportDataType=$scope.exportList[1];
-        $scope.updateSelectedType=function(){
-            var bsTable=document.getElementById('bsTable');
-            var element=angular.element(bsTable);
-            element.bootstrapTable('refreshOptions',{
-                exportDataType:$scope.exportDataType.value
-            });
-        };
+    //UX Scope Params
+    $scope.isBusy = false;
+    $scope.experiencedLoadingError = false;
+    $scope.resultIsEmpty = false;
 
 
-        ///Multi-Select Properties/ Params
-        $scope.selectedIndicatorTags={};
-        $scope.selectedIndicatorTags.selectedAll=false;
-        $scope.selectedIndicatorTags.indicatorTags=[];
-        $scope.indicatorTags=[];
-        $scope.onSelectedIndicatorTagChanged=onSelectedIndicatorTagChanged;
-        $scope.isBusy=false;
+    //Dynamic DataTable Params
+    $scope.currentPage = 1;
+    $scope.counter = 0;
+    $scope.fixedColumns = true;
 
-
-         init();
-
-        //scope methods
-        function init(){
-            buildColumns();
-            buildTableControls();
-        }
-        $scope.$on('generate-moh-731-pdf-report',function(event,args){
-
-
-            generateMoh731PdfReport($rootScope.selectedPdfRow.location,$rootScope.selectedPdfRow)
-        });
-        function buildColumns(){
-            $scope.columns=[];
-
-            $scope.titles=[];
-            _.each($scope.titles,function(header){
-                var visible=(header.location_uuid!=='location_uuid');
-                $scope.columns.push({
-                    field:"fields",
-                    title:header,
-                    align:'center',
-                    valign:'bottom',
-                    class:header.name==='location'?'bst-table-min-width':undefined,
-                    visible:visible,
-                    tooltip:true,
-                    formatter:function(value,row,index){
-                        return cellFormatter(value,row,index,header);
-                    }
-                });
-            });
-        }
-        function buildTableControls(){
-            $scope.bsTableControl={
-                options:{
-                    data:$scope.TableData,
-                    rowStyle:function(row,index){
-                        return {classes:'none'};
-                    },
-                    tooltip:true,
-                    classes:'table table-hover',
-                    cache:false,
-                    height:550,
-                    detailView:true,
-                    detailFormatter:detailFormatter,
-                    striped:true,
-                    selectableRows:true,
-                    showFilter:true,
-                    pagination:true,
-                    pageSize:20,
-                    pageList:[5,10,25,50,100,200],
-                    search:true,
-                    trimOnSearch:true,
-                    singleSelect:false,
-                    showColumns:true,
-                    showRefresh:true,
-                    showMultiSort:true,
-                    showPaginationSwitch:true,
-                    smartDisplay:true,
-                    idField:'location',
-                    minimumCountColumns:2,
-                    clickToSelect:true,
-                    showToggle:false,
-                    maintainSelected:true,
-                    showExport:true,
-                    toolbar:'#toolbar',
-                    toolbarAlign:'left',
-                    exportTypes:['json','xml','csv','txt','png','sql','doc','excel','powerpoint','pdf'],
-                    columns:$scope.columns,
-                    exportOptions:{fileName:'MOH-731 Report'},
-                    iconSize:undefined,
-                    iconsPrefix:'glyphicon',// glyphicon of fa (font awesome)
-                    icons:{
-                        paginationSwitchDown:'glyphicon-chevron-down',
-                        paginationSwitchUp:'glyphicon-chevron-up',
-                        refresh:'glyphicon-refresh',
-                        toggle:'glyphicon-list-alt',
-                        columns:'glyphicon-th',
-                        sort:'glyphicon-sort',
-                        plus:'glyphicon-plus',
-                        minus:'glyphicon-minus',
-                        detailOpen:'glyphicon-plus',
-                        detailClose:'glyphicon-minus'
-                    },
-                    fixedColumns: $scope.fixedColumns,
-                    fixedNumber:2,
-                    onExpandRow:function onExpandRow(index,row,$detail){
-                      var result=document.getElementsByClassName("fixed-table-body-columns");
-                      result[0].style.visibility='hidden';
-                    },
-                    onCollapseRow:function onCollapseRow(index,row,$detail) {
-                      var result = document.getElementsByClassName("fixed-table-body-columns");
-                      result[0].style.visibility = 'visible';
-                    },
-
-                    onPostBody:function(){
-                      //please make sure you calibrate results[0].style.maxHeight with relation to height (550)
-                      var results = document.getElementsByClassName("fixed-table-body-columns");
-                      results[0].style.maxHeight='380px';
-                    }
-                }
-            };
-
-
-        }
-        /**
-         * generate Pdf report  from rowdata and  Location
-         * @param {type} locationName
-         * @param {type} rowData
-         * @returns {undefined}
-         */
-        function generateMoh731PdfReport(locationName,rowData){
-            $scope.facilityData=CachedDataService.getCachedEtlLocations()[rowData["location_uuid"]];
-            var params={facilityName:$scope.facilityData.description+"",
-                district:$scope.facilityData.county_district+"",
-                county:"county",
-                facility:$scope.facilityData.description+"",startDate:$filter('date')($scope.startDate,"M/yy"),endDate:$filter('date')($scope.endDate,"M/yy")};
-            var mainReportjson=Moh731ReportService.generatePdfReportSchema(params);
-            //generate Pdf  report
-            $scope.indicatorNumber=0;
-            $scope.sectionNumber=0;
-            //$scope.indicatorNumber=0;
-            angular.forEach(Moh731ReportService.getPdfSections(),function(sectionData,key){
-                //get section labels  and  data1
-                var el=0;
-                $scope.sectionLabel=[];
-                $scope.sectionValues=[];
-                angular.forEach(sectionData,function(sectionLabel,key){
-
-                    if(el!==0){
-                        $scope.sectionLabel.push([sectionLabel]);
-                        //push section  data
-                                     $scope.datavalue="";
-                        if(angular.isDefined(rowData[Moh731ReportService.getPdfSectionsKeys()[$scope.sectionNumber][el]]))
-                        {
-                            $scope.datavalue=rowData[Moh731ReportService.getPdfSectionsKeys()[$scope.sectionNumber][el]];
-                        }else{
-                            $scope.datavalue="-";
-                        }
-
-                        $scope.sectionValues.push(
-                                ['HIV'+$scope.indicatorNumber,$scope.datavalue+""]);
-                        $scope.indicatorNumber++;
-                    }
-                    el++;
-                },[]);
-//add section  number
-                $scope.sectionNumber++;
-                var sectionData={
-                    sectionHead:sectionData[0],sectionLabels:$scope.sectionLabel
-                    ,sectionDataValues:$scope.sectionValues};
-                var reportSection=Moh731ReportService.generateReportSection(sectionData);
-
-                //add section main  json
-                mainReportjson.content.push(reportSection);
-            },[]);
-
-            //final  report  schema
-
-
-            pdfMake.createPdf(mainReportjson).open();
-
-        }
-
-        function loadIndicatorsSchema(){
-            $scope.experiencedLoadingErrors=false;
-            if($scope.isBusy===true)return;
-            $scope.indicatorTags=[];
-            $scope.isBusy=true;
-            if($scope.reportName&&$scope.reportName!=='')
-                EtlRestService.getIndicatorsSchemaWithSections($scope.reportName
-                        ,onFetchIndicatorsSchemaSuccess,
-                        onFetchIndicatorsSchemaError);
-
-        }
-        function onFetchIndicatorsSchemaSuccess(result){
-            $scope.isBusy=false;
-            $scope.indicatorTags=result.result[0];
-            Moh731ReportService.setReportSchema(result.result[0]);
-            Moh731ReportService.setSectionSchema(result.result[1]);
-        }
-
-        function onFetchIndicatorsSchemaError(error){
-            $scope.isBusy=false;
-            $scope.experiencedLoadingErrors=true;
-        }
-
-        function getReportData(){
-            //clean bSData table
-            $scope.experiencedLoadingErrors=false;
-            $scope.noresults=false;
-            $scope.reportGeneration=false;
-            if($scope.isBusy===true)
-                return;
-            $scope.isBusy=true;
-            $scope.indicators=[];
-            if($scope.reportName&&$scope.reportName!==''
-                    &&$scope.startDate&&$scope.startDate!=='')
-                EtlRestService.getMoh731Report($scope.reportName,moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-                        moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-                        $scope.selectedSearchLocations,$scope.countBy,onFetchMoh731ReportSuccess,onFetchMoh731ReportError);
-        }
-      function sortReportByLocation(result){
-        angular.forEach(result.result,function(resultRow,key){
-          //test location  of  the  result  row
-
-          if(angular.isDefined($scope.dataSortedByLocation[resultRow.location_uuid])){
-            $scope.dataSortedByLocation[resultRow.location_uuid].push(resultRow)
-          }else{
-            $scope.dataSortedByLocation[resultRow.location_uuid]=[];
-            $scope.dataSortedByLocation[resultRow.location_uuid].push(resultRow);
-          }
-        },[]);
+    //DataTable Options
+    $scope.columns = [];
+    $scope.bsTableControl = {
+      options: {}
+    };
+    $scope.reportModeList = [{
+      name: 'Combine Locations',
+      value: 'groupByNone'
+    }, {
+      name: 'Separate Locations',
+      value: 'groupByLocation'
+    }];
+    $scope.selectedReportMode = $scope.reportModeList[1];
+    $scope.updateReportMode = function() {
+      var bsTable = document.getElementById('bsTable');
+      var element = angular.element(bsTable);
+      element.bootstrapTable('removeAll');
+      if ($scope.selectedReportMode.value === 'groupByLocation') {
+        if ($scope.indicators.length < 0) generateMoh731Indicators();
+        element.bootstrapTable('append', $scope.indicators);
+      } else {
+        generateCombinedLocationReport();
+        element.bootstrapTable('append', $scope.aggregatedIndicators);
       }
-        function buildReport () {
-          $timeout(function () {
-            buildTableControls();
-          }, 500);
-        }
-        function onFetchMoh731ReportSuccess(result){
+    };
 
-            $scope.reportGeneration=true;
-            $scope.isBusy=false;
-            $scope.dataSortedByLocation={};
+    //Start Initialization
+    init();
 
-            $scope.LocationData={};
+    //scope methods
+    function init() {
 
-            if(angular.isDefined(result.result)&&result.result.length>0){
-                $scope.moh731ReportData=result.result;
-                sortReportByLocation(result)
-                //processs dataSortedLocation
-                angular.forEach($scope.dataSortedByLocation,function(LocationRow,key){
-                      $scope.LocationData[key]={};
-                      angular.forEach(LocationRow,function(LocationObjects,key2){
-                        angular.forEach(LocationObjects,function(actualValue,actualkey){
-                            $scope.LocationData[key][actualkey]=actualValue;
-                        },[]);
+    }
 
-                    },[]);
-                },[]);
-
-                //Clean Current Bs Table Data
-                var len=$scope.TableData.length;
-                var tlen=$scope.columns.length;
-                $scope.TableData.splice(0,len);
-                var tlen=$scope.columns.splice(0,tlen);
-                angular.forEach($scope.LocationData,function(actualValue,actualkey){
-                    if(angular.isDefined(actualValue)){
-                        $scope.TableData.push(actualValue);
-
-                    }
-                },[]);
-
-                //start  of variable  names  to  label  names  change  on the  report  table
-                //generate Pdf  report
-                $scope.indicatorNumber=0;
-                $scope.sectionNumber=0;
-                //$scope.indicatorNumber=0;
-                angular.forEach(Moh731ReportService.getPdfSections(),function(sectionData,key){
-                    //get section labels  and  data1
-                    var el=0;
-                    $scope.sectionLabel=[];
-                    $scope.sectionValues=[];
-                    angular.forEach(sectionData,function(sectionLabel,key){
+    function generateMoh731Indicators() {
+      if ($scope.isBusy === true) return;
+      $scope.experiencedLoadingErrors = false;
+      $scope.resultIsEmpty = false;
+      $scope.indicators = [];
+      $scope.isBusy = true;
+      //Pre-generate location summary for the PDF Report Header
+      $scope.locationSummary = '';
+      $scope.locationSummary = getSelectedLocationName($scope.selectedLocations);
+      var locations = '';
+      if ($scope.selectedLocation !== '') {
+        locations = $scope.selectedLocation;
+      } else {
+        locations = getSelectedLocations($scope.selectedLocations);
+      }
+      if ($scope.countBy && $scope.countBy !== '' && $scope.reportName &&
+        $scope.reportName !== '' && $scope.startDate && $scope.startDate !==
+        '') {
+        EtlRestService.getMoh731Report(
+          $scope.reportName,
+          moment(new Date($scope.startDate)).startOf('day').format(
+            'YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+          moment(new Date($scope.endDate)).startOf('day').format(
+            'YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+          locations, $scope.countBy, onFetchMoh731IndicatorsSuccess,
+          onFetchMoh731IndicatorsError,
+          $scope.groupBy);
+      }
+    }
 
 
-                        if(angular.isDefined(sectionLabel)&&angular.isDefined(Moh731ReportService.getPdfSectionsKeys()[$scope.sectionNumber])){
+    function onFetchMoh731IndicatorsSuccess(result) {
+      $scope.isBusy = false;
+      $scope.indicators = [];
+      console.log('Sql query for MOH731 request=======>', result.sql, result.sqlParams);
+      if (result.result.length === 0) {
+        $scope.resultIsEmpty = true;
+      } else {
+        $scope.indicators = result.result;
+      }
+      buildDataTable();
+      $scope.updateReportMode
+    }
 
-                            if(el==0){
-                                //inject  fixed  location  column
-                                sectionLabel="Location";
-                                var actualKey='location';
-                            }else{
-                                var actualKey=Moh731ReportService.getPdfSectionsKeys()[$scope.sectionNumber][el];
-                            }
-                            if(sectionLabel!=="location_uuid"){
+    function onFetchMoh731IndicatorsError(error) {
+      $scope.isBusy = false;
+      $scope.experiencedLoadingErrors = true;
+    }
 
-                                $scope.columns.push({
-                                    field:actualKey,
-                                    title:sectionLabel,
-                                    align:'center',
-                                    class:actualKey==='location'?'bst-table-min-width-mid':undefined,
-                                    valign:'bottom',
-                                    tooltip:true,
-                                    formatter:function(value,row,index){
+    function generateCombinedLocationReport() {
+      $scope.aggregatedIndicators = [];
+      _.every($scope.indicators, function(indicator) {
+        var newindicator = {};
+        for (var property in indicator) {
+          if (property === 'location') {
+            var count = 'All';
+            if ($scope.selectedLocations.locations.length > 0)
+              count = $scope.selectedLocations.locations.length;
+            newindicator[property] = count +
+              ' Locations Selected'
+          } else if (property === 'location_uuid' || property ===
+            'location_id') {
+            newindicator[property] = indicator[property];
+          } else {
+            newindicator[property] = getSumByIndicatorKey(property);
+          }
+        };
+        $scope.aggregatedIndicators.unshift(newindicator);
+        return;
+      });
+    }
 
-                                        return cellFormatter(value,row,index,actualKey);
+    function getSumByIndicatorKey(prop) {
+      if ($scope.indicators == null) {
+        return 0;
+      }
+      return $scope.indicators.reduce(function(a, b) {
+        return b[prop] == null ? a : a + b[prop];
+      }, 0);
+    };
 
-                                    }
-                                });
-                            }
-                        }
-
-
-                        $scope.indicatorNumber++;
-
-                        el++;
-                    },[]);
-//add section  number
-
-                    $scope.sectionNumber++;
-                },[]);
-
-                $scope.dataSortedByLocation=null;
-                if(false){
-                    Moh731ReportService.generateReportDataSections(result.result,Moh731ReportService.getReportSchema());
-                    Moh731ReportService.getReportSections();
-                }else{
-
-                }
-              buildReport();
-                $scope.reportData=Moh731ReportService.generateReport(result.result[0]);
-
+    function getSelectedLocations(selectedLocationObject) {
+      var locations;
+      try {
+        if (angular.isDefined(selectedLocationObject.locations)) {
+          for (var i = 0; i < selectedLocationObject.locations.length; i++) {
+            if (i === 0) {
+              locations = '' + selectedLocationObject.locations[i].uuId();
+            } else {
+              locations =
+                locations + ',' + selectedLocationObject.locations[i].uuId();
             }
-
-
-
+          }
         }
-        function getReportSectionLabel(sectionKey){
-            angular.forEach(Moh731ReportService.setSectionSchema(),function(value,key){
-                try{
-                    if(value.label===sectionKey){
-                        return value.description;
-                    }else{
-                    }
-                }catch(e){
-                    console.log(e);
-                }
-            },[]);
-            return "";
-        }
+      } catch (e) {
 
+      }
+      return locations;
+    }
 
-
-
-
-
-
-        function onSelectedIndicatorTagChanged(tag){
-            filterIndicators();
-        }
-
-
-
-        function getIndicatorDetails(name){
-            var found=$filter('filter')($scope.indicatorTags,{name:name})[0];
-            if(found)
-                return found;
-        }
-
-
-        //get  Hiv  summary  flat table  error
-        function onFetchMoh731ReportError(error){
-            $scope.isBusy=false;
-            $scope.experiencedLoadingErrors=true;
-        }
-
-        /**
-         * Function to format detailed view
-         */
-        function detailFormatter(index,row){
-            var $body=angular.element(document.body);   // 1
-            var $rootScope=$body.scope().$root;         // 2
-            $rootScope.$apply(function(){               // 3
-                $rootScope.selectedPdfRow=row;
-                $rootScope.selectedPdfIndex=index;
-            });
-            var html=[];
-            html.push('<div class="well well-sm " style="padding:2px; margin-bottom: 5px !important; ">'+
-                    '<a href="#/moh-731-generate-pdf" class="btn btn-info">Generate Pdf</a></div>');
-            _.each(row,function(value,key){
-                if(key==='location_uuid'||key==='state')return;
-                var label="label";
-                label=$filter('titlecase')(label.toString().split('_').join(' '));
-                var key=$filter('titlecase')(key.toString().split('_').join(' '));
-                html.push('<div class="well well-sm " style="padding:2px; height:43px!important;margin-bottom: 5px !important; ">'+
-                        '<b>'+key+'</b><br>'+value+'</div>');
-            });
-            //adding a get pdf  report  link
-            return html.join('');
-        }
-
-        /**
-         * Function to add button on each cell
-         */
-
-        function cellFormatter(value,row,index,header){
-
-            if(header==="Location"){
-                return  CachedDataService.getCachedEtlLocations()[row["location_uuid"]].name
-
-            }else{
-                if(row[header]===undefined){
-
-                    return "-";
-                }else{
-
-                    return ['<a class="btn btn-large btn-default" style="padding: inherit; width:100%; max-width: 300px">'+row[header]+'</a>'];
-                }
-                // return ;
+    function getSelectedLocationName(selectedLocationObject) {
+      var locations = '';
+      try {
+        if (angular.isDefined(selectedLocationObject.locations)) {
+          for (var i = 0; i < selectedLocationObject.locations.length; i++) {
+            if (i === 0) {
+              locations = '' + selectedLocationObject.locations[i].name();
+            } else {
+              locations =
+                locations + ', ' + selectedLocationObject.locations[i].name();
             }
-
+          }
         }
+      } catch (e) {
+
+      }
+      return locations.toString();
+    }
+
+
+    /**
+     * Functions to populate and define bootstrap data table
+     */
+    function buildDataTable() {
+      $timeout(function() {
+        buildColumns();
+        buildTableControls();
+      }, 500);
+
+    }
+
+    function buildSingleColumn(header) {
+      var visible = (header !== 'location_uuid');
+      $scope.columns.push({
+        field: header,
+        title: $filter('titlecase')(header.toString().split('_').join(' ')),
+        align: 'center',
+        valign: 'center',
+        class: header === 'location' ? 'bst-table-min-width' : undefined,
+        visible: visible,
+        tooltip: true,
+        sortable: true,
+        formatter: function(value, row, index) {
+          return cellFormatter(value, row, index, header);
+        }
+      });
+    }
+
+    function buildColumns() {
+      if ($scope.indicators.length > 0) $scope.indicatorKeys = Object.keys(
+        $scope.indicators[0]); // ['alpha', 'beta']
+      $scope.columns = [];
+      _.each($scope.indicatorKeys, function(header) {
+        buildSingleColumn(header);
+      });
+    }
+
+    $scope.$on('generate-moh-731-pdf-report', function(event, args) {
+      generateMoh731PdfReport($rootScope.selectedPdfRow.location,
+        $rootScope.selectedPdfRow)
+    });
+
+    function buildTableControls() {
+      $scope.bsTableControl = {
+        options: {
+          data: $scope.indicators,
+          rowStyle: function(row, index) {
+            return {
+              classes: 'none'
+            };
+          },
+          tooltip: true,
+          classes: 'table table-hover',
+          cache: false,
+          height: 550,
+          detailView: true,
+          detailFormatter: detailFormatter,
+          striped: true,
+          selectableRows: true,
+          showFilter: true,
+          pagination: true,
+          pageSize: 20,
+          pageList: [5, 10, 25, 50, 100, 200],
+          search: true,
+          trimOnSearch: true,
+          singleSelect: false,
+          showColumns: true,
+          showRefresh: true,
+          showMultiSort: true,
+          showPaginationSwitch: true,
+          smartDisplay: true,
+          idField: 'location',
+          minimumCountColumns: 2,
+          clickToSelect: true,
+          showToggle: false,
+          maintainSelected: true,
+          showExport: true,
+          toolbar: '#toolbar',
+          toolbarAlign: 'left',
+          exportTypes: ['json', 'xml', 'csv', 'txt', 'png', 'sql', 'doc',
+            'excel', 'powerpoint', 'pdf'
+          ],
+          columns: $scope.columns,
+          exportOptions: {
+            fileName: 'MOH-731 Report'
+          },
+          iconSize: undefined,
+          iconsPrefix: 'glyphicon', // glyphicon of fa (font awesome)
+          icons: {
+            paginationSwitchDown: 'glyphicon-chevron-down',
+            paginationSwitchUp: 'glyphicon-chevron-up',
+            refresh: 'glyphicon-refresh',
+            toggle: 'glyphicon-list-alt',
+            columns: 'glyphicon-th',
+            sort: 'glyphicon-sort',
+            plus: 'glyphicon-plus',
+            minus: 'glyphicon-minus',
+            detailOpen: 'glyphicon-plus',
+            detailClose: 'glyphicon-minus'
+          },
+          fixedColumns: $scope.fixedColumns,
+          fixedNumber: 2,
+          onExpandRow: function onExpandRow(index, row, $detail) {
+            var result = document.getElementsByClassName(
+              "fixed-table-body-columns");
+            result[0].style.visibility = 'hidden';
+          },
+          onCollapseRow: function onCollapseRow(index, row, $detail) {
+            var result = document.getElementsByClassName(
+              "fixed-table-body-columns");
+            result[0].style.visibility = 'visible';
+          },
+
+          onPostBody: function() {
+            //please make sure you calibrate results[0].style.maxHeight with relation to height (550)
+            var results = document.getElementsByClassName(
+              "fixed-table-body-columns");
+            results[0].style.maxHeight = '380px';
+          }
+        }
+      };
 
 
     }
+
+    /**
+     * Function to format detailed view
+     */
+    function detailFormatter(index, row) {
+      //expose indexes to scope
+      var $body = angular.element(document.body);
+      var $rootScope = $body.scope().$root;
+      $rootScope.$apply(function() {
+        $rootScope.selectedPdfRow = row;
+        $rootScope.selectedPdfIndex = index;
+      });
+      var html = [];
+      html.push(
+        '<div class="well well-sm " style="padding:2px; margin-bottom: 5px !important; ">' +
+        '<a href="#/moh-731-generate-pdf" class="btn btn-info">Generate Pdf</a></div>'
+      );
+      _.each(row, function(value, key) {
+        var label = key;
+        label = $filter('titlecase')(label.toString().split('_').join(' '));
+        var key = $filter('titlecase')(key.toString().split('_').join(' '));
+        if (key === 'Location Uuid' || key === 'state' || key ===
+          'Location Id') return;
+        //for separate locations
+        if (key === 'Location' && $scope.selectedReportMode.value ===
+          'groupByLocation') {
+          html.push(
+            '<div class="well well-sm " style="padding:2px; margin-bottom: 5px !important; ">' +
+            '<p><b>' + key + '</b> (<span class="text-info">' + label +
+            '</span>): ' + value + '</p></div>');
+        } else if (key === 'Location' && $scope.selectedReportMode.value ===
+          'groupByNone') {
+          //for combined locations
+          var count = 'All';
+          if ($scope.selectedLocations.locations.length > 0)
+            count = $scope.selectedLocations.locations.length;
+          html.push(
+            '<div class="well well-sm " style="padding:2px; margin-bottom: 5px !important; ">' +
+            '<p><b>' + key + '</b> (<span class="text-info">' + label +
+            '</span>): ' + count +
+            ' Locations Selected' + '</p></div>');
+        } else {
+          html.push(
+            '<div class="well well-sm " style="padding:2px; margin-bottom: 5px !important; ">' +
+            '<p><b>' + key + '</b> (<span class="text-info">' + label +
+            '</span>): ' + value + '</p></div>');
+        }
+      });
+      return html.join('');
+    }
+
+    /**
+     * Function to add button on each cell
+     */
+    function cellFormatter(value, row, index, header) {
+      //for separate locations
+      if (header === 'location' && $scope.groupBy === 'groupByLocation') {
+        var html = [];
+        html.push(
+          '<div class="text-center" style="height:43px!important;" ><span ' +
+          'class="text-info text-capitalize">' + value + '</span></div>');
+        return html.join('');
+      } else if (header === 'location' && $scope.groupBy === 'groupByNone') {
+        var html = [];
+        //for combined locations
+        html.push(
+          '<div class="text-center" style="height:43px!important;" ><span ' +
+          'class="text-info text-capitalize">' + $scope.selectedLocations.locations
+          .length + ' Locations Selected' + '</span></div>');
+        return html.join('');
+      } else {
+        //for other fields other than location
+        var html = [];
+        html.push(
+          '<div class="text-center" style="height:43px!important;width:100% " ><span style="white-space: nowrap;">' +
+          value + '</span></div>');
+        return html.join('');
+      }
+    }
+
+
+    /**
+     * generate Pdf report  from rowdata and  Location
+     * @param {type} locationName
+     * @param {type} rowData
+     * @returns {undefined}
+     */
+    function generateMoh731PdfReport(locationName, rowData) {
+      //test if  pdf is  for  combined  locations
+      var params = {};
+      if ($scope.selectedReportMode.value !==
+        'groupByLocation') {
+        //combined  locations
+        params = {
+          facilityName: $scope.locationSummary,
+          district: 'N/A',
+          county: 'N/A',
+          facility: $scope.locationSummary,
+          startDate: $filter('date')($scope.startDate, 'M/yy'),
+          endDate: $filter('date')($scope.endDate, 'M/yy')
+        };
+
+      } else {
+        //normal data grouped by location DEFAULT
+        params = {
+          facilityName: rowData["location"],
+          district: 'N/A',
+          county: 'N/A',
+          facility: rowData["location"],
+          startDate: $filter('date')($scope.startDate, 'M/yy'),
+          endDate: $filter('date')($scope.endDate, 'M/yy')
+        };
+      }
+      var mainReportjson = Moh731ReportService.generatePdfReportSchema(params);
+      //generate Pdf  report
+      $scope.indicatorNumber = 0;
+      $scope.sectionNumber = 0;
+      //$scope.indicatorNumber=0;
+      angular.forEach(Moh731ReportService.getPdfSections(), function(
+        sectionData, key) {
+        //get section labels  and  data1
+        var el = 0;
+        $scope.sectionLabel = [];
+        $scope.sectionValues = [];
+        angular.forEach(sectionData, function(sectionLabel, key) {
+
+          if (el !== 0) {
+            $scope.sectionLabel.push([sectionLabel]);
+            //push section  data
+            $scope.datavalue = '';
+            if (angular.isDefined(rowData[Moh731ReportService.getPdfSectionsKeys()[
+                $scope.sectionNumber][el]])) {
+              $scope.datavalue = rowData[Moh731ReportService.getPdfSectionsKeys()[
+                $scope.sectionNumber][el]];
+            } else {
+              $scope.datavalue = '-';
+            }
+
+            $scope.sectionValues.push(
+              ['HIV' + $scope.indicatorNumber, $scope.datavalue +
+                ''
+              ]);
+            $scope.indicatorNumber++;
+          }
+          el++;
+        }, []);
+        //add section  number
+        $scope.sectionNumber++;
+        var sectionData = {
+          sectionHead: sectionData[0],
+          sectionLabels: $scope.sectionLabel,
+          sectionDataValues: $scope.sectionValues
+        };
+        var reportSection = Moh731ReportService.generateReportSection(
+          sectionData);
+
+        //add section main  json
+        mainReportjson.content.push(reportSection);
+      }, []);
+
+      //final  report  schema
+      pdfMake.createPdf(mainReportjson).open();
+
+    }
+
+  }
+
 })();

@@ -56,7 +56,6 @@
     }];
     $scope.exportDataType = $scope.exportList[1];
     $scope.updateSelectedType = function() {
-      console.log($scope.exportDataType.value, $scope.exportDataType.name);
       var bsTable = document.getElementById('bsTable');
       var element = angular.element(bsTable);
       element.bootstrapTable('refreshOptions', {
@@ -84,7 +83,6 @@
       if ($scope.groupBy && $scope.groupBy !== '' && $scope.reportName && $scope.reportName !== '' &&
         $scope.startDate && $scope.startDate !== '' && $scope.selectedIndicatorTags.indicatorTags &&
         $scope.selectedIndicatorTags.indicatorTags !== []) {
-        console.log('Location', $scope.selectedLocation);
         var locations = '';
         if ($scope.selectedLocation !== '') {
           locations = $scope.selectedLocation;

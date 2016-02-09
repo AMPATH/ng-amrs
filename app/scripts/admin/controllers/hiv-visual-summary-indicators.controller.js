@@ -54,22 +54,18 @@
         }
 
       function getSelectedLocations(selectedLocationObject) {
+        if (selectedLocationObject.selectedAll === true)
+          return;
         var locations;
-        try {
-          if (angular.isDefined(selectedLocationObject.locations)) {
-            for (var i = 0; i < selectedLocationObject.locations.length; i++) {
-              if (i === 0) {
-                locations = '' + selectedLocationObject.locations[i].uuId();
-              }
-              else {
-                locations =
-                  locations + ',' + selectedLocationObject.locations[i].uuId();
-              }
+        if (selectedLocationObject.locations)
+          for (var i = 0; i < selectedLocationObject.locations.length; i++) {
+            if (i === 0) {
+              locations = '' + selectedLocationObject.locations[i].uuId();
+            } else {
+              locations =
+                locations + ',' + selectedLocationObject.locations[i].uuId();
             }
           }
-        } catch (e) {
-
-        }
         return locations;
       }
 
