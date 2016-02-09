@@ -1,6 +1,6 @@
 {
   "name": "ngamrs",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "license": "UNLICENSED",
   "dependencies": {
     "angular-environment": "^1.0.3",
@@ -70,7 +70,9 @@
   "config": {
     "pre-git": {
       "commit-msg": [],
-      "pre-commit": [],
+      "pre-commit": [
+        "grunt test"
+      ],
       "pre-push": [
         "npm install",
         "bower install",
