@@ -15,7 +15,7 @@
   
   <form id="form-panel" name="form" novalidate>
     <tabset>
-      <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled" select="tabSelected($index)">
+      <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled" select="onTabSelected($index)">
         <formly-form model="tab.form.model" fields="tab.form.fields" form="$parent.form" options="tab.form.options"></formly-form>
       </tab>
     </tabset>
@@ -23,10 +23,10 @@
     <div style="color:red;">{{vm.errorSubmit}}</div>-->
     
     <div style="text-align: center;">
-      <button type="button" class="btn btn-default" ng-click="activateTab('prev')" ng-disabled="isFirstTab()">&lt;&lt;</button>
+      <button type="button" class="btn btn-default" ng-click="loadPreviousTab()" ng-disabled="isCurrentTabFirst()">&lt;&lt;</button>
       <button type="submit" class="btn btn-primary submit-button" ng-click="submit()" ng-disabled="submittingForm">{{submitLabel}}</button>
       <button type="button" class="btn btn-default" ng-click="cancel()" ng-disabled="submittingForm">Cancel</button>
-      <button type="button" class="btn btn-default" ng-click="activateTab('next')" ng-disabled="isLastTab()">&gt;&gt;</button>
+      <button type="button" class="btn btn-default" ng-click="loadNextTab()" ng-disabled="isCurrentTabLast()">&gt;&gt;</button>
     </div>
   </form>
   
