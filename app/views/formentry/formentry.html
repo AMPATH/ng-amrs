@@ -1,140 +1,64 @@
 <div style="padding:4px;" dw-loading="formEntryLoader" dw-loading-options="{text: 'Processing request..'}">
-  <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-  <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
-  <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">
-  <div class="breadcrumb">
-    <h2>{{patient.fullNames() | titlecase}} | Sex: {{patient.gender()}} | Age: {{patient.age()}} | Identifier: {{patient.identifierFormatted()}}</h2>{{encounterType}} - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}} {{vm.success}}
-    <strong><current-visit-vitals patient-uuid="{{patient.uuid()}}"></current-visit-vitals></strong>
-  </div>
-  <a id="top"></a>
-  <div data-ng-show='isBusy'>
-    <h2>
-        <img data-ng-show="isBusy" data-ng-src="images/ajax-loader.gif" autofocus />Loading Form...
-      </h2>
-  </div>
-  
-  <form id="form-panel" name="form" novalidate>
-    <tabset>
-      <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled" select="onTabSelected($index)">
-        <formly-form model="tab.form.model" fields="tab.form.fields" form="$parent.form" options="tab.form.options"></formly-form>
-      </tab>
-    </tabset>
-    <!--<div style="color:red;" ng-show="(vm.form.$valid === false && vm.hasClickedSubmit)">{{vm.errorMessage}}</div>
-    <div style="color:red;">{{vm.errorSubmit}}</div>-->
-    
-    <div style="text-align: center;">
-      <button type="button" class="btn btn-default" ng-click="loadPreviousTab()" ng-disabled="isCurrentTabFirst()">&lt;&lt;</button>
-      <button type="submit" class="btn btn-primary submit-button" ng-click="submit()" ng-disabled="submittingForm">{{submitLabel}}</button>
-      <button type="button" class="btn btn-default" ng-click="cancel()" ng-disabled="submittingForm">Cancel</button>
-      <button type="button" class="btn btn-default" ng-click="loadNextTab()" ng-disabled="isCurrentTabLast()">&gt;&gt;</button>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
+    <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">
+    <div class="breadcrumb">
+        <h2>{{patient.fullNames() | titlecase}} | Sex: {{patient.gender()}} | Age: {{patient.age()}} | Identifier: {{patient.identifierFormatted()}}</h2>{{encounterType}} - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}} {{vm.success}}
+        <strong><current-visit-vitals patient-uuid="{{patient.uuid()}}"></current-visit-vitals></strong>
     </div>
-  </form>
-  
+    <a id="top"></a>
+    <!-- Error messages Summary -->
+    <div sticky>
+        <button class="btn btn-warning" style="margin: 2px; width: 99%; horizontal-align: center;" data-ng-show="(isFormInvalid() && hasClickedSubmit)"
+        ng-click="scrollToTop()">Form Errors </button>
+    </div>
+    <div id="error-summary-container" class="panel panel-danger" data-ng-show="(isFormInvalid() && hasClickedSubmit)">
+        <div>
+            <h3 style="margin-left:4px; margin-top: 0px" class="text-danger">.</h3></div>
+        <div style="margin-left:4px; margin-top: 0px" data-ng-repeat="tab in lastFormlyFormSchema" data-ng-show="(isFormInvalid() && hasClickedSubmit)">
+            <h4 data-ng-show="(isFormInvalid() && hasClickedSubmit && anyFieldsInError(tab.currentFields) )">{{tab.title}}</h4>
+            <formly-error-summary form="vm.form" fields="tab.form.fields" page-fields="tab.currentFields" tab-title="tab.title"></formly-error-summary>
+        </div>
+    </div>
 
-  <div></div>
+    <div style="color:red;" ng-show="(isFormInvalid() && hasClickedSubmit)">{{validationErrorMessage}}</div>
+    <div style="color:red;">{{errorMessage}}</div>
+
+    <form id="form-panel" name="form" novalidate>
+        <tabset ng>
+            <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled" select="onTabSelected($index)">
+                <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
+            </tab>
+        </tabset>
+
+        <div style="color:red;" ng-show="(isFormInvalid() && hasClickedSubmit)">{{validationErrorMessage}}</div>
+        <div style="color:red;">{{errorMessage}}</div>
+
+        <div style="text-align: center;">
+            <button type="button" class="btn btn-default" ng-click="loadPreviousTab()" ng-disabled="isCurrentTabFirst()">&lt;&lt;</button>
+            <button type="submit" class="btn btn-primary submit-button" ng-click="submit()" ng-disabled="isBusy">{{currentMode.submitLabel}}</button>
+            <button type="button" class="btn btn-default" ng-click="cancel()" ng-disabled="submittingForm">Cancel</button>
+            <button type="button" class="btn btn-default" ng-click="loadNextTab()" ng-disabled="isCurrentTabLast()">&gt;&gt;</button>
+        </div>
+    </form>
+
+
+    <div></div>
 
 
 
-  <!--<h2>tabs</h2>
+    <!--<h2>tabs</h2>
   <pre>{{tabs | json}}</pre>-->
 
-  <!--
-   <h2>Model Value</h2>
-  <pre>{{vm.model | json}}</pre>
-  -->
 
-  <!-- Put custom templates here -->
-  <script type="text/ng-template" id="error-messages.html">
-    <formly-transclude></formly-transclude>
-    <div class="error-messages" ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched">
-      <div class="message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages" style="color:red;">
-        {{message(fc.$viewValue, fc.$modelValue, this)}}
-      </div>
-    </div>
-
-  </script>
-  <!-- Custom template to allows representation of repeatSection in a form. -->
-  <script type="text/ng-template" id="repeatSection.html">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        {{to.label}}
-      </div>
-      <div class="panel-body">
-        <!--loop through each element in model array-->
-        <div class="{{hideRepeat}}">
-          <div class="repeatsection" ng-repeat="element in model[options.key]" ng-init="fields = copyFields(to.fields)">
-            <formly-form fields="fields" model="element" bind-name="'formly_ng_repeat' + index + $parent.$index">
-            </formly-form>
-            <p>
-              <button type="button" class="btn btn-sm btn-danger" ng-click="model[options.key].splice($index, 1)">
-                Remove
-              </button>
-            </p>
-            <hr>
-          </div>
-          <p class="AddNewButton">
-            <button type="button" class="btn btn-primary" ng-click="addNew()">{{to.btnText}}</button>
-          </p>
-        </div>
-
-      </div>
-  </script>
-  <!-- sections template -->
-  <script type="text/ng-template" id="section.html">
-    <div class="panel panel-primary">
-
-      <div class="panel-heading px-nested-panel-heading clearfix">
-        <strong class="control-label" ng-if="to.label">
-        {{to.label}}
-        {{to.required ? '*' : ''}}
-      </strong>
-      </div>
-
-      <div class="panel-body px-nested-panel-body">
+    <!--<h2>Model Value</h2>
+    <pre>{{model | json}}</pre>-->
+    <script type="text/ng-template" id="error-messages.html">
         <formly-transclude></formly-transclude>
-      </div>
-
-    </div>
-  </script>
-
-  <!-- Error summary template -->
-  <script type="text/ng-template" id="formly-error-summary.html">
-    <style type="text/css">
-      body {
-        margin: 20px
-      }
-
-      .formly-field {
-        margin-bottom: 16px;
-      }
-
-      .formly-error-summary {
-        margin-bottom: 20px;
-      }
-
-      .color-error {
-        color: red;
-      }
-
-      .color-success {
-        color: green
-      }
-    </style>
-    <!-- The field here are the fields passed within the directives scope -->
-    <div class="formly-error-summary">
-      <!--
-    Allow all validations to be run on form submit only and when its rendered
-    Other custom validations will still run  when the field is touched anyway
-     -->
-      <div style="margin-left:4px; margin-bottom: 4px;" data-ng-repeat="field in vm.pageFields" class="color-error">
-        <div ng-click="vm.navigateToQuestion(vm.tabTitle, field.key, field)" data-ng-show="field.formControl.$invalid">
-          <span class="text-primary"><i class="glyphicon glyphicon-zoom-in"></i> {{field.templateOptions.label}} </span> <br/>
-          <i style="margin-left:10px;" class="glyphicon glyphicon-{{field.formControl.$invalid ? 'remove' : 'ok'}}"></i>
-          <span data-ng-if="field.formControl.$invalid">
-              {{vm.getErrorAsList(field)}} 
-          </span>
+        <div class="error-messages" ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched">
+            <div class="message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages" style="color:red;">
+                {{message(fc.$viewValue, fc.$modelValue, this)}}
+            </div>
         </div>
-      </div>
-    </div>
-  </script>
-  </div>
+    </script>
+</div>
