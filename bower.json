@@ -15,7 +15,7 @@
     "angular-bootstrap": "~0.13.0",
     "bootstrap-vertical-tabs": "~1.2.1",
     "api-check": "~7.5.0",
-    "angular-formly": "~7.1.2",
+    "angular-formly": "~7.3.4",
     "angular-formly-templates-bootstrap": "6.1.4",
     "underscore": "~1.8.3",
     "underscore.string": "~3.1.1",
