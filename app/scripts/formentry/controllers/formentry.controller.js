@@ -3,570 +3,552 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 */
 /*jscs:disable disallowMixedSpacesAndTabs, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma*/
 
-(function() {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular
-    .module('app.formentry')
-    .controller('FormentryCtrl', FormentryCtrl);
+    angular
+        .module('app.formentry')
+        .controller('FormentryCtrl', FormentryCtrl);
 
-  FormentryCtrl.$inject = ['$translate', 'dialogs', '$location',
-    '$rootScope', '$stateParams', '$state', '$scope', 'FormentryService',
-    'OpenmrsRestService', '$timeout', 'FormsMetaData',
-    'CurrentLoadedFormService', 'UtilService', '$loading',
-    'PersonAttributesRestService', '$anchorScroll', 'UserDefaultPropertiesService'
-  ];
+    FormentryCtrl.$inject = ['$translate', 'dialogs', '$location',
+        '$rootScope', '$stateParams', '$state', '$scope',
+        'OpenmrsRestService', '$timeout', 'FormsMetaData'
+        , '$loading', '$anchorScroll', 'UserDefaultPropertiesService'
+        , 'FormentryUtilService', 'configService', 'SearchDataService',
+        '$log', 'FormEntry', 'PersonAttributesRestService'
+    ];
 
-  function FormentryCtrl($translate, dialogs, $location,
-    $rootScope, $stateParams, $state, $scope, FormentryService,
-    OpenmrsRestService, $timeout, FormsMetaData, CurrentLoadedFormService,
-    UtilService, $loading, PersonAttributesRestService, $anchorScroll, UserDefaultPropertiesService) {
+    function FormentryCtrl($translate, dialogs, $location,
+        $rootScope, $stateParams, $state, $scope,
+        OpenmrsRestService, $timeout, FormsMetaData,
+        $loading, $anchorScroll, UserDefaultPropertiesService, FormentryUtilService,
+        configService, SearchDataService,
+        $log, FormEntry, PersonAttributesRestService) {
+        var vm = $scope;
+        
+        //Patient variables
+        vm.patient = $rootScope.broadcastPatient;
+        
+        //Form variables
+        vm.model = {};
+        vm.questionMap = {};
+        vm.encounterType = '';
+        var formModes = {
+            newForm: {
+                submitLabel: 'Save'
+            },
+            existingForm: {
+                submitLabel: 'Update'
+            }
+        };
+        vm.currentMode = formModes.newForm;
 
-    FormentryService.currentFormModel = {};
-    $scope.vm = {};
-    $scope.vm.isBusy = true;
-    $scope.vm.submittingForm = false;
-    $scope.vm.errorSubmit = '';
-    $scope.vm.errorMessage = 'The form has some validation errors, see the list above';
-    $scope.vm.model = {};
-    CurrentLoadedFormService.formModel = $scope.vm.model;
-    $scope.vm.patient = $rootScope.broadcastPatient;
-    $scope.vm.submitLabel = 'Save';
-    $scope.vm.encounterType;
-    var formSchema;
-    $scope.vm.formlyFields = [];
-    $scope.vm.tabs = [];
-    $scope.vm.encounter;
-    $scope.vm.encData;
-    $scope.vm.savedOrUpdated = false;
-    $scope.vm.updatedFailed = false;
-    $scope.vm.voidFailed = false;
-    $scope.vm.currentTab = 0;
-    $scope.vm.displayedTabs = [];
-    //BEGIN PATIENT SUMMARY
-    $scope.HivHistoricalExpanded = true;
+        var selectedFormMetadata;
+        var selectedFormSchema;
+        var selectedFormUuid = $stateParams.formuuid;
+        var lastPayload;
+        var lastPersonAttributePayload;
+        
+        //Loaded encounter/visit variables
+        vm.encounter = $rootScope.activeEncounter;
+        var selectedEncounterUuid = $stateParams.encuuid;
+        var currentVisitUuid = $stateParams.visitUuid;
+        var selectedEncounterData;
+        var selectedPersonAttributes;
+        
+        //Navigation parameters
+        vm.hasClickedSubmit = false;
+        vm.submitLabel = 'Save';
+        vm.submit = submit;
+        vm.isBusy = false;
+        vm.hasFailedNewingRequest = false;
+        vm.hasFailedVoidingRequest = false;
+        vm.hasFailedUpdatingingRequest = false;
+        vm.hasFailedPersonAttributeRequest = false;
+        vm.submitErrorMessage = '';
+        vm.fourStageSubmitProcess = {
+            submittingNewObs: false,
+            submittingUpdatedObs: false,
+            submittingVoidedObs: false,
+            submittingPersonAttributes: false
+        };
+        vm.formSubmitSuccessMessage = '';
 
-    $scope.showHivHistoricalSummary = false;
+        activate();
 
-    $scope.$on('viewHivHistoricalSummary', viewHivHistoricalSummary);
+        function activate() {
+            $log.log('Initializing form entry controller..');
+            
+            //determine form to load
+            determineFormToLoad();
 
-    $scope.vm.hasClickedSubmit = false;
+            loadPreFormInitializationData(
+                function () {
+                    loadFormSchemaForSelectedForm(true);
+                }, function () {
+                    loadFormSchemaForSelectedForm(true);
+                });
 
-    function viewHivHistoricalSummary() {
-      $scope.showHivHistoricalSummary = true;
-    }
-    //END PATIENT SUMMARY
-    $scope.vm.tabSelected = function($index) {
-      $scope.vm.currentTab = $index;
-      if ($scope.vm.displayedTabs.indexOf($index) === -1) {
-        $scope.vm.displayedTabs.push($index);
-      }
-
-      $scope.vm.tabs[$index]['form'] = $scope.vm.formlyFields[$index].form;
-    };
-
-    var isLastTab = function() {
-      return $scope.vm.currentTab === $scope.vm.tabs.length - 1;
-    };
-
-    var isFirstTab = function() {
-      return $scope.vm.currentTab === 0;
-    };
-
-    $scope.vm.isLastTab = isLastTab;
-    $scope.vm.isFirstTab = isFirstTab;
-
-    $scope.vm.activateTab = function(button) {
-      if (button === 'next') {
-        if (!isLastTab()) {
-          $scope.vm.currentTab++;
-          $scope.vm.tabs[$scope.vm.currentTab].active = true;
-          $scope.vm.tabs[$scope.vm.currentTab]['form'] = $scope.vm.formlyFields[$scope.vm.currentTab].form;
-          /*move to the top of the selected page*/
-          $location.hash('top');
-          $anchorScroll();
         }
-      } else if (button === 'prev') {
-        if (!isFirstTab()) {
-          $scope.vm.currentTab--;
-          $scope.vm.tabs[$scope.vm.currentTab].active = true;
-          $scope.vm.tabs[$scope.vm.currentTab]['form'] = $scope.vm.formlyFields[$scope.vm.currentTab].form;
-          /*move to the top of the selected page*/
-          $location.hash('top');
-          $anchorScroll();
+        
+        //Region: Navigation functions
+        function isSpinnerBusy(val) {
+            if (val === true) {
+                $loading.start('formEntryLoader');
+            } else {
+                $loading.finish('formEntryLoader');
+            }
         }
-      }
-    };
-    $scope.vm.anyFieldsInError = function(fields) {
-      if (fields && fields.length !== 0) {
-        var hasError = false;
-        _.each(fields, function(field) {
-          if (field.formControl && field.formControl.$error && Object.keys(field.formControl.$error).length > 0) {
-            hasError = true;
-          }
-        });
-        return hasError;
-      }
-      return false;
-    };
-
-    //Checking user navigations
-    var userConfirmedChange = false;
-    var usedStateChange = false;
-    $scope.$on('$stateChangeStart', function(event, toState, toParams) {
-      usedStateChange = true;
-      if ($scope.vm.form.$dirty && $scope.vm.savedOrUpdated === false) {
-        if (userConfirmedChange === false) {
-          //prevent transition to new url before saving data
-          event.preventDefault();
-          var dialogPromise = dialogs.confirm('Changes Not Saved',
-            'Do you want to close this form?');
-          dialogPromise.result.then(function(btn) {
-            userConfirmedChange = true;
-            $state.go(toState.name, {
-              onSuccessRout: toState,
-              onSuccessParams: toParams
-            });
-          }, function(btn) {
-            //Prevent any transition to new url
-            event.preventDefault();
-            userConfirmedChange = false;
-          });
-        }
-      }
-    });
-
-    if (usedStateChange === false) {
-      UtilService.confirmBrowserExit(function(data) {
-        if (data) {
-          var dlg = dialogs.confirm('Close Form',
-            'Do you want to close this form?');
-        }
-      });
-    }
-
-    var params = {
-      uuid: $stateParams.encuuid,
-      visitUuid: $stateParams.visitUuid
-    };
-    //var params = {uuid: '18a1f142-f2c6-4419-a5db-5f875020b887'};
-    var encData;
-    var selectedForm; //= $stateParams.formuuid;
-    if (params.uuid !== undefined) {
-      $scope.vm.encounter = $rootScope.activeEncounter;
-      var encFormUuid = $scope.vm.encounter.formUuid();
-      if (encFormUuid === undefined || encFormUuid === '') {
-        encFormUuid = $scope.vm.encounter.encounterTypeUuid();
-      }
-
-      console.log('selected form', encFormUuid);
-      selectedForm = FormsMetaData.getForm(encFormUuid);
-      $scope.vm.encounterType = $scope.vm.encounter.encounterTypeName();
-    } else {
-      selectedForm = FormsMetaData.getForm($stateParams.formuuid);
-      $scope.vm.encounterType = selectedForm.encounterTypeName;
-      console.log('selected form', selectedForm);
-    }
-
-    //load the selected form
-    activate();
-
-    $scope.vm.cancel = function() {
-      console.log($state);
-      $scope.vm.savedOrUpdated = true;
-      var dlg = dialogs.confirm('Close Form', 'Do you want to close this form?');
-      dlg.result.then(function(btn) {
-          $location.path($rootScope.previousState + '/' + $rootScope.previousStateParams.uuid);
-        },
-
-        function(btn) {
-          //$scope.vm.confirmed = 'You confirmed "No."';
-        });
-    };
-
-    $scope.vm.scrollToTop = function() {
-      $location.hash('top');
-      $anchorScroll();
-    };
-
-    $scope.vm.scrollToAnchorByKey = function(key) {
-      //var newHash = 'obs120_a8a666ban1350n11dfna1f1n0026b9348838';
-      if ($location.hash() !== key) {
-        // set the $location.hash to `newHash` and
-        // $anchorScroll will automatically scroll to it
-        $location.hash(key);
-      } else {
-        // call $anchorScroll() explicitly,
-        // since $location.hash hasn't changed
-        $anchorScroll();
-      }
-    };
-
-    $scope.vm.selectTabByTitle = function(title) {
-      _.each($scope.vm.tabs, function(tab) {
-        if (tab.title === title) {
-          tab.active = true;
-        }
-      });
-    };
-
-    $rootScope.$on("navigateToQuestion", function(args, param) {
-      $scope.vm.selectTabByTitle(param.tabTitle);
-      $scope.vm.scrollToAnchorByKey(param.questionKey);
-    });
-
-    $scope.vm.scrollToElementByKey = function(key) {
-      //var newHash = 'obs120_a8a666ban1350n11dfna1f1n0026b9348838';
-      if ($location.hash() !== key) {
-        // set the $location.hash to `newHash` and
-        // $anchorScroll will automatically scroll to it
-        $location.hash(key);
-      } else {
-        // call $anchorScroll() explicitly,
-        // since $location.hash hasn't changed
-        $anchorScroll();
-      }
-    };
-
-    $scope.vm.submit = function() {
-      if ($scope.vm.form.$valid === false) {
-        $location.hash('top');
-        $anchorScroll();
-      }
-
-      $scope.vm.hasClickedSubmit = true;
-      $scope.vm.savedOrUpdated = true;
-      var undisplayedTabs = [];
-      angular.copy($scope.vm.tabs, undisplayedTabs);
-      var removeDisplayedTabsByIndex = $scope.vm.displayedTabs;
-      var tabReviewMessage = '';
-      for (var i = removeDisplayedTabsByIndex.length - 1; i >= 0; i--) {
-        undisplayedTabs.splice(removeDisplayedTabsByIndex[i], 1);
-      }
-
-      tabReviewMessage = 'Please review The following tabs';
-      for (var i = 0, len = undisplayedTabs.length; i < len; i++) {
-        var index = _.findIndex($scope.vm.tabs, {
-          title: undisplayedTabs[i]['title']
-        });
-        tabReviewMessage = tabReviewMessage + '<br>' + undisplayedTabs[i]['title'];
-
-        //$scope.vm.tabs[index]['form'] = $scope.vm.formlyFields[index].form;
-      }
-
-      if ($scope.vm.form.$valid) {
-        if ($scope.vm.displayedTabs.length === $scope.vm.tabs.length) {
-          var form = selectedForm;
-          console.log('Selected form', form);
-          var payLoadData = FormentryService.updateFormPayLoad($scope.vm.model, $scope.vm.formlyFields, $scope.vm.patient, form, params);
-          var payLoad = payLoadData.formPayLoad;
-          console.log('PayLoad', JSON.stringify(payLoad));
-          if (!_.isEmpty(payLoad.obs)) {
-            /*
-            submit only if we have some obs
-            */
-
-            if (payLoad.encounterType !== undefined) {
-              isBusy(true);
-              $scope.vm.submittingForm = true;
-              payLoad.form = form.uuid;
-              OpenmrsRestService.getEncounterResService().saveEncounter(JSON.stringify(payLoad),
-                function(data) {
-                  isBusy(false);
-                  $scope.vm.submittingForm = false;
-                  if (data) {
-                    if ($scope.vm.submitLabel === 'Update') {
-                      $scope.vm.savedOrUpdated = true;
-                      var cPayload = angular.copy(payLoad);
-                      voidObs(cPayload, function(voidFailed) {
-                        if (voidFailed) {
-                          $scope.vm.errorSubmit = 'An error occured when trying to void obs';
-                        }
-                      });
-
-                      updateObs(cPayload, function(updateFailed) {
-                        if (updateFailed) {
-                          $scope.vm.errorSubmit = 'An error occured when trying to update the record';
-                        } else {
-                          if ($scope.vm.updatedFailed === false && $scope.vm.voidFailed === false) {
-                            $scope.vm.success = '| Form Submitted successfully';
-                            var dlg = dialogs.notify('Success', $scope.vm.success);
-                            if (payLoadData.personAttributes.length > 0) {
-                              PersonAttributesRestService.getPersonAttributeFieldValues(payLoadData.personAttributes, $scope.vm.patient);
-                            }
-                            // console.log('Previous State')
-                            // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
-                            $location.path($rootScope.previousState + '/' + $rootScope.previousStateParams.uuid);
-                          }
-                        }
-                      });
-
-                    } else {
-                      if (payLoadData.personAttributes.length > 0) {
-                        PersonAttributesRestService.getPersonAttributeFieldValues(payLoadData.personAttributes, $scope.vm.patient);
-                      }
-
-                      $scope.vm.success = '| Form Submitted successfully';
-                      var dlg = dialogs.notify('Success', $scope.vm.success);
-                      // console.log('Previous State')
-                      // console.log($rootScope.previousState + '/' +$rootScope.previousStateParams.uuid)
-                      $location.path($rootScope.previousState + '/' + $rootScope.previousStateParams.uuid);
+        
+        
+        //EndRegion: Navigation functions
+        
+        //Region: Form loading functions
+        function loadFormSchemaForSelectedForm(createFormAfterLoading) {
+            $log.log('Loading form schema for ' + selectedFormMetadata.name);
+            FormsMetaData.getFormSchema(selectedFormMetadata.name,
+                function (schema) {
+                    selectedFormSchema = schema;
+                    $log.info('Form schema loadded..', selectedFormSchema);
+                    if (createFormAfterLoading) {
+                        createFormFromSchema();
                     }
-                  }
+                });
+        }
+
+        function determineFormToLoad() {
+            if (selectedEncounterUuid !== undefined) {
+                var encFormUuid = vm.encounter.formUuid();
+                selectedFormMetadata = FormsMetaData.getForm(encFormUuid);
+                vm.encounterType = vm.encounter.encounterTypeName();
+                vm.currentMode = formModes.existingForm;
+            } else {
+                selectedFormMetadata = FormsMetaData.getForm($stateParams.formuuid);
+                vm.encounterType = selectedFormMetadata.encounterTypeName;
+                vm.currentMode = formModes.newForm;
+            }
+            $log.info('Form to load determined', selectedFormMetadata);
+        }
+
+        function createFormFromSchema() {
+            $log.log('Creating form for loaded form schema');
+            var formObject = FormEntry.createForm(selectedFormSchema, vm.model);
+            var newForm = formObject.formlyForm;
+            $log.debug('Created formly form...', newForm);
+            vm.tabs = newForm;
+            vm.questionMap = formObject.questionMap;
+            $log.debug('Created question map', vm.questionMap);
+
+            if (vm.currentMode === formModes.existingForm) {
+                populateModelWithData();
+            }
+        }
+        
+        //EndRegion: Form loading and creation functions
+        
+        //Region: Load existing form
+        function loadEncounterData(encounterUuid, callback) {
+            OpenmrsRestService.getEncounterResService().getEncounterByUuid(encounterUuid,
+                function (data) {
+                    selectedEncounterData = data;
+                    callback(true);
                 },
                 //error callback
-                function(error) {
-                  // body...
-                  isBusy(false);
-                  $scope.vm.submittingForm = false;
-                  $scope.vm.errorSubmit = 'An Error occured while trying to save the form';
+                function (error) {
+                    vm.submitErrorMessage =
+                    'An Error occured when trying to get encounter data';
+                    callback(false);
                 }
-              );
-            }
-          } else {
-            var dlg = dialogs.notify('Info', 'Can\'t submit, no obs entered. ' +
-              ' To submit enter some obs');
-          }
-        } else {
-          var dlg = dialogs.notify('Info', tabReviewMessage);
-        }
-      } else {
-
-        $scope.hasValidationError = true;
-        //only activate this for debugging purposes
-        if ($scope.vm.form.$error !== undefined) {
-          var err = $scope.vm.form.$error;
-          console.log('errrr', err);
-          if (err.js_expression1) {
-            _.each(err.js_expression1[0].$error.js_expression1, function(_errFields) {
-              console.log('errr 2', _errFields);
-              console.log('errror_fields:', getErrorField(_errFields.$name));
-            });
-          }
-        }
-      }
-
-    };
-
-    function activate() {
-      $timeout(function() {
-        var start = new Date().getTime();
-        FormentryService.getFormSchema(selectedForm.name, function(schema) {
-          formSchema = schema;
-          FormentryService.createForm(formSchema, $scope.vm.model,
-            function(formlySchema) {
-              $scope.vm.formlyFields = formlySchema;
-              if (formlySchema.length > 0) {
-                var i = 0;
-                angular.forEach(formlySchema, function(tab) {
-                  if (i === 0) {
-                    $scope.vm.tabs.push(formlySchema[i]);
-                  } else {
-                    $scope.vm.tabs.push({
-                      form: {},
-                      title: tab.title
-                    });
-                  }
-
-                  i++;
-                });
-                //update sex;
-                $scope.vm.model['sex'] = $scope.vm.patient.gender();
-                $scope.vm.isBusy = false;
-                var end = new Date().getTime();
-                var time = end - start;
-                console.log('Form Creation Execution time: ' + time + ' ms');
-              }
-
-              if (params.uuid !== undefined && params.uuid !== '') {
-                OpenmrsRestService.getEncounterResService().getEncounterByUuid(params,
-                  function(data) {
-                    $scope.vm.encData = data;
-                    if (data) {
-                      $scope.vm.submitLabel = 'Update';
-                      var existingPersonAttributes = [];
-                      existingPersonAttributes = $scope.vm.patient.getPersonAttributes();
-                      if (existingPersonAttributes) {
-                        FormentryService.getEncounter($scope.vm.encData, formlySchema, existingPersonAttributes);
-                      } else {
-                        FormentryService.getEncounter($scope.vm.encData, formlySchema);
-                      }
-                    }
-                  },
-                  //error callback
-                  function(error) {
-                    $scope.vm.errorSubmit = 'An Error occured when trying to get encounter data';
-                  }
                 );
-              } else {
-                //set the current user as the default provider
-                setProvider();
-                //set auto fill the user default location as the default encounter location
-                 setDefaultEncounterLocation();
-              }
-            });
-        });
-      }, 1000);
-    }
-
-    function isBusy(val) {
-      if (val === true) {
-        $loading.start('formEntryLoader');
-      } else {
-        $loading.finish('formEntryLoader');
-      }
-    }
-
-    /*
-    private methdd to set the current user as the selected provider
-    */
-    function setProvider() {
-      var done = false;
-      _.some($scope.vm.tabs, function(page) {
-        var model = page.form.model;
-        _.some(page.form.fields, function(_section) {
-          if (_section.type === 'section') {
-            var secKey = _section.key;
-            var secData = model[secKey] = {};
-            _.some(_section.data.fields, function(_field) {
-              if (_field.key === 'encounterProvider') {
-                secData['encounterProvider'] = OpenmrsRestService.getUserService().user.personUuId();
-                done = true;
-                return true;
-              }
-            });
-          }
-
-          if (done) {
-            return true;
-          }
-        });
-
-        if (done) {
-          return true;
         }
-      });
-    }
 
-    /*
-      private methdd to void obs
-    */
-    function voidObs(_payLoad, callback) {
-      var obsToVoid = _.where(_payLoad.obs, {
-        voided: true
-      });
-      //console.log('Obs to Void: ', obsToVoid);
-      if (obsToVoid !== undefined) {
-        _.each(obsToVoid, function(obs) {
-          OpenmrsRestService.getObsResService().voidObs(obs, function(data) {
-              if (data) {
-                console.log('Voided Obs uuid: ', obs.uuid);
-              }
-            },
-            //error callback
-            function(error) {
-              $scope.vm.errorSubmit = 'An error occured when trying to void obs';
-              $scope.vm.voidFailed = true;
-              callback($scope.vm.voidFailed);
-            });
-        });
-
-        callback($scope.vm.voidFailed);
-      } else {
-        callback($scope.vm.voidFailed);
-      }
-    }
-
-    /*
-      private methdd to update individual obs
-    */
-    function updateObs(_payLoad, callback) {
-      var obsToUpdate = _.filter(_payLoad.obs, function(obs) {
-        // console.log(obs);
-        if (obs.uuid !== undefined && obs.voided === undefined) {
-          return obs;
+        function loadPersonAttribute(patient) {
+            selectedPersonAttributes = patient.getPersonAttributes();
         }
-      });
-      //console.log('Obs to Void: ', obsToVoid);
-      if (obsToUpdate !== undefined) {
-        _.each(obsToUpdate, function(obs) {
-          OpenmrsRestService.getObsResService().saveUpdateObs(obs, function(data) {
-              if (data) {
-                console.log('Updated Obs uuid: ', data);
-              }
-            },
-            //error callback
-            function(error) {
-              $scope.vm.updatedFailed = true;
-              $scope.vm.errorSubmit = 'An error occured when trying to update the record';
-              callback($scope.vm.updatedFailed);
-            });
-        });
 
-        callback($scope.vm.updatedFailed);
-      } else {
-        callback($scope.vm.updatedFailed);
-      }
-    }
-
-    /*
-    private methdd to get the error field
-    */
-    function getErrorField(_fieldKey) {
-
-      //  console.log('++++fieldKey', _fieldKey);
-
-      var errorField;
-      var fieldKey;
-      if (_.contains(_fieldKey, 'ui-select-extended')) {
-        errorField = _fieldKey.split('ui-select-extended_')[1];
-        fieldKey = errorField.split('_')[0];
-      } else {
-        if (_fieldKey.startsWith('obs')) {
-          errorField = _fieldKey.split('obs')[1];
-          fieldKey = 'obs' + errorField.split('_')[0] + '_' + errorField.split('_')[1];
+        function loadPreFormInitializationData(successCallback, errorCallback) {
+            var numberOfRequests = 0;
+            var hasLoadingError = false;
+            if (vm.currentMode === formModes.existingForm) {
+                numberOfRequests++;
+                loadEncounterData(selectedEncounterUuid, function (isSuccessful) {
+                    if (!isSuccessful) {
+                        hasLoadingError = true;
+                    }
+                    numberOfRequests--;
+                    if (numberOfRequests === 0) {
+                        if (hasLoadingError) {
+                            errorCallback();
+                        } else {
+                            successCallback();
+                        }
+                    }
+                });
+            }
+            loadPersonAttribute(vm.patient);
+            if (numberOfRequests === 0) {
+                successCallback();
+            }
         }
-      }
 
-      var field = FormentryService.getFieldByIdKey(fieldKey, $scope.vm.tabs);
-      // console.log('error Field ', field);
-      return field;
-    }
+        function populateModelWithData() {
+            FormEntry.updateFormWithExistingObs(vm.model, selectedEncounterData);
+            FormEntry.updateFormWithExistingPersonAttributes(vm.model,
+                selectedPersonAttributes);
+        }
+        
+        //Endregion: Load existing form
+        
+        //Region: Payload generation
+        
+        function isFormInvalid() {
+            return vm.form.$valid === false;
+        }
 
-    /*
-    private method to set the current user default location as the selected facility
-    */
-    function setDefaultEncounterLocation() {
-      var isSetDefaultLocation = false;
-      _.some($scope.vm.tabs, function(page) {
-        var model = page.form.model;
-        _.some(page.form.fields, function(_section) {
-          if (_section.type === 'section') {
-            var secKey = _section.key;
-            var secData = model[secKey];
-            _.some(_section.data.fields, function(_field) {
-              if (_field.key === 'encounterLocation') {
-                var definedDefaultUserLocation = UserDefaultPropertiesService.getCurrentUserDefaultLocation();
-                if (angular.isDefined(definedDefaultUserLocation)) {
-                  //use defined default user location to prefill the form
-                  secData['encounterLocation'] = definedDefaultUserLocation.uuid;
+        function experiencedSubmitError() {
+            return vm.hasFailedNewingRequest || vm.hasFailedVoidingRequest || vm.hasFailedUpdatingingRequest || vm.hasFailedPersonAttributeRequest;
+        }
+
+        function resetErrorFlags() {
+            vm.hasFailedNewingRequest = false;
+            vm.hasFailedVoidingRequest = false;
+            vm.hasFailedUpdatingingRequest = false;
+            vm.hasFailedPersonAttributeRequest = false;
+        }
+
+        function getVoidedObsFromPayload(payload) {
+            return _.where(payload.obs, {
+                voided: true
+            });
+        }
+
+        function getUpdatedObsFromPayload(payload) {
+            return _.filter(payload.obs, function (obs) {
+                if (obs.uuid !== undefined && obs.voided === undefined) {
+                    return obs;
                 }
-                isSetDefaultLocation = true;
-                return true;
-              }
             });
-          }
-
-          if (isSetDefaultLocation) {
-            return true;
-          }
-        });
-
-        if (isSetDefaultLocation) {
-          return true;
         }
-      });
-    }
 
-  }
+        function generatePayload() {
+            $log.log('Generating payload for form..');
+            lastPayload = FormEntry.getFormPayload(vm.model);
+            if (currentVisitUuid !== undefined) {
+                updatePayloadVisitUuid(lastPayload, currentVisitUuid);
+            }
+
+            if (vm.patient !== undefined) {
+                updatePayloadPatientUuid(lastPayload, vm.patient.uuid());
+            } else {
+                throw new Error('No patient', 'A form requires a patient');
+            }
+
+            if (selectedFormMetadata.encounterTypeUuid !== undefined) {
+                updatePayloadEncounterTypeUuid(lastPayload, selectedFormMetadata.encounterTypeUuid);
+            } else {
+                throw new Error('No encounter type', 'Form does not have associated encountertype');
+            }
+
+            if (vm.currentMode === formModes.existingForm) {
+                updatePayloadEncounterUuid(lastPayload, selectedEncounterUuid);
+            }
+            $log.info('PayLoad', JSON.stringify(lastPayload));
+
+            $log.log('Generating payload for person attributes..');
+            var payload = FormEntry.getPersonAttributesPayload(vm.model);
+            lastPersonAttributePayload =
+            getFinalPersonattributePayload(payload, vm.patient);
+            $log.info('Person PayLoad', JSON.stringify(lastPersonAttributePayload));
+        }
+
+        function hasObsPayload(payload) {
+            return !_.isEmpty(payload.obs);
+        }
+
+        function updatePayloadFormUuid(payload, formUuid) {
+            payload.form = formUuid;
+        }
+
+        function updatePayloadPatientUuid(payload, patientUuid) {
+            payload.patient = patientUuid;
+        }
+
+        function updatePayloadEncounterTypeUuid(payload, encounterTypeUuid) {
+            payload.encounterType = encounterTypeUuid;
+        }
+
+        function updatePayloadEncounterUuid(payload, encounterUuid) {
+            payload.uuid = encounterUuid;
+        }
+
+        function updatePayloadVisitUuid(payload, visitUuid) {
+            payload.visit = visitUuid;
+        }
+
+        function getFinalPersonattributePayload(payload, patient) {
+            var updatedPayload = [];
+            _.each(payload, function (attribute) {
+                var personAttribute = { attribute: attribute, person: patient };
+                updatedPayload.push(personAttribute);
+            });
+            return updatedPayload;
+        }
+        
+        //debugging helpers
+        function logFieldsInError() {
+            if (vm.form.$error !== undefined) {
+                var err = vm.form.$error;
+                $log.log('form error', err);
+                if (err.js_expression1) {
+                    _.each(err.js_expression1[0].$error.js_expression1, function (_errFields) {
+                        $log.debug('js_expression validation error', _errFields);
+                        $log.debug('fields in error:', getFieldInError(_errFields.$name));
+                    });
+                }
+            }
+        }
+        
+        //private methdd to get the field in error
+        function getFieldInError(_fieldKey) {
+            var errorField;
+            var fieldKey;
+            if (_.contains(_fieldKey, 'ui-select-extended')) {
+                errorField = _fieldKey.split('ui-select-extended_')[1];
+                fieldKey = errorField.split('_')[0];
+            } else {
+                if (_fieldKey.startsWith('obs')) {
+                    errorField = _fieldKey.split('obs')[1];
+                    fieldKey = 'obs' + errorField.split('_')[0] + '_' + errorField.split('_')[1];
+                }
+            }
+
+            var field;
+            _.each(vm.questionMap, function (question) {
+                if (question.key === fieldKey) {
+                    field = question.field;
+                }
+            });
+
+            return field;
+        }
+        
+        //EndRegion: Payload generation
+        
+        //Region: Payload submission
+        function initializeSubmitStagingObject(obj, value) {
+            obj.submittingNewObs = value;
+            obj.submittingUpdatedObs = value;
+            obj.submittingVoidedObs = value;
+            obj.submittingPersonAttributes = value;
+        }
+
+        function isFourStageSubmitProcessComplete(obj) {
+            return obj.submittingNewObs === false
+                && obj.submittingUpdatedObs === false
+                && obj.submittingVoidedObs === false
+                && obj.submittingPersonAttributes === false;
+
+        }
+
+        function submit() {
+            if (isFormInvalid()) {
+                // $location.hash('top');
+                // $anchorScroll();
+                return;
+            }
+            
+            //check if there are unvisited tabs
+            
+            generatePayload();
+            if (hasObsPayload(lastPayload)) {
+                updatePayloadFormUuid(lastPayload, selectedFormUuid);
+                submitFormPayload();
+            }
+
+        }
+
+        function onSubmitStageUpdated() {
+            if (isFourStageSubmitProcessComplete(vm.fourStageSubmitProcess)) {
+                onSubmitProcessCompleted();
+            }
+        }
+
+        function onSubmitProcessCompleted() {
+            isSpinnerBusy(false);
+            if (!experiencedSubmitError()) {
+                vm.formSubmitSuccessMessage = '| Form Submitted successfully';
+                dialogs.notify('Success', vm.formSubmitSuccessMessage);
+                $location.path($rootScope.previousState + '/' + $rootScope.previousStateParams.uuid);
+            }
+        }
+
+        function submitFormPayload() {
+            initializeSubmitStagingObject(vm.fourStageSubmitProcess, true);
+            resetErrorFlags();
+            isSpinnerBusy(true);
+            
+            //first stage of submitting is to save new obs
+            OpenmrsRestService.getEncounterResService()
+                .saveEncounter(JSON.stringify(lastPayload),
+                    submitNewObsPayloadSuccessful, submitNewObsPayloadFailed);
+
+        }
+
+        function submitNewObsPayloadSuccessful(data) {
+            vm.fourStageSubmitProcess.submittingNewObs = false;
+            onSubmitStageUpdated();
+
+            if (data) {
+                if (vm.currentMode === formModes.existingForm) {
+                    var payloadCopy = angular.copy(lastPayload);
+                    
+                    //second stage of submitting is to delete voided obs
+                    var voidedObs = getVoidedObsFromPayload(payloadCopy);
+                    if (voidedObs !== undefined) {
+                        submitVoidedObs(voidedObs, function (voidFailed) {
+                            if (voidFailed) {
+                                vm.submitErrorMessage =
+                                'An error occured when trying to void obs';
+                            }
+                            vm.fourStageSubmitProcess.submittingVoidedObs = false;
+                            onSubmitStageUpdated();
+                        });
+                    }
+                    
+                    //third stage of submitting is to update voided obs
+                    var updatedObs = getUpdatedObsFromPayload(payloadCopy);
+                    if (updatedObs !== undefined) {
+                        submitUpdatedObs(updatedObs, function (updateFailed) {
+                            if (updateFailed) {
+                                vm.submitErrorMessage =
+                                'An error occured when trying to update the record';
+                            }
+                            vm.fourStageSubmitProcess.submittingUpdatedObs = false;
+                            onSubmitStageUpdated();
+                        });
+                    }
+
+
+                } else {
+                    vm.fourStageSubmitProcess.submittingUpdatedObs = false;
+                    vm.fourStageSubmitProcess.submittingVoidedObs = false;
+                    onSubmitStageUpdated();
+                }
+                //forth stage of submitting is to submit person attributes
+                if (lastPersonAttributePayload !== undefined &&
+                    lastPersonAttributePayload.length > 0) {
+                    submitPersonAttributes(lastPersonAttributePayload,
+                        function (submitFailed) {
+                            if (submitFailed) {
+                                vm.submitErrorMessage =
+                                'An error occured when trying to save person attribute';
+                            }
+                            vm.fourStageSubmitProcess.submittingPersonAttributes = false;
+                            onSubmitStageUpdated();
+                        });
+                }
+            }
+        }
+
+        function submitNewObsPayloadFailed(error) {
+            initializeSubmitStagingObject(vm.fourStageSubmitProcess, false);
+            vm.hasFailedNewingRequest = true;
+            onSubmitStageUpdated();
+        }
+
+        function submitVoidedObs(voidedObsPayload, finalCallback) {
+            var numberOfVoidRequests = 0;
+            vm.hasFailedVoidingRequest = false;
+
+            _.each(voidedObsPayload, function (obs) {
+                numberOfVoidRequests++;
+                $log.log('sending void request for obs', obs);
+                OpenmrsRestService.getObsResService().voidObs(obs, function (data) {
+                    if (data) {
+                        $log.log('Voided Obs uuid: ', obs.uuid);
+                    }
+                    numberOfVoidRequests--;
+                    //call final callback by voting
+                    if (numberOfVoidRequests === 0) {
+                        finalCallback(vm.hasFailedVoidingRequest);
+                    }
+                },
+                    //error callback
+                    function (error) {
+                        $log.log('Error voiding obs: ', obs.uuid);
+                        vm.hasFailedVoidingRequest = true;
+                        numberOfVoidRequests--;
+                        //call final callback by voting
+                        if (numberOfVoidRequests === 0) {
+                            finalCallback(vm.hasFailedVoidingRequest);
+                        }
+                    });
+            });
+        }
+
+        function submitUpdatedObs(updatedObsPayload, finalCallback) {
+            var numberOfUpdatingRequests = 0;
+            vm.hasFailedUpdatingingRequest = false;
+
+            _.each(updatedObsPayload, function (obs) {
+                numberOfUpdatingRequests++;
+                $log.log('Sending update request for obs', obs);
+                OpenmrsRestService.getObsResService().saveUpdateObs(obs, function (data) {
+                    if (data) {
+                        $log.log('Updated Obs uuid: ', data);
+                    }
+                    numberOfUpdatingRequests--;
+                    //call final callback by voting
+                    if (numberOfUpdatingRequests === 0) {
+                        finalCallback(vm.hasFailedUpdatingingRequest);
+                    }
+                },
+                    //error callback
+                    function (error) {
+                        $log.log('Error voiding obs: ', obs.uuid);
+                        vm.hasFailedUpdatingingRequest = true;
+
+                        numberOfUpdatingRequests--;
+                        //call final callback by voting
+                        if (numberOfUpdatingRequests === 0) {
+                            finalCallback(vm.hasFailedVoidingRequest);
+                        }
+                    });
+            });
+        }
+
+        function submitPersonAttributes(payload, finalCallback) {
+            var numberOfRequests = 0;
+            vm.hasFailedPersonAttributeRequest = false;
+
+            _.each(payload, function (attribute) {
+                numberOfRequests++;
+                $log.log('Sending request for person attribute', attribute);
+                PersonAttributesRestService
+                    .saveUpdatePersonAttribute(attribute, function (data) {
+                        if (data) {
+                            $log.log('Updated attribute: ', data);
+                        }
+                        numberOfRequests--;
+                        //call final callback by voting
+                        if (numberOfRequests === 0) {
+                            finalCallback(vm.hasFailedPersonAttributeRequest);
+                        }
+                    },
+                        //error callback
+                        function (error) {
+                            $log.log('Error saving attribute: ', attribute);
+                            vm.hasFailedPersonAttributeRequest = true;
+
+                            numberOfRequests--;
+                            //call final callback by voting
+                            if (numberOfRequests === 0) {
+                                finalCallback(vm.hasFailedPersonAttributeRequest);
+                            }
+                        });
+            });
+        }
+        
+        //Endregion: Payload submission
+    }
 })();
