@@ -39,193 +39,259 @@
         .state('home', {
           url: '/',
           templateUrl: 'views/main/main.html',
-          data: { requireLogin: true },
+          data: {
+            requireLogin: true
+          },
         })
         .state('about', {
           url: '/about',
           templateUrl: 'views/main/about.html',
           controller: 'AboutCtrl',
-          data: { requireLogin: true },
+          data: {
+            requireLogin: true
+          },
         })
         .state('patientsearch', {
           url: '/patientsearch',
           templateUrl: 'views/patient-search/patient-search.html',
           controller: 'PatientSearchCtrl',
-          data: { requireLogin: true },
+          data: {
+            requireLogin: true
+          },
         })
         .state('patient', {
           url: '/patient/:uuid',
           templateUrl: 'views/patient-dashboard/patient-dashboard.html',
           controller: 'PatientDashboardCtrl',
-          data: { requireLogin: true },
+          data: {
+            requireLogin: true
+          },
         })
         .state('clinical-dashboard', {
           url: '/clinical-dashboard/:locationuuid',
           templateUrl: 'views/clinic-dashboard/clinic-dashboard.html',
           controller: 'ClinicDashboardCtrl',
-          data: { requireLogin: true },
-           reloadOnSearch: false,
+          data: {
+            requireLogin: true
+          },
+          reloadOnSearch: false,
         })
         .state('clinical-dashboard.defaulters-list', {
           url: '/defaulters-list',
           templateUrl: 'views/clinic-dashboard/defaulters-list-tab.html',
           controller: 'ClinicDashboardCtrl',
-          data: { requireLogin: true },
+          data: {
+            requireLogin: true
+          },
         })
         .state('clinical-dashboard.daily-appointments', {
           url: '/daily-appointments',
           templateUrl: 'views/clinic-dashboard/daily-appointments-tab.html',
           controller: 'ClinicDashboardCtrl',
-          data: { requireLogin: true },
+          data: {
+            requireLogin: true
+          },
+          params: {
+            view: null
+          }
         })
         .state('clinical-dashboard.monthly-appointments', {
           url: '/monthly-appointments',
           templateUrl: 'views/clinic-dashboard/monthly-appointments-tab.html',
           controller: 'ClinicDashboardCtrl',
-          data: { requireLogin: true },
+          data: {
+            requireLogin: true
+          },
         })
         .state('clinical-dashboard.moh-731', {
           url: '/moh-731',
           templateUrl: 'views/clinic-dashboard/moh-731.html',
           controller: 'moh731ReportCtrl',
-          data: { requireLogin: true },
+          data: {
+            requireLogin: true
+          },
         })
         .state('clinical-dashboard.patient-register', {
           url: '/patient-register',
           templateUrl: 'views/clinic-dashboard/patient-register.html',
           controller: 'PatientRegisterCtrl',
-          data: { requireLogin: true },
+          data: {
+            requireLogin: true
+          },
         })
         .state('encounter', {
           url: '/encounter/:encuuid/patient/:uuid',
           templateUrl: 'views/formentry/formentry.html',
           controller: 'FormentryCtrl',
-          data: { requireLogin: true },
+          data: {
+            requireLogin: true
+          },
         })
 
-        .state('admin', {
+      .state('admin', {
           url: '/admin-dashboard',
           templateUrl: 'views/admin/admin-dashboard.html',
           controller: 'AdminDashboardCtrl',
-          data: { requireLogin: true }
+          data: {
+            requireLogin: true
+          }
         })
         .state('admin.view-selection', {
           url: '/view-selection',
           templateUrl: 'views/admin/admin-dashboard-view-selector.html',
-          data: { requireLogin: true }
+          data: {
+            requireLogin: true
+          }
         })
         .state('admin.patient-creation-statistics', {
           url: '/patient-creation-statistics',
           templateUrl: 'views/admin/patient-creation-statistics-container.html',
-          data: { requireLogin: true }
+          data: {
+            requireLogin: true
+          }
         })
         .state('admin.data-entry-statistics', {
           url: '/data-entry-statistics',
           templateUrl: 'views/data-analytics/data-entry-statistics.html',
           controller: 'DataEntryStatisticsCtrl',
-          data: { requireLogin: true },
+          data: {
+            requireLogin: true
+          },
         })
         .state('admin.hiv-summary-indicators', {
           url: '/hiv-summary-indicators',
           templateUrl: 'views/admin/hiv-summary-indicators.html',
           controller: 'HivSummaryIndicatorsCtrl',
-          data: { requireLogin: true},
+          data: {
+            requireLogin: true
+          },
         })
         .state('admin.hiv-summary-indicators.indicator', {
           url: '/indicator',
           templateUrl: 'views/admin/indicators-container.html',
           controller: 'HivSummaryIndicatorsCtrl',
-          data: { requireLogin: true},
+          data: {
+            requireLogin: true
+          },
         })
         .state('admin.hiv-summary-indicators.visual', {
-                  url: '/indicator_visual',
-                  templateUrl: 'views/admin/visual-indicators-container.html',
-                  controller: 'HivVisualSummaryIndicatorsCtrl',
-                  data: { requireLogin: true},
-                })
+          url: '/indicator_visual',
+          templateUrl: 'views/admin/visual-indicators-container.html',
+          controller: 'HivVisualSummaryIndicatorsCtrl',
+          data: {
+            requireLogin: true
+          },
+        })
         .state('admin.hiv-monthly-summary-indicators', {
           url: '/hiv-monthly-summary-indicators',
           templateUrl: 'views/admin/hiv-monthly-summary-indicators.html',
           controller: 'HivMonthlySummaryIndicatorsCtrl',
-          data: { requireLogin: true},
+          data: {
+            requireLogin: true
+          },
         })
         .state('admin.hiv-monthly-summary-indicators.monthly', {
           url: '/monthly_summary',
           templateUrl: 'views/admin/hiv-monthly-summary-indicators-container.html',
           controller: 'HivMonthlySummaryIndicatorsCtrl',
-          data: { requireLogin: true},
+          data: {
+            requireLogin: true
+          },
         })
         .state('admin.hiv-monthly-summary-indicators.patients', {
           url: '/month/:month/indicator/:indicator',
           templateUrl: 'views/admin/patient-monthly-list-container.html',
           controller: 'HivMonthlySummaryIndicatorsCtrl',
-          data: { requireLogin: true },
+          data: {
+            requireLogin: true
+          },
         })
         .state('admin.hiv-summary-indicators.patients', {
           url: '/location/:locationuuid/indicator/:indicator',
           templateUrl: 'views/admin/patient-list-container.html',
           controller: 'HivSummaryIndicatorsCtrl',
-          data: { requireLogin: true },
+          data: {
+            requireLogin: true
+          },
         })
         .state('url-selector', {
           url: '/url-selector',
           templateUrl: 'views/main/url-selector.html',
           controller: 'UrlSelectorCtrl',
-          data: { requireLogin: false },
+          data: {
+            requireLogin: false
+          },
         })
         .state('user-default-properties', {
           url: '/user-default-properties',
           templateUrl: 'views/main/user-default-properties.html',
           controller: 'UserDefaultPropertiesCtrl',
-          data: { requireLogin: true },
+          data: {
+            requireLogin: true
+          },
         })
         .state('login', {
           url: '/login',
           templateUrl: 'views/authentication/login.html',
           controller: 'LoginCtrl',
-          data: { requireLogin: false },
+          data: {
+            requireLogin: false
+          },
         })
         .state('admin.patient-register', {
           url: '/patient-register',
           templateUrl: 'views/admin/patient-register.html',
           controller: 'PatientRegisterCtrl',
-          data: { requireLogin: true}
+          data: {
+            requireLogin: true
+          }
         })
         .state('admin.patient-register.patient', {
           url: '/patient/:uuid',
           templateUrl: 'views/admin/patient-register.html',
-          data: { requireLogin: true}
-        }).state('admin.moh-731-report',{
-            url:'/moh-731-report',
-            templateUrl:'views/admin/moh-731-report-container.html',
-            controller:'moh731ReportCtrl',
-            data:{requireLogin:true}
-         }).state('moh-731-generate-pdf',{
-           url:'/moh-731-generate-pdf',
-           templateUrl:'views/authentication/login.html',
-           data:{requireLogin:false},
-                        });
+          data: {
+            requireLogin: true
+          }
+        }).state('admin.moh-731-report', {
+          url: '/moh-731-report',
+          templateUrl: 'views/admin/moh-731-report-container.html',
+          controller: 'moh731ReportCtrl',
+          data: {
+            requireLogin: true
+          }
+        }).state('moh-731-generate-pdf', {
+          url: '/moh-731-generate-pdf',
+          templateUrl: 'views/authentication/login.html',
+          data: {
+            requireLogin: false
+          },
+        });
 
-    }) .config(['$httpProvider', function($httpProvider) {
-        $httpProvider.interceptors.push('authenticationErrorInterceptor');
+    }).config(['$httpProvider', function($httpProvider) {
+      $httpProvider.interceptors.push('authenticationErrorInterceptor');
     }])
     .run(function($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings,
-       EtlRestServicesSettings, UtilService) {
+      EtlRestServicesSettings, UtilService) {
 
-      $rootScope.$on('$stateChangeStart',function(event, toState, toParams) {
+      $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
 
-                 //checking if  pdf report generation  path
-         if(toState.url==='/moh-731-generate-pdf'){
-                        //call renerate report
-                       // console.log('preventing default');
-                        $rootScope.$broadcast('generate-moh-731-pdf-report', {item:{} });
-                        event.preventDefault(); //prevent the change  from happening
-                    }
+        //checking if  pdf report generation  path
+        if (toState.url === '/moh-731-generate-pdf') {
+          //call renerate report
+          // console.log('preventing default');
+          $rootScope.$broadcast('generate-moh-731-pdf-report', {
+            item: {}
+          });
+          event.preventDefault(); //prevent the change  from happening
+        }
         //check whether selection of url base is required first
         var hasPersistedCurrentUrl = OpenmrsSettings.hasCoockiePersistedCurrentUrlBase() && EtlRestServicesSettings.hasCoockiePersistedCurrentUrlBase();
 
         if (!hasPersistedCurrentUrl && toState.name !== 'url-selector') {
-          $state.go('url-selector', { onSuccessRout: toState, onSuccessParams: toParams });
+          $state.go('url-selector', {
+            onSuccessRout: toState,
+            onSuccessParams: toParams
+          });
           event.preventDefault();
           return;
         }
@@ -235,7 +301,10 @@
         var shouldLogin = toState.data !== undefined &&
           toState.data.requireLogin && !OpenmrsRestService.getAuthService().authenticated;
         if (shouldLogin) {
-          $state.go('login', { onSuccessRout: toState, onSuccessParams: toParams });
+          $state.go('login', {
+            onSuccessRout: toState,
+            onSuccessParams: toParams
+          });
           event.preventDefault();
           return;
         }

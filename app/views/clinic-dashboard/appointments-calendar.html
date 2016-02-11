@@ -31,7 +31,7 @@
           href="javascript:;"
           class="event-item"
           ng-click="vm.onEventClick({calendarEvent: event})">
-         <span class="label label-{{event.labelType}}">{{event.title}} Patient(s)</span>
+         <span class="label label-{{event.labelType}}">{{event.title}} {{event.label}}</span>
         </a>
 
         <a
@@ -57,10 +57,10 @@
 </script>
 <div>
   <span>Key:
-  <span class="label label-info">scheduled</span>
-  <span class="label label-success">attended</span>
-    <span class="label label-warning">no return</span>
-    <span class="label label-danger">defaulted</span>
+    <span class="label label-success">Visits</span>
+    <span class="label label-info">Appointments</span>
+    <span class="label label-warning">Not returned</span>
+    <span class="label label-danger">Defaulted</span>
   </span>
 </div>
 <div class="row">
