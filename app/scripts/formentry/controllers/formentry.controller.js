@@ -42,6 +42,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             }
         };
         vm.currentMode = formModes.newForm;
+        vm.tabs = [];
+        var lastFormlyFormSchema = [];//usually is an array of tabs
 
         var selectedFormMetadata;
         var selectedFormSchema;
@@ -74,6 +76,16 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         };
         vm.formSubmitSuccessMessage = '';
 
+        vm.isCurrentTabLast = isCurrentTabLast;
+        vm.isCurrentTabFirst = isCurrentTabFirst;
+        vm.currentTabIndex = 0;
+        vm.displayedTabsIndices = [];
+        vm.onTabSelected = onTabSelected;
+        vm.loadNextTab = loadNextTab;
+        vm.loadPreviousTab = loadPreviousTab;
+
+
+
         activate();
 
         function activate() {
@@ -81,7 +93,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             
             //determine form to load
             determineFormToLoad();
-
+            isSpinnerBusy(true);
             loadPreFormInitializationData(
                 function () {
                     loadFormSchemaForSelectedForm(true);
@@ -99,15 +111,102 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 $loading.finish('formEntryLoader');
             }
         }
-        
+
+
+        function isCurrentTabLast() {
+            return vm.currentTabIndex === vm.tabs.length - 1;
+        }
+
+        function isCurrentTabFirst() {
+            return vm.currentTabIndex === 0;
+        }
+
+
+        function initializeDisplayedTabs() {
+            vm.tabs = [];
+            vm.currentTabIndex = 0;
+            angular.forEach(lastFormlyFormSchema, function (formlyTab) {
+                vm.tabs.push({
+                    form: {},
+                    title: formlyTab.title
+                });
+            });
+            loadCurrentTab();
+        }
+
+        function onTabSelected($index) {
+            vm.currentTabIndex = $index;
+            if (vm.displayedTabsIndices.indexOf($index) === -1) {
+                vm.displayedTabsIndices.push($index);
+            }
+
+            if (vm.tabs[$index]['form'] !== lastFormlyFormSchema[$index].form) {
+                isSpinnerBusy(true);
+                $timeout(function () {
+                    vm.tabs[$index]['form'] = lastFormlyFormSchema[$index].form;
+                    isSpinnerBusy(false);
+                }, 200, false);
+                return;
+            }
+
+        }
+
+        function loadNextTab() {
+            if (!isCurrentTabLast()) {
+                vm.currentTabIndex++;
+                loadCurrentTab();
+            }
+        }
+
+        function loadPreviousTab() {
+            if (!isCurrentTabFirst()) {
+                vm.currentTabIndex--;
+                loadCurrentTab();
+            }
+        }
+
+        function loadCurrentTab() {
+            vm.tabs[vm.currentTabIndex].active = true;
+
+            if (vm.tabs[vm.currentTabIndex]['form'] !== lastFormlyFormSchema[vm.currentTabIndex].form) {
+                isSpinnerBusy(true);
+                $timeout(function () {
+                    vm.tabs[vm.currentTabIndex]['form'] = lastFormlyFormSchema[vm.currentTabIndex].form;
+                    /*move to the top of the selected page*/
+                    $location.hash('top');
+                    $anchorScroll();
+                    isSpinnerBusy(false);
+                }, 200, false);
+                return;
+            }
+
+        }
+
+        function loadAllTabs() {
+            var i = 0;
+            angular.forEach(lastFormlyFormSchema, function (formlyTab) {
+                if (vm.displayedTabsIndices.indexOf(i) === -1) {
+                    vm.displayedTabsIndices.push(i);
+                    vm.tabs[i]['form'] = lastFormlyFormSchema[i].form;
+                }
+
+                i++;
+            });
+        }
+
+        function areAllTabsLoaded() {
+            return vm.displayedTabsIndices.length === vm.tabs.length;
+        }
         
         //EndRegion: Navigation functions
         
         //Region: Form loading functions
         function loadFormSchemaForSelectedForm(createFormAfterLoading) {
+            isSpinnerBusy(true);
             $log.log('Loading form schema for ' + selectedFormMetadata.name);
             FormsMetaData.getFormSchema(selectedFormMetadata.name,
                 function (schema) {
+                    isSpinnerBusy(false);
                     selectedFormSchema = schema;
                     $log.info('Form schema loadded..', selectedFormSchema);
                     if (createFormAfterLoading) {
@@ -133,9 +232,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function createFormFromSchema() {
             $log.log('Creating form for loaded form schema');
             var formObject = FormEntry.createForm(selectedFormSchema, vm.model);
-            var newForm = formObject.formlyForm;
-            $log.debug('Created formly form...', newForm);
-            vm.tabs = newForm;
+            lastFormlyFormSchema = formObject.formlyForm;
+            $log.debug('Created formly form...', lastFormlyFormSchema);
+            //vm.tabs = newForm;
+            initializeDisplayedTabs();
             vm.questionMap = formObject.questionMap;
             $log.debug('Created question map', vm.questionMap);
 
@@ -143,6 +243,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 populateModelWithData();
             }
         }
+
         
         //EndRegion: Form loading and creation functions
         
@@ -351,6 +452,15 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         function submit() {
+            if (!areAllTabsLoaded()) {
+                isSpinnerBusy(true);
+                $timeout(function () {
+                    loadAllTabs();
+                    submit();
+                }, 200, false);
+                return;
+            }
+            isSpinnerBusy(false);
             if (isFormInvalid()) {
                 // $location.hash('top');
                 // $anchorScroll();
@@ -363,6 +473,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             if (hasObsPayload(lastPayload)) {
                 updatePayloadFormUuid(lastPayload, selectedFormUuid);
                 submitFormPayload();
+            } else {
+                dialogs.notify('Info', 'Can\'t submit, no obs entered. ' +
+                    ' To submit enter some obs');
             }
 
         }
