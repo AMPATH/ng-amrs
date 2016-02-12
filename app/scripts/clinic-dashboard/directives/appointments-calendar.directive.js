@@ -33,21 +33,25 @@
       calendarConfig.templates.calendarSlideBox = 'mwl/calendarSlideBox.html';
       calendarConfig.templates.calendarMonthCell = 'mwl/customMonthCell.html';
     });
+
     $scope.getAppointments = function(event) {
       getAppointments();
     }
     $scope.eventClicked = function(event) {
       if (event.type === 'info') {
+        $state.go('clinical-dashboard.daily-appointments', {view:'appointments'})
         //Redirect Appointments
       } else if (event.type === 'success') {
         //Redirect Attended
+        $state.go('clinical-dashboard.daily-appointments', {view:'attended'})
       } else if (event.type === 'warning') {
+          $state.go('clinical-dashboard.daily-appointments',{view:'notReturned'});
         //Redirect to not attended
       } else if (event.type === 'important') {
         //Redirect to important
       }
       ClinicDashboardService.setStartDate(event.startsAt);
-      $state.go('clinical-dashboard.daily-appointments');
+      //$state.go('clinical-dashboard.daily-appointments');
     };
     $scope.events = [
 
@@ -86,7 +90,7 @@
         params: {
           startDate: formatedStartDate,
           endDate: formatedEndDate,
-          groupBy: 'groupByPerson,groupByd',
+          groupBy: 'groupByPerson,groupByd,groupByEncounter',
           locationUuids: $scope.locationUuid,
           report: 'attended'
         }
@@ -95,7 +99,7 @@
         params: {
           startDate: formatedStartDate,
           endDate: formatedEndDate,
-          groupBy: 'groupByd',
+          groupBy: 'groupByPerson,groupByd,groupByRtc',
           locationUuids: $scope.locationUuid,
           report: 'appointments'
         }
@@ -110,6 +114,7 @@
                 title: result.attended + ' ',
                 type: 'success',
                 labelType: 'success',
+                label: 'Visits',
                 startsAt: new Date(result.d),
                 draggable: false,
                 incrementsBadgeTotal: false,
@@ -121,6 +126,7 @@
                 title: result.scheduled + ' ',
                 type: 'info',
                 labelType: 'info',
+                label: 'Appointments',
                 startsAt: new Date(result.d),
                 draggable: false,
                 incrementsBadgeTotal: false,
@@ -131,6 +137,7 @@
                 title: result.has_not_returned + ' ',
                 type: 'warning',
                 labelType: 'warning',
+                label: 'Not Returned',
                 startsAt: new Date(result.d),
                 draggable: false,
                 incrementsBadgeTotal: false,
@@ -141,6 +148,7 @@
                 title: result.defaulted + ' ',
                 type: 'important',
                 labelType: 'danger',
+                label: 'Defaulted',
                 startsAt: new Date(result.d),
                 draggable: false,
                 incrementsBadgeTotal: false,
@@ -154,6 +162,8 @@
         }
         $scope.isBusy = false;
         $scope.events = events;
+      },function () {
+        $scope.experiencedLoadingError = true;
       });
     }
 

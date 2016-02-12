@@ -111,9 +111,10 @@
         }
 
         function getAppointmentSchedule(locationUuid,startDate,endDate,successCallback,failedCallback,startIndex,limit){
-            var resource=getResource('location/:uuid/appointment-schedule');
+            var resource=getResource('get-report-by-report-name');
 
-            var params={endDate:endDate,startDate:startDate,uuid:locationUuid};
+            var params={groupBy:'groupByPerson,groupByd',startDate:startDate,
+            locationUuids:locationUuid,report:'daily-appointments'};
 
             if(startIndex!==undefined){
                 params.startIndex=startIndex;
@@ -122,9 +123,6 @@
             if(limit!==undefined){
                 params.limit=limit;
             }
-
-            console.log(params);
-            console.log(startIndex);
 
             return resource.get(params).$promise
                     .then(function(response){
@@ -138,9 +136,10 @@
         }
 
         function getDailyNotReturnedVisits(locationUuid,startDate,endDate,successCallback,failedCallback,startIndex,limit){
-            var resource=getResource('location/:uuid/has-not-returned');
+            var resource=getResource('get-report-by-report-name');
 
-            var params={endDate:endDate,startDate:startDate,uuid:locationUuid};
+            var params={groupBy:'groupByPerson,groupByd',startDate:startDate,
+            locationUuids:locationUuid,report:'daily-has-not-returned'};
 
             if(startIndex!==undefined){
                 params.startIndex=startIndex;
@@ -167,9 +166,10 @@
 
 
         function getDailyVisits(locationUuid,startDate,endDate,successCallback,failedCallback,startIndex,limit){
-            var resource=getResource('location/:uuid/daily-visits');
+            var resource=getResource('get-report-by-report-name');
 
-            var params={endDate:endDate,startDate:startDate,uuid:locationUuid};
+            var params={groupBy:'groupByPerson,groupByd',startDate:startDate,
+            locationUuids:locationUuid,report:'daily-attendance'};
 
             if(startIndex!==undefined){
                 params.startIndex=startIndex;

@@ -21,10 +21,10 @@
         };
     }
 
-    appointmentScheduleController.$inject = ['$scope', '$rootScope', 'EtlRestService',
+    appointmentScheduleController.$inject = ['$scope', '$rootScope','$stateParams', 'EtlRestService',
         'AppointmentScheduleModel', 'moment', '$state', '$filter', 'ClinicDashboardService', 'OpenmrsRestService', ];
 
-    function appointmentScheduleController($scope, $rootScope, EtlRestService,
+    function appointmentScheduleController($scope, $rootScope,$stateParams, EtlRestService,
             AppointmentScheduleModel, moment, $state, $filter, ClinicDashboardService, OpenmrsRestService) {
 
         //scope members region
@@ -33,7 +33,7 @@
         $scope.searchString = '';
         $scope.visitSearchString = '';
         $scope.appointmentSearchString = '';
-        $scope.visitsNotReturned = ''
+        $scope.visitsNotReturned = '';
         $scope.isBusy = false;
         $scope.isBusyVisits = false;
         $scope.experiencedLoadingError = false;
@@ -51,7 +51,6 @@
         $scope.currentView = 'Appointments';
         $scope.toggleAppointmentVisits = toggleAppointmentVisits;
         $scope.selectAppointmentVisits = selectAppointmentVisits;
-
         $scope.selectedDate = function (value) {
             if (value) {
                 $scope.startDate = value;
@@ -86,7 +85,27 @@
                 element.triggerHandler('input');
             }
         };
-
+        if ($stateParams.view==='appointments'){
+          $scope.currentView = 'Appointments';
+          $scope.showNoreturn = false;
+          $scope.showVisits = false;
+          $scope.showAppointments = true;
+        }else if($stateParams.view==='attended') {
+          $scope.currentView = 'Visit';
+          $scope.showNoreturn = false;
+          $scope.showAppointments = false;
+          $scope.showVisits = true;
+        }else if($stateParams.view==='notReturned') {
+          $scope.currentView = 'Not Returned';
+          $scope.showNoreturn = true;
+          $scope.showVisits = false;
+          $scope.showAppointments = false;
+        }else {
+          $scope.currentView = 'Appointments';
+          $scope.showNoreturn = false;
+          $scope.showVisits = false;
+          $scope.showAppointments = true;
+        }
         //end scope members region
 
         function toggleAppointmentVisits() {
@@ -305,14 +324,7 @@
             $scope.allDataLoaded4AppointmentSchedule = true;
           }else{
             for (var e in appointmentSchedule.result) {
-              if($scope.appointmentPatients.length!=0){
-                $scope.appointmentPatients.push.apply($scope.appointmentPatients,
-                  new AppointmentScheduleModel.appointmentSchedule(appointmentSchedule.result[e]))
-
-              } else {
-                $scope.appointmentPatients.push(new AppointmentScheduleModel.appointmentSchedule(appointmentSchedule.result[e]));
-              }
-
+              $scope.appointmentPatients.push(new AppointmentScheduleModel.appointmentSchedule(appointmentSchedule.result[e]));
             }
           }
 
@@ -345,14 +357,7 @@
             $scope.allDataLoaded4DailyVisits = true;
           }else{
             for (var e in appointmentSchedule.result) {
-              if($scope.visitPatients.length!=0){
-                $scope.visitPatients.push.apply($scope.visitPatients,
-                  new AppointmentScheduleModel.appointmentSchedule(appointmentSchedule.result[e]))
-
-              } else {
-                $scope.visitPatients.push(new AppointmentScheduleModel.appointmentSchedule(appointmentSchedule.result[e]));
-              }
-
+              $scope.visitPatients.push(new AppointmentScheduleModel.appointmentSchedule(appointmentSchedule.result[e]));
             }
           }
 
@@ -386,12 +391,7 @@
               $scope.allDataLoaded4DailyNotReturnedVisits = true;
             }else{
               for (var e in appointmentSchedule.result) {
-                if($scope.notReturnedVisitPatients.length!=0){
-                  $scope.notReturnedVisitPatients.push.apply($scope.notReturnedVisitPatients,
-                    new AppointmentScheduleModel.appointmentSchedule(appointmentSchedule.result[e]))
-                } else {
-                  $scope.notReturnedVisitPatients.push(new AppointmentScheduleModel.appointmentSchedule(appointmentSchedule.result[e]));
-                }
+              $scope.notReturnedVisitPatients.push(new AppointmentScheduleModel.appointmentSchedule(appointmentSchedule.result[e]));
 
               }
             }
