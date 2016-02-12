@@ -15,7 +15,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         'OpenmrsRestService', '$timeout', 'FormsMetaData'
         , '$loading', '$anchorScroll', 'UserDefaultPropertiesService'
         , 'FormentryUtilService', 'configService', 'SearchDataService',
-        '$log', 'FormEntry', 'PersonAttributesRestService'
+        '$log', 'FormEntry', 'PersonAttributesRestService',
+        'CurrentLoadedFormService'
     ];
 
     function FormentryCtrl($translate, dialogs, $location,
@@ -23,7 +24,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         OpenmrsRestService, $timeout, FormsMetaData,
         $loading, $anchorScroll, UserDefaultPropertiesService, FormentryUtilService,
         configService, SearchDataService,
-        $log, FormEntry, PersonAttributesRestService) {
+        $log, FormEntry, PersonAttributesRestService, CurrentLoadedFormService) {
         var vm = $scope;
         
         //Patient variables
@@ -301,8 +302,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 populateModelWithData();
             }
             loadPatientRequiredValuesToModelAndQuestionMap();
+            if (vm.currentMode === formModes.newForm) {
+                loadDefaultValues();
+            }
+            
         }
-
+        
         function loadPatientRequiredValuesToModelAndQuestionMap() {
             //load gender to model
             vm.model.sex = vm.patient.gender();
@@ -312,8 +317,44 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 key: 'sex'
             };
         }
-
         
+        function loadDefaultValues() {
+            setCurrentProvider();
+            setCurrentDate();
+            setCurrentLocation();
+        }
+
+        function setCurrentProvider() {
+            var currentUserUuid = OpenmrsRestService.getUserService().user.personUuId();
+            if (currentUserUuid) {
+                var sectionModel =
+                    CurrentLoadedFormService.
+                        getContainingObjectForQuestionKey(vm.model, 'encounterProvider');
+                sectionModel['encounterProvider'].value = currentUserUuid;
+            }
+        }
+
+        function setCurrentDate() {
+            var currentDate = new Date();
+            if (currentDate) {
+                var sectionModel =
+                    CurrentLoadedFormService.
+                        getContainingObjectForQuestionKey(vm.model, 'encounterDatetime');
+                sectionModel['encounterDatetime'].value = currentDate;
+            }
+        }
+
+        function setCurrentLocation() {
+            var definedDefaultUserLocation =
+                UserDefaultPropertiesService.getCurrentUserDefaultLocation();
+            if (angular.isDefined(definedDefaultUserLocation)) {
+                var sectionModel =
+                    CurrentLoadedFormService.
+                        getContainingObjectForQuestionKey(vm.model, 'encounterLocation');
+
+                sectionModel['encounterLocation'].value = definedDefaultUserLocation.uuid;
+            }
+        }
         //EndRegion: Form loading and creation functions
         
         //Region: Load existing form
