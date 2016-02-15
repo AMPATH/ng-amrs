@@ -174,27 +174,16 @@ jshint -W003, -W026
       $scope.locationsOptions = {};
     }
 
-    function wrapLocations(locations) {
-      var wrappedLocations = [];
-      var locationsFetched = 1;
-      for (var i = 0; i < locations.length; i++) {
-        locationService.getLocationByUuidFromEtlOrCatch(locations[i].uuid, true, function (success) {
-          if (locations.length === locationsFetched) {
-            $scope.isBusy = false;
-          }
-          locationsFetched++;
-        }, function (error) {
-          if (locations.length === locationsFetched) {
-            $scope.isBusy = false;
-          }
-          locationsFetched++;
-        });
-        var wrapped = wrapLocation(locations[i]);
-        wrapped.index = i;
-        wrappedLocations.push(wrapped);
+      function wrapLocations(locations) {
+        var wrappedLocations = [];
+        for (var i = 0; i < locations.length; i++) {
+          var wrapped = wrapLocation(locations[i]);
+          wrapped.index = i;
+          wrappedLocations.push(wrapped);
+        }
+
+        return wrappedLocations;
       }
-      return wrappedLocations;
-    }
 
     function wrapLocation(location) {
       return LocationModel.toWrapper(location);
