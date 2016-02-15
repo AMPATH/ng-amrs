@@ -89,6 +89,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         //error
         vm.anyFieldsInError = anyFieldsInError;
         vm.isFormInvalid = isFormInvalid;
+        
+        //Patient Summary
+        vm.showHivHistoricalSummary = false;
+        vm.$on('viewHivHistoricalSummary', viewHivHistoricalSummary);
+
 
 
 
@@ -652,7 +657,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     onSubmitStageUpdated();
                 }
             } else {
-                 submitNewObsPayloadFailed('an unknown erro occured while submitting obs');
+                submitNewObsPayloadFailed('an unknown erro occured while submitting obs');
             }
         }
 
@@ -661,7 +666,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             initializeSubmitStagingObject(vm.fourStageSubmitProcess, false);
             vm.hasFailedNewingRequest = true;
             vm.errorMessage =
-                'An error occured when trying to save the obs';
+            'An error occured when trying to save the obs';
             onSubmitStageUpdated();
         }
 
@@ -759,5 +764,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
         
         //Endregion: Payload submission
+        
+        //Beginregion: PatientSummary
+        function viewHivHistoricalSummary() {
+            vm.showHivHistoricalSummary = true;
+        }
+        //Endregion: PatientSummary
     }
 })();
