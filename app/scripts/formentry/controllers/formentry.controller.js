@@ -43,7 +43,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         };
         vm.currentMode = formModes.newForm;
         vm.tabs = [];
-        var lastFormlyFormSchema = [];//usually is an array of tabs
+        vm.lastFormlyFormSchema = [];//usually is an array of tabs
 
         var selectedFormMetadata;
         var selectedFormSchema;
@@ -67,7 +67,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         vm.hasFailedVoidingRequest = false;
         vm.hasFailedUpdatingingRequest = false;
         vm.hasFailedPersonAttributeRequest = false;
-        vm.submitErrorMessage = '';
+        vm.errorMessage = '';
+        vm.validationErrorMessage = 'The form has some validation errors. See the error list above.';
         vm.fourStageSubmitProcess = {
             submittingNewObs: false,
             submittingUpdatedObs: false,
@@ -83,6 +84,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         vm.onTabSelected = onTabSelected;
         vm.loadNextTab = loadNextTab;
         vm.loadPreviousTab = loadPreviousTab;
+        vm.scrollToTop = scrollToTop;
+        
+        //error
+        vm.anyFieldsInError = anyFieldsInError;
+        vm.isFormInvalid = isFormInvalid;
 
 
 
@@ -90,6 +96,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         function activate() {
             $log.log('Initializing form entry controller..');
+            subsribeToRootScopeMessages();
             
             //determine form to load
             determineFormToLoad();
@@ -107,8 +114,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function isSpinnerBusy(val) {
             if (val === true) {
                 $loading.start('formEntryLoader');
+                vm.isBusy = true;
             } else {
                 $loading.finish('formEntryLoader');
+                vm.isBusy = false;
             }
         }
 
@@ -125,7 +134,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function initializeDisplayedTabs() {
             vm.tabs = [];
             vm.currentTabIndex = 0;
-            angular.forEach(lastFormlyFormSchema, function (formlyTab) {
+            angular.forEach(vm.lastFormlyFormSchema, function (formlyTab) {
                 vm.tabs.push({
                     form: {},
                     title: formlyTab.title
@@ -140,10 +149,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 vm.displayedTabsIndices.push($index);
             }
 
-            if (vm.tabs[$index]['form'] !== lastFormlyFormSchema[$index].form) {
+            if (vm.tabs[$index]['form'] !== vm.lastFormlyFormSchema[$index].form) {
                 isSpinnerBusy(true);
                 $timeout(function () {
-                    vm.tabs[$index]['form'] = lastFormlyFormSchema[$index].form;
+                    vm.tabs[$index]['form'] = vm.lastFormlyFormSchema[$index].form;
                     isSpinnerBusy(false);
                 }, 200, false);
                 return;
@@ -168,10 +177,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function loadCurrentTab() {
             vm.tabs[vm.currentTabIndex].active = true;
 
-            if (vm.tabs[vm.currentTabIndex]['form'] !== lastFormlyFormSchema[vm.currentTabIndex].form) {
+            if (vm.tabs[vm.currentTabIndex]['form'] !== vm.lastFormlyFormSchema[vm.currentTabIndex].form) {
                 isSpinnerBusy(true);
                 $timeout(function () {
-                    vm.tabs[vm.currentTabIndex]['form'] = lastFormlyFormSchema[vm.currentTabIndex].form;
+                    vm.tabs[vm.currentTabIndex]['form'] = vm.lastFormlyFormSchema[vm.currentTabIndex].form;
                     /*move to the top of the selected page*/
                     $location.hash('top');
                     $anchorScroll();
@@ -184,10 +193,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         function loadAllTabs() {
             var i = 0;
-            angular.forEach(lastFormlyFormSchema, function (formlyTab) {
+            angular.forEach(vm.lastFormlyFormSchema, function (formlyTab) {
                 if (vm.displayedTabsIndices.indexOf(i) === -1) {
                     vm.displayedTabsIndices.push(i);
-                    vm.tabs[i]['form'] = lastFormlyFormSchema[i].form;
+                    vm.tabs[i]['form'] = vm.lastFormlyFormSchema[i].form;
                 }
 
                 i++;
@@ -197,6 +206,55 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function areAllTabsLoaded() {
             return vm.displayedTabsIndices.length === vm.tabs.length;
         }
+
+        function anyFieldsInError(fields) {
+            if (fields && fields.length !== 0) {
+                var hasError = false;
+                _.each(fields, function (field) {
+                    if (field.formControl && field.formControl.$error && Object.keys(field.formControl.$error).length > 0) {
+                        hasError = true;
+                    }
+                });
+                return hasError;
+            }
+            return false;
+        }
+
+        function scrollToTop() {
+            $location.hash('top');
+            $anchorScroll();
+        }
+        function scrollToAnchorByKey(key) {
+            //var newHash = 'obs120_a8a666ban1350n11dfna1f1n0026b9348838';
+            if ($location.hash() !== key) {
+                // set the $location.hash to `newHash` and
+                // $anchorScroll will automatically scroll to it
+                $location.hash(key);
+            } else {
+                // call $anchorScroll() explicitly,
+                // since $location.hash hasn't changed
+                $anchorScroll();
+            }
+        }
+
+        function selectTabByTitle(title) {
+            _.each(vm.tabs, function (tab) {
+                if (tab.title === title) {
+                    tab.active = true;
+                }
+            });
+        }
+
+        function onNavigateToQuestionRequest(args, param) {
+            selectTabByTitle(param.tabTitle);
+            scrollToAnchorByKey(param.questionKey);
+        }
+
+        function subsribeToRootScopeMessages() {
+            //navigate to question request from form entry module
+            $rootScope.$on("navigateToQuestion", onNavigateToQuestionRequest);
+        }
+        
         
         //EndRegion: Navigation functions
         
@@ -232,8 +290,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function createFormFromSchema() {
             $log.log('Creating form for loaded form schema');
             var formObject = FormEntry.createForm(selectedFormSchema, vm.model);
-            lastFormlyFormSchema = formObject.formlyForm;
-            $log.debug('Created formly form...', lastFormlyFormSchema);
+            vm.lastFormlyFormSchema = formObject.formlyForm;
+            $log.debug('Created formly form...', vm.lastFormlyFormSchema);
             //vm.tabs = newForm;
             initializeDisplayedTabs();
             vm.questionMap = formObject.questionMap;
@@ -242,6 +300,17 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             if (vm.currentMode === formModes.existingForm) {
                 populateModelWithData();
             }
+            loadPatientRequiredValuesToModelAndQuestionMap();
+        }
+
+        function loadPatientRequiredValuesToModelAndQuestionMap() {
+            //load gender to model
+            vm.model.sex = vm.patient.gender();
+            
+            //load ender to QuestionMap
+            vm.questionMap['sex'] = {
+                key: 'sex'
+            };
         }
 
         
@@ -256,7 +325,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 },
                 //error callback
                 function (error) {
-                    vm.submitErrorMessage =
+                    vm.errorMessage =
                     'An Error occured when trying to get encounter data';
                     callback(false);
                 }
@@ -461,9 +530,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 return;
             }
             isSpinnerBusy(false);
+            vm.hasClickedSubmit = true;
             if (isFormInvalid()) {
-                // $location.hash('top');
-                // $anchorScroll();
+                scrollToTop();
                 return;
             }
             
@@ -501,6 +570,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             isSpinnerBusy(true);
             
             //first stage of submitting is to save new obs
+            
+            $log.log('Submitting new obs...');
             OpenmrsRestService.getEncounterResService()
                 .saveEncounter(JSON.stringify(lastPayload),
                     submitNewObsPayloadSuccessful, submitNewObsPayloadFailed);
@@ -508,6 +579,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         function submitNewObsPayloadSuccessful(data) {
+            $log.log('Submitting new obs successful');
             vm.fourStageSubmitProcess.submittingNewObs = false;
             onSubmitStageUpdated();
 
@@ -518,27 +590,40 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     //second stage of submitting is to delete voided obs
                     var voidedObs = getVoidedObsFromPayload(payloadCopy);
                     if (voidedObs !== undefined) {
+                        $log.log('Submitting deleted obs...');
                         submitVoidedObs(voidedObs, function (voidFailed) {
+                            $log.log('Submitting deleted obs complete');
                             if (voidFailed) {
-                                vm.submitErrorMessage =
+                                $log.error('Submitting deleted obs failed');
+                                vm.errorMessage =
                                 'An error occured when trying to void obs';
                             }
                             vm.fourStageSubmitProcess.submittingVoidedObs = false;
                             onSubmitStageUpdated();
                         });
                     }
+                    else {
+                        vm.fourStageSubmitProcess.submittingVoidedObs = false;
+                        onSubmitStageUpdated();
+                    }
                     
                     //third stage of submitting is to update voided obs
                     var updatedObs = getUpdatedObsFromPayload(payloadCopy);
                     if (updatedObs !== undefined) {
+                        $log.log('Submitting updated obs...');
                         submitUpdatedObs(updatedObs, function (updateFailed) {
+                            $log.log('Submitting updated obs complete');
                             if (updateFailed) {
-                                vm.submitErrorMessage =
+                                $log.error('Submitting deleted obs failed');
+                                vm.errorMessage =
                                 'An error occured when trying to update the record';
                             }
                             vm.fourStageSubmitProcess.submittingUpdatedObs = false;
                             onSubmitStageUpdated();
                         });
+                    } else {
+                        vm.fourStageSubmitProcess.submittingUpdatedObs = false;
+                        onSubmitStageUpdated();
                     }
 
 
@@ -550,22 +635,33 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 //forth stage of submitting is to submit person attributes
                 if (lastPersonAttributePayload !== undefined &&
                     lastPersonAttributePayload.length > 0) {
+                    $log.log('Submitting person attributes..');
                     submitPersonAttributes(lastPersonAttributePayload,
                         function (submitFailed) {
+                            $log.log('Submitting person attributes completed');
                             if (submitFailed) {
-                                vm.submitErrorMessage =
+                                $log.error('Submitting person attributes failed');
+                                vm.errorMessage =
                                 'An error occured when trying to save person attribute';
                             }
                             vm.fourStageSubmitProcess.submittingPersonAttributes = false;
                             onSubmitStageUpdated();
                         });
+                } else {
+                    vm.fourStageSubmitProcess.submittingPersonAttributes = false;
+                    onSubmitStageUpdated();
                 }
+            } else {
+                 submitNewObsPayloadFailed('an unknown erro occured while submitting obs');
             }
         }
 
         function submitNewObsPayloadFailed(error) {
+            $log.error('Submitting new obs failed', error);
             initializeSubmitStagingObject(vm.fourStageSubmitProcess, false);
             vm.hasFailedNewingRequest = true;
+            vm.errorMessage =
+                'An error occured when trying to save the obs';
             onSubmitStageUpdated();
         }
 

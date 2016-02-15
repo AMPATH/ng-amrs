@@ -26,18 +26,21 @@
             url: '/form/:formuuid/patient/:uuid',
             templateUrl: 'views/formentry/formentry.html',
             controller: 'FormentryCtrl',
+            controllerAs: 'vm',
             data: { requireLogin: true }
           })
         .state('visit', {
           url: '/form/:formuuid/patient/:uuid/visit/:visitUuid',
           templateUrl: 'views/formentry/formentry.html',
           controller: 'FormentryCtrl',
+          controllerAs: 'vm',
           data: { requireLogin: true }
         })
         .state('tabs', {
           url: '/form/tabs',
           templateUrl: 'views/formentry/tab.html',
           controller: 'tabCtrl',
+          controllerAs: 'vm',
           data: { requireLogin: true }
         });
     })
