@@ -86,11 +86,20 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         vm.loadPreviousTab = loadPreviousTab;
         vm.scrollToTop = scrollToTop;
         
+        //navigation confirmation
+        var userConfirmedChange = false;
+        //var usedStateChange = false;
+        var changesSaved = false;
+        vm.$on('$stateChangeStart', onStateChangeStart);
+        vm.cancel = cancel;
+        
         //error
         vm.anyFieldsInError = anyFieldsInError;
         vm.isFormInvalid = isFormInvalid;
-
-
+        
+        //Patient Summary
+        vm.showHivHistoricalSummary = false;
+        vm.$on('viewHivHistoricalSummary', viewHivHistoricalSummary);
 
         activate();
 
@@ -254,8 +263,53 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             //navigate to question request from form entry module
             $rootScope.$on("navigateToQuestion", onNavigateToQuestionRequest);
         }
-        
-        
+
+
+        function cancel() {
+            vm.changesSaved = true;
+            var dlg = dialogs.confirm('Close Form', 'Do you want to close this form?');
+            dlg.result.then(function (btn) {
+                $location.path($rootScope.previousState + '/' + $rootScope.previousStateParams.uuid);
+            },
+
+                function (btn) {
+                    //$scope.vm.confirmed = 'You confirmed "No."';
+                });
+        }
+
+        function onStateChangeStart(event, toState, toParams) {
+            // usedStateChange = true;
+            if (vm.form.$dirty && changesSaved === false) {
+                if (userConfirmedChange === false) {
+                    //prevent transition to new url before saving data
+                    event.preventDefault();
+                    var dialogPromise = dialogs.confirm('Changes Not Saved',
+                        'Do you want to close this form?');
+                    dialogPromise.result.then(function (btn) {
+                        userConfirmedChange = true;
+                        $state.go(toState.name, {
+                            onSuccessRout: toState,
+                            onSuccessParams: toParams
+                        });
+                    }, function (btn) {
+                        //Prevent any transition to new url
+                        event.preventDefault();
+                        userConfirmedChange = false;
+                    });
+                }
+            }
+        }
+
+        function registerConfirmationExit() {
+            // if (usedStateChange === false) {
+                UtilService.confirmBrowserExit(function (data) {
+                    if (data) {
+                        var dlg = dialogs.confirm('Close Form',
+                            'Do you want to close this form?');
+                    }
+                });
+            // }
+        }
         //EndRegion: Navigation functions
         
         //Region: Form loading functions
@@ -557,6 +611,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         function onSubmitProcessCompleted() {
             isSpinnerBusy(false);
+            vm.changesSaved = true;
             if (!experiencedSubmitError()) {
                 vm.formSubmitSuccessMessage = '| Form Submitted successfully';
                 dialogs.notify('Success', vm.formSubmitSuccessMessage);
@@ -652,7 +707,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     onSubmitStageUpdated();
                 }
             } else {
-                 submitNewObsPayloadFailed('an unknown erro occured while submitting obs');
+                submitNewObsPayloadFailed('an unknown erro occured while submitting obs');
             }
         }
 
@@ -661,7 +716,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             initializeSubmitStagingObject(vm.fourStageSubmitProcess, false);
             vm.hasFailedNewingRequest = true;
             vm.errorMessage =
-                'An error occured when trying to save the obs';
+            'An error occured when trying to save the obs';
             onSubmitStageUpdated();
         }
 
@@ -759,5 +814,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
         
         //Endregion: Payload submission
+        
+        //Beginregion: PatientSummary
+        function viewHivHistoricalSummary() {
+            vm.showHivHistoricalSummary = true;
+        }
+
+        //Endregion: PatientSummary
     }
 })();
