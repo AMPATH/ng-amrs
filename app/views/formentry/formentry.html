@@ -1,4 +1,13 @@
 <div style="padding:4px;" dw-loading="formEntryLoader" dw-loading-options="{text: 'Processing request..'}">
+    
+    <script>
+      // depending on how you're loading apiCheck, you may need to use AMD or CommonJS
+      // in this case, because it's a script tag, apiCheck is exposed globally
+      // also notice that I'm doing this as soon as I load the apiCheck script.
+      // you need to do this before you load angular-formly so angular-formly's
+      // initialization doesn't use apiCheck while it's enabled (perf).
+      apiCheck.globalConfig.disabled = true;
+    </script>
     <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
     <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">

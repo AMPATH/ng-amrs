@@ -66,7 +66,7 @@
                             "type": "personAttribute",
                             "label": "Transfer in from other AMPATH clinic (specify):",
                             "id": "transfered_in_to_ampath",
-                            "required": "true",
+                            "required": "false",
                             "default": "",
                             "questionOptions": {
                                 "rendering": "ui-select-extended",
@@ -3211,7 +3211,7 @@
                                 "rendering": "select"
                             },
                             "type": "obs",
-                            "validators": []
+                            "validators": [ ]
                         },
                         {
                             "type": "obsGroup",
@@ -3933,7 +3933,7 @@
                             "type": "personAttribute",
                             "label": "Specify name of clinic to which patient is being referred:",
                             "id": "transfered_out_to_ampath",
-                            "required": "true",
+                            "required": "false",
                             "default": "",
                             "questionOptions": {
                                 "rendering": "ui-select-extended",
