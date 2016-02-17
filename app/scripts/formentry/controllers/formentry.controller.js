@@ -16,7 +16,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         , '$loading', '$anchorScroll', 'UserDefaultPropertiesService'
         , 'FormentryUtilService', 'configService', 'SearchDataService',
         '$log', 'FormEntry', 'PersonAttributesRestService',
-        'CurrentLoadedFormService'
+        'CurrentLoadedFormService', 'UtilService'
     ];
 
     function FormentryCtrl($translate, dialogs, $location,
@@ -24,7 +24,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         OpenmrsRestService, $timeout, FormsMetaData,
         $loading, $anchorScroll, UserDefaultPropertiesService, FormentryUtilService,
         configService, SearchDataService,
-        $log, FormEntry, PersonAttributesRestService, CurrentLoadedFormService) {
+        $log, FormEntry, PersonAttributesRestService,
+        CurrentLoadedFormService, UtilService) {
         var vm = $scope;
         
         //Patient variables
@@ -107,6 +108,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function activate() {
             $log.log('Initializing form entry controller..');
             subsribeToRootScopeMessages();
+            registerConfirmationExit();
             
             //determine form to load
             determineFormToLoad();
@@ -280,7 +282,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         function onStateChangeStart(event, toState, toParams) {
             // usedStateChange = true;
-            if (vm.form.$dirty && changesSaved === false) {
+            if (vm.form.$dirty && vm.changesSaved === false) {
                 if (userConfirmedChange === false) {
                     //prevent transition to new url before saving data
                     event.preventDefault();
@@ -303,12 +305,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         function registerConfirmationExit() {
             // if (usedStateChange === false) {
-                UtilService.confirmBrowserExit(function (data) {
-                    if (data) {
-                        var dlg = dialogs.confirm('Close Form',
-                            'Do you want to close this form?');
-                    }
-                });
+            UtilService.confirmBrowserExit(function (data) {
+                if (data) {
+                    var dlg = dialogs.confirm('Close Form',
+                        'Do you want to close this form?');
+                }
+            });
             // }
         }
         //EndRegion: Navigation functions
@@ -359,9 +361,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             if (vm.currentMode === formModes.newForm) {
                 loadDefaultValues();
             }
-            
+
         }
-        
+
         function loadPatientRequiredValuesToModelAndQuestionMap() {
             //load gender to model
             vm.model.sex = vm.patient.gender();
@@ -371,7 +373,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 key: 'sex'
             };
         }
-        
+
         function loadDefaultValues() {
             setCurrentProvider();
             setCurrentDate();
@@ -458,7 +460,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         function populateModelWithData() {
             FormEntry.updateFormWithExistingObs(vm.model, selectedEncounterData);
-            FormEntry.updateFormWithExistingPersonAttributes(vm.model,
+            FormEntry.updateExistingPersonAttributeToForm(vm.model,
                 selectedPersonAttributes);
         }
         
@@ -615,7 +617,18 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         }
 
+        function isFourStageSubmitProcessInProgress(obj) {
+            return obj.submittingNewObs === true
+                || obj.submittingUpdatedObs === true
+                || obj.submittingVoidedObs === true
+                || obj.submittingPersonAttributes === true;
+
+        }
+
         function submit() {
+            if (isFourStageSubmitProcessInProgress(vm.fourStageSubmitProcess))
+                return;
+
             if (!areAllTabsLoaded()) {
                 isSpinnerBusy(true);
                 $timeout(function () {
@@ -653,6 +666,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function onSubmitProcessCompleted() {
             isSpinnerBusy(false);
             vm.changesSaved = true;
+            vm.hasClickedSubmit = false;
             if (!experiencedSubmitError()) {
                 vm.formSubmitSuccessMessage = '| Form Submitted successfully';
                 dialogs.notify('Success', vm.formSubmitSuccessMessage);
@@ -762,11 +776,15 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         function submitVoidedObs(voidedObsPayload, finalCallback) {
-            var numberOfVoidRequests = 0;
+            var numberOfVoidRequests = voidedObsPayload.length;
             vm.hasFailedVoidingRequest = false;
+            $log.log('number of voiding obs', numberOfVoidRequests);
+
+            if (numberOfVoidRequests === 0) {
+                finalCallback(vm.hasFailedVoidingRequest);
+            }
 
             _.each(voidedObsPayload, function (obs) {
-                numberOfVoidRequests++;
                 $log.log('sending void request for obs', obs);
                 OpenmrsRestService.getObsResService().voidObs(obs, function (data) {
                     if (data) {
@@ -774,7 +792,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     }
                     numberOfVoidRequests--;
                     //call final callback by voting
-                    if (numberOfVoidRequests === 0) {
+                    if (numberOfVoidRequests <= 0) {
                         finalCallback(vm.hasFailedVoidingRequest);
                     }
                 },
@@ -784,7 +802,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                         vm.hasFailedVoidingRequest = true;
                         numberOfVoidRequests--;
                         //call final callback by voting
-                        if (numberOfVoidRequests === 0) {
+                        if (numberOfVoidRequests <= 0) {
                             finalCallback(vm.hasFailedVoidingRequest);
                         }
                     });
@@ -792,11 +810,15 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         function submitUpdatedObs(updatedObsPayload, finalCallback) {
-            var numberOfUpdatingRequests = 0;
+            var numberOfUpdatingRequests = updatedObsPayload.length;
             vm.hasFailedUpdatingingRequest = false;
+            $log.log('number of updating obs', numberOfUpdatingRequests);
+
+            if (numberOfUpdatingRequests === 0) {
+                finalCallback(vm.hasFailedUpdatingingRequest);
+            }
 
             _.each(updatedObsPayload, function (obs) {
-                numberOfUpdatingRequests++;
                 $log.log('Sending update request for obs', obs);
                 OpenmrsRestService.getObsResService().saveUpdateObs(obs, function (data) {
                     if (data) {
@@ -823,11 +845,14 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         function submitPersonAttributes(payload, finalCallback) {
-            var numberOfRequests = 0;
+            var numberOfRequests = payload.length;
             vm.hasFailedPersonAttributeRequest = false;
 
+            $log.log('number of person attributes requests ', numberOfRequests);
+            if (numberOfRequests === 0) {
+                finalCallback(vm.hasFailedPersonAttributeRequest);
+            }
             _.each(payload, function (attribute) {
-                numberOfRequests++;
                 $log.log('Sending request for person attribute', attribute);
                 PersonAttributesRestService
                     .saveUpdatePersonAttribute(attribute, function (data) {

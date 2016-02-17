@@ -44,7 +44,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
           },
 
           function(error) {
-            console.log('An Error Occurred while voiding the person attribute', error);
+            console.error('An Error Occurred while voiding the person attribute', error);
           });
         }
 
@@ -72,8 +72,12 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
           },
 
           function(error) {
-            console.log('Failed get location id from etl server', error);
+            console.error('Failed get location id from etl server', error);
+            errorCallback('Failed get location id from etl server', error);
           });
+      } else {
+           console.error('Patient is required to submit person attributes');
+           errorCallback('Patient is required to submit person attributes');
       }
     }
 
