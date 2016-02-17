@@ -3380,7 +3380,7 @@
                             "label": "re starting reason",
                             "questionOptions": {
                                 "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",
-                                "type": "group"
+                                "rendering": "group"
                             },
                             "questions": [
                                 {
