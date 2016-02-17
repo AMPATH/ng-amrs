@@ -18,7 +18,8 @@
             'darthwade.dwLoading',
             'app.utils',
             'sticky',
-            'openmrs.angularFormentry'
+            'openmrs.angularFormentry',
+            'app.etlRestServices'
         ])
         .config(function ($stateProvider) {
             $stateProvider
@@ -44,9 +45,11 @@
                     data: { requireLogin: true }
                 });
         })
-        .run(['FormentryConfig', 'OpenmrsSettings', function (FormentryConfig, OpenmrsSettings) {
-            FormentryConfig.setOpenmrsBaseUrl(OpenmrsSettings.getCurrentRestUrlBase());
-        }])
+        .run(['FormentryConfig', 'OpenmrsSettings', 'EtlRestServicesSettings',
+            function (FormentryConfig, OpenmrsSettings, EtlRestServicesSettings) {
+                FormentryConfig.setOpenmrsBaseUrl(OpenmrsSettings.getCurrentRestUrlBase());
+                FormentryConfig.setEtlBaseUrl(EtlRestServicesSettings.getCurrentRestUrlBase());
+            }])
         .run(function (formlyConfig, formlyValidationMessages, formlyApiCheck) {
             formlyConfig.extras.errorExistsAndShouldBeVisibleExpression = 'fc.$touched || form.$submitted';
             formlyValidationMessages.addStringMessage('required', 'Ops! This field is required');
