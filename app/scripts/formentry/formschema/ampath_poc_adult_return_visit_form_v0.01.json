@@ -101,6 +101,15 @@
                             "label": "If Unscheduled, actual scheduled date",
                             "id": "q7b",
                             "type": "obs",
+                            "required": {
+                                "type": "conditionalRequired",
+                                "message": "Patient visit marked as unscheduled. Please provide the scheduled date.",
+                                "referenceQuestionId": "scheduledVisit",
+                                "referenceQuestionAnswers": [
+                                    "a89ff816-1350-11df-a1f1-0026b9348838",
+                                    "a89ff8de-1350-11df-a1f1-0026b9348838"
+                                ]
+                            },
                             "questionOptions": {
                                 "rendering": "date",
                                 "concept": "dc1942b2-5e50-4adc-949d-ad6c905f054e"
@@ -114,15 +123,6 @@
                                     "type": "js_expression",
                                     "failsWhenExpression": "!isEmpty(scheduledVisit) && arrayContains(['a89ff816-1350-11df-a1f1-0026b9348838','a89ff8de-1350-11df-a1f1-0026b9348838'], scheduledVisit) && isEmpty(myValue)",
                                     "message": "Patient visit marked as unscheduled. Please provide the scheduled date."
-                                },
-                                {
-                                    "type": "conditionalRequired",
-                                    "message": "Patient visit marked as unscheduled. Please provide the scheduled date.",
-                                    "referenceQuestionId": "scheduledVisit",
-                                    "referenceQuestionAnswers": [
-                                        "a89ff816-1350-11df-a1f1-0026b9348838",
-                                        "a89ff8de-1350-11df-a1f1-0026b9348838"
-                                    ]
                                 }
                             ],
                             "disable": {
@@ -1757,11 +1757,9 @@
                                         "rendering": "number",
                                         "concept": "a8a65d5a-1350-11df-a1f1-0026b9348838",
                                         "max": "250",
-                                        "min": "0",
-                                        "showDate": "true"
+                                        "min": "0"
                                     },
                                     "type": "obs",
-                                    "historicalExpression": "HD.getObject('prevEnc').getValue('a8a65d5a-1350-11df-a1f1-0026b9348838')",
                                     "validators": []
                                 },
                                 {
@@ -2053,16 +2051,15 @@
                                 "concept": "a8ae88a4-1350-11df-a1f1-0026b9348838",
                                 "rendering": "select-concept-answers"
                             },
-                            "validators": [
-                                {
-                                    "type": "conditionalRequired",
-                                    "message": "Patient marked as receiving new WHO stage. Please select stage.",
-                                    "referenceQuestionId": "newWHOStage",
-                                    "referenceQuestionAnswers": [
-                                        "a89b2606-1350-11df-a1f1-0026b9348838"
-                                    ]
-                                }
-                            ]
+                            "required": {
+                                "type": "conditionalRequired",
+                                "message": "Patient marked as receiving new WHO stage. Please select stage.",
+                                "referenceQuestionId": "newWHOStage",
+                                "referenceQuestionAnswers": [
+                                    "a89b2606-1350-11df-a1f1-0026b9348838"
+                                ]
+                            },
+                            "validators": []
                         }
                     ]
                 }
@@ -2197,7 +2194,7 @@
                                     "label": "Creatinine mmol/L:",
                                     "questionOptions": {
                                         "concept": "a897e450-1350-11df-a1f1-0026b9348838",
-                                        "render": "number",
+                                        "rendering": "number",
                                         "showDate": "true",
                                         "max": "11050",
                                         "min": "0"
@@ -2247,7 +2244,7 @@
                                             }
                                         ],
                                         "showDate": "true",
-                                        "render": "select"
+                                        "rendering": "select"
                                     },
                                     "type": "obs",
                                     "validators": [
@@ -3211,7 +3208,7 @@
                                 "rendering": "select"
                             },
                             "type": "obs",
-                            "validators": [ ]
+                            "validators": []
                         },
                         {
                             "type": "obsGroup",
@@ -3477,7 +3474,7 @@
                             "type": "obsGroup",
                             "questionOptions": {
                                 "concept": "a89fe6f0-1350-11df-a1f1-0026b9348838",
-                                "type": "repeating"
+                                "rendering": "repeating"
                             },
                             "questions": [
                                 {
@@ -3905,7 +3902,7 @@
                             "label": "Transfer care to other centre",
                             "questionOptions": {
                                 "concept": "a8a170e2-1350-11df-a1f1-0026b9348838",
-                                "type": "group"
+                                "rendering": "group"
                             },
                             "questions": [
                                 {
