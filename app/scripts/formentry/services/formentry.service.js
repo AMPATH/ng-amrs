@@ -290,9 +290,11 @@ jshint -W106, -W052, -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W116, -W0
                 if (_field.key.startsWith('personAttribute')) {
                   var personAttribute = [];
                   personAttribute = PersonAttributesRestService.getPersonAttributeValue(personAttributes, fieldKey);
+                 
                   if (personAttribute !== undefined &&
                     personAttribute !== null &&
                     personAttribute.length > 0) {
+                         var existingFormLocation = personAttribute[0].value.uuid;
                      sectionData[fieldKey] = existingFormLocation;
                     _field.data['initValue'] = existingFormLocation;
                     _field.data['uuid'] = personAttribute[0].uuid;
