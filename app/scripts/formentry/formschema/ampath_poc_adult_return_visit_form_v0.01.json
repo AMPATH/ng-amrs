@@ -3171,6 +3171,48 @@
                     "questions": [
                         {
                             "label": "TB Treatment plan:",
+                            "id": "tbKKKKTreatmentPlan",
+                            "required": "true",
+                            "hide": "true",
+                            "questionOptions": {
+                                "concept": "a89sc1fd4-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "NONE"
+                                    },
+                                    {
+                                        "concept": "a89b7908-1350-11df-a1f1-0026b9348838",
+                                        "label": "Continue Regimen"
+                                    },
+                                    {
+                                        "concept": "a89b77aa-1350-11df-a1f1-0026b9348838",
+                                        "label": "Start Induction"
+                                    },
+                                    {
+                                        "concept": "a89b7c50-1350-11df-a1f1-0026b9348838",
+                                        "label": "Change to Continuation"
+                                    },
+                                    {
+                                        "concept": "a898c938-1350-11df-a1f1-0026b9348838",
+                                        "label": "Re-dose"
+                                    },
+                                    {
+                                        "concept": "a8a00158-1350-11df-a1f1-0026b9348838",
+                                        "label": "Substitution"
+                                    },
+                                    {
+                                        "concept": "a89b7d36-1350-11df-a1f1-0026b9348838",
+                                        "label": "Stop"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "TB Treatment plan:",
                             "id": "tbTreatmentPlan",
                             "required": "true",
                             "questionOptions": {
