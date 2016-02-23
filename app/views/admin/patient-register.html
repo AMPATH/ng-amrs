@@ -55,11 +55,13 @@
     <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
     <b>Loading data...</b>
   </div>
-  <div ng-show='allDataLoaded' >
-    <p class="bg-info" style="padding:4px;">
-      <b>
-        <span style="color:green;" class="glyphicon glyphicon-ok" />All data loaded {{'[ ' + indicators.length + ' ]'}}</b>
-    <p>
+
   </div>
-  </div>
+
+</div>
+<div ng-show='allDataLoaded' >
+  <p class="bg-info" style="padding:4px;">
+    <b>
+      <span style="color:green;" class="glyphicon glyphicon-ok" />All data loaded {{'[ ' + indicators.length + ' ]'}}</b>
+  <p>
 </div>

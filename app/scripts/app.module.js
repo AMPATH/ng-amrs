@@ -259,12 +259,19 @@
           data: {
             requireLogin: true
           }
-        }).state('moh-731-generate-pdf', {
+        }).state('moh-731-geneuerate-pdf', {
           url: '/moh-731-generate-pdf',
-          templateUrl: 'views/authentication/login.html',
+          templateUrl: 'views/admin/moh-731-report-container.html',
           data: {
-            requireLogin: false
-          },
+            requireLogin: true
+          }
+        }).state('moh-731-report-by-location', {
+          url: '/moh-731-pdf/location/:location',
+          templateUrl: 'views/admin/moh-731-report-container.html',
+          controller: 'moh731ReportCtrl',
+          data: {
+            requireLogin: true
+          }
         });
 
     }).config(['$httpProvider', function($httpProvider) {
