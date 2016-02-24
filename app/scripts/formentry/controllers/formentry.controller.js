@@ -331,9 +331,18 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         function determineFormToLoad() {
-            if (selectedEncounterUuid !== undefined) {
-                var encFormUuid = vm.encounter.formUuid();
-                selectedFormMetadata = FormsMetaData.getForm(encFormUuid);
+            if (selectedEncounterUuid !== undefined) { 
+                // map legacy adult return to the new form uuid
+                // TODO: There may be a better way of doing this as we
+                // to serving schemas in the db.
+                var LEGACY_ADULT_RETURN = 'a7de4a14-5292-458f-a0af-cb1cd0a3c81a'
+                var uuid = vm.encounter.formUuid() || vm.encounter.encounterTypeUuid();
+                
+                if(uuid === LEGACY_ADULT_RETURN) {
+                  // Assign the current adult return uuid
+                  uuid = '1339a535-e38f-44cd-8cf8-f42f7c5f2ab7';
+                }
+                selectedFormMetadata = FormsMetaData.getForm(uuid);
                 vm.encounterType = vm.encounter.encounterTypeName();
                 vm.currentMode = formModes.existingForm;
             } else {
