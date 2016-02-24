@@ -16,6 +16,7 @@ jshint -W003, -W026
 				selectedForms: "=",
 				startDate: "=",
         endDate: "=",
+        locationUuid: '@',
 				selectedProvider: "=",
         enabledControls: "=",
         selectedLocations: "=",
@@ -25,6 +26,7 @@ jshint -W003, -W026
     },
 			controller: hivSummaryFilterController,
 			link: hivSummaryFilterLink,
+
 			templateUrl: "views/clinic-dashboard/hiv-summary-filter-controls.html"
 		};
 	}
@@ -73,15 +75,18 @@ jshint -W003, -W026
       $scope.fetchLocations=fetchLocations;
       $scope.reInitialize =  init;
       $rootScope.$on('location:change', function() {
-        $scope.$parent.selectedLocation = ClinicDashboardService.
-          getSelectedLocation().selected.uuId();
+        $scope.$parent.selectedLocation = ClinicDashboardService.getSelectedLocation().selected.uuId();
       });
 
       //pre-load data
       init();
       function init() {
-        $scope.$parent.selectedLocation = ClinicDashboardService.
-          getSelectedLocation().selected.uuId();
+        if (ClinicDashboardService.getSelectedLocation().selected ){
+          $scope.$parent.selectedLocation = ClinicDashboardService.
+            getSelectedLocation().selected.uuId();
+        }else{
+          $scope.$parent.selectedLocation = ClinicDashboardService.getSelectedLocation().uuId();
+        }
         if(canView('indicator')) loadIndicatorsSchema();
         if(canView('location')) fetchLocations();
         loadForms();
