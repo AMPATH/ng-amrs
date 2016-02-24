@@ -13,17 +13,16 @@
         selected: '='
       },
       controller: appointmentCalendarController,
-      link: monthlyAppointmentLink,
       templateUrl: 'views/clinic-dashboard/appointments-calendar.html'
     };
   }
   appointmentCalendarController.$inject = [
     '$scope', '$rootScope', 'moment', '$filter', '$http', '$q', 'ClinicDashboardService',
-    'EtlRestServicesSettings', 'calendarConfig', '$state'
+    'EtlRestServicesSettings', 'calendarConfig', '$state','$loading'
   ];
 
   function appointmentCalendarController($scope, $rootScope, moment, $filter, $http,
-    $q, ClinicDashboardService, EtlRestServicesSettings, calendarConfig, $state) {
+    $q, ClinicDashboardService, EtlRestServicesSettings, calendarConfig, $state,$loading) {
     calendarConfig.templates.calendarMonthCell = 'customMonthCell.html';
     calendarConfig.templates.calendarSlideBox = 'calendarSlideBox.html';
     $scope.events = [];
@@ -86,24 +85,27 @@
       var events = [];
       var path = EtlRestServicesSettings.getCurrentRestUrlBase().trim() +
         'get-report-by-report-name';
-      var attented = $http.get(path, {
+      var attented = $http.get(path, {cache: true,
         params: {
           startDate: formatedStartDate,
           endDate: formatedEndDate,
           groupBy: 'groupByPerson,groupByd,groupByEncounter',
           locationUuids: $scope.locationUuid,
-          report: 'attended'
+          report: 'attended',
+          limit: 1000000
         }
       });
-      var appointments = $http.get(path, {
+      var appointments = $http.get(path, {cache: true,
         params: {
           startDate: formatedStartDate,
           endDate: formatedEndDate,
           groupBy: 'groupByPerson,groupByd,groupByRtc',
           locationUuids: $scope.locationUuid,
-          report: 'appointments'
+          report: 'appointments',
+          limit: 1000000
         }
       });
+      isBusy(true);
       $q.all([attented, appointments]).then(function(arrayOfResults) {
         for (var i in arrayOfResults) {
           var results = arrayOfResults[i].data.result;
@@ -161,15 +163,20 @@
           }
         }
         $scope.isBusy = false;
+        isBusy(false);
         $scope.events = events;
       },function () {
+        isBusy(false);
         $scope.experiencedLoadingError = true;
       });
     }
-
-  }
-
-  function monthlyAppointmentLink() {
+    function isBusy(val) {
+      if (val === true) {
+        $loading.start('calendarViewLoader');
+      } else {
+        $loading.finish('calendarViewLoader');
+      }
+    }
 
   }
 

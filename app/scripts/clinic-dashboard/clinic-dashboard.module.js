@@ -6,6 +6,7 @@
             'app.openmrsRestServices',
             'app.etlRestServices',
             'models',
-            'ui.bootstrap'
+            'ui.bootstrap',
+            'darthwade.dwLoading'
         ]);
 })();
