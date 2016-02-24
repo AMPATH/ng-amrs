@@ -54,7 +54,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
           function(response) {
             var locationId = response.result[0]['location_id'].toString();
             var attributePayLoad = JSON.stringify({value:locationId,
-                attributeType:personAttribute.attribute.attributeType.uuid});
+                attributeType:personAttribute.attribute.attributeType});
 
             if (locationId !== null && locationId !== undefined)  {
               personAttributeResource.save({uuid:patientUuid},
@@ -117,7 +117,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
       _.each(personAttributes, function(attribute) {
         var personAttribute = {attribute:attribute,person:person};
         saveUpdatePersonAttribute(personAttribute, function(response) {
-          console.log('Person attribute value', JSON.stringify(response));
+          console.log('Person attribute value', JSON.stringify(response));          
         },
 
        function(error) {
