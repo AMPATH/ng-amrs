@@ -460,8 +460,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         function populateModelWithData() {
             FormEntry.updateFormWithExistingObs(vm.model, selectedEncounterData);
-            FormEntry.updateExistingPersonAttributeToForm(vm.model,
-                selectedPersonAttributes);
+            FormEntry.updateExistingPersonAttributeToForm(selectedPersonAttributes,
+            vm.model);
+          
         }
         
         //Endregion: Load existing form
@@ -743,6 +744,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     onSubmitStageUpdated();
                 }
                 //forth stage of submitting is to submit person attributes
+                console.log('Payload person attributes=====',JSON.stringify(lastPersonAttributePayload))
                 if (lastPersonAttributePayload !== undefined &&
                     lastPersonAttributePayload.length > 0) {
                     $log.log('Submitting person attributes..');
