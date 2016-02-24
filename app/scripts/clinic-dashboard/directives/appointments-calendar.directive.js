@@ -166,6 +166,7 @@
         isBusy(false);
         $scope.events = events;
       },function () {
+        $scope.isBusy = false;
         isBusy(false);
         $scope.experiencedLoadingError = true;
       });
