@@ -75,13 +75,19 @@
       <button ng-disabled="isBusy" ng-click='getAppointments()' class="btn btn-default" mwl-date-modifier date="viewDate" set-to-today>
         This Month
       </button>
+      <button ng-show='!isBusy && experiencedLoadingError' class="btn btn-danger" ng-click="getAppointments()">
+        <span class="glyphicon glyphicon-refresh"></span>
+        <span>Retry</span>
+      </button>
       <button ng-disabled="isBusy" ng-click='getAppointments()' class="btn btn-primary" mwl-date-modifier date="viewDate" increment="calendarView">
         Next Month
       </button>
     </div>
+
+  </div>
+
   </div>
 </div>
 <mwl-calendar events="events" view="calendarView" view-title="calendarTitle"
 on-event-click="eventClicked(calendarEvent)" view-date="viewDate">
 </mwl-calendar>
-</div>
