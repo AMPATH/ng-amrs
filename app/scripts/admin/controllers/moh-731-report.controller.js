@@ -21,6 +21,8 @@
     $scope.reportGeneration = false;
     $scope.reportName = 'MOH-731';
     $scope.countBy = 'num_persons';
+    $scope.startIndex = 0;
+    $scope.limit=1000000;
     $scope.groupBy = 'groupByLocation';
     $scope.generateMoh731Report = generateMoh731Indicators;
     $scope.selectedLocation = '';
@@ -96,7 +98,10 @@
             'YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           locations, $scope.countBy, onFetchMoh731IndicatorsSuccess,
           onFetchMoh731IndicatorsError,
-          $scope.groupBy);
+          $scope.groupBy,
+          $scope.startIndex,
+          $scope.limit
+        );
       }
     }
 
@@ -111,7 +116,7 @@
         $scope.indicators = result.result;
       }
       buildDataTable();
-      $scope.updateReportMode
+      $scope.selectedReportMode = $scope.reportModeList[1];
     }
 
     function onFetchMoh731IndicatorsError(error) {
@@ -202,7 +207,10 @@
     }
 
     function buildSingleColumn(header) {
-      var visible = (header !== 'location_uuid');
+      var visible = true;
+      if (header==='location_uuid'||header==='location_id'){
+        visible =false;
+      }
       $scope.columns.push({
         field: header,
         title: $filter('titlecase')(header.toString().split('_').join(' ')),
@@ -312,7 +320,6 @@
         }
       };
 
-
     }
 
     /**
@@ -364,17 +371,32 @@
       });
       return html.join('');
     }
+    $scope.$on('$stateChangeStart',
+      function(event, toState, toParams, fromState, fromParams) {
+        if (toState.name === 'moh-731-report-by-location') {
+          event.preventDefault();
+         if(toParams.location!==undefined){
+           var selectedRow=  $filter('filter')($scope.indicators, {location: toParams.location})[0];
+           generateMoh731PdfReport(selectedRow.location,
+             selectedRow);
+         }
+
+
+        }
+      });
 
     /**
-     * Function to add button on each cell
+     * Function to add report (pdf) generation button
      */
     function cellFormatter(value, row, index, header) {
       //for separate locations
       if (header === 'location' && $scope.groupBy === 'groupByLocation') {
         var html = [];
         html.push(
-          '<div class="text-center" style="height:43px!important;" ><span ' +
-          'class="text-info text-capitalize">' + value + '</span></div>');
+          '<div class="text-center" style="height:43px!important;" ><a href="#/moh-731-pdf/location/'+row.location_id+'" ' +
+          'title="Generate PDF Report for '+value+' " data-toggle="tooltip"class="btn btn-default" ' +
+          'style="height:43px!important; width:100%!important">' +
+          '<span class="text-info text-capitalize">' + value + '</span></a></div>');
         return html.join('');
       } else if (header === 'location' && $scope.groupBy === 'groupByNone') {
         var html = [];

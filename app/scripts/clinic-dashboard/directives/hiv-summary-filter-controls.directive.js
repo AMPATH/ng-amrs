@@ -111,7 +111,7 @@ jshint -W003, -W026
           dataTextField: 'name',
           dataValueField: 'name',
           filter: 'contains',
-          autoClose: false,
+          autoClose: true,
           itemTemplate: '<span></span>' +
           '<span><strong>#: data.name #</strong><br/><span><small>#: data.label #</small></span></span>',
           tagTemplate:  '<span class="selected-value"></span><span>#:data.name#</span>',

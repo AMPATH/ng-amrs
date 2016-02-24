@@ -565,9 +565,20 @@
         }
 
 
-        function getMoh731Report(report,startDate,endDate,locations,countBy,successCallback,failedCallback,groupBy){
+        function getMoh731Report(report,startDate,endDate,locations,countBy,successCallback,failedCallback,groupBy,startIndex,limit){
             var resource=getResource('get-report-by-report-name');
             var params={startDate:startDate,endDate:endDate,locationUuids:locations,countBy:countBy,report:report,groupBy:groupBy};
+
+            if(startIndex!==undefined){
+              params.startIndex=startIndex;
+            }
+
+            if(limit!==undefined){
+              params.limit=limit;
+            }
+
+            console.log(params);
+            console.log(startIndex);
             return resource.get(params).$promise
                     .then(function(response){
                         successCallback(response);
