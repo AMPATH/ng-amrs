@@ -63,6 +63,7 @@
     <span class="label label-danger">Defaulted</span>
   </span>
 </div>
+<div dw-loading="calendarViewLoader" dw-loading-options="{text: 'Hang in there......'}">
 <div class="row">
   <h2 class="text-center">{{ calendarTitle }}</h2>
   <div class="text-center">
@@ -83,3 +84,4 @@
 <mwl-calendar events="events" view="calendarView" view-title="calendarTitle"
 on-event-click="eventClicked(calendarEvent)" view-date="viewDate">
 </mwl-calendar>
+</div>

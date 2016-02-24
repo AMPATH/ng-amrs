@@ -120,7 +120,7 @@
         //select  the  type of  view  you  want to see
         function selectAppointmentVisits(viewType) {
             switch (viewType) {
-                case "visits":
+                case 'visits':
                 {
                     $scope.currentView = 'Visit';
                     $scope.showNoreturn = false;
@@ -128,7 +128,7 @@
                     $scope.showVisits = true;
                     break;
                 }
-                case "appointments":
+                case 'appointments':
                 {
                     $scope.currentView = 'Appointments';
                     $scope.showNoreturn = false;
@@ -136,7 +136,7 @@
                     $scope.showAppointments = true;
                     break;
                 }
-                case "noreturn":
+                case 'noreturn':
                 {
                     $scope.currentView = 'Not Returned';
                     $scope.showNoreturn = true;
