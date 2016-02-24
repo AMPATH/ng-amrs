@@ -27,7 +27,7 @@ jshint -W030
         person_id: 'person_id',
         uuid: 'uuid',
         encounter_id: 'encounter_id',
-        encounter_datetime: 'encounter_datetime',
+        test_datetime: 'test_datetime',
         encounter_type: 'encounter_type',
         location_id: '_location_id',
         location_uuid: 'location_uuid',
@@ -54,7 +54,7 @@ jshint -W030
       expect(model.personId()).to.equal(patientTestEtl.person_id);
       expect(model.uuid()).to.equal(patientTestEtl.uuid);
       expect(model.encounterId()).to.equal(patientTestEtl.encounter_id);
-      expect(model.encounterDatetime()).to.equal(patientTestEtl.encounter_datetime);
+      expect(model.testDatetime()).to.equal(patientTestEtl.test_datetime);
       expect(model.encounterType()).to.equal(patientTestEtl.encounter_type);
       expect(model.locationId()).to.equal(patientTestEtl.location_id);
       expect(model.locationUuid()).to.equal(patientTestEtl.location_uuid);
@@ -66,7 +66,7 @@ jshint -W030
       expect(model.creatinine()).to.equal(patientTestEtl.creatinine);
       expect(model.chestXray()).to.equal(patientTestEtl.chest_xray);
       expect(model.testsOrdered()).to.equal(patientTestEtl.tests_ordered);
-		
+
       /* jshint ignore:end */
     });
 

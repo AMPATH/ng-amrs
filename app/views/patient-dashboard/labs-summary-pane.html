@@ -16,7 +16,7 @@
       </thead>
       <tbody>
         <tr ng-repeat="encounter in encounters" >
-          <td>{{encounter.encounterDatetime() | date:'dd-MM-yyyy'}}</td>
+          <td>{{encounter.testDatetime() | date:'dd-MM-yyyy'}}</td>
           <td>{{encounter.cd4Count()}}</td>
           <td>{{encounter.cd4Percent()}}</td>
           <td>{{encounter.hivViralLoad()}}</td>
