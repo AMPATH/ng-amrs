@@ -12,13 +12,15 @@
   angular
     .module('app.clinicDashboard')
     .controller('ClinicDashboardCtrl', ClinicDashboardCtrl);
-  ClinicDashboardCtrl.$nject = ['$rootScope', '$scope', '$stateParams', 'OpenmrsRestService', 'LocationModel', 'ClinicDashboardService'];
+  ClinicDashboardCtrl.$nject = ['$rootScope', '$scope', '$stateParams', 'OpenmrsRestService', 'LocationModel',
+    'ClinicDashboardService','UserDefaultPropertiesService','CachedDataService'];
 
   function ClinicDashboardCtrl($rootScope, $scope, $stateParams,
-    OpenmrsRestService, LocationModel, ClinicDashboardService) {
+    OpenmrsRestService, LocationModel, ClinicDashboardService,UserDefaultPropertiesService,CachedDataService) {
 
     var locationService = OpenmrsRestService.getLocationResService();
     $scope.selectedLocation = ClinicDashboardService.getSelectedLocation();
+
     $scope.selected = '';
     $scope.locations = [];
 
@@ -30,21 +32,44 @@
 
     $scope.switchTabByIndex = switchTabByIndex;
 
+    $scope.setDefaultUserLocation = setDefaultUserLocation;
+
     activate();
 
     function activate() {
       fetchLocations();
+      setDefaultUserLocation();
     }
 
     function switchTabByIndex(index) {
       $scope.activeTabId = index;
     }
 
+    function setDefaultUserLocation(){
+      var definedDefaultUserLocation = UserDefaultPropertiesService.getCurrentUserDefaultLocation();
+      if (angular.isDefined(definedDefaultUserLocation)) {
+        //use defined default user location to prefill the clinical dashboard
+        if (ClinicDashboardService.getSelectedLocation().selected===undefined){
+          var uuid = UserDefaultPropertiesService.getCurrentUserDefaultLocation().uuid;
+          CachedDataService.getCachedLocationByUuid(uuid,function(results){
+              var location = wrapLocation(results);
+              $scope.selectedLocation.selected =location;
+              ClinicDashboardService.setSelectedLocation(location);
+              $scope.locationSelectionEnabled = false;
+
+            });
+        }
+
+      }
+    }
+
+
+
     function onLocationSelection($event) {
       $scope.locationSelectionEnabled = false;
       ClinicDashboardService.setLocationSelectionEnabled(false);
-      //ClinicDashboardService.setSelectedLocation($scope.selected);
-      $rootScope.$emit('location:change');
+      ClinicDashboardService.setSelectedLocation({selected:$scope.selectedLocation.selected});
+      $rootScope.$broadcast('location:change');
     }
 
     function fetchLocations() {
