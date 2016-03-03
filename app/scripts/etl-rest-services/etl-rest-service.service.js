@@ -567,6 +567,7 @@
 
         function getMoh731Report(report,startDate,endDate,locations,countBy,successCallback,failedCallback,groupBy,startIndex,limit){
             var resource=getResource('get-report-by-report-name');
+            groupBy = groupBy + ',groupByPerson';
             var params={startDate:startDate,endDate:endDate,locationUuids:locations,countBy:countBy,report:report,groupBy:groupBy};
 
             if(startIndex!==undefined){
