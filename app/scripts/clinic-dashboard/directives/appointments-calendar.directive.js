@@ -85,11 +85,11 @@
       var events = [];
       var path = EtlRestServicesSettings.getCurrentRestUrlBase().trim() +
         'get-report-by-report-name';
-      var attented = $http.get(path, {cache: true,
+      var attended = $http.get(path, {cache: true,
         params: {
           startDate: formatedStartDate,
           endDate: formatedEndDate,
-          groupBy: 'groupByPerson,groupByd,groupByEncounter',
+          groupBy: 'groupByPerson,groupByAttendedDate,groupByEncounter',
           locationUuids: $scope.locationUuid,
           report: 'attended',
           limit: 1000000
@@ -99,37 +99,40 @@
         params: {
           startDate: formatedStartDate,
           endDate: formatedEndDate,
-          groupBy: 'groupByPerson,groupByd,groupByRtc',
+          groupBy: 'groupByPerson,groupByAttendedDate,groupByRtcDate',
           locationUuids: $scope.locationUuid,
-          report: 'appointments',
+          report: 'scheduled',
           limit: 1000000
         }
       });
       isBusy(true);
-      $q.all([attented, appointments]).then(function(arrayOfResults) {
+      $q.all([attended, appointments]).then(function(arrayOfResults) {
         for (var i in arrayOfResults) {
           var results = arrayOfResults[i].data.result;
           for (var j in results) {
             var result = results[j];
             if (result.attended) {
+              console.log('Testing dates', new Date(result.attended_date));
+              console.log('Testing dates', result.attended_date);
               var attended = {
                 title: result.attended + ' ',
                 type: 'success',
                 labelType: 'success',
                 label: 'Visits',
-                startsAt: new Date(result.d),
+                startsAt: new Date(result.attended_date),
                 draggable: false,
                 incrementsBadgeTotal: false,
                 resizable: false
               };
-              events.push(attended);
+              if (result.attended > 0)
+                events.push(attended);
             } else if (result.scheduled) {
               var scheduled = {
                 title: result.scheduled + ' ',
                 type: 'info',
                 labelType: 'info',
                 label: 'Appointments',
-                startsAt: new Date(result.d),
+                startsAt: new Date(result.scheduled_date),
                 draggable: false,
                 incrementsBadgeTotal: false,
                 resizable: false
@@ -140,7 +143,7 @@
                 type: 'warning',
                 labelType: 'warning',
                 label: 'Not Returned',
-                startsAt: new Date(result.d),
+                startsAt: new Date(result.scheduled_date),
                 draggable: false,
                 incrementsBadgeTotal: false,
                 resizable: false
@@ -151,14 +154,16 @@
                 type: 'important',
                 labelType: 'danger',
                 label: 'Defaulted',
-                startsAt: new Date(result.d),
+                startsAt: new Date(result.scheduled_date),
                 draggable: false,
                 incrementsBadgeTotal: false,
                 resizable: false
               };
-              events.push(scheduled);
-              events.push(hasNotReturned);
-              events.push(defaulted);
+              if(result.scheduled > 0)
+                events.push(scheduled);
+              if(result.has_not_returned > 0)
+                events.push(hasNotReturned);
+              // events.push(defaulted);
             }
           }
         }
