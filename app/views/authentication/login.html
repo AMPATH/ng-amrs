@@ -6,7 +6,7 @@
   </div>
 
   <hr/>
-  <form ng-submit="authenticate()">
+  <form ng-submit="authenticate()" onkeydown="if (event.keyCode == 13){document.getElementById('login').click(); return false;}" >
     <div class="form-group">
       <label for="username">Username</label>
       <div class="input-group">
