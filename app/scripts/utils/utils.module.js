@@ -3,6 +3,6 @@
 (function() {
   'use strict';
 
-  var app = angular.module('app.utils', []);
+  var app = angular.module('app.utils', ['openmrs-ngresource.utils']);
 
 })();
