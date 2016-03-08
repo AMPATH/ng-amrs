@@ -251,6 +251,16 @@
             requireLogin: true
           },
         })
+
+        .state('admin.moh-731-report.patients', {
+          url: '/location/:locationuuid/indicator/:indicator',
+          templateUrl: 'views/admin/patient-moh-list-container.html',
+          controller: 'moh731ReportCtrl',
+          data: {
+            requireLogin: true
+          }
+        })
+
         .state('url-selector', {
           url: '/url-selector',
           templateUrl: 'views/main/url-selector.html',
@@ -289,14 +299,26 @@
           data: {
             requireLogin: true
           }
-        }).state('admin.moh-731-report', {
+        }).state('admin.moh-731-report.report', {
           url: '/moh-731-report',
           templateUrl: 'views/admin/moh-731-report-container.html',
           controller: 'moh731ReportCtrl',
           data: {
             requireLogin: true
           }
-        }).state('moh-731-geneuerate-pdf', {
+        })
+
+        .state('admin.moh-731-report', {
+          url: '/moh-731-reports',
+          templateUrl: 'views/admin/moh-731-report.html',
+          controller: 'moh731ReportCtrl',
+          data: {
+            requireLogin: true
+          }
+        })
+
+
+        .state('moh-731-geneuerate-pdf', {
           url: '/moh-731-generate-pdf',
           templateUrl: 'views/admin/moh-731-report-container.html',
           data: {

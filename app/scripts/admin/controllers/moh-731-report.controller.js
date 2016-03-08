@@ -27,7 +27,7 @@
     var groupByTypes = ['groupByLocation'];
     $scope.groupBy = groupByTypes[0];
     $scope.generateMoh731Report = generateMoh731Indicators;
-    $scope.selectedLocation = '';
+
 
 
 
@@ -35,6 +35,10 @@
     $scope.isBusy = false;
     $scope.experiencedLoadingError = false;
     $scope.resultIsEmpty = false;
+    $scope.getIndicatorLabelByName =getIndicatorLabelByName;
+    $scope.selectedLocation = $stateParams.locationuuid || '';
+    $scope.selectedIndicatorBox = $stateParams.indicator || '';
+    $scope.loadPatientList = loadPatientList;
 
 
     //Dynamic DataTable Params
@@ -73,6 +77,7 @@
 
     //scope methods
     function init() {
+      if (!loadCachedData())loadIndicatorsSchema();
 
     }
 
@@ -125,6 +130,7 @@
         $scope.resultIsEmpty = true;
       } else {
         $scope.indicators = result.result;
+
       }
       buildDataTable();
       $scope.selectedReportMode = $scope.reportModeList[1];
@@ -133,6 +139,68 @@
     function onFetchMoh731IndicatorsError(error) {
       $scope.isBusy = false;
       $scope.experiencedLoadingErrors = true;
+    }
+
+    function loadIndicatorsSchema() {
+      $scope.experiencedLoadingErrors = false;
+      if ($scope.isBusy === true) return;
+      $scope.indicatorTags = [];
+      $scope.isBusy = true;
+      if ($scope.reportName && $scope.reportName !== '')
+        EtlRestService.getIndicatorsSchema($scope.reportName, onFetchIndicatorsSchemaSuccess,
+          onFetchIndicatorsSchemaError);
+
+    }
+
+    function onFetchIndicatorsSchemaSuccess(result) {
+      $scope.isBusy = false;
+      $scope.indicatorTags = result.result;
+      $scope.indicatorTags.unshift( {name: 'location'}, {name: 'location_uuid'})
+
+
+    }
+
+
+    function onFetchIndicatorsSchemaError(error) {
+      $scope.isBusy = false;
+      $scope.experiencedLoadingErrors = true;
+    }
+
+    $rootScope.$on('$stateChangeStart',
+      function (event, toState, toParams, fromState, fromParams) {
+        loadPatientList(toParams.indicator, toParams.locationuuid)
+      });
+
+    function loadPatientList(indicator, location) {
+      $scope.selectedIndicatorBox = indicator;
+      $scope.selectedLocation = location;
+      Moh731ReportService.setIndicatorDetails(getIndicatorDetails(indicator));
+      cacheResource(); //cache report before changing view/state
+    }
+
+    function cacheResource() {
+      Moh731ReportService.setIndicatorTags($scope.indicatorTags);
+      Moh731ReportService.setIndicators($scope.indicators);
+      Moh731ReportService.setStartDate($scope.startDate);
+      Moh731ReportService.setEndDate($scope.endDate);
+    }
+    function getIndicatorDetails(name) {
+      var found = $filter('filter')($scope.indicatorTags, {name: name})[0];
+      if (found)return found;
+    }
+
+    /**
+     * Method to fetch cached data to avoid round trips.
+     */
+    function loadCachedData() {
+      if (Moh731ReportService.getIndicatorTags()) {
+        $scope.indicators = Moh731ReportService.getIndicators();
+        $scope.indicatorTags = Moh731ReportService.getIndicatorTags();
+        $scope.startDate = Moh731ReportService.getStartDate();
+        $scope.endDate = Moh731ReportService.getEndDate();
+        buildDataTable();
+        return true;
+      }
     }
 
     function generateCombinedLocationReport() {
@@ -203,6 +271,12 @@
 
       }
       return locations.toString();
+    }
+    function getIndicatorLabelByName(name) {
+      var found = $filter('filter')($scope.indicatorKeys, {name: name})[0];
+      if (found)return found.label;
+
+
     }
 
 
@@ -350,7 +424,8 @@
         '<a href="#/moh-731-generate-pdf" class="btn btn-info">Generate Pdf</a></div>'
       );
       _.each(row, function(value, key) {
-        var label = key;
+        //var label = key;
+        var label = getIndicatorLabelByName(key) || key;
         label = $filter('titlecase')(label.toString().split('_').join(' '));
         var key = $filter('titlecase')(key.toString().split('_').join(' '));
         if (key === 'Location Uuid' || key === 'state' || key ===
@@ -421,8 +496,10 @@
         //for other fields other than location
         var html = [];
         html.push(
-          '<div class="text-center" style="height:43px!important;width:100% " ><span style="white-space: nowrap;">' +
-          value + '</span></div>');
+          '<div class="text-center" style="height:43px!important;" ><a href="#/admin-dashboard/moh-731-reports/location/' + row.location_uuid +  '/indicator/' + header+'" '+
+          'title="'+header.replace(/_/g, " ")+' '+' in '+ row.location +' " data-toggle="tooltip"class="btn btn-default" ' +
+          'style="height:43px; width:100%; max-width: 300px">' +
+           value + '</a></div>');
         return html.join('');
       }
     }
