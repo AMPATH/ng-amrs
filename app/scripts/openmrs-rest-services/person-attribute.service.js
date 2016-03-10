@@ -10,9 +10,9 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
     .module('app.openmrsRestServices')
           .factory('PersonAttributesRestService', PersonAttributesRestService);
 
-  PersonAttributesRestService.$inject = ['OpenmrsSettings', '$resource','LocationResService'];
+  PersonAttributesRestService.$inject = ['OpenmrsSettings', '$resource','LocationExtensionService'];
 
-  function PersonAttributesRestService(OpenmrsSettings, $resource,LocationResService) {
+  function PersonAttributesRestService(OpenmrsSettings, $resource,LocationExtensionService) {
     var service = {
       getPersonAttributeByUuid: getPersonAttributeByUuid,
       saveUpdatePersonAttribute:saveUpdatePersonAttribute,
