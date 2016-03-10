@@ -46,12 +46,14 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         vm.currentMode = formModes.newForm;
         vm.tabs = [];
         vm.lastFormlyFormSchema = [];//usually is an array of tabs
+        
 
         var selectedFormMetadata;
         var selectedFormSchema;
         var selectedFormUuid = $stateParams.formuuid;
         var lastPayload;
         var lastPersonAttributePayload;
+        //vm.selectedFormMetadata = selectedFormMetadata;
         
         //Loaded encounter/visit variables
         vm.encounter = $rootScope.activeEncounter;
@@ -258,6 +260,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         function onNavigateToQuestionRequest(args, param) {
+            console.log('params', param);
             selectTabByTitle(param.tabTitle);
             scrollToAnchorByKey(param.questionKey);
         }
@@ -335,7 +338,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 // map legacy adult return to the new form uuid
                 // TODO: There may be a better way of doing this as we
                 // to serving schemas in the db.
-                var LEGACY_ADULT_RETURN = 'a7de4a14-5292-458f-a0af-cb1cd0a3c81a'
+                var LEGACY_ADULT_RETURN = 'a7de4a14-5292-458f-a0af-cb1cd0a3c81a';
                 var uuid = vm.encounter.formUuid() || vm.encounter.encounterTypeUuid();
                 
                 if(uuid === LEGACY_ADULT_RETURN) {
@@ -354,7 +357,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         function createFormFromSchema() {
-            $log.log('Creating form for loaded form schema');
+            console.log('Creating form for loaded form schema', selectedFormSchema);
             var formObject = FormEntry.createForm(selectedFormSchema, vm.model);
             vm.lastFormlyFormSchema = formObject.formlyForm;
             $log.debug('Created formly form...', vm.lastFormlyFormSchema);
