@@ -50,7 +50,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
 
         //getting the location id
         var locationUUid = personAttribute.attribute.value;
-        LocationResService.getLocationByUuidFromEtl(locationUUid,
+        LocationExtensionService.getLocationByUuidFromEtl(locationUUid,
           function(response) {
             var locationId = response.result[0]['location_id'].toString();
             var attributePayLoad = JSON.stringify({value:locationId,

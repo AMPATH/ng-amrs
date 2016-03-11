@@ -26,7 +26,8 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
         forms = CachedDataService.getCachedPocForms();
         var service = {
             getForm: getForm,
-            getFormSchema: getFormSchema
+            getFormSchema: getFormSchema,
+            getFormSchemasArray: getFormSchemasArray
         };
 
         return service;
@@ -44,7 +45,7 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
             return result;
         }
         
-        function getFormSchema(formName, callback) {
+        function getFormSchema(formName, onSuccess, onError) {
             formName = createValidFormName(formName);
             // this should de dropped once we align all forms related issues
             if (formName !== undefined) {
@@ -59,13 +60,39 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
                     //console.log('testing json files');
                     //console.log(response.schema);
                     //schema = response.schema;
-                    callback(response);
+                    onSuccess(response);
                 })
                 .error(function (data, status, headers, config) {
                     //console.log(data);
                     //console.log(status);
                     if (status === 404) { alert('Form Resource not Available'); }
+                    
+                    onError(data);
                 });
+        }
+        
+        function getFormSchemasArray(arrayFormNames, onSuccess, onError) {
+            var numberOfRequests = arrayFormNames.length;
+            var formSchemas = [];
+            var hasReturned = false;
+            for (var i = 0; i < arrayFormNames.length; i++) {
+                var formName = arrayFormNames[i];
+
+                getFormSchema(formName,
+                    function(formSchema) {
+                        formSchemas.push(formSchema);
+                        numberOfRequests--;
+                        if (numberOfRequests === 0 && !hasReturned) {
+                            hasReturned = true;
+                            onSuccess(formSchemas);
+                        }
+                    }, function(error) {
+                        if (!hasReturned) {
+                            hasReturned = true;
+                            onError(error);
+                        }
+                    });
+            }
         }
 
         function createValidFormName(formName) {
