@@ -1,44 +1,54 @@
 <div ng-disabled="isBusy">
-  <table class='table table-hover table-striped table-responsive'>
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>BP</th>
-        <th>Pulse</th>
-        <th>Temperature</th>
-        <th>Oxygen Sat</th>
-        <th>Height</th>
-        <th>Weight</th>
-      </tr>
-    </thead>
-    <tr ng-repeat="encounter in encounters">
-      <td>{{encounter.encounterDatetime() | date:'dd-MM-yyyy'}}</td>
-      <td>{{encounter.systolicBp()}} / {{encounter.diastolicBp()}}</td>
-      <td>{{encounter.pulse()}}</td>
-      <td>{{encounter.temperature()}}</td>
-      <td>{{encounter.oxygenSat()}}</td>
-      <td>{{encounter.height()}}</td>
-      <td>{{encounter.weight()}}</td>
-    </tr>
-  </table>
-  <div ng-show='experiencedLoadingError'>
-    <p class="bg-danger" style="padding:4px;">
-      <b>
+    <table class='table table-hover table-striped table-responsive'>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Date</th>
+                <th>BP</th>
+                <th>Pulse</th>
+                <th>Temperature</th>
+                <th>Oxygen Sat</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>BMI</th>
+            </tr>
+        </thead>
+        <tr ng-repeat="encounter in encounters">
+            <td>
+                <span class="glyphicon glyphicon-warning-sign text-danger" ng-if="encounter.BMI() && encounter.BMI() < 20">
+                        </span>
+            </td>
+            <td>{{encounter.encounterDatetime() | date:'dd-MM-yyyy'}}</td>
+            <td>{{encounter.systolicBp()}} / {{encounter.diastolicBp()}}</td>
+            <td>{{encounter.pulse()}}</td>
+            <td>{{encounter.temperature()}}</td>
+            <td>{{encounter.oxygenSat()}}</td>
+            <td>{{encounter.height()}}</td>
+            <td>{{encounter.weight()}}</td>
+            <td>
+                <span style="color:red;" ng-if="encounter.BMI() && encounter.BMI() < 20">{{encounter.BMI()}}</span>
+                <span ng-if="!(encounter.BMI() && encounter.BMI() < 20)">{{encounter.BMI()}}</span>
+            </td>
+        </tr>
+    </table>
+    <div ng-show='experiencedLoadingError'>
+        <p class="bg-danger" style="padding:4px;">
+            <b>
         <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
-      <p>
-  </div>
-  <div ng-show='!isBusy && !allDataLoaded'>
-    <button class="btn btn-info" ng-click="loadMoreVitals()">
-      <span class="glyphicon glyphicon-refresh"></span>Load More</button>
-  </div>
-  <div ng-show='isBusy && !allDataLoaded'>
-    <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
-    <b>Loading data...</b>
-  </div>
-  <div ng-show='allDataLoaded'>
-    <p class="bg-info" style="padding:4px;">
-      <b>
+            <p>
+    </div>
+    <div ng-show='!isBusy && !allDataLoaded'>
+        <button class="btn btn-info" ng-click="loadMoreVitals()">
+            <span class="glyphicon glyphicon-refresh"></span>Load More</button>
+    </div>
+    <div ng-show='isBusy && !allDataLoaded'>
+        <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+        <b>Loading data...</b>
+    </div>
+    <div ng-show='allDataLoaded'>
+        <p class="bg-info" style="padding:4px;">
+            <b>
         <span style="color:green;" class="glyphicon glyphicon-ok" />All vitals loaded {{'[ ' + encounters.length + ' ]'}}</b>
-      <p>
-  </div>
+            <p>
+    </div>
 </div>

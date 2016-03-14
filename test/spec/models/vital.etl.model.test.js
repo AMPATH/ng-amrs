@@ -29,8 +29,8 @@ jshint -W030
           encounter_id : 'familyName',
           encounter_datetime : 'familyName2',
           location_id : '_location_id',
-          weight : 'weight',
-          height : 'height',
+          weight : 56,
+          height : 178,
           temp : 'temp',
           oxygen_sat : 'oxygen_sat',
           systolic_bp : 'systolic_bp',
@@ -60,6 +60,15 @@ jshint -W030
         expect(model.systolicBp()).to.equal(vitalEtl.systolic_bp);
         expect(model.diastolicBp()).to.equal(vitalEtl.diastolic_bp);
         expect(model.pulse()).to.equal(vitalEtl.pulse);
+		
+        /* jshint ignore:end */
+      });
+      
+       it('should calcluate BMI correctly when BMI member is called ', function() {
+        /* jshint ignore:start */
+        var model = new vitalModelFactory.vital(vitalEtl);
+
+        expect(model.BMI()).to.equal(17.7);
 		
         /* jshint ignore:end */
       });

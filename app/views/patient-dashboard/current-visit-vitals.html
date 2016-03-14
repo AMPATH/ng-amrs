@@ -33,7 +33,8 @@
                 <span ng-if="vital.oxygenSaturation">Oxygen Sat : {{vital.oxygenSaturation}} |</span>
                 <span ng-if="vital.height">Height : {{vital.height}} |</span>
                 <span ng-if="vital.weight">Weight : {{vital.weight}} |</span>
-                <span ng-if="vital.bmi">BMI:Kg/M2 : {{vital.bmi}} </span>
+                <span ng-if="vital.bmi && !(vital.bmi && vital.bmi < 20)">BMI:Kg/M2 : {{vital.bmi}} </span>
+                <span style="color:red;" ng-if="(vital.bmi && vital.bmi < 20)">BMI:Kg/M2 : {{vital.bmi}} </span>
 
                 </strong>
               </li>
