@@ -108,9 +108,9 @@
     var reportSectionsKeys = [
       ['HIV Exposed Infant (within 2 months)',
         'HIV_Exposed_Infant',
-        'On_CTX_Below_15_yrs',
-        'On_CTX_15_yrs_and_Older',
-        'Total on CTX (Sum HV03-03 TO HV03-06)'
+        'on_pcp_prophylaxis_below_15',
+        'on_pcp_prophylaxis_15_and_above',
+        'on_pcp_prophylaxis'
       ],
       ['Enrolled in Care',
         'enrolled_in_care_males_lt_one',
@@ -163,8 +163,9 @@
         'on_art_total'
       ],
       ['3.7 Cumulative Ever on ART',
-        'Ever_on_art_Below_15yrs',
-        'Ever_on_art_15yrs_&_older', 'on_art'
+        'ever_on_art_below_15',
+        'ever_on_art_15_and_older',
+        'ever_on_art'
       ],
       ['3.8 Survival and Retention on ART at 12 months',
         'art_net_cohort_at_12_months',
