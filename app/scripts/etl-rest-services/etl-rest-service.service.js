@@ -102,6 +102,10 @@
             var params={startIndex:startIndex,uuid:patientUuid,limit:limit};
             return resource.get(params).$promise
                     .then(function(response){
+                        if(response.error) {
+                            failedCallback('Error processing request', response);
+                            return;
+                        }
                         successCallback(response);
                     })
                     .catch(function(error){
