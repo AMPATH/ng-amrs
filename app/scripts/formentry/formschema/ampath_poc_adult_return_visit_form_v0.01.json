@@ -2,10 +2,12 @@
     "name": "ampath_poc_adult_return_visit_form_v0.01",
     "uuid": "xxxx",
     "processor": "EncounterFormProcessor",
-    "referencedForms": [{
-        "formName": "ampath_poc_triage_encounter_form_v0.01",
-        "alias":"triage"
-    }],
+    "referencedForms": [
+        {
+            "formName": "ampath_poc_triage_encounter_form_v0.01",
+            "alias": "triage"
+        }
+    ],
     "pages": [
         {
             "label": "Encounter Details",
@@ -1746,11 +1748,33 @@
             "sections": [
                 {
                     "label": "Vitals",
-                    "reference" :{
-                        "page":"Page 1",
-                        "section":"Vital Signs:",
+                    "reference": {
+                        "page": "Page 1",
+                        "section": "Vital Signs:",
                         "form": "triage"
                     }
+                }
+            ]
+        },
+        {
+            "label": "CC/HPI",
+            "sections": [
+                {
+                    "label": "CC/HPI",
+                    "questions": [
+                        {
+                            "type": "obs",
+                            "label": "",
+                            "id": "cchpi",
+                            "required": "false",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "textarea",
+                                "concept": "a89ffbf4-1350-11df-a1f1-0026b9348838",
+                                "rows": 15
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -2290,6 +2314,28 @@
                                     ]
                                 }
                             ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Assessment",
+            "sections": [
+                {
+                    "label": "Assessment",
+                    "questions": [
+                        {
+                            "type": "obs",
+                            "label": "",
+                            "id": "assessments_comments",
+                            "required": "false",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "textarea",
+                                "concept": "23f710cc-7f9c-4255-9b6b-c3e240215dba",
+                                "rows": 18
+                            }
                         }
                     ]
                 }
