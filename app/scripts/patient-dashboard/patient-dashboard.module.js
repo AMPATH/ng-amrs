@@ -5,6 +5,7 @@
         .module('app.patientdashboard', [
             'app.openmrsRestServices',
             'app.etlRestServices',
-            'dialogs.main'
+            'dialogs.main',
+            'kendo.directives'
         ]);
 })();

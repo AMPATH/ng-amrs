@@ -993,5 +993,73 @@
       expect(callbacks.message.trim()).not.to.equal('');
     });
 
+    // getPatientLevelReminders unit tests
+    // indicators=passed-indicator&patientUuid=passed-uuid&referenceDate=passed-date&report=passed-report
+    it('should make an api call to the hiv etl rest endpoint when getPatientLevelReminders is ' +
+      'called with indicator, patient-uuid, report, and reference date', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?' +
+        'indicators=passed-indicator&patientUuid=passed-uuid&referenceDate=passed-date&report=passed-report').respond({});
+      etlRestService.getPatientLevelReminders('passed-date', 'passed-uuid', 'passed-report','passed-indicator',
+        function () { }, function () { });
+
+      httpBackend.flush();
+    });
+
+    it('should make an api call to the get report etl rest endpoint when getPatientLevelReminders is ' +
+      'called with a report-indicator, reference date and paging parameters', function () {
+
+      //case startIndex and limit are defined
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?' +
+        'indicators=passed-indicator&limit=10&patientUuid=passed-uuid&referenceDate=passed-date&' +
+        'report=passed-report&startIndex=0').respond({});
+      etlRestService.getPatientLevelReminders('passed-date', 'passed-uuid', 'passed-report','passed-indicator',
+        function () { }, function () { }, 0, 10);
+
+      httpBackend.flush();
+
+      //case startIndex defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?' +
+        'indicators=passed-indicator&patientUuid=passed-uuid&referenceDate=passed-date&' +
+        'report=passed-report&startIndex=0').respond({});
+      etlRestService.getPatientLevelReminders('passed-date', 'passed-uuid', 'passed-report','passed-indicator',
+        function () { }, function () { }, 0, undefined);
+
+      httpBackend.flush();
+
+      //case limit defined only
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?' +
+        'indicators=passed-indicator&limit=10&patientUuid=passed-uuid&referenceDate=passed-date&' +
+        'report=passed-report').respond({});
+      etlRestService.getPatientLevelReminders('passed-date', 'passed-uuid', 'passed-report','passed-indicator',
+        function () { }, function () { }, undefined, 10);
+
+      httpBackend.flush();
+    });
+
+    it('should call the onSuccess callback getPatientLevelReminders request successfully returns', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?' +
+        'indicators=passed-indicator&limit=10&patientUuid=passed-uuid&referenceDate=passed-date&' +
+        'report=passed-report&startIndex=0').respond({});
+      etlRestService.getPatientLevelReminders('passed-date', 'passed-uuid', 'passed-report','passed-indicator',
+         callbacks.onSuccess, callbacks.onFailure, 0, 10);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(true);
+      expect(callbacks.onFailedCalled).to.equal(false);
+    });
+
+    it('should call the onFailed callback when getPatientLevelReminders request is not successful', function () {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?' +
+        'indicators=passed-indicator&limit=10&patientUuid=passed-uuid&referenceDate=passed-date&' +
+        'report=passed-report&startIndex=0').respond(500);
+      etlRestService.getPatientLevelReminders('passed-date', 'passed-uuid', 'passed-report','passed-indicator',
+        callbacks.onSuccess, callbacks.onFailure, 0, 10);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(false);
+      expect(callbacks.onFailedCalled).to.equal(true);
+      expect(callbacks.message).to.exist;
+      expect(callbacks.message.trim()).not.to.equal('');
+    });
+
+
   });
 })();

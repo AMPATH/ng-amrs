@@ -1,0 +1,33 @@
+<span id="mainNotification" style="display:none;"></span>
+<script id="infoTemplate" type="text/x-kendo-template">
+  <div class="info-template" style="cursor: pointer;">
+    <i class="fa fa-times fa-lg pull-right text-muted" style="margin-right: 15px"></i>
+    <span class="fa-stack fa-lg">
+      <i class="fa fa-circle-thin fa-stack-2x text-primary" ></i>
+      <i class="fa fa-envelope fa-stack-1x text-primary"></i>
+    </span>
+    <h3><strong>#= title #</strong></h3>
+    <p class="text-muted">#= message #</p>
+  </div>
+</script>
+
+<script id="warningTemplate" type="text/x-kendo-template">
+  <div class="warning-template" style="cursor: pointer;">
+    <i class="fa fa-times fa-lg pull-right text-muted" style="margin-right: 15px"></i>
+   <span class="fa-stack fa-lg ">
+      <i class="fa fa-circle-thin fa-stack-2x text-warning"></i>
+      <i class="fa fa-info-circle fa-stack-1x text-warning"></i>
+    </span>
+    <h3><strong>#= title #</strong></h3>
+    <p class="text-muted">#= message #</p>
+  </div>
+</script>
+
+<script id="successTemplate" type="text/x-kendo-template">
+  <div class="success-template" style="cursor: pointer;">
+    <i class="fa fa-times fa-lg pull-right text-muted" style="margin-right: 15px"></i>
+    <i class="fa fa-envelope"></i>
+    <h3><strong>#= title #</strong></h3>
+    <h3>#= message #</h3>
+  </div>
+</script>
