@@ -90,6 +90,9 @@ module.exports = function (config) {
     'bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js',
     'bower_components/kendo-ui/js/kendo.ui.core.min.js',
     'bower_components/offline/offline.js',
+    'bower_components/angular-ui-ace/ui-ace.js',
+    'bower_components/openmrs-ngresource/dist/scripts/openmrsNgresource.js',
+    'bower_components/angular-formentry/dist/scripts/angularFormentry.js',
     'bower_components/angular-mocks/angular-mocks.js',
     // endbower
       'app/scripts/**/*.module.js',

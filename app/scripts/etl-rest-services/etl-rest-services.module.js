@@ -4,6 +4,7 @@
   angular
     .module('app.etlRestServices', [
       'ngResource',
-      'ngCookies'
+      'ngCookies',
+      'openmrs-ngresource.utils'
     ]);
 })();
