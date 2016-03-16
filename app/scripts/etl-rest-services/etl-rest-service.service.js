@@ -35,7 +35,8 @@
             getHivSummaryFlatTable:getHivSummaryFlatTable,
             getPatientByIndicatorAndLocation:getPatientByIndicatorAndLocation,
             getMoh731Report:getMoh731Report,
-            getIndicatorsSchemaWithSections:getIndicatorsSchemaWithSections
+            getIndicatorsSchemaWithSections:getIndicatorsSchemaWithSections,
+            getPatientLevelReminders:getPatientLevelReminders
 
         };
         return serviceDefinition;
@@ -590,6 +591,34 @@
                     });
 
         }
+      function getPatientLevelReminders(referenceDate,patientUuid,report,indicators,successCallback,failedCallback,
+        startIndex,limit){
+        var resource=getResource('get-report-by-report-name');
+
+        var params={report:report,patientUuid:patientUuid, referenceDate:referenceDate, indicators:indicators};
+
+
+        if(startIndex!==undefined){
+          params.startIndex=startIndex;
+        }
+
+        if(limit!==undefined){
+          params.limit=limit;
+        }
+
+        console.log(params);
+        console.log(startIndex);
+
+        return resource.get(params).$promise
+          .then(function(response){
+            successCallback(response);
+          })
+          .catch(function(error){
+            failedCallback('Error processing request',error);
+            console.error(error);
+          });
+
+      }
 
 
 

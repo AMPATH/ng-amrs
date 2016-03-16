@@ -46,6 +46,7 @@ jshint -W098, -W117, -W003, -W026
       getPatientByIndicatorAndLocation:getPatientByIndicatorAndLocation,
 
       getDataEntryStatistics: getDataEntryStatistics,
+      getPatientLevelReminders:getPatientLevelReminders,
 
       returnErrorOnNextCall: false
     };
@@ -770,6 +771,25 @@ jshint -W098, -W117, -W003, -W026
         name:'Clinic '+index,
         total:'Total'+index
       }
+    }
+
+    function getPatientLevelReminders(referenceDate,patientUuid,report,indicators,successCallback,failedCallback,
+                                      startIndex,limit){
+      var result= [{
+        last_encounter_date: null,
+        person_id: null,
+        person_uuid: null,
+        needs_vl_coded: 0,
+        overdue_vl_lab_order: 0,
+        needs_cd4_count_coded: 0,
+        overdue_cd4_count_lab_order: 0
+      }];
+      successCallback({
+        startIndex: 0,
+        size: 1,
+        result: result
+      });
+
     }
 
     function getDetailsOfPatientCreationInLocationRecord(index) {
