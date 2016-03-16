@@ -19,13 +19,17 @@
     $scope.startDate = new Date(moment().subtract(1, 'months').calendar());
 
     $scope.reportGeneration = false;
-    $scope.reportName = 'MOH-731';
+    var reportNames = ['MOH-731','MOH-731-allsites-report']
+    $scope.reportName = reportNames[0];
     $scope.countBy = 'num_persons';
     $scope.startIndex = 0;
     $scope.limit=1000000;
-    $scope.groupBy = 'groupByLocation';
+    var groupByTypes = ['groupByLocation'];
+    $scope.groupBy = groupByTypes[0];
     $scope.generateMoh731Report = generateMoh731Indicators;
     $scope.selectedLocation = '';
+    
+    
 
     //UX Scope Params
     $scope.isBusy = false;
@@ -87,6 +91,13 @@
       } else {
         locations = getSelectedLocations($scope.selectedLocations);
       }
+      
+      if($scope.selectedLocations.allAggregated === true) {
+           $scope.reportName = reportNames[1];
+            $scope.groupBy = '';
+            locations = '';
+      }
+      
       if ($scope.countBy && $scope.countBy !== '' && $scope.reportName &&
         $scope.reportName !== '' && $scope.startDate && $scope.startDate !==
         '') {
