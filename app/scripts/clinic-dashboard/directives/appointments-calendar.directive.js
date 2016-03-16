@@ -38,19 +38,15 @@
     }
     $scope.eventClicked = function(event) {
       if (event.type === 'info') {
-        $state.go('clinical-dashboard.daily-appointments', {view:'appointments'})
-        //Redirect Appointments
+        $state.go('clinical-dashboard.daily-appointments.appointments', {view:'appointments'})
       } else if (event.type === 'success') {
-        //Redirect Attended
-        $state.go('clinical-dashboard.daily-appointments', {view:'attended'})
+        $state.go('clinical-dashboard.daily-appointments.visits', {view:'attended'})
       } else if (event.type === 'warning') {
-          $state.go('clinical-dashboard.daily-appointments',{view:'notReturned'});
-        //Redirect to not attended
+          $state.go('clinical-dashboard.daily-appointments.has-not-returned',{view:'notReturned'});
       } else if (event.type === 'important') {
         //Redirect to important
       }
       ClinicDashboardService.setStartDate(event.startsAt);
-      //$state.go('clinical-dashboard.daily-appointments');
     };
     $scope.events = [
 

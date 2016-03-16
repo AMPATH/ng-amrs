@@ -5,8 +5,7 @@
         <label for="start-date">Select Date</label>
         <div>
           <p class="input-group">
-            <input type="text" id="start-date" class="form-control" datepicker-popup="mediumDate" ng-model="selectedDate" ng-model-options="{getterSetter: true}"
-                   is-open="dateControlStatus.startOpened" />
+            <input type="text" id="start-date" class="form-control" datepicker-popup="mediumDate" ng-model="selectedDate" ng-model-options="{getterSetter: true}" is-open="dateControlStatus.startOpened" />
             <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="openDatePopup($event)">
                 <i class="glyphicon glyphicon-calendar"></i>
@@ -22,17 +21,7 @@
     </div>
 
   </div>
-  <div class="btn-group pull-right">
-    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{currentView}}<span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <li><a data-ng-click="selectAppointmentVisits('appointments')" >Appointments</a></li>
-      <li><a data-ng-click="selectAppointmentVisits('visits')" >Visits</a></li>
-      <li><a data-ng-click="selectAppointmentVisits('noreturn')">Not Returned</a></li>
-    </ul>
-
-  </div>
-  <div ng-show='showVisits'>
-   <div ng-show='!isBusyVisits && experiencedVisitsLoadingError'>
+    <div ng-show='!isBusyVisits && experiencedVisitsLoadingError'>
       <button class="btn btn-info" ng-click="loadSchedule()">
         <span class="glyphicon glyphicon-refresh"></span>
         <span>Reload</span>
@@ -43,7 +32,7 @@
       <b>Loading visits...</b>
     </div>
 
-  <div style="margin-bottom:2px"><span style="font-size:24px;">Actual Visits List <small style="font-size:14px; color:grey;">(Number of Patients: {{visitPatients.length}})</small></span></div>
+    <div style="margin-bottom:2px"><span style="font-size:24px;">Actual Visits List <small style="font-size:14px; color:grey;">(Number of Patients: {{customPatients.length}})</small></span></div>
     <!--Update to handle more than  two  views effectively -->
 
 
@@ -53,244 +42,66 @@
  !-->
 
 
-  <div ng-show='experiencedVisitsLoadingError'>
-    <p class="bg-danger" style="padding:4px;">
-      <b>
+    <div ng-show='experiencedVisitsLoadingError'>
+      <p class="bg-danger" style="padding:4px;">
+        <b>
         <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
-    <p>
-  </div>
-  <div class="form-group">
-    <div/>
-    <div class="panel panel-default">
-      <!-- Default panel contents -->
-      <div class="panel-heading">
-        <div class="input-group">
+        <p>
+    </div>
+    <div class="form-group">
+      <div/>
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+          <div class="input-group">
 
-          <input class="form-control"  placeholder="Filter..." type="text" ng-model="visitSearchString"/>
-          <div class="input-group-btn">
-            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            <input class="form-control" placeholder="Filter..." type="text" ng-model="visitSearchString" />
+            <div class="input-group-btn">
+              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+
           </div>
-
         </div>
-      </div>
 
-      <table class='table table-hover table-striped table-responsive'>
-        <thead>
-        <tr>
-          <th>#</th>
-          <th>Identifier</th>
-          <th>Name</th>
-        </tr>
-        </thead>
-        <tr  ng-repeat="patient in customPatients | filter:visitSearchString | startFrom:(currentPage-1)*10 | limitTo:10" ng-class="{ warning: patient.status}" data-ng-click="loadPatient(patient.uuid)">
-          <td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
-          <td>{{patient.identifier}}</td>
-          <td>{{patient.name | titlecase}}</td>
-          <td>
-            <a href="#/patient/{{patient.uuid}}"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
-          </td>
-        </tr>
-      </table>
+        <table class='table table-hover table-striped table-responsive'>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Identifier</th>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tr ng-repeat="patient in customPatients | filter:visitSearchString | startFrom:(currentPage-1)*10 | limitTo:10" ng-class="{ warning: patient.status}" data-ng-click="loadPatient(patient.uuid)">
+            <td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
+            <td>{{patient.identifier}}</td>
+            <td>{{patient.name | titlecase}}</td>
+            <td>
+              <a href="#/patient/{{patient.uuid}}"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
+            </td>
+          </tr>
+        </table>
 
-      <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
-      <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="customPatients.length" items-per-page="10"
-                  ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
-                  last-text="&raquo;" rotate="false"></pagination>
-      <!-- END DATATABLE -->
-      <hr style="margin: 4px;" />
-      <div style="padding:2px; margin-bottom: 30px !important; ">
-        <div ng-show='!isBusy && !allDataLoaded4DailyVisits'>
-          <span class="text-success">{{visitPatients.length}} Records Loaded. Click 'Load More' to fetch more records</span>
-          <button class="btn btn-info pull-right " ng-click="loadSchedule(true)">
-            <span class="glyphicon glyphicon-refresh"></span> Load More</button>
-        </div>
-        <div ng-show='isBusy && !allDataLoaded4DailyVisits'>
-          <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
-          <b>Loading data...</b>
-        </div>
-        <div ng-show='allDataLoaded4DailyVisits' >
-          <p class="bg-info" style="padding:4px;">
-            <b>
+        <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
+        <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="customPatients.length" items-per-page="10" ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
+        last-text="&raquo;" rotate="false"></pagination>
+        <!-- END DATATABLE -->
+        <div style="padding:2px; margin-bottom: 30px !important; ">
+          <div ng-show='!isBusy && !allDataLoaded4DailyVisits'>
+            <span class="text-success">{{visitPatients.length}} Records Loaded. Click 'Load More' to fetch more records</span>
+            <button class="btn btn-info pull-right " ng-click="loadSchedule(true)">
+              <span class="glyphicon glyphicon-refresh"></span> Load More</button>
+          </div>
+          <div ng-show='isBusy && !allDataLoaded4DailyVisits'>
+            <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+            <b>Loading data...</b>
+          </div>
+          <div ng-show='allDataLoaded4DailyVisits'>
+            <p class="bg-info" style="padding:4px;">
+              <b>
               <span style="color:green;" class="glyphicon glyphicon-ok" />All data loaded {{'[ ' + visitPatients.length + ' ]'}}</b>
-          <p>
-        </div>
-    </div>
-  </div>
-  </div>
-</div></div>
-
-  <div ng-show='showNoreturn'>
-    <div ng-show='!isBusyVisits && experiencedVisitsLoadingError'>
-      <button class="btn btn-info" ng-click="loadSchedule()">
-        <span class="glyphicon glyphicon-refresh"></span>
-        <span>Reload</span>
-      </button>
-    </div>
-    <div ng-show='isBusyVisits'>
-      <img ng-show="isBusyVisits" src="images/ajax-loader.gif" autofocus />
-      <b>Loading not returned...</b>
-    </div>
-    <div style="margin-bottom:2px">
-      <span style="font-size:24px;"> Not Returned List <small style="font-size:14px; color:grey;">(Number of Patients: {{notReturnedVisitPatients.length}})</small></span></div>
-      <!--Update to handle more than  two  views effectively -->
-
-
-
-      <!-- original Script
-      <a class="btn btn-info pull-right" href ng-click="toggleAppointmentVisits()">Show Appointments</a></span></div>
-   !-->
-  <div ng-show='experiencedVisitsLoadingError'>
-    <p class="bg-danger" style="padding:4px;">
-      <b>
-        <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
-    <p>
-  </div>
-  <div class="form-group">
-
-    <div class="panel panel-default">
-      <!-- Default panel contents -->
-      <div class="panel-heading">
-        <div class="input-group">
-
-          <input class="form-control"  placeholder="Filter..." type="text" ng-model="visitsNotReturned"/>
-          <div class="input-group-btn">
-            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              <p>
           </div>
-
-        </div>
-      </div>
-
-      <table class='table table-hover table-striped table-responsive'>
-        <thead>
-        <tr>
-          <th>#</th>
-          <th>Identifier</th>
-          <th>Name</th>
-        </tr>
-        </thead>
-        <tr  ng-repeat="patient in customPatientsNotReturned | filter:visitsNotReturned | startFrom:(currentPage-1)*10 | limitTo:10" ng-class="{ warning: patient.status}" data-ng-click="loadPatient(patient.uuid)">
-          <td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
-          <td>{{patient.identifier}}</td>
-          <td>{{patient.name | titlecase}}</td>
-          <td>
-            <a href="#/patient/{{patient.uuid}}"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
-          </td>
-        </tr>
-      </table>
-
-      <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
-      <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="customPatientsNotReturned.length" items-per-page="10"
-                  ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
-                  last-text="&raquo;" rotate="false"></pagination>
-      <!-- END DATATABLE -->
-      <hr style="margin: 4px;" />
-      <div style="padding:2px; margin-bottom: 30px !important; ">
-        <div ng-show='!isBusy && !allDataLoaded4DailyNotReturnedVisits'>
-          <span class="text-success">{{notReturnedVisitPatients.length}} Records Loaded. Click 'Load More' to fetch more records</span>
-          <button class="btn btn-info pull-right " ng-click="loadSchedule(true)">
-            <span class="glyphicon glyphicon-refresh"></span> Load More</button>
-        </div>
-        <div ng-show='isBusy && !allDataLoaded4DailyNotReturnedVisits'>
-          <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
-          <b>Loading data...</b>
-        </div>
-        <div ng-show='allDataLoaded4DailyNotReturnedVisits' >
-          <p class="bg-info" style="padding:4px;">
-            <b>
-              <span style="color:green;" class="glyphicon glyphicon-ok" />All data loaded {{'[ ' + notReturnedVisitPatients.length + ' ]'}}</b>
-          <p>
         </div>
       </div>
     </div>
-    </div>
-  </div>
-
-
-
-
- <div ng-show='showAppointments'>
-
-  <div ng-show='!isBusy && experiencedLoadingError'>
-      <button class="btn btn-info" ng-click="loadSchedule()">
-        <span class="glyphicon glyphicon-refresh"></span>
-        <span>Reload</span>
-      </button>
-    </div>
-    <div ng-show='isBusy'>
-      <img ng-show="isBusyVisits" src="images/ajax-loader.gif" autofocus />
-      <b>Loading appointments...</b>
-    </div>
-  <div style="margin-bottom:2px">
-    <span style="font-size:24px;">Appointment List <small style="font-size:14px;">(Number of Patients: {{appointmentPatients.length}})</small></span>
-  </div>
-    <!-- original  script
-    <a class="btn btn-success pull-right" href ng-click="toggleAppointmentVisits()">Show Visits</a></span></div>
-  !-->
-  <div ng-show='experiencedLoadingError'>
-    <p class="bg-danger" style="padding:4px;">
-      <b>
-        <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>
-        An error occured while loading. Please try again.</b>
-   </p>
-  </div>
-  <div class="form-group">
-    <div/>
-    <div class="panel panel-default">
-      <!-- Default panel contents -->
-      <div class="panel-heading">
-        <div class="input-group">
-
-          <input class="form-control"  placeholder="Filter..." type="text" ng-model="appointmentSearchString"/>
-          <div class="input-group-btn">
-            <button class="btn btn-default pull-right" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-          </div>
-
-        </div>
-      </div>
-
-      <table class='table table-hover table-striped table-responsive'>
-        <thead>
-        <tr>
-          <th>#</th>
-          <th>Identifier</th>
-          <th>Name</th>
-        </tr>
-        </thead>
-        <tr  ng-repeat="patient in customAppointmentPatients | filter:appointmentSearchString | startFrom:(currentPage-1)*10 | limitTo:10" ng-class="{ warning: patient.status}" data-ng-click="loadPatient(patient.uuid)">
-          <td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
-          <td>{{patient.identifier}}</td>
-          <td>{{patient.name | titlecase}}</td>
-          <td>
-            <a href="#/patient/{{patient.uuid}}"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
-          </td>
-        </tr>
-      </table>
-
-      <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
-      <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="customAppointmentPatients.length" items-per-page="10"
-                  ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
-                  last-text="&raquo;" rotate="false"></pagination>
-      <!-- END DATATABLE -->
-      <hr style="margin: 4px;" />
-      <div style="padding:2px; margin-bottom: 30px !important; ">
-        <div ng-show='!isBusy && !allDataLoaded4AppointmentSchedule'>
-          <span class="text-success">{{appointmentPatients.length}} Records Loaded. Click 'Load More' to fetch more records</span>
-          <button class="btn btn-info pull-right " ng-click="loadSchedule(true)">
-            <span class="glyphicon glyphicon-refresh"></span> Load More</button>
-        </div>
-        <div ng-show='isBusy && !allDataLoaded4AppointmentSchedule'>
-          <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
-          <b>Loading data...</b>
-        </div>
-        <div ng-show='allDataLoaded4AppointmentSchedule' >
-          <p class="bg-info" style="padding:4px;">
-            <b>
-              <span style="color:green;" class="glyphicon glyphicon-ok" />All data loaded {{'[ ' + appointmentPatients.length + ' ]'}}</b>
-          <p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 </div>

@@ -74,6 +74,7 @@
           data: {
             requireLogin: true
           },
+          cache: false,
           reloadOnSearch: false,
         })
         .state('clinical-dashboard.defaulters-list', {
@@ -87,6 +88,39 @@
         .state('clinical-dashboard.daily-appointments', {
           url: '/daily-appointments',
           templateUrl: 'views/clinic-dashboard/daily-appointments-tab.html',
+          controller: 'ClinicDashboardCtrl',
+          data: {
+            requireLogin: true
+          },
+          params: {
+            view: null
+          }
+        })
+        .state('clinical-dashboard.daily-appointments.visits', {
+          url: '/daily-appointments/visits',
+          templateUrl: 'views/clinic-dashboard/daily-visits-tab.html',
+          controller: 'ClinicDashboardCtrl',
+          data: {
+            requireLogin: true
+          },
+          params: {
+            view: null
+          }
+        })
+        .state('clinical-dashboard.daily-appointments.appointments', {
+          url: '/daily-appointments/appointments',
+          templateUrl: 'views/clinic-dashboard/daily-appointments.html',
+          controller: 'ClinicDashboardCtrl',
+          data: {
+            requireLogin: true
+          },
+          params: {
+            view: null
+          }
+        })
+        .state('clinical-dashboard.daily-appointments.has-not-returned', {
+          url: '/daily-appointments/has-not-returned',
+          templateUrl: 'views/clinic-dashboard/daily-not-returned.html',
           controller: 'ClinicDashboardCtrl',
           data: {
             requireLogin: true

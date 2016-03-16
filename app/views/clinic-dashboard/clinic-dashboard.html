@@ -23,7 +23,6 @@
 			<span style="font-size:20px; font-weight:bold; vertical-align: middle;" class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
 		</div>
 	</div>
-	<hr style="margin: -4px;" />
 </div>
 <ul class="nav nav-pills" style="margin-top:16px;" ng-hide="selectedLocation.selected === undefined">
 	<li ui-sref-active="active"><a ui-sref="clinical-dashboard.daily-appointments({locationuuid: selectedLocation.selected.uuId()})"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;Daily Visits</a></li>
@@ -32,5 +31,5 @@
 	<li ui-sref-active="active"><a ui-sref="clinical-dashboard.moh-731({locationuuid: selectedLocation.selected.uuId()})"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;MOH 731</a></li>
 	<li ui-sref-active="active"><a ui-sref="clinical-dashboard.patient-register({locationuuid: selectedLocation.selected.uuId()})"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;Patient Register</a></li>
 </ul>
-<br>
+<hr style="margin: 2px;" />
 <div ui-view></div>

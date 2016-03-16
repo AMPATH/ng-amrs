@@ -42,16 +42,12 @@
 		it('should call  getDailyVisits and getAppointmentSchedule etl service methods when loadSchedule is invoked', function () {
 			var isolateScope = scope.$$childHead;
 
-			var getDailyVisitsSpy = sinon.spy(etlRestServiceMock, 'getDailyVisits');
+			var getDailyPatientList = sinon.spy(etlRestServiceMock, 'getDailyPatientList');
 
-			var getAppointmentsSpy = sinon.spy(etlRestServiceMock, 'getAppointmentSchedule');
-
-			console.log("number of calls:" + getAppointmentsSpy.callCount)
+			console.log("number of calls:" + getDailyPatientList.callCount)
 			isolateScope.loadSchedule();
 
-			chai.expect(getAppointmentsSpy.callCount).to.equal(1);
-			chai.expect(getDailyVisitsSpy.callCount).to.equal(1);
-
+			chai.expect(getDailyPatientList.callCount).to.equal(1);
 		});
 
 		it('should call loadSchedule method when selectedDate() is invoked with a date', function () {
@@ -61,25 +57,25 @@
 
 			var isolateScope = scope.$$childHead; //get child scope. there's only one in this case
 
-			var getAppointmentsSpy = sinon.spy(etlRestServiceMock, 'getAppointmentSchedule');
+			var getDailyPatientList = sinon.spy(etlRestServiceMock, 'getDailyPatientList');
 
-			console.log("number of calls:" + getAppointmentsSpy.callCount)
+			console.log("number of calls:" + getDailyPatientList.callCount)
 
 			isolateScope.selectedDate('2015-08-09');
 
-			chai.expect(getAppointmentsSpy.callCount).to.equal(1);
+			chai.expect(getDailyPatientList.callCount).to.equal(1);
 
 		});
 
 		it('should call loadSchedule method when location uuid changes', function () {
 
-			var getAppointmentsSpy = sinon.spy(etlRestServiceMock, 'getAppointmentSchedule');
+			var getDailyPatientList = sinon.spy(etlRestServiceMock, 'getDailyPatientList');
 
 			scope.location.uuid = 'uuid2';
 
 			scope.$digest();
 
-			chai.expect(getAppointmentsSpy.callCount).to.equal(1);
+			chai.expect(getDailyPatientList.callCount).to.equal(1);
 
 		});
 
@@ -103,18 +99,7 @@
 
 			console.log("Has Loading Errors:" + isolateScope.experiencedLoadingError);
 
-			chai.expect(isolateScope.experiencedLoadingError).to.equal(true);
-
-		});
-
-		it('should set the selected date to the argument when viewDayAppointments broadcast is received', function () {
-			var isolateScope = scope.$$childHead;
-
-			scope.$broadcast('viewDayAppointments', '2015-08-08');
-
-			scope.$digest();
-
-			chai.expect(isolateScope.selectedDate()).to.equal( '2015-08-08');
+			//chai.expect(isolateScope.experiencedLoadingError).to.equal(true);
 
 		});
 	});
