@@ -12,11 +12,13 @@
   angular
     .module('app.clinicDashboard')
     .controller('ClinicDashboardCtrl', ClinicDashboardCtrl);
-  ClinicDashboardCtrl.$nject = ['$rootScope', '$scope', '$stateParams', 'OpenmrsRestService', 'LocationModel',
+  ClinicDashboardCtrl.$nject = ['$rootScope', '$scope', '$stateParams',
+   'OpenmrsRestService', 'LocationModel','$state',
     'ClinicDashboardService','UserDefaultPropertiesService','CachedDataService'];
 
   function ClinicDashboardCtrl($rootScope, $scope, $stateParams,
-    OpenmrsRestService, LocationModel, ClinicDashboardService,UserDefaultPropertiesService,CachedDataService) {
+    OpenmrsRestService, LocationModel,$state, ClinicDashboardService,UserDefaultPropertiesService,
+    CachedDataService) {
 
     var locationService = OpenmrsRestService.getLocationResService();
     $scope.selectedLocation = ClinicDashboardService.getSelectedLocation();
@@ -38,7 +40,6 @@
 
     function activate() {
       fetchLocations();
-      setDefaultUserLocation();
     }
 
     function switchTabByIndex(index) {
@@ -56,7 +57,6 @@
               $scope.selectedLocation.selected =location;
               ClinicDashboardService.setSelectedLocation(location);
               $scope.locationSelectionEnabled = false;
-
             });
         }
 
@@ -69,6 +69,9 @@
       $scope.locationSelectionEnabled = false;
       ClinicDashboardService.setLocationSelectionEnabled(false);
       ClinicDashboardService.setSelectedLocation({selected:$scope.selectedLocation.selected});
+      console.log('Selected Location===>',$scope.selectedLocation.selected.uuId());
+      $state.transitionTo($state.current, {locationuuid: $scope.selectedLocation.selected.uuId()},
+         { reload: true, inherit: true, notify: true });
       $rootScope.$broadcast('location:change');
     }
 
@@ -80,6 +83,7 @@
     function onGetLocationsSuccess(locations) {
       $scope.isBusy = false;
       $scope.locations = wrapLocations(locations);
+      setDefaultUserLocation();
     }
 
     function onGetLocationsError(error) {

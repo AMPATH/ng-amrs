@@ -25,7 +25,7 @@ jshint -W098, -W117, -W003, -W026
       numberOfPatientTestsToReturn: numberOfPatientTestsToReturn,
 
       getDailyVisits: getDailyVisits,
-      getDailyNotReturnedVisits:getDailyNotReturnedVisits,
+      getDailyPatientList:getDailyPatientList,
 
 
       getAppointmentSchedule: getAppointmentSchedule,
@@ -291,7 +291,7 @@ jshint -W098, -W117, -W003, -W026
     }
     //getDailyNotReturnedVisits Mock
 
-    function getDailyNotReturnedVisits(locationUuid, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
+    function getDailyPatientList(locationUuid,report, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
       if (!startIndex) {
         startIndex = 0;
       }
