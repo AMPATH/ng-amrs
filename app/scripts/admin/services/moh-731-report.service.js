@@ -16,7 +16,11 @@
     var setUp = false;
     var serviceDefinition;
     var startDate = new Date();
+    var selectedLocation={selected:undefined};
+    var indicatorDetails;
     var endDate = new Date();
+    var indicatorTags;
+    var indicators;
     var pdfReportSections = [
       ['HIV Exposed Infant (within 2 months)',
         'HIV Exposed Infant (Eligible for CTX 2 months)',
@@ -206,7 +210,21 @@
       generatePdfReportSchema: generatePdfReportSchema,
       generateReportSection: generateReportSection,
       getPdfSections: getPdfSections,
-      getPdfSectionsKeys: getPdfSectionsKeys
+      getPdfSectionsKeys: getPdfSectionsKeys,
+      getStartDate:getStartDate,
+      setStartDate:setStartDate,
+      getEndDate:getEndDate,
+      setEndDate:setEndDate,
+      getSelectedLocation:getSelectedLocation,
+      setSelectedLocation:setSelectedLocation,
+      resetSelectedLocation: resetSelectedLocation,
+      getIndicatorDetails:getIndicatorDetails,
+      setIndicatorDetails:setIndicatorDetails,
+      getIndicatorTags:getIndicatorTags,
+      setIndicatorTags:setIndicatorTags,
+      getIndicators:getIndicators,
+      setIndicators:setIndicators,
+
     };
     return serviceDefinition;
 
@@ -363,6 +381,39 @@
 
     function isSetUp() {
       return setUp;
+    }
+    function getSelectedLocation(){
+      return selectedLocation;
+    }
+
+
+    function setSelectedLocation(location){
+      selectedLocation=location;
+    }
+    function getIndicatorDetails(){
+      return indicatorDetails;
+    }
+
+    function setIndicatorDetails(value){
+      indicatorDetails=value;
+    }
+    function getIndicators() {
+      return indicators;
+    }
+
+    function setIndicators(value) {
+      indicators = value;
+    }
+
+    function getIndicatorTags() {
+      return indicatorTags;
+    }
+
+    function setIndicatorTags(tags) {
+      indicatorTags = tags;
+    }
+    function resetSelectedLocation() {
+      selectedLocation = {selected:undefined};
     }
 
     function generatePdfReportSchema(params) {

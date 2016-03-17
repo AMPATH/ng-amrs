@@ -1,7 +1,4 @@
 /*jshint -W003, -W098, -W117, -W026 */
-
-
-
 (function() {
   'use strict';
 
@@ -36,7 +33,9 @@
       getPatientByIndicatorAndLocation: getPatientByIndicatorAndLocation,
       getMoh731Report: getMoh731Report,
       getIndicatorsSchemaWithSections: getIndicatorsSchemaWithSections,
-      getPatientLevelReminders:getPatientLevelReminders
+      getPatientLevelReminders:getPatientLevelReminders,
+      getPatientListReportByIndicatorAndLocation:getPatientListReportByIndicatorAndLocation
+
     };
     return serviceDefinition;
 
@@ -47,6 +46,7 @@
         query: {
           method: 'GET',
           isArray: false
+
         }
       });
     }
@@ -346,7 +346,6 @@
 
     }
 
-
     function getPatientByIndicatorAndLocation(locationIds, startDate, endDate, indicator, successCallback,
       failedCallback, locationUuids, startIndex, limit) {
       var resource = getResource('patient-by-indicator');
@@ -371,6 +370,27 @@
         })
         .catch(function(error) {
           failedCallback('Error processing request', error);
+        });
+    }
+    function getPatientListReportByIndicatorAndLocation(locationIds,startDate,endDate,reportName,indicator,
+                                                        successCallback, failedCallback,locationUuids,startIndex,limit){
+      var resource=getResource('patient-list-by-indicator');
+      var params={endDate:endDate,reportName:reportName,indicator:indicator,startDate:startDate,
+        locationIds:locationIds, locationUuids:locationUuids};
+      if(startIndex!==undefined){
+        params.startIndex=startIndex;
+      }
+
+      if(limit!==undefined){
+        params.limit=limit;
+      }
+
+      return resource.get(params).$promise
+        .then(function(response){
+          successCallback(response);
+        })
+        .catch(function(error){
+          failedCallback('Error processing request',error);
         });
 
     }
