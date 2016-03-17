@@ -154,6 +154,9 @@
     <script src="bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js"></script>
     <script src="bower_components/kendo-ui/js/kendo.ui.core.min.js"></script>
     <script src="bower_components/offline/offline.js"></script>
+    <script src="bower_components/angular-ui-ace/ui-ace.js"></script>
+    <script src="bower_components/openmrs-ngresource/dist/scripts/openmrsNgresource.js"></script>
+    <script src="bower_components/angular-formentry/dist/scripts/angularFormentry.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -177,28 +180,12 @@
 
     <!-- Services -->
     <script src="scripts/openmrs-rest-services/user-default-properties.service.js"></script>
-    <script src="scripts/openmrs-rest-services/openmrs-settings.service.js"></script>
-    <script src="scripts/openmrs-rest-services/session.service.js"></script>
     <script src="scripts/openmrs-rest-services/authentication.service.js"></script>
-    <script src="scripts/openmrs-rest-services/openmrs-patient.service.js"></script>
-    <script src="scripts/openmrs-rest-services/user.service.js"></script>
-    <script src="scripts/openmrs-rest-services/location.service.js"></script>
-    <script src="scripts/openmrs-rest-services/provider.service.js"></script>
-    <script src="scripts/openmrs-rest-services/encounter.service.js"></script>
-    <script src="scripts/openmrs-rest-services/obs.service.js"></script>
     <script src="scripts/openmrs-rest-services/person-attribute.service.js"></script>
-    <script src="scripts/openmrs-rest-services/openmrs-form.service.js"></script>
-    <script src="scripts/formentry/services/formentry.service.js"></script>
-    <script src="scripts/openmrs-rest-services/openmrs-rest.service.js"></script>
     <script src="scripts/formentry/services/formsmetadata.service.js"></script>
-    <script src="scripts/formentry/services/search-data.service.js"></script>
     <script src="scripts/etl-rest-services/etl-rest-service.service.js"></script>
     <script src="scripts/etl-rest-services/etl-rest-services-settings.service.js"></script>
-    <script src="scripts/openmrs-rest-services/concept.service.js"></script>
-    <script src="scripts/openmrs-rest-services/drug.service.js"></script>
-    <script src="scripts/formentry/services/form-validator.service.js"></script>
-    <script src="scripts/formentry/services/current-loaded-form.service.js"></script>
-    <script src="scripts/openmrs-rest-services/visit.service.js"></script>
+    <script src="scripts/etl-rest-services/location-extention.service.js"></script>
     <script src="scripts/patient-search/services/patient-search.service.js"></script>
     <script src="scripts/clinic-dashboard/services/clinic-dashboard.service.js"></script>
     <script src="scripts/admin/services/hiv-summary-indicator.service.js"></script>
@@ -209,19 +196,6 @@
     <script src="scripts/admin/services/moh-731-report.service.js"></script>
     <script src="scripts/offline/services/offline.service.js"></script>
     <!--models-->
-    <script src="scripts/models/session.model.js"></script>
-    <script src="scripts/models/patient.model.js"></script>
-    <script src="scripts/models/user.model.js"></script>
-    <script src="scripts/models/encounter.model.js"></script>
-    <script src="scripts/models/location.model.js"></script>
-    <script src="scripts/models/provider.model.js"></script>
-    <script src="scripts/models/person.model.js"></script>
-    <script src="scripts/models/name.model.js"></script>
-    <script src="scripts/models/concept-name.model.js"></script>
-    <script src="scripts/models/concept-class.model.js"></script>
-    <script src="scripts/models/concept.model.js"></script>
-    <script src="scripts/models/drug.model.js"></script>
-    <script src="scripts/models/today-vital.model.js"></script>
 
 
     <!-- etl models -->
@@ -233,6 +207,7 @@
     <script src="scripts/models/defaulter.etl.model.js"></script>
     <script src="scripts/models/monthly-appointment-visit.etl.model.js"></script>
     <script src="scripts/models/patient.etl.model.js"></script>
+    <script src="scripts/models/today-vital.model.js"></script>
 
     <!-- directives -->
     <script src="scripts/clinic-dashboard/directives/appointments-calendar.directive.js"></script>
@@ -247,9 +222,8 @@
     <script src="scripts/patient-dashboard/directives/hiv-summary-historical.directive.js"></script>
     <script src="scripts/patient-dashboard/directives/active-tab-sync.directive.js"></script>
     <script src="scripts/clinic-dashboard/directives/daily-visits.directive.js"></script>
+    <script src="scripts/clinic-dashboard/directives/active-link-if.directive.js"></script>
     <script src="scripts/clinic-dashboard/directives/monthly-appointment.directive.js"></script>
-    <script src="scripts/formentry/directives/custom-expression.directive.js"></script>
-    <script src="scripts/formentry/directives/error-summary-directive.js"></script>
     <script src="scripts/clinic-dashboard/directives/defaulter-list.directive.js"></script>
     <script src="scripts/patient-search/directives/focus.directive.js"></script>
     <script src="scripts/patient-dashboard/directives/current-visit.directive.js"></script>
@@ -276,7 +250,6 @@
     <script src="scripts/patient-search/controllers/patient-search.controller.js"></script>
     <script src="scripts/authentication/controllers/login.controller.js"></script>
     <script src="scripts/formentry/controllers/formentry.controller.js"></script>
-    <script src="scripts/formentry/controllers/tabs.controller.js"></script>
     <script src="scripts/main/controllers/url-selector.controller.js"></script>
     <script src="scripts/main/controllers/user-default-properties.controller.js"></script>
     <script src="scripts/data-analytics/controllers/data-entry-statistics.controller.js"></script>
@@ -286,35 +259,20 @@
     <script src="scripts/admin/controllers/hiv-monthly-summary-indicators.controller.js"></script>
     <script src="scripts/admin/controllers/patient-register.controller.js"></script>
     <script src="scripts/admin/controllers/moh-731-report.controller.js"></script>
-
-    <!--tabs controller drop after test -->
-    <script src="scripts/formentry/controllers/tabs.controller.js"></script>
     <script src="scripts/clinic-dashboard/controllers/clinic-dashboard.controller.js"></script>
 
     <!-- Filters -->
     <script src="scripts/clinic-dashboard/filters/props.filter.js"></script>
     <script src="scripts/clinic-dashboard/filters/day-appointments.filter.js"></script>
-    <script src="scripts/clinic-dashboard/filters/visit-date-appointments.filter.js"></script>
     <script src="scripts/clinic-dashboard/filters/not-returned-date-appointments.filter.js"></script>
 
     <!-- Others -->
     <script src="scripts/main/controllers/about.js"></script>
     <script src="scripts/patient-search/patient-filter.filter.js"></script>
-    <script src="scripts/utils/filters/title-case.filter.js"></script>
     <script src="scripts/utils/services/util.service.js"></script>
-    <script src="scripts/utils/services/util-cached-data.service.js"></script>
 
 
-    <!-- Formly -->
-    <script src="scripts/formentry/formly-controls/datepicker.formly.js"></script>
-    <script src="scripts/formentry/formly-controls/datetimepicker.formly.js"></script>
-    <script src="scripts/formentry/formly-controls/ui-select.formly.js"></script>
-    <script src="scripts/formentry/formly-controls/labelled-button-field.formly.js"></script>
-    <script src="scripts/formentry/formly-controls/repeating-section.formly.js"></script>
-    <script src="scripts/formentry/formly-controls/anchor.formly.js"></script>
-    <script src="scripts/formentry/formly-controls/sections.js"></script>
-    <script src="scripts/formentry/formly-controls/concept-search-select.js"></script>
-    <!-- endbuild -->
+     <!-- endbuild -->
 
 </body>
 

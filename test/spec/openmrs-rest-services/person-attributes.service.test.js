@@ -14,13 +14,13 @@
     var settingsService;
     var v = 'custom:(uuid,value,attributeType:(uuid,uuid))';
     var mockData;
-    var locationResService;
+    var locationExtentionService;
 
     beforeEach(inject(function($injector) {
       httpBackend = $injector.get('$httpBackend');
       personAttributesService = $injector.get('PersonAttributesRestService');
       settingsService = $injector.get('OpenmrsSettings');
-      locationResService = $injector.get('LocationResService');
+      locationExtentionService = $injector.get('LocationExtensionService');
       mockData = $injector.get('mockData');
     }));
 
@@ -33,7 +33,7 @@
     });
 
     it('should have location service service defined', function() {
-      expect(locationResService).to.exist;
+      expect(locationExtentionService).to.exist;
     });
 
     it('should make an api call to the person attributes resource when' +
@@ -62,8 +62,8 @@
     });
 
     it('location service should have the following  methods', function() {
-      expect(locationResService.getLocationByUuidFromEtl).to.be.an('function');
-      expect(locationResService.getLocationByUuidFromEtl).to.be.an('function');
+      expect(locationExtentionService.getLocationByUuidFromEtl).to.be.an('function');
+      expect(locationExtentionService.getLocationByUuidFromEtl).to.be.an('function');
 
     });
 

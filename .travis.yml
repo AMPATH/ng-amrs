@@ -17,6 +17,7 @@ branches:
 branches:
   only:
     - master
+    - formentry
     
 notifications:
   webhooks:

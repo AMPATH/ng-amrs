@@ -15,6 +15,7 @@
       scope: {
         locationUuid: '@',
         reportName: '@',
+        viewTitle: '@',
       },
       controller: appointmentScheduleController,
       link: appointmentScheduleLink,

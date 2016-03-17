@@ -10,9 +10,9 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
     .module('app.openmrsRestServices')
           .factory('PersonAttributesRestService', PersonAttributesRestService);
 
-  PersonAttributesRestService.$inject = ['OpenmrsSettings', '$resource','LocationResService'];
+  PersonAttributesRestService.$inject = ['OpenmrsSettings', '$resource','LocationExtensionService'];
 
-  function PersonAttributesRestService(OpenmrsSettings, $resource,LocationResService) {
+  function PersonAttributesRestService(OpenmrsSettings, $resource,LocationExtensionService) {
     var service = {
       getPersonAttributeByUuid: getPersonAttributeByUuid,
       saveUpdatePersonAttribute:saveUpdatePersonAttribute,
@@ -44,17 +44,17 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
           },
 
           function(error) {
-            console.log('An Error Occurred while voiding the person attribute', error);
+            console.error('An Error Occurred while voiding the person attribute', error);
           });
         }
 
         //getting the location id
         var locationUUid = personAttribute.attribute.value;
-        LocationResService.getLocationByUuidFromEtl(locationUUid,
+        LocationExtensionService.getLocationByUuidFromEtl(locationUUid,
           function(response) {
             var locationId = response.result[0]['location_id'].toString();
             var attributePayLoad = JSON.stringify({value:locationId,
-                attributeType:personAttribute.attribute.attributeType.uuid});
+                attributeType:personAttribute.attribute.attributeType});
 
             if (locationId !== null && locationId !== undefined)  {
               personAttributeResource.save({uuid:patientUuid},
@@ -72,8 +72,12 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
           },
 
           function(error) {
-            console.log('Failed get location id from etl server', error);
+            console.error('Failed get location id from etl server', error);
+            errorCallback('Failed get location id from etl server', error);
           });
+      } else {
+           console.error('Patient is required to submit person attributes');
+           errorCallback('Patient is required to submit person attributes');
       }
     }
 
@@ -113,7 +117,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
       _.each(personAttributes, function(attribute) {
         var personAttribute = {attribute:attribute,person:person};
         saveUpdatePersonAttribute(personAttribute, function(response) {
-          console.log('Person attribute value', JSON.stringify(response));
+          console.log('Person attribute value', JSON.stringify(response));          
         },
 
        function(error) {

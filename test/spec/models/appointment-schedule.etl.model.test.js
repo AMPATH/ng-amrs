@@ -12,6 +12,7 @@ jshint -W030
   describe('AppointmentScheduleModel Factory Unit Tests', function () {
     beforeEach(function () {
       module('models');
+      module('openmrs-ngresource.utils');
     });
 
     var appointmentScheduleModelFactory;

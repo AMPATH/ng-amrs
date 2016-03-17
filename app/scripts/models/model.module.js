@@ -3,6 +3,7 @@
 
   angular
         .module('models', [
+          'openmrs-ngresource.models',
           'app.utils'
         ]);
 })();

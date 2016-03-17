@@ -8,7 +8,10 @@
             'ngResource',
             'ngCookies',
             'models',
-            'restangular'
+            'openmrs-ngresource.models',
+            'restangular',
+            'openmrs-ngresource.restServices',
+            'app.etlRestServices'
         ])
         .run(RestangularConfig);
 
