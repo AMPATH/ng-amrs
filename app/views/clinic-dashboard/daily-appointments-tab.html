@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs">
+	<li ui-sref-active-if="clinical-dashboard.daily-appointments.appointments"><a ui-sref="clinical-dashboard.daily-appointments.appointments({locationuuid: selectedLocation.selected.uuId()})"><span aria-hidden="true"></span>&nbsp;Appointments</a></li>
 	<li ui-sref-active="active"><a ui-sref="clinical-dashboard.daily-appointments.visits({locationuuid: selectedLocation.selected.uuId()})"><span aria-hidden="true"></span>&nbsp;Visits</a></li>
-	<li ui-sref-active="active"><a ui-sref="clinical-dashboard.daily-appointments.appointments({locationuuid: selectedLocation.selected.uuId()})"><span aria-hidden="true"></span>&nbsp;Appointments</a></li>
 	<li ui-sref-active="active"><a ui-sref="clinical-dashboard.daily-appointments.has-not-returned({locationuuid: selectedLocation.selected.uuId()})"><span aria-hidden="true"></span>&nbsp;Has not returned</a></li>
 </ul>
 <div class="help-block"></div>

@@ -77,6 +77,7 @@
           },
           cache: false,
           reloadOnSearch: false,
+          deepStateRedirect: { default: { state: 'clinical-dashboard.daily-appointments' } },
         })
         .state('clinical-dashboard.defaulters-list', {
           url: '/defaulters-list',
@@ -95,7 +96,8 @@
           },
           params: {
             view: null
-          }
+          },
+          deepStateRedirect: { default: { state: 'clinical-dashboard.daily-appointments.appointments' } },
         })
         .state('clinical-dashboard.daily-appointments.visits', {
           url: '/daily-appointments/visits',
