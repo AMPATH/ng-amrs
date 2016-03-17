@@ -19,7 +19,6 @@
   function ClinicDashboardCtrl($rootScope, $scope, $stateParams,
     OpenmrsRestService, LocationModel,$state, ClinicDashboardService,UserDefaultPropertiesService,
     CachedDataService) {
-
     var locationService = OpenmrsRestService.getLocationResService();
     $scope.selectedLocation = ClinicDashboardService.getSelectedLocation();
 
