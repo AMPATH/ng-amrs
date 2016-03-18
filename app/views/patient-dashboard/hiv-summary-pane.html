@@ -18,7 +18,8 @@
       </div>
 </div>
 <ul class="list-group" ng-show="(hasSummary === true && experiencedLoadingError == false)">
-  <li class="list-group-item" style="font-size:large">Last Appt Date: {{hivSummary.encounterDatetime()| date:'dd-MM-yyyy'}}</li>
+  <li class="list-group-item" style="font-size:large">Last Appt Date: {{hivSummary.encounterDatetime()| date:'dd-MM-yyyy'}} 
+      {{hivSummary.prevEncounterTypeName() ? '(' + hivSummary.prevEncounterTypeName() + ')' : '(None)' }}</li>
   <li class="list-group-item" style="font-size:large">RTC Date: {{hivSummary.rtcDate()| date:'dd-MM-yyyy'}}</li>
   <li class="list-group-item" style="font-size:large">Last Viral Load: {{hivSummary.vl_1()}} ({{hivSummary.vl_1Date() | date:'dd-MM-yyyy'}})</li>
   <li class="list-group-item" style="font-size:large">Last CD4 Count: {{hivSummary.cd4_1()}} ({{hivSummary.cd4_1Date()| date:'dd-MM-yyyy'}})</li>

@@ -29,6 +29,7 @@ jshint -W030
         uuid: 'middleName',
         encounter_id: 'familyName',
         encounter_datetime: 'familyName2',
+        encounter_type_name: 'encounter_type_name',
         location_id: '_location_id',
         location_uuid: '_location_uuid',
         visit_num: '_visit_num',
@@ -37,6 +38,7 @@ jshint -W030
         transfer_out: '_transfer_out',
         out_of_care: 'out_of_care',
         prev_rtc_date: '_prev_rtc_date',
+        prev_encounter_type_name: '_prev_encounter_type_name',
         rtc_date: '_rtc_date',
         arv_start_date: '_arv_start_date',
         arv_first_regimen: '_arv_first_regimen',
@@ -91,6 +93,7 @@ jshint -W030
       expect(model.uuid()).to.equal(hivSummaryEtl.uuid);
       expect(model.encounterId()).to.equal(hivSummaryEtl.encounter_id);
       expect(model.encounterDatetime()).to.equal(hivSummaryEtl.encounter_datetime);
+      expect(model.encounterTypeName()).to.equal(hivSummaryEtl.encounter_type_name);
       expect(model.locationId()).to.equal(hivSummaryEtl.location_id);
       expect(model.locationUuid()).to.equal(hivSummaryEtl.location_uuid);
 
@@ -100,6 +103,7 @@ jshint -W030
       expect(model.transferOut()).to.equal(hivSummaryEtl.transfer_out);
       expect(model.outOfCare()).to.equal(hivSummaryEtl.out_of_care);
       expect(model.prevRtcDate()).to.equal(hivSummaryEtl.prev_rtc_date);
+      expect(model.prevEncounterTypeName()).to.equal(hivSummaryEtl.prev_encounter_type_name);
 
       expect(model.rtcDate()).to.equal(hivSummaryEtl.rtc_date);
       expect(model.arvStartDate()).to.equal(hivSummaryEtl.arv_start_date);
