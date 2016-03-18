@@ -100,7 +100,6 @@
       if($scope.selectedLocations.allAggregated === true) {
            $scope.reportName = reportNames[1];
             $scope.groupBy = '';
-            locations = '';
       }
 
       if ($scope.countBy && $scope.countBy !== '' && $scope.reportName &&

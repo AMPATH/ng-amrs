@@ -62,7 +62,7 @@
             			</span>
                 </div>
             </div>
-            <div class="form-group col-md-12" ng-show="canView('location') && !selectedLocations.allAggregated">
+            <div class="form-group col-md-12" ng-show="canView('location')">
                 <label for="start-date">Location</label>
                 <div ng-hide="selectedLocations.selectedAll" class="input-group">
                     <div class="input-group-addon">
@@ -91,12 +91,9 @@
                 </div>
             </div>
             <div class="form-group col-md-12" ng-show="canView('agglocations')">
-                <label ng-show="selectedLocations.allAggregated">Location</label>
-                <div ng-show="selectedLocations.allAggregated" class="input-group">
-                    <strong class="text-info">All Locations aggregated</strong>
-                </div>
+
                 <div class="input-group">
-                    <label style="font-weight: lighter; cursor: pointer;"> Aggregate All Locations
+                    <label style="font-weight: lighter; cursor: pointer;"> Aggregate Locations
                         <input style="margin:4px; vertical-align:middle;" type="checkbox" ng-model="selectedLocations.allAggregated">
                     </label>
                 </div>
