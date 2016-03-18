@@ -108,8 +108,6 @@
           for (var j in results) {
             var result = results[j];
             if (result.attended) {
-              console.log('Testing dates', new Date(result.attended_date));
-              console.log('Testing dates', result.attended_date);
               var attended = {
                 title: result.attended + ' ',
                 type: 'success',
@@ -118,7 +116,9 @@
                 startsAt: new Date(result.attended_date),
                 draggable: false,
                 incrementsBadgeTotal: false,
-                resizable: false
+                resizable: false,
+                locationUuid:$scope.locationUuid,
+                tab:'visits'
               };
               if (result.attended > 0)
                 events.push(attended);
@@ -131,7 +131,9 @@
                 startsAt: new Date(result.scheduled_date),
                 draggable: false,
                 incrementsBadgeTotal: false,
-                resizable: false
+                resizable: false,
+                locationUuid:$scope.locationUuid,
+                tab:'appointments'
               };
 
               var hasNotReturned = {
@@ -142,7 +144,9 @@
                 startsAt: new Date(result.scheduled_date),
                 draggable: false,
                 incrementsBadgeTotal: false,
-                resizable: false
+                resizable: false,
+                locationUuid:$scope.locationUuid,
+                tab:'has-not-returned'
               };
 
               var defaulted = {
@@ -153,7 +157,8 @@
                 startsAt: new Date(result.scheduled_date),
                 draggable: false,
                 incrementsBadgeTotal: false,
-                resizable: false
+                resizable: false,
+                locationUuid:$scope.locationUuid
               };
               if(result.scheduled > 0)
                 events.push(scheduled);
