@@ -104,7 +104,8 @@
           templateUrl: 'views/clinic-dashboard/daily-visits-tab.html',
           controller: 'ClinicDashboardCtrl',
           data: {
-            requireLogin: true
+            requireLogin: true,
+            cssClassnames : 'panel-success'
           },
           params: {
             view: null
@@ -115,7 +116,8 @@
           templateUrl: 'views/clinic-dashboard/daily-appointments.html',
           controller: 'ClinicDashboardCtrl',
           data: {
-            requireLogin: true
+            requireLogin: true,
+            cssClassnames : 'panel-info'
           },
           params: {
             view: null
@@ -126,7 +128,8 @@
           templateUrl: 'views/clinic-dashboard/daily-not-returned.html',
           controller: 'ClinicDashboardCtrl',
           data: {
-            requireLogin: true
+            requireLogin: true,
+            cssClassnames : 'panel-warning'
           },
           params: {
             view: null

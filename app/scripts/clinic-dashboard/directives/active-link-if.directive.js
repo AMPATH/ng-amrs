@@ -10,7 +10,7 @@
     .directive('uiSrefActiveIf', ['$state', function($state) {
     return {
         restrict: "A",
-        controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
+        controller: ['$scope', '$element', '$attrs','$rootScope', function ($scope, $element, $attrs,$rootScope) {
             var state = $attrs.uiSrefActiveIf;
 
             function update() {
@@ -19,6 +19,7 @@
                 } else {
                     $element.removeClass('active');
                 }
+                $rootScope.$broadcast('$stateChangedlink');
             }
 
             $scope.$on('$stateChangeSuccess', update);
