@@ -16,6 +16,7 @@
     $scope.selectedLocation = $stateParams.locationuuid || '';
     $scope.selectedIndicatorBox = $stateParams.indicator || '';
     $scope.loadPatientList = loadPatientList;
+    $scope.ChangeView=ChangeView;
 
     //Hiv Summary Indicators Service Properties & Methods
     $scope.reportName = 'hiv-summary-report';
@@ -152,6 +153,10 @@
         buildDataTable();
         return true;
       }
+    }
+
+    function ChangeView(){
+      $state.go('admin.hiv-summary-combined');
     }
 
     /**
