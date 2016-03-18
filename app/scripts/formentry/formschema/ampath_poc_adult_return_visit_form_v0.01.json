@@ -1764,7 +1764,7 @@
                     "questions": [
                         {
                             "type": "obs",
-                            "label": "",
+                            "label": "Please enter the [History of Present Illness |Assessment] below:",
                             "id": "cchpi",
                             "required": "false",
                             "default": "",
@@ -2327,7 +2327,7 @@
                     "questions": [
                         {
                             "type": "obs",
-                            "label": "",
+                            "label": "Assessment:",
                             "id": "assessments_comments",
                             "required": "false",
                             "default": "",
