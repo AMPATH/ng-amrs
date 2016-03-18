@@ -33,7 +33,7 @@ jshint -W003, -W026
     'CachedDataService', 'LocationModel','OpenmrsRestService', 'EtlRestService'];
 
     function reportFiltersController($scope, $rootScope, SearchDataService, moment, $state, $filter, CachedDataService,
-  LocationModel, OpenmrsRestService, EtlRestService) {
+  LocationModel, OpenmrsRestService, EtlRestService ) {
 		$scope.forms = [];
 		$scope.selectedForms = {};
 		$scope.selectedForms.selected = [];
@@ -100,12 +100,14 @@ jshint -W003, -W026
         filter: 'contains',
         autoClose: true,
         itemTemplate: '<span></span>' +
-        '<span><strong>#: data.name #</strong><br/><span><small>#: data.label #</small></span></span>',
-        tagTemplate:  '<span class="selected-value"></span><span>#:data.name#</span>',
+        '<span><strong>#: data.label #' +
+        '</strong><br/><span><small>#: data.description #</small></span></span>',
+        tagTemplate:  '<span class="selected-value"></span><span>#: data.label#</span>',
         dataSource:result.result
       };
       $scope.isBusy = false;
     }
+
 
     function onFetchIndicatorsSchemaError(error) {
       $scope.isBusy = false;
