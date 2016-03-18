@@ -310,6 +310,18 @@
             requireLogin: true
           }
         })
+        //this is the combined view
+
+        .state('admin.hiv-summary-combined', {
+          url: '/hiv-combine-report',
+          templateUrl: 'views/admin/hiv-summary-combined.html',
+          controller: 'HivSummaryIndicatorsCtrl',
+          data: {
+            requireLogin: true
+          }
+        })
+
+
 
         .state('admin.moh-731-report', {
           url: '/moh-731-reports',
