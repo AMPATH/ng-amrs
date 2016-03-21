@@ -257,7 +257,7 @@
                                 "concept": "9ce5dbf0-a141-4ad8-8c9d-cd2bf84fe72b",
                                 "answers": [
                                     {
-                                        "concept": "f0a280e8-eb88-41a8-837a-f9949ed1b9cd0",
+                                        "concept": "f0a280e8-eb88-41a8-837a-f9949ed1b9cd",
                                         "label": "Condom promotion/provision"
                                     },
                                     {
@@ -735,7 +735,7 @@
                                         {
                                             "type": "js_expression",
                                             "failsWhenExpression": "!isEmpty(onArt) && onArt === 'a899b35c-1350-11df-a1f1-0026b9348838' && isEmpty(myValue)",
-                                            "message": "Patient on ARVs. Please provide adherence history."
+                                            "message": "Patient on ART. Please provide adherence history."
                                         }
                                     ],
                                     "disable": {
@@ -743,7 +743,7 @@
                                     }
                                 },
                                 {
-                                    "label": "Adherence (ARVS) Reason for Poor/Fair:",
+                                    "label": "Adherence (ART) Reason for Poor/Fair:",
                                     "id": "artReasonPoorFair",
                                     "questionOptions": {
                                         "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
@@ -810,7 +810,7 @@
                                     }
                                 },
                                 {
-                                    "label": "Adherence (ARVS): Other (specify):",
+                                    "label": "Adherence (ART): Other (specify):",
                                     "type": "obs",
                                     "questionOptions": {
                                         "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
@@ -2376,7 +2376,7 @@
                                     },
                                     {
                                         "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                                        "label": "Not on ARVS"
+                                        "label": "Not on ART"
                                     },
                                     {
                                         "concept": "a8a00220-1350-11df-a1f1-0026b9348838",
@@ -2384,7 +2384,7 @@
                                     },
                                     {
                                         "concept": "a89b77aa-1350-11df-a1f1-0026b9348838",
-                                        "label": "Start ARVs"
+                                        "label": "Start ART"
                                     },
                                     {
                                         "concept": "a89b7d36-1350-11df-a1f1-0026b9348838",
@@ -2403,7 +2403,7 @@
                             ]
                         },
                         {
-                            "label": "Reason to Start ARVs:",
+                            "label": "Reason to Start ART:",
                             "id": "arvStartReason",
                             "questionOptions": {
                                 "concept": "a89b6ce2-1350-11df-a1f1-0026b9348838",
@@ -2440,12 +2440,12 @@
                                 {
                                     "type": "js_expression",
                                     "failsWhenExpression": "!isEmpty(arvPlan) && isEmpty(myValue) && arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'], arvPlan)",
-                                    "message": "You indicated patient is (re)starting ARVs. Please provide reason."
+                                    "message": "You indicated patient is (re)starting ART. Please provide reason."
                                 },
                                 {
                                     "type": "js_expression",
                                     "failsWhenExpression": "!isEmpty(arvPlan) && !isEmpty(myValue) && !arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'], arvPlan)",
-                                    "message": "You indicated patient is not (re)starting ARVs, therefore no reason for starting should be selected."
+                                    "message": "You indicated patient is not (re)starting ART, therefore no reason for starting should be selected."
                                 }
                             ],
                             "disable": {
@@ -2639,14 +2639,14 @@
                         },
                         {
                             "type": "obsGroup",
-                            "label": "Eligible for ARVs",
+                            "label": "Eligible for ART",
                             "questionOptions": {
                                 "concept": "a8a17a7e-1350-11df-a1f1-0026b9348838",
                                 "rendering": "group"
                             },
                             "questions": [
                                 {
-                                    "label": "Eligible for ARVs but not started:",
+                                    "label": "Eligible for ART but not started:",
                                     "id": "artEligibleNotStarted",
                                     "questionOptions": {
                                         "concept": "a89d26cc-1350-11df-a1f1-0026b9348838",
@@ -2674,7 +2674,7 @@
                                     "validators": []
                                 },
                                 {
-                                    "label": "Eligible for ARVs but not started: Other (specify):",
+                                    "label": "Eligible for ART but not started: Other (specify):",
                                     "questionOptions": {
                                         "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                                         "rendering": "text"
