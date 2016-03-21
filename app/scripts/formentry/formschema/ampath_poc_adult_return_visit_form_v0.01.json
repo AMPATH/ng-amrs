@@ -1842,6 +1842,10 @@
                                         "label": "Breathlessness"
                                     },
                                     {
+                                        "concept": "a8953d90-1350-11df-a1f1-0026b9348838",
+                                        "label": "Back pain"
+                                    },
+                                    {
                                         "concept": "a892e4b4-1350-11df-a1f1-0026b9348838",
                                         "label": "Chest pain"
                                     },
