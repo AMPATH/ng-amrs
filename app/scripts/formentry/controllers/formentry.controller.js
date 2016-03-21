@@ -704,7 +704,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             vm.changesSaved = true;
             vm.hasClickedSubmit = false;
             if (!experiencedSubmitError()) {
-                vm.formSubmitSuccessMessage = '| Form Submitted successfully';
+                vm.formSubmitSuccessMessage = 'Form Submitted successfully';
                 dialogs.notify('Success', vm.formSubmitSuccessMessage);
                 $location.path($rootScope.previousState + '/' + $rootScope.previousStateParams.uuid);
             }

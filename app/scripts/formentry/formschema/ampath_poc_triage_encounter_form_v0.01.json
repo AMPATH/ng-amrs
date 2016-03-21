@@ -241,7 +241,7 @@
                                 "concept": "9ce5dbf0-a141-4ad8-8c9d-cd2bf84fe72b",
                                 "answers": [
                                     {
-                                        "concept": "f0a280e8-eb88-41a8-837a-f9949ed1b9cd0",
+                                        "concept": "f0a280e8-eb88-41a8-837a-f9949ed1b9cd",
                                         "label": "Condom promotion/provision"
                                     },
                                     {
@@ -303,7 +303,6 @@
                                 },
                                 {
                                     "label": "Pulse(Rate/Min):",
-                                    "historicalExpression": "HD.getObject('prevEnc').getValue('a8a65f12-1350-11df-a1f1-0026b9348838')",
                                     "questionOptions": {
                                         "rendering": "number",
                                         "concept": "a8a65f12-1350-11df-a1f1-0026b9348838",
