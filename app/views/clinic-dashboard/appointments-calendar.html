@@ -17,10 +17,34 @@
     <div class="cal-slide-content cal-event-list">
       <ul class="unstyled list-unstyled">
 
-        <li ng-repeat="event in vm.events">
-          <a  style="text-decoration:none" ui-sref="clinical-dashboard.daily-appointments.{{event.tab}}({locationuuid: event.locationUuid})"><span class="label label-{{event.labelType}}">{{event.title}} {{event.label}}</span></a>
-        </li>
+      <li
+        ng-repeat="event in vm.events | orderBy:'startsAt' track by event.$id"
+        ng-class="event.cssClass"
+        mwl-draggable="event.draggable === true"
+        drop-data="{event: event}">
+        <a
+          href="javascript:;"
+          class="event-item"
+          ng-click="vm.onEventClick({calendarEvent: event})">
+         <span class="label label-{{event.labelType}}">{{event.title}} {{event.label}}</span>
+        </a>
 
+        <a
+          href="javascript:;"
+          class="event-item-edit"
+          ng-if="vm.editEventHtml && event.editable !== false"
+          ng-bind-html="vm.$sce.trustAsHtml(vm.editEventHtml)"
+          ng-click="vm.onEditEventClick({calendarEvent: event})">
+        </a>
+
+        <a
+          href="javascript:;"
+          class="event-item-delete"
+          ng-if="vm.deleteEventHtml && event.deletable !== false"
+          ng-bind-html="vm.$sce.trustAsHtml(vm.deleteEventHtml)"
+          ng-click="vm.onDeleteEventClick({calendarEvent: event})">
+        </a>
+      </li>
       </ul>
     </div>
   </div>
