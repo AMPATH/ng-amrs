@@ -16,6 +16,7 @@
     $scope.selectedLocation=$stateParams.locationuuid||'';
     $scope.selectedIndicatorBox=$stateParams.indicator||'';
     $scope.loadPatientList=loadPatientList;
+    $scope.ChangeView =ChangeView;
 
 
     //Hiv Summary Indicators Service Properties & Methods
@@ -184,6 +185,9 @@
       HivMonthlySummaryIndicatorService.setSelectedLocation(getSelectedLocations($scope.selectedLocations));
       HivMonthlySummaryIndicatorService.setStartDate($scope.startDate);
       HivMonthlySummaryIndicatorService.setEndDate($scope.endDate);
+    }
+    function ChangeView(){
+      $state.go('admin.hiv-summary-combined');
     }
 
     /**
