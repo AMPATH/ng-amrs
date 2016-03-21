@@ -1,10 +1,8 @@
 
 <h2 style=" margin-top: 0px !important; "> <span style="font-size:20px;" class="glyphicon glyphicon-file text-info"></span><strong> MOH-731 Report</strong> </h2>
 <stats-clinic-dashboard-hiv-summary-filters  enabled-controls="'start-date, end-date'"
- start-date="startDate" end-date="endDate" >
+ start-date="startDate" end-date="endDate" selected-locations="selectedLocations">
 </stats-clinic-dashboard-hiv-summary-filters>
-
-
 <br>
 <div  class="well" style="padding:2px; margin-bottom: 5px !important; ">
   <div style="cursor: pointer;" class="alert alert-danger" ng-click="generateMoh731Report()" ng-show='experiencedLoadingErrors' >

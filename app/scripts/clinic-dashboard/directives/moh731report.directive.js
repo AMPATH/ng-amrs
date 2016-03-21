@@ -55,6 +55,7 @@
     var locationService = OpenmrsRestService.getLocationResService();
     $scope.selectedLocations = {};
     $scope.selectedLocations.selectedAll = false;
+    $scope.selectedLocations.allAggregated=false;
     $scope.selectedLocations.locations = [];
     $scope.locations = [];
     $scope.selectingLocation = true;
