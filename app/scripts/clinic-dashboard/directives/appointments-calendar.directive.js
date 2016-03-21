@@ -32,7 +32,6 @@
       calendarConfig.templates.calendarSlideBox = 'mwl/calendarSlideBox.html';
       calendarConfig.templates.calendarMonthCell = 'mwl/customMonthCell.html';
     });
-
     $scope.getAppointments = function(event) {
       getAppointments();
     }
