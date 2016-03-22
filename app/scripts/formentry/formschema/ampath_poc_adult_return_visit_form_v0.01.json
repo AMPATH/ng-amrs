@@ -1764,7 +1764,7 @@
                     "questions": [
                         {
                             "type": "obs",
-                            "label": "Please enter the [History of Present Illness |Assessment] below:",
+                            "label": "Please enter the History of Present Illness below:",
                             "id": "cchpi",
                             "required": "false",
                             "default": "",
@@ -1840,6 +1840,10 @@
                                     {
                                         "concept": "a8ad1276-1350-11df-a1f1-0026b9348838",
                                         "label": "Breathlessness"
+                                    },
+                                    {
+                                        "concept": "a8953d90-1350-11df-a1f1-0026b9348838",
+                                        "label": "Back pain"
                                     },
                                     {
                                         "concept": "a892e4b4-1350-11df-a1f1-0026b9348838",
@@ -2327,7 +2331,7 @@
                     "questions": [
                         {
                             "type": "obs",
-                            "label": "Assessment:",
+                            "label": "Please enter the Assessment below:",
                             "id": "assessments_comments",
                             "required": "false",
                             "default": "",
