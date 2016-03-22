@@ -82,6 +82,8 @@ jshint -W003, -W026
     function resetPaging(){
       $scope.nextStartInts = [];
       $scope.allDataLoaded = false;
+      $scope.nextStartIndex = 0;
+      $scope.patients = [];
     }
 
     function onFetchDefaultersListSuccess(defaulters) {
