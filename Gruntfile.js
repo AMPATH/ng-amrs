@@ -289,6 +289,17 @@ module.exports = function (grunt) {
         }]
       }
     },
+    ngtemplates: {
+      ngAmrsApp: {
+        options: {
+          htmlmin: '<%= htmlmin.dist.options %>',
+          usemin: 'scripts/templates.js'
+        },
+        cwd: '<%= yeoman.app %>',
+        src: ['*.html', 'views/{,*/}*.html'],
+        dest: '.tmp/concat/scripts/templates.js'
+      }
+    },
 
     // ng-annotate tries to make the code safe for minification automatically
     // by using the Angular long form for dependency injection.
@@ -603,6 +614,7 @@ module.exports = function (grunt) {
     'version',
     'wiredep',
     'useminPrepare',
+    'ngtemplates',
     'concurrent:dist',
     'autoprefixer',
     'concat',
@@ -621,7 +633,7 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
-
+  grunt.loadNpmTasks('grunt-angular-templates');
   function _splitVersionNumber(version) {
       var parts = version.split('.');
       return {
