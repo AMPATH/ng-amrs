@@ -1,13 +1,39 @@
+
+<div class="panel panel-info" ng-show="criticalReminders.length>0" style="margin-top: -15px!important;">
+  <!--<div class="panel-heading">-->
+    <!--<span class="fa-stack fa-lg">-->
+      <!--<i class="fa fa-circle-thin fa-stack-2x text-danger"></i>-->
+      <!--<i class="fa fa-bell fa-stack-1x text-danger"></i>-->
+    <!--</span> Critical Clinical Reminders-->
+  <!--</div>-->
+  <div class="panel-body" style="padding: 3px!important;">
+    <div class="alert alert-danger" style="padding: 10px!important; margin-bottom: 3px!important;" ng-repeat="criticalReminder in criticalReminders">
+      <span class="pull-right">
+        <i class="fa fa-info-circle fa-2x text-danger"></i>
+      </span>
+      <p class="text-danger">
+        <strong>{{criticalReminder.message}}</strong>
+
+        <strong class="text-muted">{{criticalReminder.labs}}</strong>
+      </p>
+    </div>
+  </div>
+</div>
+
 <span id="mainNotification" style="display:none;"></span>
 <script id="infoTemplate" type="text/x-kendo-template">
   <div class="info-template" style="cursor: pointer;">
     <i class="fa fa-times fa-lg pull-right text-muted" style="margin-right: 15px"></i>
     <span class="fa-stack fa-lg">
-      <i class="fa fa-circle-thin fa-stack-2x text-primary" ></i>
+      <i class="fa fa-circle-thin fa-stack-2x text-primary"></i>
       <i class="fa fa-envelope fa-stack-1x text-primary"></i>
     </span>
+
     <h3><strong>#= title #</strong></h3>
-    <p class="text-muted">#= message #</p>
+
+    <p class="text-muted">#= message #
+      <br/> <strong>#= labs #</strong>
+    </p>
   </div>
 </script>
 
@@ -18,8 +44,12 @@
       <i class="fa fa-circle-thin fa-stack-2x text-warning"></i>
       <i class="fa fa-info-circle fa-stack-1x text-warning"></i>
     </span>
+
     <h3><strong>#= title #</strong></h3>
-    <p class="text-muted">#= message #</p>
+
+    <p class="text-muted">#= message #
+      <br/> <strong>#= labs #</strong>
+    </p>
   </div>
 </script>
 
@@ -27,7 +57,10 @@
   <div class="success-template" style="cursor: pointer;">
     <i class="fa fa-times fa-lg pull-right text-muted" style="margin-right: 15px"></i>
     <i class="fa fa-envelope"></i>
+
     <h3><strong>#= title #</strong></h3>
+
     <h3>#= message #</h3>
+    <br/> <strong>#= labs #</strong>
   </div>
 </script>

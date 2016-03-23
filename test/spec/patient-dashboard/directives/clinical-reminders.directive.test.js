@@ -7,7 +7,7 @@
 (function () {
   'use strict';
 
-  describe('Labs Reminder Directive Unit Tests', function () {
+  describe('Clinical Reminder Directive Unit Tests', function () {
 
     beforeEach(function () {
       //debugger;
@@ -21,8 +21,8 @@
 
     beforeEach(inject(function ($injector, $rootScope, $compile, $httpBackend) {
       elm = angular.element(
-        '<labs-reminder patient-uuid="{{patient.uuid}}">' +
-        '</labs-reminder>');
+        '<clinical-reminders patient-uuid="{{patient.uuid}}">' +
+        '</clinical-reminders>');
       scope = $rootScope.$new();
       scope.patient = { uuid: 'uuid' };
       element = $compile(elm)(scope);
