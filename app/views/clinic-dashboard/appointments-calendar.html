@@ -14,44 +14,17 @@
 </script>
 <script id="calendarSlideBox.html" type="text/ng-template">
   <div class="cal-slide-box" uib-collapse="vm.isCollapsed" mwl-collapse-fallback="vm.isCollapsed">
-    <div class="cal-slide-content cal-event-list">
-      <ul class="unstyled list-unstyled">
-
-      <li
-        ng-repeat="event in vm.events | orderBy:'startsAt' track by event.$id"
-        ng-class="event.cssClass"
-        mwl-draggable="event.draggable === true"
-        drop-data="{event: event}">
-        <a
-          href="javascript:;"
-          class="event-item"
-          ng-click="vm.onEventClick({calendarEvent: event})">
-         <span class="label label-{{event.labelType}}">{{event.title}} {{event.label}}</span>
-        </a>
-
-        <a
-          href="javascript:;"
-          class="event-item-edit"
-          ng-if="vm.editEventHtml && event.editable !== false"
-          ng-bind-html="vm.$sce.trustAsHtml(vm.editEventHtml)"
-          ng-click="vm.onEditEventClick({calendarEvent: event})">
-        </a>
-
-        <a
-          href="javascript:;"
-          class="event-item-delete"
-          ng-if="vm.deleteEventHtml && event.deletable !== false"
-          ng-bind-html="vm.$sce.trustAsHtml(vm.deleteEventHtml)"
-          ng-click="vm.onDeleteEventClick({calendarEvent: event})">
-        </a>
-      </li>
-      </ul>
+    <div style='margin:5px' class="row" role="group" aria-label="...">
+      <div class="col-xs-4" ng-repeat="event in vm.events | orderBy:'startsAt' track by event.$id">
+        <button ng-click="vm.onEventClick({calendarEvent: event})"  type="button" class="btn btn-block btn-{{event.type}}">{{event.title}} {{event.label}}
+        </button>
+      </div>
     </div>
   </div>
 </script>
 <div>
   <span>Key:
-    <span class="label label-success">Visits</span>
+  <span class="label label-success">Visits</span>
   <span class="label label-info">Appointments</span>
   <span class="label label-warning">Not returned</span>
   <span class="label label-danger">Defaulted</span>
@@ -60,7 +33,8 @@
 <div dw-loading="calendarViewLoader" dw-loading-options="{text: 'Hang in there......'}">
   <div class="row">
     <div class="text-center">
-      <p><h2 class="text-center">{{ calendarTitle }}</h2> <span class="btn-group">
+      <p>
+        <h2 class="text-center">{{ calendarTitle }}</h2> <span class="btn-group">
         <button ng-disabled="isBusy" ng-click='getAppointments()' class="btn btn-primary" mwl-date-modifier date="viewDate" decrement="calendarView">
           Previous Month
         </button>
@@ -69,12 +43,13 @@
         </button>
         <button ng-show='!isBusy && experiencedLoadingError' class="btn btn-danger" ng-click="getAppointments()">
           <span class="glyphicon glyphicon-refresh"></span>
-          <span>Retry</span>
+        <span>Retry</span>
         </button>
         <button ng-disabled="isBusy" ng-click='getAppointments()' class="btn btn-primary" mwl-date-modifier date="viewDate" increment="calendarView">
           Next Month
         </button>
-      </span></p>
+        </span>
+      </p>
     </div>
   </div>
 </div>
