@@ -28,11 +28,12 @@
       'app.admin',
       'app.formentry',
       'app.utils',
-    //   'app.logToServer',
+      //   'app.logToServer',
       'ct.ui.router.extras',
       'sticky',
       'mwl.calendar',
-      'app.offline'
+      'app.offline',
+      'angular-cache'
     ])
     .config(function($stateProvider, $stickyStateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');
@@ -77,7 +78,11 @@
           },
           cache: false,
           reloadOnSearch: false,
-          deepStateRedirect: { default: { state: 'clinical-dashboard.daily-appointments' } },
+          deepStateRedirect: {
+            default: {
+              state: 'clinical-dashboard.daily-appointments'
+            }
+          },
         })
         .state('clinical-dashboard.defaulters-list', {
           url: '/defaulters-list',
@@ -97,7 +102,11 @@
           params: {
             view: null
           },
-          deepStateRedirect: { default: { state: 'clinical-dashboard.daily-appointments.appointments' } },
+          deepStateRedirect: {
+            default: {
+              state: 'clinical-dashboard.daily-appointments.appointments'
+            }
+          },
         })
         .state('clinical-dashboard.daily-appointments.visits', {
           url: '/daily-appointments/visits',
@@ -105,7 +114,7 @@
           controller: 'ClinicDashboardCtrl',
           data: {
             requireLogin: true,
-            cssClassnames : 'panel-success'
+            cssClassnames: 'panel-success'
           },
           params: {
             view: null
@@ -117,7 +126,7 @@
           controller: 'ClinicDashboardCtrl',
           data: {
             requireLogin: true,
-            cssClassnames : 'panel-info'
+            cssClassnames: 'panel-info'
           },
           params: {
             view: null
@@ -129,7 +138,7 @@
           controller: 'ClinicDashboardCtrl',
           data: {
             requireLogin: true,
-            cssClassnames : 'panel-warning'
+            cssClassnames: 'panel-warning'
           },
           params: {
             view: null
@@ -255,16 +264,16 @@
           },
         })
 
-        .state('admin.moh-731-report.patients', {
-          url: '/location/:locationuuid/indicator/:indicator',
-          templateUrl: 'views/admin/patient-moh-list-container.html',
-          controller: 'moh731ReportCtrl',
-          data: {
-            requireLogin: true
-          }
-        })
+      .state('admin.moh-731-report.patients', {
+        url: '/location/:locationuuid/indicator/:indicator',
+        templateUrl: 'views/admin/patient-moh-list-container.html',
+        controller: 'moh731ReportCtrl',
+        data: {
+          requireLogin: true
+        }
+      })
 
-        .state('url-selector', {
+      .state('url-selector', {
           url: '/url-selector',
           templateUrl: 'views/main/url-selector.html',
           controller: 'UrlSelectorCtrl',
@@ -312,41 +321,41 @@
         })
         //this is the combined view
 
-        .state('admin.hiv-summary-combined', {
-          url: '/hiv-combine-report',
-          templateUrl: 'views/admin/hiv-summary-combined.html',
-          controller: 'HivSummaryIndicatorsCtrl',
-          data: {
-            requireLogin: true
-          }
-        })
+      .state('admin.hiv-summary-combined', {
+        url: '/hiv-combine-report',
+        templateUrl: 'views/admin/hiv-summary-combined.html',
+        controller: 'HivSummaryIndicatorsCtrl',
+        data: {
+          requireLogin: true
+        }
+      })
 
 
 
-        .state('admin.moh-731-report', {
-          url: '/moh-731-reports',
-          templateUrl: 'views/admin/moh-731-report.html',
-          controller: 'moh731ReportCtrl',
-          data: {
-            requireLogin: true
-          }
-        })
+      .state('admin.moh-731-report', {
+        url: '/moh-731-reports',
+        templateUrl: 'views/admin/moh-731-report.html',
+        controller: 'moh731ReportCtrl',
+        data: {
+          requireLogin: true
+        }
+      })
 
 
-        .state('moh-731-geneuerate-pdf', {
-          url: '/moh-731-generate-pdf',
-          templateUrl: 'views/admin/moh-731-report-container.html',
-          data: {
-            requireLogin: true
-          }
-        }).state('moh-731-report-by-location', {
-          url: '/moh-731-pdf/location/:location',
-          templateUrl: 'views/admin/moh-731-report-container.html',
-          controller: 'moh731ReportCtrl',
-          data: {
-            requireLogin: true
-          }
-        });
+      .state('moh-731-geneuerate-pdf', {
+        url: '/moh-731-generate-pdf',
+        templateUrl: 'views/admin/moh-731-report-container.html',
+        data: {
+          requireLogin: true
+        }
+      }).state('moh-731-report-by-location', {
+        url: '/moh-731-pdf/location/:location',
+        templateUrl: 'views/admin/moh-731-report-container.html',
+        controller: 'moh731ReportCtrl',
+        data: {
+          requireLogin: true
+        }
+      });
 
     }).config(['$httpProvider', function($httpProvider) {
       $httpProvider.interceptors.push('authenticationErrorInterceptor');
@@ -411,5 +420,11 @@
         $rootScope.currentStateParams = toParams;
       });
 
+    }).run(function($http, CacheFactory) {
+      $http.defaults.cache = CacheFactory(Math.random()+'cache', {
+        maxAge: 5 * 60 * 1000, // Items added to this cache expire after 15 minutes
+        cacheFlushInterval: 10 * 60 * 1000, // This cache will clear itself every hour
+        deleteOnExpire: 'aggressive' // Items will be deleted from this cache when they expire
+      });
     });
 })();
