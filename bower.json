@@ -43,8 +43,8 @@
     "startbootstrap-sb-admin-2": "~1.0.8",
     "kendo-ui": "kendo-ui-core#^2016.1.125",
     "offline": "~0.7.15",
-    "angular-formentry": "https://github.com/AMPATH/openmrs-angularFormentry.git#~0.0.1",
-    "openmrs-ngresource": "https://github.com/AMPATH/openmrs-ngresource.git#^0.0.1",
+    "angular-formentry": "https://github.com/AMPATH/openmrs-angularFormentry.git#0.1.0",
+    "openmrs-ngresource": "https://github.com/AMPATH/openmrs-ngresource.git#0.0.2",
     "angular-cache": "~4.5.0"
   },
   "devDependencies": {
