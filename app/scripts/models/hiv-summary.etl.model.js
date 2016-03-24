@@ -110,8 +110,10 @@
                 hivSummaryEtl.vl_2_date : '';
             var _vlOrderDate = !UtilService.isNullOrUndefined(hivSummaryEtl.vl_order_date) ?
                 hivSummaryEtl.vl_order_date : '';
+            var _isPendingViralLoad = determineIfVlIsPending(hivSummaryEtl);
             var _cd4OrderDate = !UtilService.isNullOrUndefined(hivSummaryEtl.cd4_order_date) ?
                 hivSummaryEtl.cd4_order_date : '';
+            var _isPendingCD4 = determineIfCD4IsPending(hivSummaryEtl);
             var _enrollmentDate = !UtilService.isNullOrUndefined(hivSummaryEtl.enrollment_date) ?
                 hivSummaryEtl.enrollment_date : '';
 
@@ -475,6 +477,15 @@
                 }
             };
 
+            modelDefinition.isPendingViralLoad = function(value) {
+              if (angular.isDefined(value)) {
+                _isPendingViralLoad=value;
+              }
+              else {
+                return _isPendingViralLoad;
+              }
+            };
+
             modelDefinition.cd4OrderDate = function(value) {
                 if (angular.isDefined(value)) {
                     _cd4OrderDate = value;
@@ -482,6 +493,15 @@
                 else {
                     return _cd4OrderDate;
                 }
+            };
+
+            modelDefinition.isPendingCD4 = function(value) {
+              if (angular.isDefined(value)) {
+                _isPendingCD4=value;
+              }
+              else {
+                return _isPendingCD4;
+              }
             };
 
             modelDefinition.enrollmentDate = function(value) {
@@ -494,6 +514,64 @@
             };
 
 
+        }
+        function determineIfVlIsPending(hivSummaryEtl){
+          var overDueDays=!UtilService.isNullOrUndefined(hivSummaryEtl.vl_order_date) ?
+            dateDiffInDays(new Date(hivSummaryEtl.vl_order_date),new Date()): 0;
+          if(overDueDays>1){
+            if(!UtilService.isNullOrUndefined(hivSummaryEtl.vl_1_date)) {
+              if (!UtilService.isNullOrUndefined(hivSummaryEtl.vl_order_date)) {
+                return {
+                  status:hivSummaryEtl.vl_order_date>hivSummaryEtl.vl_1_date,
+                  days:overDueDays
+                };
+              }
+            } else{
+              return  {
+                status:true,
+                days:overDueDays
+              }
+            }
+          }else{
+            return  {
+              status:false,
+              days:overDueDays
+            };
+          }
+        }
+        function determineIfCD4IsPending(hivSummaryEtl){
+          var overDueDays=!UtilService.isNullOrUndefined(hivSummaryEtl.cd4_order_date) ?
+            dateDiffInDays(new Date(hivSummaryEtl.cd4_order_date),new Date()): 0;
+          if(overDueDays>1){
+            if(!UtilService.isNullOrUndefined(hivSummaryEtl.cd4_1_date)) {
+              if (!UtilService.isNullOrUndefined(hivSummaryEtl.cd4_order_date)) {
+                return {
+                  status:hivSummaryEtl.cd4_order_date>hivSummaryEtl.cd4_1_date,
+                  days:overDueDays
+                };
+              }
+            } else{
+              return  {
+                status:true,
+                days:overDueDays
+              }
+            }
+
+          }else{
+            return  {
+              status:false,
+              days:overDueDays
+            };
+          }
+        }
+        function dateDiffInDays(a, b) {
+          var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+         // a and b are javascript Date objects
+          // Discard the time and time-zone information.
+          var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+          var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+          return Math.floor((utc2 - utc1) / _MS_PER_DAY);
         }
 
         function toArrayOfModels(unwrappedObjects) {
