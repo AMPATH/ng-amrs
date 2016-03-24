@@ -4075,7 +4075,7 @@
                                                 "label": "Non-Ampath"
                                             }
                                         ],
-                                        "rendering": "multiCheckbox"
+                                        "rendering": "select"
                                     },
                                     "type": "obs",
                                     "validators": []
