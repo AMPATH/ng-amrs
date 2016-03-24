@@ -2017,148 +2017,257 @@
                             "questions": [
                                 {
                                     "label": "WBC/mm3",
+                                    "id": "testWBCmm",
                                     "questionOptions": {
                                         "concept": "a896dea2-1350-11df-a1f1-0026b9348838",
                                         "max": "500",
                                         "min": "0",
                                         "showDate": "true",
+                                        "shownDateOptions": {
+                                            "validators": [
+                                                {
+                                                    "type": "date"
+                                                },
+                                                {
+                                                    "type": "js_expression",
+                                                    "failsWhenExpression": "!isEmpty(testWBCmm) && isEmpty(myValue)",
+                                                    "message": "Date is result is required."
+                                                }
+                                            ],
+                                            "disable": {
+                                                "disableWhenExpression": "isEmpty(testWBCmm)"
+                                            }
+                                        },
                                         "rendering": "number"
                                     },
                                     "type": "obs",
-                                    "validators": [
-                                        {
-                                            "type": "date"
-                                        }
-                                    ]
+                                    "validators": []
                                 },
                                 {
                                     "label": "Hgb g/dL",
+                                    "id": "hgbgdl_test",
                                     "questionOptions": {
                                         "concept": "a8908a16-1350-11df-a1f1-0026b9348838",
                                         "max": "50",
                                         "min": "0",
                                         "showDate": "true",
-                                        "rendering": "number"
+                                        "rendering": "number",
+                                        "shownDateOptions": {
+                                            "validators": [
+                                                {
+                                                    "type": "date"
+                                                },
+                                                {
+                                                    "type": "js_expression",
+                                                    "failsWhenExpression": "!isEmpty(hgbgdl_test) && isEmpty(myValue)",
+                                                    "message": "Date is result is required."
+                                                }
+                                            ],
+                                            "disable": {
+                                                "disableWhenExpression": "isEmpty(hgbgdl_test)"
+                                            }
+                                        }
                                     },
                                     "type": "obs",
-                                    "validators": [
-                                        {
-                                            "type": "date"
-                                        }
-                                    ]
+                                    "validators": []
                                 },
                                 {
                                     "label": "MCV",
+                                    "id": "mcv_test",
                                     "questionOptions": {
                                         "concept": "a898201e-1350-11df-a1f1-0026b9348838",
                                         "max": "500",
                                         "min": "0",
                                         "showDate": "true",
-                                        "rendering": "number"
+                                        "rendering": "number",
+                                        "shownDateOptions": {
+                                            "validators": [
+                                                {
+                                                    "type": "date"
+                                                },
+                                                {
+                                                    "type": "js_expression",
+                                                    "failsWhenExpression": "!isEmpty(mcv_test) && isEmpty(myValue)",
+                                                    "message": "Date is result is required."
+                                                }
+                                            ],
+                                            "disable": {
+                                                "disableWhenExpression": "isEmpty(mcv_test)"
+                                            }
+                                        }
                                     },
                                     "type": "obs",
-                                    "validators": [
-                                        {
-                                            "type": "date"
-                                        }
-                                    ]
+                                    "validators": []
                                 },
                                 {
                                     "label": "ALC/ mm3",
+                                    "id": "alcmm_test",
                                     "questionOptions": {
                                         "concept": "a898b20e-1350-11df-a1f1-0026b9348838",
                                         "max": "500",
                                         "min": "0",
                                         "showDate": "true",
-                                        "rendering": "number"
+                                        "rendering": "number",
+                                        "shownDateOptions": {
+                                            "validators": [
+                                                {
+                                                    "type": "date"
+                                                },
+                                                {
+                                                    "type": "js_expression",
+                                                    "failsWhenExpression": "!isEmpty(alcmm_test) && isEmpty(myValue)",
+                                                    "message": "Date is result is required."
+                                                }
+                                            ],
+                                            "disable": {
+                                                "disableWhenExpression": "isEmpty(alcmm_test)"
+                                            }
+                                        }
                                     },
                                     "type": "obs",
-                                    "validators": [
-                                        {
-                                            "type": "date"
-                                        }
-                                    ]
+                                    "validators": []
                                 },
                                 {
                                     "type": "obs",
+                                    "id": "cd4_test",
                                     "questionOptions": {
                                         "concept": "a8a8bb18-1350-11df-a1f1-0026b9348838",
                                         "showDate": "true",
-                                        "rendering": "number"
+                                        "rendering": "number",
+                                        "shownDateOptions": {
+                                            "validators": [
+                                                {
+                                                    "type": "date"
+                                                },
+                                                {
+                                                    "type": "js_expression",
+                                                    "failsWhenExpression": "!isEmpty(cd4_test) && isEmpty(myValue)",
+                                                    "message": "Date is result is required."
+                                                }
+                                            ],
+                                            "disable": {
+                                                "disableWhenExpression": "isEmpty(cd4_test)"
+                                            }
+                                        }
                                     },
                                     "label": "CD4:",
-                                    "validators": [
-                                        {
-                                            "type": "date"
-                                        }
-                                    ]
+                                    "validators": []
                                 },
                                 {
                                     "type": "obs",
                                     "label": "CD4%:",
+                                    "id": "cd4percent_test",
                                     "questionOptions": {
                                         "rendering": "number",
                                         "max": "100",
                                         "min": "0",
                                         "showDate": "true",
-                                        "concept": "a8970a26-1350-11df-a1f1-0026b9348838"
-                                    },
-                                    "validators": [
-                                        {
-                                            "type": "date"
+                                        "concept": "a8970a26-1350-11df-a1f1-0026b9348838",
+                                        "shownDateOptions": {
+                                            "validators": [
+                                                {
+                                                    "type": "date"
+                                                },
+                                                {
+                                                    "type": "js_expression",
+                                                    "failsWhenExpression": "!isEmpty(cd4percent_test) && isEmpty(myValue)",
+                                                    "message": "Date is result is required."
+                                                }
+                                            ],
+                                            "disable": {
+                                                "disableWhenExpression": "isEmpty(cd4percent_test)"
+                                            }
                                         }
-                                    ]
+                                    },
+                                    "validators": []
                                 },
                                 {
                                     "type": "obs",
                                     "label": "Viral Load:",
+                                    "id": "viralLoad_test",
                                     "questionOptions": {
                                         "concept": "a8982474-1350-11df-a1f1-0026b9348838",
                                         "rendering": "number",
                                         "max": "10000000",
                                         "min": "0",
-                                        "showDate": "true"
-                                    },
-                                    "validators": [
-                                        {
-                                            "type": "date"
+                                        "showDate": "true",
+                                        "shownDateOptions": {
+                                            "validators": [
+                                                {
+                                                    "type": "date"
+                                                },
+                                                {
+                                                    "type": "js_expression",
+                                                    "failsWhenExpression": "!isEmpty(viralLoad_test) && isEmpty(myValue)",
+                                                    "message": "Date is result is required."
+                                                }
+                                            ],
+                                            "disable": {
+                                                "disableWhenExpression": "isEmpty(viralLoad_test)"
+                                            }
                                         }
-                                    ]
+                                    },
+                                    "validators": []
                                 },
                                 {
                                     "type": "obs",
                                     "label": "Creatinine mmol/L:",
+                                    "id": "creatinine_test",
                                     "questionOptions": {
                                         "concept": "a897e450-1350-11df-a1f1-0026b9348838",
                                         "rendering": "number",
                                         "showDate": "true",
                                         "max": "11050",
-                                        "min": "0"
-                                    },
-                                    "validators": [
-                                        {
-                                            "type": "date"
+                                        "min": "0",
+                                        "shownDateOptions": {
+                                            "validators": [
+                                                {
+                                                    "type": "date"
+                                                },
+                                                {
+                                                    "type": "js_expression",
+                                                    "failsWhenExpression": "!isEmpty(creatinine_test) && isEmpty(myValue)",
+                                                    "message": "Date is result is required."
+                                                }
+                                            ],
+                                            "disable": {
+                                                "disableWhenExpression": "isEmpty(creatinine_test)"
+                                            }
                                         }
-                                    ]
+                                    },
+                                    "validators": []
                                 },
                                 {
                                     "type": "obs",
                                     "label": "SGPT(ALT):",
+                                    "id": "sgptalt_test",
                                     "questionOptions": {
                                         "concept": "a896ca48-1350-11df-a1f1-0026b9348838",
                                         "rendering": "number",
                                         "max": "3500",
                                         "min": "0",
-                                        "showDate": "true"
-                                    },
-                                    "validators": [
-                                        {
-                                            "type": "date"
+                                        "showDate": "true",
+                                        "shownDateOptions": {
+                                            "validators": [
+                                                {
+                                                    "type": "date"
+                                                },
+                                                {
+                                                    "type": "js_expression",
+                                                    "failsWhenExpression": "!isEmpty(sgptalt_test) && isEmpty(myValue)",
+                                                    "message": "Date is result is required."
+                                                }
+                                            ],
+                                            "disable": {
+                                                "disableWhenExpression": "isEmpty(sgptalt_test)"
+                                            }
                                         }
-                                    ]
+                                    },
+                                    "validators": []
                                 },
                                 {
                                     "label": "Sputum Gene xpert MTB:",
+                                    "id": "sputumgene_test",
                                     "questionOptions": {
                                         "concept": "741517cf-8bac-4755-b289-8dd2a2df7962",
                                         "answers": [
@@ -2180,17 +2289,29 @@
                                             }
                                         ],
                                         "showDate": "true",
-                                        "rendering": "select"
+                                        "rendering": "select",
+                                        "shownDateOptions": {
+                                            "validators": [
+                                                {
+                                                    "type": "date"
+                                                },
+                                                {
+                                                    "type": "js_expression",
+                                                    "failsWhenExpression": "!isEmpty(sputumgene_test) && isEmpty(myValue)",
+                                                    "message": "Date is result is required."
+                                                }
+                                            ],
+                                            "disable": {
+                                                "disableWhenExpression": "isEmpty(sputumgene_test)"
+                                            }
+                                        }
                                     },
                                     "type": "obs",
-                                    "validators": [
-                                        {
-                                            "type": "date"
-                                        }
-                                    ]
+                                    "validators": []
                                 },
                                 {
                                     "label": "Sputum AFB Smear:",
+                                    "id": "sputumafp_test",
                                     "questionOptions": {
                                         "concept": "a8945d4e-1350-11df-a1f1-0026b9348838",
                                         "answers": [
@@ -2224,17 +2345,29 @@
                                             }
                                         ],
                                         "showDate": "true",
-                                        "rendering": "select"
+                                        "rendering": "select",
+                                        "shownDateOptions": {
+                                            "validators": [
+                                                {
+                                                    "type": "date"
+                                                },
+                                                {
+                                                    "type": "js_expression",
+                                                    "failsWhenExpression": "!isEmpty(sputumafp_test) && isEmpty(myValue)",
+                                                    "message": "Date is result is required."
+                                                }
+                                            ],
+                                            "disable": {
+                                                "disableWhenExpression": "isEmpty(sputumafp_test)"
+                                            }
+                                        }
                                     },
                                     "type": "obs",
-                                    "validators": [
-                                        {
-                                            "type": "date"
-                                        }
-                                    ]
+                                    "validators": []
                                 },
                                 {
                                     "label": "Sputum Culture:",
+                                    "id": "sputumculture_test",
                                     "questionOptions": {
                                         "concept": "a8a462a2-1350-11df-a1f1-0026b9348838",
                                         "answers": [
@@ -2260,17 +2393,29 @@
                                             }
                                         ],
                                         "showDate": "true",
-                                        "rendering": "select"
+                                        "rendering": "select",
+                                        "shownDateOptions": {
+                                            "validators": [
+                                                {
+                                                    "type": "date"
+                                                },
+                                                {
+                                                    "type": "js_expression",
+                                                    "failsWhenExpression": "!isEmpty(sputumculture_test) && isEmpty(myValue)",
+                                                    "message": "Date is result is required."
+                                                }
+                                            ],
+                                            "disable": {
+                                                "disableWhenExpression": "isEmpty(sputumculture_test)"
+                                            }
+                                        }
                                     },
                                     "type": "obs",
-                                    "validators": [
-                                        {
-                                            "type": "date"
-                                        }
-                                    ]
+                                    "validators": []
                                 },
                                 {
                                     "label": "CXR Code:",
+                                    "id": "cxrcode_test",
                                     "questionOptions": {
                                         "concept": "a8908192-1350-11df-a1f1-0026b9348838",
                                         "answers": [
@@ -2308,14 +2453,25 @@
                                             }
                                         ],
                                         "showDate": "true",
-                                        "rendering": "select"
+                                        "rendering": "select",
+                                        "shownDateOptions": {
+                                            "validators": [
+                                                {
+                                                    "type": "date"
+                                                },
+                                                {
+                                                    "type": "js_expression",
+                                                    "failsWhenExpression": "!isEmpty(cxrcode_test) && isEmpty(myValue)",
+                                                    "message": "Date is result is required."
+                                                }
+                                            ],
+                                            "disable": {
+                                                "disableWhenExpression": "isEmpty(cxrcode_test)"
+                                            }
+                                        }
                                     },
                                     "type": "obs",
-                                    "validators": [
-                                        {
-                                            "type": "date"
-                                        }
-                                    ]
+                                    "validators": []
                                 }
                             ]
                         }
@@ -3919,7 +4075,7 @@
                                                 "label": "Non-Ampath"
                                             }
                                         ],
-                                        "rendering": "multiCheckbox"
+                                        "rendering": "select"
                                     },
                                     "type": "obs",
                                     "validators": []
