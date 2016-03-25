@@ -24,7 +24,7 @@
   function clinicalRemindersController($scope, $rootScope, EtlRestService, $state, $filter) {
     //report params
     $scope.reportName='clinical-reminder-report';
-    $scope.reminderIndicators='needs_vl_coded,overdue_vl_lab_order'; //comma separated indicators
+    $scope.reminderIndicators='needs_vl_coded,overdue_vl_lab_order,months_since_last_vl_date'; //comma separated indicators
     $scope.referenceDate= new Date();
     $scope.criticalReminders =[];
     $scope.isBusy=false;
@@ -102,24 +102,25 @@
 
     function constructReminders(reminders){
       //Viral Load Followups
-      var labs ='Last Viral Load ('+ $filter('date')(reminders.last_vl_date, "dd/MM/yyyy")+'): '+reminders.viral_load;
+      var labs ='Last viral load: none';
+      if (reminders.viral_load) labs ='Last viral load: '+reminders.viral_load+ ' on '+$filter('date')(reminders.last_vl_date, "dd/MM/yyyy")+', '+reminders.months_since_last_vl_date+' months ago.';
       switch (reminders.needs_vl_coded)
       {
         case 1:
           var title = 'Viral Load Reminder';
-          var message ='Patient requires a viral load test. Reason: patient\'s previous viral load was >1000';
+          var message ='Patient requires viral load. Viral loads > 1000 must be repeated in three months.';
           pushReminderNotification(title,message,labs,'warning',true);
-          break;
-
-        case 2:
+        //  break;
+        //
+        //case 2:
           var title = 'Viral Load Reminder';
-          var message ='Patient requires viral load test.  Reason: patient needs 6 months viral load test follow-up.';
+          var message ='Patient requires viral load. Patients newly on ART require a viral load test every six months.';
           pushReminderNotification(title,message,labs,'warning',true);
-          break;
-
-        case 3:
+        //  break;
+        //
+        //case 3:
           var title = 'Viral Load Reminder';
-          var message ='Patient requires viral load test.  Reason: patient has been on ART for more than 1 year without Viral Load follow-ups.';
+          var message ='Patient requires viral load. Patients on ART > 1 year require a viral load test every year.';
           pushReminderNotification(title,message,labs,'warning',true);
           break;
 
@@ -129,8 +130,8 @@
       //Pending Viral Load Order
       if(reminders.overdue_vl_lab_order>0){
         var title = 'Overdue Viral Load Order';
-        var message ='Patient\'s viral load test drawn on '+ $filter('date')( reminders.vl_order_date, "dd/MM/yyyy")+', ' +reminders.overdue_vl_lab_order+' days ago is missing. ' +
-          'Please follow up with lab or redraw new specimen';
+        var message ='No result reported for patient\'s viral load test drawn on '+ $filter('date')( reminders.vl_order_date, "dd/MM/yyyy")+', (' +reminders.overdue_vl_lab_order+' days ago). ' +
+          'Please follow up with lab or redraw new specimen.';
         var labs='';
         pushReminderNotification(title,message,labs,'warning',true);
       }
