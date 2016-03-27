@@ -110,15 +110,15 @@
           var title = 'Viral Load Reminder';
           var message ='Patient requires viral load. Viral loads > 1000 must be repeated in three months.';
           pushReminderNotification(title,message,labs,'warning',true);
-        //  break;
-        //
-        //case 2:
+          break;
+
+        case 2:
           var title = 'Viral Load Reminder';
           var message ='Patient requires viral load. Patients newly on ART require a viral load test every six months.';
           pushReminderNotification(title,message,labs,'warning',true);
-        //  break;
-        //
-        //case 3:
+          break;
+
+        case 3:
           var title = 'Viral Load Reminder';
           var message ='Patient requires viral load. Patients on ART > 1 year require a viral load test every year.';
           pushReminderNotification(title,message,labs,'warning',true);
