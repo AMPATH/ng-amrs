@@ -103,7 +103,7 @@
     function constructReminders(reminders){
       //Viral Load Followups
       var labs ='Last viral load: none';
-      if (reminders.viral_load) labs ='Last viral load: '+reminders.viral_load+ ' on '+$filter('date')(reminders.last_vl_date, "dd/MM/yyyy")+', '+reminders.months_since_last_vl_date+' months ago.';
+      if (reminders.last_vl_date) labs ='Last viral load: '+reminders.viral_load+ ' on '+$filter('date')(reminders.last_vl_date, "dd/MM/yyyy")+', '+reminders.months_since_last_vl_date+' months ago.';
       switch (reminders.needs_vl_coded)
       {
         case 1:
@@ -114,7 +114,7 @@
 
         case 2:
           var title = 'Viral Load Reminder';
-          var message ='Patient requires viral load. Patients newly on ART require a viral load test every six months.';
+          var message ='Patient requires viral load. Patients newly on ART require a viral load test every 6 months.';
           pushReminderNotification(title,message,labs,'warning',true);
           break;
 
