@@ -32,8 +32,7 @@
       'ct.ui.router.extras',
       'sticky',
       'mwl.calendar',
-      'app.offline',
-      'angular-cache'
+      'app.offline'
     ])
     .config(function($stateProvider, $stickyStateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');
@@ -420,11 +419,5 @@
         $rootScope.currentStateParams = toParams;
       });
 
-    }).run(function($http, CacheFactory) {
-      $http.defaults.cache = CacheFactory(Math.random()+'cache', {
-        maxAge: 5 * 60 * 1000, // Items added to this cache expire after 15 minutes
-        cacheFlushInterval: 10 * 60 * 1000, // This cache will clear itself every hour
-        deleteOnExpire: 'aggressive' // Items will be deleted from this cache when they expire
-      });
     });
 })();
