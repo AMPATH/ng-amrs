@@ -33,7 +33,7 @@
     $scope.currentPage = 1;
     $scope.counter = 0;
     //This is used by the clinic dashboard
-    $scope.selectedLocation = '';
+    $scope.selectedLocation = $stateParams.locationuuid || '';
     $scope.setCountType = function(val) {
       $scope.countBy = val;
       loadHivSummaryIndicators()

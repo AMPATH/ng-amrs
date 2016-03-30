@@ -1,9 +1,9 @@
 
-<h2 style=" margin-top: 0px !important; "> <span style="font-size:20px;" class="glyphicon glyphicon-file text-info"></span><strong> MOH-731 Report</strong> </h2>
-<stats-clinic-dashboard-hiv-summary-filters  enabled-controls="'start-date, end-date'"
- start-date="startDate" end-date="endDate" selected-locations="selectedLocations">
-</stats-clinic-dashboard-hiv-summary-filters>
+<report-filters enabled-controls="'start-date, end-date'"  start-date="startDate" end-date="endDate"
+                selected-locations="selectedLocations" >
+</report-filters>
 <br>
+
 <div  class="well" style="padding:2px; margin-bottom: 5px !important; ">
   <div style="cursor: pointer;" class="alert alert-danger" ng-click="generateMoh731Report()" ng-show='experiencedLoadingErrors' >
         <span class="glyphicon glyphicon-exclamation-sign">
@@ -18,11 +18,14 @@
         </span> Empty report data returned. Please check your Report Filters and try again.</b>
   </div>
   <div style="height: 35px" ng-show='!isBusy && !experiencedLoadingErrors'>
-    <button  class="btn btn-info pull-right"
-             ng-click="generateMoh731Report()">
-      <span class="glyphicon glyphicon-refresh"></span>
-      <span>Generate Report</span>
-    </button>
+    <div class="btn-group pull-right">
+      <button  class="btn btn-info pull-right"
+               ng-click="generateMoh731Report()">
+        <span class="glyphicon glyphicon-refresh"></span>
+        <span>Generate Report</span>
+      </button>
+      </ul>
+    </div>
   </div>
   <div  ng-show='isBusy'>
     <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
@@ -35,9 +38,6 @@
   <div>
 
     <div id="toolbar">
-      <select ng-model='selectedReportMode' style="margin-left: 5px" class="form-control"
-              ng-options="l.name for l in reportModeList" ng-change="updateReportMode()">
-      </select>
     </div>
     <table id="bsTable" class="table table-striped table-condensed table-hover" bs-table-control="bsTableControl" >
     </table>
