@@ -469,6 +469,16 @@
 
         }
       });
+    /**
+     * Function to add ellipses to long strings
+     */
+    function truncateString (title, length) {
+      if(!length) length = 10;
+      if (title.length > length) {
+        title = title.substring(0, length)+'...';
+      }
+      return title;
+    }
 
     /**
      * Function to add report (pdf) generation button
@@ -479,9 +489,9 @@
         var html = [];
         html.push(
           '<div class="text-center" style="height:43px!important;" ><a href="#/moh-731-pdf/location/'+row.location_id+'" ' +
-          'title="Generate PDF Report for '+value+' " data-toggle="tooltip"class="btn btn-default" ' +
+          'title=" '+value+' " data-toggle="tooltip"class="btn btn-default" ' +
           'style="height:43px!important; width:100%!important">' +
-          '<span class="text-info text-capitalize">' + value + '</span></a></div>');
+          '<span class="text-info text-capitalize">' + truncateString(value, 30) + '</span></a></div>');
         return html.join('');
       } else if (header === 'location' && $scope.groupBy === 'groupByNone') {
         var html = [];
