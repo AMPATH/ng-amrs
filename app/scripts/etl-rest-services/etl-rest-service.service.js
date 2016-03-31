@@ -6,9 +6,15 @@
     .module('app.etlRestServices')
     .service('EtlRestService', EtlRestService);
 
-  EtlRestService.$inject = ['EtlRestServicesSettings', '$resource'];
+  EtlRestService.$inject = ['EtlRestServicesSettings', '$resource', 'CacheFactory'];
 
-  function EtlRestService(EtlRestServicesSettings, $resource) {
+  function EtlRestService(EtlRestServicesSettings, $resource, CacheFactory) {
+      var defaultCachingProperty =
+          CacheFactory(Math.random() + 'cache', {
+              maxAge: 5 * 60 * 1000, // Items added to this cache expire after 15 minutes
+              cacheFlushInterval: 5 * 60 * 1000, // This cache will clear itself every hour
+              deleteOnExpire: 'aggressive' // Items will be deleted from this cache when they expire
+          });
     var serviceDefinition;
     serviceDefinition = {
       getResource: getResource,
@@ -39,16 +45,19 @@
     };
     return serviceDefinition;
 
-    function getResource(path) {
-      return $resource(EtlRestServicesSettings.getCurrentRestUrlBase().trim() + path, {
-        uuid: '@uuid'
-      }, {
-        query: {
-          method: 'GET',
-          isArray: false
-
+    function getResource(path, cacheProperty) {
+        var caching = defaultCachingProperty;
+        if(!_.isEmpty(cacheProperty)) {
+            caching = cacheProperty;
         }
-      });
+        return $resource(EtlRestServicesSettings.getCurrentRestUrlBase().trim() + path, {
+            uuid: '@uuid'
+        }, {
+            get: {
+            method: 'GET',
+            cache: caching
+            }
+        });
     }
 
 
@@ -156,12 +165,7 @@
 
     function getDailyPatientList(locationUuid, report, startDate,
       endDate, successCallback, failedCallback, startIndex, limit) {
-      var resource = getResource('get-report-by-report-name', {
-            query: {
-                method: 'GET',
-                cache: true
-            }
-         });
+      var resource = getResource('get-report-by-report-name');
 
       var params = {
         groupBy: 'groupByPerson,groupByd',
