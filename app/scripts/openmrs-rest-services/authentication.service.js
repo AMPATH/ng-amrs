@@ -18,7 +18,8 @@
       setCredentials: setCredentials,
       logOut: logOut,
       clearCredentials: clearCredentials,
-      authenticated: false
+      authenticated: false,
+      user: null
     };
 
     return service;
@@ -30,6 +31,7 @@
           //console.log(data);
           var session = new SessionModel.session(data.sessionId, data.authenticated);
           service.authenticated = session.isAuthenticated();
+          service.user = data.user;
           if (service.authenticated) {
             //find out if the user has set the default location
             UserDefaultPropertiesService.setAuthenticatedUser(CurrentUser.username);
