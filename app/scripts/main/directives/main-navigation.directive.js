@@ -42,11 +42,11 @@
 
     $scope.isUserLoggedIn = false;
 
-    $scope.username = 'AKwatuha';
+    $scope.username = '';
 
-    $scope.location = 'Ampath';
+    $scope.location = '';
 
-    $scope.role = 'S/W Programmer';
+    $scope.role = '';
 
     $scope.logOut = logOut;
 
