@@ -30,7 +30,7 @@
           $scope.isVisible = true;
           $scope.errors = 'Invalid user name or password. Please try again';
         } else {
-          OpenmrsRestService.getUserService().getUser({q: $scope.CurrentUser.username},
+          OpenmrsRestService.getUserService().getUser({ uuid:  OpenmrsRestService.getAuthService().user.uuid },
             function (data) {
               console.log('Logged in user:', data);
 
