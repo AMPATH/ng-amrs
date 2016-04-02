@@ -4105,7 +4105,7 @@
                             "questionOptions": {
                                 "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
                                 "rendering": "date",
-                                "weeksList" :[4,8,12]
+                                "weeksList" :[2,4,8,12,16]
                             },
                             "validators": [
                                 {
