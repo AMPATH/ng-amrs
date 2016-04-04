@@ -6,9 +6,12 @@
     .module('app.admin')
     .controller('HivMonthlySummaryIndicatorsCtrl',HivMonthlySummaryIndicatorsCtrl);
   HivMonthlySummaryIndicatorsCtrl.$nject=
-    ['$rootScope','$scope','$stateParams','EtlRestService','OpenmrsRestService','CachedDataService','HivMonthlySummaryIndicatorService','moment','$filter','$state'];
+    ['$rootScope','$scope','$stateParams','EtlRestService','OpenmrsRestService','CachedDataService',
+      'HivMonthlySummaryIndicatorService','moment','$filter','$state', '$timeout'];
 
-  function HivMonthlySummaryIndicatorsCtrl($rootScope,$scope,$stateParams,EtlRestService,OpenmrsRestService,CachedDataService,HivMonthlySummaryIndicatorService,moment,$filter,$state){
+  function HivMonthlySummaryIndicatorsCtrl($rootScope,$scope,$stateParams,EtlRestService,OpenmrsRestService,
+                                           CachedDataService,HivMonthlySummaryIndicatorService,moment,$filter,$state,
+                                           $timeout){
     //Patient List Directive Properties & Methods
     var date = new Date();
     $scope.startDate = new Date(date.getFullYear(), date.getMonth()-12, 1);
@@ -172,7 +175,9 @@
         $scope.indicatorTags = HivMonthlySummaryIndicatorService.getIndicatorTags();
         $scope.startDate=HivMonthlySummaryIndicatorService.getStartDate();
         $scope.endDate=HivMonthlySummaryIndicatorService.getEndDate();
+        $scope.selectedLocations=HivMonthlySummaryIndicatorService.getSelectedLocation();
         buildDataTable();
+
         return true;
       }
     }
@@ -182,9 +187,10 @@
     function cacheResource() {
       HivMonthlySummaryIndicatorService.setIndicatorTags($scope.indicatorTags);
       HivMonthlySummaryIndicatorService.setIndicators($scope.indicators);
-      HivMonthlySummaryIndicatorService.setSelectedLocation(getSelectedLocations($scope.selectedLocations));
       HivMonthlySummaryIndicatorService.setStartDate($scope.startDate);
       HivMonthlySummaryIndicatorService.setEndDate($scope.endDate);
+      if($scope.selectedLocations && $scope.selectedLocations.locations.length>0)
+        HivMonthlySummaryIndicatorService.setSelectedLocation($scope.selectedLocations);
     }
     function ChangeView(){
       $state.go('admin.hiv-summary-combined');
@@ -194,8 +200,10 @@
      * Functions to populate and define bootstrap data table
      */
     function buildDataTable() {
-      buildColumns();
-      buildTableControls();
+      $timeout(function () {
+        buildColumns();
+        buildTableControls();
+      }, 500);
     }
     function buildColumns() {
       $scope.columns = [];
