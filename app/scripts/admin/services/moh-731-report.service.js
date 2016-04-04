@@ -20,7 +20,7 @@
     var indicatorDetails;
     var endDate = new Date();
     var indicatorTags;
-    var indicators;
+    var indicators=[];
     var pdfReportSections = [
       ['HIV Exposed Infant (within 2 months)',
         'HIV Exposed Infant (Eligible for CTX 2 months)',

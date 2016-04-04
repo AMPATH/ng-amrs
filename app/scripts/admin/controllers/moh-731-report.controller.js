@@ -19,7 +19,7 @@
     $scope.startDate = new Date(moment().subtract(1, 'months').calendar());
 
     $scope.reportGeneration = false;
-    var reportNames = ['MOH-731-report','MOH-731-allsites-report']
+    var reportNames = ['MOH-731-report','MOH-731-allsites-report'];
     $scope.reportName = reportNames[0];
     $scope.countBy = 'num_persons';
     $scope.startIndex = 0;
@@ -27,9 +27,7 @@
     var groupByTypes = ['groupByLocation'];
     $scope.groupBy = groupByTypes[0];
     $scope.generateMoh731Report = generateMoh731Indicators;
-
-
-
+    $scope.formatedLocations='';
 
     //UX Scope Params
     $scope.isBusy = false;
@@ -39,7 +37,6 @@
     $scope.selectedLocation = $stateParams.locationuuid || '';
     $scope.selectedIndicatorBox = $stateParams.indicator || '';
     $scope.loadPatientList = loadPatientList;
-
 
     //Dynamic DataTable Params
     $scope.currentPage = 1;
@@ -51,26 +48,6 @@
     $scope.bsTableControl = {
       options: {}
     };
-    $scope.reportModeList = [{
-      name: 'Combine Locations',
-      value: 'groupByNone'
-    }, {
-      name: 'Separate Locations',
-      value: 'groupByLocation'
-    }];
-    $scope.selectedReportMode = $scope.reportModeList[1];
-    $scope.updateReportMode = function() {
-      var bsTable = document.getElementById('bsTable');
-      var element = angular.element(bsTable);
-      element.bootstrapTable('removeAll');
-      if ($scope.selectedReportMode.value === 'groupByLocation') {
-        if ($scope.indicators.length < 0) generateMoh731Indicators();
-        element.bootstrapTable('append', $scope.indicators);
-      } else {
-        generateCombinedLocationReport();
-        element.bootstrapTable('append', $scope.aggregatedIndicators);
-      }
-    };
 
     //Start Initialization
     init();
@@ -78,7 +55,21 @@
     //scope methods
     function init() {
       if (!loadCachedData())loadIndicatorsSchema();
+    }
 
+    function setReportMode() {
+      //Pre-generate location summary for the PDF Report Header
+      formatReportLocationHeader($scope.selectedLocations);
+      //format locations to be sent to server
+      $scope.formatedLocations = getSelectedLocations($scope.selectedLocations);
+      //depending on grouping type set reportName and groupBy
+      if($scope.selectedLocations.allAggregated === true) {
+        $scope.reportName = reportNames[1];
+        $scope.groupBy = '';
+      } else{
+        $scope.reportName = reportNames[0];
+        $scope.groupBy = groupByTypes[0];
+      }
     }
 
     function generateMoh731Indicators() {
@@ -87,20 +78,7 @@
       $scope.resultIsEmpty = false;
       $scope.indicators = [];
       $scope.isBusy = true;
-      //Pre-generate location summary for the PDF Report Header
-      $scope.locationSummary = '';
-      $scope.locationSummary = getSelectedLocationName($scope.selectedLocations);
-      var locations = '';
-      if ($scope.selectedLocation !== '') {
-        locations = $scope.selectedLocation;
-      } else {
-        locations = getSelectedLocations($scope.selectedLocations);
-      }
-
-      if($scope.selectedLocations.allAggregated === true) {
-           $scope.reportName = reportNames[1];
-            $scope.groupBy = '';
-      }
+      setReportMode();
 
       if ($scope.countBy && $scope.countBy !== '' && $scope.reportName &&
         $scope.reportName !== '' && $scope.startDate && $scope.startDate !==
@@ -111,7 +89,7 @@
             'YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           moment(new Date($scope.endDate)).startOf('day').format(
             'YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-          locations, $scope.countBy, onFetchMoh731IndicatorsSuccess,
+          $scope.formatedLocations , $scope.countBy, onFetchMoh731IndicatorsSuccess,
           onFetchMoh731IndicatorsError,
           $scope.groupBy,
           $scope.startIndex,
@@ -119,7 +97,6 @@
         );
       }
     }
-
 
     function onFetchMoh731IndicatorsSuccess(result) {
       $scope.isBusy = false;
@@ -131,8 +108,8 @@
         $scope.indicators = result.result;
 
       }
+      formatReportHeader();
       buildDataTable();
-      $scope.selectedReportMode = $scope.reportModeList[1];
     }
 
     function onFetchMoh731IndicatorsError(error) {
@@ -167,7 +144,8 @@
 
     $rootScope.$on('$stateChangeStart',
       function (event, toState, toParams, fromState, fromParams) {
-        loadPatientList(toParams.indicator, toParams.locationuuid)
+        if(toState.name==='admin.moh-731-report.patients')
+          loadPatientList(toParams.indicator, toParams.locationuuid);
       });
 
     function loadPatientList(indicator, location) {
@@ -201,28 +179,30 @@
         return true;
       }
     }
-
-    function generateCombinedLocationReport() {
-      $scope.aggregatedIndicators = [];
-      _.every($scope.indicators, function(indicator) {
-        var newindicator = {};
-        for (var property in indicator) {
-          if (property === 'location') {
-            var count = 'All';
-            if ($scope.selectedLocations.locations.length > 0)
-              count = $scope.selectedLocations.locations.length;
-            newindicator[property] = count +
-              ' Locations Selected'
-          } else if (property === 'location_uuid' || property ===
-            'location_id') {
-            newindicator[property] = indicator[property];
-          } else {
-            newindicator[property] = getSumByIndicatorKey(property);
-          }
-        };
-        $scope.aggregatedIndicators.unshift(newindicator);
-        return;
-      });
+    function formatReportHeader() {
+      if($scope.selectedLocations.allAggregated === true) {
+        var aggregatedIndicators = [];
+        _.every($scope.indicators, function (indicator) {
+          var newindicator = {};
+          for (var property in indicator) {
+            if (property === 'location') {
+              var count = 'All';
+              if ($scope.selectedLocations.locations.length > 0)
+                count = $scope.selectedLocations.locations.length;
+              newindicator[property] = count +
+                ' Locations Selected'
+            } else if (property === 'location_uuid' || property ===
+              'location_id') {
+              newindicator[property] = indicator[property];
+            } else {
+              newindicator[property] = getSumByIndicatorKey(property);
+            }
+          };
+          aggregatedIndicators.unshift(newindicator);
+          return;
+        });
+        $scope.indicators = aggregatedIndicators;
+      }
     }
 
     function getSumByIndicatorKey(prop) {
@@ -235,41 +215,54 @@
     };
 
     function getSelectedLocations(selectedLocationObject) {
-      var locations;
-      try {
-        if (angular.isDefined(selectedLocationObject.locations)) {
-          for (var i = 0; i < selectedLocationObject.locations.length; i++) {
-            if (i === 0) {
-              locations = '' + selectedLocationObject.locations[i].uuId();
+      var locations='';
+      if ($scope.selectedLocation !== '') {
+        locations= $scope.selectedLocation;
+      } else {
+        try {
+          if (angular.isDefined(selectedLocationObject.locations)) {
+            if (selectedLocationObject.selectedAll === false) {
+              for (var i = 0; i < selectedLocationObject.locations.length; i++) {
+                if (i === 0) {
+                  locations = '' + selectedLocationObject.locations[i].uuId();
+                } else {
+                  locations =
+                    locations + ',' + selectedLocationObject.locations[i].uuId();
+                }
+              }
             } else {
-              locations =
-                locations + ',' + selectedLocationObject.locations[i].uuId();
+              locations = '';
             }
           }
-        }
-      } catch (e) {
+        } catch (e) {
 
+        }
       }
       return locations;
     }
 
-    function getSelectedLocationName(selectedLocationObject) {
-      var locations = '';
+    function formatReportLocationHeader(selectedLocationObject) {
+      $scope.locationSummary = '';
+      var locations = 'All Facilities Selected';
       try {
         if (angular.isDefined(selectedLocationObject.locations)) {
-          for (var i = 0; i < selectedLocationObject.locations.length; i++) {
-            if (i === 0) {
-              locations = '' + selectedLocationObject.locations[i].name();
-            } else {
-              locations =
-                locations + ', ' + selectedLocationObject.locations[i].name();
+          if(selectedLocationObject.selectedAll===false) {
+            for (var i = 0; i < selectedLocationObject.locations.length; i++) {
+              if (i === 0) {
+                locations = '' + selectedLocationObject.locations[i].name();
+              } else {
+                locations =
+                  locations + ', ' + selectedLocationObject.locations[i].name();
+              }
             }
+          } else{
+            $scope.locationSummary = '';
           }
         }
       } catch (e) {
 
       }
-      return locations.toString();
+      $scope.locationSummary = locations.toString();
     }
     function getIndicatorLabelByName(name) {
       var found = $filter('filter')($scope.indicatorKeys, {name: name})[0];
@@ -311,12 +304,14 @@
     }
 
     function buildColumns() {
-      if ($scope.indicators.length > 0) $scope.indicatorKeys = Object.keys(
-        $scope.indicators[0]); // ['alpha', 'beta']
-      $scope.columns = [];
-      _.each($scope.indicatorKeys, function(header) {
-        buildSingleColumn(header);
-      });
+      if($scope.indicators) {
+        if ($scope.indicators.length > 0) $scope.indicatorKeys = Object.keys(
+          $scope.indicators[0]); // ['alpha', 'beta']
+        $scope.columns = [];
+        _.each($scope.indicatorKeys, function (header) {
+          buildSingleColumn(header);
+        });
+      }
     }
 
     $scope.$on('generate-moh-731-pdf-report', function(event, args) {
@@ -411,16 +406,10 @@
      */
     function detailFormatter(index, row) {
       //expose indexes to scope
-      var $body = angular.element(document.body);
-      var $rootScope = $body.scope().$root;
-      $rootScope.$apply(function() {
-        $rootScope.selectedPdfRow = row;
-        $rootScope.selectedPdfIndex = index;
-      });
       var html = [];
       html.push(
         '<div class="well well-sm " style="padding:2px; margin-bottom: 5px !important; ">' +
-        '<a href="#/moh-731-generate-pdf" class="btn btn-info">Generate Pdf</a></div>'
+        '<a href="#/moh-731-pdf/location/'+row.location_id+'" class="btn btn-info">Generate Pdf</a></div>'
       );
       _.each(row, function(value, key) {
         //var label = key;
@@ -430,23 +419,11 @@
         if (key === 'Location Uuid' || key === 'state' || key ===
           'Location Id') return;
         //for separate locations
-        if (key === 'Location' && $scope.selectedReportMode.value ===
-          'groupByLocation') {
+        if (key === 'Location') {
           html.push(
             '<div class="well well-sm " style="padding:2px; margin-bottom: 5px !important; ">' +
             '<p><b>' + key + '</b> (<span class="text-info">' + label +
             '</span>): ' + value + '</p></div>');
-        } else if (key === 'Location' && $scope.selectedReportMode.value ===
-          'groupByNone') {
-          //for combined locations
-          var count = 'All';
-          if ($scope.selectedLocations.locations.length > 0)
-            count = $scope.selectedLocations.locations.length;
-          html.push(
-            '<div class="well well-sm " style="padding:2px; margin-bottom: 5px !important; ">' +
-            '<p><b>' + key + '</b> (<span class="text-info">' + label +
-            '</span>): ' + count +
-            ' Locations Selected' + '</p></div>');
         } else {
           html.push(
             '<div class="well well-sm " style="padding:2px; margin-bottom: 5px !important; ">' +
@@ -460,13 +437,21 @@
       function(event, toState, toParams, fromState, fromParams) {
         if (toState.name === 'moh-731-report-by-location') {
           event.preventDefault();
-         if(toParams.location!==undefined){
-           var selectedRow=  $filter('filter')($scope.indicators, {location: toParams.location})[0];
-           generateMoh731PdfReport(selectedRow.location,
-             selectedRow);
-         }
-
-
+          if(!$scope.selectedLocations) return;
+          if($scope.selectedLocations.allAggregated === true) {
+            var selectedRow = $scope.indicators[0];
+            generateMoh731PdfReport(selectedRow.location,
+              selectedRow);
+          }else {
+            if (toParams.location) {
+              var selectedRows = $filter('filter')($scope.indicators, {location_id: Number(toParams.location)});
+              if (selectedRows) {
+                var selectedRow = selectedRows[0];
+                generateMoh731PdfReport(selectedRow.location,
+                  selectedRow);
+              }
+            }
+          }
         }
       });
     /**
@@ -485,21 +470,13 @@
      */
     function cellFormatter(value, row, index, header) {
       //for separate locations
-      if (header === 'location' && $scope.groupBy === 'groupByLocation') {
+      if (header === 'location') {
         var html = [];
         html.push(
           '<div class="text-center" style="height:43px!important;" ><a href="#/moh-731-pdf/location/'+row.location_id+'" ' +
           'title=" '+value+' " data-toggle="tooltip"class="btn btn-default" ' +
           'style="height:43px!important; width:100%!important">' +
           '<span class="text-info text-capitalize">' + truncateString(value, 30) + '</span></a></div>');
-        return html.join('');
-      } else if (header === 'location' && $scope.groupBy === 'groupByNone') {
-        var html = [];
-        //for combined locations
-        html.push(
-          '<div class="text-center" style="height:43px!important;" ><span ' +
-          'class="text-info text-capitalize">' + $scope.selectedLocations.locations
-          .length + ' Locations Selected' + '</span></div>');
         return html.join('');
       } else {
         //for other fields other than location
@@ -521,31 +498,16 @@
      * @returns {undefined}
      */
     function generateMoh731PdfReport(locationName, rowData) {
-      //test if  pdf is  for  combined  locations
-      var params = {};
-      if ($scope.selectedReportMode.value !==
-        'groupByLocation') {
-        //combined  locations
-        params = {
-          facilityName: $scope.locationSummary,
+      if(!$scope.selectedLocations) return;
+      var location =$scope.selectedLocations.allAggregated === true? $scope.locationSummary:rowData["location"];
+      var params = {
+          facilityName: location,
           district: 'N/A',
           county: 'N/A',
-          facility: $scope.locationSummary,
+          facility: location,
           startDate: $filter('date')($scope.startDate, 'M/yy'),
           endDate: $filter('date')($scope.endDate, 'M/yy')
         };
-
-      } else {
-        //normal data grouped by location DEFAULT
-        params = {
-          facilityName: rowData["location"],
-          district: 'N/A',
-          county: 'N/A',
-          facility: rowData["location"],
-          startDate: $filter('date')($scope.startDate, 'M/yy'),
-          endDate: $filter('date')($scope.endDate, 'M/yy')
-        };
-      }
       var mainReportjson = Moh731ReportService.generatePdfReportSchema(params);
       //generate Pdf  report
       $scope.indicatorNumber = 0;

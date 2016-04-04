@@ -46,6 +46,7 @@ jshint -W003, -W026
     $scope.selectedLocations = {};
     $scope.selectedLocations.selectedAll = false;
     $scope.selectedLocations.locations = [];
+    $scope.selectedLocations.allAggregated = false;
     $scope.selectAllLocations= selectAllLocations;
 
 		$scope.providers = [];
