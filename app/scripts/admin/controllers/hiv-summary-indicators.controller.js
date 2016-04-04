@@ -6,9 +6,11 @@
     .module('app.admin')
     .controller('HivSummaryIndicatorsCtrl', HivSummaryIndicatorsCtrl);
   HivSummaryIndicatorsCtrl.$nject =
-    ['$rootScope', '$scope', '$stateParams', 'EtlRestService', 'HivSummaryIndicatorService', 'moment', '$filter', '$state'];
+    ['$rootScope', '$scope', '$stateParams', 'EtlRestService', 'HivSummaryIndicatorService', 'moment', '$filter', '$state'
+    ,'$timeout'];
 
-  function HivSummaryIndicatorsCtrl($rootScope, $scope, $stateParams, EtlRestService, HivSummaryIndicatorService, moment, $filter, $state) {
+  function HivSummaryIndicatorsCtrl($rootScope, $scope, $stateParams, EtlRestService, HivSummaryIndicatorService, moment,
+                                    $filter, $state, $timeout) {
     //Patient List Directive Properties & Methods
     var date = new Date();
     $scope.startDate = new Date(date.getFullYear(), date.getMonth()-1, 1);
@@ -173,9 +175,10 @@
      * Functions to populate and define bootstrap data table
      */
     function buildDataTable() {
-      buildColumns();
-      buildTableControls();
-
+      $timeout(function () {
+        buildColumns();
+        buildTableControls();
+      }, 500);
     }
 
     function buildColumns() {

@@ -66,7 +66,7 @@ jshint -W003, -W026
         function loadPatientList(loadNextOffset) {
             $scope.experiencedLoadingErrors = false;
             if($scope.isBusy === true) return;
-            $scope.locationUuid=HivMonthlySummaryIndicatorService.getSelectedLocation();
+            $scope.locationUuid=getSelectedLocations(HivMonthlySummaryIndicatorService.getSelectedLocation());
             $scope.isBusy = true;
             if(loadNextOffset!==true)resetPaging();
             if ($scope.indicator && $scope.indicator!=='' && $scope.startDate && $scope.startDate!=='' ) {
@@ -85,6 +85,26 @@ jshint -W003, -W026
           $scope.nextStartIndex = 0;
           $scope.patients = [];
           $scope.allDataLoaded = false;
+        }
+
+        function getSelectedLocations(selectedLocationObject) {
+          var locations;
+          try {
+            if (angular.isDefined(selectedLocationObject.locations)) {
+              for (var i = 0; i < selectedLocationObject.locations.length; i++) {
+                if (i === 0) {
+                  locations = '' + selectedLocationObject.locations[i].uuId();
+                }
+                else {
+                  locations =
+                    locations + ',' + selectedLocationObject.locations[i].uuId();
+                }
+              }
+            }
+          } catch (e) {
+
+          }
+          return locations;
         }
 
         function onFetchPatientsListSuccess(patients) {
