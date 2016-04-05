@@ -8,6 +8,7 @@
             "sections": [
                 {
                     "label": "Encounter Details",
+                    "isExpanded": true,
                     "questions": [
                         {
                             "label": "Visit Date",
@@ -133,6 +134,7 @@
                 },
                 {
                     "label": "PWPs",
+                    "isExpanded": true,
                     "questions": [
                         {
                             "label": "Civil Status:",
@@ -270,6 +272,7 @@
                 },
                 {
                     "label": "Vital Signs:",
+                    "isExpanded": true,
                     "questions": [
                         {
                             "label": "BP:Systolic:",

@@ -14,6 +14,7 @@
             "sections": [
                 {
                     "label": "Encounter Details",
+                    "isExpanded": true,
                     "questions": [
                         {
                             "label": "Visit Date",
@@ -131,8 +132,8 @@
                                     "message": "Patient visit marked as unscheduled. Please provide the scheduled date."
                                 }
                             ],
-                            "disable": {
-                                "disableWhenExpression": "!arrayContains(['a89ff816-1350-11df-a1f1-0026b9348838','a89ff8de-1350-11df-a1f1-0026b9348838'], scheduledVisit)"
+                            "hide": {
+                                "hideWhenExpression": "!arrayContains(['a89ff816-1350-11df-a1f1-0026b9348838','a89ff8de-1350-11df-a1f1-0026b9348838'], scheduledVisit)"
                             }
                         }
                     ]
@@ -316,34 +317,6 @@
                                     "validators": []
                                 }
                             ]
-                        },
-                        {
-                            "type": "obsGroup",
-                            "label": "If yes reason for hospitalization",
-                            "questionOptions": {
-                                "concept": "a8a003a6-1350-11df-a1f1-0026b9348838",
-                                "rendering": "repeating"
-                            },
-                            "questions": [
-                                {
-                                    "label": "Reason for hospitalization",
-                                    "questionOptions": {
-                                        "concept": "a8a07a48-1350-11df-a1f1-0026b9348838",
-                                        "rendering": "problem"
-                                    },
-                                    "type": "obs",
-                                    "validators": [
-                                        {
-                                            "type": "conditionalAnswered",
-                                            "message": "Providing diagnosis but didn't answer that patient was hospitalized in question 11a",
-                                            "referenceQuestionId": "wasHospitalized",
-                                            "referenceQuestionAnswers": [
-                                                "a899b35c-1350-11df-a1f1-0026b9348838"
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
                         }
                     ]
                 },
@@ -362,8 +335,8 @@
                                     "type": "date"
                                 }
                             ],
-                            "disable": {
-                                "disableWhenExpression": "sex !== 'F'"
+                            "hide": {
+                                "hideWhenExpression": "sex !== 'F'"
                             }
                         },
                         {
@@ -384,8 +357,8 @@
                             },
                             "type": "obs",
                             "validators": [],
-                            "disable": {
-                                "disableWhenExpression": "sex !== 'F'"
+                            "hide": {
+                                "hideWhenExpression": "sex !== 'F'"
                             }
                         },
                         {
@@ -406,8 +379,8 @@
                             },
                             "type": "obs",
                             "validators": [],
-                            "disable": {
-                                "disableWhenExpression": "sex !== 'F'"
+                            "hide": {
+                                "hideWhenExpression": "sex !== 'F'"
                             }
                         },
                         {
@@ -487,8 +460,8 @@
                                     "message": "Patient on family planning. Please provide a method."
                                 }
                             ],
-                            "disable": {
-                                "disableWhenExpression": "onFamilyPlanning !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                            "hide": {
+                                "hideWhenExpression": "onFamilyPlanning !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                             }
                         },
                         {
@@ -524,8 +497,8 @@
                                     "message": "Patient on family planning. Please provide a method."
                                 }
                             ],
-                            "disable": {
-                                "disableWhenExpression": "onFamilyPlanning !== 'a899b42e-1350-11df-a1f1-0026b9348838'"
+                            "hide": {
+                                "hideWhenExpression": "onFamilyPlanning !== 'a899b42e-1350-11df-a1f1-0026b9348838'"
                             }
                         }
                     ]
@@ -537,6 +510,7 @@
             "sections": [
                 {
                     "label": "ART History",
+                    "isExpanded": true,
                     "questions": [
                         {
                             "label": "Is patient currently on ART?",
@@ -571,8 +545,8 @@
                                     "type": "date"
                                 }
                             ],
-                            "disable": {
-                                "disableWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                            "hide": {
+                                "hideWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                             }
                         },
                         {
@@ -604,8 +578,8 @@
                                     "message": "Patient previously marked as on ART. Please provide the treatment category."
                                 }
                             ],
-                            "disable": {
-                                "disableWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                            "hide": {
+                                "hideWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                             }
                         },
                         {
@@ -695,8 +669,8 @@
                                     },
                                     "type": "obs",
                                     "validators": [],
-                                    "disable": {
-                                        "disableWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                    "hide": {
+                                        "hideWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                                     }
                                 }
                             ]
@@ -738,8 +712,8 @@
                                             "message": "Patient on ART. Please provide adherence history."
                                         }
                                     ],
-                                    "disable": {
-                                        "disableWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                    "hide": {
+                                        "hideWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                                     }
                                 },
                                 {
@@ -805,8 +779,8 @@
                                     },
                                     "type": "obs",
                                     "validators": [],
-                                    "disable": {
-                                        "disableWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], artAdherence) "
+                                    "hide": {
+                                        "hideWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], artAdherence) "
                                     }
                                 },
                                 {
@@ -817,8 +791,8 @@
                                         "rendering": "text"
                                     },
                                     "validators": [],
-                                    "disable": {
-                                        "disableWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], artAdherence)"
+                                    "hide": {
+                                        "hideWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], artAdherence)"
                                     }
                                 }
                             ]
@@ -832,6 +806,7 @@
             "sections": [
                 {
                     "label": "PCP Prophylaxis",
+                    "isExpanded": true,
                     "questions": [
                         {
                             "label": "PCP Prophylaxis:",
@@ -895,8 +870,8 @@
                                             "message": "Patient on PCP Prophylaxis. Please provide adherence history"
                                         }
                                     ],
-                                    "disable": {
-                                        "disableWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838'"
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838'"
                                     }
                                 },
                                 {
@@ -962,8 +937,8 @@
                                     },
                                     "type": "obs",
                                     "validators": [],
-                                    "disable": {
-                                        "disableWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], pcpProphylaxisAdherence)"
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], pcpProphylaxisAdherence)"
                                     }
                                 },
                                 {
@@ -975,8 +950,8 @@
                                     "type": "obs",
                                     "id": "pcpOtherAdherence",
                                     "validators": [],
-                                    "disable": {
-                                        "disableWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], pcpProphylaxisAdherence)"
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(pcpProphylaxisCurrent) || pcpProphylaxisCurrent === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], pcpProphylaxisAdherence)"
                                     }
                                 }
                             ]
@@ -987,7 +962,7 @@
                     "label": "TB Prophylaxis",
                     "questions": [
                         {
-                            "label": "Is patient on TB Prophylaxis?",
+                            "label": "TB Prophylaxis:",
                             "id": "onTbProphylaxis",
                             "questionOptions": {
                                 "concept": "a899e35e-1350-11df-a1f1-0026b9348838",
@@ -1043,8 +1018,8 @@
                                             "message": "Patient on TB Prophylaxis. Please provide adherence history."
                                         }
                                     ],
-                                    "disable": {
-                                        "disableWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838'"
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838'"
                                     }
                                 },
                                 {
@@ -1110,8 +1085,8 @@
                                     },
                                     "type": "obs",
                                     "validators": [],
-                                    "disable": {
-                                        "disableWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], q16c)"
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], q16c)"
                                     }
                                 },
                                 {
@@ -1123,8 +1098,8 @@
                                     "type": "obs",
                                     "id": "tbProphylaxisOtherAdherence",
                                     "validators": [],
-                                    "disable": {
-                                        "disableWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], q16c)"
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(onTbProphylaxis) || onTbProphylaxis === 'a899e0ac-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], q16c)"
                                     }
                                 }
                             ]
@@ -1196,8 +1171,8 @@
                                             "message": "You indicated patient is not on tb treatment, therefore start date should not be indicated."
                                         }
                                     ],
-                                    "disable": {
-                                        "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                    "hide": {
+                                        "hideWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                                     }
                                 }
                             ]
@@ -1228,8 +1203,8 @@
                                         "rendering": "select"
                                     },
                                     "type": "obs",
-                                    "disable": {
-                                        "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                    "hide": {
+                                        "hideWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                                     }
                                 },
                                 {
@@ -1240,8 +1215,8 @@
                                         "rendering": "text"
                                     },
                                     "type": "obs",
-                                    "disable": {
-                                        "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                    "hide": {
+                                        "hideWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                                     }
                                 }
                             ]
@@ -1313,8 +1288,8 @@
                                         "rendering": "select"
                                     },
                                     "validators": [],
-                                    "disable": {
-                                        "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                    "hide": {
+                                        "hideWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                                     }
                                 },
                                 {
@@ -1425,8 +1400,8 @@
                                             "message": "Patient on TB Treament. Please provide adherence history."
                                         }
                                     ],
-                                    "disable": {
-                                        "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                    "hide": {
+                                        "hideWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                                     }
                                 },
                                 {
@@ -1492,8 +1467,8 @@
                                     },
                                     "type": "obs",
                                     "validators": [],
-                                    "disable": {
-                                        "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], tb_adherence)"
+                                    "hide": {
+                                        "hideWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], tb_adherence)"
                                     }
                                 },
                                 {
@@ -1505,8 +1480,8 @@
                                     "type": "obs",
                                     "id": "adherenceTbOther",
                                     "validators": [],
-                                    "disable": {
-                                        "disableWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], tb_adherence)"
+                                    "hide": {
+                                        "hideWhenExpression": "onTbTreatment !== 'a899b35c-1350-11df-a1f1-0026b9348838' || !arrayContains(['a73d20b3-d721-4763-a362-14a0c41a6b5e','fdaf8b47-ea14-4d28-80fa-e1da58a30e8b'], tb_adherence)"
                                     }
                                 }
                             ]
@@ -1761,6 +1736,7 @@
             "sections": [
                 {
                     "label": "CC/HPI",
+                    "isExpanded": true,
                     "questions": [
                         {
                             "type": "obs",
@@ -1782,50 +1758,8 @@
             "label": "Current Symptoms",
             "sections": [
                 {
-                    "label": "Problem list",
-                    "questions": [
-                        {
-                            "type": "obsGroup",
-                            "questionOptions": {
-                                "concept": "a89c2d8a-1350-11df-a1f1-0026b9348838",
-                                "rendering": "repeating"
-                            },
-                            "label": "Problem Added",
-                            "questions": [
-                                {
-                                    "label": "Problem Added",
-                                    "questionOptions": {
-                                        "concept": "a8ae835e-1350-11df-a1f1-0026b9348838",
-                                        "rendering": "problem"
-                                    },
-                                    "type": "obs",
-                                    "validators": []
-                                }
-                            ]
-                        },
-                        {
-                            "type": "obsGroup",
-                            "questionOptions": {
-                                "concept": "a89c2d8a-1350-11df-a1f1-0026b9348838",
-                                "rendering": "repeating"
-                            },
-                            "label": "Problem Resolved",
-                            "questions": [
-                                {
-                                    "label": "Problem Resolved",
-                                    "questionOptions": {
-                                        "concept": "a8af4aa0-1350-11df-a1f1-0026b9348838",
-                                        "rendering": "problem"
-                                    },
-                                    "type": "obs",
-                                    "validators": []
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
                     "label": "TB Screening questions",
+                    "isExpanded": true,
                     "questions": [
                         {
                             "label": "TB Symptoms:",
@@ -2034,8 +1968,8 @@
                                                     "message": "Date is result is required."
                                                 }
                                             ],
-                                            "disable": {
-                                                "disableWhenExpression": "isEmpty(testWBCmm)"
+                                            "hide": {
+                                                "hideWhenExpression": "isEmpty(testWBCmm)"
                                             }
                                         },
                                         "rendering": "number"
@@ -2063,8 +1997,8 @@
                                                     "message": "Date is result is required."
                                                 }
                                             ],
-                                            "disable": {
-                                                "disableWhenExpression": "isEmpty(hgbgdl_test)"
+                                            "hide": {
+                                                "hideWhenExpression": "isEmpty(hgbgdl_test)"
                                             }
                                         }
                                     },
@@ -2091,8 +2025,8 @@
                                                     "message": "Date is result is required."
                                                 }
                                             ],
-                                            "disable": {
-                                                "disableWhenExpression": "isEmpty(mcv_test)"
+                                            "hide": {
+                                                "hideWhenExpression": "isEmpty(mcv_test)"
                                             }
                                         }
                                     },
@@ -2119,8 +2053,8 @@
                                                     "message": "Date is result is required."
                                                 }
                                             ],
-                                            "disable": {
-                                                "disableWhenExpression": "isEmpty(alcmm_test)"
+                                            "hide": {
+                                                "hideWhenExpression": "isEmpty(alcmm_test)"
                                             }
                                         }
                                     },
@@ -2145,8 +2079,8 @@
                                                     "message": "Date is result is required."
                                                 }
                                             ],
-                                            "disable": {
-                                                "disableWhenExpression": "isEmpty(cd4_test)"
+                                            "hide": {
+                                                "hideWhenExpression": "isEmpty(cd4_test)"
                                             }
                                         }
                                     },
@@ -2174,8 +2108,8 @@
                                                     "message": "Date is result is required."
                                                 }
                                             ],
-                                            "disable": {
-                                                "disableWhenExpression": "isEmpty(cd4percent_test)"
+                                            "hide": {
+                                                "hideWhenExpression": "isEmpty(cd4percent_test)"
                                             }
                                         }
                                     },
@@ -2202,8 +2136,8 @@
                                                     "message": "Date is result is required."
                                                 }
                                             ],
-                                            "disable": {
-                                                "disableWhenExpression": "isEmpty(viralLoad_test)"
+                                            "hide": {
+                                                "hideWhenExpression": "isEmpty(viralLoad_test)"
                                             }
                                         }
                                     },
@@ -2230,8 +2164,8 @@
                                                     "message": "Date is result is required."
                                                 }
                                             ],
-                                            "disable": {
-                                                "disableWhenExpression": "isEmpty(creatinine_test)"
+                                            "hide": {
+                                                "hideWhenExpression": "isEmpty(creatinine_test)"
                                             }
                                         }
                                     },
@@ -2258,8 +2192,8 @@
                                                     "message": "Date is result is required."
                                                 }
                                             ],
-                                            "disable": {
-                                                "disableWhenExpression": "isEmpty(sgptalt_test)"
+                                            "hide": {
+                                                "hideWhenExpression": "isEmpty(sgptalt_test)"
                                             }
                                         }
                                     },
@@ -2301,8 +2235,8 @@
                                                     "message": "Date is result is required."
                                                 }
                                             ],
-                                            "disable": {
-                                                "disableWhenExpression": "isEmpty(sputumgene_test)"
+                                            "hide": {
+                                                "hideWhenExpression": "isEmpty(sputumgene_test)"
                                             }
                                         }
                                     },
@@ -2357,8 +2291,8 @@
                                                     "message": "Date is result is required."
                                                 }
                                             ],
-                                            "disable": {
-                                                "disableWhenExpression": "isEmpty(sputumafp_test)"
+                                            "hide": {
+                                                "hideWhenExpression": "isEmpty(sputumafp_test)"
                                             }
                                         }
                                     },
@@ -2405,8 +2339,8 @@
                                                     "message": "Date is result is required."
                                                 }
                                             ],
-                                            "disable": {
-                                                "disableWhenExpression": "isEmpty(sputumculture_test)"
+                                            "hide": {
+                                                "hideWhenExpression": "isEmpty(sputumculture_test)"
                                             }
                                         }
                                     },
@@ -2465,8 +2399,8 @@
                                                     "message": "Date is result is required."
                                                 }
                                             ],
-                                            "disable": {
-                                                "disableWhenExpression": "isEmpty(cxrcode_test)"
+                                            "hide": {
+                                                "hideWhenExpression": "isEmpty(cxrcode_test)"
                                             }
                                         }
                                     },
@@ -2484,6 +2418,7 @@
             "sections": [
                 {
                     "label": "Assessment",
+                    "isExpanded": true,
                     "questions": [
                         {
                             "type": "obs",
@@ -2505,12 +2440,13 @@
             "label": "Medication Plan",
             "sections": [
                 {
-                    "label": "ARV plan",
+                    "label": "ART plan",
+                    "isExpanded": true,
                     "questions": [
                         {
                             "required": "true",
                             "id": "arvPlan",
-                            "label": "ARV Plan:",
+                            "label": "ART Plan:",
                             "questionOptions": {
                                 "concept": "a89b75d4-1350-11df-a1f1-0026b9348838",
                                 "answers": [
@@ -2608,8 +2544,8 @@
                                     "message": "You indicated patient is not (re)starting ART, therefore no reason for starting should be selected."
                                 }
                             ],
-                            "disable": {
-                                "disableWhenExpression": "!arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'], arvPlan)"
+                            "hide": {
+                                "hideWhenExpression": "!arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838'], arvPlan)"
                             }
                         },
                         {
@@ -2701,8 +2637,8 @@
                                             "message": "You indicated patient is changing/changing dose/substituting/stopping arvs, reason for changing should be selected."
                                         }
                                     ],
-                                    "disable": {
-                                        "disableWhenExpression": "!arrayContains(['a898c938-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'], arvPlan)"
+                                    "hide": {
+                                        "hideWhenExpression": "!arrayContains(['a898c938-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'], arvPlan)"
                                     }
                                 },
                                 {
@@ -2767,8 +2703,8 @@
                                             "message": "You indicated patient is not changing/dose/substituting/stopping arvs due to toxicity, cause should be selected."
                                         }
                                     ],
-                                    "disable": {
-                                        "disableWhenExpression": "arvChangeReason!=='a890d1ba-1350-11df-a1f1-0026b9348838'"
+                                    "hide": {
+                                        "hideWhenExpression": "arvChangeReason!=='a890d1ba-1350-11df-a1f1-0026b9348838'"
                                     }
                                 },
                                 {
@@ -2791,8 +2727,8 @@
                                             "message": "You indicated patient is not changing /changing dose/substituting/stopping arvs due to other toxicity, other cause is not required."
                                         }
                                     ],
-                                    "disable": {
-                                        "disableWhenExpression": "arvToxicityCause!=='a8aaf3e2-1350-11df-a1f1-0026b9348838'"
+                                    "hide": {
+                                        "hideWhenExpression": "arvToxicityCause!=='a8aaf3e2-1350-11df-a1f1-0026b9348838'"
                                     }
                                 }
                             ]
@@ -2831,7 +2767,10 @@
                                         "rendering": "select"
                                     },
                                     "type": "obs",
-                                    "validators": []
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "onArt !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
+                                    }
                                 },
                                 {
                                     "label": "Eligible for ART but not started: Other (specify):",
@@ -2842,8 +2781,8 @@
                                     "type": "obs",
                                     "id": "q24dOther",
                                     "validators": [],
-                                    "disable": {
-                                        "disableWhenExpression": "artEligibleNotStarted !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
+                                    "hide": {
+                                        "hideWhenExpression": "artEligibleNotStarted !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
                                     }
                                 }
                             ]
@@ -2934,14 +2873,15 @@
                                     "message": "Based on the plan selected, you may not choose a regimen."
                                 }
                             ],
-                            "disable": {
-                                "disableWhenExpression": "!arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'],arvPlan)"
+                            "hide": {
+                                "hideWhenExpression": "!arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'],arvPlan)"
                             }
                         }
                     ]
                 },
                 {
                     "label": "PCP Prophylaxis Plan",
+                    "isExpanded": true,
                     "questions": [
                         {
                             "required": "true",
@@ -3025,8 +2965,8 @@
                                             "message": "Patient has not changed drugs, please do not select a reason."
                                         }
                                     ],
-                                    "disable": {
-                                        "disableWhenExpression": "!arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'], pcpProphylaxisPlan)"
+                                    "hide": {
+                                        "hideWhenExpression": "!arrayContains(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7d36-1350-11df-a1f1-0026b9348838'], pcpProphylaxisPlan)"
                                     }
                                 }
                             ]
@@ -3093,8 +3033,8 @@
                                     "message": "You indicated patient is not changing/dose/substituting/stopping PCP due to toxicity, cause should not be selected."
                                 }
                             ],
-                            "disable": {
-                                "disableWhenExpression": "pcpProphylaxisChangeReason !== 'a890d1ba-1350-11df-a1f1-0026b9348838'"
+                            "hide": {
+                                "hideWhenExpression": "pcpProphylaxisChangeReason !== 'a890d1ba-1350-11df-a1f1-0026b9348838'"
                             }
                         },
                         {
@@ -3112,8 +3052,8 @@
                                     "message": "You indicated patient is changing /changing dose/substituting/stopping PCP due to other toxicity, indicate the other cause."
                                 }
                             ],
-                            "disable": {
-                                "disableWhenExpression": "pcpToxicityCause !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
+                            "hide": {
+                                "hideWhenExpression": "pcpToxicityCause !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
                             }
                         },
                         {
@@ -3141,14 +3081,15 @@
                                     "message": "You indicated patient is starting/continuing/changing PCP regimen. Please select regimen."
                                 }
                             ],
-                            "disable": {
-                                "disableWhenExpression": "!arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838', 'a89b7908-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838'], pcpProphylaxisPlan)"
+                            "hide": {
+                                "hideWhenExpression": "!arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838', 'a89b7908-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838'], pcpProphylaxisPlan)"
                             }
                         }
                     ]
                 },
                 {
                     "label": "TB Prophylaxis Plan",
+                    "isExpanded": true,
                     "questions": [
                         {
                             "label": "TB Prophylaxis Plan:",
@@ -3286,7 +3227,7 @@
                         {
                             "label": "TB Treatment plan:",
                             "id": "tbKKKKTreatmentPlan",
-                            "required": "true",
+                            "required": "false",
                             "hide": "true",
                             "questionOptions": {
                                 "concept": "a89sc1fd4-1350-11df-a1f1-0026b9348838",
@@ -3328,7 +3269,7 @@
                         {
                             "label": "TB Treatment plan:",
                             "id": "tbTreatmentPlan",
-                            "required": "true",
+                            "required": "false",
                             "questionOptions": {
                                 "concept": "a89c1fd4-1350-11df-a1f1-0026b9348838",
                                 "answers": [
@@ -3408,8 +3349,8 @@
                                             "message": "You indicated patient is not stopping, changing or re-dosing tb medication, therefore reason should not be selected."
                                         }
                                     ],
-                                    "disable": {
-                                        "disableWhenExpression": "!arrayContains(['a89b7d36-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838'], tbTreatmentPlan)"
+                                    "hide": {
+                                        "hideWhenExpression": "!arrayContains(['a89b7d36-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838'], tbTreatmentPlan)"
                                     }
                                 },
                                 {
@@ -3435,8 +3376,8 @@
                                             "message": "You indicated patient did not completed tb medication, therefore date completed is not to be indicated."
                                         }
                                     ],
-                                    "disable": {
-                                        "disableWhenExpression": "!arrayContains(['a89c1ef8-1350-11df-a1f1-0026b9348838'], tbPlanChangeReason)"
+                                    "hide": {
+                                        "hideWhenExpression": "!arrayContains(['a89c1ef8-1350-11df-a1f1-0026b9348838'], tbPlanChangeReason)"
                                     }
                                 },
                                 {
@@ -3501,8 +3442,8 @@
                                             "message": "You indicated patient did not change tb medication because of toxicity, therefore cause should not be selected."
                                         }
                                     ],
-                                    "disable": {
-                                        "disableWhenExpression": "!arrayContains(['a890d1ba-1350-11df-a1f1-0026b9348838'], tbPlanChangeReason)"
+                                    "hide": {
+                                        "hideWhenExpression": "!arrayContains(['a890d1ba-1350-11df-a1f1-0026b9348838'], tbPlanChangeReason)"
                                     }
                                 },
                                 {
@@ -3525,8 +3466,8 @@
                                             "message": "You indicated patient did not change tb medication because of other toxicity, therefore other cause should not be indicated."
                                         }
                                     ],
-                                    "disable": {
-                                        "disableWhenExpression": "!arrayContains(['a8aaf3e2-1350-11df-a1f1-0026b9348838'], tbToxicityCause)"
+                                    "hide": {
+                                        "hideWhenExpression": "!arrayContains(['a8aaf3e2-1350-11df-a1f1-0026b9348838'], tbToxicityCause)"
                                     }
                                 }
                             ]
@@ -3619,8 +3560,8 @@
                                     },
                                     "type": "obs",
                                     "validators": [],
-                                    "disable": {
-                                        "disableWhenExpression": "tbMedPickupSite !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
+                                    "hide": {
+                                        "hideWhenExpression": "tbMedPickupSite !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
                                     }
                                 }
                             ]
@@ -4097,6 +4038,7 @@
                 },
                 {
                     "label": "Next appointment",
+                    "isExpanded": true,
                     "questions": [
                         {
                             "label": "Return to clinic Date:",
