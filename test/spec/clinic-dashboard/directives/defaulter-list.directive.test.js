@@ -16,11 +16,20 @@
 			module('app.clinicDashboard');
 			module('mock.etlRestServices');
 			module('my.templates');
+      module('openmrs-ngresource.restServices');
 		});
 
 		var elm, element, scope, etlRestServiceMock;
+    var PatientResService ;
+    var PatientResServiceStub;
 
 		beforeEach(inject(function ($injector, $rootScope, $compile, $httpBackend) {
+      PatientResService = $injector.get('PatientResService');
+
+      PatientResServiceStub = sinon.stub(PatientResService,
+        'getPatientByUuid', function (params, callback) {
+          callback({});
+        });
 			elm = angular.element(
 				'<defaulter-list location-uuid="{{location.uuid}}" selected="selected">' +
 				'</defaulter-list>');

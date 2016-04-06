@@ -13,7 +13,9 @@ jshint -W003, -W026
         return {
             restrict: "E",
             scope: { locationUuid: "@",
-                      indicator:"@"
+                      indicator:"@",
+                  selectedIndicatorBox:"=",
+              selectedLocationName:"="
 
             },
             controller: patientMohListController,
@@ -24,10 +26,10 @@ jshint -W003, -W026
 
   patientMohListController.$inject =
     ['$scope', '$rootScope', 'EtlRestService', 'PatientEtlModel', '$state', 'OpenmrsRestService', 'moment',
-      'Moh731ReportService'];
+      'Moh731ReportService','$filter','$stateParams','$timeout'];
 
     function patientMohListController($scope, $rootScope, EtlRestService, PatientEtlModel, $state, OpenmrsRestService,
-                                   moment, Moh731ReportService) {
+                                   moment, Moh731ReportService,$filter,$stateParams,$timeout) {
 
         //non-function types scope members
         $scope.patients = [];
@@ -38,10 +40,15 @@ jshint -W003, -W026
         $scope.endDate = Moh731ReportService.getEndDate();
         //function types scope members
         $scope.loadPatientList = loadPatientList;
-        $scope.loadPatient = loadPatient;
+        //$scope.loadPatient = loadPatient;
         $scope.loadIndicatorView=loadIndicatorView;
         $scope.getIndicatorDetails = getIndicatorDetails;
+        $scope.getIndicatorLabelByName = getIndicatorLabelByName;
+        $scope.selectedIndicatorBox =$filter('titlecase')( $stateParams.indicator || '').split('_').join(' ');
+        $scope.selectedLocationName = $stateParams.locationName || '';
 
+
+        $filter('titlecase')($scope.selectedIndicatorBox.toString().split('_').join(' '))
         //Pagination Params
         $scope.nextStartIndex = 0;
         $scope.allDataLoaded = false;
@@ -51,15 +58,21 @@ jshint -W003, -W026
       //load data
         loadPatientList();
 
-        function loadPatient(patientUuid) {
-           OpenmrsRestService.getPatientService().getPatientByUuid({ uuid: patientUuid },
-              function (data) {
-                $rootScope.broadcastPatient = data;
-                $state.go('patient', { uuid: patientUuid });
+      $rootScope.$on('$stateChangeStart',
+        function(event, toState, toParams, fromState, fromParams) {
+          console.log('ToState',toState);
+          console.log('FromState',fromState);
+          if ((toState.name === 'patient' &&
+            fromState.name === 'admin.moh-731-report.patients'))
+          $rootScope.broadcastPatient = _.find($scope.customPatientList, function(p){
+            if(p.uuid() === toParams.uuid) return p;
+          });
 
-              });
-          }
-        function loadIndicatorView ()
+        });
+
+
+
+      function loadIndicatorView ()
         {
           $state.go('admin.moh-731-report.report');
         }
@@ -98,11 +111,22 @@ jshint -W003, -W026
           if (patients.size === 0){
             $scope.allDataLoaded = true;
           }else{
-            $scope.patients.length!=0?$scope.patients.push.apply($scope.patients,PatientEtlModel.toArrayOfModels(patients.result)):
-            $scope.patients = PatientEtlModel.toArrayOfModels(patients.result);
+            $scope.patients.length!=0?$scope.patients.push.apply($scope.patients,patients.result):
+            $scope.patients = patients.result;
+            _.each($scope.patients, function(p){
+              $scope.customPatientList = [];
+              OpenmrsRestService.getPatientService().getPatientByUuid({
+                  uuid: p.patient_uuid
+                },
+                function(patient) {
+                  $scope.customPatientList.push(patient);
+                });
+            });
             $scope.nextStartIndex +=  patients.size;
           }
-
+          $timeout(function(){
+            $rootScope.$broadcast("patient", $scope.patients);
+          },200)
 
         }
 
@@ -110,9 +134,18 @@ jshint -W003, -W026
                $scope.isBusy = false;
              $scope.experiencedLoadingErrors = true;
         }
-        function getIndicatorDetails() {
-            return Moh731ReportService.getIndicatorDetails();
-        }
+      function getIndicatorDetails(name) {
+        $scope.data=Moh731ReportService.getIndicators();
+        var found = $filter('filter')($scope.data, {name: name})[0];
+        if (found)return found.label;
+        return Moh731ReportService.getIndicators();
+      }
+
+
+      function getIndicatorLabelByName(name) {
+        var found = $filter('filter')($scope.indicatorKeys, {name: name})[0];
+        if (found)return found.label;
+      }
 	}
 
         function patientListLink(scope, element, attrs, vm) {

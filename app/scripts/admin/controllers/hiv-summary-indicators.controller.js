@@ -6,17 +6,21 @@
     .module('app.admin')
     .controller('HivSummaryIndicatorsCtrl', HivSummaryIndicatorsCtrl);
   HivSummaryIndicatorsCtrl.$nject =
+
     ['$rootScope', '$scope', '$stateParams', 'EtlRestService', 'HivSummaryIndicatorService', 'moment', '$filter', '$state'
     ,'$timeout'];
 
   function HivSummaryIndicatorsCtrl($rootScope, $scope, $stateParams, EtlRestService, HivSummaryIndicatorService, moment,
                                     $filter, $state, $timeout) {
+
     //Patient List Directive Properties & Methods
     var date = new Date();
     $scope.startDate = new Date(date.getFullYear(), date.getMonth()-1, 1);
     $scope.endDate  = date;
     $scope.selectedLocation = $stateParams.locationuuid || '';
     $scope.selectedIndicatorBox = $stateParams.indicator || '';
+    $scope.selectedLocationName = $stateParams.locationName || '';
+
     $scope.loadPatientList = loadPatientList;
     $scope.ChangeView=ChangeView;
 
@@ -26,6 +30,7 @@
     $scope.groupBy = 'groupByLocation';
     $scope.loadHivSummaryIndicators = loadHivSummaryIndicators;
     $scope.getIndicatorLabelByName = getIndicatorLabelByName;
+
 
     //UX Scope Params
     $scope.isBusy = false;
@@ -118,12 +123,13 @@
 
     $rootScope.$on('$stateChangeStart',
       function (event, toState, toParams, fromState, fromParams) {
-        loadPatientList(toParams.indicator, toParams.locationuuid)
+        loadPatientList(toParams.indicator, toParams.locationuuid,toParams.locationName)
       });
 
-    function loadPatientList(indicator, location) {
+    function loadPatientList(indicator, location,locationName) {
       $scope.selectedIndicatorBox = indicator;
       $scope.selectedLocation = location;
+      $scope.selectedLocationName=locationName;
       HivSummaryIndicatorService.setIndicatorDetails(getIndicatorDetails(indicator));
       cacheResource(); //cache report before changing view/state
     }
@@ -296,8 +302,10 @@
         'title="' + getIndicatorLabelByName(header.name) + ' (in ' + row.location + ')" data-toggle="tooltip"',
         'data-placement="top"',
         'href="#/admin-dashboard/hiv-summary-indicators/location/' + row.location_uuid + '/indicator/' + header.name
-        + '">' + value + '</a>'
+        + '/locationName/' + row.location +'">' + value + '</a>'
       ].join('');
+
+
     }
   }
 })();

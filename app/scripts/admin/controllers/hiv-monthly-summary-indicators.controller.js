@@ -20,6 +20,8 @@
     $scope.selectedIndicatorBox=$stateParams.indicator||'';
     $scope.loadPatientList=loadPatientList;
     $scope.ChangeView =ChangeView;
+    $scope.selectedLocationName = $stateParams.locationName || '';
+
 
 
     //Hiv Summary Indicators Service Properties & Methods
@@ -142,11 +144,12 @@
 
     $rootScope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams){
-        loadPatientList(toParams.indicator, toParams.month)
+        loadPatientList(toParams.indicator, toParams.month,toParams.locationName)
       });
 
-    function loadPatientList(indicator, month) {
+    function loadPatientList(indicator, month,locationName) {
       $scope.selectedIndicatorBox=indicator;
+      $scope.selectedLocationName=locationName;
       HivMonthlySummaryIndicatorService.setSelectedMonth(moment(month*1000));
       HivMonthlySummaryIndicatorService.setIndicatorDetails(getIndicatorDetails(indicator));
       cacheResource(); //cache report before changing view/state
@@ -312,7 +315,7 @@
         'title="'+getIndicatorLabelByName(header.name)+' " data-toggle="tooltip"' ,
         'data-placement="top"',
         'href="#/admin-dashboard/hiv-monthly-summary-indicators/month/'+ Date.parse(new Date(row.month))/1000+'/indicator/'+header.name
-        +'">'+value+'</a>'
+        + '/locationName/' + row.location +'">'+value+'</a>'
       ].join('');
     }
 

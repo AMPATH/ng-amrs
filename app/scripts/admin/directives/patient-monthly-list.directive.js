@@ -23,10 +23,10 @@ jshint -W003, -W026
 
   patientMonthlyListController.$inject =
     ['$scope', '$rootScope', 'EtlRestService', 'PatientEtlModel', '$state', 'OpenmrsRestService', 'moment',
-      'HivMonthlySummaryIndicatorService'];
+      'HivMonthlySummaryIndicatorService','$timeout','$stateParams'];
 
     function patientMonthlyListController($scope, $rootScope, EtlRestService, PatientEtlModel, $state, OpenmrsRestService,
-                                   moment, HivMonthlySummaryIndicatorService) {
+                                   moment, HivMonthlySummaryIndicatorService,$timeout,$stateParams) {
 
         //non-function types scope members
         $scope.patients = [];
@@ -38,9 +38,10 @@ jshint -W003, -W026
         $scope.endDate= new Date($scope.selectedMonth.getFullYear(), $scope.selectedMonth.getMonth()+1, 1)-1;
         //function types scope members
         $scope.loadPatientList = loadPatientList;
-        $scope.loadPatient = loadPatient;
+        //$scope.loadPatient = loadPatient;
         $scope.loadIndicatorView=loadIndicatorView;
         $scope.getIndicatorDetails = getIndicatorDetails;
+        $scope.selectedLocationName = $stateParams.locationName || '';
 
         //Pagination Params
         $scope.nextStartIndex = 0;
@@ -50,14 +51,19 @@ jshint -W003, -W026
       //load data
         loadPatientList();
 
-        function loadPatient(patientUuid) {
-           OpenmrsRestService.getPatientService().getPatientByUuid({ uuid: patientUuid },
-              function (data) {
-                $rootScope.broadcastPatient = data;
-                $state.go('patient', { uuid: patientUuid });
 
-              });
-          }
+      $rootScope.$on('$stateChangeStart',
+        function(event, toState, toParams, fromState, fromParams) {
+          console.log('ToState',toState);
+          console.log('FromState',fromState);
+          if ((toState.name === 'patient' &&
+            fromState.name === 'admin.hiv-monthly-summary-indicators.patients'))
+          $rootScope.broadcastPatient = _.find($scope.customPatientList, function(p){
+            if(p.uuid() === toParams.uuid) return p;
+          });
+
+        });
+
         function loadIndicatorView ()
         {
           $state.go('admin.hiv-monthly-summary-indicators.monthly');
@@ -114,10 +120,23 @@ jshint -W003, -W026
           if (patients.size === 0){
             $scope.allDataLoaded = true;
           }else{
-            $scope.patients.length!=0?$scope.patients.push.apply($scope.patients,PatientEtlModel.toArrayOfModels(patients.result)):
-            $scope.patients = PatientEtlModel.toArrayOfModels(patients.result);
+            $scope.patients.length!=0?$scope.patients.push.apply($scope.patients,patients.result):
+            $scope.patients = patients.result;
+            _.each($scope.patients, function(p){
+              $scope.customPatientList = [];
+              OpenmrsRestService.getPatientService().getPatientByUuid({
+                  uuid: p.patient_uuid
+                },
+                function(patient) {
+                  $scope.customPatientList.push(patient);
+                });
+            });
             $scope.nextStartIndex +=  patients.size;
           }
+          $timeout(function(){
+            $rootScope.$broadcast("patient", $scope.patients);
+          },200)
+
 
 
         }

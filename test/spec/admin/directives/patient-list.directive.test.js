@@ -14,12 +14,22 @@
 			module('app.admin');
 			module('mock.etlRestServices');
 			module('my.templates');
+      module('openmrs-ngresource.restServices');
 		});
 
-		var elm, element, scope, etlRestServiceMock;
+		var elm, element, scope, etlRestServiceMock,openmrsRestServiceMock;
+    var PatientResService ;
+    var PatientResServiceStub;
 
 		beforeEach(inject(function ($injector, $rootScope, $compile, $httpBackend) {
-			elm = angular.element(
+      PatientResService = $injector.get('PatientResService');
+
+      PatientResServiceStub = sinon.stub(PatientResService,
+        'getPatientByUuid', function (params, callback) {
+          callback({});
+        });
+
+      elm = angular.element(
 				'<patient-list location-uuid="{{location.uuid}}" indicator="is_on_arvs" start-date="2015-04-01" ' +
         'selected="selected"></patient-list>');
 			scope = $rootScope.$new();
@@ -27,9 +37,12 @@
 			element = $compile(elm)(scope);
 			scope.$digest();
 			etlRestServiceMock = $injector.get('EtlRestService');
+     // openmrsRestServiceMock = $injector.get('OpenmrsRestService');
+
 		}));
 
 		afterEach(function() {
+      PatientResServiceStub.restore();
 			etlRestServiceMock.returnErrorOnNextCall = false;
 		});
 
@@ -39,7 +52,8 @@
 			expect(etlRestServiceMock.isMockService).to.equal(true);
 		});
 
-		it('should have required public members exposed on the scope on load',
+
+    it('should have required public members exposed on the scope on load',
       function () {
 			var isolateScope = element.isolateScope();
 			expect(isolateScope.patients).to.exist;

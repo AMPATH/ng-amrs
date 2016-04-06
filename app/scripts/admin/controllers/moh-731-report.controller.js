@@ -34,9 +34,11 @@
     $scope.experiencedLoadingError = false;
     $scope.resultIsEmpty = false;
     $scope.getIndicatorLabelByName =getIndicatorLabelByName;
+    $scope.getIndicatorLabelByName=getIndicatorLabelByName
     $scope.selectedLocation = $stateParams.locationuuid || '';
     $scope.selectedIndicatorBox = $stateParams.indicator || '';
     $scope.loadPatientList = loadPatientList;
+    $scope.selectedLocationName = $stateParams.locationName || '';
 
     //Dynamic DataTable Params
     $scope.currentPage = 1;
@@ -144,13 +146,16 @@
 
     $rootScope.$on('$stateChangeStart',
       function (event, toState, toParams, fromState, fromParams) {
+
         if(toState.name==='admin.moh-731-report.patients')
-          loadPatientList(toParams.indicator, toParams.locationuuid);
+
+        loadPatientList(toParams.indicator, toParams.locationuuid,toParams.locationName)
       });
 
-    function loadPatientList(indicator, location) {
+    function loadPatientList(indicator, location,locationName) {
       $scope.selectedIndicatorBox = indicator;
       $scope.selectedLocation = location;
+      $scope.selectedLocationName = locationName;
       Moh731ReportService.setIndicatorDetails(getIndicatorDetails(indicator));
       cacheResource(); //cache report before changing view/state
     }
@@ -161,10 +166,12 @@
       Moh731ReportService.setStartDate($scope.startDate);
       Moh731ReportService.setEndDate($scope.endDate);
     }
-    function getIndicatorDetails(name) {
-      var found = $filter('filter')($scope.indicatorTags, {name: name})[0];
+
+    function getIndicatorDetails() {
+      var found = $filter('filter')($scope.indicatorTags , {name: name})[0];
       if (found)return found;
     }
+
 
     /**
      * Method to fetch cached data to avoid round trips.
@@ -266,6 +273,7 @@
     }
     function getIndicatorLabelByName(name) {
       var found = $filter('filter')($scope.indicatorKeys, {name: name})[0];
+
       if (found)return found.label;
 
 
@@ -465,6 +473,7 @@
       return title;
     }
 
+
     /**
      * Function to add report (pdf) generation button
      */
@@ -482,12 +491,14 @@
         //for other fields other than location
         var html = [];
         html.push(
-          '<div class="text-center" style="height:43px!important;" ><a href="#/admin-dashboard/moh-731-reports/location/' + row.location_uuid +  '/indicator/' + header+'" '+
+          '<div class="text-center" style="height:43px!important;" ><a href="#/admin-dashboard/moh-731-reports/location/'
+          + row.location_uuid +  '/indicator/' + header+ '/locationName/' + row.location +'" '+
           'title="'+header.replace(/_/g, " ")+' '+' in '+ row.location +' " data-toggle="tooltip"class="btn btn-default" ' +
           'style="height:43px; width:100%; max-width: 300px">' +
            value + '</a></div>');
         return html.join('');
       }
+
     }
 
 

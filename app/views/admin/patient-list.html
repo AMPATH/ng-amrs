@@ -27,34 +27,18 @@
       <b>Loading data...</b>
     </div>
   </div >
-  <h3 class="text-warning">Patient List: {{getIndicatorDetails().label.replace('# of', '')|titlecase  }}</h3>
+  <h4 class="text-warning">Patient List: {{getIndicatorDetails().label.replace('# of', '')|titlecase  }}
+    in {{selectedLocationName}} <span style="padding-left:150px;"></span> Start date: {{startDate}}    End date:{{endDate}}
+  </h4>
   <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
-	<table class='table table-hover table-striped'>
-		<thead>
-			<tr>
-				<td>#</td>
-				<th>Identifiers</th>
-				<th>Name</th>
-        <th></th>
-			</tr>
-		</thead>
-		<tr ng-repeat="patient in patients | startFrom:(currentPage-1)*10 | limitTo:10"
-        data-ng-click="loadPatient(patient.patientUuid())"
-		style="cursor: pointer;">
-			<td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
-			<td>{{patient.identifiers()}}</td>
-			<td>{{patient.personName() | titlecase}}</td>
-			<td>
-				<a href="#/patient/{{patient.uuid()}}"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
-			</td>
-		</tr>
-	</table>
-	<hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
-	<pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="patients.length" items-per-page="10"
-	ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
-	last-text="&raquo;" rotate="false"></pagination>
+
+  <!-- DATATABLE -->
+
+  <patient-list-filters enabled-controls="' patientable'"   >
+  </patient-list-filters>
   <!-- END DATATABLE -->
-  <hr style="margin: 4px;" />
+
+
   <div style="padding:2px; margin-bottom: 30px !important; ">
 
     <div ng-show='!isBusy && !allDataLoaded'>
