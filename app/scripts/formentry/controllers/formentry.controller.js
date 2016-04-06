@@ -559,7 +559,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             $log.log('Generating payload for person attributes..');
             var payload = FormEntry.getPersonAttributesPayload(vm.model);
-            lastPersonAttributePayload =getFinalPersonattributePayload(payload);
+            lastPersonAttributePayload =
+                getFinalPersonattributePayload(payload, vm.patient);
             $log.info('Person PayLoad', JSON.stringify(lastPersonAttributePayload));
         }
 
@@ -587,15 +588,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             payload.visit = visitUuid;
         }
 
-        function getFinalPersonattributePayload(payload) {
-          var formatedPayload= {
-            attributes: []
-          }
+        function getFinalPersonattributePayload(payload, patient) {
+            var updatedPayload = [];
             _.each(payload, function(attribute) {
-                formatedPayload.attributes.push(attribute);
+                var personAttribute = { attribute: attribute, person: patient };
+                updatedPayload.push(personAttribute);
             });
-            console.log("formatedPayload is ",formatedPayload);
-            return formatedPayload;
+            return updatedPayload;
         }
 
         //debugging helpers
@@ -781,9 +780,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 }
                 //forth stage of submitting is to submit person attributes
                 console.log('Payload person attributes=====', JSON.stringify(lastPersonAttributePayload))
-                if (lastPersonAttributePayload !== undefined) {
+                if (lastPersonAttributePayload !== undefined &&
+                    lastPersonAttributePayload.length > 0) {
                     $log.log('Submitting person attributes..');
-                    submitPersonAttributes(lastPersonAttributePayload,vm.patient,
+                    submitPersonAttributes(lastPersonAttributePayload,
                         function(submitFailed) {
                             $log.log('Submitting person attributes completed');
                             if (submitFailed) {
@@ -881,22 +881,39 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             });
         }
 
-        function submitPersonAttributes(lastPersonAttributePayload,person,finalCallback) {
-                $log.log('Showing person attribute payload', lastPersonAttributePayload);
-                PersonAttributesRestService.saveUpdatePersonAttribute(lastPersonAttributePayload,person,function(data) {
+        function submitPersonAttributes(payload, finalCallback) {
+            var numberOfRequests = payload.length;
+            vm.hasFailedPersonAttributeRequest = false;
+
+            $log.log('number of person attributes requests ', numberOfRequests);
+            if (numberOfRequests === 0) {
+                finalCallback(vm.hasFailedPersonAttributeRequest);
+            }
+            _.each(payload, function(attribute) {
+                $log.log('Sending request for person attribute', attribute);
+                PersonAttributesRestService
+                    .saveUpdatePersonAttribute(attribute, function(data) {
                         if (data) {
                             $log.log('Updated attribute: ', data);
+                        }
+                        numberOfRequests--;
+                        //call final callback by voting
+                        if (numberOfRequests === 0) {
                             finalCallback(vm.hasFailedPersonAttributeRequest);
                         }
-
                     },
                     //error callback
                     function(error) {
                         $log.log('Error saving attribute: ', attribute);
                         vm.hasFailedPersonAttributeRequest = true;
 
-                        finalCallback(vm.hasFailedPersonAttributeRequest);
+                        numberOfRequests--;
+                        //call final callback by voting
+                        if (numberOfRequests === 0) {
+                            finalCallback(vm.hasFailedPersonAttributeRequest);
+                        }
                     });
+            });
         }
 
         //Endregion: Payload submission

@@ -10,13 +10,14 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
     .module('app.openmrsRestServices')
           .factory('PersonAttributesRestService', PersonAttributesRestService);
 
-  PersonAttributesRestService.$inject = ['OpenmrsSettings', '$resource','LocationExtensionService', 'Restangular'];
+  PersonAttributesRestService.$inject = ['OpenmrsSettings', '$resource','LocationExtensionService'];
 
-  function PersonAttributesRestService(OpenmrsSettings, $resource,LocationExtensionService, Restangular) {
+  function PersonAttributesRestService(OpenmrsSettings, $resource,LocationExtensionService) {
     var service = {
       getPersonAttributeByUuid: getPersonAttributeByUuid,
       saveUpdatePersonAttribute:saveUpdatePersonAttribute,
       voidPersonAttribute: voidPersonAttribute,
+      getPersonAttributeFieldValues:getPersonAttributeFieldValues,
       getPersonAttributeValue:getPersonAttributeValue
     };
 
@@ -29,17 +30,55 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
         { query: { method: 'GET', isArray: false } });
     }
 
-    function saveUpdatePersonAttribute(formatedPersonAttributes,person, successCallback, errorCallback) {
-      var personUuid= person.uuid();
-      console.log('person attributes payload in service',personUuid);
-      Restangular.one('person', personUuid).customPOST(JSON.stringify(formatedPersonAttributes)).then(function(success) {
-        console.log('person attributes saved successfully');
-        if (typeof successCallback === 'function') successCallback(success);
-      },
-      function(error) {
-        console.log('Error saving person attributes');
-        if (typeof errorCallback === 'function') errorCallback(error);
-      });
+    function saveUpdatePersonAttribute(personAttribute, successCallback, errorCallback) {
+      var personAttributeResource = getPersonAttributeResource();
+      var patient = personAttribute.person;
+      var patientUuid = patient.uuid();
+      var personAttributeUuid = personAttribute.attribute.uuid;
+
+      if (patientUuid !== undefined) {
+        //Void an existing person attribute and create a new one
+        if (personAttributeUuid) {
+          voidPersonAttribute(personAttribute, function(response) {
+            console.log('Voided a person attribute with uuid ' + personAttributeUuid);
+          },
+
+          function(error) {
+            console.error('An Error Occurred while voiding the person attribute', error);
+          });
+        }
+
+        //getting the location id
+        var locationUUid = personAttribute.attribute.value;
+        LocationExtensionService.getLocationByUuidFromEtl(locationUUid,
+          function(response) {
+            var locationId = response.result[0]['location_id'].toString();
+            var attributePayLoad = JSON.stringify({value:locationId,
+                attributeType:personAttribute.attribute.attributeType});
+
+            if (locationId !== null && locationId !== undefined)  {
+              personAttributeResource.save({uuid:patientUuid},
+                    attributePayLoad).$promise
+                  .then(function(data) {
+                  successCallback(data);
+                })
+                .catch(function(error) {
+                  console.error('An Error occured when saving person attribute ', error);
+                  if (typeof errorCallback === 'function')
+                  errorCallback('Error processing request', error);
+                });
+            }
+
+          },
+
+          function(error) {
+            console.error('Failed get location id from etl server', error);
+            errorCallback('Failed get location id from etl server', error);
+          });
+      } else {
+           console.error('Patient is required to submit person attributes');
+           errorCallback('Patient is required to submit person attributes');
+      }
     }
 
     function getPersonAttributeByUuid(params, successCallback, errorCallback) {
@@ -73,6 +112,20 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
         }
       );
     }
+
+    function getPersonAttributeFieldValues(personAttributes, person) {
+      _.each(personAttributes, function(attribute) {
+        var personAttribute = {attribute:attribute,person:person};
+        saveUpdatePersonAttribute(personAttribute, function(response) {
+          console.log('Person attribute value', JSON.stringify(response));          
+        },
+
+       function(error) {
+         console.log('An Error Occurred while getting the person attributes');
+       });
+      });
+    }
+
     function getPersonAttributeValue(attributes, key) {
       var inp = JSON.stringify(attributes);
       console.log(inp);
