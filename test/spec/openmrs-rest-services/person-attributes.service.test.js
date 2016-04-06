@@ -56,7 +56,6 @@
       expect(personAttributesService.voidPersonAttribute).to.be.an('function');
       expect(personAttributesService.getPersonAttributeByUuid).to.be.an('function');
       expect(personAttributesService.saveUpdatePersonAttribute).to.be.an('function');
-      expect(personAttributesService.getPersonAttributeFieldValues).to.be.an('function');
       expect(personAttributesService.getPersonAttributeValue).to.be.an('function');
 
     });
