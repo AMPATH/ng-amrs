@@ -109,6 +109,7 @@ jshint -W098, -W117, -W030
             console.log('mock schema', mockFormSchema);
             rootScope =  $rootScope;
             rootScope.broadcastPatient = selectedPatient;
+            rootScope.latestEncounterPerType = {};
 			controllerScope = $rootScope.$new();
             console.log('patient', controllerScope.patient);
             dialogService = $injector.get('dialogs');

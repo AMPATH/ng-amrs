@@ -78,7 +78,7 @@
       vm.hasEncounters = vm.encounterList.length > 0 ? true : false;
       vm.totalItems = vm.encounterList.length;
       vm.noOfPages = Math.ceil(vm.totalItems / vm.entryLimit);
-
+      addLatestEncounterPerTypeToRootScope();
     }
 
     function onLoadEncountersError(error) {
@@ -87,6 +87,17 @@
       console.error('Error: EncounterController An error' + error +
         'occured while loading');
     }
-
+    
+    function addLatestEncounterPerTypeToRootScope() {
+        $rootScope.latestEncounterPerType = {};
+        
+        var latestEncounters = {};
+        _.each(vm.encounterList, function(encounter){
+            if(latestEncounters[encounter.encounterTypeUuid()] === undefined) {
+                latestEncounters[encounter.encounterTypeUuid()] = encounter;
+            }
+        });
+        $rootScope.latestEncounterPerType = latestEncounters;
+    }
   }
 })();
