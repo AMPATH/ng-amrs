@@ -11,12 +11,14 @@
 
   function directive() {
     return {
+
       restrict: "E",
       scope: {
         locationUuid: "@",
         startDate: "@",
         endDate: "@",
-        indicator: "@"
+        indicator: "@",
+        selectedLocationName:"@"
       },
       controller: patientListController,
       link: patientListLink,
@@ -26,10 +28,10 @@
 
   patientListController.$inject =
     ['$scope', '$rootScope', 'EtlRestService', 'PatientEtlModel', '$state', 'OpenmrsRestService', 'moment',
-      'HivSummaryIndicatorService'];
+      'HivSummaryIndicatorService','$filter','$stateParams','$timeout'];
 
   function patientListController($scope, $rootScope, EtlRestService, PatientEtlModel, $state, OpenmrsRestService,
-                                 moment, HivSummaryIndicatorService) {
+                                 moment, HivSummaryIndicatorService,$filter,$stateParams,$timeout) {
 
     //non-function types scope members
     $scope.patients = [];
@@ -39,27 +41,45 @@
     $scope.startDate = HivSummaryIndicatorService.getStartDate();
     $scope.endDate = HivSummaryIndicatorService.getEndDate();
 
+
     //function types scope members
     $scope.loadPatientList = loadPatientList;
-    $scope.loadPatient = loadPatient;
+  //  $scope.loadPatient = loadPatient;
     $scope.loadIndicatorView = loadIndicatorView;
     $scope.getIndicatorDetails = getIndicatorDetails;
+    $scope.getIndicatorLabelByName = getIndicatorLabelByName;
+    $scope.getSelectedLocation =getSelectedLocation;
+    $scope.selectedLocationName = $stateParams.locationName || '';
 
     //Pagination Params
     $scope.nextStartIndex = 0;
     $scope.allDataLoaded = false;
 
+    //Dynamic DataTable Params
+   // $scope.indicators = [];  //set filtered indicators to []
+    $scope.currentPage = 1;
+    $scope.counter = 0;
+    $scope.setCountType = function (val) {
+      $scope.countBy = val;
+     // loadHivSummaryIndicators()
+    };
     //load data
     loadPatientList();
 
-    function loadPatient(patientUuid) {
-      OpenmrsRestService.getPatientService().getPatientByUuid({uuid: patientUuid},
-        function (data) {
-          $rootScope.broadcastPatient = data;
-          $state.go('patient', {uuid: patientUuid});
+    $rootScope.$on('$stateChangeStart',
+      function(event, toState, toParams, fromState, fromParams,patientUuid) {
+        console.log('ToState',toState);
+        console.log('FromState',fromState);
+        if ((toState.name === 'patient' &&
+          fromState.name === 'admin.hiv-summary-indicators.patients'))
 
-        });
-    }
+          $rootScope.broadcastPatient = _.find($scope.customPatientList, function(p){
+            if(p.uuid() === toParams.uuid) return p;
+          });
+
+      });
+
+
 
     function loadIndicatorView() {
       $state.go('admin.hiv-summary-indicators.indicator');
@@ -76,6 +96,7 @@
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError, $scope.nextStartIndex, 300);
+
       }
       else {
         $scope.experiencedLoadingErrors = true;
@@ -98,10 +119,24 @@
       if (patients.size === 0){
         $scope.allDataLoaded = true;
       }else{
-        $scope.patients.length!=0?$scope.patients.push.apply($scope.patients,PatientEtlModel.toArrayOfModels(patients.result)):
-          $scope.patients = PatientEtlModel.toArrayOfModels(patients.result);
+        $scope.patients.length!=0?$scope.patients.push.apply($scope.patients,patients.result):
+          $scope.patients = patients.result;
+        _.each($scope.patients, function(p){
+          $scope.customPatientList = [];
+          OpenmrsRestService.getPatientService().getPatientByUuid({
+              uuid: p.patient_uuid
+            },
+            function(patient) {
+              $scope.customPatientList.push(patient);
+            });
+        });
+
+
         $scope.nextStartIndex +=  patients.size;
       }
+      $timeout(function(){
+      $rootScope.$broadcast("patient", $scope.patients);
+      },200)
     }
 
     function onFetchPatientsListError(error) {
@@ -112,11 +147,26 @@
     function getIndicatorDetails() {
       return HivSummaryIndicatorService.getIndicatorDetails();
     }
+
+    function getSelectedLocation (){
+      return HivSummaryIndicatorService.getSelectedLocation();
     }
 
-  function patientListLink(scope, element, attrs, vm) {
+
+
+    function getIndicatorLabelByName(name) {
+      var found = $filter('filter')($scope.patientTags, {name: name})[0];
+      if (found)return found.label;
+    }
+
+
+    }
+
+  function patientListLink(scope, element, attrs, vm,$ctrl) {
     scope.onLoadPatientList = function () {
 
     }
   }
+
+
 })();

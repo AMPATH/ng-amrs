@@ -14,12 +14,22 @@
 			module('app.admin');
 			module('mock.etlRestServices');
 			module('my.templates');
+      module('openmrs-ngresource.restServices');
 		});
 
 		var elm, element, scope, etlRestServiceMock;
+    var PatientResService ;
+    var PatientResServiceStub;
 
 		beforeEach(inject(function ($injector, $rootScope, $compile, $httpBackend) {
-			elm = angular.element(
+      PatientResService = $injector.get('PatientResService');
+
+      PatientResServiceStub = sinon.stub(PatientResService,
+        'getPatientByUuid', function (params, callback) {
+          callback({});
+        });
+
+      elm = angular.element(
 				'<patient-monthly-list location-uuid="{{location.uuid}}" indicator="is_on_arvs" start-date="2015-04-01" ' +
         'selected="selected"></patient-monthly-list>');
 			scope = $rootScope.$new();

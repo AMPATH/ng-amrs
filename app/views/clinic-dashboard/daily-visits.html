@@ -51,42 +51,24 @@
       <div/>
       <div class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading">
-          <div class="input-group">
 
-            <input class="form-control" placeholder="Filter..." type="text" ng-model="visitSearchString" />
-            <div class="input-group-btn">
-              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-            </div>
+        <!-- DATATABLE -->
+        <div>
 
+          <div id="toolbar">
+            <select ng-model='exportDataType' style="margin-left: 5px" class="form-control"
+                    ng-options="l.name for l in exportList" ng-change="updateSelectedType()">
+            </select>
           </div>
+          <table id="bsTable" class="table table-striped table-condensed table-hover" bs-table-control="bsTableControl" >
+          </table>
         </div>
-
-        <table class='table table-hover table-striped table-responsive'>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Identifier</th>
-              <th>Name</th>
-            </tr>
-          </thead>
-          <tr ng-repeat="patient in customPatients | filter:visitSearchString | startFrom:(currentPage-1)*10 | limitTo:10" ng-class="{ warning: patient.status}" data-ng-click="loadPatient(patient.uuid)">
-            <td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
-            <td>{{patient.identifier}}</td>
-            <td>{{patient.name | titlecase}}</td>
-            <td>
-              <a href="#/patient/{{patient.uuid}}"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a>
-            </td>
-          </tr>
-        </table>
+        <!-- END DATATABLE -->
 
         <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
-        <pagination boundary-links="true" ng-model="currentPage" max-size="10" total-items="customPatients.length" items-per-page="10" ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;"
-        last-text="&raquo;" rotate="false"></pagination>
-        <!-- END DATATABLE -->
         <div style="padding:2px; margin-bottom: 30px !important; ">
           <div ng-show='!isBusy && !allDataLoaded4DailyVisits'>
-            <span class="text-success">{{visitPatients.length}} Records Loaded. Click 'Load More' to fetch more records</span>
+            <span class="text-success">{{customPatients.length}} Records Loaded. Click 'Load More' to fetch more records</span>
             <button class="btn btn-info pull-right " ng-click="loadSchedule(true)">
               <span class="glyphicon glyphicon-refresh"></span> Load More</button>
           </div>
@@ -97,7 +79,7 @@
           <div ng-show='allDataLoaded4DailyVisits'>
             <p class="bg-info" style="padding:4px;">
               <b>
-              <span style="color:green;" class="glyphicon glyphicon-ok" />All data loaded {{'[ ' + visitPatients.length + ' ]'}}</b>
+              <span style="color:green;" class="glyphicon glyphicon-ok" />All data loaded {{'[ ' + customPatients.length + ' ]'}}</b>
               <p>
           </div>
         </div>

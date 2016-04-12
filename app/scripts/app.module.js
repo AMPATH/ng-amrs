@@ -247,7 +247,7 @@
           },
         })
         .state('admin.hiv-monthly-summary-indicators.patients', {
-          url: '/month/:month/indicator/:indicator',
+          url: '/month/:month/indicator/:indicator/locationName/:locationName',
           templateUrl: 'views/admin/patient-monthly-list-container.html',
           controller: 'HivMonthlySummaryIndicatorsCtrl',
           data: {
@@ -255,7 +255,7 @@
           },
         })
         .state('admin.hiv-summary-indicators.patients', {
-          url: '/location/:locationuuid/indicator/:indicator',
+          url: '/location/:locationuuid/indicator/:indicator/locationName/:locationName',
           templateUrl: 'views/admin/patient-list-container.html',
           controller: 'HivSummaryIndicatorsCtrl',
           data: {
@@ -264,7 +264,7 @@
         })
 
       .state('admin.moh-731-report.patients', {
-        url: '/location/:locationuuid/indicator/:indicator',
+        url: '/location/:locationuuid/indicator/:indicator/locationName/:locationName',
         templateUrl: 'views/admin/patient-moh-list-container.html',
         controller: 'moh731ReportCtrl',
         data: {
