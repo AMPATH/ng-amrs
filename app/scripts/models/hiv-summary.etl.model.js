@@ -117,6 +117,9 @@
             var _enrollmentDate = !UtilService.isNullOrUndefined(hivSummaryEtl.enrollment_date) ?
                 hivSummaryEtl.enrollment_date : '';
 
+            var _curWhoStage = !UtilService.isNullOrUndefined(hivSummaryEtl.cur_who_stage) ?
+                    hivSummaryEtl.cur_who_stage : '';
+
             modelDefinition.personId = function(value) {
                 if (angular.isDefined(value)) {
                     _personId = value;
@@ -510,6 +513,15 @@
                 }
                 else {
                     return _enrollmentDate;
+                }
+            };
+
+            modelDefinition.curWhoStage = function(value) {
+                if (angular.isDefined(value)) {
+                    _curWhoStage = value;
+                }
+                else {
+                    return _curWhoStage;
                 }
             };
 
