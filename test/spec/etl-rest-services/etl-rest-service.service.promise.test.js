@@ -60,8 +60,8 @@
       var promise = etlRestService.getHivSummary('passed-uuid');
       expect(promise).to.be.an.object;
 
-      promise.then(function(data) {
-        expect(data).to.equal(successResponse.data);
+      promise.then(function(response) {
+        expect(response.data).to.equal(successResponse.data);
       }).catch(function() {});
       httpBackend.flush();
     });
@@ -88,7 +88,9 @@
         httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/hiv-summary?limit=20&startIndex=0').respond(500, errorResponse);
 
         etlRestService.getHivSummary('passed-uuid')
-          .then(callbacks.onSuccess).catch(callbacks.onFailure);
+          .then(callbacks.onSuccess).catch(function(error) {
+            callbacks.onFailure(error.data);
+          });
 
         httpBackend.flush();
         expect(callbacks.onSuccessCalled).to.equal(false);
@@ -144,7 +146,9 @@
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/vitals?limit=20&startIndex=0').respond(500, errorResponse);
       
       var promise = etlRestService.getVitals('passed-uuid');
-      promise.then(callbacks.onSuccess).catch(callbacks.onFailure);
+      promise.then(callbacks.onSuccess).catch(function(error){
+        callbacks.onFailure(error.data);
+      });
       
       httpBackend.flush();
       expect(callbacks.onSuccessCalled).to.equal(false);

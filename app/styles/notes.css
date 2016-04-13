@@ -1,0 +1,21 @@
+.note-info {
+  font-style: italic;
+  color: green;
+}
+
+.note-label-primary {
+  font-style: oblique;
+  font-weight: bold;
+  font-size: 14px;
+  color: #2B3856;
+}
+
+.note-label {
+  font-style: oblique;
+  color: #2B3856;
+}
+
+.note-table-row {
+    border-bottom-color: slategray;
+    border-bottom-style: double;
+}
