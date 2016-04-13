@@ -81,6 +81,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         };
         vm.formSubmitSuccessMessage = '';
 
+        vm.areAllTabsLoaded = areAllTabsLoaded;
+        vm.validateTabs = validateTabs;
+        vm.loadAllTabs = loadAllTabs;
         vm.isCurrentTabLast = isCurrentTabLast;
         vm.isCurrentTabFirst = isCurrentTabFirst;
         vm.currentTabIndex = 0;
@@ -203,6 +206,16 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 return;
             }
 
+        }
+
+        function validateTabs() {
+            isSpinnerBusy(true);
+            $timeout(function() {
+                loadAllTabs();
+                isSpinnerBusy(false);
+                vm.hasClickedSubmit = true;
+                //scrollToTop();
+            }, 200, false);
         }
 
         function loadAllTabs() {
