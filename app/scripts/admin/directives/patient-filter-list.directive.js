@@ -72,6 +72,14 @@
       });
     };
 
+    $scope.$on("patient", function(event, data){
+      //use the data
+      $scope.patients =data;
+      console.log('got here list directive', $scope.patients)
+      buildDataTable();
+
+    });
+
     //pre-load data
     init();
     function init() {
@@ -83,14 +91,6 @@
     function canView(param){
       return $scope.enabledControls.indexOf(param) > -1;
     }
-
-    $scope.$on("patient", function(event, data){
-      //use the data
-      $scope.patients =data;
-      buildDataTable();
-
-    });
-
 
     /**
      * Functions to populate and define bootstrap data table
@@ -116,10 +116,27 @@
           formatter: function (value, row, index) {
             return cellFormatter(value, row, index, header);
 
-          }
+          },
+          events:'actionEvents'
         });
       });
     }
+
+    //addding click event to bootstrap-table links
+    window.actionEvents = {
+      'click .clickLink': function (e, value, row, index) {
+        console.log(row);
+        //fetch patient based on uuid
+        OpenmrsRestService.getPatientService().getPatientByUuid({
+            uuid: row.patient_uuid
+          },
+          function(data) {
+            $rootScope.broadcastPatient = data;
+            $state.go('patient', {uuid: row.patient_uuid});
+          });
+      }
+    };
+
 
     function buildTableControls() {
 
@@ -189,10 +206,10 @@
       if (header.name === '#') return '<div class="text-center" style="width:43px;height:23px!important;" >' +
         '<span class="text-info text-capitalize">' + numbers + '</span></div>';
 
-      return ['<a class=""',
+      return ['<a class="clickLink"',
         'title="  " data-toggle="tooltip"',
         'data-placement="top"',
-        'href="#/patient/'  +row.patient_uuid +'">' + value + '</a>'
+        'href="javascript:void(0)" >' + value + '</a>'
       ].join('');
     }
 

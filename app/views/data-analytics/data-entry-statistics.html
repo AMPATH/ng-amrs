@@ -1,78 +1,11 @@
-<h2  ng-click="selectedView = ''" style="cursor:pointer;"> <span style="font-size:20px;" class="glyphicon glyphicon-stats"></span><strong> Data Entry Statistics </strong> 
-<button class="btn btn-info pull-right" ng-show="selectedView !== ''">
-	Change View
-</button>
+<h2  ng-click="selectedView = ''" style="cursor:pointer;"> <span style="font-size:20px;" class="glyphicon glyphicon-stats"></span><strong> Data Entry Statistics </strong>
 </h2>
 <hr style="margin: 0px;" />
-<div class="container-fluid" style="margin-top: 30px;" collapse="selectedView !== ''">
-	<div class="row">
-		<div class="col-xs-6 col-md-3" ng-click="selectedView = 'view1'">
-			<a class="thumbnail" style="text-decoration:none; cursor:pointer;">
-				<div>
-					<strong><span class="glyphicon glyphicon-stats"></span> View 1</strong>
-				</div>
-				<div>
-					<Span>View number of encounters per encounter type per day    </Span>
-					<br/>
-					<br/>
-				</div>
-			</a>
-		</div>
-		<div class="col-xs-6 col-md-3" ng-click="selectedView = 'view2'">
-			<a class="thumbnail" style="text-decoration:none; cursor:pointer;">
-				<div>
-					<strong><span class="glyphicon glyphicon-stats"></span> 
-					View 2</strong>
-				</div>
-				<div>
-					View number of encounters per encounter type per month
-					<br/>
-					<br/>
-				</div>
-			</a>
-		</div>
-		<div class="col-xs-6 col-md-3" ng-click="selectedView = 'view3'">
-			<a class="thumbnail" style="text-decoration:none; cursor:pointer;">
-				<div>
-					<strong><span class="glyphicon glyphicon-stats"></span> View 3</strong>
-				</div>
-				<div>
-					View number of encounters per encounter type per provider
-					<br/>
-					<br/>
-				</div>
-			</a>
-		</div>
-		<div class="col-xs-6 col-md-3"  ng-click="selectedView = 'view4'"> 
-			<a class="thumbnail" style="text-decoration:none; cursor:pointer;">
-				<div>
-					<strong><span class="glyphicon glyphicon-stats"></span> View 4</strong>
-				</div>
-				<div>
-					View number of encounters per encounter type per creator
-					<br/>
-					<br/>
-				</div>
-			</a>
-		</div>
-		<div class="col-xs-6 col-md-3"  ng-click="selectedView = 'view5'"> 
-			<a class="thumbnail" style="text-decoration:none; cursor:pointer;">
-				<div>
-					<strong><span class="glyphicon glyphicon-stats"></span> Custom Views</strong>
-				</div>
-				<div>
-					View by all possible row column configurations
-					<br/>
-					<br/>
-				</div>
-			</a>
-		</div>
-
-	</div>
-</div>
-
-<stats-data-entry-stats-view-one collapse="!(selectedView === 'view1')"></stats-data-entry-stats-view-one>
-<stats-data-entry-stats-view-two   ng-show="selectedView === 'view2'"></stats-data-entry-stats-view-two>
-<stats-data-entry-stats-view-three  ng-show="selectedView === 'view3'"></stats-data-entry-stats-view-three>
-<stats-data-entry-stats-view-four  ng-show="selectedView === 'view4'"></stats-data-entry-stats-view-four>
-<stats-data-entry-stats collapse="!(selectedView === 'view5')"></stats-data-entry-stats>
+<ul class="nav nav-pills" style="margin-top:16px;">
+	<li ui-sref-active="active"><a ui-sref="admin.data-entry-statistics.view({view_id:'view1'})"><span span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;Encounters per type per day</a></li>
+	<li ui-sref-active="active"><a ui-sref="admin.data-entry-statistics.view({view_id:'view2'})"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;Encounters per type per month</a></li>
+	<li ui-sref-active="active"><a ui-sref="admin.data-entry-statistics.view({view_id:'view3'})"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;Encounters per type per Provider</a></li>
+	<li ui-sref-active="active"><a ui-sref="admin.data-entry-statistics.view({view_id:'view4'})"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;Encounters per type per creator</a></li>
+	<li ui-sref-active="active"><a ui-sref="admin.data-entry-statistics.view({view_id:'view5'})"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span>&nbsp;Custom configurations</a></li>
+</ul>
+<div ui-view></div>

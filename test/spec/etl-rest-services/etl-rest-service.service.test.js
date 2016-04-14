@@ -636,6 +636,7 @@
       var subType;
       var queryParam;
       var expectedParam;
+      var groupBy = "groupByDate,groupByEncounterTypeId"
 
       //VIEW1
       //subtype by-date-by-encounter-type
@@ -644,6 +645,7 @@
         subType: subType,
         startDate: startDate,
         endDate: endDate,
+        groupBy:groupBy,
         locationUuids: locationUuids,
         encounterTypeUuids: encounterTypeUuids,
         formUuids: formUuids,
@@ -651,7 +653,7 @@
       };
 
       queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-        endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid);
+        endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid, groupBy);
       //assertions
       expect(queryParam).to.deep.equal(expectedParam);
 
@@ -660,22 +662,25 @@
         subType: subType,
         startDate: startDate,
         endDate: endDate,
+        groupBy:groupBy,
         locationUuids: locationUuids,
         providerUuid: providerUuid
       };
 
       queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-        endDate, locationUuids, null, null, providerUuid, creatorUuid);
+        endDate, locationUuids, null, null, providerUuid, creatorUuid,groupBy);
       //assertions
       expect(queryParam).to.deep.equal(expectedParam);
 
       //VIEW2
       //subtype by-month-by-encounter-type
+      groupBy = "groupByMonth,groupByEncounterTypeId"
       subType = 'by-month-by-encounter-type';
       expectedParam = {
         subType: subType,
         startDate: startDate,
         endDate: endDate,
+        groupBy:groupBy,
         locationUuids: locationUuids,
         encounterTypeUuids: encounterTypeUuids,
         formUuids: formUuids,
@@ -683,7 +688,7 @@
       };
 
       queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-        endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid);
+        endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid, groupBy);
 
       //assertions
       expect(queryParam).to.deep.equal(expectedParam);
@@ -693,12 +698,13 @@
         subType: subType,
         startDate: startDate,
         endDate: endDate,
+        groupBy:groupBy,
         locationUuids: locationUuids,
         providerUuid: providerUuid
       };
 
       queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-        endDate, locationUuids, null, null, providerUuid, creatorUuid);
+        endDate, locationUuids, null, null, providerUuid, creatorUuid, groupBy);
 
       //assertions
       expect(queryParam).to.deep.equal(expectedParam);
@@ -706,11 +712,13 @@
 
       //VIEW3
       //subtype by-provider-by-encounter-type
+      groupBy = "groupByProviderId,groupByEncounterTypeId"
       subType = 'by-provider-by-encounter-type';
       expectedParam = {
         subType: subType,
         startDate: startDate,
         endDate: endDate,
+        groupBy:groupBy,
         locationUuids: locationUuids,
         encounterTypeUuids: encounterTypeUuids,
         formUuids: formUuids,
@@ -718,7 +726,7 @@
       };
 
       queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-        endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid);
+        endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid,groupBy);
 
       //assertions
       expect(queryParam).to.deep.equal(expectedParam);
@@ -728,22 +736,25 @@
         subType: subType,
         startDate: startDate,
         endDate: endDate,
+        groupBy:groupBy,
         locationUuids: locationUuids,
         providerUuid: providerUuid
       };
 
       queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-        endDate, locationUuids, null, null, providerUuid, creatorUuid);
+        endDate, locationUuids, null, null, providerUuid, creatorUuid,groupBy);
 
       //assertions
       expect(queryParam).to.deep.equal(expectedParam);
 
       //VIEW4
       //by-creator-by-encounter-type
+      groupBy = "groupByCreatorId,groupByEncounterTypeId"
       subType = 'by-creator-by-encounter-type';
       expectedParam = {
         subType: subType,
         startDate: startDate,
+        groupBy:groupBy,
         endDate: endDate,
         locationUuids: locationUuids,
         encounterTypeUuids: encounterTypeUuids,
@@ -752,7 +763,7 @@
       };
 
       queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-        endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid);
+        endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid,groupBy);
 
       //assertions
       expect(queryParam).to.deep.equal(expectedParam);
@@ -762,34 +773,37 @@
         subType: subType,
         startDate: startDate,
         endDate: endDate,
+        groupBy:groupBy,
         locationUuids: locationUuids,
         creatorUuid: creatorUuid
       };
 
       queryParam = etlRestService.getDataEntryStatisticsQueryParam(subType, startDate,
-        endDate, locationUuids, null, null, providerUuid, creatorUuid);
+        endDate, locationUuids, null, null, providerUuid, creatorUuid,groupBy);
 
       //assertions
       expect(queryParam).to.deep.equal(expectedParam);
-
 
     });
 
     it('should make an api call to the data entry statistics etl ' +
       'rest endpoint when getDataEntryStatistics is called with ' +
-      'a subType, date range, location uuid, and optional parameters', function () {
+      'a subType, date range, location uuid, groupBy, and optional parameters', function () {
       var locationUuids = 'id1,id2,id3';
       var startDate = '2015-01-01';
       var endDate = '2015-06-01';
+      var groupBy = "groupByDate,groupByEncounterTypeId"
 
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
         'data-entry-statistics/by-date-by-encounter-type?' +
-        'endDate=' + endDate + '&locationUuids=' + locationUuids +
+        'endDate=' + endDate +
+        '&groupBy=' + groupBy +
+        '&locationUuids=' + locationUuids +
         '&startDate=' + startDate).respond({});
 
       etlRestService.getDataEntryStatistics('by-date-by-encounter-type',
         startDate, endDate, locationUuids, undefined, undefined, undefined,
-        undefined, function () { }, function () { });
+        undefined,groupBy,  function () { }, function () { });
       httpBackend.flush();
     });
 
@@ -798,15 +812,18 @@
       var locationUuids = 'id1,id2,id3';
       var startDate = '2015-01-01';
       var endDate = '2015-06-01';
+      var groupBy = "groupByDate,groupByEncounterTypeId"
 
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
         'data-entry-statistics/by-date-by-encounter-type?' +
-        'endDate=' + endDate + '&locationUuids=' + locationUuids +
+        'endDate=' + endDate +
+        '&groupBy=' + groupBy +
+        '&locationUuids=' + locationUuids +
         '&startDate=' + startDate).respond({});
 
       etlRestService.getDataEntryStatistics('by-date-by-encounter-type',
         startDate, endDate, locationUuids, undefined, undefined, undefined,
-        undefined, callbacks.onSuccess, callbacks.onFailure);
+        undefined, groupBy, callbacks.onSuccess, callbacks.onFailure);
       httpBackend.flush();
 
       expect(callbacks.onSuccessCalled).to.equal(true);
@@ -818,15 +835,18 @@
       var locationUuids = 'id1,id2,id3';
       var startDate = '2015-01-01';
       var endDate = '2015-06-01';
+      var groupBy = "groupByDate,groupByEncounterTypeId"
 
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() +
         'data-entry-statistics/by-date-by-encounter-type?' +
-        'endDate=' + endDate + '&locationUuids=' + locationUuids +
+        'endDate=' + endDate +
+        '&groupBy=' + groupBy +
+        '&locationUuids=' + locationUuids +
         '&startDate=' + startDate).respond(500);
 
       etlRestService.getDataEntryStatistics('by-date-by-encounter-type',
         startDate, endDate, locationUuids, undefined, undefined, undefined,
-        undefined, callbacks.onSuccess, callbacks.onFailure);
+        undefined,groupBy, callbacks.onSuccess, callbacks.onFailure);
       httpBackend.flush();
 
       expect(callbacks.onSuccessCalled).to.equal(false);

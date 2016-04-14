@@ -206,6 +206,26 @@
             requireLogin: true
           },
         })
+
+        .state('admin.data-entry-statistics.view', {
+          url: '/view/:view_id',
+          templateUrl: 'views/data-analytics/view-one.html',
+          controller: 'DataEntryStatisticsCtrl',
+          data: {
+            requireLogin: true
+          },
+        })
+
+        .state('admin.data-entry-statistics.patientlist', {
+          url: '/data-entry-list',
+          templateUrl: 'views/data-analytics/data-entry-patient-list.html',
+          // controller: 'DataEntryPatientListCtrl',
+          data: {
+            requireLogin: true
+          },
+        })
+
+
         .state('admin.hiv-summary-indicators', {
           url: '/hiv-summary-indicators',
           templateUrl: 'views/admin/hiv-summary-indicators.html',

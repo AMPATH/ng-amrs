@@ -1,6 +1,6 @@
 <div style="margin: 2px;">
-	<stats-data-entry-filters enabled-controls="controls" 
-	start-date="startDate" selected-provider="selectedProvider" 
+	<stats-data-entry-filters enabled-controls="controls"
+	start-date="startDate" selected-provider="selectedProvider"
 	selected-forms="selectedForms" selected-locations="selectedLocations"
 	selected-encounter-types="selectedEncounterTypes">
 	</stats-data-entry-filters>
@@ -30,11 +30,11 @@
 		<!--<hr style="margin-top: 2px; margin-bottom: 2px;"/>-->
 
 		<div class="panel panel-primary" style="padding:2px; margin:0px;">
-			<table class='table table-responsive'>
+			<table class='table table-responsive table-striped table-bordered table-condense'>
 				<thead>
 					<tr>
 						<th>Encounter Types</th>
-						<th ng-repeat="header in columnHeaderRow">{{header | date:'EEE'}}
+						<th class="text-center"ng-repeat="header in columnHeaderRow">{{header | date:'EEE'}}
 							<br/> {{header | date:'dd-MM-yyyy'}}</th>
 					</tr>
 				</thead>
@@ -42,8 +42,11 @@
 					<td>
 						{{item.encounter_type}}
 					</td>
-					<td ng-repeat="cell in item.value">
-						{{cell.value.encounters_count}}
+					<td ng-repeat="cell in item.value" >
+						<span  ng-click="getPatienList(cell)" class="btn btn-default text-center"
+						style="cursor: pointer; width:100%">
+							{{cell.value.encounters_count||0}}
+						</span>
 					</td>
 				</tr>
 			</table>
