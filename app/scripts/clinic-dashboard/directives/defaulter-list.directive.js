@@ -63,6 +63,10 @@ jshint -W003, -W026
         headers:'identifiers'
       },
       {
+        name: 'universalId',
+        headers:'amrs_universal_id'
+      },
+      {
         name: 'person_name',
         headers:'person_name'
       },
@@ -140,12 +144,72 @@ jshint -W003, -W026
       $scope.patients = [];
     }
 
+    function _sortDefaulterList(defaultersList) {
+      /*
+      This is a custom method to be used to sort defaulters list based
+      on how files are arranged in the cabinets using the amrs universal
+      identifier. This may only be applicable to MTRH for now
+
+      The AMRS universal Id is an 11 digit identifier that is made up of
+      9 digits and a check-digit (i.e. 123456789-1)
+      The last four digits of this identifier will be used to sort the defaulters list
+      to fit the specifications of the file arrangement in the cabinets
+
+      Last for digits will used to sort the list (i.e. 6789)
+      This number is further split into primary set and secondary set
+      the first 2 digits are used as the primary sorting field
+      and the last 2 digits are used as the secondary sorting field
+
+      for example in this case 67 is the primary sort field and
+      89 is the secondary sort field
+      */
+      var universalIDregex = /[0-9]{9}-[0-9]{1}/i;
+      _.each(defaultersList, function(patient){
+        var identifiers = patient.identifiers;
+        var priSortField = '9999'; //set the highest sort order for values without amrs universal id. This is to push the to the bottom of the list
+        var secSortField = '9999'
+        if(!_.isUndefined(identifiers) && !_.isNull(identifiers)) {
+          var identifierList = identifiers.split(',');
+          patient.priSortField = priSortField;
+          patient.secSortField = secSortField;
+          patient.universalId = '';
+
+          var universalId = _.find(identifierList, function(id){
+            var trimmedId = id.trim();
+            if(universalIDregex.test(trimmedId)) {
+              return id;
+            }
+          });
+
+          if (!_.isUndefined(universalId)) {
+            var trimmedId = universalId.trim();
+            priSortField = trimmedId.substr(5,2);
+            secSortField = trimmedId.substr(7,2);
+            patient.priSortField = priSortField;
+            patient.secSortField = secSortField;
+            patient.universalId = trimmedId;
+          }
+        } else {
+          patient.priSortField = priSortField;
+          patient.secSortField = secSortField;
+          patient.universalId = '';
+        }
+      });
+
+      //sort the list based on primary and secondary id
+      defaultersList.sort(function(a, b) {
+        return a.priSortField - b.priSortField  ||  a.secSortField - b.secSortField;
+      });
+
+    }
+
     function onFetchDefaultersListSuccess(defaulters) {
       $scope.isBusy = false;
       //update pagination parameters
       if (defaulters.size === 0){
         $scope.allDataLoaded = true;
       }else{
+        _sortDefaulterList(defaulters.result);
         $scope.patients.length!=0?$scope.patients.push.apply($scope.patients,defaulters.result):
           $scope.patients =defaulters.result;
         _.each($scope.patients, function(p){
@@ -172,10 +236,10 @@ jshint -W003, -W026
      */
 
     function buildDataTable() {
-      $timeout(function() {
+      //$timeout(function() {
         buildColumns();
         buildTableControls();
-      }, 100);
+    //  }, 100);
 
     }
 
@@ -266,6 +330,9 @@ jshint -W003, -W026
       var numbers = 1 + (index);
       if (header.name === '#') return '<div class="text-center" style="width:43px;height:23px!important;" >' +
         '<span class="text-info text-capitalize">' + numbers + '</span></div>';
+
+      if (header.name === 'universalId') return '<div class="text-center" style="width:100px;height:23px!important;" >' +
+          '<span class="text-info text-capitalize"> <a href="#/patient/'  +row.patient_uuid +'">' + row.universalId + '</a></span></div>';
       if(header.name==='rtc_date') return '<div class="text-center" style="height:43px!important;" ><span ' +
         'class="text-info text-capitalize">'+ $filter('date')(row.rtc_date, 'dd-MM-yyyy')+'</span>' +'<br/>'+
         '<span>' +row.days_since_rtc+ ' ' +'days ago'+
