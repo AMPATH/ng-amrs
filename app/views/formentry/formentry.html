@@ -1,31 +1,31 @@
 <div style="padding:4px;" dw-loading="formEntryLoader" dw-loading-options="{text: 'Processing request..'}">
-    
-    <script>
-      // depending on how you're loading apiCheck, you may need to use AMD or CommonJS
-      // in this case, because it's a script tag, apiCheck is exposed globally
-      // also notice that I'm doing this as soon as I load the apiCheck script.
-      // you need to do this before you load angular-formly so angular-formly's
-      // initialization doesn't use apiCheck while it's enabled (perf).
-      apiCheck.globalConfig.disabled = true;
-    </script>
-    <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
-    <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">
-    <div class="breadcrumb">
-        <h2>{{patient.fullNames() | titlecase}} | Sex: {{patient.gender()}} | Age: {{patient.age()}} | Identifier: {{patient.identifierFormatted()}}</h2>{{encounterType}} - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}} {{vm.success}}
-        <strong><current-visit-vitals patient-uuid="{{patient.uuid()}}"></current-visit-vitals></strong>
-    </div>
-    <a id="top"></a>
-    <div class="panel panel-default" style="margin-top: -20px;">
+
+  <script>
+    // depending on how you're loading apiCheck, you may need to use AMD or CommonJS
+    // in this case, because it's a script tag, apiCheck is exposed globally
+    // also notice that I'm doing this as soon as I load the apiCheck script.
+    // you need to do this before you load angular-formly so angular-formly's
+    // initialization doesn't use apiCheck while it's enabled (perf).
+    apiCheck.globalConfig.disabled = true;
+  </script>
+  <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+  <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
+  <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">
+  <div class="breadcrumb">
+    <h2>{{patient.fullNames() | titlecase}} | Sex: {{patient.gender()}} | Age: {{patient.age()}} | Identifier: {{patient.identifierFormatted()}}</h2>{{encounterType}} - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}} {{vm.success}}
+    <strong><current-visit-vitals patient-uuid="{{patient.uuid()}}"></current-visit-vitals></strong>
+  </div>
+  <a id="top"></a>
+  <div class="panel panel-default" style="margin-top: -20px;">
     <div class="panel-heading" style=" cursor: pointer;" data-ng-click="isSummaryExpanded = !isSummaryExpanded">
       <span class="text-default" style="margin-left: 2px;"> Patient Summaries </span>
       <!--<button class="btn btn-default btn-sm pull-right">V</button>-->
       <span class="label label-default pull-right" style="margin-right: 4px;" ng-show="isSummaryExpanded">
         <span class="glyphicon glyphicon-menu-up"> </span>
-     </span>
+      </span>
       <span class="label label-default pull-right" style="margin-right: 4px;" ng-hide="isSummaryExpanded">
         <span class="glyphicon glyphicon-menu-down"></span>
-     </span>
+      </span>
     </div>
     <div class="panel-body" collapse="!isSummaryExpanded" style="padding: 4px;">
       <tabset>
@@ -56,62 +56,67 @@
             <vitals patient-uuid="{{patient.uuid()}}"></vitals>
           </div>
         </tab>
+        <tab heading="Latest Encounter Data">
+          <div class="panel">
+            <encounter-view patient-uuid="{{patient.uuid()}}"></encounter-view>
+          </div>
+        </tab>
       </tabset>
     </div>
   </div>
-    <!-- Error messages Summary -->
-    <div sticky>
-        <button class="btn btn-warning" style="margin: 2px; width: 99%; horizontal-align: center;" data-ng-show="(isFormInvalid() && hasClickedSubmit)"
-        ng-click="scrollToTop()">Form Errors </button>
+  <!-- Error messages Summary -->
+  <div sticky>
+    <button class="btn btn-warning" style="margin: 2px; width: 99%; horizontal-align: center;" data-ng-show="(isFormInvalid() && hasClickedSubmit)" ng-click="scrollToTop()">Form Errors </button>
+  </div>
+  <div id="error-summary-container" class="panel panel-danger" data-ng-if="(isFormInvalid() && hasClickedSubmit)">
+    <div ng-init="scrollToTop()">
+      <h3 style="margin-left:4px; margin-top: 0px" class="text-danger">.</h3></div>
+    <div style="margin-left:4px; margin-top: 0px" data-ng-repeat="tab in lastFormlyFormSchema" data-ng-show="(isFormInvalid() && hasClickedSubmit)">
+      <h4 data-ng-show="(isFormInvalid() && hasClickedSubmit && anyFieldsInError(tab.currentFields) )">{{tab.title}}</h4>
+      <formly-error-summary form="vm.form" fields="tab.form.fields" page-fields="tab.currentFields" tab-title="tab.title"></formly-error-summary>
     </div>
-    <div id="error-summary-container" class="panel panel-danger" data-ng-if="(isFormInvalid() && hasClickedSubmit)">
-        <div ng-init="scrollToTop()">
-            <h3 style="margin-left:4px; margin-top: 0px" class="text-danger">.</h3></div>
-        <div style="margin-left:4px; margin-top: 0px" data-ng-repeat="tab in lastFormlyFormSchema" data-ng-show="(isFormInvalid() && hasClickedSubmit)">
-            <h4 data-ng-show="(isFormInvalid() && hasClickedSubmit && anyFieldsInError(tab.currentFields) )">{{tab.title}}</h4>
-            <formly-error-summary form="vm.form" fields="tab.form.fields" page-fields="tab.currentFields" tab-title="tab.title"></formly-error-summary>
-        </div>
-    </div>
+  </div>
+
+  <div style="color:red;" ng-show="(isFormInvalid() && hasClickedSubmit)">{{validationErrorMessage}}</div>
+  <div style="color:red;">{{errorMessage}}</div>
+
+  <form id="form-panel" name="form" novalidate>
+    <tabset ng>
+      <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled" select="onTabSelected($index)">
+        <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
+      </tab>
+    </tabset>
 
     <div style="color:red;" ng-show="(isFormInvalid() && hasClickedSubmit)">{{validationErrorMessage}}</div>
     <div style="color:red;">{{errorMessage}}</div>
-
-    <form id="form-panel" name="form" novalidate>
-        <tabset ng>
-            <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled" select="onTabSelected($index)">
-                <formly-form model="tab.form.model" fields="tab.form.fields" form="vm.form" options="tab.form.options"></formly-form>
-            </tab>
-        </tabset>
-
-        <div style="color:red;" ng-show="(isFormInvalid() && hasClickedSubmit)">{{validationErrorMessage}}</div>
-        <div style="color:red;">{{errorMessage}}</div>
-        <div><span class="text-success" ng-if="!isFormInvalid() && hasClickedSubmit"><span class="glyphicon glyphicon-ok-circle"></span> Form Validation Successful! Click {{currentMode.submitLabel}} to proceed.</span></div>
-        <div style="text-align: center;">
-            <button type="button" class="btn btn-default" ng-click="loadPreviousTab()" ng-disabled="isCurrentTabFirst()">&lt;&lt;</button>
-            <button type="submit" class="btn btn-primary submit-button" ng-click="submit()" ng-disabled="isBusy" ng-show="areAllTabsLoaded()">{{currentMode.submitLabel}}</button>
-            <button type="submit" class="btn btn-danger submit-button" ng-click="validateTabs()" ng-disabled="isBusy" ng-hide="areAllTabsLoaded()">Validate</button>
-            <button type="button" class="btn btn-default" ng-click="cancel()" ng-disabled="submittingForm">Cancel</button>
-            <button type="button" class="btn btn-default" ng-click="loadNextTab()" ng-disabled="isCurrentTabLast()">&gt;&gt;</button>
-        </div>
-    </form>
+    <div><span class="text-success" ng-if="!isFormInvalid() && hasClickedSubmit"><span class="glyphicon glyphicon-ok-circle"></span> Form Validation Successful! Click {{currentMode.submitLabel}} to proceed.</span>
+    </div>
+    <div style="text-align: center;">
+      <button type="button" class="btn btn-default" ng-click="loadPreviousTab()" ng-disabled="isCurrentTabFirst()">&lt;&lt;</button>
+      <button type="submit" class="btn btn-primary submit-button" ng-click="submit()" ng-disabled="isBusy" ng-show="areAllTabsLoaded()">{{currentMode.submitLabel}}</button>
+      <button type="submit" class="btn btn-danger submit-button" ng-click="validateTabs()" ng-disabled="isBusy" ng-hide="areAllTabsLoaded()">Validate</button>
+      <button type="button" class="btn btn-default" ng-click="cancel()" ng-disabled="submittingForm">Cancel</button>
+      <button type="button" class="btn btn-default" ng-click="loadNextTab()" ng-disabled="isCurrentTabLast()">&gt;&gt;</button>
+    </div>
+  </form>
 
 
-    <div></div>
+  <div></div>
 
 
 
-    <!--<h2>tabs</h2>
+  <!--<h2>tabs</h2>
   <pre>{{tabs | json}}</pre>-->
 
 
-    <!--<h2>Model Value</h2>
+  <!--<h2>Model Value</h2>
     <pre>{{model | json}}</pre>-->
-    <script type="text/ng-template" id="error-messages.html">
-        <formly-transclude></formly-transclude>
-        <div class="error-messages" ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched">
-            <div class="message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages" style="color:red;">
-                {{message(fc.$viewValue, fc.$modelValue, this)}}
-            </div>
-        </div>
-    </script>
+  <script type="text/ng-template" id="error-messages.html">
+    <formly-transclude></formly-transclude>
+    <div class="error-messages" ng-messages="fc.$error" ng-if="form.$submitted || options.formControl.$touched">
+      <div class="message" ng-message="{{::name}}" ng-repeat="(name, message) in ::options.validation.messages" style="color:red;">
+        {{message(fc.$viewValue, fc.$modelValue, this)}}
+      </div>
+    </div>
+  </script>
 </div>
