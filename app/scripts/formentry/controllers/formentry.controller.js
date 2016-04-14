@@ -16,7 +16,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         , '$loading', '$anchorScroll', 'UserDefaultPropertiesService'
         , 'FormentryUtilService', 'configService', 'SearchDataService',
         '$log', 'FormEntry', 'PersonAttributesRestService',
-        'CurrentLoadedFormService', 'UtilService'
+        'CurrentLoadedFormService', 'UtilService', 'moment', 'EncounterDataService',
+        'HistoricalDataService'
     ];
 
     function FormentryCtrl($translate, dialogs, $location,
@@ -25,7 +26,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         $loading, $anchorScroll, UserDefaultPropertiesService, FormentryUtilService,
         configService, SearchDataService,
         $log, FormEntry, PersonAttributesRestService,
-        CurrentLoadedFormService, UtilService) {
+        CurrentLoadedFormService, UtilService, moment, EncounterDataService, HistoricalDataService) {
         var vm = $scope;
 
         //Patient variables
@@ -61,6 +62,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         var currentVisitUuid = $stateParams.visitUuid;
         var selectedEncounterData;
         var selectedPersonAttributes;
+        var lastEncounterData;
 
         //Navigation parameters
         vm.hasClickedSubmit = false;
@@ -114,11 +116,34 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             $log.log('Initializing form entry controller..');
             subsribeToRootScopeMessages();
             registerConfirmationExit();
-
+            
+            HistoricalDataService.removeAllObjects();
             //determine form to load
             determineFormToLoad();
             
             isSpinnerBusy(true);
+
+            if (vm.currentMode === formModes.newForm) {
+                loadPreviousEncounter(function(message) {
+                    
+                    if(message === undefined && lastEncounterData !== undefined) {
+                         EncounterDataService.registerPreviousEncounters('prevEnc', lastEncounterData);
+                    } else {
+                        console.error('Error fetching last encounter: ' + message);
+                         HistoricalDataService.removeAllObjects();
+                    }
+                    
+                    loadPreFormInitializationData(
+                        function() {
+                            loadFormSchemaForSelectedForm(true);
+                        }, function() {
+                            loadFormSchemaForSelectedForm(true);
+                        });
+                });
+
+                return;
+            }
+
             loadPreFormInitializationData(
                 function() {
                     loadFormSchemaForSelectedForm(true);
@@ -460,6 +485,42 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 sectionModel['encounterLocation'].value = definedDefaultUserLocation.uuid;
             }
         }
+
+        function loadPreviousEncounter(callback) {
+            var uuid = selectedFormMetadata.encounterTypeUuid;
+            var lastEncounter = $rootScope.latestEncounterPerType[uuid];
+            if (lastEncounter === undefined) {
+                callback('No previous encounter');
+                return;
+            }
+            var lastEncounterDate = moment(lastEncounter.encounterDate());
+
+            var today = new moment();
+
+            var oneYearAgo = today.subtract(1, 'years');
+
+            var encounterMoreThanOneYearOld = oneYearAgo.isAfter(lastEncounterDate);
+
+            if (encounterMoreThanOneYearOld) {
+                callback('Previous encounter more than one year old!');
+                return;
+            }
+
+            var lastEncounterUuid = lastEncounter.uuid();
+
+            OpenmrsRestService.getEncounterResService().getEncounterByUuid(lastEncounterUuid,
+                function(data) {
+                    lastEncounterData = data;
+                    callback();
+                },
+                //error callback
+                function(error) {
+                    callback('An Error occured when trying to get encounter data');
+                }
+            );
+
+
+        }
         //EndRegion: Form loading and creation functions
 
         //Region: Load existing form
@@ -573,7 +634,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             $log.log('Generating payload for person attributes..');
             var payload = FormEntry.getPersonAttributesPayload(vm.model);
-            lastPersonAttributePayload =getFinalPersonattributePayload(payload);
+            lastPersonAttributePayload = getFinalPersonattributePayload(payload);
             $log.info('Person PayLoad', JSON.stringify(lastPersonAttributePayload));
         }
 
@@ -602,13 +663,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         function getFinalPersonattributePayload(payload) {
-          var formatedPayload= {
-            attributes: []
-          }
+            var formatedPayload = {
+                attributes: []
+            }
             _.each(payload, function(attribute) {
                 formatedPayload.attributes.push(attribute);
             });
-            console.log("formatedPayload is ",formatedPayload);
+            console.log("formatedPayload is ", formatedPayload);
             return formatedPayload;
         }
 
@@ -797,7 +858,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 console.log('Payload person attributes=====', JSON.stringify(lastPersonAttributePayload))
                 if (lastPersonAttributePayload !== undefined) {
                     $log.log('Submitting person attributes..');
-                    submitPersonAttributes(lastPersonAttributePayload,vm.patient,
+                    submitPersonAttributes(lastPersonAttributePayload, vm.patient,
                         function(submitFailed) {
                             $log.log('Submitting person attributes completed');
                             if (submitFailed) {
@@ -895,22 +956,22 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             });
         }
 
-        function submitPersonAttributes(lastPersonAttributePayload,person,finalCallback) {
-                $log.log('Showing person attribute payload', lastPersonAttributePayload);
-                PersonAttributesRestService.saveUpdatePersonAttribute(lastPersonAttributePayload,person,function(data) {
-                        if (data) {
-                            $log.log('Updated attribute: ', data);
-                            finalCallback(vm.hasFailedPersonAttributeRequest);
-                        }
+        function submitPersonAttributes(lastPersonAttributePayload, person, finalCallback) {
+            $log.log('Showing person attribute payload', lastPersonAttributePayload);
+            PersonAttributesRestService.saveUpdatePersonAttribute(lastPersonAttributePayload, person, function(data) {
+                if (data) {
+                    $log.log('Updated attribute: ', data);
+                    finalCallback(vm.hasFailedPersonAttributeRequest);
+                }
 
-                    },
-                    //error callback
-                    function(error) {
-                        $log.log('Error saving attribute: ', attribute);
-                        vm.hasFailedPersonAttributeRequest = true;
+            },
+                //error callback
+                function(error) {
+                    $log.log('Error saving attribute: ', attribute);
+                    vm.hasFailedPersonAttributeRequest = true;
 
-                        finalCallback(vm.hasFailedPersonAttributeRequest);
-                    });
+                    finalCallback(vm.hasFailedPersonAttributeRequest);
+                });
         }
 
         //Endregion: Payload submission
