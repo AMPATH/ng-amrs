@@ -1,4 +1,4 @@
-(function(){
+(function() {
   'use strict';
 
   angular
@@ -12,11 +12,11 @@
     'EncounterModel',
     '$location',
     '$rootScope',
-    '$filter'
+    '$modal'
   ];
 
   function EncounterCtrl($stateParams, $timeout, EncounterResService,
-                         EncounterModel, $location, $rootScope, $filter) {
+    EncounterModel, $location, $rootScope,$modal) {
     var vm = this;
     vm.encounterList = [];
     vm.selectedEncounter = null;
@@ -26,8 +26,8 @@
     //Pagination Variables
     vm.currentPage = 1;
     vm.entryLimit = 10;
-    vm.totalItems=0;
-    vm.noOfPages=0;
+    vm.totalItems = 0;
+    vm.noOfPages = 0;
     vm.setSelected = function(encounter) {
       vm.selectedEncounter = encounter;
 
@@ -43,10 +43,30 @@
       return !vm.isBusy && !vm.experiencedLoadingError && !vm.hasEncounters;
     }
 
-    $timeout(function(){
+    vm.EncounterDetails = function(encounterUuid) {
+      console.log('Encounter Details');
+      var modalInstance = $modal.open({
+        animation: true,
+        size:'lg',
+        templateUrl: 'views/patient-dashboard/view-encounter-modal.html',
+        controller: 'ViewEncounterCtrl',
+        resolve: {
+          items: function() {
+            return encounterUuid;
+          }
+        }
+      });
+      modalInstance.result.then(function() {
+        console.log();
+      }, function() {
+
+      });
+    };
+
+    $timeout(function() {
       var params = {
         patientUuid: $stateParams.uuid
-      }
+      };
       vm.experiencedLoadingError = false;
       EncounterResService.getPatientEncounters(params, onLoadEncountersSuccess,
         onLoadEncountersError);
@@ -56,8 +76,9 @@
       vm.isBusy = false;
       vm.encounterList = EncounterModel.toArrayOfModels(data);
       vm.hasEncounters = vm.encounterList.length > 0 ? true : false;
-      vm.totalItems =  vm.encounterList.length;
+      vm.totalItems = vm.encounterList.length;
       vm.noOfPages = Math.ceil(vm.totalItems / vm.entryLimit);
+
     }
 
     function onLoadEncountersError(error) {
@@ -66,5 +87,6 @@
       console.error('Error: EncounterController An error' + error +
         'occured while loading');
     }
+
   }
 })();
