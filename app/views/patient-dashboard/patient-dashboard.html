@@ -48,6 +48,9 @@
 				<li active-tab-sync index="3" data-ng-glick="activeList(this, 3)" ng-class="{active: activeListId === 3}">
 					<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Forms</a>
 				</li>
+				<li active-tab-sync index="8" data-ng-glick="activeList(this, 8)" ng-class="{active: activeListId === 8}">
+					<a data-target="#printLabelsTab" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Lab Orders</a>
+				</li>
 			</ul>
 			<ul class="nav nav-pills hidden-xs hidden-lg hidden-xl " style="cursor: pointer;">
 				<li active-tab-sync index="1" data-ng-glick="activeList(this, 1)" ng-class="{active: activeListId === 1}">
@@ -125,7 +128,11 @@
           </accordion>
         </div>
       </div>
+			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="printLabelsTab">
+				<div class="page-content">
+					<print-labels patient-uuid="{{patient.uuid()}}"></print-labels>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
-

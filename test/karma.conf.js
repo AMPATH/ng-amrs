@@ -94,6 +94,8 @@ module.exports = function (config) {
     'bower_components/openmrs-ngresource/dist/scripts/openmrsNgresource.js',
     'bower_components/angular-formentry/dist/scripts/angularFormentry.js',
     'bower_components/angular-cache/dist/angular-cache.js',
+    'bower_components/angular-bar-code-scanner/angular-bar-code-scanner.js',
+    'bower_components/angular-bar-code-scanner/angular-bar-code-scanner.min.js',
     'bower_components/angular-mocks/angular-mocks.js',
     // endbower
       'app/scripts/**/*.module.js',

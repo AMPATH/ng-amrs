@@ -1,21 +1,22 @@
 /*
  jshint -W003, -W098, -W117, -W109
  */
- /*
- jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma
- */
- (function() {
+/*
+jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma
+*/
+(function() {
   'use strict';
 
   angular
-  .module('app.patientsearch')
-  .controller('PatientSearchCtrl', PatientSearchCtrl);
+    .module('app.patientsearch')
+    .controller('PatientSearchCtrl', PatientSearchCtrl);
 
   PatientSearchCtrl.$inject = ['$rootScope', 'OpenmrsRestService', '$scope',
-  '$log', 'filterFilter', '$state','PatientSearchService'];
+    '$log', 'filterFilter', '$state', 'PatientSearchService', '$window', '$timeout'
+  ];
 
   function PatientSearchCtrl($rootScope, OpenmrsRestService, $scope, $log,
-    filterFilter, $state,PatientSearchService) {
+    filterFilter, $state, PatientSearchService, $window, $timeout) {
     $scope.filter = '';
     $scope.patients = PatientSearchService.getPatients();
     $scope.isBusy = false;
@@ -26,29 +27,20 @@
     $scope.currentPage = 1;
     $scope.entryLimit = 10; // items per page
     $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
-    $scope.searchString = PatientSearchService.getSearchString ();
+    $scope.searchString = PatientSearchService.getSearchString();
     $scope.$watch('searchString', function(searchString) {
+      console.log(searchString);
       $scope.patients = PatientSearchService.getPatients();
       if (searchString && searchString.length > 2) {
-        $scope.isSearchButton = false;
-        $scope.loaderButton = true;
-        $scope.isBusy = true;
-        OpenmrsRestService.getPatientService().getPatientQuery({q:searchString},
-          function(data) {
-            $scope.isSearchButton = true;
-            $scope.loaderButton = false;
-            $scope.isBusy = false;
-            $scope.isResetButton = false;
-            $scope.patients = data;
-            PatientSearchService.resetPatients();
-            PatientSearchService.setPatients(data);
-            PatientSearchService.setSearchString (searchString);
-            $scope.totalItems = $scope.patients.length;
-            $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
-            $scope.currentPage = 1;
-          }
-          );
+        searchPatients(searchString);
       }
+    });
+
+    $scope.$on('bar-code-scan-event', function(event, parameters) {
+      $scope.searchString = '';
+      var barcode = angular.element.find('#search-textbox')[0].value.replace('$', '');
+      $scope.searchString = barcode;
+      searchPatients(barcode);
     });
 
     $scope.loadPatient = function(patientUuid) {
@@ -56,15 +48,18 @@
        Get the selected patient and save the details in the root scope
        so that we don't do another round trip to get the patient details
        */
-       $rootScope.broadcastPatient = _.find($scope.patients, function(patient) {
-        if (patient.uuid() === patientUuid)
-          {return patient;}
+      $rootScope.broadcastPatient = _.find($scope.patients, function(patient) {
+        if (patient.uuid() === patientUuid) {
+          return patient;
+        }
       });
 
-       $state.go('patient', {uuid:patientUuid});
-     };
+      $state.go('patient', {
+        uuid: patientUuid
+      });
+    };
 
-     $scope.pageChanged = function() {
+    $scope.pageChanged = function() {
       $log.log('Page changed to: ' + $scope.currentPage);
     };
 
@@ -81,5 +76,28 @@
       PatientSearchService.resetPatients();
       $scope.searchString = '';
     };
+
+    function searchPatients(searchString) {
+      $scope.isSearchButton = false;
+      $scope.loaderButton = true;
+      $scope.isBusy = true;
+      OpenmrsRestService.getPatientService().getPatientQuery({
+          q: searchString
+        },
+        function(data) {
+          $scope.isSearchButton = true;
+          $scope.loaderButton = false;
+          $scope.isBusy = false;
+          $scope.isResetButton = false;
+          $scope.patients = data;
+          PatientSearchService.resetPatients();
+          PatientSearchService.setPatients(data);
+          PatientSearchService.setSearchString(searchString);
+          $scope.totalItems = $scope.patients.length;
+          $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
+          $scope.currentPage = 1;
+        }
+      );
+    }
   }
 })();
