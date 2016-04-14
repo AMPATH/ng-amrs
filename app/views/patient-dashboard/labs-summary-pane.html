@@ -1,32 +1,16 @@
-<div ng-disabled="isBusy">
+<!--<div ng-disabled="isBusy">-->
+  <!-- DATATABLE -->
   <div>
-    <!--table class='table table-hover table-striped' id="data_table"-->
-    <table class='table table-hover table-striped'>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>CD4</th>
-          <th>CD4 Percent</th>
-          <th>Viral Load</th>
-          <th>Hemoglobin</th>
-          <th>AST</th>
-          <th>Creatinine</th>
-          <th>Chest Xray</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="encounter in encounters" >
-          <td>{{encounter.testDatetime() | date:'dd-MM-yyyy'}}</td>
-          <td>{{encounter.cd4Count()}}</td>
-          <td>{{encounter.cd4Percent()}}</td>
-          <td>{{encounter.hivViralLoad()}}</td>
-          <td>{{encounter.hemoglobin()}}</td>
-          <td>{{encounter.ast()}}</td>
-          <td>{{encounter.creatinine()}}</td>
-          <td>{{encounter.chestXray()}}</td>
-        </tr>
-      </tbody>
+
+    <div id="toolbar">
+      <select ng-model='exportDataType' style="margin-left: 5px" class="form-control"
+              ng-options="l.name for l in exportList" ng-change="updateSelectedType()">
+      </select>
+    </div>
+    <table id="bsTable" class="table table-striped table-condensed table-hover" bs-table-control="bsTableControl" >
     </table>
+  </div>
+
     <div ng-show='experiencedLoadingError'>
       <p class="bg-danger" style="padding:4px;">
         <b>
@@ -34,7 +18,7 @@
         <p>
     </div>
     <div ng-show='!isBusy && !allDataLoaded'>
-      <button class="btn btn-info" ng-click="loadMoreLabs()">
+      <button class="btn btn-info" ng-click="loadMoreLabs(true)">
         <span class="glyphicon glyphicon-refresh"></span>Load More</button>
     </div>
     <div ng-show='isBusy && !allDataLoaded'>
