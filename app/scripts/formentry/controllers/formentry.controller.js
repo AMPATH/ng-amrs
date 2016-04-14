@@ -117,6 +117,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             //determine form to load
             determineFormToLoad();
+            
             isSpinnerBusy(true);
             loadPreFormInitializationData(
                 function() {
