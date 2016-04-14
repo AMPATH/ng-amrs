@@ -1,0 +1,106 @@
+
+<div ng-controller="PrintLabelsCtrl as vm">
+  <div class="row">
+    <div class="col-md-12">
+      <span>
+    <button ng-click='vm.toggleSettings()' class="btn pull-right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+      </button>
+      <span>
+    <strong class="text-danger" ng-if='!vm.defaultPrinter'>No default printer configured</strong>
+      <strong ng-if='vm.defaultPrinter'>Using : {{vm.defaultPrinter}}</strong>
+    </span>
+      </span>
+    </div>
+  </div>
+  <div ng-if='!vm.printServerConfigure'>
+    <div class="form-group">
+      <label for="printServerUrl">Print Server Location</label>
+      <div class="input-group">
+        <input ng-model="vm.printServerUrl" type="text" class="form-control" id="printServerUrl" placeholder="https://{server location}/">
+        <span class="input-group-btn">
+       <button ng-click='vm.printServerUrlChange()' class="btn btn-default" type="button">Find Printers</button>
+     </span>
+      </div>
+    </div>
+    <div class="form-group">
+      <select ng-if='vm.printers.length >= 1' class="form-control" ng-model="vm.defaultPrinter">
+        <option ng-repeat="opt in vm.printers">{{opt.name}}</option>
+      </select>
+    </div>
+    <button class="btn btn-success" ng-click='vm.saveSettings()'>Save</button>
+  </div>
+  <div ng-if='vm.printServerConfigure'>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="patientIdentifer">Patient Identifer</label>
+          <select class="form-control" ng-if="identifiers.length >= 1" ng-model="vm.patientIdentifer">
+            <option ng-repeat="opt in identifiers" value="{{opt.identifier}}">{{opt.identifierType.display}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="patientIdentifer">Collection Date</label>
+          <div class="input-group">
+            <input type="text" class="form-control" datepicker-popup="mediumDate" is-open="vm.valuationDatePickerIsOpen" ng-click="vm.valuationDatePickerOpen()" ng-model="vm.valuationDate" />
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default"
+                      ng-click="vm.valuationDatePickerOpen()">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="patientIdentifer">Number of copies</label>
+          <input type="text" class="form-control" ng-model="vm.copies" />
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+              <input type="checkbox" ng-model="vm.allItemsSelected" ng-change="vm.selectAll()">
+            </th>
+            <th>Collection Date</th>
+            <th>Test Name</th>
+            <th>Provider</th>
+            <th>Patient Identifer</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="order in vm.testsOrdered.groupMembers">
+            <td>
+              <input type="checkbox" ng-model="order.isChecked" ng-change="vm.selectEntity()">
+            </td>
+            <td>
+              {{vm.valuationDate | date:'dd/MM/yyyy'}}
+            </td>
+            <td>
+              {{order.value.name.display}}
+            </td>
+            <td>
+              {{vm.provider.display}}
+            </td>
+            <td>
+              {{vm.patientIdentifer}}
+            </td>
+            <td>
+              <button ng-click="vm.printLabel(order)" class="btn btn-xs"><span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button ng-click="vm.printMultipleLabels()" class="btn">Print Selected <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</div>

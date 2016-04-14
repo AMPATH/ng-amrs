@@ -11,11 +11,12 @@
     'EncounterResService',
     'EncounterModel',
     '$location',
-    '$rootScope'
+    '$rootScope',
+    '$filter'
   ];
 
   function EncounterCtrl($stateParams, $timeout, EncounterResService,
-                         EncounterModel, $location, $rootScope) {
+                         EncounterModel, $location, $rootScope, $filter) {
     var vm = this;
     vm.encounterList = [];
     vm.selectedEncounter = null;
@@ -57,7 +58,6 @@
       vm.hasEncounters = vm.encounterList.length > 0 ? true : false;
       vm.totalItems =  vm.encounterList.length;
       vm.noOfPages = Math.ceil(vm.totalItems / vm.entryLimit);
-
     }
 
     function onLoadEncountersError(error) {

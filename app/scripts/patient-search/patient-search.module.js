@@ -3,6 +3,7 @@
 
 angular
         .module('app.patientsearch', [
-            'app.openmrsRestServices'
+            'app.openmrsRestServices',
+            'angular-bar-code-scanner'
         ]);
 })();

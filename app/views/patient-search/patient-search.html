@@ -4,7 +4,7 @@
     <div class="input-group">
       <input type="text" id="search-textbox" class="form-control"  ng-model="searchString"
       ng-model-options="{ updateOn: 'change blur' }"  placeholder="Enter the Patient Name or Identifier and press Enter or Search button to search"
-      focus="true">
+      focus="true" data-bar-code-scanner>
       <div class="input-group-btn">
         <button ng-show="loaderButton" class="btn btn-primary ladda-button" data-style="expand-right">
           <img ng-show="isBusy" ng-style="{background:'white'}" src="images/ajax-loader.gif" />
