@@ -64,7 +64,7 @@ jshint -W030
         /* jshint ignore:end */
       });
       
-       it('should calcluate BMI correctly when BMI member is called ', function() {
+       it('should calculate BMI correctly when BMI member is called ', function() {
         /* jshint ignore:start */
         var model = new vitalModelFactory.vital(vitalEtl);
 
@@ -72,7 +72,52 @@ jshint -W030
 		
         /* jshint ignore:end */
       });
-
+      
+      it('should generate an array of models give an array of ETL vital ' +
+          'objects', function() {
+          var fromEtl = [{
+            person_id : 'person_id',
+            uuid : 'uuid',
+            encounter_id : 'familyName',
+            encounter_datetime : '2011-11-02',
+            location_id : '_location_id',
+            weight : 56,
+            height : 178,
+            temp : 'temp',
+            oxygen_sat : 'oxygen_sat',
+            systolic_bp : 'systolic_bp',
+            diastolic_bp : 'diastolic_bp',
+            pulse : 'pulse'
+          }, {
+            person_id : 'person_id',
+            uuid : 'uuid',
+            encounter_id : 'familyName',
+            encounter_datetime : '2012-05-02',
+            location_id : '_location_id',
+            weight : 60,
+            height : 178,
+            temp : 'temp',
+            oxygen_sat : 'oxygen_sat',
+            systolic_bp : 'systolic_bp',
+            diastolic_bp : 'diastolic_bp',
+            pulse : 'pulse'
+          }];
+            
+          var expected = [];   
+          for(var v in fromEtl) {
+            expected.push(new vitalModelFactory.vital(fromEtl[v]));
+          }
+          var generatedArray = vitalModelFactory.toArrayOfModels(fromEtl);
+          
+          _.each(expected, function(obj) {
+           _.each(obj, function(objField) {
+              expect(_.find(generatedArray, function(gObj){
+                return _.find(gObj, function(gObjField) {
+                  return objField.apply(obj) === gObjField.apply(gObj);
+                });
+              })).to.not.equal(undefined);
+            });
+          });
+      });
     });
-
 })();
