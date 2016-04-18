@@ -6,9 +6,14 @@
     .module('app.etlRestServices')
     .service('EtlRestService', EtlRestService);
 
-  EtlRestService.$inject = ['EtlRestServicesSettings', '$resource', 'CacheFactory'];
+  EtlRestService.$inject = [
+    'EtlRestServicesSettings',
+    '$resource',
+    'CacheFactory',
+    '$q'
+  ];
 
-  function EtlRestService(EtlRestServicesSettings, $resource, CacheFactory) {
+  function EtlRestService(EtlRestServicesSettings, $resource, CacheFactory, $q) {
       var defaultCachingProperty =
           CacheFactory(Math.random() + 'cache', {
               maxAge: 5 * 60 * 1000, // Items added to this cache expire after 15 minutes
@@ -76,14 +81,24 @@
         uuid: patientUuid,
         limit: limit
       };
-      return resource.get(params).$promise
-        .then(function(response) {
-          successCallback(response);
-        })
-        .catch(function(error) {
-          failedCallback('Error processing request', error);
-          console.error(error);
-        });
+      
+      if(typeof successCallback === 'function') {
+        return resource.get(params).$promise.then(function(response) {
+            successCallback(response);
+          }, function(error) {
+            if(typeof failedCallback === 'function') {
+              failedCallback('Error processing request', error);
+            }
+            console.error(error);
+          });
+       } else {
+         return resource.get(params).$promise.then(function(response) {
+           return response.data;
+         }, function(response) {
+           // Something went crazy
+           return $q.reject(response.data);
+         });
+       }
     }
 
     function getVitals(patientUuid, startIndex, limit, successCallback, failedCallback) {
@@ -101,15 +116,26 @@
         uuid: patientUuid,
         limit: limit
       };
-      return resource.get(params).$promise
-        .then(function(response) {
-          successCallback(response);
-        })
-        .catch(function(error) {
-          failedCallback('Error processing request', error);
-          console.error(error);
-        });
+      
+      if(typeof successCallback === 'function') {
+        return resource.get(params).$promise.then(function(response) {
+            successCallback(response);
+          }, function(error) {
+            if(typeof failedCallback === 'function') {
+              failedCallback('Error processing request', error);
+            }
+            console.error(error);
+          });
+       } else {
+         return resource.get(params).$promise.then(function(response) {
+           return response.data;
+         }, function(response) {
+           // Something went crazy
+           return $q.reject(response.data);
+         });
+       }
     }
+    
     function getPatientTests(patientUuid, startIndex, limit, successCallback, failedCallback) {
       var resource = getResource('patient/:uuid/data');
       if (!startIndex) {
