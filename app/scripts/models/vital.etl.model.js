@@ -12,7 +12,8 @@
 
     function factory(UtilService) {
         var service = {
-            vital: vital
+            vital: vital,
+            toArrayOfModels: toArrayOfModels
         };
 
         return service;
@@ -161,6 +162,15 @@
             };
 
         }
+        
+        function toArrayOfModels(etlVitalArray) {
+            var models = [];
 
+            for (var i = 0; i < etlVitalArray.length; i++) {
+                models.push(new vital(etlVitalArray[i]));
+            }
+
+            return models;
+        }
     }
 })();
