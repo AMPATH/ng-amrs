@@ -21,9 +21,9 @@
 		});
 
 		var elm, element, scope, etlRestServiceMock, locationModelFactory, locationModels, moment, settingsService;
-		
+
 		beforeEach(function(){
-			
+
 		});
 
 		beforeEach(inject(function ($injector, $rootScope, $compile, $httpBackend) {
@@ -40,16 +40,16 @@
 			locationModelFactory =  $injector.get('LocationModel');
 			moment =  $injector.get('moment');
 		}));
-		
+
 		beforeEach(function() {
 			var testLocations = [{name: '_name',
 					  uuid:'uuid1',
-                      description: '_description'}, 
+                      description: '_description'},
                       {name: '_name2',
 					  uuid:'uuid2',
                       description: '_description2'}];
-					  
-					  locationModels = 
+
+					  locationModels =
 					  locationModelFactory.toArrayOfWrappers(testLocations);
 		});
 
@@ -72,22 +72,22 @@
 				// expect(isolateScope.loadPatientList).to.exist;
 			});
 
-		
-			
-			
-			
-			
-			
-			
+
+
+
+
+
+
+
 			it('should invoke the getDataEntryStatistics etl method when loadStatsFromServer is invoked' +
-			' with required params', 
+			' with required params',
 			function(){
 				var isolateScope = element.isolateScope();
 				var loadStatsFromServerSpy = sinon.spy(etlRestServiceMock, 'getDataEntryStatistics');
 				isolateScope.loadStatsFromServer();
 				chai.expect(loadStatsFromServerSpy.callCount).to.equal(1);
 			});
-			
+
 			it('should not invoke the getDataEntryStatistics etl method when loadStatsFromServer is invoked ' +
       		'and there is a pending request to avoid race conditions',
 		    function () {
@@ -97,17 +97,17 @@
 				isolateScope.loadStatsFromServer();
 				chai.expect(loadStatsFromServerSpy.callCount).to.equal(0);
 			});
-			
+
 			 it('should not call getPatientListByIndicator when loadPatientList is called and startDate not' +
 			' supplied or empty', function () {
 				var isolateScope = scope.$$childHead;
 				var loadStatsFromServerSpy = sinon.spy(etlRestServiceMock, 'getDataEntryStatistics');
-		
+
 				//case undefined
 				isolateScope.startDate= undefined;
 				isolateScope.loadStatsFromServer();
 				chai.expect(loadStatsFromServerSpy.callCount).to.equal(0);
-			
+
 				//case empty
 				isolateScope.startDate = null;
 				isolateScope.loadStatsFromServer();
@@ -116,12 +116,12 @@
 			it('should set isBusy to false when loadStatsFromServer is invoked, and callbacks return',
 			function () {
 					var isolateScope = scope.$$childHead;
-		
+
 					//case when no error occurs during call
 					etlRestServiceMock.returnErrorOnNextCall = false;
 					isolateScope.loadStatsFromServer();
 					expect(isolateScope.isBusy).to.equal(false);
-		
+
 					//case when no error occurs during call
 					etlRestServiceMock.returnErrorOnNextCall = true;
 					isolateScope.loadStatsFromServer();
@@ -130,14 +130,14 @@
 			it('should set experiencedLoadingErrors to true when loadStatsFromServer is invoked, and callback returns error',
 			function () {
 					var isolateScope = scope.$$childHead;
-		
+
 					//case when no error occurs during call
 					etlRestServiceMock.returnErrorOnNextCall = true;
 					isolateScope.loadStatsFromServer();
 					expect(isolateScope.experiencedLoadingErrors).to.equal(true);
 			});
-			
-			
+
+
 
 	});
 })();

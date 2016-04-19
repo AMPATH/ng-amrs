@@ -4,7 +4,7 @@
 		<button id="btn-append-to-body" type="button" class="btn btn-primary" dropdown-toggle>
 			View By: <span class="caret"></span>
 		</button>
-		
+
 		<ul class="dropdown-menu" role="menu" aria-labelledby="btn-append-to-body">
 			<li ng-repeat="item in viewConfigurations" role="menuitem"><a ng-click="changeView(item)">{{item.display}} <br/> <small style="color: gray;">{{item.description}}</small></a></li>
 		</ul>
@@ -12,7 +12,7 @@
 		<span class="text-primary" style="font-size: 20px; vertical-align: middle; ">  {{currentViewConfiguration.display}}</span>
 	<hr style="margin-top:0px; margin-bottom:2px;" />
 	<stats-data-entry-filters enabled-controls="currentViewConfiguration.controls" start-date="startDate" end-date="endDate"
-	start-month="startMonth" end-month="endMonth" 
+	start-month="startMonth" end-month="endMonth"
 	selected-provider="selectedProvider" selected-locations="selectedLocations"
 	selected-creator="selectedCreator" selected-forms="selectedForms"
 	selected-encounter-types="selectedEncounterTypes">
@@ -70,8 +70,11 @@
 					</td>
 
 					<!--cell doesn't change' -->
-					<td ng-repeat="cell in item.value">
-						{{cell.value.encounters_count}}
+					<td ng-repeat="cell in item.value" >
+						<span  ng-click="getPatienList(cell)" class="btn btn-default text-center"
+						style="cursor: pointer; width:100%">
+							{{cell.value.encounters_count||0}}
+						</span>
 					</td>
 				</tr>
 			</table>

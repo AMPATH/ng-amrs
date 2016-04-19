@@ -32,7 +32,7 @@ jshint -W003, -W026
 		$scope.canView = canView;
 		//
 		$scope.changeView = changeView;
-		
+
 		//params
 		$scope.selectedLocations = {};
 		$scope.selectedProvider = { selected: null };
@@ -47,13 +47,13 @@ jshint -W003, -W026
 		$scope.endMonth =
 		helperService.generateEndMonth($scope.startMonth,
 			$scope.currentViewConfiguration.numberOfColumns).toDate();
-		
-		//items	
+
+		//items
 		$scope.groupedItems = [];
 		$scope.unGroupedItems = [];
 		$scope.columnHeaderRow = [];
 		$scope.firstColumnItems = [];
-		
+
 		//params processors
 		$scope.getNextStartDate = getNextStartDate;
 		$scope.getPreviousStartDate = getPreviousStartDate;
@@ -61,12 +61,28 @@ jshint -W003, -W026
 		$scope.getPreviousStartMonth = getPreviousStartMonth;
 		// $rootScope.$on('dataEntryStatsLocationSelected',
 		// 	function () { $scope.needsRefresh = true; });
-		
+
 		//query etl functionality
 		$scope.isBusy = false;
 		$scope.needsRefresh = true;
 		$scope.experiencedLoadingErrors = false;
 		$scope.loadStatsFromServer = loadStatsFromServer;
+    $scope.currentViewConfiguration_copy = angular.copy($scope.currentViewConfiguration);
+    $scope.getPatienList = function(cell) {
+      $scope.currentViewConfiguration.groupBy = "groupByPatientId";
+      $scope.currentViewConfiguration.reportSubType = 'patientList';
+      // //params
+      // $scope.selectedProvider = { selected: null };
+      var selected = [];
+      selected.push({encounterTypeUuid:cell.value.encounter_type_uuid})
+      $scope.selectedEncounterTypes = { selected: selected };
+      // $scope.selectedForms = { selected: [] };
+      $scope.startDate = cell.value.date;
+      $scope.endDate = cell.value.date;
+
+      loadStatsFromServer();
+      $state.go('admin.data-entry-statistics.patientlist');
+    }
 
 		activate();
 		function activate() {
@@ -77,9 +93,9 @@ jshint -W003, -W026
 			$scope.currentViewConfiguration = newView;
 			$scope.needsRefresh = true;
 		}
-		
+
 		//query etl functionality
-		
+
 		function loadStatsFromServer() {
 
 			if ($scope.isBusy === true) {
@@ -101,7 +117,7 @@ jshint -W003, -W026
 				$scope.currentViewConfiguration.reportSubType,
 				dateRange.startDate, dateRange.endDate, params.locationUuids,
 				params.encounterTypeUuids, params.formUuids, params.providerUuid,
-				params.creatorUuid, onLoadStatsFromServerSuccess,
+				params.creatorUuid, $scope.currentViewConfiguration.groupBy, onLoadStatsFromServerSuccess,
 				onLoadStatsFromServerError);
 		}
 
@@ -109,8 +125,18 @@ jshint -W003, -W026
 			$scope.isBusy = false;
 			$scope.needsRefresh = false;
 			$scope.unGroupedItems = results.result;
+
+      if ($scope.currentViewConfiguration.reportSubType === 'patientList') {
+        //Build patient list
+        $scope.patients = results.result;
+        $rootScope.$broadcast("patient", $scope.patients);
+        $scope.currentViewConfiguration.reportSubType = $scope.currentViewConfiguration_copy.reportSubType;
+        console.log('got here', $scope.patients)
+
+
+      }
 			//process data here
-			processResults();
+			if ($scope.currentViewConfiguration.reportSubType !== 'patientList') processResults();
 		}
 
 		function onLoadStatsFromServerError(error) {
@@ -261,4 +287,4 @@ jshint -W003, -W026
 	function dataEntryStatsViewLink(scope, element, attrs, vm) {
 
     }
-})();	
+})();

@@ -27,7 +27,26 @@ jshint -W003, -W026
     function dataEntryStatsViewOneController($scope, $rootScope, moment,
 	$state, $filter, EtlRestService, helperService, UserResService) {
 		//filter configurations
+    $scope.getPatienList = function(cell) {
+      $scope.groupBy = "groupByPatientId";
+      $scope.reportSubType = 'patientList';
+      // //params
+      // $scope.selectedProvider = { selected: null };
+      var selected = [];
+      selected.push({encounterTypeUuid:cell.value.encounter_type_uuid})
+      $scope.selectedEncounterTypes = { selected: selected };
+      // $scope.selectedForms = { selected: [] };
+      $scope.startDate = cell.value.date;
+      $scope.endDate = cell.value.date;
+
+      loadStatsFromServer();
+      $scope.patientListLoaded = true;
+      $state.go('admin.data-entry-statistics.patientlist');
+
+    }
+
 		$scope.reportSubType = 'by-creator-by-encounter-type';
+    $scope.groupBy = "groupByCreatorId,groupByEncounterTypeId";
 		$scope.controls =
 		'start-date,end-date,selected-encounter,selected-form,selected-creator';
 		$scope.numberOfColumns = 6;
@@ -107,15 +126,22 @@ jshint -W003, -W026
 
 			EtlRestService.getDataEntryStatistics($scope.reportSubType,
 				startDate, endDate, locationUuids, encounterTypeUuids, formUuids, undefined,
-				creatorUuid, onLoadStatsFromServerSuccess, onLoadStatsFromServerError);
+				creatorUuid,$scope.groupBy, onLoadStatsFromServerSuccess, onLoadStatsFromServerError);
 		}
 
 		function onLoadStatsFromServerSuccess(results) {
 			$scope.isBusy = false;
 			$scope.needsRefresh = false;
 			$scope.unGroupedItems = results.result;
+
+      if ($scope.reportSubType === 'patientList') {
+        //Build patient list
+        $scope.patients = results.result;
+        $rootScope.$broadcast("patient", $scope.patients);
+        $scope.reportSubType = 'by-creator-by-encounter-type';
+      }
 			//process data here
-			processResults();
+			if ($scope.reportSubType !== 'patientList') processResults();
 		}
 
 		function onLoadStatsFromServerError(error) {

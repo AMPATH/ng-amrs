@@ -25,7 +25,7 @@
 			getViewConfigurationObjects: getViewConfigurationObjects
         };
 		return serviceDefinition;
-		
+
 		function getViewConfigurationObjects(){
 			return [
 				{
@@ -34,11 +34,12 @@
 					description: "Row as Encounter Type, Column as Date",
 					column: 'date',
 					columnTitle: 'Date',
+					groupBy:'groupByDate,groupByEncounterTypeId',
 					row: 'encounter_type_id',
 					rowTitle: 'Encounter Type',
 					additionalRowMember: 'encounter_type',
 					numberOfColumns: 6,
-					controls: 
+					controls:
 					'start-date,end-date,selected-encounter,selected-form,selected-provider'
 				},
 				{
@@ -47,11 +48,12 @@
 					description: "Row as Encounter Type, Column as Month",
 					column: 'month',
 					columnTitle: 'Month',
+					groupBy:'groupByMonth,groupByEncounterTypeId',
 					row: 'encounter_type_id',
 					rowTitle: 'Encounter Type',
 					additionalRowMember: 'encounter_type',
 					numberOfColumns: 12,
-					controls: 
+					controls:
 					'start-month,end-month,selected-encounter,selected-form,selected-provider'
 				},
 				{
@@ -60,11 +62,12 @@
 					description: "Row as Provider, Column as Encounter Type",
 					column: 'encounter_type',
 					columnTitle: 'Encounter Type',
+					groupBy:'groupByProviderId,groupByEncounterTypeId',
 					row: 'provider_id',
 					rowTitle: 'Provider',
 					additionalRowMember: 'provider_uuid',
 					numberOfColumns: 6,
-					controls: 
+					controls:
 					'start-date,end-date,selected-encounter,selected-form,selected-provider'
 				},
 				{
@@ -73,22 +76,23 @@
 					description: "Row as Creator, Column as Encounter Type",
 					column: 'encounter_type',
 					columnTitle: 'Encounter Type',
+					groupBy:'groupByCreatorId,groupByEncounterTypeId',
 					row: 'creator_id',
 					rowTitle: 'Creator',
 					additionalRowMember: 'user_uuid',
 					numberOfColumns: 6,
-					controls: 
+					controls:
 					'start-date,end-date,selected-encounter,selected-form,selected-creator'
 				}
 			];
 		}
-		
+
 
 		function generateEndDate(startDate, daysToAdd) {
 			var day = moment(startDate).startOf('day');
 			return day.add(daysToAdd, 'days').endOf('day');
 		}
-		
+
 		function generateEndMonth(startDate, monthsToAdd) {
 			var day = moment(startDate).startOf('day');
 			return day.add(monthsToAdd, 'months').endOf('day');
@@ -104,7 +108,7 @@
 						locations = '' + selectedLocationObject.locations[i].uuId();
 					}
 					else {
-						locations = 
+						locations =
 						locations + ',' + selectedLocationObject.locations[i].uuId();
 					}
 				}
@@ -113,20 +117,21 @@
 		}
 
 		function getSelectedEncounterTypes(selectedEncounterTypeObject) {
+			console.log('encounter types helper', selectedEncounterTypeObject);
 			var encounterTypes;
 			if (selectedEncounterTypeObject.selected)
 				for (var i = 0; i < selectedEncounterTypeObject.selected.length; i++) {
 					if (i === 0) {
-						encounterTypes = 
+						encounterTypes =
 						'' + selectedEncounterTypeObject.selected[i].encounterTypeUuid;
 					}
 					else {
-						encounterTypes = 
-						encounterTypes + ',' + 
+						encounterTypes =
+						encounterTypes + ',' +
 						selectedEncounterTypeObject.selected[i].encounterTypeUuid;
 					}
 				}
-
+				console.log('encounter types helper- return', encounterTypes);
 			return encounterTypes;
 		}
 
@@ -152,7 +157,7 @@
 
 			return providerUuid;
 		}
-		
+
 		function getSelectedCreator(selectedCreatorObject) {
 			var creatorUuid;
 			if (selectedCreatorObject.selected && selectedCreatorObject.selected.uuid)
@@ -176,9 +181,9 @@
 					cell[yPropName] = uniqueYarray[y];
 
 
-					cell['value'] = findItemByXandY(xPropName, yPropName, 
+					cell['value'] = findItemByXandY(xPropName, yPropName,
 					uniqueXarray[x], uniqueYarray[y], arrayOfObjectsToGroup);
-					
+
 					row['value'].push(cell);
 					if (cell.value && extraYpropNameColumn)
 						row[extraYpropNameColumn] = cell.value[extraYpropNameColumn];
@@ -189,11 +194,11 @@
 			return groupedItems;
 		}
 
-		function findItemByXandY(xPropName, yPropName, xValue, yValue, 
+		function findItemByXandY(xPropName, yPropName, xValue, yValue,
 		arrayOfObjectsToSearch) {
 			var found;
 			_.each(arrayOfObjectsToSearch, function (item) {
-				if (found === undefined && item[xPropName] === xValue && 
+				if (found === undefined && item[xPropName] === xValue &&
 				item[yPropName] === yValue) {
 					found = item;
 				}
@@ -217,7 +222,7 @@
 			}
 			return arrayOfDates;
 		}
-		
+
 		function getMonthArrayFrom(startDate, count) {
 
 			var arrayOfDates = [];

@@ -537,12 +537,12 @@
 
 
     function getDataEntryStatistics(subType, startDate, endDate, locationUuids,
-      encounterTypeUuids, formUuids, providerUuid, creatorUuid, successCallback, failedCallback) {
+      encounterTypeUuids, formUuids, providerUuid, creatorUuid, groupBy, successCallback, failedCallback) {
       var resource = getResource('data-entry-statistics/:subType');
 
 
       var params = getDataEntryStatisticsQueryParam(subType, startDate, endDate, locationUuids, encounterTypeUuids,
-        formUuids, providerUuid, creatorUuid);
+        formUuids, providerUuid, creatorUuid, groupBy);
 
       return resource.get(params).$promise
         .then(function(response) {
@@ -571,11 +571,12 @@
       }];
     }
 
-    function getDataEntryStatisticsQueryParam(subType, startDate, endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid) {
+    function getDataEntryStatisticsQueryParam(subType, startDate, endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid,groupBy) {
       var param = {
         subType: subType, //mandatory params
         startDate: startDate,
-        endDate: endDate
+        endDate: endDate,
+        groupBy:groupBy
       };
 
       var paramConfig = {};
@@ -601,6 +602,9 @@
         case 'by-creator-by-encounter-type':
           paramConfig = getParamConfigObj(['locationUuids', 'encounterTypeUuids', 'formUuids', 'creatorUuid']);
           break;
+        case 'patientList':
+            paramConfig = getParamConfigObj(['locationUuids', 'encounterTypeUuids', 'formUuids', 'creatorUuid']);
+            break;
       }
 
       //set-up the param object

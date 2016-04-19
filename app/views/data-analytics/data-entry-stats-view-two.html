@@ -1,6 +1,6 @@
 <div style="margin: 2px;">
 	<stats-data-entry-filters enabled-controls="controls"
-	 start-month="startMonth" selected-provider="selectedProvider" 
+	 start-month="startMonth" selected-provider="selectedProvider"
 	 selected-forms="selectedForms" selected-locations="selectedLocations"
 	selected-encounter-types="selectedEncounterTypes">
 	</stats-data-entry-filters>
@@ -41,8 +41,11 @@
 					<td>
 						{{item.encounter_type}}
 					</td>
-					<td ng-repeat="cell in item.value">
-						{{cell.value.encounters_count}}
+					<td ng-repeat="cell in item.value" >
+						<span  ng-click="getPatienList(cell)" class="btn btn-default text-center"
+						style="cursor: pointer; width:100%">
+							{{cell.value.encounters_count||0}}
+						</span>
 					</td>
 				</tr>
 			</table>

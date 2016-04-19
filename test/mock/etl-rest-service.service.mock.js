@@ -228,7 +228,7 @@ jshint -W098, -W117, -W003, -W026
     }
 
     function getDataEntryStatistics(subType, startDate, endDate, locationUuids,
-      encounterTypeUuids, formUuids, providerUuid, creatorUuid, successCallback, failedCallback) {
+      encounterTypeUuids, formUuids, providerUuid, creatorUuid, groupBy, successCallback, failedCallback) {
       switch (subType) {
         case 'by-date-by-encounter-type':
           if(service.returnErrorOnNextCall === true){
