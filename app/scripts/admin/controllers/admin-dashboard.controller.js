@@ -12,10 +12,10 @@
   angular
     .module('app.admin')
     .controller('AdminDashboardCtrl', AdminDashboardCtrl);
-  AdminDashboardCtrl.$nject = ['$rootScope', '$scope', 
+  AdminDashboardCtrl.$nject = ['$rootScope', '$scope',
   '$stateParams', '$timeout', 'OpenmrsRestService'];
 
-  function AdminDashboardCtrl($rootScope, $scope, 
-  $stateParams, $timeout, OpenmrsRestService) {  
+  function AdminDashboardCtrl($rootScope, $scope,
+  $stateParams, $timeout, OpenmrsRestService) {
   }
 })();

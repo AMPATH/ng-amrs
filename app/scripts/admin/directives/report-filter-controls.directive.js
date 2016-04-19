@@ -20,7 +20,8 @@ jshint -W003, -W026
         enabledControls: "=",
         selectedLocations: "=",
         selectedIndicatorTags: "=",
-        reportName:"="
+        reportName:"=",
+        isBusy:"="
 
     },
 			controller: reportFiltersController,
@@ -71,6 +72,7 @@ jshint -W003, -W026
       $scope.loadIndicatorsSchema= loadIndicatorsSchema;
       $scope.fetchLocations=fetchLocations;
       $scope.reInitialize =  init;
+      $scope.isBusy=false;
 
       //pre-load data
     init();

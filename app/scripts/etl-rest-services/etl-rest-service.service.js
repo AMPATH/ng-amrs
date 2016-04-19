@@ -45,7 +45,8 @@
       getMoh731Report: getMoh731Report,
       getIndicatorsSchemaWithSections: getIndicatorsSchemaWithSections,
       getPatientLevelReminders:getPatientLevelReminders,
-      getPatientListReportByIndicatorAndLocation:getPatientListReportByIndicatorAndLocation
+      getPatientListReportByIndicatorAndLocation:getPatientListReportByIndicatorAndLocation,
+      getHivOverviewVisualizationReport: getHivOverviewVisualizationReport
 
     };
     return serviceDefinition;
@@ -749,5 +750,43 @@
         });
 
     }
+
+    function getHivOverviewVisualizationReport(startDate, endDate, report, groupBy, locationUuids, orderBy,
+                                               indicators,  successCallback, failedCallback, startIndex, limit) {
+      var resource = getResource('get-report-by-report-name');
+
+      var params = {
+        endDate: endDate,
+        report: report,
+        startDate: startDate,
+        groupBy: groupBy,
+        locationUuids: locationUuids,
+        indicators: indicators,
+        order: orderBy
+      };
+
+
+      if (startIndex !== undefined) {
+        params.startIndex = startIndex;
+      }
+
+      if (limit !== undefined) {
+        params.limit = limit;
+      }
+
+      console.log(params);
+      console.log(startIndex);
+
+      return resource.get(params).$promise
+        .then(function(response) {
+          successCallback(response);
+        })
+        .catch(function(error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
+
+    }
+
     }
 })();

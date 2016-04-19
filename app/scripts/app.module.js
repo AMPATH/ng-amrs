@@ -167,6 +167,14 @@
             requireLogin: true
           },
         })
+        .state('clinical-dashboard.visualization', {
+          url: '/visualization',
+          templateUrl: 'views/clinic-dashboard/visualization-tab.html',
+          controller: 'ClinicDashboardCtrl',
+          data: {
+            requireLogin: true
+          }
+        })
         .state('encounter', {
           url: '/encounter/:encuuid/patient/:uuid',
           templateUrl: 'views/formentry/formentry.html',
@@ -371,6 +379,14 @@
         url: '/moh-731-pdf/location/:location',
         templateUrl: 'views/admin/moh-731-report-container.html',
         controller: 'moh731ReportCtrl',
+        data: {
+          requireLogin: true
+        }
+      })
+      .state('admin.clinical-visualization', {
+        url: '/clinical-visualization',
+        templateUrl: 'views/admin/clinical-visualization-container.html',
+        controller: 'AdminDashboardCtrl',
         data: {
           requireLogin: true
         }

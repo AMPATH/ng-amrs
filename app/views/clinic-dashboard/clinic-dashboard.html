@@ -28,7 +28,8 @@
 	<li ui-sref-active-if="clinical-dashboard.daily-appointments"><a ui-sref="clinical-dashboard.daily-appointments({locationuuid: selectedLocation.selected.uuId()})"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp;Daily Schedule</a></li>
 	<li ui-sref-active="active"><a ui-sref="clinical-dashboard.monthly-appointments({locationuuid: selectedLocation.selected.uuId()})"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>&nbsp;Monthly Schedule</a></li>
 	<li ui-sref-active="active"><a ui-sref="clinical-dashboard.defaulters-list({locationuuid: selectedLocation.selected.uuId()})"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;Defaulters List</a></li>
-	<li ui-sref-active="active"><a ui-sref="clinical-dashboard.moh-731({locationuuid: selectedLocation.selected.uuId()})"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;MOH 731</a></li>
+  <li ui-sref-active-if="clinical-dashboard.visualization"><a ui-sref="clinical-dashboard.visualization({locationuuid: selectedLocation.selected.uuId()})"><span class="fa  fa-bar-chart " aria-hidden="true"></span>&nbsp;Clinical Summary Visualization</a></li>
+  <li ui-sref-active="active"><a ui-sref="clinical-dashboard.moh-731({locationuuid: selectedLocation.selected.uuId()})"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;MOH 731</a></li>
 	<li ui-sref-active="active"><a ui-sref="clinical-dashboard.patient-register({locationuuid: selectedLocation.selected.uuId()})"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;Patient Register</a></li>
 </ul>
 <hr style="margin: 2px;" />
