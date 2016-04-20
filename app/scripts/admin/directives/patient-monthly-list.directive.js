@@ -52,18 +52,6 @@ jshint -W003, -W026
         loadPatientList();
 
 
-      $rootScope.$on('$stateChangeStart',
-        function(event, toState, toParams, fromState, fromParams) {
-          console.log('ToState',toState);
-          console.log('FromState',fromState);
-          if ((toState.name === 'patient' &&
-            fromState.name === 'admin.hiv-monthly-summary-indicators.patients'))
-          $rootScope.broadcastPatient = _.find($scope.customPatientList, function(p){
-            if(p.uuid() === toParams.uuid) return p;
-          });
-
-        });
-
         function loadIndicatorView ()
         {
           $state.go('admin.hiv-monthly-summary-indicators.monthly');
@@ -122,20 +110,12 @@ jshint -W003, -W026
           }else{
             $scope.patients.length!=0?$scope.patients.push.apply($scope.patients,patients.result):
             $scope.patients = patients.result;
-            _.each($scope.patients, function(p){
-              $scope.customPatientList = [];
-              OpenmrsRestService.getPatientService().getPatientByUuid({
-                  uuid: p.patient_uuid
-                },
-                function(patient) {
-                  $scope.customPatientList.push(patient);
-                });
-            });
+            console.log('patients======>>>>',$scope.patients);
             $scope.nextStartIndex +=  patients.size;
           }
           $timeout(function(){
             $rootScope.$broadcast("patient", $scope.patients);
-          },200)
+          },100)
 
 
 

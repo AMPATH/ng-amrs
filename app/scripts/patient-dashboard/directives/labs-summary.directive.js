@@ -42,11 +42,11 @@ jshint -W003, -W026
         },
         {
           name: 'cd4_percent',
-          headers:'cd4_percent'
+          headers:'cd4_%'
         },
         {
           name: 'hiv_viral_load',
-          headers:'hiv_viral_load'
+          headers:'hiv_vl'
         },
         {
           name: 'hemoglobin',
@@ -142,7 +142,7 @@ jshint -W003, -W026
             title: $filter('titlecase')(header.headers.toString().split('_').join(' ')),
             align: 'center',
             valign: 'center',
-            class: header.name === 'test_datetime' ? 'bst-table-min-width' : undefined,
+           // class: header.name === 'test_datetime' ? 'bst-table-min-width' : undefined,
             sortable:true,
             visible:true,
             tooltip: true,
@@ -225,8 +225,12 @@ jshint -W003, -W026
        */
       function cellFormatter(value, row, index, header) {
 
-        if(header.name==='test_datetime') return '<div class="text-center" style="height:43px;!important;" ><span ' +
+        if(header.name==='test_datetime') return '<div class="text-center" style="height:43px;width: 100px;!important;" ><span ' +
           'class="">'+ $filter('date')(row.test_datetime, 'dd-MM-yyyy')+'</span></div>';
+        if (header.name === 'hiv_viral_load') return '<div class="text-center" style="height:43px!important;" >' +
+          nullToEmptyString (row.hiv_viral_load) + '</div>';
+        if (header.name === 'cd4_percent') return '<div class="text-center" style="height:43px!important;" >' +
+          nullToEmptyString (row.cd4_percent) + '</div>';
 
         return ['<',
           ''  +row.patient_uuid +'">' + nullToEmptyString(value)

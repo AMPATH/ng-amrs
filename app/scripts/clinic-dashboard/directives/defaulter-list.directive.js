@@ -106,19 +106,6 @@ jshint -W003, -W026
 
     }
 
-    $rootScope.$on('$stateChangeStart',
-      function(event, toState, toParams, fromState, fromParams) {
-        console.log('ToState',toState);
-        console.log('FromState',fromState);
-        if ((toState.name === 'patient' &&
-          fromState.name === 'clinical-dashboard.defaulters-list'))
-          //event.preventDefault();
-        $rootScope.broadcastPatient = _.find($scope.customPatientList, function(p){
-          if(p.uuid() === toParams.uuid) return p;
-        });
-
-      });
-
 
     function utcDateToLocal(date) {
       var day = new moment(date).format();
@@ -212,15 +199,6 @@ jshint -W003, -W026
         _sortDefaulterList(defaulters.result);
         $scope.patients.length!=0?$scope.patients.push.apply($scope.patients,defaulters.result):
           $scope.patients =defaulters.result;
-        _.each($scope.patients, function(p){
-          $scope.customPatientList = [];
-          OpenmrsRestService.getPatientService().getPatientByUuid({
-              uuid: p.patient_uuid
-            },
-            function(patient) {
-              $scope.customPatientList.push(patient);
-            });
-        });
         $scope.nextStartIndex +=  defaulters.size;
       }
       buildDataTable();
@@ -259,10 +237,26 @@ jshint -W003, -W026
            // console.log('this is the value ',value,row);
             return cellFormatter(value, row, index, header);
 
-          }
+          },
+          events:'actionEvents'
         });
       });
     }
+
+    //addding click event to bootstrap-table links
+    window.actionEvents = {
+      'click .clickLink': function (e, value, row, index) {
+        console.log(row);
+        //fetch patient based on uuid
+        OpenmrsRestService.getPatientService().getPatientByUuid({
+            uuid: row.patient_uuid
+          },
+          function(data) {
+            $rootScope.broadcastPatient = data;
+            $state.go('patient', {uuid: row.patient_uuid});
+          });
+      }
+    };
 
     function buildTableControls() {
       $scope.bsTableControl = {
@@ -332,7 +326,7 @@ jshint -W003, -W026
         '<span class="text-info text-capitalize">' + numbers + '</span></div>';
 
       if (header.name === 'universalId') return '<div class="text-center" style="width:100px;height:23px!important;" >' +
-          '<span class="text-info text-capitalize"> <a href="#/patient/'  +row.patient_uuid +'">' + row.universalId + '</a></span></div>';
+          '<span class="text-info text-capitalize"> <a class="clickLink" href="javascript:void(0)">' + row.universalId + '</a></span></div>';
       if(header.name==='rtc_date') return '<div class="text-center" style="height:43px!important;" ><span ' +
         'class="text-info text-capitalize">'+ $filter('date')(row.rtc_date, 'dd-MM-yyyy')+'</span>' +'<br/>'+
         '<span>' +row.days_since_rtc+ ' ' +'days ago'+
@@ -342,10 +336,10 @@ jshint -W003, -W026
         'class="text-info text-capitalize">'+ $filter('date')(row.encounter_datetime, 'dd-MM-yyyy')+'</span>' +'<br/>'+
         '<span>' +row.encounter_type_name+
         '</span></div>';
-      return ['<a  class=""',
+      return ['<a  class="clickLink"',
         'title="  " data-toggle="tooltip"',
         'data-placement="top"',
-        'href="#/patient/'  +row.patient_uuid +'">' + value + '</a>'
+        'href="javascript:void(0)" >' + value + '</a>'
       ].join('');
     }
 
