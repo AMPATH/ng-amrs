@@ -532,3 +532,12 @@ width:100%}
     color: #fff; /* active text color */
     background-color: #a94442; /* active bg color */
 }
+
+.panel-heading button:after {
+  visibility: hidden;
+}
+
+.weeks-control {
+    font-size: 20px;
+    line-height: 1.5;
+}

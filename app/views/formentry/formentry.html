@@ -7,9 +7,9 @@
     // initialization doesn't use apiCheck while it's enabled (perf).
     apiCheck.globalConfig.disabled = true;
   </script>
-  <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+  <!--<link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
-  <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">
+  <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css">-->
   <div class="breadcrumb">
     <h2>{{patient.fullNames() | titlecase}} | Sex: {{patient.gender()}} | Age: {{patient.age()}} | Identifier: {{patient.identifierFormatted()}}</h2>{{encounterType}} - {{vm.encounter.encounterDate()| date:'dd-MM-yyyy'}} - {{vm.encounter.locationName()}} {{vm.success}}
     <strong><current-visit-vitals patient-uuid="{{patient.uuid()}}"></current-visit-vitals></strong>

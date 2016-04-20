@@ -516,7 +516,7 @@
                             "label": "Is patient currently on ART?",
                             "required": "true",
                             "id": "onArt",
-                            "historicalExpression":"HD.getObject('prevEnc').getValue('a89ae254-1350-11df-a1f1-0026b9348838')",
+                            "historicalExpression":"arrayContainsAny(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'], HD.getObject('prevEnc').getValue('a89b75d4-1350-11df-a1f1-0026b9348838')) ? 'a899b35c-1350-11df-a1f1-0026b9348838' : HD.getObject('prevEnc').getValue('a89ae254-1350-11df-a1f1-0026b9348838')",
                             "questionOptions": {
                                 "concept": "a89ae254-1350-11df-a1f1-0026b9348838",
                                 "answers": [
@@ -553,7 +553,7 @@
                         {
                             "label": "What line of ART is patient taking?",
                             "id": "current_arv_line",
-                            "historicalExpression":"HD.getObject('prevEnc').getValue('04616f5d-b961-4f41-bbd7-bcc0dd235577')",
+                            "historicalExpression":"!_.isEmpty(HD.getObject('prevEnc').getValue('a89b6a62-1350-11df-a1f1-0026b9348838')) ? undefined : HD.getObject('prevEnc').getValue('04616f5d-b961-4f41-bbd7-bcc0dd235577')",
                             "questionOptions": {
                                 "concept": "04616f5d-b961-4f41-bbd7-bcc0dd235577",
                                 "answers": [
@@ -595,7 +595,7 @@
                                 {
                                     "label": "What is the patient's current ART regimen?",
                                     "id": "current_art_regimen",
-                                    "historicalExpression":"HD.getObject('prevEnc').getValue('a8a08344-1350-11df-a1f1-0026b9348838.a899cf5e-1350-11df-a1f1-0026b9348838')",
+                                    "historicalExpression":"_.isEmpty(HD.getObject('prevEnc').getValue('a89b6a62-1350-11df-a1f1-0026b9348838')) ? HD.getObject('prevEnc').getValue('a8a08344-1350-11df-a1f1-0026b9348838.a899cf5e-1350-11df-a1f1-0026b9348838') : HD.getObject('prevEnc').getValue('a89b6a62-1350-11df-a1f1-0026b9348838')",
                                     "questionOptions": {
                                         "concept": "a899cf5e-1350-11df-a1f1-0026b9348838",
                                         "answers": [
@@ -1751,7 +1751,6 @@
                             "id": "cchpi",
                             "required": "false",
                             "default": "",
-                            "historicalExpression":"HD.getObject('prevEnc').getValue('a89ffbf4-1350-11df-a1f1-0026b9348838')",
                             "questionOptions": {
                                 "rendering": "textarea",
                                 "concept": "a89ffbf4-1350-11df-a1f1-0026b9348838",
@@ -2434,7 +2433,6 @@
                             "id": "assessments_comments",
                             "required": "false",
                             "default": "",
-                            "historicalExpression":"HD.getObject('prevEnc').getValue('23f710cc-7f9c-4255-9b6b-c3e240215dba')",
                             "questionOptions": {
                                 "rendering": "textarea",
                                 "concept": "23f710cc-7f9c-4255-9b6b-c3e240215dba",
