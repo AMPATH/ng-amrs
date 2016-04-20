@@ -66,20 +66,6 @@
     //load data
     loadPatientList();
 
-    $rootScope.$on('$stateChangeStart',
-      function(event, toState, toParams, fromState, fromParams,patientUuid) {
-        console.log('ToState',toState);
-        console.log('FromState',fromState);
-        if ((toState.name === 'patient' &&
-          fromState.name === 'admin.hiv-summary-indicators.patients'))
-
-          $rootScope.broadcastPatient = _.find($scope.customPatientList, function(p){
-            if(p.uuid() === toParams.uuid) return p;
-          });
-
-      });
-
-
 
     function loadIndicatorView() {
       $state.go('admin.hiv-summary-indicators.indicator');
@@ -121,22 +107,12 @@
       }else{
         $scope.patients.length!=0?$scope.patients.push.apply($scope.patients,patients.result):
           $scope.patients = patients.result;
-        _.each($scope.patients, function(p){
-          $scope.customPatientList = [];
-          OpenmrsRestService.getPatientService().getPatientByUuid({
-              uuid: p.patient_uuid
-            },
-            function(patient) {
-              $scope.customPatientList.push(patient);
-            });
-        });
-
 
         $scope.nextStartIndex +=  patients.size;
       }
       $timeout(function(){
       $rootScope.$broadcast("patient", $scope.patients);
-      },200)
+      },100)
     }
 
     function onFetchPatientsListError(error) {

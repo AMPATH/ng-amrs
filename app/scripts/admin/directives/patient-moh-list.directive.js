@@ -58,18 +58,6 @@ jshint -W003, -W026
       //load data
         loadPatientList();
 
-      $rootScope.$on('$stateChangeStart',
-        function(event, toState, toParams, fromState, fromParams) {
-          console.log('ToState',toState);
-          console.log('FromState',fromState);
-          if ((toState.name === 'patient' &&
-            fromState.name === 'admin.moh-731-report.patients'))
-          $rootScope.broadcastPatient = _.find($scope.customPatientList, function(p){
-            if(p.uuid() === toParams.uuid) return p;
-          });
-
-        });
-
 
 
       function loadIndicatorView ()
@@ -113,15 +101,6 @@ jshint -W003, -W026
           }else{
             $scope.patients.length!=0?$scope.patients.push.apply($scope.patients,patients.result):
             $scope.patients = patients.result;
-            _.each($scope.patients, function(p){
-              $scope.customPatientList = [];
-              OpenmrsRestService.getPatientService().getPatientByUuid({
-                  uuid: p.patient_uuid
-                },
-                function(patient) {
-                  $scope.customPatientList.push(patient);
-                });
-            });
             $scope.nextStartIndex +=  patients.size;
           }
           $timeout(function(){

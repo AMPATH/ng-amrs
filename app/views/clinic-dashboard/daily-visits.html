@@ -22,7 +22,7 @@
 
   </div>
     <div ng-show='!isBusyVisits && experiencedVisitsLoadingError'>
-      <button class="btn btn-info" ng-click="loadSchedule()">
+      <button class="btn btn-info" ng-click="loadSchedule(true)">
         <span class="glyphicon glyphicon-refresh"></span>
         <span>Reload</span>
       </button>
@@ -53,17 +53,13 @@
         <!-- Default panel contents -->
 
         <!-- DATATABLE -->
-        <div>
-
-          <div id="toolbar">
-            <select ng-model='exportDataType' style="margin-left: 5px" class="form-control"
-                    ng-options="l.name for l in exportList" ng-change="updateSelectedType()">
-            </select>
-          </div>
-          <table id="bsTable" class="table table-striped table-condensed table-hover" bs-table-control="bsTableControl" >
-          </table>
+        <div ng-show='isBusy && !allDataLoaded4DailyVisits'>
+          <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+          <b>Loading data...</b>
         </div>
-        <!-- END DATATABLE -->
+
+        <patient-list-filters enabled-controls="' patientable'"   >
+        </patient-list-filters>
 
         <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;" />
         <div style="padding:2px; margin-bottom: 30px !important; ">
