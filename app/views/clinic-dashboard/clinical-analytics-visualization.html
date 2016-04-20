@@ -1,0 +1,127 @@
+<div class="container-fluid">
+  <!--<div class="row" >-->
+    <!--<div class="col-sm-12 " style="min-height: 60px; margin: 2px;" >-->
+  <!--<input kendo-range-slider ng-model="width"-->
+         <!--k-options="sliderProperties"-->
+         <!--style=" width: 100%;" />-->
+    <!--</div>-->
+  <!--</div>-->
+  <div class="row">
+
+    <div class="col-sm-12" >
+      <div class="chart-wrapper">
+        <div class="chart-title">
+          <span class="fa fa-dashboard"> </span>
+          HIV Care Comparative Overview
+
+        </div>
+        <div class="chart-stage" dw-loading="{{hivComparative.reportName}}" dw-loading-options="{text: 'Fetching Hiv analytics...'}">
+          <c3chart bindto-id="hivComparativeChart"
+                   chart-data="hivComparative.chart.dataPoints"
+                   chart-columns="hivComparative.chart.dataColumns"
+                   chart-x="hivComparative.chart.xAxis"
+                   show-labels="true"
+                   show-subchart="false"
+                   enable-zoom="true">
+            <chart-axes values-x="x" y="{{hivComparative.chart.yAxis}}" y2="{{hivComparative.chart.y2Axis}}"/>
+            <chart-axis>
+              <chart-axis-x axis-position="outer-center"
+                            axis-label="Date (Month)"
+                            axis-type="category">
+
+
+              </chart-axis-x>
+              <chart-axis-y axis-id="y"
+                            axis-position="outer-right"
+                            axis-label="Number Of Patients"
+                            range-max="hivComparative.chart.max"
+                            range-min="hivComparative.chart.min"/>
+            </chart-axis>
+            <chart-axis-y axis-id="y2"
+                          axis-position="outer-right"
+                          axis-label="Percent (%)"
+                          range-max="100"
+                          range-min="0"/>
+            <chart-points point-radius="5"
+                          show-point="true"
+                          point-expand-enabled="true"
+                          point-expand-radius="10"/>
+            <chart-grid show-x="true" show-y="true">
+            </chart-grid>
+            <chart-events on-click-data="updatePieChartParameters(data)"/>
+            <chart-legend show-legend="true" legend-position="bottom" />
+            <chart-tooltip value-format-function="roundOffValues"/>
+          </c3chart>
+        </div>
+        <div class="chart-notes">
+          A comparative graph showing HIV Care analysis
+          (From: {{hivComparative.startDate|  date:'dd/MM/yyyy'}} To: {{hivComparative.endDate|  date:'dd/MM/yyyy'}})
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-sm-6" >
+      <div class="chart-wrapper">
+        <div class="chart-title">
+          <span class="fa fa-dashboard"> </span>
+          Patient Status Overview
+
+        </div>
+        <div class="chart-stage" dw-loading="{{patientStatus.reportName}}"
+             dw-loading-options="{text: 'Fetching Patient Status analytics...'}">
+          <c3chart bindto-id="patient-status-chart"
+                   chart-data="patientStatus.chart.dataPoints"
+                   chart-columns="patientStatus.chart.dataColumns"> 
+              
+            <chart-donut title="Patient Status" width="60"/>
+            <chart-size  chart-height="250"/>
+            <chart-events on-click-data="generatePatientList(data)"/>
+            <chart-legend show-legend="true" legend-position="right" />
+            <chart-tooltip value-format-function="formatTooltipValue"/>
+          </c3chart>
+
+        </div>
+        <div class="chart-notes">
+          A comparative chart showing patient care status statistics
+          (From: {{patientStatus.startDate|  date:'dd/MM/yyyy'}} To: {{patientStatus.endDate|  date:'dd/MM/yyyy'}})
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6" >
+      <div class="chart-wrapper">
+        <div class="chart-title">
+          <span class="fa fa-dashboard"> </span>
+          ART Overview
+
+        </div>
+        <div class="chart-stage" dw-loading="{{art.reportName}}"
+             dw-loading-options="{text: 'Fetching ART analytics...'}">
+          <c3chart bindto-id="art-chart"
+                   chart-data="art.chart.dataPoints"
+                   chart-columns="art.chart.dataColumns"> 
+              
+            <chart-donut title="ART" width="60"/>
+            <chart-size  chart-height="250"/>
+            <chart-events on-click-data="generatePatientList(data)"/>
+            <chart-legend show-legend="true" legend-position="right" />
+            <chart-tooltip value-format-function="formatTooltipValue"/>
+          </c3chart>
+
+        </div>
+        <div class="chart-notes">
+          A comparative chart showing ARV Drugs consumption statistics
+          (From: {{art.startDate|  date:'dd/MM/yyyy'}} To: {{art.endDate|  date:'dd/MM/yyyy'}})
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <hr>
+
+  <p class="small text-muted pull-right">Use the spanner to change filter parameters</p>
+
+</div>

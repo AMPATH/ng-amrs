@@ -45,7 +45,8 @@
     <link rel="stylesheet" href="styles/medical-icons/wfmi-style.css">
     <link rel="stylesheet" href="styles/ng-switcher.css">
     <link rel="stylesheet" href="styles/offline-fix.css">
-  <link rel="stylesheet" href="styles/notification.css">
+    <link rel="stylesheet" href="styles/notification.css">
+    <link rel="stylesheet" href="styles/visualization.css">
     <!-- endbuild -->
 </head>
 
@@ -160,6 +161,8 @@
     <script src="bower_components/angular-cache/dist/angular-cache.js"></script>
     <script src="bower_components/angular-bar-code-scanner/angular-bar-code-scanner.js"></script>
     <script src="bower_components/angular-bar-code-scanner/angular-bar-code-scanner.min.js"></script>
+    <script src="bower_components/keen-js/dist/keen.min.js"></script>
+    <script src="bower_components/c3-angular/c3-angular.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -198,6 +201,7 @@
     <script src="scripts/authentication/services/authentication-interceptor.service.js"></script>
     <script src="scripts/admin/services/moh-731-report.service.js"></script>
     <script src="scripts/offline/services/offline.service.js"></script>
+    <script src="scripts/clinic-dashboard/services/clinical-analytics-visualization.service.js"></script>
     <!--models-->
 
 
@@ -250,6 +254,8 @@
     <script src="scripts/clinic-dashboard/directives/route-css-classnames.directive.js"></script>
     <script src="scripts/admin/directives/patient-filter-list.directive.js"></script>
     <script src="scripts/patient-dashboard/directives/encounter-view.directive.js"></script>
+    <script src="scripts/clinic-dashboard/directives/clinical-analytics-visualization.directive.js"></script>
+
     <!-- Controllers -->
     <script src="scripts/patient-dashboard/controllers/patient-dashboard.controller.js"></script>
     <script src="scripts/patient-dashboard/controllers/encounter.controller.js"></script>

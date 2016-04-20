@@ -7,6 +7,8 @@
             'app.etlRestServices',
             'models',
             'ui.bootstrap',
-            'darthwade.dwLoading'
+            'darthwade.dwLoading',
+            'gridshore.c3js.chart',
+            'kendo.directives'
         ]);
 })();

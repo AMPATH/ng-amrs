@@ -1,0 +1,19 @@
+
+<div class="well" style="padding:2px; cursor:pointer; margin-bottom: 2px !important;">
+  <div style="margin: 2px;">
+  </div>
+  <hr style="margin:1px;" />
+  <div class="panel panel-default" style="padding: 4px; margin: 2px;" collapse="isExpanded">
+    <report-filters enabled-controls="'start-date, end-date, location, generate-button'" start-date="startDate" end-date="endDate"
+                    selected-locations="selectedLocations" is-busy="isBusy">
+    </report-filters>
+    <div class="row" >
+      <clinical-analytics-visualization  start-date="startDate" end-date="endDate"
+                                         selected-locations="selectedLocations" is-busy="isBusy">
+      </clinical-analytics-visualization>
+    </div>
+
+  </div>
+
+</div>
+

@@ -47,6 +47,7 @@ jshint -W098, -W117, -W003, -W026
 
       getDataEntryStatistics: getDataEntryStatistics,
       getPatientLevelReminders:getPatientLevelReminders,
+      getHivOverviewVisualizationReport:getHivOverviewVisualizationReport,
 
       returnErrorOnNextCall: false
     };
@@ -224,6 +225,28 @@ jshint -W098, -W117, -W003, -W026
         result: patients
       });
 
+
+    }
+    function getHivOverviewVisualizationReport(startDate, endDate, report, groupBy, locationUuids, orderBy,
+      indicators,  successCallback, failedCallback, startIndex, limit){
+      console.log('calling mock getHivOverviewVisualizationReport');
+      var result= [{
+          "location_uuid": "08feb14c-1352-11df-a1f1-0026b9348838",
+          "location_id": 2,
+          "patients": 987,
+          "on_nevirapine": 397,
+          "on_lopinavir": 83,
+          "on_efavirenz": 344,
+          "on_atazanavir": 22,
+          "on_raltegravir": 0,
+          "on_other_arv_drugs": 2,
+          "not_on_arv": 142
+      }];
+      successCallback({
+        startIndex: 0,
+        size: 1,
+        result: result
+      });
 
     }
 
