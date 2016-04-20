@@ -530,7 +530,7 @@
         function determineIfVlIsPending(hivSummaryEtl){
           var overDueDays=!UtilService.isNullOrUndefined(hivSummaryEtl.vl_order_date) ?
             dateDiffInDays(new Date(hivSummaryEtl.vl_order_date),new Date()): 0;
-          if(overDueDays>1){
+          if(overDueDays>0){
             if(!UtilService.isNullOrUndefined(hivSummaryEtl.vl_1_date)) {
               if (!UtilService.isNullOrUndefined(hivSummaryEtl.vl_order_date)) {
                 return {
@@ -554,7 +554,7 @@
         function determineIfCD4IsPending(hivSummaryEtl){
           var overDueDays=!UtilService.isNullOrUndefined(hivSummaryEtl.cd4_order_date) ?
             dateDiffInDays(new Date(hivSummaryEtl.cd4_order_date),new Date()): 0;
-          if(overDueDays>1){
+          if(overDueDays>0){
             if(!UtilService.isNullOrUndefined(hivSummaryEtl.cd4_1_date)) {
               if (!UtilService.isNullOrUndefined(hivSummaryEtl.cd4_order_date)) {
                 return {
