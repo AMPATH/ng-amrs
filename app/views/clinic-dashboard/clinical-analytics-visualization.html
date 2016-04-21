@@ -1,3 +1,4 @@
+
 <div class="container-fluid">
   <!--<div class="row" >-->
     <!--<div class="col-sm-12 " style="min-height: 60px; margin: 2px;" >-->
@@ -77,7 +78,7 @@
               
             <chart-donut title="Patient Status" width="60"/>
             <chart-size  chart-height="250"/>
-            <chart-events on-click-data="generatePatientList(data)"/>
+            <chart-events on-click-data="generatePatientList(data, patientStatus)"/>
             <chart-legend show-legend="true" legend-position="right" />
             <chart-tooltip value-format-function="formatTooltipValue"/>
           </c3chart>
@@ -104,7 +105,7 @@
               
             <chart-donut title="ART" width="60"/>
             <chart-size  chart-height="250"/>
-            <chart-events on-click-data="generatePatientList(data)"/>
+            <chart-events on-click-data="generatePatientList(data, art)"/>
             <chart-legend show-legend="true" legend-position="right" />
             <chart-tooltip value-format-function="formatTooltipValue"/>
           </c3chart>

@@ -26,3 +26,8 @@
   font-size: 12px;
   padding: 8px 10px 5px;
 }
+
+.xx-dialog .modal-dialog {
+  width :90%;
+  min-width: 800px;
+}

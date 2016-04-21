@@ -1,0 +1,26 @@
+<div class="modal-header text-center">
+  <h3 class="modal-title text-info">Patient List | {{indicatorName}}</h3>
+  <strong class="text-muted" >
+    (From: {{startDate|  date:'dd/MM/yyyy'}} To: {{endDate|  date:'dd/MM/yyyy'}})</strong>
+</div>
+<div class="modal-body" dw-loading="busyIndicator" dw-loading-options="{text: 'Fetching Patient List...'}">
+  <patient-list-filters enabled-controls="'patientable'"   >
+  </patient-list-filters>
+</div>
+<div class="modal-footer">
+  <div>
+    <div ng-if="!isBusy && !allDataLoaded">
+      <span class="text-success">{{patients.length}}/{{totalCount}} Patients Loaded. Click 'Load More' to fetch more patients</span>
+    </div>
+    <div ng-if='allDataLoaded' >
+      <p class="bg-info" style="padding:4px;">
+        <b>
+          <span style="color:green;" class="glyphicon glyphicon-ok" />All patients loaded {{'[ ' + patients.length + ' ]'}}</b>
+      <p>
+    </div>
+  </div>
+  <button class="btn btn-info" data-ng-disabled='allDataLoaded||isBusy' ng-click="loadPatientList(true)">
+    <span class="glyphicon glyphicon-refresh"></span> Load More</button>
+  <button class="btn btn-primary" ng-click="cancel()">Close</button>
+  <!--<button class="btn btn-primary" ng-click="ok()">OK</button>-->
+</div>

@@ -163,7 +163,7 @@
           singleSelect: false,
           showColumns: true,
           showRefresh: true,
-          showMultiSort: true,
+          showMultiSort: false,
           showPaginationSwitch: true,
           smartDisplay: true,
           idField: 'patientUuid',
