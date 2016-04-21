@@ -31,14 +31,12 @@ jshint -W003, -W026
       $scope.groupBy = "groupByPatientId";
       $scope.reportSubType = 'patientList';
       // //params
-      // $scope.selectedProvider = { selected: null };
+      // console.log('Test testing cell value ', cell);
+
       var selected = [];
       selected.push({encounterTypeUuid:cell.value.encounter_type_uuid})
       $scope.selectedEncounterTypes = { selected: selected };
-      // $scope.selectedForms = { selected: [] };
-      $scope.startDate = cell.value.date;
-      $scope.endDate = cell.value.date;
-
+      $scope.selectedCreator = {selectedCreator:cell.value.user_uuid};
       loadStatsFromServer();
       $scope.patientListLoaded = true;
       $state.go('admin.data-entry-statistics.patientlist');

@@ -82,7 +82,7 @@
         uuid: patientUuid,
         limit: limit
       };
-      
+
       if(typeof successCallback === 'function') {
         return resource.get(params).$promise.then(function(response) {
             successCallback(response);
@@ -117,7 +117,7 @@
         uuid: patientUuid,
         limit: limit
       };
-      
+
       if(typeof successCallback === 'function') {
         return resource.get(params).$promise.then(function(response) {
             successCallback(response);
@@ -136,7 +136,7 @@
          });
        }
     }
-    
+
     function getPatientTests(patientUuid, startIndex, limit, successCallback, failedCallback) {
       var resource = getResource('patient/:uuid/data');
       if (!startIndex) {
@@ -604,7 +604,7 @@
           paramConfig = getParamConfigObj(['locationUuids', 'encounterTypeUuids', 'formUuids', 'creatorUuid']);
           break;
         case 'patientList':
-            paramConfig = getParamConfigObj(['locationUuids', 'encounterTypeUuids', 'formUuids', 'creatorUuid']);
+            paramConfig = getParamConfigObj(['locationUuids', 'encounterTypeUuids', 'formUuids', 'providerUuid', 'creatorUuid']);
             break;
       }
 
