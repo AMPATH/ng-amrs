@@ -44,7 +44,7 @@
     "kendo-ui": "2016.1.412+SP3",
     "offline": "~0.7.15",
     "angular-formentry": "https://github.com/AMPATH/openmrs-angularFormentry.git#0.1.5",
-    "openmrs-ngresource": "https://github.com/AMPATH/openmrs-ngresource.git#0.0.6",
+    "openmrs-ngresource": "https://github.com/AMPATH/openmrs-ngresource.git#0.0.7",
     "angular-cache": "^4.5.0",
     "angular-bar-code-scanner": "~1.0.0",
     "keen-js": "^3.4.0",
