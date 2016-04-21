@@ -3,7 +3,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 */
 /*jscs:disable disallowMixedSpacesAndTabs, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma*/
 
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -116,38 +116,54 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             $log.log('Initializing form entry controller..');
             subsribeToRootScopeMessages();
             registerConfirmationExit();
-            
+
             HistoricalDataService.removeAllObjects();
             //determine form to load
             determineFormToLoad();
-            
+
             isSpinnerBusy(true);
 
             if (vm.currentMode === formModes.newForm) {
-                loadPreviousEncounter(function(message) {
-                    
-                    if(message === undefined && lastEncounterData !== undefined) {
-                         EncounterDataService.registerPreviousEncounters('prevEnc', lastEncounterData);
-                    } else {
-                        console.error('Error fetching last encounter: ' + message);
-                         HistoricalDataService.removeAllObjects();
-                    }
-                    
+                try {
+                    loadPreviousEncounter(function (message) {
+                        try {
+                            if (message === undefined && lastEncounterData !== undefined) {
+                                EncounterDataService.registerPreviousEncounters('prevEnc', lastEncounterData);
+                            } else {
+                                console.error('Error fetching last encounter: ' + message);
+                                HistoricalDataService.removeAllObjects();
+                            }
+
+                        } catch (error) {
+                            $log.error('An error occured when loading/processing previous encounter', error);
+                        }
+
+
+                        loadPreFormInitializationData(
+                            function () {
+                                loadFormSchemaForSelectedForm(true);
+                            }, function () {
+                                loadFormSchemaForSelectedForm(true);
+                            });
+                    });
+
+                } catch (error) {
+                    $log.error('An error occured when loading previous encounter', error);
                     loadPreFormInitializationData(
-                        function() {
+                        function () {
                             loadFormSchemaForSelectedForm(true);
-                        }, function() {
+                        }, function () {
                             loadFormSchemaForSelectedForm(true);
                         });
-                });
+                }
 
                 return;
             }
 
             loadPreFormInitializationData(
-                function() {
+                function () {
                     loadFormSchemaForSelectedForm(true);
-                }, function() {
+                }, function () {
                     loadFormSchemaForSelectedForm(true);
                 });
 
@@ -177,7 +193,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function initializeDisplayedTabs() {
             vm.tabs = [];
             vm.currentTabIndex = 0;
-            angular.forEach(vm.lastFormlyFormSchema, function(formlyTab) {
+            angular.forEach(vm.lastFormlyFormSchema, function (formlyTab) {
                 vm.tabs.push({
                     form: {},
                     title: formlyTab.title
@@ -194,7 +210,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             if (vm.tabs[$index]['form'] !== vm.lastFormlyFormSchema[$index].form) {
                 isSpinnerBusy(true);
-                $timeout(function() {
+                $timeout(function () {
                     vm.tabs[$index]['form'] = vm.lastFormlyFormSchema[$index].form;
                     isSpinnerBusy(false);
                 }, 200, false);
@@ -222,7 +238,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             if (vm.tabs[vm.currentTabIndex]['form'] !== vm.lastFormlyFormSchema[vm.currentTabIndex].form) {
                 isSpinnerBusy(true);
-                $timeout(function() {
+                $timeout(function () {
                     vm.tabs[vm.currentTabIndex]['form'] = vm.lastFormlyFormSchema[vm.currentTabIndex].form;
                     /*move to the top of the selected page*/
                     $location.hash('top');
@@ -236,7 +252,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         function validateTabs() {
             isSpinnerBusy(true);
-            $timeout(function() {
+            $timeout(function () {
                 loadAllTabs();
                 isSpinnerBusy(false);
                 vm.hasClickedSubmit = true;
@@ -246,7 +262,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         function loadAllTabs() {
             var i = 0;
-            angular.forEach(vm.lastFormlyFormSchema, function(formlyTab) {
+            angular.forEach(vm.lastFormlyFormSchema, function (formlyTab) {
                 if (vm.displayedTabsIndices.indexOf(i) === -1) {
                     vm.displayedTabsIndices.push(i);
                     vm.tabs[i]['form'] = vm.lastFormlyFormSchema[i].form;
@@ -263,7 +279,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function anyFieldsInError(fields) {
             if (fields && fields.length !== 0) {
                 var hasError = false;
-                _.each(fields, function(field) {
+                _.each(fields, function (field) {
                     if (field.formControl && field.formControl.$error && Object.keys(field.formControl.$error).length > 0) {
                         hasError = true;
                     }
@@ -291,7 +307,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         function selectTabByTitle(title) {
-            _.each(vm.tabs, function(tab) {
+            _.each(vm.tabs, function (tab) {
                 if (tab.title === title) {
                     tab.active = true;
                 }
@@ -313,11 +329,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function cancel() {
             vm.changesSaved = true;
             var dlg = dialogs.confirm('Close Form', 'Do you want to close this form?');
-            dlg.result.then(function(btn) {
+            dlg.result.then(function (btn) {
                 $location.path($rootScope.previousState + '/' + $rootScope.previousStateParams.uuid);
             },
 
-                function(btn) {
+                function (btn) {
                     //$scope.vm.confirmed = 'You confirmed "No."';
                 });
         }
@@ -330,13 +346,13 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     event.preventDefault();
                     var dialogPromise = dialogs.confirm('Changes Not Saved',
                         'Do you want to close this form?');
-                    dialogPromise.result.then(function(btn) {
+                    dialogPromise.result.then(function (btn) {
                         userConfirmedChange = true;
                         $state.go(toState.name, {
                             onSuccessRout: toState,
                             onSuccessParams: toParams
                         });
-                    }, function(btn) {
+                    }, function (btn) {
                         //Prevent any transition to new url
                         event.preventDefault();
                         userConfirmedChange = false;
@@ -347,7 +363,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         function registerConfirmationExit() {
             // if (usedStateChange === false) {
-            UtilService.confirmBrowserExit(function(data) {
+            UtilService.confirmBrowserExit(function (data) {
                 if (data) {
                     var dlg = dialogs.confirm('Close Form',
                         'Do you want to close this form?');
@@ -362,7 +378,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             isSpinnerBusy(true);
             $log.log('Loading form schema for ' + selectedFormMetadata.name);
             FormsMetaData.getFormSchema(selectedFormMetadata.name,
-                function(schema) {
+                function (schema) {
                     isSpinnerBusy(false);
                     selectedFormSchema = schema;
                     $log.info('Form schema loadded..', selectedFormSchema);
@@ -377,17 +393,17 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function getFormSchemaReferences(createFormAfterLoading) {
 
             var referencedFormNames = [];
-            _.each(selectedFormSchema.referencedForms, function(reference) {
+            _.each(selectedFormSchema.referencedForms, function (reference) {
                 referencedFormNames.push(reference.formName);
             });
             isSpinnerBusy(true);
-            FormsMetaData.getFormSchemasArray(referencedFormNames, function(formSchemas) {
+            FormsMetaData.getFormSchemasArray(referencedFormNames, function (formSchemas) {
                 isSpinnerBusy(false);
                 FormEntry.compileFormSchema(selectedFormSchema, formSchemas);
                 if (createFormAfterLoading) {
                     createFormFromSchema();
                 }
-            }, function(error) {
+            }, function (error) {
                 isSpinnerBusy(false);
                 console.error('Could not load referenced forms', error);
                 vm.errorMessage = 'Could not load referenced forms';
@@ -509,12 +525,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             var lastEncounterUuid = lastEncounter.uuid();
 
             OpenmrsRestService.getEncounterResService().getEncounterByUuid(lastEncounterUuid,
-                function(data) {
+                function (data) {
                     lastEncounterData = data;
                     callback();
                 },
                 //error callback
-                function(error) {
+                function (error) {
                     callback('An Error occured when trying to get encounter data');
                 }
             );
@@ -526,12 +542,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         //Region: Load existing form
         function loadEncounterData(encounterUuid, callback) {
             OpenmrsRestService.getEncounterResService().getEncounterByUuid(encounterUuid,
-                function(data) {
+                function (data) {
                     selectedEncounterData = data;
                     callback(true);
                 },
                 //error callback
-                function(error) {
+                function (error) {
                     vm.errorMessage =
                         'An Error occured when trying to get encounter data';
                     callback(false);
@@ -548,7 +564,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             var hasLoadingError = false;
             if (vm.currentMode === formModes.existingForm) {
                 numberOfRequests++;
-                loadEncounterData(selectedEncounterUuid, function(isSuccessful) {
+                loadEncounterData(selectedEncounterUuid, function (isSuccessful) {
                     if (!isSuccessful) {
                         hasLoadingError = true;
                     }
@@ -601,7 +617,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         function getUpdatedObsFromPayload(payload) {
-            return _.filter(payload.obs, function(obs) {
+            return _.filter(payload.obs, function (obs) {
                 if (obs.uuid !== undefined && obs.voided === undefined) {
                     return obs;
                 }
@@ -666,7 +682,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             var formatedPayload = {
                 attributes: []
             }
-            _.each(payload, function(attribute) {
+            _.each(payload, function (attribute) {
                 formatedPayload.attributes.push(attribute);
             });
             console.log("formatedPayload is ", formatedPayload);
@@ -679,7 +695,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 var err = vm.form.$error;
                 $log.log('form error', err);
                 if (err.js_expression1) {
-                    _.each(err.js_expression1[0].$error.js_expression1, function(_errFields) {
+                    _.each(err.js_expression1[0].$error.js_expression1, function (_errFields) {
                         $log.debug('js_expression validation error', _errFields);
                         $log.debug('fields in error:', getFieldInError(_errFields.$name));
                     });
@@ -702,7 +718,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             }
 
             var field;
-            _.each(vm.questionMap, function(question) {
+            _.each(vm.questionMap, function (question) {
                 if (question.key === fieldKey) {
                     field = question.field;
                 }
@@ -743,7 +759,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             if (!areAllTabsLoaded()) {
                 isSpinnerBusy(true);
-                $timeout(function() {
+                $timeout(function () {
                     loadAllTabs();
                     submit();
                 }, 200, false);
@@ -813,7 +829,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     var voidedObs = getVoidedObsFromPayload(payloadCopy);
                     if (voidedObs !== undefined) {
                         $log.log('Submitting deleted obs...');
-                        submitVoidedObs(voidedObs, function(voidFailed) {
+                        submitVoidedObs(voidedObs, function (voidFailed) {
                             $log.log('Submitting deleted obs complete');
                             if (voidFailed) {
                                 $log.error('Submitting deleted obs failed');
@@ -833,7 +849,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     var updatedObs = getUpdatedObsFromPayload(payloadCopy);
                     if (updatedObs !== undefined) {
                         $log.log('Submitting updated obs...');
-                        submitUpdatedObs(updatedObs, function(updateFailed) {
+                        submitUpdatedObs(updatedObs, function (updateFailed) {
                             $log.log('Submitting updated obs complete');
                             if (updateFailed) {
                                 $log.error('Submitting deleted obs failed');
@@ -859,7 +875,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 if (lastPersonAttributePayload !== undefined) {
                     $log.log('Submitting person attributes..');
                     submitPersonAttributes(lastPersonAttributePayload, vm.patient,
-                        function(submitFailed) {
+                        function (submitFailed) {
                             $log.log('Submitting person attributes completed');
                             if (submitFailed) {
                                 $log.error('Submitting person attributes failed');
@@ -896,9 +912,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 finalCallback(vm.hasFailedVoidingRequest);
             }
 
-            _.each(voidedObsPayload, function(obs) {
+            _.each(voidedObsPayload, function (obs) {
                 $log.log('sending void request for obs', obs);
-                OpenmrsRestService.getObsResService().voidObs(obs, function(data) {
+                OpenmrsRestService.getObsResService().voidObs(obs, function (data) {
                     if (data) {
                         $log.log('Voided Obs uuid: ', obs.uuid);
                     }
@@ -909,7 +925,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     }
                 },
                     //error callback
-                    function(error) {
+                    function (error) {
                         $log.log('Error voiding obs: ', obs.uuid);
                         vm.hasFailedVoidingRequest = true;
                         numberOfVoidRequests--;
@@ -930,9 +946,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 finalCallback(vm.hasFailedUpdatingingRequest);
             }
 
-            _.each(updatedObsPayload, function(obs) {
+            _.each(updatedObsPayload, function (obs) {
                 $log.log('Sending update request for obs', obs);
-                OpenmrsRestService.getObsResService().saveUpdateObs(obs, function(data) {
+                OpenmrsRestService.getObsResService().saveUpdateObs(obs, function (data) {
                     if (data) {
                         $log.log('Updated Obs uuid: ', data);
                     }
@@ -943,7 +959,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     }
                 },
                     //error callback
-                    function(error) {
+                    function (error) {
                         $log.log('Error voiding obs: ', obs.uuid);
                         vm.hasFailedUpdatingingRequest = true;
 
@@ -958,7 +974,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         function submitPersonAttributes(lastPersonAttributePayload, person, finalCallback) {
             $log.log('Showing person attribute payload', lastPersonAttributePayload);
-            PersonAttributesRestService.saveUpdatePersonAttribute(lastPersonAttributePayload, person, function(data) {
+            PersonAttributesRestService.saveUpdatePersonAttribute(lastPersonAttributePayload, person, function (data) {
                 if (data) {
                     $log.log('Updated attribute: ', data);
                     finalCallback(vm.hasFailedPersonAttributeRequest);
@@ -966,7 +982,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             },
                 //error callback
-                function(error) {
+                function (error) {
                     $log.log('Error saving attribute: ', attribute);
                     vm.hasFailedPersonAttributeRequest = true;
 
