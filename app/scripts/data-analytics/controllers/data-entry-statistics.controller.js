@@ -19,7 +19,6 @@
 
 		if (!_.isNull($stateParams.view_id) && !_.isUndefined($stateParams.view_id)) {
 			$scope.selectedView = $stateParams.view_id;
-
 		}
 
 	}

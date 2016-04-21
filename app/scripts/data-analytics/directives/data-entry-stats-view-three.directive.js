@@ -27,29 +27,28 @@ jshint -W003, -W026
     function dataEntryStatsViewOneController($scope, $rootScope, moment,
 	 $state, $filter, EtlRestService, helperService, SearchDataService) {
 		//filter configurations
-    $scope.getPatienList = function(cell) {
-      $scope.groupBy = "groupByPatientId";
-      $scope.reportSubType = 'patientList';
-      // //params
-      // $scope.selectedProvider = { selected: null };
-      var selected = [];
-      selected.push({encounterTypeUuid:cell.value.encounter_type_uuid})
-      $scope.selectedEncounterTypes = { selected: selected };
-      // $scope.selectedForms = { selected: [] };
-      $scope.startDate = cell.value.date;
-      $scope.endDate = cell.value.date;
-
-      loadStatsFromServer();
-      $scope.patientListLoaded = true;
-      $state.go('admin.data-entry-statistics.patientlist');
-
-    }
-
-		$scope.reportSubType = 'by-provider-by-encounter-type';
+    $scope.reportSubType = 'by-provider-by-encounter-type';
     $scope.groupBy = "groupByProviderId,groupByEncounterTypeId";
 		$scope.controls =
 		'start-date,end-date,selected-encounter,selected-form,selected-provider';
 		$scope.numberOfColumns = 6;
+
+    $scope.getPatienList = function(cell) {
+      $scope.groupBy = "groupByPatientId";
+      $scope.reportSubType = 'patientList';
+      // //params
+      // console.log('Test testing cell value ', cell)
+      var selected = [];
+      selected.push({encounterTypeUuid:cell.value.encounter_type_uuid})
+      $scope.selectedEncounterTypes = { selected: selected };
+
+      var selectedProvider={selectedProvider:cell.value.provider_uuid};
+      $scope.selectedProvider = selectedProvider;
+      // $scope.selectedForms = { selected: [] };
+      loadStatsFromServer();
+      $state.go('admin.data-entry-statistics.patientlist');
+
+    }
 
 		//params
 		$scope.selectedProvider = { selected: null };
@@ -133,6 +132,7 @@ jshint -W003, -W026
 		}
 
 		function onLoadStatsFromServerSuccess(results) {
+      // console.log('Called though', $scope.reportSubType)
 			$scope.isBusy = false;
 			$scope.needsRefresh = false;
 			$scope.unGroupedItems = results.result;
@@ -141,6 +141,7 @@ jshint -W003, -W026
         //Build patient list
         $scope.patients = results.result;
         $rootScope.$broadcast("patient", $scope.patients);
+        console.log('Data Entry Results ', $scope.patients)
         $scope.reportSubType = 'by-provider-by-encounter-type';
       }
 			//process data here

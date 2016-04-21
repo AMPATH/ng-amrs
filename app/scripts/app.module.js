@@ -227,7 +227,7 @@
         .state('admin.data-entry-statistics.patientlist', {
           url: '/data-entry-list',
           templateUrl: 'views/data-analytics/data-entry-patient-list.html',
-          // controller: 'DataEntryPatientListCtrl',
+          // controller: 'DataEntryStatisticsCtrl',
           data: {
             requireLogin: true
           },

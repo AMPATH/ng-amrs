@@ -154,6 +154,9 @@
 			var providerUuid;
 			if (selectedProviderObject.selected && selectedProviderObject.selected.uuId)
 				providerUuid = selectedProviderObject.selected.uuId();
+			else if (selectedProviderObject.selectedProvider) {
+				providerUuid = selectedProviderObject.selectedProvider;
+			}
 
 			return providerUuid;
 		}
@@ -162,6 +165,9 @@
 			var creatorUuid;
 			if (selectedCreatorObject.selected && selectedCreatorObject.selected.uuid)
 				creatorUuid = selectedCreatorObject.selected.uuid;
+				else if (selectedCreatorObject.selectedCreator) {
+					creatorUuid = selectedCreatorObject.selectedCreator;
+				}
 
 			return creatorUuid;
 		}
