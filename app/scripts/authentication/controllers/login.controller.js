@@ -6,9 +6,9 @@
     .module('app.authentication')
     .controller('LoginCtrl', LoginCtrl);
 
-  LoginCtrl.$inject = ['$scope', 'OpenmrsRestService', '$timeout'];
+  LoginCtrl.$inject = ['$scope', 'OpenmrsRestService', '$timeout', 'SessionResService'];
 
-  function LoginCtrl($scope, OpenmrsRestService, $timeout) {
+  function LoginCtrl($scope, OpenmrsRestService, $timeout, SessionResService) {
     $scope.errors = '';
     $scope.isVisible = false;
     $scope.CurrentUser = {
@@ -17,6 +17,8 @@
     };
 
     $scope.isBusy = false;
+    
+    clearCurrentSession();
 
     $scope.authenticate = function () {
       //to do authenticate
@@ -39,5 +41,13 @@
 
       }); // authenticate user
     };
+    
+    function clearCurrentSession() {
+      $scope.isBusy = true;
+
+     SessionResService.deleteSession(function(response) {
+        $scope.isBusy = false;
+      });
+    }
   }
 })();
