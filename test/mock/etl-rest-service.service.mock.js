@@ -44,6 +44,7 @@ jshint -W098, -W117, -W003, -W026
       numberOfPatientsToReturn: 20,
 
       getPatientByIndicatorAndLocation:getPatientByIndicatorAndLocation,
+      getPatientListReportByIndicatorAndLocation:getPatientListReportByIndicatorAndLocation,
 
       getDataEntryStatistics: getDataEntryStatistics,
       getPatientLevelReminders:getPatientLevelReminders,
@@ -721,10 +722,43 @@ jshint -W098, -W117, -W003, -W026
 
       return hivSummaryEtl;
     }
+
+    function getPatientListReportByIndicatorAndLocation(locationIds,startDate,endDate,reportName,indicator,
+                                                        successCallback, failedCallback,locationUuids,startIndex,limit){
+      console.log('calling mock getPatientListReportByIndicatorAndLocation');
+      limit = service.numberOfPatientsToReturn;
+
+      if (service.returnErrorOnNextCall === true) {
+        console.log('returning error on getPatientListReportByIndicatorAndLocation');
+        failedCallback({ message: 'An error occurred' });
+        return;
+      }
+
+      var patients = [];
+      var numberOfRecords = limit;
+      if (startIndex >= service.numberOfPatientsToReturn) {
+        successCallback({
+          startIndex: startIndex,
+          size: 0,
+          result: []
+        });
+        return;
+      }
+
+      for (var i = startIndex; i < (startIndex + numberOfRecords); i++) {
+        patients.push(getPatientEtlRecord(i));
+      }
+
+      successCallback({
+        startIndex: startIndex,
+        size: numberOfRecords,
+        result: patients
+      });
+    }
+
     function getPatientByIndicatorAndLocation(locationIds,startDate,endDate,indicator,successCallback,
                                               failedCallback,locationUuids,startIndex,limit){
       console.log('calling mock getPatientByIndicatorAndLocation');
-        startIndex = startIndex;
         limit = service.numberOfPatientsToReturn;
 
       if (service.returnErrorOnNextCall === true) {
