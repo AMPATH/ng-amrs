@@ -16,7 +16,7 @@
     var setUp = false;
     var serviceDefinition;
     var startDate = new Date();
-    var selectedLocation={selected:undefined};
+    var selectedLocation;
     var indicatorDetails;
     var endDate = new Date();
     var indicatorTags;

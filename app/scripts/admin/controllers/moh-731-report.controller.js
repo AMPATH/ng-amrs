@@ -165,6 +165,8 @@
       Moh731ReportService.setIndicators($scope.indicators);
       Moh731ReportService.setStartDate($scope.startDate);
       Moh731ReportService.setEndDate($scope.endDate);
+      if($scope.selectedLocations && $scope.selectedLocations.locations.length>0)
+        Moh731ReportService.setSelectedLocation($scope.selectedLocations);
     }
 
     function getIndicatorDetails() {
@@ -182,6 +184,7 @@
         $scope.indicatorTags = Moh731ReportService.getIndicatorTags();
         $scope.startDate = Moh731ReportService.getStartDate();
         $scope.endDate = Moh731ReportService.getEndDate();
+        $scope.selectedLocations=Moh731ReportService.getSelectedLocation();
         buildDataTable();
         return true;
       }
