@@ -68,15 +68,16 @@ jshint -W003, -W026
         function loadPatientList(loadNextOffset) {
             $scope.experiencedLoadingErrors = false;
             if($scope.isBusy === true) return;
+            var locations=getSelectedLocations(Moh731ReportService.getSelectedLocation())||$scope.locationUuid;
             $scope.isBusy = true;
             if(loadNextOffset!==true)resetPaging();
             if ($scope.locationUuid && $scope.locationUuid !== ''&& $scope.indicator && $scope.indicator!==''
               && $scope.startDate && $scope.startDate!=='' ) {
-              EtlRestService.getPatientListReportByIndicatorAndLocation($scope.locationUuid,
+              EtlRestService.getPatientListReportByIndicatorAndLocation(locations,
                 moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
                 moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
                 $scope.reportName,
-                $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError,$scope.locationUuid,
+                $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError,locations,
                 $scope.nextStartIndex, 300);
 
             }
@@ -124,6 +125,26 @@ jshint -W003, -W026
       function getIndicatorLabelByName(name) {
         var found = $filter('filter')($scope.indicatorKeys, {name: name})[0];
         if (found)return found.label;
+      }
+
+      function getSelectedLocations(selectedLocationObject) {
+        var locations;
+        try {
+          if (angular.isDefined(selectedLocationObject.locations)) {
+            for (var i = 0; i < selectedLocationObject.locations.length; i++) {
+              if (i === 0) {
+                locations = '' + selectedLocationObject.locations[i].uuId();
+              }
+              else {
+                locations =
+                  locations + ',' + selectedLocationObject.locations[i].uuId();
+              }
+            }
+          }
+        } catch (e) {
+
+        }
+        return locations;
       }
 	}
 
