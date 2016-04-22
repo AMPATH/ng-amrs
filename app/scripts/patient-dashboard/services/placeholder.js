@@ -1,1 +1,0 @@
-/*placeholder is used to ensure the folder structure is consistent when commited to git */

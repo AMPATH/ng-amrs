@@ -45,6 +45,9 @@
 				<li active-tab-sync index="6" data-ng-glick="activeList(this, 6)" ng-class="{active: activeListId === 6}">
 					<a data-target="#tab6" data-toggle="tab"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;Current Visit</a>
 				</li>
+        <li active-tab-sync index="10" data-ng-glick="activeList(this, 10)" ng-class="{active: activeListId === 10}">
+					<a data-target="#notesTab" data-toggle="tab"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp;Clinical Notes</a>
+				</li>
 				<li active-tab-sync index="3" data-ng-glick="activeList(this, 3)" ng-class="{active: activeListId === 3}">
 					<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Forms</a>
 				</li>
@@ -71,6 +74,9 @@
 				<li active-tab-sync index="6" data-ng-glick="activeList(this, 6)" ng-class="{active: activeListId === 6}">
 					<a data-target="#tab6" data-toggle="tab"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;Current Visit</a>
 				</li>
+        <li active-tab-sync index="10" data-ng-glick="activeList(this, 10)" ng-class="{active: activeListId === 10}">
+					<a data-target="#notesTab" data-toggle="tab"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp;Clinical Notes</a>
+				</li>
 				<li active-tab-sync index="3" data-ng-glick="activeList(this, 3)" ng-class="{active: activeListId === 3}">
 					<a data-target="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Forms</a>
 				</li>
@@ -86,6 +92,11 @@
 				</div>
 				<div style="margin-top: 2px;">
 					<patient-demographics></patient-demographics>
+				</div>
+			</div>
+      <div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="notesTab">
+				<div class="page-content">
+					<clinical-notes patient-uuid={{patient.uuid()}}></clinical-notes>
 				</div>
 			</div>
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab2">

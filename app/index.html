@@ -47,6 +47,7 @@
     <link rel="stylesheet" href="styles/offline-fix.css">
     <link rel="stylesheet" href="styles/notification.css">
     <link rel="stylesheet" href="styles/visualization.css">
+    <link rel="stylesheet" href="styles/notes.css">
     <!-- endbuild -->
 </head>
 
@@ -147,8 +148,7 @@
     <script src="bower_components/flot/jquery.flot.js"></script>
     <script src="bower_components/holderjs/holder.js"></script>
     <script src="bower_components/metisMenu/dist/metisMenu.js"></script>
-    <script src="bower_components/eve/eve.js"></script>
-    <script src="bower_components/raphael/raphael.min.js"></script>
+    <script src="bower_components/raphael/raphael.js"></script>
     <script src="bower_components/mocha/mocha.js"></script>
     <script src="bower_components/morrisjs/morris.js"></script>
     <script src="bower_components/datatables-responsive/js/dataTables.responsive.js"></script>
@@ -169,6 +169,9 @@
 
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <!-- Global stuff - Be careful with this kind of stuff -->
+    <script src="scripts/global.utils.js"></script>
+    <!-- end of global stuff -->
     <!-- Modules -->
     <script src="scripts/app.module.js"></script>
     <script src="scripts/authentication/authentication.module.js"></script>
@@ -203,6 +206,7 @@
     <script src="scripts/admin/services/moh-731-report.service.js"></script>
     <script src="scripts/offline/services/offline.service.js"></script>
     <script src="scripts/clinic-dashboard/services/clinical-analytics-visualization.service.js"></script>
+    <script src="scripts/patient-dashboard/services/notes.service.js"></script>
     <!--models-->
 
 
@@ -256,7 +260,8 @@
     <script src="scripts/admin/directives/patient-filter-list.directive.js"></script>
     <script src="scripts/patient-dashboard/directives/encounter-view.directive.js"></script>
     <script src="scripts/clinic-dashboard/directives/clinical-analytics-visualization.directive.js"></script>
-
+    <script src="scripts/patient-dashboard/directives/notes.directive.js"></script>
+    
     <!-- Controllers -->
     <script src="scripts/patient-dashboard/controllers/patient-dashboard.controller.js"></script>
     <script src="scripts/patient-dashboard/controllers/encounter.controller.js"></script>
@@ -282,7 +287,6 @@
     <script src="scripts/clinic-dashboard/filters/not-returned-date-appointments.filter.js"></script>
 
     <!-- Others -->
-    <script src="scripts/main/controllers/about.js"></script>
     <script src="scripts/patient-search/patient-filter.filter.js"></script>
     <script src="scripts/utils/services/util.service.js"></script>
 

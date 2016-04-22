@@ -29,6 +29,8 @@
                 hivSummaryEtl.uuid : '';
             var _encounterId = !UtilService.isNullOrUndefined(hivSummaryEtl.encounter_id) ?
                 hivSummaryEtl.encounter_id : '';
+            var _encounterType = !UtilService.isNullOrUndefined(hivSummaryEtl.encounter_type) ?
+                hivSummaryEtl.encounter_type : '';
             var _encounterDatetime = !UtilService.isNullOrUndefined(hivSummaryEtl.encounter_datetime) ?
                 hivSummaryEtl.encounter_datetime : '';
             var _encounterTypeName = !UtilService.isNullOrUndefined(hivSummaryEtl.encounter_type_name) ?
@@ -119,6 +121,9 @@
 
             var _curWhoStage = !UtilService.isNullOrUndefined(hivSummaryEtl.cur_who_stage) ?
                     hivSummaryEtl.cur_who_stage : '';
+            
+            var _tbProphylaxisStartDate = !UtilService.isNullOrUndefined(hivSummaryEtl.tb_prophylaxis_start_date) ?
+                    hivSummaryEtl.tb_prophylaxis_start_date : '';        
 
             modelDefinition.personId = function(value) {
                 if (angular.isDefined(value)) {
@@ -155,7 +160,15 @@
                     return _encounterDatetime;
                 }
             };
-
+            
+            modelDefinition.encounterType = function(value) {
+              if(angular.isDefined(value)) {
+                _encounterType = value;
+              } else {
+                return _encounterType;
+              }
+            };
+            
             modelDefinition.encounterTypeName = function(value) {
                 if (angular.isDefined(value)) {
                     _encounterTypeName = value;
@@ -524,8 +537,14 @@
                     return _curWhoStage;
                 }
             };
-
-
+            
+            modelDefinition.tbProphylaxisStartDate = function(value) {
+              if(angular.isDefined(value)) {
+                _tbProphylaxisStartDate = value;
+              } else {
+                return _tbProphylaxisStartDate;
+              }
+            }
         }
         function determineIfVlIsPending(hivSummaryEtl){
           var overDueDays=!UtilService.isNullOrUndefined(hivSummaryEtl.vl_order_date) ?

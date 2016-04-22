@@ -94,10 +94,10 @@
           });
        } else {
          return resource.get(params).$promise.then(function(response) {
-           return response.data;
+           return response;
          }, function(response) {
            // Something went crazy
-           return $q.reject(response.data);
+           return $q.reject(response);
          });
        }
     }
@@ -129,10 +129,10 @@
           });
        } else {
          return resource.get(params).$promise.then(function(response) {
-           return response.data;
+           return response;
          }, function(response) {
            // Something went crazy
-           return $q.reject(response.data);
+           return $q.reject(response);
          });
        }
     }
