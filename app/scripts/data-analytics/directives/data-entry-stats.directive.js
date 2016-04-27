@@ -68,21 +68,8 @@ jshint -W003, -W026
 		$scope.experiencedLoadingErrors = false;
 		$scope.loadStatsFromServer = loadStatsFromServer;
     $scope.currentViewConfiguration_copy = angular.copy($scope.currentViewConfiguration);
-    $scope.getPatienList = function(cell) {
-      $scope.currentViewConfiguration.groupBy = "groupByPatientId";
-      $scope.currentViewConfiguration.reportSubType = 'patientList';
-      // //params
-      // $scope.selectedProvider = { selected: null };
-      var selected = [];
-      selected.push({encounterTypeUuid:cell.value.encounter_type_uuid})
-      $scope.selectedEncounterTypes = { selected: selected };
-      // $scope.selectedForms = { selected: [] };
-      $scope.startDate = cell.value.date;
-      $scope.endDate = cell.value.date;
-
-      loadStatsFromServer();
-      $state.go('admin.data-entry-statistics.patientlist');
-    }
+    $scope.getPatienList = onLoadPatientList
+    $scope.isLoadingPatientList = false;
 
 		activate();
 		function activate() {
@@ -95,6 +82,20 @@ jshint -W003, -W026
 		}
 
 		//query etl functionality
+
+    function onLoadPatientList(cell) {
+      $scope.currentViewConfiguration.groupBy = "groupByPatientId";
+      $scope.currentViewConfiguration.reportSubType = 'patientList';
+      // //params
+      // $scope.selectedProvider = { selected: null };
+      var selected = [];
+      selected.push({encounterTypeUuid:cell.value.encounter_type_uuid})
+      $scope.selectedEncounterTypes = { selected: selected };
+      // $scope.selectedForms = { selected: [] };
+      $scope.startDate = cell.value.date;
+      $scope.endDate = cell.value.date;
+      loadStatsFromServer();
+    }
 
 		function loadStatsFromServer() {
 
@@ -125,14 +126,18 @@ jshint -W003, -W026
 			$scope.isBusy = false;
 			$scope.needsRefresh = false;
 			$scope.unGroupedItems = results.result;
+      console.log('Sql Query :', results.sql);
+      if ($scope.isLoadingPatientList) {
+          $state.go('admin.data-entry-statistics.patientlist', {patient_list:'patientList'});
+          $scope.isLoadingPatientList=false;
+      }
 
       if ($scope.currentViewConfiguration.reportSubType === 'patientList') {
         //Build patient list
         $scope.patients = results.result;
         $rootScope.$broadcast("patient", $scope.patients);
+        helperService.patientList($scope.patients);
         $scope.currentViewConfiguration.reportSubType = $scope.currentViewConfiguration_copy.reportSubType;
-        console.log('got here', $scope.patients)
-
 
       }
 			//process data here
@@ -142,6 +147,7 @@ jshint -W003, -W026
 		function onLoadStatsFromServerError(error) {
 			$scope.isBusy = false;
 			$scope.experiencedLoadingErrors = true;
+      $scope.isLoadingPatientList=false;
 			console.error('An error occured when fetching data', error);
 		}
 

@@ -158,6 +158,7 @@ jshint -W003, -W026
       $scope.locationsOptions = {
         placeholder: 'Select a location or type to search...',
         dataTextField: 'name()',
+        dataValueField: 'uuid',
         filter: 'contains',
         dataSource:wrapLocations(locations)
       };
@@ -181,7 +182,9 @@ jshint -W003, -W026
 		}
 
 		function wrapLocation(location) {
-			return LocationModel.toWrapper(location);
+			var location = LocationModel.toWrapper(location);
+      location.uuid = location.uuId();
+      return location;
 		}
 	}
 

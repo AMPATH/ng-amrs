@@ -7,6 +7,20 @@
 		.factory('DataEntryStatsHelpersService', DataEntryStatsHelpersService);
 	DataEntryStatsHelpersService.$inject = ['moment'];
 	function DataEntryStatsHelpersService(moment) {
+		var patientListData;
+		var viewParams = {
+			selectedLocations:[],
+			selectedForms:[],
+			selectedCreator:'',
+			selectedProvider:'',
+			startDate:'',
+			endDate:'',
+			selectedEncounterTypes:[],
+			cached:false,
+			viewId:''
+		}
+		var selectedLocations
+		var sel
 		var serviceDefinition;
 		serviceDefinition = {
 			generateEndDate: generateEndDate,
@@ -22,9 +36,30 @@
 			areDateObjectsEqual: areDateObjectsEqual,
 			generateEndMonth: generateEndMonth,
 			getMonthArrayFrom: getMonthArrayFrom,
-			getViewConfigurationObjects: getViewConfigurationObjects
+			getViewConfigurationObjects: getViewConfigurationObjects,
+			patientList:patientList,
+			getSetViewCachedData:viewCachedData
         };
 		return serviceDefinition;
+
+
+		function viewCachedData(cachedData) {
+			if (angular.isDefined(cachedData)) {
+				viewParams = cachedData;
+			}
+			else {
+				return viewParams;
+			}
+		}
+
+		function patientList(data) {
+			if (angular.isDefined(data)) {
+				patientListData = data;
+			}
+			else {
+				return patientListData;
+			}
+		}
 
 		function getViewConfigurationObjects(){
 			return [
@@ -103,6 +138,7 @@
 				return;
 			var locations;
 			if (selectedLocationObject.locations)
+			console.log('Locations object', selectedLocationObject)
 				for (var i = 0; i < selectedLocationObject.locations.length; i++) {
 					if (i === 0) {
 						locations = '' + selectedLocationObject.locations[i].uuId();

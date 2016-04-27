@@ -22,33 +22,18 @@ jshint -W003, -W026
 	}
 
 	dataEntryStatsViewOneController.$inject = ['$scope', '$rootScope', 'moment',
-	'$state', '$filter', 'EtlRestService', 'DataEntryStatsHelpersService', 'SearchDataService'];
+	'$state', '$filter', 'EtlRestService', 'DataEntryStatsHelpersService',
+  'SearchDataService', '$timeout'];
 
     function dataEntryStatsViewOneController($scope, $rootScope, moment,
-	 $state, $filter, EtlRestService, helperService, SearchDataService) {
+	 $state, $filter, EtlRestService, helperService, SearchDataService, $timeout) {
 		//filter configurations
     $scope.reportSubType = 'by-provider-by-encounter-type';
     $scope.groupBy = "groupByProviderId,groupByEncounterTypeId";
 		$scope.controls =
 		'start-date,end-date,selected-encounter,selected-form,selected-provider';
 		$scope.numberOfColumns = 6;
-
-    $scope.getPatienList = function(cell) {
-      $scope.groupBy = "groupByPatientId";
-      $scope.reportSubType = 'patientList';
-      // //params
-      // console.log('Test testing cell value ', cell)
-      var selected = [];
-      selected.push({encounterTypeUuid:cell.value.encounter_type_uuid})
-      $scope.selectedEncounterTypes = { selected: selected };
-
-      var selectedProvider={selectedProvider:cell.value.provider_uuid};
-      $scope.selectedProvider = selectedProvider;
-      // $scope.selectedForms = { selected: [] };
-      loadStatsFromServer();
-      $state.go('admin.data-entry-statistics.patientlist');
-
-    }
+    $scope.viewCachedData = {};
 
 		//params
 		$scope.selectedProvider = { selected: null };
@@ -76,8 +61,10 @@ jshint -W003, -W026
 		$scope.isBusy = false;
 		$scope.needsRefresh = true;
 		$scope.experiencedLoadingErrors = false;
+    $scope.isLoadingPatientList = false;
 		$scope.loadStatsFromServer = loadStatsFromServer;
 		$scope.getProvider = getProvider;
+    $scope.getPatienList = onLoadPatientList
 
 		//grouping functionality
 		$scope.extractUniqueElementsByProperty =
@@ -87,10 +74,39 @@ jshint -W003, -W026
 
 		activate();
 		function activate() {
-			//loadStatsFromServer();
+      $scope.viewCachedData = helperService.getSetViewCachedData()
+      if($scope.viewCachedData.cached && $scope.viewCachedData.viewId==='view3') {
+
+        $timeout(function() {
+          $scope.selectedLocations = $scope.viewCachedData.selectedLocations;
+          $scope.selectedProvider = $scope.viewCachedData.selectedProvider;
+          $scope.selectedEncounterTypes = $scope.viewCachedData.selectedEncounterTypes;
+          $scope.selectedForms = $scope.viewCachedData.selectedForms;
+          $scope.startDate = $scope.viewCachedData.startDate;
+          $scope.endDate = $scope.viewCachedData.endDate
+          console.log('cached called', $scope.viewCachedData);
+          loadStatsFromServer();
+        }, 0);
+      }
 		}
 
 		//query etl functionality
+
+    function onLoadPatientList(cell) {
+      $scope.groupBy = "groupByPatientId";
+      $scope.reportSubType = 'patientList';
+      // //params
+      // console.log('Test testing cell value ', cell)
+      var selected = [];
+      selected.push({encounterTypeUuid:cell.value.encounter_type_uuid})
+      $scope.selectedEncounterTypes = { selected: selected };
+
+      var selectedProvider={selectedProvider:cell.value.provider_uuid};
+      $scope.selectedProvider = selectedProvider;
+      $scope.isLoadingPatientList = true;
+      loadStatsFromServer();
+
+    }
 
 		function loadStatsFromServer() {
 
@@ -136,21 +152,43 @@ jshint -W003, -W026
 			$scope.isBusy = false;
 			$scope.needsRefresh = false;
 			$scope.unGroupedItems = results.result;
+      console.log('Sql Query :', results.sql);
+      if ($scope.isLoadingPatientList) {
+          $state.go('admin.data-entry-statistics.patientlist', {patient_list:'patientList'});
+          $scope.isLoadingPatientList=false;
+      }
 
       if ($scope.reportSubType === 'patientList') {
         //Build patient list
         $scope.patients = results.result;
+        helperService.patientList($scope.patients);
         $rootScope.$broadcast("patient", $scope.patients);
         console.log('Data Entry Results ', $scope.patients)
         $scope.reportSubType = 'by-provider-by-encounter-type';
+      } else {
+        $scope.viewCachedData = {
+          selectedLocations:$scope.selectedLocations,
+    			selectedForms:$scope.selectedForms,
+    			selectedCreator:'',
+    			selectedProvider:$scope.selectedProvider,
+    			startDate:$scope.startDate,
+    			endDate:$scope.endDate,
+          selectedEncounterTypes:$scope.selectedEncounterTypes,
+          cached:true,
+          viewId:'view3'
+        }
+        helperService.getSetViewCachedData($scope.viewCachedData);
+        console.log('cached params',   $scope.viewCachedData)
+        //process data here
+        processResults()
       }
-			//process data here
-			if ($scope.reportSubType !== 'patientList') processResults();
+
 		}
 
 		function onLoadStatsFromServerError(error) {
 			$scope.isBusy = false;
 			$scope.experiencedLoadingErrors = true;
+      $scope.isLoadingPatientList=false;
 			console.error('An error occured when fetching data', error);
 		}
 
