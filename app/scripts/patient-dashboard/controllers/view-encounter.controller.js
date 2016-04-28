@@ -13,11 +13,11 @@
     .module('app.patientdashboard')
     .controller('ViewEncounterCtrl', ViewEncounterCtrl);
   ViewEncounterCtrl.$nject = ['$rootScope', '$scope', '$stateParams', '$timeout',
-    'OpenmrsRestService', '$modal', 'items', 'EncounterResService'
+    'OpenmrsRestService', '$uibModalInstance', 'items', 'EncounterResService'
   ];
 
   function ViewEncounterCtrl($rootScope, $scope, $stateParams, $timeout,
-    OpenmrsRestService,$modal, items, EncounterResService) {
+    OpenmrsRestService,$uibModalInstance, items, EncounterResService) {
     $scope.patient = {};
     $scope.patient = $rootScope.broadcastPatient;
     EncounterResService.getEncounterByUuid(items, function(data) {
@@ -28,9 +28,9 @@
       });
       $scope.obs = data.obs;
     });
-    $scope.ok = function(modal) {
-      console.log('Close',modal);
-      //$modal.close('close');
+    $scope.ok = function() {
+      console.log('Close');
+       $uibModalInstance.dismiss('cancel');
     };
   }
 })();

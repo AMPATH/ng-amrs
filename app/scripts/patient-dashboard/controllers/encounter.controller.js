@@ -12,11 +12,11 @@
     'EncounterModel',
     '$location',
     '$rootScope',
-    '$modal'
+    '$uibModal'
   ];
 
   function EncounterCtrl($stateParams, $timeout, EncounterResService,
-    EncounterModel, $location, $rootScope,$modal) {
+    EncounterModel, $location, $rootScope,$uibModal) {
     var vm = this;
     vm.encounterList = [];
     vm.selectedEncounter = null;
@@ -45,7 +45,7 @@
 
     vm.EncounterDetails = function(encounterUuid) {
       console.log('Encounter Details');
-      var modalInstance = $modal.open({
+      var modalInstance = $uibModal.open({
         animation: true,
         size:'lg',
         templateUrl: 'views/patient-dashboard/view-encounter-modal.html',
@@ -57,7 +57,7 @@
         }
       });
       modalInstance.result.then(function() {
-        console.log();
+        console.log('Close');
       }, function() {
 
       });
@@ -87,10 +87,10 @@
       console.error('Error: EncounterController An error' + error +
         'occured while loading');
     }
-    
+
     function addLatestEncounterPerTypeToRootScope() {
         $rootScope.latestEncounterPerType = {};
-        
+
         var latestEncounters = {};
         _.each(vm.encounterList, function(encounter){
             if(latestEncounters[encounter.encounterTypeUuid()] === undefined) {
