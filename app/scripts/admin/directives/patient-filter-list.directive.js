@@ -64,7 +64,7 @@
       {name: 'Export Selected', value: 'selected'}];
     $scope.exportDataType = $scope.exportList[1];
     $scope.updateSelectedType = function () {
-      console.log($scope.exportDataType.value, $scope.exportDataType.name);
+      console.log('updateSelectedType',$scope.exportDataType.value, $scope.exportDataType.name);
       var bsTable = document.getElementById('bsTable');
       var element = angular.element(bsTable);
       element.bootstrapTable('refreshOptions', {
@@ -72,10 +72,10 @@
       });
     };
 
+
     $scope.$on("patient", function(event, data){
       //use the data
       $scope.patients =data;
-      console.log('got here list directive', $scope.patients)
       buildDataTable();
 
     });
@@ -139,6 +139,7 @@
 
 
     function buildTableControls() {
+      console.log('got here list directive', $scope.patients)
 
       $scope.bsTableControl = {
         options: {
@@ -218,5 +219,10 @@
 
 
     function reportFiltersLink(scope, element, attrs, vm) {
+
+      if(!_.isUndefined(scope.$parent.data) && scope.$parent.data.length > 0 ) {
+        scope.patients = scope.$parent.data;
+      }
+      scope.reInitialize();
      }
 })();
