@@ -2,14 +2,17 @@
 	<table class='table table-hover table-striped table-responsive'>
 		<thead>
 			<tr>
-				<th>Date</th>
-				<th>Current ARV Meds</th>
+				<th>Encounter Date</th>
+				<th>RTC Date</th>
+				<th>ARV Meds</th>
 				<th>CD4 Count</th>
 				<th>Viral Load</th>
+				<th>WHO Stage</th>
 			</tr>
 		</thead>
-		<tr ng-repeat="encounter in hivSummaries" >
+		<tr ng-repeat="encounter in hivSummaries" ng-class="{danger: encounter.rtcDate() < encounter.encounterDatetime()}"  >
 			<td>{{encounter.encounterDatetime()  | date:'dd-MM-yyyy'}}</td>
+			<td>{{encounter.rtcDate() | date: 'dd-MM-yyyy'}}</td>
 			<td>{{encounter.curArvMeds()}}</td>
 			<td>{{encounter.cd4_1()}}
 				<div>
@@ -21,6 +24,7 @@
 					<small ng-if="encounter.vl_1Date()" class="text-default">({{encounter.vl_1Date()  | date:'dd-MM-yyyy'}})</small>
 				</div>
 			</td>
+			<td>{{encounter.curWhoStage()}}</td>
 		</tr>
 	</table>
 	<div ng-show='experiencedLoadingError'>
