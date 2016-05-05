@@ -7,7 +7,8 @@
         </button>
 
         <ul class="dropdown-menu" role="menu" aria-labelledby="btn-append-to-body">
-            <li style="cursor: pointer;" ng-repeat="item in preConfiguredSettings" role="menuitem"><a ng-click="selectConfiguration(item)">{{item.name}} </a></li>
+            <li style="cursor: pointer;" ng-repeat="item in preConfiguredSettings" role="menuitem"><a class="btn {{$index === 0 ? 'btn-success' : 'btn-default'}}" 
+            ng-click="selectConfiguration(item)">{{item.name}} </a></li>
         </ul>
     </div>
     <br/>
