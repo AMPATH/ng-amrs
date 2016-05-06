@@ -12,7 +12,11 @@ jshint -W003, -W026
     function vitals() {
         return {
             restict: "E",
-            scope: { patientUuid: "@" },
+            scope: {
+              patientUuid: "@",
+              isBusy:"=",
+              encounters:"="
+            },
             controller: vitalsController,
             link: vitalsLink,
             templateUrl: "views/patient-dashboard/vitals-pane.html"
@@ -43,6 +47,7 @@ jshint -W003, -W026
 
         function onFetchVitalsSuccess(vitalsData) {
             $scope.nextStartIndex = +vitalsData.startIndex + vitalsData.size;
+            $scope.isBusy = false;
             for (var e in vitalsData.result) {
                 var membersToCheck = ['weight', 'height', 'temp', 'oxygen_sat',
                     'systolic_bp', 'diastolic_bp', 'pulse'];

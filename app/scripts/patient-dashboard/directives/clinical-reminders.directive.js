@@ -11,7 +11,11 @@
   function clinicalReminders() {
     var directive = {
       restrict: 'E',
-      scope: {patientUuid: '@'},
+      scope: {
+        patientUuid: '@',
+        isBusy:'=',
+        criticalReminders:'='
+      },
       controller: clinicalRemindersController,
       templateUrl: "views/patient-dashboard/clinical-reminders.html"
     };
@@ -68,12 +72,14 @@
 
     function init() {
       $scope.criticalReminders =[];
+      $scope.isBusy=true;
       EtlRestService.getPatientLevelReminders($scope.referenceDate, $scope.patientUuid, $scope.reportName,
         $scope.reminderIndicators, onFetchPatientLevelRemindersSuccess, onFetchPatientLevelRemindersError, 0, 1);
     }
 
     function onFetchPatientLevelRemindersSuccess(result) {
       console.log('Sql query for PatientLevelReminder request=======>', result.sql, result.sqlParams);
+      $scope.isBusy=false;
       $scope.indicator = result.result[0];
       if(result.result.length>0 && $scope.indicator.person_uuid === $scope.patientUuid) {
         constructReminders($scope.indicator); //transform coded reminders to meaningful msg
@@ -81,6 +87,7 @@
     }
 
     function onFetchPatientLevelRemindersError(error) {
+      $scope.isBusy=false;
       console.log('An error occurred while fetching indicator, etl might be inaccessible', error)
     }
 

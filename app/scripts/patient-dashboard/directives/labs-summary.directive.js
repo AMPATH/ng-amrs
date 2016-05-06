@@ -12,7 +12,11 @@ jshint -W003, -W026
     function labsSummary() {
         return {
             restict: "E",
-            scope: { patientUuid: "@" },
+            scope: {
+              patientUuid: "@",
+              isBusy:"=",
+              encounters:"="
+            },
             controller: labsSummaryController,
             link: labsSummaryLink,
             templateUrl: "views/patient-dashboard/labs-summary-pane.html"
