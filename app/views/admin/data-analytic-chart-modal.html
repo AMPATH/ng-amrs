@@ -1,0 +1,64 @@
+
+<div class="container-fluid" ng-show="chartFilters" >
+  <div class="panel panel-default" style="padding: 4px; margin: 2px;" collapse="isExpanded">
+  <div style="margin:15px;">
+  select type of Chart:
+  </br>
+  <select id="chart-control"
+          kendo-combo-box
+          k-placeholder="'Select type of chart to generate'"
+          k-data-text-field="'name'"
+          k-filter="'contains'"
+          k-ng-model="chartType.name"
+          k-min-length="3"
+          k-data-source="chartType"
+          style="width: 100%">
+  </select>
+
+</div>
+  <div style="margin:15px;">
+    select indicator for x-axis:
+    </br>
+    <select id="x-axis-control"
+            kendo-combo-box
+            k-placeholder="'Select indicator'"
+            k-data-text-field="'name'"
+            k-filter="'contains'"
+            k-ng-model="selectedAxis.xAxis"
+            k-min-length="3"
+            k-data-source="xAxisSource"
+            style="width: 100%">
+    </select>
+
+  </div>
+
+  <div style="margin:15px;">
+    select indicators for y-axis:
+    </br>
+    <select id="y-axis-control"
+            style="width:inherit"
+            type="multiple"
+            k-placeholder="'Select indicator'"
+            kendo-multi-select
+            k-ng-model="selectedAxis.yAxis"
+            k-data-text-field="'name'"
+            k-data-source="yAxisSource">
+    </select>
+
+  </div>
+    <div style="height: 35px" ng-show='!isBusy && !experiencedLoadingErrors'>
+      <button
+        class="btn btn-info pull-right" ng-click="generateGraph(item)">
+        <span class="glyphicon glyphicon-refresh"></span>
+        <span>Generate Chart</span>
+      </button>
+    </div>
+
+  </div>
+  <div class="row">
+    <div id="chart"></div>
+  </div>
+
+</div>
+
+

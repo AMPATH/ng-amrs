@@ -77,7 +77,7 @@
       function () {
         var isolateScope = element.isolateScope();
         isolateScope.indicatorTags=[{},{}];
-        isolateScope.selectedIndicatorTags.indicatorTags=[{},{}];
+       // isolateScope.selectedIndicatorTags.indicatorTags=[{},{}];
         etlRestServiceMock.returnErrorOnNextCall = false;
         isolateScope.loadIndicatorsSchema();
         expect(isolateScope.indicatorTags.length).to.equal(0);
