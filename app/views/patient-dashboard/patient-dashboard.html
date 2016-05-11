@@ -17,12 +17,24 @@
             <span ng-if="patient.commonIdentifiers().cCC==null">Not Available</span></h5>
           <h5  style="padding-top: 10px">National ID: <span ng-if="patient.commonIdentifiers().kenyaNationalId">{{patient.commonIdentifiers().kenyaNationalId}}</span>
             <span ng-if="patient.commonIdentifiers().kenyaNationalId==null">Not Available</span></h5>
+
             </div>
+        <button data-ng-click='generateClinicalSummaryPdf()'  type="button" class="btn btn-primary pull-right"
+                data-ng-disabled="clinicalRemindersIsBusy||labTestsIsBusy||vitalsIsBusy||hivSummaryIsBusy||clinicalNotesIsBusy||letterHeadIsBusy">
+
+         <span ng-hide="clinicalRemindersIsBusy||labTestsIsBusy||vitalsIsBusy||hivSummaryIsBusy||clinicalNotesIsBusy||letterHeadIsBusy">
+           <span class="glyphicon glyphicon-print"></span> Patient Clinical Summary
+         </span>
+         <span  ng-show="clinicalRemindersIsBusy||labTestsIsBusy||vitalsIsBusy||hivSummaryIsBusy||clinicalNotesIsBusy||letterHeadIsBusy">
+          <img src="images/ajax-loader.gif" autofocus /> Loading summary data...
+         </span>
+        </button>
+
       </div>
     </div>
 	</div>
 </div>
-<clinical-reminders patient-uuid="{{patient.uuid()}}"></clinical-reminders>
+<clinical-reminders patient-uuid="{{patient.uuid()}}" critical-reminders="clinicalReminders" is-busy="clinicalRemindersIsBusy"></clinical-reminders>
 <div style="margin-top: 4px; margin-bottom:4px;">
 	<div class="row">
 		<div class="col-lg-2 " style="padding-left:13px; padding-right:13px; padding-top:4px; padding-bottom:4px;">
@@ -96,7 +108,7 @@
 			</div>
       <div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="notesTab">
 				<div class="page-content">
-					<clinical-notes patient-uuid={{patient.uuid()}}></clinical-notes>
+					<clinical-notes patient-uuid={{patient.uuid()}} notes="clinicalNotes" is-busy="clinicalNotesIsBusy"></clinical-notes>
 				</div>
 			</div>
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab2">
@@ -111,12 +123,12 @@
 			</div>
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab4">
 				<div class="page-content">
-					<vitals patient-uuid="{{patient.uuid()}}"></vitals>
+					<vitals patient-uuid="{{patient.uuid()}} " encounters="vitals" is-busy="vitalsIsBusy"></vitals>
 				</div>
 			</div>
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab5">
 				<div class="page-content">
-					<labs-summary patient-uuid="{{patient.uuid()}}"></labs-summary>
+					<labs-summary patient-uuid="{{patient.uuid()}}" encounters="labTests" is-busy="labTestsIsBusy"></labs-summary>
 				</div>
 			</div>
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab6">
@@ -128,7 +140,7 @@
         <div class="page-content">
 
           <div style="margin-top: 2px; padding:2px;">
-            <hiv-summary patient-uuid="{{patient.uuid()}}"></hiv-summary>
+            <hiv-summary patient-uuid="{{patient.uuid()}}" hiv-summary="hivSummary" is-busy="hivSummaryIsBusy"></hiv-summary>
           </div>
           <accordion ng-show="showHivHistoricalSummary">
             <accordion-group is-open="HivHistoricalExpanded">
