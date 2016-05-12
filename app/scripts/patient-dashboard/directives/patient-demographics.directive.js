@@ -20,7 +20,7 @@ jshint -W003, -W026, -W033, -W098
 
     PatientDemographicsCtrl.$inject = ['$rootScope', '$scope', '$stateParams', 'OpenmrsRestService','$state'];
 
-    function PatientDemographicsCtrl($rootScope, scope, $stateParams, OpenmrsRestService,$state) {
+    function PatientDemographicsCtrl($rootScope, $scope, $stateParams, OpenmrsRestService,$state) {
         /*
         Avoid the round trip and use the rootScope patient selected during
         search process
@@ -33,7 +33,7 @@ jshint -W003, -W026, -W033, -W098
             var orderAdded=addOrderProperty(data);
             console.log("orderAdded array is ",orderAdded);
             orderAdded.relationships.sort(sortRelationships);
-          scope.patientRelationships=orderAdded;
+          $scope.patientRelationships=orderAdded;
         },function(error){
           console.log("The request failed because of ",error);
         });
@@ -41,16 +41,30 @@ jshint -W003, -W026, -W033, -W098
         if (!$rootScope.broadcastPatient.getPersonAttributes) {
             var patient = OpenmrsRestService.getPatientService().getPatientByUuid({ uuid: $stateParams.uuid },
                 function (data) {
-                    scope.patient = data;
-                    scope.personAttributes = data.getPersonAttributes();
+                    $scope.patient = data;
+                    $scope.personAttributes = data.getPersonAttributes();
 
                 }
 
                 );
         }
         else {
-            scope.patient = $rootScope.broadcastPatient;
-            scope.personAttributes = scope.patient.getPersonAttributes();
+            $scope.patient = $rootScope.broadcastPatient;
+            $scope.personAttributes = $scope.patient.getPersonAttributes();
+        }
+        $scope.loadPatient = loadPatient;
+        function loadPatient(patientUuid) {
+          /*
+            Get the selected patient and save the details in the root scope
+            so that we don't do another round trip to get the patient details
+            */
+            console.log("patient uuid clicked id ",patientUuid);
+          OpenmrsRestService.getPatientService().getPatientByUuid({ uuid: patientUuid },
+                 function(data) {
+                   $rootScope.broadcastPatient = data;
+                   $state.go('patient', { uuid: patientUuid });
+                 }
+            );
         }
     }
     function addOrderProperty(arr) {
