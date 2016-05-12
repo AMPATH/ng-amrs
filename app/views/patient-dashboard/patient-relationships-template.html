@@ -1,0 +1,45 @@
+<button ng-hide="isAddingNew" style="margin-top:10px;margin-bottom:10px" ng-click="isAddingNew = true;searchString = ''" class="btn btn-primary ladda-button" data-style="expand-right">
+  <span>Add New Relationship</span>
+</button>
+
+<div ng-show="isAddingNew">
+  <form>
+    <div class="form-group">
+      <patient-relationship-search></patient-relationship-search>
+   <label for="relationship">Relationship Type</label>
+   <select ng-model="selectedRelationshipType" ng-options="patientRelationshipType as patientRelationshipType.display()
+    for patientRelationshipType in patientRelationshipTypes.relationshipTypes">
+  </select></br>
+   <button style="margin-top:10px" ng-click="setPatientRelationship(patient.uuid(),selectedRelationshipType.uuId(),patientToBindRelationship.uuid())" class="btn btn-primary ladda-button" data-style="expand-right">
+     <span>Save Relationship</span>
+   </button>
+   <button style="margin-top:10px" ng-click="isAddingNew = false" class="btn btn-default ladda-button" data-style="expand-right">
+     <span>Cancel</span>
+   </button>
+   </div>
+ </form>
+</div>
+<div>
+  <div class="alert alert-success" ng-show="showSuccessAlert" >
+     <strong>Done!</strong> {{successAlert}}
+   </div>
+<table ng-if="patientRelationships.relationships.length > 0" class="table table-striped table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Relationship</th>
+      <th>Person Name</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr  ng-repeat="relationship in patientRelationships.relationships">
+    <td>{{relationship.relationshipTypeName()}}</td>
+    <td>{{relationship.relative() | titlecase}}</td>
+    <td><a href="" ng-click="setRelationship(relationship.personUuId(),relationship.relationshipTypeUuId())"><span class="glyphicon glyphicon-pencil"></span></a></td>
+    <td><a href="" ng-click="voidRelationship(relationship.uuId())"><span class="glyphicon glyphicon-remove"></span></a></td>
+    <td><a href="" ng-click="loadPatient(relationship.personUuId())"><span style="font-size:14px;" class="glyphicon glyphicon-zoom-in"></span></a><td>
+  </tr>
+</tbody>
+</table>
+</div>

@@ -9,7 +9,6 @@
     <li class="list-group-item" style="font-size:large" ng-if="patient.address().estateLandmark">Estate/Landmark: {{patient.address().estateLandmark| titlecase }}</li>
     <li class="list-group-item" style="font-size:large" ng-if="patient.address().townVillage">Town/Village: {{patient.address().townVillage| titlecase }}</li>
     <li class="list-group-item" style="font-size:large" ng-if="patient.address().stateProvince">State/Province: {{patient.address().stateProvince| titlecase }}</li>
-    <li class="list-group-item" style="font-size:large" ng-if="patientRelationships.relationships.length > 0">Relationship(s):<div ng-repeat="relationship in patientRelationships.relationships"> {{relationship.relationshipTypeName()}}:{{relationship.relative() | titlecase}}</div></li>
-
+    <li class="list-group-item" style="font-size:large" ng-if="patientRelationships.relationships.length > 0">
   </li>
 </ul>

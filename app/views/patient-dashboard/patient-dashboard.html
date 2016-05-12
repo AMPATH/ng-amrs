@@ -104,6 +104,8 @@
 				</div>
 				<div style="margin-top: 2px;">
 					<patient-demographics></patient-demographics>
+					<a ng-if="patientRelationships.relationships.length > 0" style="cellpadding:4px;font-size:14px;" data-target="#tab9" data-toggle="tab">&nbsp;&nbsp;&nbsp;View Relationships</a>
+					<a ng-if="patientRelationships.relationships.length == 0" style="cellpadding:4px;font-size:14px;" data-target="#tab9" data-toggle="tab">&nbsp;&nbsp;&nbsp;Add new Relationships</a>
 				</div>
 			</div>
       <div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="notesTab">
@@ -157,6 +159,11 @@
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="printLabelsTab">
 				<div class="page-content">
 					<print-labels patient-uuid="{{patient.uuid()}}"></print-labels>
+				</div>
+			</div>
+			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab9">
+				<div class="page-content">
+					<patient-relationship></patient-relationship>
 				</div>
 			</div>
 		</div>
