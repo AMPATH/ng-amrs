@@ -25,7 +25,7 @@
 
 
     //Hiv Summary Indicators Service Properties & Methods
-    $scope.reportName='hiv-summary-report';
+    $scope.reportName='hiv-summary-monthly-report';
     $scope.countBy='num_persons';
     $scope.groupBy='groupByYear,groupByMonth';
     $scope.loadHivSummaryIndicators=loadHivSummaryIndicators;
@@ -206,7 +206,7 @@
       $timeout(function () {
         buildColumns();
         buildTableControls();
-      }, 500);
+      }, 1000);
     }
     function buildColumns() {
       $scope.columns = [];
