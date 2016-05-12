@@ -73,11 +73,11 @@
 
 
 
-    it('should ensure main variables needed for the controller exists', function(){
+    it('should ensure main variables needed for the controller are initialised', function(){
       expect(scope.isBusy).to.be.equal(true);
       expect(scope.currentPage).to.be.equal(1);
       expect(scope.groupBy).to.be.equal('groupByYear,groupByMonth');
-      expect(scope.reportName).to.be.equal('hiv-summary-report');
+      expect(scope.reportName).to.be.equal('hiv-summary-monthly-report');
       expect(scope.countBy).to.be.equal('num_persons');
     });
 
