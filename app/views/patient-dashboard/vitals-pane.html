@@ -15,35 +15,29 @@
         </thead>
         <tr ng-repeat="encounter in encounters">
             <td>
-                <span class="glyphicon glyphicon-warning-sign text-danger" ng-if="(encounter.systolicBp() <= 80 || encounter.systolicBp() >= 140)
-                  || (encounter.diastolicBp() <= 50 || encounter.diastolicBp() >= 90) || (encounter.pulse() >= 100)
-                  || (encounter.temperature() <= 35.0 || encounter.temperature() >= 38.0) || (encounter.oxygenSat() <= 89)
-                  || (encounter.BMI() <= 18 || encounter.BMI() >= 30)" >
+                <span class="glyphicon glyphicon-warning-sign text-danger" ng-if="(encounter.systolicBp() && (encounter.systolicBp() <= 80 || encounter.systolicBp() >= 140))
+                  || (encounter.diastolicBp() && (encounter.diastolicBp() <= 50 || encounter.diastolicBp() >= 90)) || (encounter.pulse() && encounter.pulse() >= 100)
+                  || (encounter.temperature() && (encounter.temperature() <= 35.0 || encounter.temperature() >= 38.0)) || (encounter.oxygenSat() && encounter.oxygenSat() <= 89)
+                  || (encounter.BMI() && (encounter.BMI() <= 18 || encounter.BMI() >= 30))" >
                 </span>
             <td>{{encounter.encounterDatetime() | date:'dd-MM-yyyy'}}</td>
             <td>
-                <span style="color:red;" ng-if="encounter.systolicBp() <= 80 || encounter.systolicBp() >= 140">{{encounter.systolicBp()}}</span>
-                <span ng-if="!(encounter.systolicBp() <= 80 || encounter.systolicBp() >= 140)">{{encounter.systolicBp()}}</span>
-                <span style="color:red;" ng-if="encounter.diastolicBp() <= 50 || encounter.diastolicBp() >= 90">{{encounter.diastolicBp()}}</span>
-                <span ng-if="!(encounter.diastolicBp() <= 50 || encounter.diastolicBp() >= 90)">{{encounter.diastolicBp()}}</span>
+                <span style="{{(encounter.systolicBp() && (encounter.systolicBp() <= 80 || encounter.systolicBp() >= 140)) ? 'color:red;':''}}" >{{encounter.systolicBp()}}</span>
+                <span style="{{(encounter.diastolicBp() && (encounter.diastolicBp() <= 50 || encounter.diastolicBp() >= 90)) ? 'color:red;':''}}">{{encounter.diastolicBp()}}</span>
             </td>
             <td>
-                <span style="color:red;" ng-if="encounter.pulse() >= 100">{{encounter.pulse()}}</span>
-                <span ng-if="!(encounter.pulse() >= 100)">{{encounter.pulse()}}</span>
+                <span style="{{(encounter.pulse() && encounter.pulse() >= 100)?'color:red;':''}}">{{encounter.pulse()}}</span>
             </td>
             <td>
-                <span style="color:red;" ng-if="encounter.temperature() <= 35.0 || encounter.temperature() >= 38.0">{{encounter.temperature()}}</span>
-                <span ng-if="!(encounter.temperature() <= 35.0 || encounter.temperature() >= 38.0)">{{encounter.temperature()}}</span>
+                <span style="{{(encounter.temperature() && (encounter.temperature() <= 35.0 || encounter.temperature() >= 38.0)) ? 'color:red;':''}}" >{{encounter.temperature()}}</span>
             </td>
             <td>
-                <span style="color:red;" ng-if="encounter.oxygenSat() <= 89">{{encounter.oxygenSat()}}</span>
-                <span ng-if="!(encounter.oxygenSat() <= 89)">{{encounter.oxygenSat()}}</span>
+                <span style="{{(encounter.oxygenSat() && encounter.oxygenSat() <= 89)? 'color:red;':''}}">{{encounter.oxygenSat()}}</span>
             </td>
             <td>{{encounter.height()}}</td>
             <td>{{encounter.weight()}}</td>
             <td>
-                <span style="color:red;" ng-if="encounter.BMI() <= 18 || encounter.BMI() >= 30">{{encounter.BMI()}}</span>
-                <span ng-if="!(encounter.BMI() <= 18 || encounter.BMI() >= 30)">{{encounter.BMI()}}</span>
+                <span style="{{(encounter.BMI() && (encounter.BMI() <= 18 || encounter.BMI() >= 30))? 'color:red;':''}}" >{{encounter.BMI()}}</span>
             </td>
         </tr>
     </table>

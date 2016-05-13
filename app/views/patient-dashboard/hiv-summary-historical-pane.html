@@ -10,7 +10,7 @@
 				<th>WHO Stage</th>
 			</tr>
 		</thead>
-		<tr ng-repeat="encounter in hivSummaries" ng-class="{danger: encounter.rtcDate() < encounter.encounterDatetime()}"  >
+		<tr ng-repeat="encounter in hivSummaries" ng-class="{danger: (encounter.rtcDate() &&  encounter.encounterDatetime()) && (encounter.rtcDate() < encounter.encounterDatetime())}"  >
 			<td>{{encounter.encounterDatetime()  | date:'dd-MM-yyyy'}}</td>
 			<td>{{encounter.rtcDate() | date: 'dd-MM-yyyy'}}</td>
 			<td>{{encounter.curArvMeds()}}</td>
