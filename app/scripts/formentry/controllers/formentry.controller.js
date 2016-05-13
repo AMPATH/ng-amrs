@@ -872,7 +872,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 }
                 //forth stage of submitting is to submit person attributes
                 console.log('Payload person attributes=====', JSON.stringify(lastPersonAttributePayload))
-                if (lastPersonAttributePayload !== undefined) {
+                if (lastPersonAttributePayload !== undefined &&
+                 angular.isArray(lastPersonAttributePayload.attributes) && 
+                 lastPersonAttributePayload.attributes.length > 0) {
                     $log.log('Submitting person attributes..');
                     submitPersonAttributes(lastPersonAttributePayload, vm.patient,
                         function (submitFailed) {
@@ -983,7 +985,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             },
                 //error callback
                 function (error) {
-                    $log.log('Error saving attribute: ', attribute);
+                    $log.log('Error saving attribute: ', lastPersonAttributePayload);
                     vm.hasFailedPersonAttributeRequest = true;
 
                     finalCallback(vm.hasFailedPersonAttributeRequest);
