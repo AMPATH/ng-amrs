@@ -221,7 +221,7 @@
                   width: 60,
                   bold: true,
                 }, {
-                  text: (patient.hivSummary.vl_1() || 'N/A').toString() +
+                  text: (patient.hivSummary.vl_1()!=null ? patient.hivSummary.vl_1(): 'N/A').toString() +
                   ' (' + $filter('date')(patient.hivSummary.vl_1Date(), "dd-MM-yyyy") + ')' || 'N/A',
                   width: '*',
                   alignment: 'left',
@@ -233,7 +233,7 @@
                   width: 60,
                   bold: true,
                 }, {
-                  text: (patient.hivSummary.cd4_1() || 'N/A').toString() +
+                  text: (patient.hivSummary.cd4_1()!=null ? patient.hivSummary.cd4_1(): 'N/A').toString() +
                   ' (' + $filter('date')(patient.hivSummary.cd4_1Date(), "dd-MM-yyyy") + ')' || 'N/A',
                   width: '*',
                   alignment: 'left',
@@ -396,28 +396,8 @@
               bold: true,
               fontSize: 10,
               width: '*',
-            }, {
-              text: 'Hemoglobin',
-              fontSize: 10,
-              bold: true,
-              width: '*',
-            }, {
-              text: 'AST',
-              fontSize: 10,
-              bold: true,
-              width: '*',
-            }, {
-              text: 'Creatinine',
-              fontSize: 10,
-              bold: true,
-              width: '*',
-            }, {
-              text: 'Chest X-Ray',
-              fontSize: 10,
-              bold: true,
-              width: '*',
-            }, {
-              text: 'Test Ordered',
+            },{
+              text: 'ART',
               fontSize: 10,
               bold: true,
               width: '*',
@@ -427,24 +407,21 @@
             ]
           ];
           _.each(patient.labTests, function (labs) {
-            if (labs.cd4_count || labs.cd4_percent || labs.hiv_viral_load || labs.hemoglobin || labs.ast || labs.creatinine || labs.chest_xray) {
+            if (labs.cd4_count!=null || labs.cd4_percent!=null || labs.hiv_viral_load!=null) {
               patientLabTests.push([
                 $filter('date')(labs.test_datetime, "dd-MM-yyyy") || 'N/A',
-                (labs.cd4_count || '').toString(),
-                (labs.cd4_percent || '').toString(),
-                (labs.hiv_viral_load || '').toString(),
-                (labs.hemoglobin || '').toString(),
-                labs.ast || ''.toString(),
-                (labs.creatinine || '').toString(),
-                (labs.chest_xray || '').toString(),
-                (labs.tests_ordered || '').toString()
+                (labs.cd4_count!=null? labs.cd4_count: '').toString(),
+                (labs.cd4_percent!=null? labs.cd4_percent: '').toString(),
+                (labs.hiv_viral_load!=null? labs.hiv_viral_load:'').toString(),
+                (labs.cur_arv_meds!=null? labs.cur_arv_meds:'').toString()
               ])
             }
           });
-          patientLabTests = patientLabTests.slice(0, 5);
+          //patientLabTests = patientLabTests.slice(0, 5);
           if (patientLabTests.length < 2) patientLabTests = [['Patient has no Lab Test']];
         }
       } catch (e) {
+        console.log('some weird error0', e)
       }
       return patientLabTests
     }
@@ -512,7 +489,8 @@
                   width: 60,
                   bold: true,
                 }, {
-                  text: (patient.clinicalNotes.lastViralLoad.value || 'N/A').toString() + ' (' + patient.clinicalNotes.lastViralLoad.date + ')',
+                  text: (patient.clinicalNotes.lastViralLoad.value!=null?patient.clinicalNotes.lastViralLoad.value: 'N/A').toString()
+                  + ' (' + patient.clinicalNotes.lastViralLoad.date + ')',
                   width: '*',
                   alignment: 'left',
                   color: '#2a2a2a',
@@ -523,7 +501,8 @@
                   width: 60,
                   bold: true,
                 }, {
-                  text: (patient.clinicalNotes.lastCD4Count.value || 'N/A').toString() + ' (' + patient.clinicalNotes.lastCD4Count.date + ')',
+                  text: (patient.clinicalNotes.lastCD4Count.value!=null?patient.clinicalNotes.lastCD4Count.value: 'N/A').toString()
+                  + ' (' + patient.clinicalNotes.lastCD4Count.date + ')',
                   width: '*',
                   alignment: 'left',
                   color: '#2a2a2a',
@@ -823,7 +802,7 @@
                         [{
                           style: 'tableExample',
                           table: {
-
+                           // widths: ['*', '*', '*', '*', '*'],
                             body: constructPatientLabTests(patient)
                           }
                         },]
