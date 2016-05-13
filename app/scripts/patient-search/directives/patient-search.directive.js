@@ -36,13 +36,13 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
     $scope.currentPage = 1;
     $scope.entryLimit = 10; // items per page
     $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
-    $scope.searchString = PatientSearchService.getSearchString();
+    $scope.relationshipSearchString = PatientSearchService.getSearchString();
     $scope.searchPanelVisible=false;
 
     $scope.$on('bar-code-scan-event', function(event, parameters) {
-      $scope.searchString = '';
+      $scope.relationshipSearchString= '';
       var barcode = angular.element.find('#search-textbox')[0].value.replace('$', '');
-      $scope.searchString = barcode;
+      $scope.relationshipSearchString = barcode;
       searchPatients(barcode);
     });
 
@@ -72,16 +72,16 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
       $scope.searchPanelVisible=false;
       $scope.isResetButton = true;
       PatientSearchService.resetPatients();
-      $scope.searchString = '';
+      $scope.relationshipSearchString = '';
     };
 
-    function searchPatients(searchString) {
+    function searchPatients(relationshipSearchString) {
       $scope.searchPanelVisible=true;
       $scope.isSearchButton = false;
       $scope.loaderButton = true;
       $scope.isBusy = true;
       OpenmrsRestService.getPatientService().getPatientQuery({
-          q: searchString
+          q: relationshipSearchString
         },
         function(data) {
           $scope.isSearchButton = true;
@@ -91,7 +91,7 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
           $scope.patients = data;
           PatientSearchService.resetPatients();
           PatientSearchService.setPatients(data);
-          PatientSearchService.setSearchString(searchString);
+          PatientSearchService.setSearchString(relationshipSearchString);
           $scope.totalItems = $scope.patients.length;
           $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
           $scope.currentPage = 1;

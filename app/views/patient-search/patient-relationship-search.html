@@ -2,7 +2,7 @@
   <div class="form-group">
     <label for="search-textbox">Search by Patient Name</label>
     <div class="input-group">
-      <input type="text" id="search-textbox" class="form-control"  ng-model="searchString"
+      <input type="text" id="search-textbox" class="form-control"  ng-model="relationshipSearchString"
       ng-model-options="{ updateOn: 'change blur' }"  placeholder="Enter the Patient Name or Identifier and press Enter or Search button to search"
       focus="true" data-bar-code-scanner>
       <div class="input-group-btn">
@@ -10,7 +10,7 @@
           <img ng-show="isBusy" ng-style="{background:'white'}" src="images/ajax-loader.gif" />
         </button>
 
-        <button  ng-show="isSearchButton" ng-click="searchPatients(searchString)"
+        <button  ng-show="isSearchButton" ng-click="searchPatients(relationshipSearchString)"
          class="btn btn-primary ladda-button" data-style="expand-right">
           <span class="glyphicon glyphicon-search"> Search</span>
         </button>
@@ -24,7 +24,7 @@
   </div>
 </form>
 <div ng-show="searchPanelVisible">
-<div >{{patients.length}} Patient(s) results found for <span style="color:grey">{{searchString}}</span></div>
+<div >{{patients.length}} Patient(s) results found for <span style="color:grey">{{relationshipSearchString}}</span></div>
 <div ng-show="patients.length > 0" class="panel panel-primary" style="padding:2px;">
   <div class="panel panel-default">
     <table class="table table-striped table-hover">
