@@ -81,7 +81,7 @@ function PatientRelationshipCtrl($rootScope, $scope, $stateParams, OpenmrsRestSe
   else{
     displayErrorDialog('Validation Error','Please make sure you fill the necessary fields before submiting');
   }
-  $scope.searchString = '';
+  $scope.relationshipSearchString = '';
 }
 function voidRelationship(relationshipUuId){
   var dlg=dialogs.confirm('Delete Relationship','Are you sure you want to delete this relationship?');
@@ -97,7 +97,7 @@ function voidRelationship(relationshipUuId){
         displayErrorDialog('Error','System encountered an error while deleting the relationship');
       });
   });
-  $scope.searchString = '';
+  $scope.relationshipSearchString = '';
 }
 function setRelationship(patientUuid,relationshipTypeUuId)
 {
@@ -113,7 +113,7 @@ function setRelationship(patientUuid,relationshipTypeUuId)
       return patientRelationshipType;
     }
   });
-  $scope.searchString = '';
+  $scope.relationshipSearchString = '';
 }
 function getPatientRelationships(){
   OpenmrsRestService.getPatientRelationshipService()
