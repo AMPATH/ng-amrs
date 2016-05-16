@@ -3,16 +3,17 @@
 		<thead>
 			<tr>
 				<th>Encounter Date</th>
-				<th>Previous RTC Date</th>
+				<th>RTC Date        </th>
 				<th>ARV Meds</th>
 				<th>CD4 Count</th>
 				<th>Viral Load</th>
 				<th>WHO Stage</th>
 			</tr>
 		</thead>
-		<tr ng-repeat="encounter in hivSummaries" ng-class="{danger: encounter.prevRtcDate() < encounter.encounterDatetime()}"  >
+		<tr ng-repeat="encounter in hivSummaries" ng-class="{danger: (encounter.prevRtcDate() &&  encounter.encounterDatetime()) 
+		&& (encounter.prevRtcDate() < encounter.encounterDatetime())}"  >
 			<td>{{encounter.encounterDatetime()  | date:'dd-MM-yyyy'}}</td>
-			<td>{{encounter.prevRtcDate() | date: 'dd-MM-yyyy'}}</td>
+			<td>{{'Current: '}}</br>{{encounter.rtcDate() | date: 'dd-MM-yyyy'}}</br>{{'Previous:'}}</br>{{encounter.prevRtcDate() | date: 'dd-MM-yyyy'}}</td>
 			<td>{{encounter.curArvMeds()}}</td>
 			<td>{{encounter.cd4_1()}}
 				<div>
