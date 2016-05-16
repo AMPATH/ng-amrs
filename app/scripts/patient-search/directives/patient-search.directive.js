@@ -38,6 +38,7 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
     $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
     $scope.relationshipSearchString = PatientSearchService.getSearchString();
     $scope.searchPanelVisible=false;
+    $scope.isBusy = false;
 
     $scope.$on('bar-code-scan-event', function(event, parameters) {
       $scope.relationshipSearchString= '';
