@@ -22,6 +22,8 @@ function PatientRelationshipCtrl($rootScope, $scope, $stateParams, OpenmrsRestSe
   $scope.voidRelationship=voidRelationship;
   $scope.setRelationship=setRelationship;
   $scope.loadPatient = loadPatient;
+  $scope.isBusy = false;
+  $scope.cancelRelationship=cancelRelationship;
   getPatientRelationships();
   OpenmrsRestService.getPatientRelationshipTypeService()
   .getPatientRelationshipTypes(function(data){
@@ -102,10 +104,12 @@ function voidRelationship(relationshipUuId){
 function setRelationship(patientUuid,relationshipTypeUuId)
 {
   $scope.isAddingNew = true;
+  $scope.isBusy = true;
   console.log("patientUuid clicked is ",patientUuid);
   OpenmrsRestService.getPatientService().getPatientByUuid({ uuid: patientUuid },
          function(data) {
            $scope.patientToBindRelationship = data;
+           $scope.isBusy = false;
          }
     );
   $scope.selectedRelationshipType=_.find($scope.patientRelationshipTypes.relationshipTypes, function(patientRelationshipType) {
@@ -162,6 +166,11 @@ function displaySuccessAlert(message){
 function displayErrorDialog(errorTitle,errorMessage){
   var dlgError=dialogs.error(errorTitle,errorMessage);
   dlgError.result.then(function(btnError){});
+}
+function cancelRelationship(){
+  $scope.isAddingNew = false;
+  $scope.patientToBindRelationship='';
+  $scope.selectedRelationshipType='';
 }
 }
 function addOrderProperty(arr) {

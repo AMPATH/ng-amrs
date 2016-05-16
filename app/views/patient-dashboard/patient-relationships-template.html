@@ -4,7 +4,11 @@
 
 <div ng-show="isAddingNew">
   <form>
-    <div class="form-group">
+    <div  ng-show='isBusy'>
+      <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+      <b> Loading, Please wait...</b>
+    </div>
+    <div ng-hide='isBusy' class="form-group">
       <patient-relationship-search></patient-relationship-search>
    <label for="relationship">Relationship Type</label>
    <select ng-model="selectedRelationshipType" ng-options="patientRelationshipType as patientRelationshipType.display()
@@ -13,7 +17,7 @@
    <button style="margin-top:10px" ng-click="setPatientRelationship(patient.uuid(),selectedRelationshipType.uuId(),patientToBindRelationship.uuid())" class="btn btn-primary ladda-button" data-style="expand-right">
      <span>Save Relationship</span>
    </button>
-   <button style="margin-top:10px" ng-click="isAddingNew = false" class="btn btn-default ladda-button" data-style="expand-right">
+   <button style="margin-top:10px" ng-click="cancelRelationship()" class="btn btn-default ladda-button" data-style="expand-right">
      <span>Cancel</span>
    </button>
    </div>
