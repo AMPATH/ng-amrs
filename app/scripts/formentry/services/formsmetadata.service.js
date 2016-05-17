@@ -96,7 +96,8 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
         }
 
         function createValidFormName(formName) {
-            return formName.replace(/ /gi, '_').toLowerCase();
+            formName = formName.replace(/ /gi, '_').toLowerCase();
+            return formName.replace(/\//gi, '_').toLowerCase();
         }
     }
 })();
