@@ -20,7 +20,7 @@ module.exports = function (grunt) {
     app: require('./bower.json').appPath || 'app',
     dist: 'dist'
   };
-
+  grunt.loadNpmTasks('grunt-mkdir');
   // Define the configuration for all the tasks
   grunt.initConfig({
     bower: grunt.file.readJSON('bower.json'),
@@ -62,6 +62,14 @@ module.exports = function (grunt) {
         ]
       }
     },
+
+    mkdir: {
+    all: {
+      options: {
+        create: ['dist/img']
+      },
+    },
+  },
 
     // The actual grunt server settings
     connect: {
@@ -359,7 +367,13 @@ module.exports = function (grunt) {
             cwd: 'bower_components/kendo-ui/styles/Default',
             src: ['*'],
             dest: '<%= yeoman.dist %>/styles/Bootstrap'
-          }
+          }, {
+         expand: true,
+         cwd: 'bower_components/ion.rangeSlider/img',
+         src: ['*'],
+         dest: '<%= yeoman.dist %>/img'
+       }
+
         ]
       },
       json: {
@@ -613,6 +627,7 @@ module.exports = function (grunt) {
     'clean:dist',
     'version',
     'wiredep',
+    'mkdir:all',
     'useminPrepare',
     'ngtemplates',
     'concurrent:dist',

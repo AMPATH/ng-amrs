@@ -47,7 +47,7 @@
         expect(isolateScope.selectedLocation).to.exist;
         expect(isolateScope.startDate).to.exist;
         expect(isolateScope.endDate).to.exist;
-        expect(isolateScope.sliderProperties).to.exist;
+        expect(isolateScope.rangeSlider).to.exist;
         expect(isolateScope.hivComparative).to.exist;
         expect(isolateScope.patientStatus).to.exist;
         expect(isolateScope.art).to.exist;
