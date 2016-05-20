@@ -47,6 +47,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         vm.currentMode = formModes.newForm;
         vm.tabs = [];
         vm.lastFormlyFormSchema = [];//usually is an array of tabs
+        vm.changesSaved = false;
 
 
         var selectedFormMetadata;
@@ -873,7 +874,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 //forth stage of submitting is to submit person attributes
                 console.log('Payload person attributes=====', JSON.stringify(lastPersonAttributePayload))
                 if (lastPersonAttributePayload !== undefined &&
-                 angular.isArray(lastPersonAttributePayload.attributes) && 
+                 angular.isArray(lastPersonAttributePayload.attributes) &&
                  lastPersonAttributePayload.attributes.length > 0) {
                     $log.log('Submitting person attributes..');
                     submitPersonAttributes(lastPersonAttributePayload, vm.patient,
