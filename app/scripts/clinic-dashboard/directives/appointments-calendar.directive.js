@@ -28,10 +28,11 @@
     $scope.events = [];
     $scope.calendarView = 'month';
     $scope.viewDate = ClinicDashboardService.getStartDate();
-    $scope.$on('$destroy', function() {
-      calendarConfig.templates.calendarSlideBox = 'mwl/calendarSlideBox.html';
-      calendarConfig.templates.calendarMonthCell = 'mwl/customMonthCell.html';
-    });
+    //TODO: Find out why the following was necessary
+    // $scope.$on('$destroy', function() { 
+    //   calendarConfig.templates.calendarSlideBox = 'mwl/calendarSlideBox.html';
+    //   calendarConfig.templates.calendarMonthCell = 'mwl/customMonthCell.html';
+    // });
     $scope.getAppointments = function(event) {
       getAppointments();
     }
