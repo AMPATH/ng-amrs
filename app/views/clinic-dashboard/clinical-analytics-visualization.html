@@ -1,12 +1,11 @@
 
 <div class="container-fluid">
-  <!--<div class="row" >-->
-    <!--<div class="col-sm-12 " style="min-height: 60px; margin: 2px;" >-->
-  <!--<input kendo-range-slider ng-model="width"-->
-         <!--k-options="sliderProperties"-->
-         <!--style=" width: 100%;" />-->
-    <!--</div>-->
-  <!--</div>-->
+  <div class="row" >
+    <div class="col-sm-12 " style="min-height: 60px; margin: 2px 2px 10px 2px;" >
+      <input type="text" id="rangeSlider" name="rangeSlider" value="" />
+      <!--<hr style="margin: 2px 0px 2px 0px;">-->
+    </div>
+  </div>
   <div class="row">
 
     <div class="col-sm-12" >
@@ -74,8 +73,8 @@
              dw-loading-options="{text: 'Fetching Patient Status analytics...'}">
           <c3chart bindto-id="patient-status-chart"
                    chart-data="patientStatus.chart.dataPoints"
-                   chart-columns="patientStatus.chart.dataColumns"> 
-              
+                   chart-columns="patientStatus.chart.dataColumns">
+
             <chart-donut title="Patient Status" width="60"/>
             <chart-size  chart-height="250"/>
             <chart-events on-click-data="generatePatientList(data, patientStatus)"/>
@@ -101,8 +100,8 @@
              dw-loading-options="{text: 'Fetching ART analytics...'}">
           <c3chart bindto-id="art-chart"
                    chart-data="art.chart.dataPoints"
-                   chart-columns="art.chart.dataColumns"> 
-              
+                   chart-columns="art.chart.dataColumns">
+
             <chart-donut title="ART" width="60"/>
             <chart-size  chart-height="250"/>
             <chart-events on-click-data="generatePatientList(data, art)"/>

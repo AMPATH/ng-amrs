@@ -35,17 +35,29 @@
     $scope.endDate = new Date();
     $scope.generateGraph = generateGraph;
     $scope.width = 0;
-    $scope.sliderProperties = {
-      min: $scope.startDate.getTime(),
-      max: $scope.endDate.getTime(),
-      smallStep: 8640000000,
-      largeStep: 8640000000,
-      tickPlacement: 'both',
-      tooltip: {
-        template: "#= kendo.toString(new Date(value), 'dd/MMMM/yyyy') #"
-      }
-    };
-
+    $scope.rangeSlider=$("#rangeSlider");
+    $scope.rangeSlider.ionRangeSlider({
+      type: "double",
+      min: moment(new Date(new Date().setYear(new Date().getFullYear() - 15))).startOf('month').format("X"),
+      max: moment(new Date(new Date().setYear(new Date().getFullYear()))).startOf('month').format("X"),
+      from: moment(new Date($scope.startDate)).startOf('month').format("X"),
+      to: moment(new Date($scope.endDate)).startOf('month').format("X"),
+      grid: true,
+      grid_num: 10,
+      force_edges: true,
+      prettify: function (num) {
+        var m = moment(num, "X");
+        return m.format("MMMM, YYYY");
+      },
+      keyboard: true,
+      onFinish: function (data) {
+        $scope.startDate = new Date(moment.unix(data.from).startOf('month'));
+        $scope.endDate = new Date(moment.unix(data.to).startOf('month'));
+        generateGraph($scope.hivComparative, $scope.startDate, $scope.endDate);
+        generateGraph($scope.art, $scope.startDate, $scope.endDate);
+        generateGraph($scope.patientStatus, $scope.startDate, $scope.endDate);
+      },
+    });
 
     //comparative current_on_art,current_in_care,vl_less_than_1000,reporting_month
     $scope.hivComparative = {
@@ -228,9 +240,19 @@
         generateGraph($scope.hivComparative, $scope.startDate, $scope.endDate);
         generateGraph($scope.art, $scope.startDate, $scope.endDate);
         generateGraph($scope.patientStatus, $scope.startDate, $scope.endDate);
+        updateRangeSlider();
       }
 
     });
+
+    function updateRangeSlider(){
+      try{
+        $scope.rangeSlider.data("ionRangeSlider").update({
+          from: moment(new Date($scope.startDate)).startOf('month').format("X"),
+          to: moment(new Date($scope.endDate)).startOf('month').format("X"),
+        });
+      } catch(e){}
+    }
 
     function isBusy(val, elem) {
       if (val === true) {
