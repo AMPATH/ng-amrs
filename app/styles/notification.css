@@ -48,20 +48,15 @@
   color: #fff;
 }
 .success-template {
-  width: 240px;
-  height: 100px;
-  padding: 0 30px;
-  line-height: 100px;
+  width: 355px;
+  height: 120px
 }
 .success-template h3 {
-  font-size: 1.7em;
-  font-weight: normal;
-  display: inline-block;
-  vertical-align: middle;
+  font-size: 1em;
+  /*padding: 20px 10px 5px;*/
 }
 .success-template span {
-  display: inline-block;
-  vertical-align: middle;
+  float: left;
+  margin: 30px 15px 30px 20px;
   color: white;
-  margin-right: 10px;
 }
