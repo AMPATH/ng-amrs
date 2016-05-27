@@ -22,8 +22,8 @@
                 </span>
             <td>{{encounter.encounterDatetime() | date:'dd-MM-yyyy'}}</td>
             <td>
-                <span style="{{(encounter.systolicBp() && (encounter.systolicBp() <= 80 || encounter.systolicBp() >= 140)) ? 'color:red;':''}}" >{{encounter.systolicBp()}}/</span>
-                <span style="{{(encounter.diastolicBp() && (encounter.diastolicBp() <= 50 || encounter.diastolicBp() >= 90)) ? 'color:red;':''}}">{{encounter.diastolicBp()}}</span>
+                <span style="{{(encounter.systolicBp() && (encounter.systolicBp() <= 80 || encounter.systolicBp() >= 140)) ? 'color:red;':''}}" >{{encounter.systolicBp() && encounter.systolicBp() + "/"}}</span><!--
+             --><span style="{{(encounter.diastolicBp() && (encounter.diastolicBp() <= 50 || encounter.diastolicBp() >= 90)) ? 'color:red;':''}}">{{encounter.diastolicBp() && encounter.diastolicBp()}}</span>
             </td>
             <td>
                 <span style="{{(encounter.pulse() && encounter.pulse() >= 100)?'color:red;':''}}">{{encounter.pulse()}}</span>

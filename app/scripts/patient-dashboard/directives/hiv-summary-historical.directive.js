@@ -41,6 +41,13 @@ jshint -W003, -W026
             $scope.$on('viewHivHistoricalSummary',viewHivHistoricalSummary);
         }
 
+        function parseHivSummaryDates(){
+          _.each($scope.hivSummaries, function(encounter){
+              encounter.encounterDatetime(new Date(encounter.encounterDatetime()).setHours(0,0,0,0));
+              encounter.prevRtcDate(new Date(encounter.prevRtcDate()).setHours(0,0,0,0));
+          });
+        }
+
         function viewHivHistoricalSummary() {
             loadHistoricalHivSummary();
         }
@@ -67,6 +74,7 @@ jshint -W003, -W026
               {
                 $scope.summaryLength= $scope.summaryLength+1;
                 $scope.hivSummaries.push(new HivSummaryModel.hivSummary(records.result[e]));
+                parseHivSummaryDates();
               }
             }
             $scope.nextStartIndex = +records.startIndex + records.size;
@@ -94,4 +102,3 @@ jshint -W003, -W026
 
     }
 })();
-
