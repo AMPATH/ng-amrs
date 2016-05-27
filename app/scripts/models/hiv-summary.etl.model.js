@@ -121,9 +121,9 @@
 
             var _curWhoStage = !UtilService.isNullOrUndefined(hivSummaryEtl.cur_who_stage) ?
                     hivSummaryEtl.cur_who_stage : '';
-            
+
             var _tbProphylaxisStartDate = !UtilService.isNullOrUndefined(hivSummaryEtl.tb_prophylaxis_start_date) ?
-                    hivSummaryEtl.tb_prophylaxis_start_date : '';        
+                    hivSummaryEtl.tb_prophylaxis_start_date : '';
 
             modelDefinition.personId = function(value) {
                 if (angular.isDefined(value)) {
@@ -160,7 +160,7 @@
                     return _encounterDatetime;
                 }
             };
-            
+
             modelDefinition.encounterType = function(value) {
               if(angular.isDefined(value)) {
                 _encounterType = value;
@@ -168,7 +168,7 @@
                 return _encounterType;
               }
             };
-            
+
             modelDefinition.encounterTypeName = function(value) {
                 if (angular.isDefined(value)) {
                     _encounterTypeName = value;
@@ -537,7 +537,7 @@
                     return _curWhoStage;
                 }
             };
-            
+
             modelDefinition.tbProphylaxisStartDate = function(value) {
               if(angular.isDefined(value)) {
                 _tbProphylaxisStartDate = value;
