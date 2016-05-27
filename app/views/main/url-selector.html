@@ -2,13 +2,14 @@
     <h3 class="text-primary"><span class="glyphicon glyphicon-hdd"></span> Server Settings</h3>
     <hr/>
     <div style="margin:2px;" class="btn-group" dropdown dropdown-append-to-body>
-        <button id="btn-append-to-body" type="button" class="btn btn-primary" dropdown-toggle>
+        <span><button id="btn-append-to-body" type="button" class="btn btn-primary" dropdown-toggle>
             <span class="glyphicon glyphicon-hdd"></span> Templates: <span class="caret"></span>
         </button>
 
         <ul class="dropdown-menu" role="menu" aria-labelledby="btn-append-to-body">
             <li style="cursor: pointer;" ng-repeat="item in preConfiguredSettings" role="menuitem"><a ng-click="selectConfiguration(item)">{{item.name}} </a></li>
         </ul>
+        <img ng-show="isBusy" ng-style="{background:'white'}" src="images/ajax-loader.gif" /><span>
     </div>
     <br/>
     <br />

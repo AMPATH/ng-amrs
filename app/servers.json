@@ -1,0 +1,23 @@
+[ {
+  "name": "Production",
+  "etl": "https://amrsreporting.ampath.or.ke:8002/etl/",
+  "amrs": "https://amrs.ampath.or.ke:8443/amrs/ws/rest/v1/"
+}, {
+  "name": "Production Demo",
+  "etl": "https://amrsreporting.ampath.or.ke:8003/etl/",
+  "amrs": "https://amrs.ampath.or.ke:8443/amrs/ws/rest/v1/"
+},
+{
+  "name": "Single  Server",
+  "etl": "/etl-server/etl/",
+  "amrs": "/amrs/ws/rest/v1/"
+},
+ {
+  "name": "Test",
+  "etl": "https://test1.ampath.or.ke:8002/etl/",
+  "amrs": "https://test1.ampath.or.ke:8443/amrs/ws/rest/v1/"
+}, {
+  "name": "Test Demo",
+  "etl": "https://test1.ampath.or.ke:8003/etl/",
+  "amrs": "https://test1.ampath.or.ke:8443/amrs/ws/rest/v1/"
+}]
