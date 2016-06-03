@@ -1,0 +1,40 @@
+{
+    "name": "component_sti",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "STI",
+            "sections": [
+                {
+                    "label": "STI",
+                    "questions": [
+                        {
+                            "label": "Do you have any of the following:",
+                            "questionOptions": {
+                                "concept": "a8b00562-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a8982b54-1350-11df-a1f1-0026b9348838",
+                                        "label": "Genital ulcers"
+                                    },
+                                    {
+                                        "concept": "a8ad3062-1350-11df-a1f1-0026b9348838",
+                                        "label": "Urethral discharge:"
+                                    },
+                                    {
+                                        "concept": "a8ad2eb4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Vaginal discharge"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

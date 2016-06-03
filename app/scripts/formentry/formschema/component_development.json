@@ -1,0 +1,81 @@
+{
+    "name": "component_development",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Developmental History",
+            "sections": [
+                {
+                    "label": "Disability",
+                    "questions": [
+                        {
+                            "label": "Does child have a disability:",
+                            "questionOptions": {
+                                "concept": "a89ffa64-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "If yes:",
+                            "questionOptions": {
+                                "concept": "c2ecd5f7-4b47-47ae-b706-3dc5ed98b4db",
+                                "answers": [
+                                    {
+                                        "concept": "a898ac14-1350-11df-a1f1-0026b9348838",
+                                        "label": "Celebral Palsy"
+                                    },
+                                    {
+                                        "concept": "d2c75e8e-3c80-4851-8225-050adfa96226",
+                                        "label": "Physical Disability"
+                                    },
+                                    {
+                                        "concept": "a890b810-1350-11df-a1f1-0026b9348838",
+                                        "label": "Mental  Disability"
+                                    },
+                                    {
+                                        "concept": "a8a0c9da-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Physical disability, specify:",
+                            "type": "obs",
+                            "id": "phydisspec",
+                            "questionOptions": {
+                                "concept": "37e7f17b-d38c-4df0-8839-bf4f298a65e2",
+                                "rendering": "text"
+                            }
+                        },
+                        {
+                            "label": "Mental disability, specify:",
+                            "type": "obs",
+                            "id": "mentdisspec",
+                            "questionOptions": {
+                                "concept": "c7963e68-467a-4649-8b88-e96c38b40180",
+                                "rendering": "text"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

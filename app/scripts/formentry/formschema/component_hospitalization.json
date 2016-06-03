@@ -1,0 +1,75 @@
+{
+    "name": "component_hospitalization",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Hospitalization",
+            "sections": [
+                {
+                    "label": "Hospitalization History",
+                    "questions": [
+                      {
+                            "type": "obsGroup",
+                            "label": "Recent hospitalizations",
+                            "questionOptions": {
+                                "rendering": "group",
+                                "concept": "a8a003a6-1350-11df-a1f1-0026b9348838"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Was the patient hospitalized since last visit?",
+                                    "id": "wasHospitalized",
+                                    "questionOptions": {
+                                        "concept": "a898c56e-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Yes"
+                                            },
+                                            {
+                                                "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                                "label": "No"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                }
+                            ]
+                        },
+                        {
+                            "type": "obsGroup",
+                            "label": "If yes reason for hospitalization:",
+                            "questionOptions": {
+                                "concept": "a8a003a6-1350-11df-a1f1-0026b9348838",
+                                "rendering": "repeating"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Reason for hospitalization:",
+                                    "questionOptions": {
+                                        "concept": "a8a07a48-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "problem"
+                                    },
+                                    "type": "obs",
+                                    "validators": [
+                                        {
+                                            "type": "conditionalAnswered",
+                                            "message": "Providing diagnosis but didn't answer that patient was hospitalized in question 11a",
+                                            "referenceQuestionId": "wasHospitalized",
+                                            "referenceQuestionAnswers": [
+                                                "a899b35c-1350-11df-a1f1-0026b9348838"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

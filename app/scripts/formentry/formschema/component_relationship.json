@@ -1,0 +1,63 @@
+{
+    "name": "component_relationship",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Relationship",
+            "sections": [
+                {
+                    "label": "Relationship",
+                    "questions": [
+                               {
+                            "label": "Siblings less than 18 months:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8a0bbde-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    },
+                                    {
+                                        "concept":"a89ad3a4-1350-11df-a1f1-0026b9348838",
+                                        "label":"N/A"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                         {
+                            "label": "If yes for siblings < 18 months, are they registered in pediatric HIV clinic:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8a0bd00-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    },
+                                    {
+                                        "concept":"a899b50a-1350-11df-a1f1-0026b9348838",
+                                        "label":"Unknown"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        }    
+                    ]
+                }
+            ]
+        }
+    ]
+}

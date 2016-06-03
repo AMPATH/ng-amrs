@@ -1,0 +1,290 @@
+{
+    "name": "component_dna-pcr-justification",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "DNA-PCR Justification",
+            "sections": [
+                {
+                    "label": "DNA-PCR Justification",
+                    "questions": [
+                        {
+                            "label": "PCR ordered:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a89c2268-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "concept": "a898fe80-1350-11df-a1f1-0026b9348838",
+                                        "label": "First time PCR"
+                                    }
+                                ]
+                            },
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "isEmpty(testOrder) || !arrayContains(testOrder, 'a898fe80-1350-11df-a1f1-0026b9348838')"
+                            }
+                        },
+                        {
+                            "label": "If second time PCR, indicate reason:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "3749b4db-8e76-4e5a-b3c9-9361ac0cfcb0",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "concept": "a8af9046-1350-11df-a1f1-0026b9348838",
+                                        "label": "Repeat for confirmatory"
+                                    },
+                                    {
+                                        "concept": "a8a08ff6-1350-11df-a1f1-0026b9348838",
+                                        "label": "Repeat after rejection"
+                                    }
+                                ]
+                            },
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "isEmpty(testOrder) || !arrayContains(testOrder, 'a898fe80-1350-11df-a1f1-0026b9348838')"
+                            }
+                        },
+                        {
+                            "type": "obsGroup",
+                            "label": "Entry point, detailed",
+                            "questionOptions": {
+                                "concept": "a8a17f06-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Entry point:",
+                                    "id": "entryPoint",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "concept": "a8a17e48-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "select",
+                                        "answers": [
+                                            {
+                                                "label": "OPD",
+                                                "concept": "a8a09ac8-1350-11df-a1f1-0026b9348838"
+                                            },
+                                            {
+                                                "label": "Peadiatric ward",
+                                                "concept": "3e5ad07b-2ced-4925-8264-cc4d8d1438d4"
+                                            },
+                                            {
+                                                "label": "MCH",
+                                                "concept": "a8a17d80-1350-11df-a1f1-0026b9348838"
+                                            },
+                                            {
+                                                "label": "PMTCT",
+                                                "concept": "a89fbedc-1350-11df-a1f1-0026b9348838"
+                                            },
+                                            {
+                                                "label": "CCC",
+                                                "concept": "a8a3899a-1350-11df-a1f1-0026b9348838"
+                                            },
+                                            {
+                                                "label": "Other",
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+                                            }
+                                        ]
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                "hideWhenExpression": "isEmpty(testOrder) || !arrayContains(testOrder, 'a898fe80-1350-11df-a1f1-0026b9348838')"
+                            }
+                                },
+                                {
+                                    "label": "Entry point, other specify:",
+                                    "id": "entryPointOther",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "text"
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                "hideWhenExpression": "isEmpty(testOrder) || !arrayContains(testOrder, 'a898fe80-1350-11df-a1f1-0026b9348838')"
+                            }
+                                },
+                                {
+                                    "label": "HIV status of mother:",
+                                    "id": "motherStatus",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "concept": "a8afb80a-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "select",
+                                        "answers": [
+                                            {
+                                                "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                                                "label": "Positive"
+                                            },
+                                            {
+                                                "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Negative"
+                                            },
+                                            {
+                                                "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Unknown"
+                                            }
+                                        ]
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                "hideWhenExpression": "isEmpty(testOrder) || !arrayContains(testOrder, 'a898fe80-1350-11df-a1f1-0026b9348838')"
+                            }
+                                },
+                                {
+                                    "label": "HIV exposed child:",
+                                    "id": "expoChild",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "concept": "a8a76cae-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "select",
+                                        "answers": [
+                                            {
+                                                "concept": "a897ff62-1350-11df-a1f1-0026b9348838",
+                                                "label": "Yes"
+                                            },
+                                            {
+                                                "concept": "a89ace7c-1350-11df-a1f1-0026b9348838",
+                                                "label": "No"
+                                            },
+                                            {
+                                                "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Unknown"
+                                            }
+                                        ]
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                "hideWhenExpression": "isEmpty(testOrder) || !arrayContains(testOrder, 'a898fe80-1350-11df-a1f1-0026b9348838')"
+                            }
+                                },
+                                {
+                                    "label": "Infant prophylaxis:",
+                                    "id": "infantproph",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "concept": "a89addfe-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "select",
+                                        "answers": [
+                                            {
+                                                "concept": "a8967656-1350-11df-a1f1-0026b9348838",
+                                                "label": "sdNVP only"
+                                            },
+                                            {
+                                                "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
+                                                "label": "sdNVP +AZT +3TC"
+                                            },
+                                            {
+                                                "concept": "a8967656-1350-11df-a1f1-0026b9348838",
+                                                "label": "NVP"
+                                            },
+                                            {
+                                                "concept": "a897ea4a-1350-11df-a1f1-0026b9348838",
+                                                "label": "AZT"
+                                            },
+                                            {
+                                                "concept": "a8967656-1350-11df-a1f1-0026b9348838",
+                                                "label": " NVP during BF period"
+                                            },
+                                            {
+                                                "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                                "label": " None"
+                                            },
+                                            {
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                                "label": " Other"
+                                            }
+                                        ]
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                "hideWhenExpression": "isEmpty(testOrder) || !arrayContains(testOrder, 'a898fe80-1350-11df-a1f1-0026b9348838')"
+                            }
+                                },
+                                {
+                                    "label": "Infant feeding:",
+                                    "id": "infFeed",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "concept": "a89abee6-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "select",
+                                        "answers": [
+                                            {
+                                                "concept": "a8a8d9b8-1350-11df-a1f1-0026b9348838",
+                                                "label": "EBF=Exclusive breastfeeding  "
+                                            },
+                                            {
+                                                "concept": "a8a70156-1350-11df-a1f1-0026b9348838",
+                                                "label": "ERF=Exclusive replacement feeding  "
+                                            },
+                                            {
+                                                "concept": "a89cca10-1350-11df-a1f1-0026b9348838",
+                                                "label": "MF=Mixed Feeding"
+                                            },
+                                            {
+                                                "concept": "a8ae86e2-1350-11df-a1f1-0026b9348838",
+                                                "label": "BF= Breastfeeding"
+                                            },
+                                            {
+                                                "concept": "a89cc934-1350-11df-a1f1-0026b9348838",
+                                                "label": "NBF=Not breastfeeding"
+                                            }
+                                        ]
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                "hideWhenExpression": "isEmpty(testOrder) || !arrayContains(testOrder, 'a898fe80-1350-11df-a1f1-0026b9348838')"
+                            }
+                                },
+                                {
+                                    "label": "Mother's PMTCT regimen:",
+                                    "id": "moPmtctReg",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "concept": "a898bdc6-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "select",
+                                        "answers": [
+                                            {
+                                                "concept": "a8967656-1350-11df-a1f1-0026b9348838",
+                                                "label": "sdNVP only"
+                                            },
+                                            {
+                                                "concept": "0906b973-25da-4e87-a272-84692cdd8453",
+                                                "label": "Uninterrupted HAART (HAART until end of BF)"
+                                            },
+                                            {
+                                                "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
+                                                "label": "AZT (from 14wks or later) + sdNVP + 3TC (Tail)  "
+                                            },
+                                            {
+                                                "concept": "a899ccb6-1350-11df-a1f1-0026b9348838",
+                                                "label": "HAART"
+                                            },
+                                            {
+                                                "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                                "label": "None"
+                                            },
+                                            {
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                                "label": " Other"
+                                            }
+                                        ]
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                "hideWhenExpression": "isEmpty(testOrder) || !arrayContains(testOrder, 'a898fe80-1350-11df-a1f1-0026b9348838')"
+                            }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

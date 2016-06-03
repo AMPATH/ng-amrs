@@ -1,0 +1,138 @@
+{
+    "name": "component_peds-hiv-status",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Child's HIV Status",
+            "sections": [
+                {
+                    "label": "Child's HIV Status",
+                    "questions": [
+                        {
+                            "label": "Child’s current HIV status:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8a76cae-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a897ff62-1350-11df-a1f1-0026b9348838",
+                                        "label": "HIV exposed"
+                                    },
+                                    {
+                                        "concept": "a89ace7c-1350-11df-a1f1-0026b9348838",
+                                        "label": "HIV infected"
+                                    },
+                                    {
+                                        "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                                        "label": "HIV negative"
+                                    },
+                                    {
+                                        "concept": "a89a7ae4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Status indeterminate"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "If positive, child’s aware of own HIV Status:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "cd8ead74-96fc-4764-a9fa-c9ee059c59c5",
+                                "answers": [
+                                    {
+                                        "concept": "a899ea48-1350-11df-a1f1-0026b9348838",
+                                        "label": "Not disclosed"
+                                    },
+                                    {
+                                        "concept": "40c4e9fa-0fc0-4ceb-89d6-1c8cfebb9bae",
+                                        "label": "Partially disclosed"
+                                    },
+                                    {
+                                        "concept": "a89c1ef8-1350-11df-a1f1-0026b9348838",
+                                        "label": "Disclosure completed"
+                                    },
+                                    {
+                                        "concept": "e30f9b6c-e4b2-4cd0-83be-8d0d487f57fe",
+                                        "label": "Acceptance of diagnosis and management ongoing"
+                                    },
+                                    {
+                                        "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Unknown"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "Disclosure Plan",
+                    "questions": [
+                        {
+                            "label": "Child disclosure plan :",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "7cad5b2e-867f-4f6e-9e15-4b205712bd31",
+                                "answers": [
+                                    {
+                                        "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
+                                        "label": "N/A"
+                                    },
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "Not initiated "
+                                    },
+                                    {
+                                        "concept": "29b25c26-f947-4d72-9e4a-54b9e936be7a",
+                                        "label": "Initiated"
+                                    },
+                                    {
+                                        "concept": "a8af5018-1350-11df-a1f1-0026b9348838",
+                                        "label": "Continued"
+                                    },
+                                    {
+                                        "concept": "a89c1ef8-1350-11df-a1f1-0026b9348838",
+                                        "label": "Completed"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        }
+                    ]
+                },
+                {
+                    "label": "Discontinue, HIV Negative",
+                    "questions": [
+                        {
+                            "label": "Discontinued from HIV follow up, HIV negative",
+                            "type": "obs",
+                            "id": "discNeg",
+                            "questionOptions": {
+                                "concept": "a8a08704-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Do not know",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ],
+                                "rendering":"select"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
