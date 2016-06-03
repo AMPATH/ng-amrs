@@ -8,7 +8,6 @@
             "sections": [
                 {
                     "label": "Encounter Details",
-                    "isExpanded": true,
                     "questions": [
                         {
                             "label": "Visit Date",
@@ -43,6 +42,33 @@
                             "questionOptions": {
                                 "rendering": "ui-select-extended"
                             }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Patient",
+            "sections": [
+                {
+                    "label": "Patient Type",
+                    "isExpanded": "true",
+                    "questions": [
+                        {
+                            "label": "What is the patient category?",
+                            "type": "obs",
+                            "id": "patientCategory",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a89eea66-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "label": "PMTCT",
+                                        "concept": "a89fbedc-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            },
+                            "validators": []
                         }
                     ]
                 }
@@ -140,6 +166,7 @@
                     "questions": [
                         {
                             "label": "Pregnancy status",
+                            "id": "pregStatus",
                             "questionOptions": {
                                 "concept": "6b4f1d00-0a27-41dd-a299-fb7dc730819c",
                                 "rendering": "select",
@@ -506,33 +533,6 @@
                                 "rendering": "select"
                             },
                             "validators": []
-                        },
-                        {
-                            "label": "Peds WHO stage",
-                            "type": "obs",
-                            "id": "pedwhoStage",
-                            "questionOptions": {
-                                "concept": "a89b3740-1350-11df-a1f1-0026b9348838",
-                                "answers": [
-                                    {
-                                        "label": "1",
-                                        "concept": "a89b33d0-1350-11df-a1f1-0026b9348838"
-                                    },
-                                    {
-                                        "label": "2",
-                                        "concept": "a89b34ac-1350-11df-a1f1-0026b9348838"
-                                    },
-                                    {
-                                        "label": "3",
-                                        "concept": "a89b3588-1350-11df-a1f1-0026b9348838"
-                                    },
-                                    {
-                                        "label": "4",
-                                        "concept": "a89b3664-1350-11df-a1f1-0026b9348838"
-                                    }
-                                ],
-                                "rendering": "select"
-                            }
                         }
                     ]
                 }
@@ -1102,7 +1102,7 @@
                         },
                         {
                             "label": "VDRL Qualitative/RPR:",
-                            "type": "Obs",
+                            "type": "obs",
                             "id": "rpr",
                             "questionOptions": {
                                 "concept": "a8945678-1350-11df-a1f1-0026b9348838",
@@ -1145,10 +1145,11 @@
                         },
                         {
                             "label": "TB Sputum:",
-                            "type": "Obs",
+                            "type": "obs",
                             "id": "sputumafp_test",
                             "questionOptions": {
                                 "concept": "a8945d4e-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
                                 "answers": [
                                     {
                                         "concept": "a8a45ab4-1350-11df-a1f1-0026b9348838",
@@ -1395,26 +1396,29 @@
             ]
         },
         {
-            "label": "Next Appointment",
+            "label": "Next appointment",
             "sections": [
                 {
                     "label": "Next appointment",
-                    "isExpanded": true,
+                    "isExpanded": "true",
                     "questions": [
                         {
-                            "label": "Return to clinic date:",
+                            "label": "Return to clinic Date:",
                             "type": "obs",
                             "required": "true",
                             "questionOptions": {
                                 "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
-                                "rendering": "date"
+                                "rendering": "date",
+                                "weeksList": [
+                                    2,
+                                    4,
+                                    8,
+                                    12,
+                                    16
+                                ]
                             },
-                            "validators": [
-                                {
-                                    "type": "date",
-                                    "allowFutureDates": "true"
-                                }
-                            ]
+                            "validators": [],
+                            "allowFutureDates": "true"
                         }
                     ]
                 }
