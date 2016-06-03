@@ -1,0 +1,135 @@
+{
+    "name": "component_family-planning",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Family Planning",
+            "sections": [
+                {
+                    "label": "Family Planning",
+                    "questions": [
+                        {
+                            "label": "Family planning:",
+                            "id": "onFamilyPlanning",
+                            "questionOptions": {
+                                "concept": "774961c6-232f-4332-8a9f-f5c55ebe86d0",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Family planning method:",
+                            "id": "q12e",
+                            "questionOptions": {
+                                "concept": "a894b1cc-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a893516a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Condoms"
+                                    },
+                                    {
+                                        "concept": "b75702a6-908d-491b-9399-6495712c81cc",
+                                        "label": "Emergency OCP"
+                                    },
+                                    {
+                                        "concept": "a8aff356-1350-11df-a1f1-0026b9348838",
+                                        "label": "Implant"
+                                    },
+                                    {
+                                        "concept": "a8a71330-1350-11df-a1f1-0026b9348838",
+                                        "label": "Injectable Hormones"
+                                    },
+                                    {
+                                        "concept": "a8a71650-1350-11df-a1f1-0026b9348838",
+                                        "label": "IUD"
+                                    },
+                                    {
+                                        "concept": "4a740e33-fee5-4a2b-b679-1904722e3d9e",
+                                        "label": "Lactation Method"
+                                    },
+                                    {
+                                        "concept": "a897dbd6-1350-11df-a1f1-0026b9348838",
+                                        "label": "OCP"
+                                    },
+                                    {
+                                        "concept": "a8a714c0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Rhythm Method"
+                                    },
+                                    {
+                                        "concept": "a8a713f8-1350-11df-a1f1-0026b9348838",
+                                        "label": "Sterilization"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": [
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "isEmpty(myValue) && onFamilyPlanning === 'a899b35c-1350-11df-a1f1-0026b9348838'",
+                                    "message": "Patient on family planning. Please provide a method."
+                                }
+                            ],
+                            "hide": {
+                                "hideWhenExpression": "onFamilyPlanning !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                            }
+                        },
+                        {
+                            "label": "If not on family planning, reason:",
+                            "id": "reasonNotOnFamilyPlanning",
+                            "questionOptions": {
+                                "concept": "88ad5975-4762-4108-a967-072f12f91b0b",
+                                "answers": [
+                                    {
+                                        "concept": "2d6f977e-3b3f-4ea9-82ee-fde1fb4bdf56",
+                                        "label": "Not sexual active"
+                                    },
+                                    {
+                                        "concept": "37b27c86-cabb-4c82-9166-d67d2271a8a3",
+                                        "label": "Thinks can't get pregnant"
+                                    },
+                                    {
+                                        "concept": "fb82f3b4-bcec-4cd2-a0a4-545b02d28a4d",
+                                        "label": "Wants to get pregnant"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": [
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "isEmpty(myValue) && onFamilyPlanning === 'a899b42e-1350-11df-a1f1-0026b9348838'",
+                                    "message": "Patient on family planning. Please provide a method."
+                                }
+                            ],
+                            "hide": {
+                                "hideWhenExpression": "onFamilyPlanning !== 'a899b42e-1350-11df-a1f1-0026b9348838'"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

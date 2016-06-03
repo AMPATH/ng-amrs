@@ -1,0 +1,63 @@
+{
+    "name": "component_child-labor",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Employment/Child labor",
+            "sections": [
+                {
+                    "label": "Child labor",
+                    "questions": [
+                        {
+                            "label": "Are you employed?",
+                            "id": "employed",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a89ec338-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "If employed, what's the status of your work?",
+                            "id": "occupation",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a0a00e-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "concept": "49c8583d-baa0-4b80-a719-8c5609129c15",
+                                        "label": "Permanent"
+                                    },
+                                    {
+                                        "concept": "a8a09b90-1350-11df-a1f1-0026b9348838",
+                                        "label": "Casual"
+                                    },
+                                    {
+                                        "concept": "a8b03294-1350-11df-a1f1-0026b9348838",
+                                        "label": "Works on the streets"
+                                    }
+                                ]
+                            },
+                            "validators":[],
+                            "hide":{
+                                "hideWhenExpression":"employed !=='a899b35c-1350-11df-a1f1-0026b9348838'"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

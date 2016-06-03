@@ -1,0 +1,125 @@
+{
+    "name": "component_vitals",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Vitals",
+            "sections": [
+                {
+                    "label": "Vital Signs",
+                    "questions": [
+                        {
+                            "label": "BP:Systolic:",
+                            "id": "syst",
+                            "questionOptions": {
+                                "rendering": "number",
+                                "concept": "a8a65d5a-1350-11df-a1f1-0026b9348838",
+                                "max": "250",
+                                "min": "0"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "BP:Diastolic:",
+                            "id": "syst",
+                            "questionOptions": {
+                                "rendering": "number",
+                                "concept": "a8a65e36-1350-11df-a1f1-0026b9348838",
+                                "max": "150",
+                                "min": "0"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Pulse(Rate/Min):",
+                            "questionOptions": {
+                                "rendering": "number",
+                                "concept": "a8a65f12-1350-11df-a1f1-0026b9348838",
+                                "max": "230",
+                                "min": "0"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Temp(C):",
+                            "questionOptions": {
+                                "rendering": "number",
+                                "concept": "a8a65fee-1350-11df-a1f1-0026b9348838",
+                                "max": "43",
+                                "min": "25"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Weight(Kg):",
+                            "id": "weight",
+                            "questionOptions": {
+                                "rendering": "number",
+                                "concept": "a8a660ca-1350-11df-a1f1-0026b9348838",
+                                "max": "150",
+                                "min": "0"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Height(CM):",
+                            "id": "height",
+                            "questionOptions": {
+                                "rendering": "number",
+                                "concept": "a8a6619c-1350-11df-a1f1-0026b9348838",
+                                "max": "350",
+                                "min": "0"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Sp02:",
+                            "questionOptions": {
+                                "rendering": "number",
+                                "concept": "a8a66354-1350-11df-a1f1-0026b9348838",
+                                "max": "100",
+                                "min": "0"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "BMI (Kg/M2):",
+                            "id": "bmi",
+                            "questionOptions": {
+                                "rendering": "number",
+                                "concept": "a89c60c0-1350-11df-a1f1-0026b9348838",
+                                "max": "100",
+                                "min": "0",
+                                "calculate": {
+                                    "calculateExpression": "calcBMI(height,weight)"
+                                }
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "MUAC:",
+                            "id": "muac",
+                            "questionOptions": {
+                                "rendering": "number",
+                                "concept": "a89c6188-1350-11df-a1f1-0026b9348838",
+                                "max": "230",
+                                "min": "60"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

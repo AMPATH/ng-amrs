@@ -1,0 +1,48 @@
+{
+    "name": "component_nutrition",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Nutrition",
+            "sections": [
+                {
+                    "label": "Nutrition",
+                    "questions": [
+                        {
+                            "label": "How often do you miss meals for an entire day?",
+                            "type":"obs",
+                            "questionOptions": {
+                                "concept": "a89ce388-1350-11df-a1f1-0026b9348838",
+                                
+                                "answers": [
+                                    {
+                                        "concept": "a899d120-1350-11df-a1f1-0026b9348838",
+                                        "label": "Never"
+                                    },
+                                    {
+                                        "concept": "a899d7f6-1350-11df-a1f1-0026b9348838",
+                                        "label": "Monthly"
+                                    },
+                                    {
+                                        "concept": "a899d8d2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Weekly"
+                                    },
+                                    {
+                                        "concept": "65831439-8ba0-4c64-ab62-1f7b7f548fb7",
+                                        "label": "Few times per week"
+                                    },
+                                    {
+                                        "concept": "a8a05dc4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Daily"
+                                    }
+                                ],
+                                "rendering": "select"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

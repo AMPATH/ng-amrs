@@ -1,0 +1,120 @@
+{
+    "name": "component_reproductive-health",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Reproductive health",
+            "sections": [
+                {
+                    "label": "Reproductive health",
+                    "questions": [
+                        {
+                            "label": "Have you started having your monthly period?",
+                            "id": "monthlyPeriod",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a185d2-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Present",
+                                        "concept": "a8a4bd42-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Absent",
+                                        "concept": "a8a4bc84-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "Are you having trouble with your menses?",
+                            "id": "mensesTrouble",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a185d2-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Normal",
+                                        "concept": "a899e7b4-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Abnormal",
+                                        "concept": "a899e890-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "If having trouble with menses, which problem?",
+                            "id": "spendNight",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a185d2-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Painful",
+                                        "concept": "a890e7fe-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Irregular",
+                                        "concept": "a8933860-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Very heavy",
+                                        "concept": "a89cf9d6-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Other",
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "Are you currently pregnant?",
+                            "id": "currentlyPregnant",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a710ba-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "If currently pregnant, are you enrolled to ANC?",
+                            "id": "ANCEnrolled",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a18140-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

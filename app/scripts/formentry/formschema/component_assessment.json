@@ -1,0 +1,47 @@
+{
+    "name": "component_assessment",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Assessment",
+            "sections": [
+                
+                
+                {
+                    "label": "General comments notes",
+                    "isExpanded":"true",
+                    "questions": [
+                        {
+                            "label": "Clinical comments, general:",
+                            "type": "obs",
+                            "id": "assNote",
+                            "questionOptions": {
+                                "concept": "5e4dc798-2cce-4a1a-97e9-bcf22d64b07c",
+                                "rendering": "text"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "Assessment Notes",
+                    "isExpanded":"true",
+                    "questions": [
+                        {
+                            "label": "Please enter the assessment below:",
+                            "type": "obs",
+                            "id": "assNote",
+                            "required":"false",
+                            "default":"",
+                            "questionOptions": {
+                                "concept": "23f710cc-7f9c-4255-9b6b-c3e240215dba",
+                                "rendering": "textarea",
+                                "rows": 18
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

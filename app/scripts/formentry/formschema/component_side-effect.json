@@ -1,0 +1,193 @@
+{
+    "name": "component_side-effect",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Side Effects/Toxicity",
+            "sections": [
+                {
+                    "label": "Side Effects/Toxicity",
+                    "questions": [
+                        {
+                            "type": "obsGroup",
+                            "label": "Side effects",
+                            "id": "sideEff",
+                            "questionOptions": {
+                                "concept": "a8a072c8-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Any side effects attributable to any drug that the patient is currently taking:",
+                                    "id": "currSideEffect",
+                                    "questionOptions": {
+                                        "concept": "30fc0cea-b6c7-48cc-bbfb-4eb53170ce41",
+                                        "answers": [
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Yes"
+                                            },
+                                            {
+                                                "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                                "label": "No"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                }
+                            ]
+                        },
+                        {
+                            "type": "obsGroup",
+                            "questionOptions": {
+                                "rendering": "repeating",
+                                "concept": "a8a072c8-1350-11df-a1f1-0026b9348838"
+                            },
+                            "label": "If yes drugs suspected to be causing side effects",
+                            "questions": [
+                                {
+                                    "label": "Drug:",
+                                    "questionOptions": {
+                                        "concept": "1682a920-c93d-4aad-b9cb-4a2b2c41ff1a",
+                                        "rendering": "drug"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                }
+                            ]
+                        },
+                        {
+                            "label": "If yes, tick all that apply:",
+                            "questionOptions": {
+                                "concept": "c2ecd5f7-4b47-47ae-b706-3dc5ed98b4db",
+                                "answers": [
+                                    {
+                                        "concept": "a877c7f6-1350-11df-a1f1-0026b9348838",
+                                        "label": "Anaemia"
+                                    },
+                                    {
+                                        "concept": "a8909060-1350-11df-a1f1-0026b9348838",
+                                        "label": "Hepatitis"
+                                    },
+                                    {
+                                        "concept": "a89d0c0a-1350-11df-a1f1-0026b9348838",
+                                        "label": "IRIS"
+                                    },
+                                    {
+                                        "concept": "a8a01dfa-1350-11df-a1f1-0026b9348838",
+                                        "label": "Lactic Acidosis"
+                                    },
+                                    {
+                                        "concept": "a89cee50-1350-11df-a1f1-0026b9348838",
+                                        "label": "Lipo-dystrophy"
+                                    },
+                                    {
+                                        "concept": "a897fe86-1350-11df-a1f1-0026b9348838",
+                                        "label": "Neuropathy"
+                                    },
+                                    {
+                                        "concept": "a8ad239c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Persistent Vomiting"
+                                    },
+                                    {
+                                        "concept": "a895776a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Rash"
+                                    },
+                                    {
+                                        "concept": "a8a16d0e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Steven-Johnson syndrome"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "currSideEffect !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                            }
+                        },
+                        {
+                            "label": "Severity of the reaction:",
+                            "questionOptions": {
+                                "concept": "6c1b293c-4d8c-470f-9991-93cdde1274ff",
+                                "answers": [
+                                    {
+                                        "concept": "a89efccc-1350-11df-a1f1-0026b9348838",
+                                        "label": "Mild"
+                                    },
+                                    {
+                                        "concept": "a89efdee-1350-11df-a1f1-0026b9348838",
+                                        "label": "Moderate"
+                                    },
+                                    {
+                                        "concept": "a89eff1a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Severe"
+                                    },
+                                    {
+                                        "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Unknown"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "currSideEffect !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                            }
+                        },
+                        {
+                            "label": "How certain are you the drug(s) is/are the case of the reaction?",
+                            "questionOptions": {
+                                "concept": "d0efbf5b-cbfc-48fc-a857-c0ca4d70f077",
+                                "answers": [
+                                    {
+                                        "concept": "45eb8953-dc14-4c2e-8ce6-12cdf7da280a",
+                                        "label": "Certain"
+                                    },
+                                    {
+                                        "concept": "07e9e14e-a718-4a9e-9479-1de79e1f614a",
+                                        "label": "Probable/Likely"
+                                    },
+                                    {
+                                        "concept": "260e6d24-1634-4467-a070-e8359f6827f7",
+                                        "label": "Possible"
+                                    },
+                                    {
+                                        "concept": "66b46c63-7e75-4b1d-918a-1e17348c62f7",
+                                        "label": "Unlikely"
+                                    },
+                                    {
+                                        "concept": "b1055e84-0e97-483a-ae8a-3f2dee84a623",
+                                        "label": "Conditional/Unclassified"
+                                    },
+                                    {
+                                        "concept": "80d03d9f-2510-4a95-b9d6-2613aaeebd21",
+                                        "label": "Unassessable/Unclassified"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "currSideEffect !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

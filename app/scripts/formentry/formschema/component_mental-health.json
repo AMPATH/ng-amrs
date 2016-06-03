@@ -1,0 +1,39 @@
+{
+    "name": "component_mental-health",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Mental health",
+            "sections": [
+                {
+                    "label": "Mental health",
+                    "questions": [
+                        {
+                            "label": "Little interest or pleasure in doing things:",
+                            "id": "interest",
+                            "questionOptions": {
+                                "concept": "0975c82b-7905-446f-bd16-2f5e373543db",
+                                "rendering": "number",
+                                "max": "3",
+                                "min": "0"
+                            },
+                            "type": "obs"
+                        },
+                        {
+                            "label": "Feels down or depressed or hopeless:",
+                            "id": "down",
+                            "questionOptions": {
+                                "concept": "fa7f8ebd-449d-4f09-a5ed-fd9c05302c67",
+                                "rendering": "number",
+                                "max": "3",
+                                "min": "0"
+                            },
+                            "type": "obs"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

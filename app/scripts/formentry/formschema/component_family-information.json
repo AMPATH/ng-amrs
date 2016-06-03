@@ -1,0 +1,141 @@
+{
+    "name": "component_family-information",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Family information",
+            "sections": [
+                {
+                    "label": "Family Information",
+                    "questions": [
+                        {
+                            "type": "obsGroup",
+                            "label": "Person bringing patient",
+                            "questionOptions": {
+                                "concept": "a8a0798a-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Person bringing patient:",
+                                    "questionOptions": {
+                                        "concept": "a898c01e-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a898c0dc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Mother"
+                                            },
+                                            {
+                                                "concept": "a898c1a4-1350-11df-a1f1-0026b9348838",
+                                                "label": "Father"
+                                            },
+                                            {
+                                                "concept": "a898c262-1350-11df-a1f1-0026b9348838",
+                                                "label": "Sibling"
+                                            },
+                                            {
+                                                "concept": "a8a171a0-1350-11df-a1f1-0026b9348838",
+                                                "label": "Childrens home"
+                                            },
+                                            {
+                                                "concept": "89c9f54-1350-11df-a1f1-0026b9348838",
+                                                "label": "Paternal grandparent"
+                                            },
+                                            {
+                                                "concept": "a89c9e3c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Maternal grandparent"
+                                            },
+                                            {
+                                                "concept": "a898c6f4-1350-11df-a1f1-0026b9348838",
+                                                "label": "Self"
+                                            },
+                                            {
+                                                "concept": "a8a17470-1350-11df-a1f1-0026b9348838",
+                                                "label": "Paternal aunt"
+                                            },
+                                            {
+                                                "concept": "a8a17394-1350-11df-a1f1-0026b9348838",
+                                                "label": "Maternal aunt"
+                                            },
+                                            {
+                                                "concept": "a8a175f6-1350-11df-a1f1-0026b9348838",
+                                                "label": "Paternal uncle"
+                                            },
+                                            {
+                                                "concept": "a8a1752e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Maternal uncle"
+                                            },
+                                            {
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Other"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Patient changed their residence:",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "d9a414af-021b-459f-bcea-4c88b1382e39",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ]
+                            },
+                            "type": "obs"
+                        },
+                        {
+                            "label": "Mother deceased:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8a0b670-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Father deceased:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8a0b788-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,36 @@
+{
+    "name": "component_child-abuse",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Child abuse",
+            "sections": [
+                {
+                    "label": "Child abuse",
+                    "questions": [
+                        {
+                            "label": "Since your last visit, do you feel safe(salama)/Mistreated/Threatened where you stay?",
+                            "id": "mistreated",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "1a7a49c3-115c-4b43-8fc8-055020b754b3",
+                                "rendering": "select",
+                                "answers": [
+                                  {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

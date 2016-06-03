@@ -1,0 +1,73 @@
+{
+    "name": "component_crypto",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Cryptococcal prevention",
+            "sections": [
+                {
+                    "label": "Cryptococcal Secondary Prevention",
+                    "isExpanded":"true",
+                    "questions": [
+                        {
+                            "label": "Cryptococcus Tx:",
+                            "questionOptions": {
+                                "concept": "a899e516-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "None"
+                                    },
+                                    {
+                                        "concept": "a8971e12-1350-11df-a1f1-0026b9348838",
+                                        "label": "Fluconazole 400mg"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                },
+                {
+                    "label": "Cryptococcal Treatment Plan",
+                    "isExpanded":"true",
+                    "questions": [
+                        {
+                            "label": "Cryptococcal treatment plan",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a89c2790-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a89b7908-1350-11df-a1f1-0026b9348838",
+                                        "label": "Continue"
+                                    },
+                                    {
+                                        "concept": "a89b7c50-1350-11df-a1f1-0026b9348838",
+                                        "label": "Change Regimen"
+                                    },
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "None"
+                                    },
+                                    {
+                                        "concept": "a89b77aa-1350-11df-a1f1-0026b9348838",
+                                        "label": "Start"
+                                    },
+                                    {
+                                        "concept": "a89b7d36-1350-11df-a1f1-0026b9348838",
+                                        "label": "Stop"
+                                    }
+                                ],
+                                "rendering": "select"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

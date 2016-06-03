@@ -1,0 +1,1881 @@
+{
+
+    "name": "Outreach Field Follow up Form",
+
+    "version": "0.01",
+
+    "encounterType": "uuid",
+
+    "form": "uuid",
+
+    "processor": "EncounterFormProcessor",
+
+    "pages": [
+
+        {
+
+            "label": "Outreach Form",
+
+            "sections": [
+
+                {
+
+                    "label": "Encounter Details",
+
+                    "isExpanded": "true",
+
+                    "questions": [
+
+                        {
+
+                            "label": "Visit Date",
+
+                            "type": "encounterDatetime",
+
+                            "required": "true",
+
+                            "default": "",
+
+                            "id": "encDate",
+
+                            "questionOptions": {
+
+                                "rendering": "date"
+
+                            },
+
+                            "validators": []
+
+                        },
+
+                        {
+
+                            "type": "encounterProvider",
+
+                            "label": "Provider",
+
+                            "id": "provider",
+
+                            "required": "true",
+
+                            "default": "",
+
+                            "questionOptions": {
+
+                                "rendering": "ui-select-extended"
+
+                            },
+
+                            "disable": {
+
+                                "disableWhenExpression": "q1 === 'disq6'"
+
+                            },
+
+                            "validators": []
+
+                        },
+
+                        {
+
+                            "type": "encounterLocation",
+
+                            "label": "Facility name (site/satellite clinic required):",
+
+                            "id": "location",
+
+                            "required": "true",
+
+                            "questionOptions": {
+
+                                "rendering": "ui-select-extended"
+
+                            },
+
+                            "validators": []
+
+                        }
+
+                    ]
+
+                },
+
+                {
+
+                    "label": "Pre-Clinic Review:",
+
+                    "questions": [
+
+                        {
+
+                            "type": "obs",
+
+                            "label": "Date of Missed Appointment:",
+
+                            "id": "date_missed_appointment",
+
+                            "required": "true",
+
+                            "default": "",
+
+                            "questionOptions": {
+
+                                "rendering": "date",
+
+                                "concept": "a89e3896-1350-11df-a1f1-0026b9348838"
+
+                            }
+
+                        },
+
+                        {
+
+                            "label": "Patient category:",
+
+                            "id": "patient_category",
+
+                            "questionOptions": {
+
+                                "answers": [
+
+                                    {
+
+                                        "concept": "a89ee8ea-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Adult"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89ee9a8-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Pead"
+
+                                    }
+
+                                ],
+
+                                "concept": "a89eea66-1350-11df-a1f1-0026b9348838",
+
+                                "rendering": "select"
+
+                            },
+
+                            "type": "obs"
+
+                        },
+
+                        {
+
+                            "type": "obsGroup",
+
+                            "label": "Reason for attempted contact, detailed:",
+
+                            "questionOptions": {
+
+                                "rendering": "group",
+
+                                "concept": "a8af629c-1350-11df-a1f1-0026b9348838"
+
+                            },
+
+                            "questions": [
+
+                                {
+
+                                    "label": "Reason for attempted contact:",
+
+                                    "id": "reasonAttemptContact",
+
+                                    "type": "obs",
+
+                                    "questionOptions": {
+
+                                        "answers": [
+
+                                            {
+
+                                                "concept": "a89e36b6-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Clinical issue"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a89a898a-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Research"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Other non coded"
+
+                                            }
+
+                                        ],
+
+                                        "rendering": "select",
+
+                                        "concept": "a89e3788-1350-11df-a1f1-0026b9348838"
+
+                                    }
+
+                                },
+
+                                {
+
+                                    "label": "Outreach followup category:",
+
+                                    "id": "outreachFollowupCategory",
+
+                                    "type": "obs",
+
+                                    "questionOptions": {
+
+                                        "answers": [
+
+                                            {
+
+                                                "concept": "7a1f0cec-d378-4099-9cef-66ff675a5004",
+
+                                                "label": "High Risk"
+
+                                            },
+
+                                            {
+
+                                                "concept": "83b589e1-ea64-4ed5-8c73-de78f674dda2",
+
+                                                "label": "Medium Risk"
+
+                                            },
+
+                                            {
+
+                                                "concept": "06eb5a64-5b0d-47f9-929f-30e6c51f365e",
+
+                                                "label": "Low Risk"
+
+                                            }
+
+                                        ],
+
+                                        "rendering": "select",
+
+                                        "concept": "6212418a-8bf3-4ec9-97c1-4c77749c31f5"
+
+                                    }
+
+                                },
+
+                                {
+
+                                    "label": "Other non-coded",
+
+                                    "id": "otherFollowupContact",
+
+                                    "type": "obs",
+
+                                    "questionOptions": {
+
+                                        "rendering": "text",
+
+                                        "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838"
+
+                                    }
+
+                                }
+
+                            ]
+
+                        }
+
+                    ]
+
+                },
+
+                {
+
+                    "label": "Phone Follow-up:",
+
+                    "questions": [
+
+                        {
+
+                            "type": "obs",
+
+                            "label": "Number of call attempts:",
+
+                            "id": "callAttempts",
+
+                            "questionOptions": {
+
+                                "rendering": "number",
+
+                                "concept": "e6c52d7e-3e25-4a83-8f9c-55a03bdc653a"
+
+                            }
+
+                        },
+
+                        {
+
+                            "type": "obs",
+
+                            "label": "Who does the phone belong to?",
+
+                            "id": "phoneBelong",
+
+                            "questionOptions": {
+
+                                "answers": [
+
+                                    {
+
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Patient"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89cd280-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Caregiver"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a8aaf234-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Family Member"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a8aaf07c-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Friend"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Other"
+
+                                    }
+
+                                ],
+
+                                "rendering": "select",
+
+                                "concept": "47a5988a-e5f7-424e-96cc-3b34aeea3c1a"
+
+                            }
+
+                        },
+
+                        {
+
+                            "type": "obs",
+
+                            "label": "Was the patient contacted?",
+
+                            "id": "patientContacted",
+
+                            "questionOptions": {
+
+                                "answers": [
+
+                                    {
+
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Yes"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "No"
+
+                                    }
+
+                                ],
+
+                                "rendering": "select",
+
+                                "concept": "2b90dbd2-8897-49fd-9784-e5999e7312fa"
+
+                            }
+
+                        },
+
+                        {
+
+                            "type": "obs",
+
+                            "label": "Reason not contacted:",
+
+                            "id": "reasonNotContacted",
+
+                            "questionOptions": {
+
+                                "answers": [
+
+                                    {
+
+                                        "concept": "a69cdbf7-edf0-4e4d-a4dc-1ff3bc771d5c",
+
+                                        "label": "No phone number"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89dec06-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Phone Inactive"
+
+                                    },
+
+                                    {
+
+                                        "concept": "1965eb6f-fc86-4f44-b3b8-59772b1daa20",
+
+                                        "label": "Wrong number"
+
+                                    },
+
+                                    {
+
+                                        "concept": "fdd18cec-11ba-4512-ab3c-b66066847f58",
+
+                                        "label": "No one answers"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Other"
+
+                                    }
+
+                                ],
+
+                                "rendering": "select",
+
+                                "concept": "2b90dbd2-8897-49fd-9784-e5999e7312fa"
+
+                            },
+
+                            "validators": [
+
+                                {
+
+                                    "type": "js_expression",
+
+                                    "failsWhenExpression": "isEmpty(myValue) && patientContacted === 'a899b42e-1350-11df-a1f1-0026b9348838'",
+
+                                    "message": "Patient was contacted."
+
+                                }
+
+                            ],
+
+                            "hide": {
+
+                                "hideWhenExpression": "patientContacted !== 'a899b42e-1350-11df-a1f1-0026b9348838'"
+
+                            }
+
+                        },
+
+                        {
+
+                            "type": "obs",
+
+                            "label": "Refer for field follow up:",
+
+                            "id": "referFieldFollowUp",
+
+                            "questionOptions": {
+
+                                "answers": [
+
+                                    {
+
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Yes"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "No"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89de526-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "In AMPATH catchment but far away"
+
+                                    },
+
+                                    {
+
+                                        "concept": "83df5f26-f97a-4cda-9c05-d0bdc6e4ebee",
+
+                                        "label": "Out of Catchment"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89decc4-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Locator info inadequate"
+
+                                    }
+
+                                ],
+
+                                "rendering": "select",
+
+                                "concept": "3cef9756-ae0e-4b35-9ee2-b0fb96556971"
+
+                            }
+
+                        }
+
+                    ]
+
+                },
+
+                {
+
+                    "label": "Field Follow-up:",
+
+                    "questions": [
+
+                        {
+
+                            "type": "obs",
+
+                            "label": "If field follow up not attempted:",
+
+                            "id": "notAttempt",
+
+                            "questionOptions": {
+
+                                "answers": [
+
+                                    {
+
+                                        "label": "Road impassable",
+
+                                        "concept": "a89ef826-1350-11df-a1f1-0026b9348838"
+
+                                    },
+
+                                    {
+
+                                        "label": "In AMPATH catchment but far away",
+
+                                        "concept": "a89de526-1350-11df-a1f1-0026b9348838"
+
+                                    },
+
+                                    {
+
+                                        "label": "Out of Catchment",
+
+                                        "concept": "83df5f26-f97a-4cda-9c05-d0bdc6e4ebee"
+
+                                    },
+
+                                    {
+
+                                        "label": "Locator information inadequate",
+
+                                        "concept": "a89decc4-1350-11df-a1f1-0026b9348838"
+
+                                    },
+
+                                    {
+
+                                        "label": "Insufficient Funds",
+
+                                        "concept": "a8b03af0-1350-11df-a1f1-0026b9348838"
+
+                                    }
+
+                                ],
+
+                                "rendering": "select",
+
+                                "concept": "4377ab37-f513-4426-af67-07016d1a64ef"
+
+                            }
+
+                        },
+
+                        {
+
+                            "type": "obsGroup",
+
+                            "label": "Field Follow-up Method, detailed",
+
+                            "questionOptions": {
+
+                                "rendering": "group",
+
+                                "concept": "277bf7bf-7171-44fd-aaf6-54a33c5a4680"
+
+                            },
+
+                            "questions": [
+
+                                {
+
+                                    "type": "obs",
+
+                                    "label": "Field Follow-up Method:",
+
+                                    "questionOptions": {
+
+                                        "concept": "a89dea80-1350-11df-a1f1-0026b9348838",
+
+                                        "answers": [
+
+                                            {
+
+                                                "label": "Public means",
+
+                                                "concept": "a89de9b8-1350-11df-a1f1-0026b9348838"
+
+                                            },
+
+                                            {
+
+                                                "label": "CCC/CBOW",
+
+                                                "concept": "a8af6404-1350-11df-a1f1-0026b9348838"
+
+                                            }
+
+                                        ],
+
+                                        "rendering": "select"
+
+                                    }
+
+                                },
+
+                                {
+
+                                    "type": "obs",
+
+                                    "label": "Number of Attempts:",
+
+                                    "id": "noAtt",
+
+                                    "questionOptions": {
+
+                                        "rendering": "number",
+
+                                        "min": "1",
+
+                                        "concept": "a89de6ac-1350-11df-a1f1-0026b9348838"
+
+                                    }
+
+                                }
+
+                            ]
+
+                        },
+
+                        {
+
+                            "type": "obs",
+
+                            "id": "patientFound",
+
+                            "label": "Was the Patient Found?",
+
+                            "questionOptions": {
+
+                                "answers": [
+
+                                    {
+
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Yes"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "No"
+
+                                    }
+
+                                ],
+
+                                "rendering": "select",
+
+                                "concept": "a89deb3e-1350-11df-a1f1-0026b9348838"
+
+                            }
+
+                        },
+
+                        {
+
+                            "type": "obsGroup",
+
+                            "label": "Reason not Found:",
+
+                            "questionOptions": {
+
+                                "rendering": "group",
+
+                                "concept": "a8af541e-1350-11df-a1f1-0026b9348838"
+
+                            },
+
+                            "questions": [
+
+                                {
+
+                                    "type": "obs",
+
+                                    "label": "Reason not Found:",
+
+                                    "id": "reasonNotFound",
+
+                                    "questionOptions": {
+
+                                        "answers": [
+
+                                            {
+
+                                                "concept": "a89decc4-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Locator information inadequate"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a89ded8c-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Patient moved away"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a89de21a-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "At work"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a89dee54-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Not at home"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Other"
+
+                                            }
+
+                                        ],
+
+                                        "rendering": "select",
+
+                                        "concept": "a89de5e4-1350-11df-a1f1-0026b9348838"
+
+                                    }
+
+                                },
+
+                                {
+
+                                    "type": "obs",
+
+                                    "label": "Other reason not Found:",
+
+                                    "questionOptions": {
+
+                                        "rendering": "text",
+
+                                        "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838"
+
+                                    }
+
+                                }
+
+                            ],
+
+                            "type": "obs",
+
+                            "validators": [
+
+                                {
+
+                                    "type": "js_expression",
+
+                                    "failsWhenExpression": "isEmpty(myValue) && patientFound === 'a899b42e-1350-11df-a1f1-0026b9348838'",
+
+                                    "message": "Patient was contacted."
+
+                                }
+
+                            ],
+
+                            "hide": {
+
+                                "hideWhenExpression": "patientFound !== 'a899b42e-1350-11df-a1f1-0026b9348838'"
+
+                            }
+
+                        },
+
+                        {
+
+                            "type": "obs",
+
+                            "label": "Does Patient Have Medications Remaining?If yes,How Many Days Worth?",
+
+                            "id": "medsRemDays",
+
+                            "questionOptions": {
+
+                                "rendering": "number",
+
+                                "concept": "a89fe006-1350-11df-a1f1-0026b9348838"
+
+                            }
+
+                        },
+
+                        {
+
+                            "type": "obs",
+
+                            "label": "Date Patient Found;",
+
+                            "id": "dateFound",
+
+                            "questionOptions": {
+
+                                "rendering": "date",
+
+                                "concept": "a89df246-1350-11df-a1f1-0026b9348838"
+
+                            }
+
+                        }
+
+                    ]
+
+                },
+
+                {
+
+                    "label": "If Found or Information Supplied:",
+
+                    "questions": [
+
+                        {
+
+                            "type": "obsGroup",
+
+                            "label": "Location of Contact, Detailed:",
+
+                            "questionOptions": {
+
+                                "rendering": "group",
+
+                                "concept": "a8af5d74-1350-11df-a1f1-0026b9348838"
+
+                            },
+
+                            "questions": [
+
+                                {
+
+                                    "type": "obs",
+
+                                    "label": "Location of Contact:",
+
+                                    "id": "locCont",
+
+                                    "questionOptions": {
+
+                                        "answers": [
+
+                                            {
+
+                                                "label": "Home",
+
+                                                "concept": "a89df17e-1350-11df-a1f1-0026b9348838"
+
+                                            },
+
+                                            {
+
+                                                "label": "Work",
+
+                                                "concept": "a8a087c2-1350-11df-a1f1-0026b9348838"
+
+                                            },
+
+                                            {
+
+                                                "label": "Phone",
+
+                                                "concept": "a89de832-1350-11df-a1f1-0026b9348838"
+
+                                            },
+
+                                            {
+
+                                                "label": "School",
+
+                                                "concept": "a89f03ac-1350-11df-a1f1-0026b9348838"
+
+                                            },
+
+                                            {
+
+                                                "label": "Other",
+
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+
+                                            }
+
+                                        ],
+
+                                        "rendering": "select",
+
+                                        "concept": "a89df30e-1350-11df-a1f1-0026b9348838"
+
+                                    }
+
+                                },
+
+                                {
+
+                                    "type": "obs",
+
+                                    "label": "Other Location of Contact:",
+
+                                    "id": "otherlocCont",
+
+                                    "questionOptions": {
+
+                                        "rendering": "text",
+
+                                        "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838"
+
+                                    }
+
+                                }
+
+                            ]
+
+                        },
+
+                        {
+
+                            "type": "obs",
+
+                            "label": "Directed Toward:",
+
+                            "id": "dirtoward",
+
+                            "questionOptions": {
+
+                                "answers": [
+
+                                    {
+
+                                        "label": "The Patient",
+
+                                        "concept": "a8a089fc-1350-11df-a1f1-0026b9348838"
+
+                                    },
+
+                                    {
+
+                                        "label": "Caregiver",
+
+                                        "concept": "a89cd280-1350-11df-a1f1-0026b9348838"
+
+                                    }
+
+                                ],
+
+                                "rendering": "select",
+
+                                "concept": "a8a08aba-1350-11df-a1f1-0026b9348838"
+
+                            }
+
+                        },
+
+                        {
+
+                            "type": "obs",
+
+                            "label": "Is Caregiver Ampath Patient?",
+
+                            "id": "careampathpat",
+
+                            "questionOptions": {
+
+                                "rendering": "select",
+
+                                "concept": "a8a08b78-1350-11df-a1f1-0026b9348838",
+
+                                "answers": [
+
+                                    {
+
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Yes"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "No"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89e6ae6-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Do not know"
+
+                                    }
+
+                                ]
+
+                            }
+
+                        },
+
+                        {
+
+                            "type": "obsGroup",
+
+                            "label": "Reason for Missed Visit:",
+
+                            "questionOptions": {
+
+                                "rendering": "group",
+
+                                "concept": "a8afd4ca-1350-11df-a1f1-0026b9348838"
+
+                            },
+
+                            "questions": [
+
+                                {
+
+                                    "label": "Reason for Missed Visit (tick all that apply):",
+
+                                    "questionOptions": {
+
+                                        "concept": "a89ef11e-1350-11df-a1f1-0026b9348838",
+
+                                        "answers": [
+
+                                            {
+
+                                                "concept": "a89335d6-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Deceased"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a89de152-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Travelled"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a89ef060-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Transferred Clinic"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a89e26d0-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Did not actually miss appointment"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a89e27f2-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Forgot appointment"
+
+                                            },
+
+                                            {
+
+                                                "concept": "ec9227a3-d078-4ed0-bdc3-e8328a9e549e",
+
+                                                "label": "Family Conflicts"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a89e291e-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Family Commitments"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a89ecaa4-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Disclosure Issues"
+
+                                            },
+
+                                            {
+
+                                                "concept": "057dae68-3d6f-4d79-926c-ed75a0ce7fd5",
+
+                                                "label": "Patient was Admitted"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a89e2b30-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Transport Costs"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a8a08cfe-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Insecurity"
+
+                                            },
+
+                                            {
+
+                                                "concept": "81033c9e-80d4-445a-9899-3a6a9c9520ee",
+
+                                                "label": "Had medications and felt well"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a89e2a54-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Work Commitments"
+
+                                            },
+
+                                            {
+
+                                                "concept": "c042afc9-2dd9-4735-bd1b-60df518b7dbf",
+
+                                                "label": "School Commitments"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a8a08f38-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Too Ill to come"
+
+                                            },
+
+                                            {
+
+                                                "concept": "04b9e1ce-3463-495b-9c08-7a1a2db779ba",
+
+                                                "label": "Patient given date different in AMRS"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Other"
+
+                                            }
+
+                                        ],
+
+                                        "rendering": "multiCheckbox"
+
+                                    },
+
+                                    "type": "obs",
+
+                                    "validators": []
+
+                                }
+
+                            ]
+
+                        },
+
+                        {
+
+                            "label": "Date of death:",
+
+                            "questionOptions": {
+
+                                "concept": "a89df3d6-1350-11df-a1f1-0026b9348838",
+
+                                "rendering": "date"
+
+                            },
+
+                            "type": "obs",
+
+                            "validators": [
+
+                                {
+
+                                    "type": "date"
+
+                                }
+
+                            ]
+
+                        },
+
+                        {
+
+                            "label": "Reason for Death:",
+
+                            "id": "reasdeath",
+
+                            "questionOptions": {
+
+                                "concept": "a89df750-1350-11df-a1f1-0026b9348838",
+
+                                "answers": [
+
+                                    {
+
+                                        "concept": "a89df49e-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Suicide"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a890bfcc-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Accident"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89df67e-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Murder"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Illness"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Unknown"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Other"
+
+                                    }
+
+                                ],
+
+                                "rendering": "select"
+
+                            },
+
+                            "type": "obs"
+
+                        },
+
+                        {
+
+                            "type": "obs",
+
+                            "label": "Death Reported by:",
+
+                            "questionOptions": {
+
+                                "rendering": "select",
+
+                                "concept": "a89ef1f0-1350-11df-a1f1-0026b9348838",
+
+                                "answers": [
+
+                                    {
+
+                                        "concept": "a89cd0fa-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Husband"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89cd0fa-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Grandparent"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a898c1a4-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Father"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a898c0dc-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Mother"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89cd280-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Caretaker"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89cd1c2-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Wife"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a898c262-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Sibling"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a8aaf234-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Other family member"
+
+                                    }
+
+                                ]
+
+                            }
+
+                        },
+
+                        {
+
+                            "type": "obsGroup",
+
+                            "label": "Patient Refused Detailed:",
+
+                            "questionOptions": {
+
+                                "rendering": "group",
+
+                                "concept": "a8a0917c-1350-11df-a1f1-0026b9348838"
+
+                            },
+
+                            "questions": [
+
+                                {
+
+                                    "type": "obs",
+
+                                    "label": "Refused Care:",
+
+                                    "id": "refcare",
+
+                                    "questionOptions": {
+
+                                        "concept": "a8a0917c-1350-11df-a1f1-0026b9348838",
+
+                                        "answers": [
+
+                                            {
+
+                                                "concept": "a8a089fc-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "patient"
+
+                                            },
+
+                                            {
+
+                                                "concept": "a89cd280-1350-11df-a1f1-0026b9348838",
+
+                                                "label": "Caregiver"
+
+                                            }
+
+                                        ],
+
+                                        "rendering": "select"
+
+                                    }
+
+                                }
+
+                            ]
+
+                        },
+
+                        {
+
+                            "label": "Reason:",
+
+                            "id": "reasref",
+
+                            "questionOptions": {
+
+                                "concept": "a89e3468-1350-11df-a1f1-0026b9348838",
+
+                                "answers": [
+
+                                    {
+
+                                        "concept": "a89e30e4-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Family Discrimination(disclosure)"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89e3396-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Believes healed by faith "
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89e3274-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Denial of Status "
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89e31ac-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Community Discrimination "
+
+                                    },
+
+                                    {
+
+                                        "concept": "a8a097bc-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "No longer taking medicines"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a8aca1ce-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Taking herbals"
+
+                                    }
+
+                                ],
+
+                                "rendering": "select"
+
+                            },
+
+                            "type": "obs"
+
+                        },
+
+                        {
+
+                            "label": "What are the chances the patient will return to clinic?",
+
+                            "id": "chanretoclin",
+
+                            "questionOptions": {
+
+                                "concept": "683347ee-cebe-4eac-b366-ef62d68b91c7",
+
+                                "answers": [
+
+                                    {
+
+                                        "concept": "9407c0db-5cdc-48a9-8750-85961cf9804f",
+
+                                        "label": "Very Low"
+
+                                    },
+
+                                    {
+
+                                        "concept": "af3afb20-ab67-45e7-ad5e-74d6daa06e84",
+
+                                        "label": "Low"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89efdee-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Medium"
+
+                                    },
+
+                                    {
+
+                                        "concept": "4480348c-4ee9-4878-b6bb-987f42151af6",
+
+                                        "label": "High"
+
+                                    },
+
+                                    {
+
+                                        "concept": "7a260efe-bd7e-4926-87d9-b9e008956873",
+
+                                        "label": "Very High"
+
+                                    }
+
+                                ],
+
+                                "rendering": "select"
+
+                            },
+
+                            "type": "obs"
+
+                        }
+
+                    ]
+
+                },
+
+                {
+
+                    "label": "Patient Status:",
+
+                    "questions": [
+
+                        {
+
+                            "label": "Patient Status(choose one):",
+
+                            "id": "patstat",
+
+                            "questionOptions": {
+
+                                "concept": "7c579743-5ef7-4e2c-839f-5b95597cb01c",
+
+                                "answers": [
+
+                                    {
+
+                                        "concept": "a8af5018-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Patient wishes to remain in care in Ampath"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89335d6-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Patient dead"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a8af50f4-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "patient sel disengaged from care"
+
+                                    },
+
+                                    {
+
+                                        "concept": "636b7246-51f7-4985-9430-431b09d39bea",
+
+                                        "label": "patient HIV negative"
+
+                                    },
+
+                                    {
+
+                                        "concept": "bea9c288-0650-4b42-a324-1d6d51591c72",
+
+                                        "label": "Outreach worker does not believe patient can be traced"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a89e3ad0-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "patient transfered out"
+
+                                    },
+
+                                    {
+
+                                        "concept": "07c536bc-19f2-4296-9c4a-edd85f070095",
+
+                                        "label": "patient in process of being traced"
+
+                                    }
+
+                                ],
+
+                                "rendering": "select"
+
+                            },
+
+                            "type": "obs"
+
+                        },
+
+                        {
+
+                            "label": "Refer to Outreach to update Locator Information?",
+
+                            "id": "reftoout",
+
+                            "questionOptions": {
+
+                                "concept": "a89e3008-1350-11df-a1f1-0026b9348838",
+
+                                "answers": [
+
+                                    {
+
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "Yes"
+
+                                    },
+
+                                    {
+
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+
+                                        "label": "No"
+
+                                    }
+
+                                ],
+
+                                "rendering": "select"
+
+                            },
+
+                            "type": "obs"
+
+                        }
+
+                    ]
+
+                },
+
+                {
+
+                    "label": "Assessment Notes",
+
+                    "isExpanded": "true",
+
+                    "questions": [
+
+                        {
+
+                            "label": "Please enter the Assessment below:",
+
+                            "type": "obs",
+
+                            "id": "assNote",
+
+                            "required": "false",
+
+                            "default": "",
+
+                            "questionOptions": {
+
+                                "concept": "23f710cc-7f9c-4255-9b6b-c3e240215dba",
+
+                                "rendering": "textarea",
+
+                                "rows": 18
+
+                            }
+
+                        }
+
+                    ]
+
+                },
+
+                {
+
+                    "label": "Next appointment",
+
+                    "isExpanded": "true",
+
+                    "questions": [
+
+                        {
+
+                            "label": "Return to clinic Date:",
+
+                            "type": "obs",
+
+                            "questionOptions": {
+
+                                "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
+
+                                "rendering": "date",
+
+                                "weeksList": [
+
+                                    2,
+
+                                    4,
+
+                                    8,
+
+                                    12,
+
+                                    16
+
+                                ]
+
+                            },
+
+                            "validators": [
+
+                                {
+
+                                    "type": "date",
+
+                                    "allowFutureDates": "true"
+
+                                }
+
+                            ]
+
+                        }
+
+                    ]
+
+                }
+
+            ]
+
+        }
+
+    ]
+
+}
