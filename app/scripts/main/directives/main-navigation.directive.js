@@ -26,15 +26,18 @@
     }
   }
 
-  Controller.$inject = ['$scope', 'OpenmrsRestService'];
+    Controller.$inject = ['$scope', 'OpenmrsRestService', 
+    'UserDefaultPropertiesService', 'dialogs', '$rootScope'];
 
-
-    Controller.$inject = ['$scope', 'OpenmrsRestService', 'UserDefaultPropertiesService'];
-
-    function Controller($scope, OpenmrsRestService, UserDefaultPropertiesService) {
+    function Controller($scope, OpenmrsRestService,
+     UserDefaultPropertiesService, dialogs, $rootScope) {
     var vm = this;
      
     var authenticationService = OpenmrsRestService.getAuthService();
+    
+    var isShowingErrorDialog = false;
+    
+    $rootScope.$on('Unauthorized', onUnauthorized);
 
     $scope.showNavigationBar = false;
 
@@ -87,6 +90,20 @@
 
     function updateLoginLogoutMenutItems() {
       $scope.isUserLoggedIn = authenticationService.authenticated;
+    }
+    
+    function onUnauthorized(eventInfo, message) {
+      if(isShowingErrorDialog){
+        return; //don't show multiple error messages
+      }
+      
+      isShowingErrorDialog = true;
+      
+      var errorPromise = dialogs.error('Unauthorized', message);
+      errorPromise.result.then(
+        function(btn){
+          isShowingErrorDialog = false;
+        });
     }
   }
 })();
