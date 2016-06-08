@@ -394,6 +394,7 @@
 
     }).config(['$httpProvider', function($httpProvider) {
       $httpProvider.interceptors.push('authenticationErrorInterceptor');
+      $httpProvider.interceptors.push('AuthorizationInterceptor');
     }])
     .config(function ($provide) {
       $provide.decorator('$q', function ($delegate) {
