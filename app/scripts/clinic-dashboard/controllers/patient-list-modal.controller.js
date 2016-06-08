@@ -20,8 +20,8 @@
     $scope.isBusy = false;
     $scope.experiencedLoadingErrors = false;
     $scope.currentPage = 1;
-    $scope.startDate = data.chartObject.startDate;
-    $scope.endDate = data.chartObject.endDate;
+    $scope.startDate = data.startDate;
+    $scope.endDate = data.endDate;
     $scope.locationUuid = data.chartObject.selectedLocations;
     $scope.indicator = data.selectedPoint.id;
     $scope.indicatorName = data.selectedPoint.name;
@@ -47,21 +47,33 @@
 
 
     function loadPatientList(loadNextOffset) {
-      if (!data.selectedPoint) return;
-      $scope.experiencedLoadingErrors = false;
+     if (!data.selectedPoint) return;
+        $scope.experiencedLoadingErrors = false;
       if ($scope.isBusy === true) return;
       isBusy(true, 'busyIndicator');
       $scope.isBusy = true;
       if (loadNextOffset !== true)resetPaging();
       if ($scope.indicator && $scope.indicator!=='' && $scope.startDate && $scope.startDate!=='' ) {
-      EtlRestService.getPatientListReportByIndicatorAndLocation($scope.locationUuid,
-        moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-        moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), $scope.reportName,
-        $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError, $scope.locationUuid, $scope.nextStartIndex, 300);
+        fetchData();
       } else{
         $scope.experiencedLoadingErrors = true;
         $scope.isBusy = false;
         isBusy(false, 'busyIndicator');
+      }
+
+    }
+    function fetchData(){
+      if ($scope.reportName==='clinical-hiv-comparative-overview-report' ) {
+        EtlRestService.getHivOverviewVisualizationReport(
+          moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+          moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+          'patient-list-report-'+$scope.indicator, 'groupByPerson', $scope.locationUuid, 'encounter_datetime|desc', '',
+          onFetchPatientsListSuccess,onFetchPatientsListError,$scope.nextStartIndex, 300);
+      } else{
+        EtlRestService.getPatientListReportByIndicatorAndLocation($scope.locationUuid,
+          moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+          moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'), $scope.reportName,
+          $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError, $scope.locationUuid, $scope.nextStartIndex, 300);
       }
     }
 
@@ -81,7 +93,7 @@
       } else {
         $scope.patients.length != 0 ? $scope.patients.push.apply($scope.patients, patients.result) :
           $scope.patients = patients.result;
-        $scope.nextStartIndex += patients.size;
+        $scope.nextStartIndex += patients.size||0;
       }
       $timeout(function () {
         $rootScope.$broadcast("patient", $scope.patients);

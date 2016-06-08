@@ -10,7 +10,8 @@
 <div class="modal-footer">
   <div>
     <div ng-if="!isBusy && !allDataLoaded">
-      <span class="text-success">{{patients.length}}/{{totalCount}} Patients Loaded. Click 'Load More' to fetch more patients</span>
+      <span class="text-success"><span>{{patients.length}}</span><span ng-hide="indicatorName.indexOf('%') > -1">/{{totalCount}}</span>
+        Patients Loaded. Click 'Load More' to fetch more patients</span>
     </div>
     <div ng-if='allDataLoaded' >
       <p class="bg-info" style="padding:4px;">

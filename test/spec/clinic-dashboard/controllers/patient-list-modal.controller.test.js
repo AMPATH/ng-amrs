@@ -154,10 +154,11 @@
               }
             ]
           },
-          "startDate": "2015-04-21T07:00:45.781Z",
-            "endDate": "2016-04-21T07:00:45.781Z",
+
             "selectedLocations": "2b0419c2-275f-4354-8b49-4c97d033ecbb"
-        }
+        },
+        "startDate": "2015-04-21T07:00:45.781Z",
+        "endDate": "2016-04-21T07:00:45.781Z"
       };
      // modalInstance=$injector.get('$modalInstance');
       controller =$controller('PatientListModalCtrl', {
@@ -186,8 +187,8 @@
 
 			expect(scope.patients).to.exist;
 			expect(scope.isBusy).to.exist;
-			expect(scope.experiencedLoadingErrors).to.exist;
-			expect(scope.loadPatientList).to.exist;
+		  expect(scope.experiencedLoadingErrors).to.exist;
+		  expect(scope.loadPatientList).to.exist;
       expect(scope.startDate).to.exist;
       expect(scope.endDate).to.exist;
       expect(scope.locationUuid).to.exist;

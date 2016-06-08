@@ -48,14 +48,14 @@
                           point-expand-radius="10"/>
             <chart-grid show-x="true" show-y="true">
             </chart-grid>
-            <chart-events on-click-data="updatePieChartParameters(data)"/>
+            <chart-events on-click-data="generatePatientList(data, hivComparative, getSelectedMonth(data).startDate, getSelectedMonth(data).endDate, false)"/>
             <chart-legend show-legend="true" legend-position="bottom" />
             <chart-tooltip value-format-function="roundOffValues"/>
           </c3chart>
         </div>
         <div class="chart-notes">
           A comparative graph showing HIV Care analysis
-          (From: {{hivComparative.startDate|  date:'dd/MM/yyyy'}} To: {{hivComparative.endDate|  date:'dd/MM/yyyy'}})
+          (From: {{startDate|  date:'dd/MM/yyyy'}} To: {{endDate|  date:'dd/MM/yyyy'}})
         </div>
       </div>
     </div>
@@ -77,7 +77,7 @@
 
             <chart-donut title="Patient Status" width="60"/>
             <chart-size  chart-height="250"/>
-            <chart-events on-click-data="generatePatientList(data, patientStatus)"/>
+            <chart-events on-click-data="generatePatientList(data, patientStatus, patientStatus.startDate, patientStatus.endDate, true)"/>
             <chart-legend show-legend="true" legend-position="right" />
             <chart-tooltip value-format-function="formatTooltipValue"/>
           </c3chart>
@@ -104,7 +104,7 @@
 
             <chart-donut title="ART" width="60"/>
             <chart-size  chart-height="250"/>
-            <chart-events on-click-data="generatePatientList(data, art)"/>
+            <chart-events on-click-data="generatePatientList(data, art, art.startDate, art.endDate, true)"/>
             <chart-legend show-legend="true" legend-position="right" />
             <chart-tooltip value-format-function="formatTooltipValue"/>
           </c3chart>
