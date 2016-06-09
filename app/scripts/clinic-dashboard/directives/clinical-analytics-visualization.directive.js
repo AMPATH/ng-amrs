@@ -140,41 +140,42 @@
       dataColumns: ClinicalAnalyticsService.defineXAndYAxis($scope.art.chartDefinition)
     };
 
-
-    //Patient List Function to generate data
-    $scope.generatePatientList = function (data, obj) {
-      var modalInstance = $modal.open({
-        templateUrl: 'views/clinic-dashboard/patient-list-modal.html',
-        controller: 'PatientListModalCtrl',
-        size: 'lg',
-        backdrop: true,
-        keyboard: true,
-        backdropClick: true,
-        // windowClass:'xx-dialog',
-        resolve: {
-          data: function () {
-            return {
-              selectedPoint: data,
-              chartObject: obj
-            };
-          }
-        }
-      });
-
-      modalInstance.result.then(function (selectedItem) {
-        $scope.selectedProject = selectedItem.ProjectID
-      }, function () {
-        console.info('Modal dismissed at: ' + new Date());
-      });
-    };
-
-    //Patient List Functions
-    $scope.updatePieChartParameters = function (data) {
+    $scope.getSelectedMonth = function (data) {
       var dataPoint = $scope.hivComparative.chart.dataPoints[data.index];
       var selectedMonth = dataPoint.reporting_month.split('/');
       var dateRange = getMonthDateRange(selectedMonth[1], selectedMonth[0]);
-      generateGraph($scope.art, dateRange.startDate, dateRange.endDate);
-      generateGraph($scope.patientStatus, dateRange.startDate, dateRange.endDate);
+      return dateRange;
+    };
+    //Patient List Function to generate data
+    $scope.generatePatientList = function (data, obj, startDate, endDate, animation) {
+      if(data && obj && startDate && endDate) {
+        var modalInstance = $modal.open({
+          templateUrl: 'views/clinic-dashboard/patient-list-modal.html',
+          controller: 'PatientListModalCtrl',
+          size: 'lg',
+          animation: animation,
+          backdrop: true,
+          keyboard: true,
+          backdropClick: true,
+          // windowClass:'xx-dialog',
+          resolve: {
+            data: function () {
+              return {
+                selectedPoint: data,
+                chartObject: obj,
+                startDate: new Date(startDate),
+                endDate: new Date(endDate)
+              };
+            }
+          }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+          $scope.selectedProject = selectedItem.ProjectID
+        }, function () {
+          console.info('Modal dismissed at: ' + new Date());
+        });
+      }
     };
 
 
