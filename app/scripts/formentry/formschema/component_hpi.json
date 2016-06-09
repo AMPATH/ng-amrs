@@ -71,6 +71,30 @@
                     ]
                 },
                 {
+                    "label": "Chief Complaints",
+                    "questions": [
+                        {
+                            "label": "Chief Complaints:",
+                            "questionOptions": {
+                                "concept": "a8a6ddb6-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a8a4cb8e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Feeling well(Asymptomatic)"
+                                    },
+                                    {
+                                        "concept": "a899b5e6-1350-11df-a1f1-0026b9348838",
+                                        "label": "Having Symptoms"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                },
+                {
                     "label": "History Presenting Illness, Notes",
                     "isExpanded": "true",
                     "questions": [

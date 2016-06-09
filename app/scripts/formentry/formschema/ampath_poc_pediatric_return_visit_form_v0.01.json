@@ -68,7 +68,7 @@
             "alias": "hpi"
         },
         {
-            "formName": "component_physical-exam",
+            "formName": "component_physical-exams",
             "alias": "ppe"
         },
         {
@@ -94,6 +94,10 @@
         {
             "formName": "component_dna-pcr-justification",
             "alias": "dnapcrjust"
+        },
+        {
+            "formName": "component_development",
+            "alias": "develop"
         }
     ],
     "pages": [
@@ -155,8 +159,11 @@
                 {
                     "reference": {
                         "form": "fi",
-                        "page": "Family information",
-                        "section": "Family Information"
+                        "page": "Family Information",
+                        "section": "Family Information",
+                        "excludeQuestions": [
+                            "changedResidence"
+                        ]
                     }
                 }
             ]
@@ -324,23 +331,23 @@
             "sections": [
                 {
                     "reference": {
-                        "form": "ppe",
-                        "page": "physical Exam",
-                        "section": "Pediatric Weight Assessment"
+                        "form": "develop",
+                        "page": "Developmental History",
+                        "section": "Child's Physical Exam"
                     }
                 },
                 {
                     "reference": {
                         "form": "ppe",
-                        "page": "physical Exam",
-                        "section": "Physical Exam"
+                        "page": "Physical Exams",
+                        "section": "Physical Exams"
                     }
                 },
                 {
                     "reference": {
                         "form": "ppe",
-                        "page": "physical Exam",
-                        "section": "Physical Exam Notes"
+                        "page": "Physical Exams",
+                        "section": "Physical Exams, Notes"
                     }
                 },
                 {
@@ -403,6 +410,13 @@
                         "page": "Test Results",
                         "section": "Chest Xray"
                     }
+                },
+                {
+                    "reference": {
+                        "form": "lr",
+                        "page": "Test Results",
+                        "section": "Other Test"
+                    }
                 }
             ]
         },
@@ -413,7 +427,7 @@
                     "reference": {
                         "form": "ws",
                         "page": "WHO staging",
-                        "section": "Staging"
+                        "section": "Ped Staging"
                     }
                 },
                 {

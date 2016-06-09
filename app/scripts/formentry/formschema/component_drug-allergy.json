@@ -1,0 +1,253 @@
+{
+    "name": "component_drug-allergy",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Drug Allergy",
+            "sections": [
+                {
+                    "label": "Drug Allergy",
+                    "questions": [
+                        {
+                            "type": "obsGroup",
+                            "label": "Penicillin  allergy",
+                            "questionOptions": {
+                                "concept": "a8a1990a-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Penicillin  allergy:",
+                                    "id": "penAllergy",
+                                    "questionOptions": {
+                                        "concept": "a8ad3f44-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Yes"
+                                            },
+                                            {
+                                                "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                                "label": "No"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Specify reaction:",
+                                    "questionOptions": {
+                                        "concept": "a8a19842-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Wheeze"
+                                            },
+                                            {
+                                                "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Prurits"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Vomitng"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Cough"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Rash"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Angioedema"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Swelling"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Others"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "penAllergy !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "obsGroup",
+                            "label": "Sulfa allergy",
+                            "questionOptions": {
+                                "concept": "a8a199d2-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Sulfa allergy:",
+                                    "id": "sulAllergy",
+                                    "questionOptions": {
+                                        "concept": "a8ad402a-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Yes"
+                                            },
+                                            {
+                                                "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                                "label": "No"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Specify reaction:",
+                                    "questionOptions": {
+                                        "concept": "a8a19842-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Wheeze"
+                                            },
+                                            {
+                                                "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Prurits"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Vomitng"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Cough"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Rash"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Angioedema"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Swelling"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Others"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "sulAllergy !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "obsGroup",
+                            "label": "Other allergy",
+                            "questionOptions": {
+                                "concept": "a8a19a9a-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Other allergy:",
+                                    "id":"otherAllergy",
+                                    "questionOptions": {
+                                        "concept": "a899c59a-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Yes"
+                                            },
+                                            {
+                                                "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                                "label": "No"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Name of drug/product",
+                                    "type": "obsGroup",
+                                    "questionOptions": {
+                                        "concept": "a8a19b58-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "repeating"
+                                    }
+                                },
+                                {
+                                    "label": "Specify reaction:",
+                                    "questionOptions": {
+                                        "concept": "a8a19842-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Wheeze"
+                                            },
+                                            {
+                                                "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Prurits"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Vomitng"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Cough"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Rash"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Angioedema"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Swelling"
+                                            },
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Others"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "otherAllergy !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

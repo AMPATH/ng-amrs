@@ -1,0 +1,134 @@
+{
+    "name": "Transfer out form",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Transfer Out",
+            "sections": [
+                {
+                    "label": "Encounter Details",
+                    "questions": [
+                        {
+                            "label": "Visit Date",
+                            "type": "encounterDatetime",
+                            "required": "true",
+                            "default": "",
+                            "id": "encDate",
+                            "questionOptions": {
+                                "rendering": "date"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "encounterProvider",
+                            "label": "Provider",
+                            "id": "provider",
+                            "required": "true",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        },
+                        {
+                            "type": "encounterLocation",
+                            "label": "Facility name (site/satellite clinic required):",
+                            "id": "location",
+                            "required": "true",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "Patient Status",
+                    "questions": [
+                        {
+                            "label": "Please indicate the patient's care status:",
+                            "questionOptions": {
+                                "concept": "7c579743-5ef7-4e2c-839f-5b95597cb01c",
+                                "answers": [
+                                    {
+                                        "concept": "1f09e809-8ea3-45e6-a71f-16e6a0d72390",
+                                        "label": "Transfer to MNCH for PMTCT care"
+                                    },
+                                    {
+                                        "concept": "a89335d6-1350-11df-a1f1-0026b9348838",
+                                        "label": "Patient dead"
+                                    },
+                                    {
+                                        "concept": "636b7246-51f7-4985-9430-431b09d39bea",
+                                        "label": "Patient HIV negative"
+                                    },
+                                    {
+                                        "concept": "6daff4ce-bce7-41f5-9141-17e694155180",
+                                        "label": "Patient self-disengaged from care "
+                                    },
+                                    {
+                                        "concept": "bea9c288-0650-4b42-a324-1d6d51591c72",
+                                        "label": "Patient cannot be traced by outreach worker"
+                                    },
+                                    {
+                                        "concept": "bea9c288-0650-4b42-a324-1d6d51591c72",
+                                        "label": "Patient in process of being traced by outreach worker"
+                                    },
+                                    {
+                                        "concept": "a89c2e5c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Transfer to other center"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "type": "personAttribute",
+                            "label": "Specify name of clinic to which patient is being referred:",
+                            "id": "transfered_out_to_ampath",
+                            "required": "false",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended",
+                                "attributeType": "8d87236c-c2cc-11de-8d13-0010c6dffd0f"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "Assessment",
+                    "isExpanded": "true",
+                    "questions": [
+                        {
+                            "label": "Please enter the transfer details below:",
+                            "type": "obs",
+                            "id": "assNote",
+                            "required": "false",
+                            "default": "",
+                            "questionOptions": {
+                                "concept": "23f710cc-7f9c-4255-9b6b-c3e240215dba",
+                                "rendering": "textarea",
+                                "rows": 18
+                            }
+                        },
+                        {
+                            "label": "Date of return to CCC",
+                            "type": "obs",
+                            "required": "true",
+                            "questionOptions": {
+                                "concept": "144a9449-e947-4d53-9c04-9e11d1e2a120",
+                                "rendering": "date"
+                            },
+                            "validators":[]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

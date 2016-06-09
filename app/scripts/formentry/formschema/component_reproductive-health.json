@@ -49,7 +49,7 @@
                         },
                         {
                             "label": "If having trouble with menses, which problem?",
-                            "id": "spendNight",
+                            "id": "troubleMenses",
                             "type": "obs",
                             "questionOptions": {
                                 "concept": "a8a185d2-1350-11df-a1f1-0026b9348838",
@@ -72,6 +72,36 @@
                                         "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838"
                                     }
                                 ]
+                            }
+                        },
+                        {
+                            "label": "If you have ever had sex, have you ever been pregnant?",
+                            "id": "everPregnant",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "1e5f1722-2989-4dab-a63e-416625382b68",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "At what age did you have your first pregnancy:",
+                            "type": "obs",
+                            "id":"ageFirstPregn",
+                            "questionOptions": {
+                                "concept": "4ebfed33-debf-481a-b263-62c336115f58",
+                                "rendering": "number",
+                                "max": "50",
+                                "min": "8"
                             }
                         },
                         {
@@ -110,6 +140,25 @@
                                         "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
                                     }
                                 ]
+                            }
+                        },
+                        {
+                            "label": "How many pregnancies have you had",
+                            "type": "obs",
+                            "id":"gravida",
+                            "questionOptions": {
+                                "concept": "a8aaf59a-1350-11df-a1f1-0026b9348838",
+                                "rendering": "number",
+                                "max": "50"
+                            }
+                        },
+                        {
+                            "label": "How many pregnancies have you delivered",
+                            "type": "obs",
+                            "id":"parity",
+                            "questionOptions": {
+                                "concept": "a899a920-1350-11df-a1f1-0026b9348838",
+                                "rendering": "number"
                             }
                         }
                     ]

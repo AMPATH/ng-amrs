@@ -1,0 +1,42 @@
+
+{
+    "name": "component_adult-hiv-status",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Adult HIV Status",
+            "sections": [
+                {
+                    "label": "HIV Status",
+                    "questions": [
+                        {
+                            "label": "Current HIV status:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "9e4d6436-4040-46a3-a0ae-6dbc0acfe593",
+                                "answers": [
+                                   
+                                    {
+                                        "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                                        "label": "HIV positive"
+                                    },
+                                    {
+                                        "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                                        "label": "HIV negative"
+                                    },
+                                    {
+                                        "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Unknown"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

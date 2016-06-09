@@ -176,6 +176,10 @@
                                             {
                                                 "concept": "a89c301e-1350-11df-a1f1-0026b9348838",
                                                 "label": "Non-Ampath"
+                                            },
+                                            {
+                                                "concept": "a8a17d80-1350-11df-a1f1-0026b9348838",
+                                                "label": "MCH"
                                             }
                                         ],
                                         "rendering": "multiCheckbox"

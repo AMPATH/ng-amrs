@@ -105,11 +105,11 @@
                                             },
                                             {
                                                 "concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46",
-                                                "label": "Pill Burden"
+                                                "label": "Pill burden"
                                             },
                                             {
                                                 "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
-                                                "label": "Side Effects"
+                                                "label": "Side effects"
                                             },
                                             {
                                                 "concept": "a89eba46-1350-11df-a1f1-0026b9348838",
@@ -125,7 +125,7 @@
                                             },
                                             {
                                                 "concept": "a897fdaa-1350-11df-a1f1-0026b9348838",
-                                                "label": "Travel Problems"
+                                                "label": "Travel problems"
                                             },
                                             {
                                                 "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
@@ -272,7 +272,7 @@
                                             },
                                             {
                                                 "concept": "a8ad239c-1350-11df-a1f1-0026b9348838",
-                                                "label": "Persistent Vomiting"
+                                                "label": "Persistent vomiting"
                                             },
                                             {
                                                 "concept": "a895776a-1350-11df-a1f1-0026b9348838",

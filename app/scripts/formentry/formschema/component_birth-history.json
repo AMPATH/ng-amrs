@@ -1,0 +1,259 @@
+{
+    "name": "component_birth-history",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Birth History",
+            "sections": [
+                {
+                    "label": "Birth History",
+                    "questions": [
+                        {
+                            "label": "Birth weight:",
+                            "id": "birthWeight",
+                            "questionOptions": {
+                                "rendering": "number",
+                                "concept": "a8ace206-1350-11df-a1f1-0026b9348838",
+                                "max": "250",
+                                "min": "0"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Earliest weight:",
+                            "id": "EarliestWeight",
+                            "questionOptions": {
+                                "rendering": "number",
+                                "concept": "a8a32c48-1350-11df-a1f1-0026b9348838",
+                                "max": "250",
+                                "min": "0"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Age in weeks:",
+                            "id": "ageInWeeks",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a3345e-1350-11df-a1f1-0026b9348838",
+                                "rendering": "number",
+                                "answers": []
+                            }
+                        },
+                        {
+                            "label": "Known birth weight:",
+                            "id": "knownBirthWeight",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "26cfd02b-3d1b-4701-8392-ff45d0bde9a4",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Unknown",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "obsGroup",
+                            "label": "Method of delivery:",
+                            "questionOptions": {
+                                "concept": "a8a33daa-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Method of delivery:",
+                                    "type": "obs",
+                                  
+                                    "id": "methodOfDelivery",
+                                    "questionOptions": {
+                                          "rendering": "select",
+                                        "concept": "a8aafab8-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "245bc3a5-9f60-41b9-8676-49eb0cceae81",
+                                                "label": "Vertex delivery"
+                                            },
+                                            {
+                                                "concept": "a89acf58-1350-11df-a1f1-0026b9348838",
+                                                "label": "Spontaneous varginal delivery"
+                                            },
+                                            {
+                                                "concept": "a89ad034-1350-11df-a1f1-0026b9348838",
+                                                "label": "Cesarean delivery"
+                                            },
+                                            {
+                                                "concept": "a89ad11a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Breech delivery"
+                                            },
+                                            {
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Other"
+                                            },
+                                            {
+                                                "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Unknown"
+                                            },
+                                            {
+                                                "concept": "a8a351aa-1350-11df-a1f1-0026b9348838",
+                                                "label": "Vacuum assisted"
+                                            },
+                                            {
+                                                "concept": "a8a350ec-1350-11df-a1f1-0026b9348838",
+                                                "label": "Forceps"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "label": "Other method of delivery, specify:",
+                                    "type": "obs",
+                                    
+                                    "id": "OthermethodSpecify",
+                                    "questionOptions": {
+                                        "rendering": "text",
+                                        "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                                        "answers": []
+                                    },
+                                    "hide": {
+                                        "hideWhenExpression": "methodOfDelivery !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Birth Status",
+                    "id": "birthStatus",
+                    "questions": [
+                        {
+                            "label": "Prematurity EGA 36 weeks:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8a35006-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    },
+                                    {
+                                        "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Unknown"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Episiotomy done on mother:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8aacd7c-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    },
+                                    {
+                                        "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Unknown"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Rapture of membrane greater than 4 hours:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8aace62-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    },
+                                    {
+                                        "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Unknown"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Obvious birth defects:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "d6a5ae01-3d7d-4883-89e6-897c60bfec82",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Obvious birth defects, specify:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "text",
+                                "concept": "9fd74584-ade5-4394-b4e3-0e6781f8c983"
+                            }
+                        },
+                        {
+                            "label": "Did the child receive ARV’s during infancy for perinatal prophylaxis:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a89c8b7c-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    },
+                                    {
+                                        "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Unknown"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -34,6 +34,7 @@
                         },
                         {
                             "label": "LMP:",
+                            "id": "lastPeriod",
                             "questionOptions": {
                                 "concept": "a89ff758-1350-11df-a1f1-0026b9348838",
                                 "rendering": "date"
@@ -71,7 +72,25 @@
                             }
                         },
                         {
+                            "label": "EDD:",
+                            "id": "deliveryDate",
+                            "questionOptions": {
+                                "concept": "a8aaddbc-1350-11df-a1f1-0026b9348838",
+                                "rendering": "date"
+                            },
+                            "type": "obs",
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ],
+                            "hide": {
+                                "hideWhenExpression": "sex !== 'F'"
+                            }
+                        },
+                        {
                             "label": "Delivered since last visit? (If yes, fill out pMTCT form)",
+                            "id":"lastDelivery",
                             "questionOptions": {
                                 "concept": "a89a94ca-1350-11df-a1f1-0026b9348838",
                                 "answers": [
@@ -114,7 +133,7 @@
                         },
                         {
                             "label": "Family planning method:",
-                            "id": "q12e",
+                            "id": "fpMethod",
                             "questionOptions": {
                                 "concept": "a894b1cc-1350-11df-a1f1-0026b9348838",
                                 "answers": [
@@ -237,6 +256,54 @@
                             },
                             "type": "obs",
                             "validators": []
+                        }
+                    ]
+                },
+                {
+                    "label": "Adolescent (12-19yrs)",
+                    "questions": [
+                        {
+                            "label": "Adolescent sexually active:",
+                            "id": "sexuallyActive",
+                            "questionOptions": {
+                                "concept": "053ec791-2371-4c87-88a1-86a1abeed90c",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "If yes, using condom?",
+                            "id": "condomUse",
+                            "questionOptions": {
+                                "concept": "a8a00090-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "sexuallyActive !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                            }
                         }
                     ]
                 }

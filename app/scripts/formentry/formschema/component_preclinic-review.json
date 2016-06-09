@@ -47,7 +47,7 @@
                         },
                         {
                             "label": "If Unscheduled, actual scheduled date",
-                            "id": "q7b",
+                            "id": "actualDate",
                             "type": "obs",
                             "required": {
                                 "type": "conditionalRequired",
@@ -208,12 +208,13 @@
                             "validators": []
                         },
                         {
-                            "label": "Prevention with positives: PWP Services:",
+                            "label": "Prevention with positives: PWP services:",
                             "questionOptions": {
+                                "rendering": "select",
                                 "concept": "9ce5dbf0-a141-4ad8-8c9d-cd2bf84fe72b",
                                 "answers": [
                                     {
-                                        "concept": "f0a280e8-eb88-41a8-837a-f9949ed1b9cd0",
+                                        "concept": "f0a280e8-eb88-41a8-837a-f9949ed1b9cd",
                                         "label": "Condom promotion/provision"
                                     },
                                     {
@@ -221,7 +222,7 @@
                                         "label": "Couple counseling"
                                     },
                                     {
-                                        "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
+                                        "concept": "91f43249-73c7-427c-8300-2038fc0d6be8",
                                         "label": "Needle exchange"
                                     },
                                     {
@@ -232,8 +233,192 @@
                                         "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
                                         "label": "N/A"
                                     }
+                                ]
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                },
+                {
+                    "label": "Enrollment History",
+                    "questions": [
+                        {
+                            "label": "Ampath Catchment Area:",
+                            "questionOptions": {
+                                "concept": "65c5071a-0cf8-49d4-99d1-5f7da6ef6503",
+                                "answers": [
+                                    {
+                                        "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Unknown"
+                                    },
+                                    {
+                                        "concept": "5066b630-842b-4105-a66d-74f8aa50aacb",
+                                        "label": "In Ampath catchment area"
+                                    },
+                                    {
+                                        "concept": "83df5f26-f97a-4cda-9c05-d0bdc6e4ebee",
+                                        "label": "Out of Ampath catchment area"
+                                    }
                                 ],
                                 "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Source of prior HIV care and treatment:",
+                            "questionOptions": {
+                                "concept": "42ad95d4-ad13-49cb-a870-d3208e339e36",
+                                "answers": [
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "None"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Point of HIV Testing:",
+                            "questionOptions": {
+                                "concept": "a8a17e48-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a89fbedc-1350-11df-a1f1-0026b9348838",
+                                        "label": "pMTCT"
+                                    },
+                                    {
+                                        "concept": "a8a17b3c-1350-11df-a1f1-0026b9348838",
+                                        "label": "VCT"
+                                    },
+                                    {
+                                        "concept": "f6dd6114-a212-4187-b76c-5b6fd8a9e7ba",
+                                        "label": "PHCT"
+                                    },
+                                    {
+                                        "concept": "a8a359a2-1350-11df-a1f1-0026b9348838",
+                                        "label": "DTC/PITC"
+                                    },
+                                    {
+                                        "concept": "a890a96a-1350-11df-a1f1-0026b9348838",
+                                        "label": "TB Clinic"
+                                    },
+                                    {
+                                        "concept": "ff3243bf-05f6-426d-aa49-969034962e45",
+                                        "label": "Adult Inpatient"
+                                    },
+                                    {
+                                        "concept": "3e5ad07b-2ced-4925-8264-cc4d8d1438d4",
+                                        "label": "Pediatric Inpatient"
+                                    },
+                                    {
+                                        "concept": "a8a17d80-1350-11df-a1f1-0026b9348838",
+                                        "label": "MCH"
+                                    },
+                                    {
+                                        "concept": "a8a09ac8-1350-11df-a1f1-0026b9348838",
+                                        "label": "OPD"
+                                    },
+                                    {
+                                        "concept": "a8934292-1350-11df-a1f1-0026b9348838",
+                                        "label": "STI"
+                                    },
+                                    {
+                                        "concept": "3ddd3de4-dbf1-4ae9-8caf-aca6383bfd5e",
+                                        "label": "OSCAR"
+                                    },
+                                    {
+                                        "concept": "7d2c77f9-091b-41d7-8608-aff8985fd708",
+                                        "label": "Tumaini"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Date Confirmed HIV Positive:",
+                            "id": "dateConfHiv+",
+                            "questionOptions": {
+                                "concept": "6d557eec-82f7-4840-a865-a02ac69d93a5",
+                                "rendering": "date"
+                            },
+                            "type": "obs",
+                            "validators": [
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "false"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Date enrolled in HIV Care:",
+                            "questionOptions": {
+                                "concept": "edda0fe9-73ba-4dbe-8739-dd8d0a8f1700",
+                                "rendering": "date"
+                            },
+                            "type": "obs",
+                            "validators": [
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "false"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Where was the test done?",
+                            "id": "testDone",
+                            "questionOptions": {
+                                "concept": "12fa8c7d-0e51-42d0-a381-4db7d34b1fcb",
+                                "rendering": "text"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "WHO stage at Enrollment",
+                            "id": "whoStageEnrol",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "1ea9d6ba-2084-4bc0-97a6-46fe677d40e5",
+                                "answers": [
+                                    {
+                                        "label": "1",
+                                        "concept": "a89b33d0-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "2",
+                                        "concept": "a89b34ac-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "3",
+                                        "concept": "a89b3588-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "4",
+                                        "concept": "a89b3664-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ],
+                                "rendering": "select"
+                            }
+                        },
+                        {
+                            "label": "Transfer in District:",
+                            "questionOptions": {
+                                "concept": "10bca44a-930f-46ae-b686-63ddb36a713f",
+                                "rendering": "text"
                             },
                             "type": "obs",
                             "validators": []

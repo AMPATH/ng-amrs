@@ -72,7 +72,7 @@
             "alias": "ca"
         },
         {
-            "formName": "component_physical-exam",
+            "formName": "component_physical-exams",
             "alias": "ppe"
         },
         {
@@ -171,7 +171,7 @@
                 {
                     "reference": {
                         "form": "fi",
-                        "page": "Family information",
+                        "page": "Family Information",
                         "section": "Family Information"
                     }
                 }
@@ -246,7 +246,7 @@
                     "reference": {
                         "form": "ntrn",
                         "page": "Nutrition",
-                        "section": "Nutrition"
+                        "section": "Nutrition Meals"
                     }
                 }
             ]
@@ -434,7 +434,7 @@
                     "reference": {
                         "form": "ws",
                         "page": "WHO staging",
-                        "section": "Staging"
+                        "section": "Ped Staging"
                     }
                 },
                 {
