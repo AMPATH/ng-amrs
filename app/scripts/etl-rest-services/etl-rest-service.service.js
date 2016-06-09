@@ -382,14 +382,18 @@
 
     }
 
-    function getPatientListByIndicator(locationUuid, startDate, endDate, indicator, successCallback, failedCallback, startIndex, limit) {
+    function getPatientListByIndicator(locationUuid, startDate, endDate, indicator, successCallback, failedCallback, startIndex, limit,
+    startAge,endAge,gender) {
       var resource = getResource('location/:uuid/patient-by-indicator');
 
       var params = {
         endDate: endDate,
         indicator: indicator,
         startDate: startDate,
-        uuid: locationUuid
+        uuid: locationUuid,
+        startAge:startAge,
+        endAge:endAge,
+        gender:(gender||['M','F']).toString()
       };
 
       if (startIndex !== undefined) {
@@ -413,14 +417,17 @@
     }
 
     function getPatientByIndicatorAndLocation(locationIds, startDate, endDate, indicator, successCallback,
-      failedCallback, locationUuids, startIndex, limit) {
+      failedCallback, locationUuids, startIndex, limit,  startAge,endAge,gender) {
       var resource = getResource('patient-by-indicator');
       var params = {
         endDate: endDate,
         indicator: indicator,
         startDate: startDate,
         locationIds: locationIds,
-        locationUuids: locationUuids
+        locationUuids: locationUuids,
+        startAge:startAge,
+        endAge:endAge,
+        gender:(gender||['M','F']).toString()
       };
       if (startIndex !== undefined) {
         params.startIndex = startIndex;
@@ -489,7 +496,7 @@
 
 
     function getHivSummaryIndicators(startDate, endDate, report, countBy, successCallback, failedCallback,
-      groupBy, locationUuids, orderBy, indicators, startIndex, limit) {
+      groupBy, locationUuids, orderBy, indicators, startIndex, limit, startAge,endAge,gender ) {
       var resource = getResource('get-report-by-report-name');
 
       var params = {
@@ -500,7 +507,11 @@
         groupBy: groupBy,
         locationUuids: locationUuids,
         indicators: indicators,
-        order: orderBy
+        order: orderBy,
+        startAge:startAge,
+        endAge:endAge,
+        gender:(gender||['M','F']).toString()
+
       };
 
 
@@ -799,7 +810,8 @@
     }
 
     function getHivOverviewVisualizationReport(startDate, endDate, report, groupBy, locationUuids, orderBy,
-      indicators, successCallback, failedCallback, startIndex, limit) {
+                                               indicators,  successCallback, failedCallback, startIndex, limit,
+                                                startAge,endAge,gender ) {
       var resource = getResource('get-report-by-report-name');
 
       var params = {
@@ -809,7 +821,10 @@
         groupBy: groupBy,
         locationUuids: locationUuids,
         indicators: indicators,
-        order: orderBy
+        order: orderBy,
+        startAge:startAge,
+        endAge:endAge,
+        gender:(gender||['M','F']).toString()
       };
 
 

@@ -82,7 +82,7 @@
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           $scope.reportName, $scope.countBy, onFetchHivSummaryIndicatorsSuccess, onFetchHivSummaryIndicatorsError,
-          $scope.groupBy,'');
+          $scope.groupBy,'','encounter_datetime|asc','',0,300, $scope.startAge, $scope.endAge,  $scope.gender);
     }
 
     function onFetchHivSummaryIndicatorsSuccess(result) {
@@ -158,6 +158,10 @@
         $scope.indicatorTags = HivSummaryIndicatorService.getIndicatorTags();
         $scope.startDate = HivSummaryIndicatorService.getStartDate();
         $scope.endDate = HivSummaryIndicatorService.getEndDate();
+        $scope.startAge = HivSummaryIndicatorService.getReportFilters().startAge;
+        $scope.endAge = HivSummaryIndicatorService.getReportFilters().endAge;
+        $scope.gender = HivSummaryIndicatorService.getReportFilters().gender;
+
         buildDataTable();
         return true;
       }
@@ -175,6 +179,11 @@
       HivSummaryIndicatorService.setIndicators($scope.indicators);
       HivSummaryIndicatorService.setStartDate($scope.startDate);
       HivSummaryIndicatorService.setEndDate($scope.endDate);
+      HivSummaryIndicatorService.setReportFilters({
+        startAge:$scope.startAge,
+        endAge:$scope.endAge,
+        gender:$scope.gender
+      });
     }
 
     /**

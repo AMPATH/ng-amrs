@@ -62,6 +62,20 @@
             			</span>
                 </div>
             </div>
+          <div class="form-group col-md-12" ng-show="canView('ageRangeSlider')">
+            <label for="ageRangeSlider">Age Range</label>
+
+            <div class="col-sm-12 " style="min-height: 30px; margin: 2px 2px 10px 2px;" >
+              <input type="text" id="ageRangeSlider" name="ageRangeSlider" value="" />
+            </div>
+
+          </div>
+          <div class="form-group col-md-12" ng-show="canView('gender')">
+            <label>Select Gender </label>
+            <div >
+              <select multiple="multiple" kendo-multi-select k-ng-model="gender" k-options="genderOptions"></select>
+            </div>
+          </div>
             <div class="form-group col-md-12" ng-show="canView('location')">
                 <label for="start-date">Location</label>
                 <div ng-hide="selectedLocations.selectedAll" class="input-group">
@@ -90,14 +104,14 @@
                     </button>
                 </div>
             </div>
-            <div class="form-group col-md-12" ng-show="canView('agglocations')">
+          <div class="form-group col-md-12" ng-show="canView('agglocations')">
 
-                <div class="input-group">
-                    <label style="font-weight: lighter; cursor: pointer;"> Aggregate Locations
-                        <input style="margin:4px; vertical-align:middle;" type="checkbox" ng-model="selectedLocations.allAggregated">
-                    </label>
-                </div>
+            <div class="input-group">
+              <label style="font-weight: lighter; cursor: pointer;"> Aggregate Locations
+                <input style="margin:4px; vertical-align:middle;" type="checkbox" ng-model="selectedLocations.allAggregated">
+              </label>
             </div>
+          </div>
             <div class="form-group col-md-6" ng-show="canView('start-month')">
                 <label for="start-month">Start Month</label>
                 <div class="input-group">
