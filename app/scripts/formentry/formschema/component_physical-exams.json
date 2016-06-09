@@ -208,6 +208,7 @@
                                 "rendering": "select"
                             },
                             "type": "obs",
+                            "hide": "true",
                             "validators": []
                         },
                         {
@@ -227,6 +228,7 @@
                                 "rendering": "select"
                             },
                             "type": "obs",
+                            "hide": "true",
                             "validators": []
                         },
                         {
