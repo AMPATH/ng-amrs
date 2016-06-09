@@ -28,7 +28,7 @@
   function clinicalRemindersController($scope, $rootScope, EtlRestService, $state, $filter) {
     //report params
     $scope.reportName='clinical-reminder-report';
-    $scope.reminderIndicators='needs_vl_coded,overdue_vl_lab_order,months_since_last_vl_date'; //comma separated indicators
+    $scope.reminderIndicators='needs_vl_coded,overdue_vl_lab_order,months_since_last_vl_date,new_viral_load_present'; //comma separated indicators
     $scope.referenceDate= new Date();
     $scope.criticalReminders =[];
     $scope.isBusy=false;
@@ -103,7 +103,8 @@
       $scope.criticalReminders.push({
         message:message,
         title:title,
-        labs:labs
+        labs:labs,
+        type:type
       });
     }
 
@@ -141,6 +142,14 @@
           'Please follow up with lab or redraw new specimen.';
         var labs='';
         pushReminderNotification(title,message,labs,'warning',true);
+      }
+
+      //New Viral Load Present
+      if(reminders.new_viral_load_present){
+        var title = 'New Viral Load present';
+        var message ='New viral load result: '+reminders.viral_load+' (collected on '+ $filter('date')( reminders.last_vl_date, "dd/MM/yyyy")+').';
+        var labs='';
+        pushReminderNotification(title,message,labs,'success',true);
       }
 
 

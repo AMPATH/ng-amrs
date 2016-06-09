@@ -7,11 +7,11 @@
     <!--</span> Critical Clinical Reminders-->
   <!--</div>-->
   <div class="panel-body" style="padding: 3px!important;">
-    <div class="alert alert-danger" style="padding: 10px!important; margin-bottom: 3px!important;" ng-repeat="criticalReminder in criticalReminders">
+    <div ng-repeat="criticalReminder in criticalReminders" ng-class="{'alert alert-danger': criticalReminder.type === 'warning', 'alert alert-success': criticalReminder.type === 'success' , 'alert alert-info': criticalReminder.type === 'info'}" style="padding: 10px!important; margin-bottom: 3px!important;">
       <span class="pull-right">
-        <i class="fa fa-info-circle fa-2x text-danger"></i>
+        <i ng-class="{'fa fa-info-circle fa-2x text-danger': criticalReminder.type === 'warning', 'fa fa-info-circle fa-2x text-success': criticalReminder.type === 'success' , 'fa fa-info-circle fa-2x text-info': criticalReminder.type === 'info'}"></i>
       </span>
-      <p class="text-danger">
+      <p ng-class="{'text-danger': criticalReminder.type === 'warning', 'text-success': criticalReminder.type === 'success' , 'text-info': criticalReminder.type === 'info'}">
         <strong>{{criticalReminder.message}}</strong>
 
         <strong class="text-muted">{{criticalReminder.labs}}</strong>
@@ -40,7 +40,7 @@
 <script id="warningTemplate" type="text/x-kendo-template">
   <div class="warning-template" style="cursor: pointer;">
     <i class="fa fa-times fa-lg pull-right text-muted" style="margin-right: 15px"></i>
-   <span class="fa-stack fa-lg ">
+    <span class="fa-stack fa-lg ">
       <i class="fa fa-circle-thin fa-stack-2x text-warning"></i>
       <i class="fa fa-info-circle fa-stack-1x text-warning"></i>
     </span>
@@ -56,7 +56,10 @@
 <script id="successTemplate" type="text/x-kendo-template">
   <div class="success-template" style="cursor: pointer;">
     <i class="fa fa-times fa-lg pull-right text-muted" style="margin-right: 15px"></i>
-    <i class="fa fa-envelope"></i>
+    <span class="fa-stack fa-lg ">
+      <i class="fa fa-circle-thin fa-stack-2x text-success"></i>
+      <i class="fa fa-envelope fa-stack-1x text-success"></i>
+    </span>
 
     <h3><strong>#= title #</strong></h3>
 
