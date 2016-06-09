@@ -14,9 +14,7 @@
     var httpBackend;
     var etlRestService;
     var settingsService;
-    var successResponse = {
-      data: '∑••Ω=§≈ç√4=2'
-    };
+    var successResponse = { data:'∑••Ω=§≈ç√4=2' };
     var errorResponse = '∑rrºoççµ®';
     beforeEach(inject(function($injector) {
       httpBackend = $injector.get('$httpBackend');
@@ -25,7 +23,7 @@
     }));
 
     beforeEach(inject(function() {
-
+      
       callbacks = {
         onSuccessCalled: false,
         onFailedCalled: false,
@@ -52,35 +50,21 @@
     it('should have ETL service defined', function() {
       expect(etlRestService).to.exist;
     });
-    it('should make an api call to the clinical notes etl rest endpoint when ' +
-      'getClinicalNotes is called with a uuid',
-      function() {
-
-        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/clinical-notes?limit=10&startIndex=0').respond({notes:[],status:''});
-
-        var promise = etlRestService.getClinicalNotes('passed-uuid');
-        expect(promise).to.be.an.object;
-        promise.then(function(response) {
-          expect(response.notes).to.be.instanceof(Array);
-        }).catch(function() {});
-        httpBackend.flush();
-      });
 
     //hiv summary methods
     it('should make an api call to the hiv summary etl rest endpoint when ' +
-      'getHivSummary is called with a uuid',
-      function() {
+       'getHivSummary is called with a uuid', function() {
+      
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/hiv-summary?limit=20&startIndex=0').respond(successResponse);
+      
+      var promise = etlRestService.getHivSummary('passed-uuid');
+      expect(promise).to.be.an.object;
 
-        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/hiv-summary?limit=20&startIndex=0').respond(successResponse);
-
-        var promise = etlRestService.getHivSummary('passed-uuid');
-        expect(promise).to.be.an.object;
-
-        promise.then(function(response) {
-          expect(response.data).to.equal(successResponse.data);
-        }).catch(function() {});
-        httpBackend.flush();
-      });
+      promise.then(function(response) {
+        expect(response.data).to.equal(successResponse.data);
+      }).catch(function() {});
+      httpBackend.flush();
+    });
 
     it('should return a promise that calls the onSuccess callback ' +
       'getHivSummary request successfully returns',
@@ -141,55 +125,51 @@
 
     //getVitals methods unit tests
     it('should make an api call to the vitals etl rest endpoint when ' +
-      'getVitals is called with a patient uuid',
-      function() {
-        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/vitals?limit=20&startIndex=0').respond({});
-        etlRestService.getVitals('passed-uuid').then(callbacks.onSuccess);
-        httpBackend.flush();
-        expect(callbacks.onSuccessCalled).to.equal(true);
-      });
+       'getVitals is called with a patient uuid', function() {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/vitals?limit=20&startIndex=0').respond({});
+      etlRestService.getVitals('passed-uuid').then(callbacks.onSuccess);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(true);
+    });
 
     it('should call the onSuccess callback getVitals request successfully ' +
-      'returns',
-      function() {
-        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/vitals?limit=20&startIndex=0').respond({});
-        etlRestService.getVitals('passed-uuid').then(callbacks.onSuccess).catch(callbacks.onFailure);
-        httpBackend.flush();
-        expect(callbacks.onSuccessCalled).to.equal(true);
-        expect(callbacks.onFailedCalled).to.equal(false);
-      });
+       'returns', function() {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/vitals?limit=20&startIndex=0').respond({});
+      etlRestService.getVitals('passed-uuid').then(callbacks.onSuccess).catch(callbacks.onFailure);
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(true);
+      expect(callbacks.onFailedCalled).to.equal(false);
+    });
 
     it('should call the onFailed callback when getVitals request is not ' +
-      'successfull',
-      function() {
-        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/vitals?limit=20&startIndex=0').respond(500, errorResponse);
-
-        var promise = etlRestService.getVitals('passed-uuid');
-        promise.then(callbacks.onSuccess).catch(function(error) {
-          callbacks.onFailure(error.data);
-        });
-
-        httpBackend.flush();
-        expect(callbacks.onSuccessCalled).to.equal(false);
-        expect(callbacks.onFailedCalled).to.equal(true);
-        expect(callbacks.message).to.exist;
-        expect(callbacks.message.trim()).not.to.equal('');
+       'successfull', function() {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/vitals?limit=20&startIndex=0').respond(500, errorResponse);
+      
+      var promise = etlRestService.getVitals('passed-uuid');
+      promise.then(callbacks.onSuccess).catch(function(error){
+        callbacks.onFailure(error.data);
       });
+      
+      httpBackend.flush();
+      expect(callbacks.onSuccessCalled).to.equal(false);
+      expect(callbacks.onFailedCalled).to.equal(true);
+      expect(callbacks.message).to.exist;
+      expect(callbacks.message.trim()).not.to.equal('');
+    });
 
     it('should make an api call to the vitals end point with default params ' +
-      'when getVitals is called with a patient uuid, without paging params',
-      function() {
-        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/vitals?limit=20&startIndex=0').respond({});
-        etlRestService.getVitals('passed-uuid');
-        httpBackend.flush();
-      });
+       'when getVitals is called with a patient uuid, without paging params', 
+       function() {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/vitals?limit=20&startIndex=0').respond({});
+      etlRestService.getVitals('passed-uuid');
+      httpBackend.flush();
+    });
 
-    it('should make an api call to the vitals end point with passed in params' +
-      'when getVitals is called with a patient uuid, and paging params',
-      function() {
-        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/vitals?limit=5&startIndex=20').respond({});
-        etlRestService.getVitals('passed-uuid', 20, 5);
-        httpBackend.flush();
-      });
+    it('should make an api call to the vitals end point with passed in params'+
+       'when getVitals is called with a patient uuid, and paging params', function() {
+      httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient/passed-uuid/vitals?limit=5&startIndex=20').respond({});
+      etlRestService.getVitals('passed-uuid', 20, 5);
+      httpBackend.flush();
+    });
   });
 })();
