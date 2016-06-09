@@ -39,6 +39,7 @@ jshint -W003, -W026
     $scope.getMoreNotes = getMoreNotes;
     $scope.disabled = false;
     $scope.fetching = false;
+    $scope.allDataLoaded = false;
     var arvLine = {
       1: 'First',
       2: 'Second',
@@ -55,9 +56,10 @@ jshint -W003, -W026
         var notes = response.notes;
         $scope.disabled = false;
         $scope.fetching=false;
-        if (notes.length) {
+        if (notes.length>0) {
             $scope.notes = $scope.notes.concat(format(notes));
         } else {
+          $scope.allDataLoaded = true;
           $scope.fetching=false;
           $scope.disabled = true; // Disable further calls if there are no more items
         }
