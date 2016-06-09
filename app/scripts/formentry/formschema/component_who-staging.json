@@ -7,13 +7,13 @@
             "label": "WHO staging",
             "sections": [
                 {
-                    "label": "Staging",
+                    "label": "Ped Staging",
                     "isExpanded": "true",
                     "questions": [
                         {
-                            "label": "WHO stage",
+                            "label": "Ped WHO stage",
                             "type": "obs",
-                            "id": "whoStage",
+                            "id": "pedWhoStage",
                             "questionOptions": {
                                 "concept": "a89b3740-1350-11df-a1f1-0026b9348838",
                                 "answers": [
@@ -85,13 +85,13 @@
                     ]
                 },
                 {
-                    "label": "WHO Staging",
+                    "label": "Adult WHO Staging",
                     "isExpanded": "true",
                     "questions": [
                         {
                             "label": "If you are assigning a new WHO stage to patient today, select new WHO stage:",
                             "type": "obs",
-                            "id": "newWhoStage",
+                            "id": "adultWhoStage",
                             "questionOptions": {
                                 "concept": "a8a8331e-1350-11df-a1f1-0026b9348838",
                                 "answers": [
@@ -126,7 +126,7 @@
                             "required": {
                                 "type": "conditionalRequired",
                                 "message": "Patient marked as receiving new WHO stage. Please select stage.",
-                                "referenceQuestionId": "newWHOStage",
+                                "referenceQuestionId": "adultWHOStage",
                                 "referenceQuestionAnswers": [
                                     "a89b2606-1350-11df-a1f1-0026b9348838"
                                 ]

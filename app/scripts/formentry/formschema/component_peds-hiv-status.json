@@ -11,6 +11,7 @@
                     "questions": [
                         {
                             "label": "Child’s current HIV status:",
+                            "id":"currStatus",
                             "type": "obs",
                             "questionOptions": {
                                 "rendering": "select",
@@ -127,7 +128,7 @@
                                         "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
                                     }
                                 ],
-                                "rendering":"select"
+                                "rendering": "select"
                             }
                         }
                     ]

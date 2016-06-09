@@ -1,0 +1,223 @@
+{
+    "name": "component_congenital-abnormalities",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Assessment of congenital abnormalities",
+            "sections": [
+                {
+                    "label": "Congenital abnormalities",
+                    "questions": [
+                         {
+                            "label": "Congenital anormaly in newborn::",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8b010e8-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a8b00d6e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    }
+                                    
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Central nervous system:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "1aa20077-2d07-44d9-be7b-a88f79262692",
+                                "answers": [
+                                    {
+                                        "concept": "c3e72f0d-ab42-421b-82d8-0aa4adb4cedf",
+                                        "label": "Hydrocephalus"
+                                    },
+                                    {
+                                        "concept": "87755ab8-2aa7-4460-9e1f-7054fa38a9ff",
+                                        "label": "Neural tube defect"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Eye, Ear, Face and Neck:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "1db594cd-a4fc-40d1-8d28-a7750801e032",
+                                "answers": [
+                                    {
+                                        "concept": "568a495d-4c0e-40f9-9260-3fdb0e4c0379",
+                                        "label": "Cleft lip and palate"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Heart:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "21dac05c-7405-4c6a-b189-585e11d4e48b",
+                                "answers": [
+                                    {
+                                        "concept": "1e2792eb-3e04-4cd7-8641-35cb4f7d20f3",
+                                        "label": "Cyanotic heart defect"
+                                    },
+                                    {
+                                        "concept": "dc3a406b-f5a8-4b60-a9e1-e93e2774492e",
+                                        "label": "Acyanotic heart defect"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Gastro-intestinal system:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "07fd37f0-6524-4c4c-9757-8ee3decb254f",
+                                "answers": [
+                                    {
+                                        "concept": "d8fd6d31-9e3b-43b6-b9d3-386690cb4730",
+                                        "label": "Gastoschisis"
+                                    },
+                                    {
+                                        "concept": "93b2a1a2-cbd0-4b96-adfe-6f3cf59bc11f",
+                                        "label": "Intestinal atresia"
+                                    },
+                                    {
+                                        "concept": "32fa148a-0ecd-463c-b796-d9b4e84a8b31",
+                                        "label": "Tracheoesophageal fistula"
+                                    },
+                                    {
+                                        "concept": "177f7a93-d580-4fb2-a512-aeacb82487ab",
+                                        "label": "Omphalocele"
+                                    },
+                                    {
+                                        "concept": "9c339f0d-11c5-4051-b87e-7d29665bdf36",
+                                        "label": "Anorectal malformations"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Genitals:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "4aa12e48-a9db-4ab4-8935-5647dcee71e9",
+                                "answers": [
+                                    {
+                                        "concept": "3fa2a7ec-5eeb-47b7-8d8c-0e6e526ddf81",
+                                        "label": "Ambiguous genitalia"
+                                    },
+                                    {
+                                        "concept": "fff202ae-c80b-4d07-b724-36499e9eb7d8",
+                                        "label": "Hypospadias"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Renal and urinary system:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "0530b0f5-3ae5-4e88-85d0-d768b7079608",
+                                "answers": [
+                                    {
+                                        "concept": "7bf10873-4f17-4bb4-96eb-41e65f3fbde9",
+                                        "label": "Congenital posterior urethral valve"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Limb defects:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "1f19f3d8-3ad9-4fcf-ab31-684bc8c78645",
+                                "answers": [
+                                    {
+                                        "concept": "354011e7-0e7f-41cb-8e09-4c444c712351",
+                                        "label": "Talipes equinovarus"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Chromosomal anomaly:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "97eaa903-a211-4acb-a95e-7bdf7360e822",
+                                "answers": [
+                                    {
+                                        "concept": "4b8c4f04-7c12-476c-a6e2-1e0620f11679",
+                                        "label": "Down syndrome"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Other Organ systems, or multi-organ system:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "86168539-b403-4108-be2a-30b207ab256c",
+                                "answers": []
+                            },
+                            "validators": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

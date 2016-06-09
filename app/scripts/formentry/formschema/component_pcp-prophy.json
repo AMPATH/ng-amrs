@@ -13,7 +13,7 @@
                         {
                             "label": "PCP prophylaxis:",
                             "id": "pcpProphylaxisCurrent",
-                            "historicalExpression":"HD.getObject('prevEnc').getValue('a899e282-1350-11df-a1f1-0026b9348838')",
+                            "historicalExpression": "HD.getObject('prevEnc').getValue('a899e282-1350-11df-a1f1-0026b9348838')",
                             "questionOptions": {
                                 "concept": "a899e282-1350-11df-a1f1-0026b9348838",
                                 "answers": [
@@ -163,7 +163,7 @@
                 },
                 {
                     "label": "PCP Prophylaxis Plan",
-                    "isExpanded":"true",
+                    "isExpanded": "true",
                     "questions": [
                         {
                             "required": "true",
