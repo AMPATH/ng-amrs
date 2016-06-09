@@ -74,6 +74,49 @@
                             }
                         }
                     ]
+                },
+                {
+                    "label": "Child's Physical Exam",
+                    "questions": [
+                        {
+                            "label": "Does the child have growth faltering (FTT):",
+                            "questionOptions": {
+                                "concept": "a8a3614a-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Is the child overweight :",
+                            "questionOptions": {
+                                "concept": "f9eac97a-5759-40a8-8b69-3193589a99f4",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
                 }
             ]
         }

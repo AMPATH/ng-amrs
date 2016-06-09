@@ -150,93 +150,93 @@
                         },
                         {
                             "label": "Past ART, peds:",
-                            "id": "pastArvDrugs",
+                            "id": "pastArvDrugsPed",
                             "type": "obs",
                             "questionOptions": {
                                 "concept": "a8a318e8-1350-11df-a1f1-0026b9348838",
                                 "answers": [
                                     {
-                                        "concept": "b7735b8a-22f2-41d6-b450-65ec7588839c",
+                                        "concept": "b58a28d2-36de-11e0-93be-0026b9348838",
                                         "label": "ABC 60mg/3TC 30mg"
                                     },
                                     {
-                                        "concept": "a896758e-1350-11df-a1f1-0026b9348838",
+                                        "concept": "25c753d8-870f-11e0-85d3-000d6014b64c",
                                         "label": "ZDV 60mg/3TC 30mg"
                                     },
                                     {
-                                        "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
+                                        "concept": "20185c04-9334-11df-8193-000d6014b64c",
                                         "label": "ZDV 60mg/3TC 30mg/NVP 50mg"
                                     },
                                     {
-                                        "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
-                                        "label": "ZDV 300mg/3TC 150mg/NVP 200mg"
+                                        "concept": "8ddf2f66-9333-11df-8193-000d6014b64c",
+                                        "label": "ZDV 300mg/3TC 150mg/NVP 200mg >25kgs"
                                     },
                                     {
-                                        "concept": "a897e608-1350-11df-a1f1-0026b9348838",
+                                        "concept": "f7cf0dd2-932f-11df-8193-000d6014b64c",
                                         "label": "d4T 12mg/3TC 60mg/NVP 100mg (T-jr)"
                                     },
                                     {
-                                        "concept": "a897e608-1350-11df-a1f1-0026b9348838",
-                                        "label": "d4T 30mg/3TC 150mg/NVP 200mg"
+                                        "concept": "aad5f784-1350-11df-a1f1-0026b9348838",
+                                        "label": "d4T 30mg/3TC 150mg/NVP 200mg >25kgs"
                                     },
                                     {
-                                        "concept": "a896758e-1350-11df-a1f1-0026b9348838",
-                                        "label": "3TC 150mg/ZDV 300mg"
+                                        "concept": "fd4cd670-3115-11e0-8090-0026b9348838",
+                                        "label": "3TC 150mg/ZDV 300mg >25kgs"
                                     },
                                     {
-                                        "concept": "3d587177-984e-4eeb-93f2-3223b6c1dd7c",
-                                        "label": "3TC 150mg/D4T 30mg"
+                                        "concept": "5b23c99a-87d1-11e0-85d3-000d6014b64c",
+                                        "label": "3TC 150mg/D4T 30mg >25kgs"
                                     },
                                     {
-                                        "concept": "a89cc876-1350-11df-a1f1-0026b9348838",
-                                        "label": "3TC 300mg/TDF 300mg"
+                                        "concept": "b9da84e8-3127-11e0-8090-0026b9348838",
+                                        "label": "3TC 300mg/TDF 300mg >25kgs"
                                     },
                                     {
-                                        "concept": "1c4a75d0-cc91-4752-b0a5-4b833326ff7a",
-                                        "label": "TDF 300mg/3TC 300mg/EFV 600mg"
+                                        "concept": "e0037172-87ce-11e0-85d3-000d6014b64c",
+                                        "label": "TDF 300mg/3TC 300mg/EFV 600mg >25kgs"
                                     },
                                     {
-                                        "concept": "a897e7c0-1350-11df-a1f1-0026b9348838",
+                                        "concept": "f8b6299e-6bbf-446a-b3f1-a88f5d6b9da2",
                                         "label": "Lopinavir 80mg/Ritonavir 20mg"
                                     },
                                     {
-                                        "concept": "a897e7c0-1350-11df-a1f1-0026b9348838",
-                                        "label": "Lopinavir 200mg/Ritonavir 50mg"
+                                        "concept": "fa8266f6-36df-11e0-93be-0026b9348838",
+                                        "label": "Lopinavir 200mg/Ritonavir 50mg >25kgs"
                                     },
                                     {
-                                        "concept": "a8afc066-1350-11df-a1f1-0026b9348838",
+                                        "concept": "3cbfb0b9-721e-4d42-92a3-7d37269aab24",
                                         "label": " Atazanavir 300mg/ritonavir 100mg"
                                     },
                                     {
-                                        "concept": "a8967656-1350-11df-a1f1-0026b9348838",
+                                        "concept": "0485075a-3111-11e0-8090-0026b9348838",
                                         "label": "Nevirapine 200mg"
                                     },
                                     {
-                                        "concept": "a89677e6-1350-11df-a1f1-0026b9348838",
+                                        "concept": "4677ad3e-3120-11e0-8090-0026b9348838",
                                         "label": "Efavirenz 600mg"
                                     },
                                     {
-                                        "concept": "a89673f4-1350-11df-a1f1-0026b9348838",
+                                        "concept": "d6262526-3113-11e0-8090-0026b9348838",
                                         "label": "Lamivudine 150mg"
                                     },
                                     {
-                                        "concept": "a897f8a0-1350-11df-a1f1-0026b9348838",
+                                        "concept": "52441ef8-3126-11e0-8090-0026b9348838",
                                         "label": " Abacavir 300mg"
                                     },
                                     {
-                                        "concept": "a897ea4a-1350-11df-a1f1-0026b9348838",
+                                        "concept": "21d417bc-3114-11e0-8090-0026b9348838",
                                         "label": " Zidovudine 300mg "
                                     },
                                     {
-                                        "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
+                                        "concept": "1baf254e-1429-4fd9-8db1-edf6523cea13",
                                         "label": " Ritonavir 100mg"
                                     },
                                     {
-                                        "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
+                                        "concept": "42ef7c4d-d6fb-49c0-a46e-019c42dea203",
                                         "label": " Ritonavir 80mg"
                                     },
                                     {
-                                        "concept": "a8afbd64-1350-11df-a1f1-0026b9348838",
+                                        "concept": "da698164-870d-11e0-85d3-000d6014b64c",
                                         "label": " Raltegravir 400mg"
                                     },
                                     {
@@ -249,12 +249,12 @@
                         },
                         {
                             "label": "Past ART, adult:",
-                            "id": "pastArvDrugs",
+                            "id": "pastArvDrugsAdult",
                             "type": "obs",
                             "questionOptions": {
                                 "concept": "a8a318e8-1350-11df-a1f1-0026b9348838",
                                 "answers": [
-                                    {
+                                     {
                                         "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
                                         "label": "NVP200/ZDV300/3TC150"
                                     },
@@ -308,7 +308,7 @@
                                     },
                                     {
                                         "concept": "a8afbd64-1350-11df-a1f1-0026b9348838",
-                                        "label": "Raltegravir"
+                                        "label": "Raltegravir 400mg"
                                     },
                                     {
                                         "concept": "a897ea4a-1350-11df-a1f1-0026b9348838",
@@ -336,7 +336,7 @@
                             "label": "Patient currently on ART:",
                             "required": "true",
                             "id": "onArt",
-                             "historicalExpression":"arrayContainsAny(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'], HD.getObject('prevEnc').getValue('a89b75d4-1350-11df-a1f1-0026b9348838')) ? 'a899b35c-1350-11df-a1f1-0026b9348838' : HD.getObject('prevEnc').getValue('a89ae254-1350-11df-a1f1-0026b9348838')",
+                            "historicalExpression": "arrayContainsAny(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'], HD.getObject('prevEnc').getValue('a89b75d4-1350-11df-a1f1-0026b9348838')) ? 'a899b35c-1350-11df-a1f1-0026b9348838' : HD.getObject('prevEnc').getValue('a89ae254-1350-11df-a1f1-0026b9348838')",
                             "questionOptions": {
                                 "concept": "a89ae254-1350-11df-a1f1-0026b9348838",
                                 "answers": [
@@ -400,7 +400,7 @@
                         {
                             "label": "Line of ART patient is taking:",
                             "id": "current_arv_line",
-                            "historicalExpression":"!_.isEmpty(HD.getObject('prevEnc').getValue('a89b6a62-1350-11df-a1f1-0026b9348838')) ? undefined : HD.getObject('prevEnc').getValue('04616f5d-b961-4f41-bbd7-bcc0dd235577')",
+                            "historicalExpression": "!_.isEmpty(HD.getObject('prevEnc').getValue('a89b6a62-1350-11df-a1f1-0026b9348838')) ? undefined : HD.getObject('prevEnc').getValue('04616f5d-b961-4f41-bbd7-bcc0dd235577')",
                             "questionOptions": {
                                 "concept": "04616f5d-b961-4f41-bbd7-bcc0dd235577",
                                 "answers": [
@@ -438,87 +438,87 @@
                                 "concept": "a899cf5e-1350-11df-a1f1-0026b9348838",
                                 "answers": [
                                     {
-                                        "concept": "b7735b8a-22f2-41d6-b450-65ec7588839c",
+                                        "concept": "b58a28d2-36de-11e0-93be-0026b9348838",
                                         "label": "ABC 60mg/3TC 30mg"
                                     },
                                     {
-                                        "concept": "a896758e-1350-11df-a1f1-0026b9348838",
+                                        "concept": "25c753d8-870f-11e0-85d3-000d6014b64c",
                                         "label": "ZDV 60mg/3TC 30mg"
                                     },
                                     {
-                                        "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
+                                        "concept": "20185c04-9334-11df-8193-000d6014b64c",
                                         "label": "ZDV 60mg/3TC 30mg/NVP 50mg"
                                     },
                                     {
-                                        "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
-                                        "label": "ZDV 300mg/3TC 150mg/NVP 200mg"
+                                        "concept": "8ddf2f66-9333-11df-8193-000d6014b64c",
+                                        "label": "ZDV 300mg/3TC 150mg/NVP 200mg >25kgs"
                                     },
                                     {
-                                        "concept": "a897e608-1350-11df-a1f1-0026b9348838",
+                                        "concept": "f7cf0dd2-932f-11df-8193-000d6014b64c",
                                         "label": "d4T 12mg/3TC 60mg/NVP 100mg (T-jr)"
                                     },
                                     {
-                                        "concept": "a897e608-1350-11df-a1f1-0026b9348838",
-                                        "label": "d4T 30mg/3TC 150mg/NVP 200mg"
+                                        "concept": "aad5f784-1350-11df-a1f1-0026b9348838",
+                                        "label": "d4T 30mg/3TC 150mg/NVP 200mg >25kgs"
                                     },
                                     {
-                                        "concept": "a896758e-1350-11df-a1f1-0026b9348838",
-                                        "label": "3TC 150mg/ZDV 300mg"
+                                        "concept": "fd4cd670-3115-11e0-8090-0026b9348838",
+                                        "label": "3TC 150mg/ZDV 300mg >25kgs"
                                     },
                                     {
-                                        "concept": "3d587177-984e-4eeb-93f2-3223b6c1dd7c",
-                                        "label": "3TC 150mg/D4T 30mg"
+                                        "concept": "5b23c99a-87d1-11e0-85d3-000d6014b64c",
+                                        "label": "3TC 150mg/D4T 30mg >25kgs"
                                     },
                                     {
-                                        "concept": "a89cc876-1350-11df-a1f1-0026b9348838",
-                                        "label": "3TC 300mg/TDF 300mg"
+                                        "concept": "b9da84e8-3127-11e0-8090-0026b9348838",
+                                        "label": "3TC 300mg/TDF 300mg >25kgs"
                                     },
                                     {
-                                        "concept": "1c4a75d0-cc91-4752-b0a5-4b833326ff7a",
-                                        "label": "TDF 300mg/3TC 300mg/EFV 600mg"
+                                        "concept": "e0037172-87ce-11e0-85d3-000d6014b64c",
+                                        "label": "TDF 300mg/3TC 300mg/EFV 600mg >25kgs"
                                     },
                                     {
-                                        "concept": "a897e7c0-1350-11df-a1f1-0026b9348838",
+                                        "concept": "f8b6299e-6bbf-446a-b3f1-a88f5d6b9da2",
                                         "label": "Lopinavir 80mg/Ritonavir 20mg"
                                     },
                                     {
-                                        "concept": "a897e7c0-1350-11df-a1f1-0026b9348838",
-                                        "label": "Lopinavir 200mg/Ritonavir 50mg"
+                                        "concept": "fa8266f6-36df-11e0-93be-0026b9348838",
+                                        "label": "Lopinavir 200mg/Ritonavir 50mg >25kgs"
                                     },
                                     {
-                                        "concept": "a8afc066-1350-11df-a1f1-0026b9348838",
+                                        "concept": "3cbfb0b9-721e-4d42-92a3-7d37269aab24",
                                         "label": " Atazanavir 300mg/ritonavir 100mg"
                                     },
                                     {
-                                        "concept": "a8967656-1350-11df-a1f1-0026b9348838",
+                                        "concept": "0485075a-3111-11e0-8090-0026b9348838",
                                         "label": "Nevirapine 200mg"
                                     },
                                     {
-                                        "concept": "a89677e6-1350-11df-a1f1-0026b9348838",
+                                        "concept": "4677ad3e-3120-11e0-8090-0026b9348838",
                                         "label": "Efavirenz 600mg"
                                     },
                                     {
-                                        "concept": "a89673f4-1350-11df-a1f1-0026b9348838",
+                                        "concept": "d6262526-3113-11e0-8090-0026b9348838",
                                         "label": "Lamivudine 150mg"
                                     },
                                     {
-                                        "concept": "a897f8a0-1350-11df-a1f1-0026b9348838",
+                                        "concept": "52441ef8-3126-11e0-8090-0026b9348838",
                                         "label": " Abacavir 300mg"
                                     },
                                     {
-                                        "concept": "a897ea4a-1350-11df-a1f1-0026b9348838",
+                                        "concept": "21d417bc-3114-11e0-8090-0026b9348838",
                                         "label": " Zidovudine 300mg "
                                     },
                                     {
-                                        "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
+                                        "concept": "1baf254e-1429-4fd9-8db1-edf6523cea13",
                                         "label": " Ritonavir 100mg"
                                     },
                                     {
-                                        "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
+                                        "concept": "42ef7c4d-d6fb-49c0-a46e-019c42dea203",
                                         "label": " Ritonavir 80mg"
                                     },
                                     {
-                                        "concept": "a8afbd64-1350-11df-a1f1-0026b9348838",
+                                        "concept": "da698164-870d-11e0-85d3-000d6014b64c",
                                         "label": " Raltegravir 400mg"
                                     },
                                     {
@@ -533,16 +533,15 @@
                             "hide": {
                                 "hideWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                             }
-                            
                         },
                         {
                             "label": "Patient's current ART regimen, adults:",
                             "id": "current_art_regimen_adult",
-                            "historicalExpression":"_.isEmpty(HD.getObject('prevEnc').getValue('a89b6a62-1350-11df-a1f1-0026b9348838')) ? HD.getObject('prevEnc').getValue('a8a08344-1350-11df-a1f1-0026b9348838.a899cf5e-1350-11df-a1f1-0026b9348838') : HD.getObject('prevEnc').getValue('a89b6a62-1350-11df-a1f1-0026b9348838')",
+                            "historicalExpression": "_.isEmpty(HD.getObject('prevEnc').getValue('a89b6a62-1350-11df-a1f1-0026b9348838')) ? HD.getObject('prevEnc').getValue('a8a08344-1350-11df-a1f1-0026b9348838.a899cf5e-1350-11df-a1f1-0026b9348838') : HD.getObject('prevEnc').getValue('a89b6a62-1350-11df-a1f1-0026b9348838')",
                             "questionOptions": {
                                 "concept": "a899cf5e-1350-11df-a1f1-0026b9348838",
                                 "answers": [
-                                    {
+                                     {
                                         "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
                                         "label": "NVP200/ZDV300/3TC150"
                                     },
@@ -596,7 +595,7 @@
                                     },
                                     {
                                         "concept": "a8afbd64-1350-11df-a1f1-0026b9348838",
-                                        "label": "Raltegravir"
+                                        "label": "Raltegravir 400mg"
                                     },
                                     {
                                         "concept": "a897ea4a-1350-11df-a1f1-0026b9348838",
@@ -618,7 +617,6 @@
                             "hide": {
                                 "hideWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
                             }
-                            
                         },
                         {
                             "type": "obsGroup",
@@ -1130,87 +1128,87 @@
                                 "concept": "a89b6a62-1350-11df-a1f1-0026b9348838",
                                 "answers": [
                                     {
-                                        "concept": "b7735b8a-22f2-41d6-b450-65ec7588839c",
+                                        "concept": "b58a28d2-36de-11e0-93be-0026b9348838",
                                         "label": "ABC 60mg/3TC 30mg"
                                     },
                                     {
-                                        "concept": "a896758e-1350-11df-a1f1-0026b9348838",
+                                        "concept": "25c753d8-870f-11e0-85d3-000d6014b64c",
                                         "label": "ZDV 60mg/3TC 30mg"
                                     },
                                     {
-                                        "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
+                                        "concept": "20185c04-9334-11df-8193-000d6014b64c",
                                         "label": "ZDV 60mg/3TC 30mg/NVP 50mg"
                                     },
                                     {
-                                        "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
-                                        "label": "ZDV 300mg/3TC 150mg/NVP 200mg"
+                                        "concept": "8ddf2f66-9333-11df-8193-000d6014b64c",
+                                        "label": "ZDV 300mg/3TC 150mg/NVP 200mg >25kgs"
                                     },
                                     {
-                                        "concept": "a897e608-1350-11df-a1f1-0026b9348838",
+                                        "concept": "f7cf0dd2-932f-11df-8193-000d6014b64c",
                                         "label": "d4T 12mg/3TC 60mg/NVP 100mg (T-jr)"
                                     },
                                     {
-                                        "concept": "a897e608-1350-11df-a1f1-0026b9348838",
-                                        "label": "d4T 30mg/3TC 150mg/NVP 200mg"
+                                        "concept": "aad5f784-1350-11df-a1f1-0026b9348838",
+                                        "label": "d4T 30mg/3TC 150mg/NVP 200mg >25kgs"
                                     },
                                     {
-                                        "concept": "a896758e-1350-11df-a1f1-0026b9348838",
-                                        "label": "3TC 150mg/ZDV 300mg"
+                                        "concept": "fd4cd670-3115-11e0-8090-0026b9348838",
+                                        "label": "3TC 150mg/ZDV 300mg >25kgs"
                                     },
                                     {
-                                        "concept": "3d587177-984e-4eeb-93f2-3223b6c1dd7c",
-                                        "label": "3TC 150mg/D4T 30mg"
+                                        "concept": "5b23c99a-87d1-11e0-85d3-000d6014b64c",
+                                        "label": "3TC 150mg/D4T 30mg >25kgs"
                                     },
                                     {
-                                        "concept": "a89cc876-1350-11df-a1f1-0026b9348838",
-                                        "label": "3TC 300mg/TDF 300mg"
+                                        "concept": "b9da84e8-3127-11e0-8090-0026b9348838",
+                                        "label": "3TC 300mg/TDF 300mg >25kgs"
                                     },
                                     {
-                                        "concept": "1c4a75d0-cc91-4752-b0a5-4b833326ff7a",
-                                        "label": "TDF 300mg/3TC 300mg/EFV 600mg"
+                                        "concept": "e0037172-87ce-11e0-85d3-000d6014b64c",
+                                        "label": "TDF 300mg/3TC 300mg/EFV 600mg >25kgs"
                                     },
                                     {
-                                        "concept": "a897e7c0-1350-11df-a1f1-0026b9348838",
+                                        "concept": "f8b6299e-6bbf-446a-b3f1-a88f5d6b9da2",
                                         "label": "Lopinavir 80mg/Ritonavir 20mg"
                                     },
                                     {
-                                        "concept": "a897e7c0-1350-11df-a1f1-0026b9348838",
-                                        "label": "Lopinavir 200mg/Ritonavir 50mg"
+                                        "concept": "fa8266f6-36df-11e0-93be-0026b9348838",
+                                        "label": "Lopinavir 200mg/Ritonavir 50mg >25kgs"
                                     },
                                     {
-                                        "concept": "a8afc066-1350-11df-a1f1-0026b9348838",
+                                        "concept": "3cbfb0b9-721e-4d42-92a3-7d37269aab24",
                                         "label": " Atazanavir 300mg/ritonavir 100mg"
                                     },
                                     {
-                                        "concept": "a8967656-1350-11df-a1f1-0026b9348838",
+                                        "concept": "0485075a-3111-11e0-8090-0026b9348838",
                                         "label": "Nevirapine 200mg"
                                     },
                                     {
-                                        "concept": "a89677e6-1350-11df-a1f1-0026b9348838",
+                                        "concept": "4677ad3e-3120-11e0-8090-0026b9348838",
                                         "label": "Efavirenz 600mg"
                                     },
                                     {
-                                        "concept": "a89673f4-1350-11df-a1f1-0026b9348838",
+                                        "concept": "d6262526-3113-11e0-8090-0026b9348838",
                                         "label": "Lamivudine 150mg"
                                     },
                                     {
-                                        "concept": "a897f8a0-1350-11df-a1f1-0026b9348838",
+                                        "concept": "52441ef8-3126-11e0-8090-0026b9348838",
                                         "label": " Abacavir 300mg"
                                     },
                                     {
-                                        "concept": "a897ea4a-1350-11df-a1f1-0026b9348838",
+                                        "concept": "21d417bc-3114-11e0-8090-0026b9348838",
                                         "label": " Zidovudine 300mg "
                                     },
                                     {
-                                        "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
+                                        "concept": "1baf254e-1429-4fd9-8db1-edf6523cea13",
                                         "label": " Ritonavir 100mg"
                                     },
                                     {
-                                        "concept": "a897e89c-1350-11df-a1f1-0026b9348838",
+                                        "concept": "42ef7c4d-d6fb-49c0-a46e-019c42dea203",
                                         "label": " Ritonavir 80mg"
                                     },
                                     {
-                                        "concept": "a8afbd64-1350-11df-a1f1-0026b9348838",
+                                        "concept": "da698164-870d-11e0-85d3-000d6014b64c",
                                         "label": " Raltegravir 400mg"
                                     },
                                     {
@@ -1297,7 +1295,7 @@
                                     },
                                     {
                                         "concept": "a8afbd64-1350-11df-a1f1-0026b9348838",
-                                        "label": "Raltegravir"
+                                        "label": "Raltegravir 400mg"
                                     },
                                     {
                                         "concept": "a897ea4a-1350-11df-a1f1-0026b9348838",
@@ -1330,6 +1328,252 @@
                             "hide": {
                                 "hideWhenExpression": "!arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'],arvPlan)"
                             }
+                        }
+                    ]
+                },
+                {
+                    "label": "ART Prophylactic History",
+                    "questions": [
+                        {
+                            "type": "obsGroup",
+                            "label": "Newborn Prophylactic Antiretroviral History",
+                            "questionOptions": {
+                                "concept": "a89c9414-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Newborn prophylactic ARV use:",
+                                    "id": "NewbornProhpArv",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "select",
+                                        "concept": "a89c8b7c-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Yes"
+                                            },
+                                            {
+                                                "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                                "label": "No"
+                                            },
+                                            {
+                                                "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Unknown"
+                                            }
+                                        ]
+                                    },
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Newborn ARV use:",
+                                    "id": "NewbornArvUse",
+                                    "questionOptions": {
+                                        "concept": "a89addfe-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a89673f4-1350-11df-a1f1-0026b9348838",
+                                                "label": "Lamivudine"
+                                            },
+                                            {
+                                                "concept": "a8967656-1350-11df-a1f1-0026b9348838",
+                                                "label": "Nevirapine"
+                                            },
+                                            {
+                                                "concept": "a897ea4a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Zidovudine"
+                                            },
+                                            {
+                                                "concept": "a897e7c0-1350-11df-a1f1-0026b9348838",
+                                                "label": "Lopinavir and ritonavir"
+                                            },
+                                            {
+                                                "concept": "a8967980-1350-11df-a1f1-0026b9348838",
+                                                "label": "Nelfinavir"
+                                            },
+                                            {
+                                                "concept": "a8967156-1350-11df-a1f1-0026b9348838",
+                                                "label": "d4T-40(Stavudine)"
+                                            },
+                                            {
+                                                "concept": "a8967156-1350-11df-a1f1-0026b9348838",
+                                                "label": "d4T-30(Stavudine)"
+                                            },
+                                            {
+                                                "concept": "a8967156-1350-11df-a1f1-0026b9348838",
+                                                "label": "Stavudine"
+                                            },
+                                            {
+                                                "concept": "a8a87a86-1350-11df-a1f1-0026b9348838",
+                                                "label": "Other"
+                                            }
+                                        ],
+                                        "rendering": "multiCheckbox"
+                                    },
+                                    "type": "obs",
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "NewbornProhpArv !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                    }
+                                },
+                                {
+                                    "label": "ARV dose quantification:",
+                                    "id": "ArvDose",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "select",
+                                        "concept": "a89ad8cc-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a89ad9a8-1350-11df-a1f1-0026b9348838",
+                                                "label": "One dose"
+                                            },
+                                            {
+                                                "concept": "a89ada8e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Two doses"
+                                            },
+                                            {
+                                                "concept": "a89adb6a-1350-11df-a1f1-0026b9348838",
+                                                "label": "More than two doses"
+                                            }
+                                        ]
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "NewbornProhpArv !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                    }
+                                },
+                                {
+                                    "label": "Number of days on treatment:",
+                                    "id": "ArvDays",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "numeric",
+                                        "concept": "a8a05e82-1350-11df-a1f1-0026b9348838",
+                                        "answers": []
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "NewbornProhpArv !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                    }
+                                },
+                                {
+                                    "label": "Number of weeks on treatment:",
+                                    "id": "ArvDays",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "numeric",
+                                        "concept": "a89add22-1350-11df-a1f1-0026b9348838",
+                                        "answers": []
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "NewbornProhpArv !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "obsGroup",
+                            "label": "Maternal Partum Antiretroviral History",
+                            "questionOptions": {
+                                "concept": "a89c8802-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Antiretroviral Use During Pregnancy",
+                                    "id": "MothersArvUse",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "select",
+                                        "concept": "a89a9e48-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a89aadc0-1350-11df-a1f1-0026b9348838",
+                                                "label": "On ARVs"
+                                            },
+                                            {
+                                                "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                                "label": "None"
+                                            },
+                                            {
+                                                "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Unknown"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "label": "Partum dosing period:",
+                                    "id": "PartumDosingPeriod",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "select",
+                                        "concept": "a89ad55c-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a89ad638-1350-11df-a1f1-0026b9348838",
+                                                "label": "Antepartum"
+                                            },
+                                            {
+                                                "concept": "a89ad714-1350-11df-a1f1-0026b9348838",
+                                                "label": "Intrapartum"
+                                            },
+                                            {
+                                                "concept": "a89ad7f0-1350-11df-a1f1-0026b9348838",
+                                                "label": "Postpartum"
+                                            }
+                                        ]
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "MothersArvUse !== 'a89aadc0-1350-11df-a1f1-0026b9348838'"
+                                    }
+                                },
+                                {
+                                    "label": "Partum ARV use:",
+                                    "id": "PartumArvUse",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "select",
+                                        "concept": "a89ad480-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a8967656-1350-11df-a1f1-0026b9348838",
+                                                "label": "Nevirapine"
+                                            },
+                                            {
+                                                "concept": "a89673f4-1350-11df-a1f1-0026b9348838",
+                                                "label": "Lamivudine"
+                                            },
+                                            {
+                                                "concept": "a897ea4a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Zidovudine"
+                                            }
+                                        ]
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "MothersArvUse !== 'a89aadc0-1350-11df-a1f1-0026b9348838'"
+                                    }
+                                },
+                                {
+                                    "label": "Number of weeks on treatment:",
+                                    "id": "ArvDays",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "numeric",
+                                        "concept": "a89add22-1350-11df-a1f1-0026b9348838",
+                                        "answers": []
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "MothersArvUse !== 'a89aadc0-1350-11df-a1f1-0026b9348838'"
+                                    }
+                                }
+                            ]
                         }
                     ]
                 }

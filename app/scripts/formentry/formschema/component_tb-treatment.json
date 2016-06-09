@@ -342,11 +342,11 @@
                                             },
                                             {
                                                 "concept": "ecafa614-49c5-4eba-84c7-b85b0d9e2c46",
-                                                "label": "Pill Burden"
+                                                "label": "Pill urden"
                                             },
                                             {
                                                 "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
-                                                "label": "Side Effects"
+                                                "label": "Side effects"
                                             },
                                             {
                                                 "concept": "a89eba46-1350-11df-a1f1-0026b9348838",
@@ -362,7 +362,7 @@
                                             },
                                             {
                                                 "concept": "a897fdaa-1350-11df-a1f1-0026b9348838",
-                                                "label": "Travel Problems"
+                                                "label": "Travel problems"
                                             },
                                             {
                                                 "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
@@ -460,6 +460,7 @@
                         },
                         {
                             "label": "TB Status:",
+                            "id":"tbstatus",
                             "required": "true",
                             "questionOptions": {
                                 "concept": "02ad9357-b996-4530-b1a4-aff91a105383",
@@ -489,6 +490,109 @@
                     ]
                 },
                 {
+                    "label": "Tuberculosis Investigations",
+                    "questions": [
+                        {
+                            "id": "tbInvestigations",
+                            "label": "Tuberculosis diagnosed based on:",
+                            "questionOptions": {
+                                "concept": "a8a0d498-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a8a0d3d0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Keith Jones score tuberculosis"
+                                    },
+                                    {
+                                        "concept": "a89d00c0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Chronic cough"
+                                    },
+                                    {
+                                        "concept": "a8a0d196-1350-11df-a1f1-0026b9348838",
+                                        "label": "Positive tuberculosis skin test"
+                                    },
+                                    {
+                                        "concept": "a8a0d0ce-1350-11df-a1f1-0026b9348838",
+                                       "label": "Household contact"
+                                    },
+                                    {
+                                        "concept": "a8985fc0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Fever of unknown origin"
+                                    },
+                                    {
+                                        "concept": "a8a0d254-1350-11df-a1f1-0026b9348838",
+                                        "label": "Keith Edwards score tuberculosis"
+                                    },
+                                    {
+                                        "concept": "a8a0d312-1350-11df-a1f1-0026b93488388",
+                                        "label": "Positive Sputum for Acid Fast Bacilli"
+                                    },
+                                    {
+                                        "concept": "a8908192-1350-11df-a1f1-0026b9348838",
+                                        "label": "Chest Xray, Preliminary findings"
+                                    },
+                                    {
+                                        "concept": "a89807f0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Weight loss"
+                                    },
+                                    {
+                                        "concept": "42e03370-82be-4d62-9056-72bf56d158b9",
+                                        "label": "Government of Kenya score"
+                                    },
+                                    {
+                                        "concept": "9364c765-eeec-4b03-b938-ea7874560d88",
+                                        "label": "Genexpert"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs"
+                        },
+                        {
+                            "id": "tbReferralOutcome",
+                            "label": "Referral Outcome:",
+                            "questionOptions": {
+                                "concept": "55fc49a8-48c7-4f4b-b0da-15b68e63b0d7",
+                                "answers": [
+                                    {
+                                        "concept": "a890a96a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Tuberculosis"
+                                    },
+                                    {
+                                        "concept": "a899e7b4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Normal"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs"
+                        }
+                    ]
+                },
+                {
+                    "label": "Contact Investigations",
+                    "questions": [
+                        {
+                            "label": "Contact investigations initiated",
+                            "id": "contactInvestInitiated",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a9cc70d0-051e-418a-84e7-bbf8009c204b",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
                     "label": "TB Treatment Plan",
                     "isExpanded": "true",
                     "questions": [
@@ -513,15 +617,15 @@
                                             },
                                             {
                                                 "concept": "a89b7908-1350-11df-a1f1-0026b9348838",
-                                                "label": "Continue Regimen"
+                                                "label": "Continue regimen"
                                             },
                                             {
                                                 "concept": "a89b77aa-1350-11df-a1f1-0026b9348838",
-                                                "label": "Start Induction"
+                                                "label": "Start induction"
                                             },
                                             {
                                                 "concept": "a89b7c50-1350-11df-a1f1-0026b9348838",
-                                                "label": "Change to Continuation"
+                                                "label": "Change to continuation"
                                             },
                                             {
                                                 "concept": "a898c938-1350-11df-a1f1-0026b9348838",
@@ -624,7 +728,7 @@
                                             },
                                             {
                                                 "concept": "a8a01dfa-1350-11df-a1f1-0026b9348838",
-                                                "label": "Lactic Acidosis"
+                                                "label": "Lactic acidosis"
                                             },
                                             {
                                                 "concept": "a89cee50-1350-11df-a1f1-0026b9348838",
@@ -636,7 +740,7 @@
                                             },
                                             {
                                                 "concept": "a8ad239c-1350-11df-a1f1-0026b9348838",
-                                                "label": "Persistent Vomiting"
+                                                "label": "Persistent vomiting"
                                             },
                                             {
                                                 "concept": "a895776a-1350-11df-a1f1-0026b9348838",
@@ -757,7 +861,7 @@
                                         "answers": [
                                             {
                                                 "concept": "a89c2f42-1350-11df-a1f1-0026b9348838",
-                                                "label": "This Ampath site"
+                                                "label": "This ampath site"
                                             },
                                             {
                                                 "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
@@ -795,7 +899,7 @@
                             },
                             "questions": [
                                 {
-                                    "label": "TB Regimen Started",
+                                    "label": "TB regimen started",
                                     "questionOptions": {
                                         "concept": "a89c218c-1350-11df-a1f1-0026b9348838",
                                         "answers": [

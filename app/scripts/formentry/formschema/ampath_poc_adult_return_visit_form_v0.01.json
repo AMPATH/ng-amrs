@@ -52,10 +52,6 @@
             "alias": "pl"
         },
         {
-            "formName": "component_sti",
-            "alias": "sti"
-        },
-        {
             "formName": "component_who-staging",
             "alias": "who"
         },
@@ -170,7 +166,10 @@
                     "reference": {
                         "form": "gynhist",
                         "page": "OB/Gyn History",
-                        "section": "OB/Gyn History"
+                        "section": "OB/Gyn History",
+                        "excludeQuestions": [
+                            "deliveryDate"
+                        ]
                     }
                 }
             ]
@@ -304,7 +303,7 @@
                     "reference": {
                         "form": "who",
                         "page": "WHO staging",
-                        "section": "WHO Staging"
+                        "section": "Adult WHO Staging"
                     }
                 }
             ]

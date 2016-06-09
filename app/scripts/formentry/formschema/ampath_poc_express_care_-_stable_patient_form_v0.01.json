@@ -46,7 +46,7 @@
                     ]
                 },
                 {
-                    "label": "Preclinic Review",
+                    "label": "Pre-clinic Review",
                     "isExpanded": "true",
                     "questions": [
                         {
@@ -61,7 +61,7 @@
                                     },
                                     {
                                         "concept": "339f41d6-a277-4c2c-90a3-aba05f5cccdd",
-                                        "label": "Unscheduled Visit "
+                                        "label": "Unscheduled visit "
                                     }
                                 ]
                             },
@@ -88,41 +88,32 @@
                             "validators": []
                         },
                         {
-                            "label": "LMP:",
-                            "questionOptions": {
-                                "concept": "a89ff758-1350-11df-a1f1-0026b9348838",
-                                "rendering": "date"
-                            },
-                            "type": "obs",
-                            "validators": [
-                                {
-                                    "type": "date"
-                                }
-                            ]
-                        },
-                        {
-                            "label": "Medication picked up at this visit(as per referral form):",
+                            "label": "Is patient pregnant? (if yes, patient must see clinician for transfer to MCH)",
+                            "id": "currentlyPregnant",
                             "type": "obs",
                             "questionOptions": {
+                                "concept": "a8a710ba-1350-11df-a1f1-0026b9348838",
                                 "rendering": "select",
-                                "concept": "a89c26b4-1350-11df-a1f1-0026b9348838",
                                 "answers": [
                                     {
-                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
-                                        "label": "Yes"
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
                                     },
                                     {
-                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                                        "label": "No"
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
                                     }
                                 ]
                             },
-                            "validators": []
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "sex !== 'F'"
+                            }
                         },
                         {
-                            "label": "When are the next Lab Investigations:",
+                            "label": "Next viral load date:",
                             "questionOptions": {
-                                "concept": "a89d226c-1350-11df-a1f1-0026b9348838",
+                                "concept": "14437cb4-5f2c-4274-95b4-8f1d7be491b5",
                                 "rendering": "date"
                             },
                             "type": "obs",
@@ -134,7 +125,7 @@
                             ]
                         },
                         {
-                            "label": "Refer to Clinician Today:",
+                            "label": "Refer to clinician today:",
                             "type": "obs",
                             "questionOptions": {
                                 "rendering": "select",
@@ -159,7 +150,7 @@
                     "isExpanded": "true",
                     "questions": [
                         {
-                            "label": "To Express Care Nurse:",
+                            "label": "Express care:",
                             "type": "obs",
                             "required": "true",
                             "questionOptions": {
@@ -181,7 +172,7 @@
                             ]
                         },
                         {
-                            "label": "To clinician:",
+                            "label": "Clinician:",
                             "type": "obs",
                             "required": "true",
                             "questionOptions": {

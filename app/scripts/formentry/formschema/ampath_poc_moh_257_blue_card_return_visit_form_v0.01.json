@@ -165,7 +165,7 @@
                     "label": "OB/Gyn History",
                     "questions": [
                         {
-                            "label": "Pregnancy status",
+                            "label": "Pregnancy status:",
                             "id": "pregStatus",
                             "questionOptions": {
                                 "concept": "6b4f1d00-0a27-41dd-a299-fb7dc730819c",
@@ -201,7 +201,7 @@
                             "validators": []
                         },
                         {
-                            "label": "Expected Date of Delivery:",
+                            "label": "EDD:",
                             "questionOptions": {
                                 "concept": "a8aaddbc-1350-11df-a1f1-0026b9348838",
                                 "rendering": "date"
@@ -538,6 +538,7 @@
                 }
             ]
         },
+        
         {
             "label": "Adherence and Medication Given",
             "sections": [
@@ -1198,6 +1199,34 @@
                                     }
                                 }
                             }
+                        },
+                        {
+                            "type": "obs",
+                            "label": "Viral load:",
+                            "id": "viralLoad_test",
+                            "questionOptions": {
+                                "concept": "a8982474-1350-11df-a1f1-0026b9348838",
+                                "rendering": "number",
+                                "max": "10000000",
+                                "min": "0",
+                                "showDate": "true",
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(viralLoad_test) && isEmpty(myValue)",
+                                            "message": "Date result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(viralLoad_test)"
+                                    }
+                                }
+                            },
+                            "validators": []
                         },
                         {
                             "label": "Other (specify):",

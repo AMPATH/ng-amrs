@@ -1,0 +1,127 @@
+{
+    "name": "component_education",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Education",
+            "sections": [
+                {
+                    "label": "Education",
+                    "questions": [
+                        {
+                            "label": "Have you ever attended school?",
+                            "id": "everAttendedSchool",
+                            "questionOptions": {
+                                "concept": "a8aae64a-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Are you currently attending school?",
+                            "id": "currInSchool",
+                            "questionOptions": {
+                                "concept": "67301b7e-6c84-4455-8de6-b8f6dfdc5f56",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    },
+                                    {
+                                        "concept": "a8aff356-1350-11df-a1f1-0026b9348838",
+                                        "label": "Completed"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "If yes, which level have you reached or completed?",
+                            "id": "levelCompleted",
+                            "questionOptions": {
+                                "concept": "a8aae726-1350-11df-a1f1-0026b9348838",
+                                "rendering": "number",
+                                "max": "24",
+                                "min": "0"
+                                
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "If no,why do you not attend school:",
+                            "id": "notInSchool",
+                            "questionOptions": {
+                                "concept": "70505673-be4c-44eb-9196-bb114f291dba",
+                                "answers": [
+                                    {
+                                        "concept": "6444e4ba-447b-4ccc-adbd-ac6416b7c5f8",
+                                        "label": "Lack of school uniform"
+                                    },
+                                    {
+                                        "concept": "d07dab51-304d-4277-ba31-7031ae6c2f78",
+                                        "label": "Fees"
+                                    },
+                                    {
+                                        "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
+                                        "label": "Illness"
+                                    },
+                                    {
+                                        "concept": "a89de526-1350-11df-a1f1-0026b9348838",
+                                        "label": "School is far"
+                                    },
+                                    {
+                                        "concept": "7e7d4555-362a-498a-b5ed-abcddcfce2a7",
+                                        "label": "Personal choice"
+                                    },
+                                    {
+                                        "concept": "a89ecb6c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Taking care of younger siblings"
+                                    },
+                                    {
+                                        "concept": "cfa0df75-6932-4d5a-b9bb-8133fb8771fb",
+                                        "label": "To get money or food on the street"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other:"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                       {
+                            "label": "Other(specify):",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                                "rendering": "text"
+                            },
+                            "validators": []
+                        } 
+                    ]
+                }
+            ]
+        }
+    ]
+}
