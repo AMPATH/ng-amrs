@@ -61,10 +61,15 @@
       </td>
     </tr>
   </table>
-  <button  ng-disabled='disabled' class="btn btn-info" ng-click="getMoreNotes()">
+  <button  ng-hide='allDataLoaded' class="btn btn-info" ng-click="getMoreNotes()">
     <span>Fetch More notes <i ng-show="fetching" style="font-size:14px" class="fa fa-spinner fa-spin"></i></span>
   </button>
-
+  <div ng-show='allDataLoaded' >
+    <p class="bg-info" style="padding:4px;">
+      <b>
+        <span style="color:green;" class="glyphicon glyphicon-ok" />All notes loaded {{'[ ' + notes.length + ' ]'}}</b>
+    <p>
+  </div>
 </div>
 
 <!-- <div data-ng-if="!isBusy && hasNotes" class="card" data-ng-repeat="note in notes | filter:searchString">
