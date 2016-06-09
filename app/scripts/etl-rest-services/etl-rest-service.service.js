@@ -14,12 +14,12 @@
   ];
 
   function EtlRestService(EtlRestServicesSettings, $resource, CacheFactory, $q) {
-      var defaultCachingProperty =
-          CacheFactory(Math.random() + 'cache', {
-              maxAge: 5 * 60 * 1000, // Items added to this cache expire after 15 minutes
-              cacheFlushInterval: 5 * 60 * 1000, // This cache will clear itself every hour
-              deleteOnExpire: 'aggressive' // Items will be deleted from this cache when they expire
-          });
+    var defaultCachingProperty =
+      CacheFactory(Math.random() + 'cache', {
+        maxAge: 5 * 60 * 1000, // Items added to this cache expire after 15 minutes
+        cacheFlushInterval: 5 * 60 * 1000, // This cache will clear itself every hour
+        deleteOnExpire: 'aggressive' // Items will be deleted from this cache when they expire
+      });
     var serviceDefinition;
     serviceDefinition = {
       getResource: getResource,
@@ -44,28 +44,43 @@
       getPatientByIndicatorAndLocation: getPatientByIndicatorAndLocation,
       getMoh731Report: getMoh731Report,
       getIndicatorsSchemaWithSections: getIndicatorsSchemaWithSections,
-      getPatientLevelReminders:getPatientLevelReminders,
-      getPatientListReportByIndicatorAndLocation:getPatientListReportByIndicatorAndLocation,
-      getHivOverviewVisualizationReport: getHivOverviewVisualizationReport
+      getPatientLevelReminders: getPatientLevelReminders,
+      getPatientListReportByIndicatorAndLocation: getPatientListReportByIndicatorAndLocation,
+      getHivOverviewVisualizationReport: getHivOverviewVisualizationReport,
+      getClinicalNotes: getClinicalNotes
 
     };
     return serviceDefinition;
 
     function getResource(path, cacheProperty) {
-        var caching = defaultCachingProperty;
-        if(!_.isEmpty(cacheProperty)) {
-            caching = cacheProperty;
+      var caching = defaultCachingProperty;
+      if (!_.isEmpty(cacheProperty)) {
+        caching = cacheProperty;
+      }
+      return $resource(EtlRestServicesSettings.getCurrentRestUrlBase().trim() + path, {
+        uuid: '@uuid'
+      }, {
+        get: {
+          method: 'GET',
+          cache: caching
         }
-        return $resource(EtlRestServicesSettings.getCurrentRestUrlBase().trim() + path, {
-            uuid: '@uuid'
-        }, {
-            get: {
-            method: 'GET',
-            cache: caching
-            }
-        });
+      });
     }
 
+    function getClinicalNotesResource(path, cacheProperty) {
+      var caching = defaultCachingProperty;
+      if (!_.isEmpty(cacheProperty)) {
+        caching = cacheProperty;
+      }
+      return $resource(EtlRestServicesSettings.getCurrentRestUrlBase().trim() + path, {
+        uuid: '@uuid'
+      }, {
+        get: {
+          method: 'GET',
+          cache: caching
+        }
+      });
+    }
 
     function getHivSummary(patientUuid, startIndex, limit, successCallback, failedCallback) {
       var resource = getResource('patient/:uuid/hiv-summary');
@@ -80,26 +95,46 @@
       var params = {
         startIndex: startIndex,
         uuid: patientUuid,
+        limit: limit,
+
+      };
+
+      if (typeof successCallback === 'function') {
+        return resource.get(params).$promise.then(function(response) {
+          successCallback(response);
+        }, function(error) {
+          if (typeof failedCallback === 'function') {
+            failedCallback('Error processing request', error);
+          }
+          console.error(error);
+        });
+      } else {
+        return resource.get(params).$promise.then(function(response) {
+          return response;
+        }, function(response) {
+          // Something went crazy
+          return $q.reject(response);
+        });
+      }
+    }
+
+    function getClinicalNotes(patientUuid, startIndex, limit) {
+      var resource = getResource('patient/:uuid/clinical-notes');
+      if (!startIndex) {
+        startIndex = 0;
+      }
+
+      if (!limit) {
+        limit = 10;
+      }
+
+      var params = {
+        startIndex: startIndex,
+        uuid: patientUuid,
         limit: limit
       };
 
-      if(typeof successCallback === 'function') {
-        return resource.get(params).$promise.then(function(response) {
-            successCallback(response);
-          }, function(error) {
-            if(typeof failedCallback === 'function') {
-              failedCallback('Error processing request', error);
-            }
-            console.error(error);
-          });
-       } else {
-         return resource.get(params).$promise.then(function(response) {
-           return response;
-         }, function(response) {
-           // Something went crazy
-           return $q.reject(response);
-         });
-       }
+      return resource.get(params).$promise;
     }
 
     function getVitals(patientUuid, startIndex, limit, successCallback, failedCallback) {
@@ -118,23 +153,23 @@
         limit: limit
       };
 
-      if(typeof successCallback === 'function') {
+      if (typeof successCallback === 'function') {
         return resource.get(params).$promise.then(function(response) {
-            successCallback(response);
-          }, function(error) {
-            if(typeof failedCallback === 'function') {
-              failedCallback('Error processing request', error);
-            }
-            console.error(error);
-          });
-       } else {
-         return resource.get(params).$promise.then(function(response) {
-           return response;
-         }, function(response) {
-           // Something went crazy
-           return $q.reject(response);
-         });
-       }
+          successCallback(response);
+        }, function(error) {
+          if (typeof failedCallback === 'function') {
+            failedCallback('Error processing request', error);
+          }
+          console.error(error);
+        });
+      } else {
+        return resource.get(params).$promise.then(function(response) {
+          return response;
+        }, function(response) {
+          // Something went crazy
+          return $q.reject(response);
+        });
+      }
     }
 
     function getPatientTests(patientUuid, startIndex, limit, successCallback, failedCallback) {
@@ -403,25 +438,32 @@
           failedCallback('Error processing request', error);
         });
     }
-    function getPatientListReportByIndicatorAndLocation(locationIds,startDate,endDate,reportName,indicator,
-                                                        successCallback, failedCallback,locationUuids,startIndex,limit){
-      var resource=getResource('patient-list-by-indicator');
-      var params={endDate:endDate,reportName:reportName,indicator:indicator,startDate:startDate,
-        locationIds:locationIds, locationUuids:locationUuids};
-      if(startIndex!==undefined){
-        params.startIndex=startIndex;
+
+    function getPatientListReportByIndicatorAndLocation(locationIds, startDate, endDate, reportName, indicator,
+      successCallback, failedCallback, locationUuids, startIndex, limit) {
+      var resource = getResource('patient-list-by-indicator');
+      var params = {
+        endDate: endDate,
+        reportName: reportName,
+        indicator: indicator,
+        startDate: startDate,
+        locationIds: locationIds,
+        locationUuids: locationUuids
+      };
+      if (startIndex !== undefined) {
+        params.startIndex = startIndex;
       }
 
-      if(limit!==undefined){
-        params.limit=limit;
+      if (limit !== undefined) {
+        params.limit = limit;
       }
 
       return resource.get(params).$promise
-        .then(function(response){
+        .then(function(response) {
           successCallback(response);
         })
-        .catch(function(error){
-          failedCallback('Error processing request',error);
+        .catch(function(error) {
+          failedCallback('Error processing request', error);
         });
 
     }
@@ -572,12 +614,12 @@
       }];
     }
 
-    function getDataEntryStatisticsQueryParam(subType, startDate, endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid,groupBy) {
+    function getDataEntryStatisticsQueryParam(subType, startDate, endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid, groupBy) {
       var param = {
         subType: subType, //mandatory params
         startDate: startDate,
         endDate: endDate,
-        groupBy:groupBy
+        groupBy: groupBy
       };
 
       var paramConfig = {};
@@ -604,8 +646,8 @@
           paramConfig = getParamConfigObj(['locationUuids', 'encounterTypeUuids', 'formUuids', 'creatorUuid']);
           break;
         case 'patientList':
-            paramConfig = getParamConfigObj(['locationUuids', 'encounterTypeUuids', 'formUuids', 'providerUuid', 'creatorUuid']);
-            break;
+          paramConfig = getParamConfigObj(['locationUuids', 'encounterTypeUuids', 'formUuids', 'providerUuid', 'creatorUuid']);
+          break;
       }
 
       //set-up the param object
@@ -722,37 +764,42 @@
 
     }
 
-    function getPatientLevelReminders(referenceDate,patientUuid,report,indicators,successCallback,failedCallback,
-      startIndex,limit){
-      var resource=getResource('get-report-by-report-name');
+    function getPatientLevelReminders(referenceDate, patientUuid, report, indicators, successCallback, failedCallback,
+      startIndex, limit) {
+      var resource = getResource('get-report-by-report-name');
 
-      var params={report:report,patientUuid:patientUuid, referenceDate:referenceDate, indicators:indicators};
+      var params = {
+        report: report,
+        patientUuid: patientUuid,
+        referenceDate: referenceDate,
+        indicators: indicators
+      };
 
 
-      if(startIndex!==undefined){
-        params.startIndex=startIndex;
+      if (startIndex !== undefined) {
+        params.startIndex = startIndex;
       }
 
-      if(limit!==undefined){
-        params.limit=limit;
+      if (limit !== undefined) {
+        params.limit = limit;
       }
 
       console.log(params);
       console.log(startIndex);
 
       return resource.get(params).$promise
-        .then(function(response){
+        .then(function(response) {
           successCallback(response);
         })
-        .catch(function(error){
-          failedCallback('Error processing request',error);
+        .catch(function(error) {
+          failedCallback('Error processing request', error);
           console.error(error);
         });
 
     }
 
     function getHivOverviewVisualizationReport(startDate, endDate, report, groupBy, locationUuids, orderBy,
-                                               indicators,  successCallback, failedCallback, startIndex, limit) {
+      indicators, successCallback, failedCallback, startIndex, limit) {
       var resource = getResource('get-report-by-report-name');
 
       var params = {
@@ -788,5 +835,5 @@
 
     }
 
-    }
+  }
 })();

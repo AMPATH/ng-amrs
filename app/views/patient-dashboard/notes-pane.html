@@ -1,18 +1,18 @@
 <form class="form-inline">
-<div class="form-group">
+  <div class="form-group">
     <div class="input-group">
-        <input class="form-control" id="search-textbox" placeholder="Filter..." type="text" ng-model="searchString"/>
-        <div class="input-group-btn">
-            <button class="btn btn-default pull-right" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-        </div>
+      <input class="form-control" id="search-textbox" placeholder="Filter..." type="text" ng-model="searchString" />
+      <div class="input-group-btn">
+        <button class="btn btn-default pull-right" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+      </div>
     </div>
-</div>
+  </div>
 </form>
 <div data-ng-hide="hasNotes || isBusy" class="bg-warning">
   <p>No notes found</p>
 </div>
 <div data-ng-if="hasError" class="bg-error">
-  <p>Sorry, an error occured while fetching! 
+  <p>Sorry, an error occured while fetching!
 </div>
 <div data-ng-if="isBusy">
   <img data-ng-if="isBusy" src="images/ajax-loader.gif" autofocus />
@@ -20,38 +20,51 @@
 </div>
 <div data-ng-if="!isBusy && hasNotes">
   <table class="table table-bordered table-striped">
-  <tr data-ng-repeat="note in notes | filter:searchString" class="note-table-row">
-    <td><span class="note-label-primary">Visit Date: </span><span class="note-info">{{note.visitDate}} 
-      ({{note.scheduled}})</span><br/>
-      <span class="note-label">Provider(s):</span> <span data-ng-repeat="provider in note.providers">
+    <tr data-ng-repeat="note in notes | filter:searchString" class="note-table-row">
+      <td><span class="note-label-primary">Visit Date: </span><span class="note-info">{{note.visitDate}}
+      ({{note.scheduled}})</span>
+        <br/>
+        <span class="note-label">Provider(s):</span> <span data-ng-repeat="provider in note.providers">
         [<span class="note-info">{{provider.name}}, {{provider.encounterType}}</span>]
-      </span><br/>
-      <span class="note-label">Last Viral Load: </span>{{ note.lastViralLoad.value}} (<span class="note-info">{{note.lastViralLoad.date}}</span>) <br/>
-      <span class="note-label">Last CD4 Count: </span>{{ note.lastCD4Count.value}} (<span class="note-info">{{note.lastCD4Count.date}}</span>) <br/>
-      
-      <span class="note-label">Vitals: </span>
-        [<span class="note-label">Weight: </span><span class="note-info">{{note.vitals.weight}}</span>, 
-        <span class="note-label">Height: </span><span class="note-info">{{note.vitals.height}}</span>, 
+        </span>
+        <br/>
+        <span class="note-label">Last Viral Load: </span>{{ note.lastViralLoad.value}} (<span class="note-info">{{note.lastViralLoad.date}}</span>)
+        <br/>
+        <span class="note-label">Last CD4 Count: </span>{{ note.lastCD4Count.value}} (<span class="note-info">{{note.lastCD4Count.date}}</span>)
+        <br/>
+
+        <span class="note-label">Vitals: </span> [
+        <span class="note-label">Weight: </span><span class="note-info">{{note.vitals.weight}}</span>,
+        <span class="note-label">Height: </span><span class="note-info">{{note.vitals.height}}</span>,
         <span class="note-label">BMI: </span><span class="note-info">{{note.vitals.bmi}}</span>,
-        <span class="note-label">Oxygen Saturation: </span><span class="note-info">{{note.vitals.oxygenSaturation}}</span>, 
-        <span class="note-label">Temperature: </span><span class="note-info">{{note.vitals.temperature}}</span>, 
+        <span class="note-label">Oxygen Saturation: </span><span class="note-info">{{note.vitals.oxygenSaturation}}</span>,
+        <span class="note-label">Temperature: </span><span class="note-info">{{note.vitals.temperature}}</span>,
         <span class="note-label">BP: </span><span class="note-info">{{note.vitals.bp}}</span>,
         <span class="note-label">Pulse: </span><span class="note-info">{{note.vitals.pulse}}</span>]
-      <br/>
-      <span class="note-label-primary"><b>CC/HPI:</b> </span><i>{{note.ccHpi}}</i><br/>
-      <span class="note-label-primary"><b>Assessment:</b> </span><i>{{note.assessment}}</i><br/>
-      <span class="note-label">Dispensed ARV drugs: </span>[<span class="note-info">{{note.artRegimen.curArvMeds}}</span>]
-      (<span class="note-label">ARV Start Date: </span><span class="note-info">{{note.artRegimen.startDate}}</span>) <br/>
-      <span class="note-label">Current ARV Regimen Line: </span><span class="note-info">{{note.artRegimen.curArvLine}}</span><br/>
-      
-      <span class="note-label">TB Prophylaxis Plan: </span><span class="note-info">{{note.tbProphylaxisPlan.plan}}</span>
-      (<span class="note-label">Start Date: </span><span class="note-info">{{note.tbProphylaxisPlan.startDate}}</span>,
-      <span class="note-label">Estimated End Date: </span><span class="note-info">{{note.tbProphylaxisPlan.estimatedEndDate}}</span>)
-      <br/>
-      
-       <span class="note-label">RTC Date: </span><span class="note-info">{{note.rtcDate}}</span> 
-    </td>  
-  <tr>
+        <br/>
+        <span class="note-label-primary"><b>CC/HPI:</b> </span><i>{{note.ccHpi}}</i>
+        <br/>
+        <span class="note-label-primary"><b>Assessment:</b> </span><i>{{note.assessment}}</i>
+        <br/>
+        <span class="note-label">Dispensed ARV drugs: </span>[<span class="note-info">{{note.artRegimen.curArvMeds}}</span>] (
+        <span class="note-label">ARV Start Date: </span><span class="note-info">{{note.artRegimen.startDate}}</span>)
+        <br/>
+        <span class="note-label">Current ARV Regimen Line: </span><span class="note-info">{{note.artRegimen.curArvLine}}</span>
+        <br/>
+
+        <span class="note-label">TB Prophylaxis Plan: </span><span class="note-info">{{note.tbProphylaxisPlan.plan}}</span> (
+        <span class="note-label">Start Date: </span><span class="note-info">{{note.tbProphylaxisPlan.startDate}}</span>,
+        <span class="note-label">Estimated End Date: </span><span class="note-info">{{note.tbProphylaxisPlan.estimatedEndDate}}</span>)
+        <br/>
+
+        <span class="note-label">RTC Date: </span><span class="note-info">{{note.rtcDate}}</span>
+      </td>
+    </tr>
+  </table>
+  <button  ng-disabled='disabled' class="btn btn-info" ng-click="getMoreNotes()">
+    <span>Fetch More notes <i ng-show="fetching" style="font-size:14px" class="fa fa-spinner fa-spin"></i></span>
+  </button>
+
 </div>
 
 <!-- <div data-ng-if="!isBusy && hasNotes" class="card" data-ng-repeat="note in notes | filter:searchString">
@@ -66,9 +79,9 @@
     <span class="note-label">Last CD4 Count: </span>{{ note.lastCD4Count.value}} (<span class="note-info">{{note.lastCD4Count.date}}</span>) <br/>
     <span class="note-label">Regimen: </span><br/>
     <div data-ng-repeat="regimen in note.regimens">
-        
+
     </div>
     CC/HPI: <i>{{note.ccHpi}}</i><br/>
     Assessment: <i>{{note.assessment}}</i><br/>
-  </div>  
+  </div>
 </div> -->
