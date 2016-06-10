@@ -38,39 +38,43 @@ jshint -W003, -W026
       $scope.labTestTags =[
         {
           name: 'test_datetime',
-          headers:'date '
+          headers:'Date'
+        },
+        {
+          name: 'hiv_dna_pcr',
+          headers:'DNA PCR'
         },
         {
           name: 'cd4_count',
-          headers:'cd4_count'
+          headers:'CD4'
         },
         {
           name: 'cd4_percent',
-          headers:'cd4_%'
+          headers:'CD4 %'
         },
         {
           name: 'hiv_viral_load',
-          headers:'hiv_vl'
+          headers:'HIV VL'
         },
         {
           name: 'hemoglobin',
-          headers:'hemoglobin'
+          headers:'Hb'
         },
         {
           name: 'ast',
-          headers:'ast'
+          headers:'AST'
         },
         {
           name: 'creatinine',
-          headers:'creatinine'
+          headers:'Cr'
         },
         {
           name: 'chest_xray',
-          headers:'chest_xray'
+          headers:'CXR'
         },
         {
           name: 'tests_ordered',
-          headers:'tests_ordered'
+          headers:'Tests Ordered'
         }
       ] ;
       //DataTable Options
@@ -142,8 +146,8 @@ jshint -W003, -W026
         _.each($scope.labTestTags, function (header) {
           //var visible =(header!=='location_uuid');
           $scope.columns.push({
-            field: header.headers,
-            title: $filter('titlecase')(header.headers.toString().split('_').join(' ')),
+            field: header.name,
+            title: header.headers.toString().split('_').join(' '),
             align: 'center',
             valign: 'center',
            // class: header.name === 'test_datetime' ? 'bst-table-min-width' : undefined,
