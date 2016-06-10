@@ -39,9 +39,9 @@
     $scope.rangeSlider.ionRangeSlider({
       type: "double",
       min: moment(new Date(new Date().setYear(new Date().getFullYear() - 15))).startOf('month').format("X"),
-      max: moment(new Date(new Date().setYear(new Date().getFullYear()))).startOf('month').format("X"),
+      max: moment(new Date(new Date().setYear(new Date().getFullYear()))).endOf('month').format("X"),
       from: moment(new Date($scope.startDate)).startOf('month').format("X"),
-      to: moment(new Date($scope.endDate)).startOf('month').format("X"),
+      to: moment(new Date($scope.endDate)).endOf('month').format("X"),
       grid: true,
       grid_num: 10,
       force_edges: true,
@@ -52,7 +52,7 @@
       keyboard: true,
       onFinish: function (data) {
         $scope.startDate = new Date(moment.unix(data.from).startOf('month'));
-        $scope.endDate = new Date(moment.unix(data.to).startOf('month'));
+        $scope.endDate = new Date(moment.unix(data.to).endOf('month'));
         generateGraph($scope.hivComparative, $scope.startDate, $scope.endDate);
         generateGraph($scope.art, $scope.startDate, $scope.endDate);
         generateGraph($scope.patientStatus, $scope.startDate, $scope.endDate);
@@ -250,7 +250,7 @@
       try{
         $scope.rangeSlider.data("ionRangeSlider").update({
           from: moment(new Date($scope.startDate)).startOf('month').format("X"),
-          to: moment(new Date($scope.endDate)).startOf('month').format("X"),
+          to: moment(new Date($scope.endDate)).endOf('month').format("X"),
         });
       } catch(e){}
     }
