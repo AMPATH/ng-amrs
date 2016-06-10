@@ -16,6 +16,8 @@
     var log;
     var EtlRestServices;
     var moments;
+    var $timeout;
+    var httpBackend;
 
     beforeEach(function () {
       module('ngAmrsApp');
@@ -48,6 +50,7 @@
 
     afterEach(function () {
       EtlRestServices.returnErrorOnNextCall = false;
+
     });
 
     it('HivSummaryIndicatorsCtrl controller should be created successfully', function () {
@@ -102,6 +105,7 @@
     it('should ensure loadPatientList method is defined and it is a function', function () {
       expect(scope.loadPatientList).to.exist;
       expect(scope.loadPatientList).to.be.an('function');
+
     });
 
     it('should ensure setCountType method is defined and it is a function', function () {
@@ -119,7 +123,7 @@
       expect(scope.getIndicatorLabelByName).to.be.an('function');
     });
     it('should ensure main variables needed for the controller exists and is initialised', function () {
-      expect(scope.isBusy).to.be.equal(true);
+      expect(scope.isBusy).to.be.equal(false);
       expect(scope.currentPage).to.be.equal(1);
       expect(scope.groupBy).to.be.equal('groupByLocation');
       expect(scope.reportName).to.be.equal('hiv-summary-report');

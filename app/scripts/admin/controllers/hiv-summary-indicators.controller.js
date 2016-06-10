@@ -8,10 +8,10 @@
   HivSummaryIndicatorsCtrl.$nject =
 
     ['$rootScope', '$scope', '$stateParams', 'EtlRestService', 'HivSummaryIndicatorService', 'moment', '$filter', '$state'
-    ,'$timeout'];
+    ,'$timeout','$modal'];
 
   function HivSummaryIndicatorsCtrl($rootScope, $scope, $stateParams, EtlRestService, HivSummaryIndicatorService, moment,
-                                    $filter, $state, $timeout) {
+                                    $filter, $state, $timeout,$modal) {
 
     //Patient List Directive Properties & Methods
     var date = new Date();
@@ -20,7 +20,6 @@
     $scope.selectedLocation = $stateParams.locationuuid || '';
     $scope.selectedIndicatorBox = $stateParams.indicator || '';
     $scope.selectedLocationName = $stateParams.locationName || '';
-
     $scope.loadPatientList = loadPatientList;
     $scope.ChangeView=ChangeView;
 
@@ -36,6 +35,7 @@
     $scope.isBusy = false;
     $scope.experiencedLoadingError = false;
     $scope.resultIsEmpty= false;
+
 
     //Dynamic DataTable Params
     $scope.indicators = [];  //set filtered indicators to []
@@ -55,42 +55,55 @@
       {name: 'Export Selected', value: 'selected'}];
     $scope.exportDataType = $scope.exportList[1];
     $scope.updateSelectedType = function () {
-      console.log($scope.exportDataType.value, $scope.exportDataType.name);
       var bsTable = document.getElementById('bsTable');
       var element = angular.element(bsTable);
       element.bootstrapTable('refreshOptions', {
         exportDataType: $scope.exportDataType.value
       });
     };
+
     //Start Initialization
     init();
 
     //scope methods
     function init() {
-      if (!loadCachedData())loadIndicatorsSchema();
+      $timeout(function() {
+        if (!loadCachedData())loadIndicatorsSchema();
+      },1000);
     }
 
     function loadHivSummaryIndicators() {
-      $scope.resultIsEmpty= false;
       $scope.experiencedLoadingErrors = false;
+      $scope.resultIsEmpty= false;
       if ($scope.isBusy === true) return;
-      $scope.indicators = [];
+      $scope.indicators =[];
       $scope.isBusy = true;
       if ($scope.countBy && $scope.countBy !== '' && $scope.reportName && $scope.reportName !== ''
-        && $scope.startDate && $scope.startDate !== '')
+        && $scope.startDate && $scope.startDate !== ''&& $scope.selectedIndicatorTags.indicatorTags &&
+        $scope.selectedIndicatorTags.indicatorTags !== [])
+        var locations = getSelectedLocations($scope.selectedLocations);
+        var indicators = getSelectedIndicators($scope.selectedIndicatorTags);
         EtlRestService.getHivSummaryIndicators(
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           $scope.reportName, $scope.countBy, onFetchHivSummaryIndicatorsSuccess, onFetchHivSummaryIndicatorsError,
-          $scope.groupBy,'','encounter_datetime|asc','',0,300, $scope.startAge, $scope.endAge,  $scope.gender);
+          $scope.groupBy,locations,'encounter_datetime|asc',indicators,0,300, $scope.startAge, $scope.endAge,  $scope.gender);
+
     }
 
     function onFetchHivSummaryIndicatorsSuccess(result) {
       $scope.isBusy = false;
       console.log('Sql query for HivSummaryIndicators request=======>', result.sql, result.sqlParams);
-      $scope.indicators = result.result;
-      if(result.result.length===0)  $scope.resultIsEmpty= true;
+      if (result.size === 0) {
+        $scope.allDataLoaded = true;
+      } else {
+        $scope.indicators.length === 0 ? $scope.indicators.push.apply($scope.indicators, result.result) : $scope.indicators = result.result;
+
+      }
       buildDataTable();
+      $scope.chartFilters = true;
+
+
     }
 
     function onFetchHivSummaryIndicatorsError(error) {
@@ -161,8 +174,10 @@
         $scope.startAge = HivSummaryIndicatorService.getReportFilters().startAge;
         $scope.endAge = HivSummaryIndicatorService.getReportFilters().endAge;
         $scope.gender = HivSummaryIndicatorService.getReportFilters().gender;
-
+        $scope.selectedLocations=HivSummaryIndicatorService.getSelectedLocation();
+        $scope.selectedIndicatorTags =HivSummaryIndicatorService.getSelectedIndicatorTags();
         buildDataTable();
+      //  $scope.chartFilters = true;
         return true;
       }
     }
@@ -171,6 +186,42 @@
       $state.go('admin.hiv-summary-combined');
     }
 
+    /**
+     * converts wrapped selected indicators and locations to comma separated strings
+     */
+    function getSelectedIndicators(selectedIndicatorObject) {
+      var indicators;
+      if (selectedIndicatorObject.indicatorTags)
+        for (var i = 0; i < selectedIndicatorObject.indicatorTags.length; i++) {
+          if (i === 0) {
+            indicators = '' + selectedIndicatorObject.indicatorTags[i].name;
+          } else {
+            indicators =
+              indicators + ',' + selectedIndicatorObject.indicatorTags[i].name;
+          }
+        }
+      return indicators;
+    }
+
+    function getSelectedLocations(selectedLocationObject) {
+      var locations;
+      try {
+        if (angular.isDefined(selectedLocationObject.locations)) {
+          for (var i = 0; i < selectedLocationObject.locations.length; i++) {
+            if (i === 0) {
+              locations = '' + selectedLocationObject.locations[i].uuId();
+            }
+            else {
+              locations =
+                locations + ',' + selectedLocationObject.locations[i].uuId();
+            }
+          }
+        }
+      } catch (e) {
+
+      }
+      return locations;
+    }
     /**
      * Function to cache data in order to prevent app from hitting the server when a resource is requested
      */
@@ -184,6 +235,10 @@
         endAge:$scope.endAge,
         gender:$scope.gender
       });
+      HivSummaryIndicatorService.setSelectedIndicatorTags($scope.selectedIndicatorTags);
+     // if($scope.selectedLocations && $scope.selectedLocations.locations.length>0)
+       HivSummaryIndicatorService.setSelectedLocation($scope.selectedLocations);
+
     }
 
     /**
@@ -193,24 +248,34 @@
       $timeout(function () {
         buildColumns();
         buildTableControls();
-      }, 500);
+      }, 1000);
+    }
+
+    function buildSingleColumn(header) {
+      var visible =(header.name!=='location_uuid');
+      $scope.columns.push({
+        field: header.name.toString(),
+        title: $filter('titlecase')(header.name.toString().split('_').join(' ')),
+        align: 'center',
+        valign: 'center',
+        class:header.name==='location'?'bst-table-min-width':undefined,
+        visible: visible,
+        tooltip: true,
+        sortable: true,
+        formatter: function (value, row, index) {
+          return cellFormatter(value, row, index, header);
+        }
+      });
     }
 
     function buildColumns() {
       $scope.columns = [];
       _.each($scope.indicatorTags, function (header) {
-        var visible =(header.name!=='location_uuid');
-        $scope.columns.push({
-          field: header.name.toString(),
-          title: $filter('titlecase')(header.name.toString().split('_').join(' ')),
-          align: 'center',
-          valign: 'center',
-          class:header.name==='location'?'bst-table-min-width':undefined,
-          sortable:true,
-          visible:visible,
-          tooltip: true,
-          formatter: function (value, row, index) {
-            return cellFormatter(value, row, index, header);
+       if (header.name === 'location')
+         buildSingleColumn(header);
+        _.each($scope.selectedIndicatorTags.indicatorTags, function (selectedIndicator) {
+          if (selectedIndicator.name === header.name) {
+            buildSingleColumn(header);
           }
         });
       });

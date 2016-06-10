@@ -74,7 +74,7 @@
 
 
     it('should ensure main variables needed for the controller are initialised', function(){
-      expect(scope.isBusy).to.be.equal(true);
+      expect(scope.isBusy).to.be.equal(false);
       expect(scope.currentPage).to.be.equal(1);
       expect(scope.groupBy).to.be.equal('groupByYear,groupByMonth');
       expect(scope.reportName).to.be.equal('hiv-summary-monthly-report');

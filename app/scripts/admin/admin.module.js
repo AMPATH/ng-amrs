@@ -10,6 +10,8 @@
             'ui.bootstrap',
             'app.dataAnalytics',
             'bsTable',
-            'kendo.directives'
+            'kendo.directives',
+            'app.clinicDashboard'
+
         ]);
 })();
