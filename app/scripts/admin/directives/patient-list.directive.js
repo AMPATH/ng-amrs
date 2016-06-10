@@ -40,6 +40,9 @@
     $scope.currentPage = 1;
     $scope.startDate = HivSummaryIndicatorService.getStartDate();
     $scope.endDate = HivSummaryIndicatorService.getEndDate();
+    $scope.startAge = HivSummaryIndicatorService.getReportFilters().startAge;
+    $scope.endAge = HivSummaryIndicatorService.getReportFilters().endAge;
+    $scope.gender = HivSummaryIndicatorService.getReportFilters().gender;
 
 
     //function types scope members
@@ -81,7 +84,8 @@
         EtlRestService.getPatientListByIndicator($scope.locationUuid,
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-          $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError, $scope.nextStartIndex, 300);
+          $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError, $scope.nextStartIndex, 300,
+          $scope.startAge, $scope.endAge,  $scope.gender);
 
       }
       else {

@@ -82,7 +82,7 @@
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           $scope.reportName, $scope.countBy, onFetchHivSummaryIndicatorsSuccess, onFetchHivSummaryIndicatorsError,
-          $scope.groupBy,locations,'encounter_datetime|asc');
+          $scope.groupBy,locations,'encounter_datetime|asc','',0,300, $scope.startAge, $scope.endAge,  $scope.gender);
     }
 
     function getSelectedLocations(selectedLocationObject) {
@@ -179,6 +179,9 @@
         $scope.startDate=HivMonthlySummaryIndicatorService.getStartDate();
         $scope.endDate=HivMonthlySummaryIndicatorService.getEndDate();
         $scope.selectedLocations=HivMonthlySummaryIndicatorService.getSelectedLocation();
+        $scope.startAge = HivMonthlySummaryIndicatorService.getReportFilters().startAge;
+        $scope.endAge = HivMonthlySummaryIndicatorService.getReportFilters().endAge;
+        $scope.gender = HivMonthlySummaryIndicatorService.getReportFilters().gender;
         buildDataTable();
 
         return true;
@@ -192,6 +195,11 @@
       HivMonthlySummaryIndicatorService.setIndicators($scope.indicators);
       HivMonthlySummaryIndicatorService.setStartDate($scope.startDate);
       HivMonthlySummaryIndicatorService.setEndDate($scope.endDate);
+      HivMonthlySummaryIndicatorService.setReportFilters({
+        startAge:$scope.startAge,
+        endAge:$scope.endAge,
+        gender:$scope.gender
+      });
       if($scope.selectedLocations && $scope.selectedLocations.locations.length>0)
         HivMonthlySummaryIndicatorService.setSelectedLocation($scope.selectedLocations);
     }

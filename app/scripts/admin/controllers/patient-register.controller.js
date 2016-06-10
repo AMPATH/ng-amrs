@@ -94,7 +94,7 @@
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
           $scope.reportName, $scope.countBy, onFetchIndicatorsSuccess, onFetchIndicatorsError, $scope.groupBy,
-          locations, '', indicators, $scope.nextStartIndex, 300);
+          locations, '', indicators, $scope.nextStartIndex, 300,$scope.startAge, $scope.endAge,  $scope.gender);
       } else {
         $scope.isBusy = false;
       }

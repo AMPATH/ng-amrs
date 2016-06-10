@@ -19,6 +19,11 @@
     var defaultIndicators;
     var selectedPosition;
     var selectedMonth;
+    var reportFilters={
+      startAge:0,
+      endAge:120,
+      gender:['M','F']
+    };
     serviceDefinition = {
       getSelectedLocation: getSelectedLocation,
       setSelectedLocation: setSelectedLocation,
@@ -42,7 +47,9 @@
       getSelectedPosition:getSelectedPosition,
       setSelectedPosition:setSelectedPosition,
       getSelectedMonth:getSelectedMonth,
-      setSelectedMonth:setSelectedMonth
+      setSelectedMonth:setSelectedMonth,
+      getReportFilters:getReportFilters,
+      setReportFilters:setReportFilters
     };
     return serviceDefinition;
     function getSelectedLocation() {
@@ -67,7 +74,13 @@
       return selectedPosition;
     }
 
+    function getReportFilters(){
+      return reportFilters;
+    }
 
+    function setReportFilters(value){
+      reportFilters=value;
+    }
     function getSelectedIndicatorTags() {
       return selectedIndicatorTags;
     }

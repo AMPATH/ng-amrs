@@ -375,7 +375,7 @@
     it('should make an api call to the patient-by-indicator etl rest endpoint when getPatientListByIndicator is ' +
       'called with location uuid report-indicator, and date range', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/patient-by-indicator?' +
-        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&startDate=2014-08-05T21:00:00.000Z').respond({});
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&indicator=passed-indicator&startDate=2014-08-05T21:00:00.000Z').respond({});
       etlRestService.getPatientListByIndicator('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-indicator', function () { }, function () { });
       httpBackend.flush();
@@ -386,7 +386,7 @@
 
       //case startIndex and limit are defined
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/patient-by-indicator?' +
-        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&limit=10&startDate=2014-08-05T21:00:00.000Z' +
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&indicator=passed-indicator&limit=10&startDate=2014-08-05T21:00:00.000Z' +
         '&startIndex=0').respond({});
       etlRestService.getPatientListByIndicator('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-indicator', function () { }, function () { }, 0, 10);
@@ -394,7 +394,7 @@
 
       //case startIndex defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/patient-by-indicator?' +
-        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&startDate=2014-08-05T21:00:00.000Z&startIndex=0')
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&indicator=passed-indicator&startDate=2014-08-05T21:00:00.000Z&startIndex=0')
         .respond({});
       etlRestService.getPatientListByIndicator('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-indicator', function () { }, function () { }, 0, undefined);
@@ -402,7 +402,7 @@
 
       //case limit defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/patient-by-indicator?' +
-        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&limit=10&startDate=2014-08-05T21:00:00.000Z')
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&indicator=passed-indicator&limit=10&startDate=2014-08-05T21:00:00.000Z')
         .respond({});
       etlRestService.getPatientListByIndicator('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-indicator', function () { }, function () { }, undefined, 10 );
@@ -411,7 +411,7 @@
 
     it('should call the onSuccess callback getPatientListByIndicator request successfully returns', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/patient-by-indicator?' +
-        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&startDate=2014-08-05T21:00:00.000Z').respond({});
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&indicator=passed-indicator&startDate=2014-08-05T21:00:00.000Z').respond({});
       etlRestService.getPatientListByIndicator('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-indicator', callbacks.onSuccess, callbacks.onFailure);
       httpBackend.flush();
@@ -421,7 +421,7 @@
 
     it('should call the onFailed callback when getPatientListByIndicator request is not successful', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'location/passed-uuid/patient-by-indicator?' +
-        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&startDate=2014-08-05T21:00:00.000Z').respond(500);
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&indicator=passed-indicator&startDate=2014-08-05T21:00:00.000Z').respond(500);
       etlRestService.getPatientListByIndicator('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-indicator', callbacks.onSuccess, callbacks.onFailure);
       httpBackend.flush();
@@ -435,7 +435,7 @@
     it('should make an api call to the patient-by-indicator etl rest endpoint when getPatientByIndicatorAndLocation is ' +
       'called with location uuid report-indicator, and date range', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient-by-indicator?' +
-        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&locationIds=passed-uuid&startDate=2014-08-05T21:00:00.000Z').respond({});
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&indicator=passed-indicator&locationIds=passed-uuid&startDate=2014-08-05T21:00:00.000Z').respond({});
       etlRestService.getPatientByIndicatorAndLocation('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-indicator', function () { }, function () { });
       httpBackend.flush();
@@ -446,7 +446,7 @@
 
       //case startIndex and limit are defined
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient-by-indicator?' +
-        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&limit=10&locationIds=passed-uuid&locationUuids=passed-uuid&startDate=2014-08' +
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&indicator=passed-indicator&limit=10&locationIds=passed-uuid&locationUuids=passed-uuid&startDate=2014-08' +
         '-05T21:00:00.000Z' + '&startIndex=0').respond({});
       etlRestService.getPatientByIndicatorAndLocation('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-indicator', function () { }, function () { }, 'passed-uuid', 0, 10);
@@ -454,7 +454,7 @@
 
       //case startIndex defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient-by-indicator?' +
-        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&locationIds=passed-uuid&locationUuids=passed-uuid&' +
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&indicator=passed-indicator&locationIds=passed-uuid&locationUuids=passed-uuid&' +
         'startDate=2014-08-05T21:00' +
         ':00.000Z&startIndex=0')
         .respond({});
@@ -464,7 +464,7 @@
 
       //case limit defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient-by-indicator?' +
-        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&limit=10&locationIds=passed-uuid&locationUuids=' +
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&indicator=passed-indicator&limit=10&locationIds=passed-uuid&locationUuids=' +
         'passed-uuid&startDate=2014-08' +
         '-05T21:00:00.000Z')
         .respond({});
@@ -475,7 +475,7 @@
 
     it('should call the onSuccess callback getPatientByIndicatorAndLocation request successfully returns', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient-by-indicator?' +
-        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&locationIds=passed-uuid&startDate=2014-08-05T21:00' +
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&indicator=passed-indicator&locationIds=passed-uuid&startDate=2014-08-05T21:00' +
         ':00.000Z').respond({});
       etlRestService.getPatientByIndicatorAndLocation('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-indicator', callbacks.onSuccess, callbacks.onFailure);
@@ -486,7 +486,7 @@
 
     it('should call the onFailed callback when getPatientByIndicatorAndLocation request is not successful', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'patient-by-indicator?' +
-        'endDate=2015-09-05T21:00:00.000Z&indicator=passed-indicator&locationIds=passed-uuid&startDate=2014-08-05T21:' +
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&indicator=passed-indicator&locationIds=passed-uuid&startDate=2014-08-05T21:' +
         '00:00.000Z').respond(500);
       etlRestService.getPatientByIndicatorAndLocation('passed-uuid', '2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-indicator', callbacks.onSuccess, callbacks.onFailure);
@@ -502,7 +502,7 @@
     it('should make an api call to the hiv etl rest endpoint when getHivSummaryIndicators is ' +
       'called with countBy, report, and date range', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?countBy=passed-countBy&' +
-        'endDate=2015-09-05T21:00:00.000Z&groupBy=passed-groupBy&indicators=passed-indicators&locationUuids=' +
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&groupBy=passed-groupBy&indicators=passed-indicators&locationUuids=' +
         'passed-locations&order=passed-encounter-date&report=passed-report&startDate=2014-08-05T21:00:00.000Z').respond({});
       etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-report','passed-countBy', function () { }, function () { },'passed-groupBy','passed-locations',
@@ -516,7 +516,7 @@
 
       //case startIndex and limit are defined
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?countBy=passed-countBy&' +
-        'endDate=2015-09-05T21:00:00.000Z&groupBy=passed-groupBy&indicators=passed-indicators&limit=10&locationUuids=' +
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&groupBy=passed-groupBy&indicators=passed-indicators&limit=10&locationUuids=' +
         'passed-locations&order=passed-encounter-date&report=passed-report&startDate=2014-08-05T21:00:00.000Z' +
         '&startIndex=0').respond({});
       etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
@@ -527,7 +527,7 @@
 
       //case startIndex defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?countBy=passed-countBy&' +
-        'endDate=2015-09-05T21:00:00.000Z&groupBy=passed-groupBy&indicators=passed-indicators&locationUuids=passed-' +
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&groupBy=passed-groupBy&indicators=passed-indicators&locationUuids=passed-' +
         'locations&order=passed-encounter-date&report=passed-report&startDate=2014-08-05T21:00:00.000Z&startIndex=0')
         .respond({});
       etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
@@ -538,7 +538,7 @@
 
       //case limit defined only
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?countBy=passed-countBy&' +
-        'endDate=2015-09-05T21:00:00.000Z&groupBy=passed-groupBy&indicators=passed-indicators&limit=10&locationUuids=' +
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&groupBy=passed-groupBy&indicators=passed-indicators&limit=10&locationUuids=' +
         'passed-locations&order=passed-encounter-date&report=passed-report&startDate=2014-08-05T21:00:00.000Z')
         .respond({});
       etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
@@ -550,7 +550,7 @@
 
     it('should call the onSuccess callback getHivSummaryIndicators request successfully returns', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?countBy=passed-countBy&' +
-        'endDate=2015-09-05T21:00:00.000Z&report=passed-report&startDate=2014-08-05T21:00:00.000Z').respond({});
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&report=passed-report&startDate=2014-08-05T21:00:00.000Z').respond({});
       etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-report', 'passed-countBy', callbacks.onSuccess, callbacks.onFailure);
       httpBackend.flush();
@@ -560,7 +560,7 @@
 
     it('should call the onFailed callback when getHivSummaryIndicators request is not successful', function () {
       httpBackend.expectGET(settingsService.getCurrentRestUrlBase() + 'get-report-by-report-name?countBy=passed-countBy&' +
-        'endDate=2015-09-05T21:00:00.000Z&report=passed-report&startDate=2014-08-05T21:00:00.000Z').respond(500);
+        'endDate=2015-09-05T21:00:00.000Z&gender=M,F&report=passed-report&startDate=2014-08-05T21:00:00.000Z').respond(500);
       etlRestService.getHivSummaryIndicators('2014-08-05T21:00:00.000Z', '2015-09-05T21:00:00.000Z',
         'passed-report', 'passed-countBy', callbacks.onSuccess, callbacks.onFailure);
       httpBackend.flush();

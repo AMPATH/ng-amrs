@@ -36,6 +36,9 @@ jshint -W003, -W026
         $scope.selectedMonth=new Date(HivMonthlySummaryIndicatorService.getSelectedMonth());
         $scope.startDate= new Date($scope.selectedMonth.getFullYear(), $scope.selectedMonth.getMonth(), 1);
         $scope.endDate= new Date($scope.selectedMonth.getFullYear(), $scope.selectedMonth.getMonth()+1, 1)-1;
+        $scope.startAge = HivMonthlySummaryIndicatorService.getReportFilters().startAge;
+        $scope.endAge = HivMonthlySummaryIndicatorService.getReportFilters().endAge;
+        $scope.gender = HivMonthlySummaryIndicatorService.getReportFilters().gender;
         //function types scope members
         $scope.loadPatientList = loadPatientList;
         //$scope.loadPatient = loadPatient;
@@ -67,7 +70,8 @@ jshint -W003, -W026
               EtlRestService.getPatientByIndicatorAndLocation($scope.locationUuid,
                 moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
                 moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-                $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError,$scope.locationUuid, $scope.nextStartIndex, 300);
+                $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError,$scope.locationUuid,
+                $scope.nextStartIndex, 300,  $scope.startAge, $scope.endAge,  $scope.gender);
             }
             else{
               $scope.experiencedLoadingErrors = true;
