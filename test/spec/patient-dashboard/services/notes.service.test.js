@@ -46,6 +46,11 @@
       etlVital = etlMockService.getVitalsETLRestMock();
       vitalsModel = new VitalEtlModel.vital(etlVital);
       
+      function getEstimatedDate(startDate, period) {
+        return moment(startDate).add(period, 'months')
+                              .toDate().toISOString();
+      }
+      
       expectedNote = {
         visitDate:hivSummaryModel.encounterDatetime(), 
         scheduled: hivSummaryModel.scheduledVisit(),
@@ -74,7 +79,8 @@
         tbProphylaxisPlan: {
           plan: 'START DRUGS',
           startDate:hivSummaryModel.tbProphylaxisStartDate(),
-          estimatedEndDate: '2016-08-17T21:00:00.000Z'
+          estimatedEndDate: getEstimatedDate(
+                              hivSummaryModel.tbProphylaxisStartDate(), 6)
         },
         ccHpi: 'None',
         assessment: 'None', 
