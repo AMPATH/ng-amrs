@@ -28,12 +28,13 @@ jshint -W003, -W026, -W117, -W098
         '$filter',
         '$timeout',
         '$location',
-        'dialogs'
+        'dialogs',
+        'UserDefaultPropertiesService'
   ];
 
   function currentVisitController($scope, $rootScope, vService, $stateParams,
                                     encService, encModel, $filter, $timeout,
-                                    $location, dialogs) {
+                                    $location, dialogs, userDefPropService) {
 
         $scope.currentVisit = initializeCurrentVisit();
         $scope.loadingVisitTypes = true;
@@ -55,7 +56,13 @@ jshint -W003, -W026, -W117, -W098
                  visitType: $scope.currentVisit.visitType,
                  startDatetime: getFormattedDate($scope.currentVisit.startDatetime)
              };
-
+             
+             // Set location to default user's if available.
+             var location = userDefPropService.getCurrentUserDefaultLocation();
+             if(angular.isDefined(location.uuid)) {
+               newVisit.location = location.uuid;
+             }
+             
              vService.saveVisit(newVisit, function(data) {
                  $scope.currentVisit.uuid = data.uuid;
                  $scope.visitStarted = true;
