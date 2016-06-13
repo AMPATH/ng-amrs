@@ -538,7 +538,6 @@
                 }
             ]
         },
-        
         {
             "label": "Adherence and Medication Given",
             "sections": [
@@ -1352,11 +1351,12 @@
             "label": "PWPs",
             "sections": [
                 {
-                    "label": "Prevention With Positives",
+                    "label": "Prevention with positives",
                     "questions": [
                         {
                             "label": "Prevention with positives: At risk population:",
                             "questionOptions": {
+                                "rendering": "select",
                                 "concept": "93aa3f1d-1c39-4196-b5e6-8adc916cd5d6",
                                 "answers": [
                                     {
@@ -1383,19 +1383,20 @@
                                         "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
                                         "label": "N/A"
                                     }
-                                ],
-                                "rendering": "select"
+                                ]
                             },
                             "type": "obs",
                             "validators": []
                         },
                         {
-                            "label": "Prevention with positives: PWP Services:",
+                            "label": "Prevention with positives: PWP services:",
+                            "type": "obs",
                             "questionOptions": {
+                                "rendering": "select",
                                 "concept": "9ce5dbf0-a141-4ad8-8c9d-cd2bf84fe72b",
                                 "answers": [
                                     {
-                                        "concept": "f0a280e8-eb88-41a8-837a-f9949ed1b9cd0",
+                                        "concept": "f0a280e8-eb88-41a8-837a-f9949ed1b9cd",
                                         "label": "Condom promotion/provision"
                                     },
                                     {
@@ -1403,7 +1404,7 @@
                                         "label": "Couple counseling"
                                     },
                                     {
-                                        "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
+                                        "concept": "91f43249-73c7-427c-8300-2038fc0d6be8",
                                         "label": "Needle exchange"
                                     },
                                     {
@@ -1414,10 +1415,8 @@
                                         "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
                                         "label": "N/A"
                                     }
-                                ],
-                                "rendering": "select"
+                                ]
                             },
-                            "type": "obs",
                             "validators": []
                         }
                     ]
