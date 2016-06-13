@@ -14,7 +14,7 @@
                             "questionOptions": {
                                 "concept": "a899eb24-1350-11df-a1f1-0026b9348838",
                                 "answers": [
-                                     {
+                                    {
                                         "concept": "a899e7b4-1350-11df-a1f1-0026b9348838",
                                         "label": "Normal"
                                     },
@@ -184,18 +184,11 @@
                                     {
                                         "concept": "a8a6af58-1350-11df-a1f1-0026b9348838",
                                         "label": "Diastolic Rumble"
-                                    }
-                                ],
-                                "rendering": "select"
-                            },
-                            "type": "obs",
-                            "validators": []
-                        },
-                        {
-                            "label": "Evidence for enlargement:",
-                            "questionOptions": {
-                                "concept": "a8a6aa3a-1350-11df-a1f1-0026b9348838",
-                                "answers": [
+                                    },
+                                    {
+                                        "concept": "a8a6aa3a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Evidence for enlargement"
+                                    },
                                     {
                                         "concept": "a8a6a814-1350-11df-a1f1-0026b9348838",
                                         "label": "LV lift"
@@ -203,32 +196,15 @@
                                     {
                                         "concept": "a896464a-1350-11df-a1f1-0026b9348838",
                                         "label": "RV lift"
-                                    }
-                                ],
-                                "rendering": "select"
-                            },
-                            "type": "obs",
-                            "hide": "true",
-                            "validators": []
-                        },
-                        {
-                            "label": "Abnormal Sounds:",
-                            "questionOptions": {
-                                "concept": "a899e96c-1350-11df-a1f1-0026b9348838",
-                                "answers": [
-                                    {
-                                        "concept": "a8962bec-1350-11df-a1f1-0026b9348838",
-                                        "label": "S3 Gallop"
                                     },
                                     {
-                                        "concept": "a8a6b980-1350-11df-a1f1-0026b9348838",
-                                        "label": "Pericardial friction rub"
+                                        "concept": "a899e96c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Abnormal sounds"
                                     }
                                 ],
                                 "rendering": "select"
                             },
                             "type": "obs",
-                            "hide": "true",
                             "validators": []
                         },
                         {
@@ -341,7 +317,7 @@
                         },
                         {
                             "label": "Developmental exam:",
-                            "id":"phyDevelopment",
+                            "id": "phyDevelopment",
                             "questionOptions": {
                                 "concept": "a89b228c-1350-11df-a1f1-0026b9348838",
                                 "answers": [
