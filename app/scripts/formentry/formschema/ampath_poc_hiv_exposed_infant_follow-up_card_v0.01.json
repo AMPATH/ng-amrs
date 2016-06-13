@@ -540,7 +540,7 @@
                     "label": "Laboratory Information",
                     "questions": [
                         {
-                            "label": "1st DNA PCR:",
+                            "label": "DNA PCR:",
                             "questionOptions": {
                                 "id": "hivPcr",
                                 "concept": "a898fe80-1350-11df-a1f1-0026b9348838",
@@ -577,7 +577,7 @@
                             ]
                         },
                         {
-                            "label": "1st antibody test at 9 months:",
+                            "label": "Antibody test:",
                             "questionOptions": {
                                 "id": "antibodyTest",
                                 "concept": "a8b0f7c4-1350-11df-a1f1-0026b9348838",
