@@ -202,6 +202,7 @@
                         },
                         {
                             "label": "EDD:",
+                            "type": "date",
                             "questionOptions": {
                                 "concept": "a8aaddbc-1350-11df-a1f1-0026b9348838",
                                 "rendering": "date"
@@ -209,7 +210,8 @@
                             "type": "obs",
                             "validators": [
                                 {
-                                    "type": "date"
+                                    "type": "date",
+                                    "allowFutureDates": "true"
                                 }
                             ],
                             "hide": {
