@@ -44,6 +44,7 @@
       $scope.countBy= val;
       loadHivSummaryIndicators()
     };
+    $scope.state = $state.current.name;
 
     //DataTable Options
     $scope.columns = [];
@@ -81,7 +82,12 @@
       if ($scope.countBy && $scope.countBy !== '' && $scope.reportName && $scope.reportName!=='' && $scope.startDate
         && $scope.startDate!=='' && $scope.selectedIndicatorTags.indicatorTags &&
         $scope.selectedIndicatorTags.indicatorTags !== [])
-        var locations =getSelectedLocations($scope.selectedLocations);
+        var locations = '';
+      if ($scope.selectedLocation && $scope.selectedLocation !=='') {
+        locations = $scope.selectedLocation;
+      } else {
+        locations = getSelectedLocations($scope.selectedLocations);
+      }
         var indicators = getSelectedIndicators($scope.selectedIndicatorTags);
         EtlRestService.getHivSummaryIndicators(
           moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
@@ -110,7 +116,6 @@
       }
       return locations;
     }
-
 
     function onFetchHivSummaryIndicatorsSuccess(result) {
       $scope.isBusy = false;
@@ -201,7 +206,7 @@
      */
     function loadCachedData() {
       if(HivMonthlySummaryIndicatorService.getIndicatorTags()) {
-        $scope.indicators = HivMonthlySummaryIndicatorService.getIndicators();
+        $scope.indicators = HivMonthlySummaryIndicatorService.getIndicators($scope.state);
         $scope.indicatorTags = HivMonthlySummaryIndicatorService.getIndicatorTags();
         $scope.startDate=HivMonthlySummaryIndicatorService.getStartDate();
         $scope.endDate=HivMonthlySummaryIndicatorService.getEndDate();
@@ -209,7 +214,7 @@
         $scope.startAge = HivMonthlySummaryIndicatorService.getReportFilters().startAge;
         $scope.endAge = HivMonthlySummaryIndicatorService.getReportFilters().endAge;
         $scope.gender = HivMonthlySummaryIndicatorService.getReportFilters().gender;
-        $scope.selectedIndicatorTags=HivMonthlySummaryIndicatorService.getSelectedIndicatorTags();
+        $scope.selectedIndicatorTags=HivMonthlySummaryIndicatorService.getSelectedIndicatorTags($scope.state);
 
         buildDataTable();
         //$scope.chartFilters = true;
@@ -217,12 +222,13 @@
         return true;
       }
     }
+
     /**
      * Function to cache data in order to prevent app from hitting the server when a resource is requested
      */
     function cacheResource() {
       HivMonthlySummaryIndicatorService.setIndicatorTags($scope.indicatorTags);
-      HivMonthlySummaryIndicatorService.setIndicators($scope.indicators);
+      HivMonthlySummaryIndicatorService.setIndicators($scope.indicators,$scope.state);
       HivMonthlySummaryIndicatorService.setStartDate($scope.startDate);
       HivMonthlySummaryIndicatorService.setEndDate($scope.endDate);
       HivMonthlySummaryIndicatorService.setReportFilters({
@@ -230,7 +236,7 @@
         endAge:$scope.endAge,
         gender:$scope.gender
       });
-      HivMonthlySummaryIndicatorService.setSelectedIndicatorTags($scope.selectedIndicatorTags);
+      HivMonthlySummaryIndicatorService.setSelectedIndicatorTags($scope.selectedIndicatorTags,$scope.state);
      // if($scope.selectedLocations && $scope.selectedLocations.locations.length>0)
         HivMonthlySummaryIndicatorService.setSelectedLocation($scope.selectedLocations);
 
@@ -372,7 +378,8 @@
       return ['<a class="btn btn-large btn-default" style="padding: inherit; width:100%; max-width: 300px"',
         'title="'+getIndicatorLabelByName(header.name)+' " data-toggle="tooltip"' ,
         'data-placement="top"',
-        'href="#/admin-dashboard/hiv-monthly-summary-indicators/month/'+ Date.parse(new Date(row.month))/1000+'/indicator/'+header.name
+        'href="#/admin-dashboard/hiv-monthly-summary-indicators/location/' + row.location_uuid +'/month/'
+        + Date.parse(new Date(row.month))/1000+'/indicator/'+header.name
         + '/locationName/' + row.location +'">'+value+'</a>'
       ].join('');
     }
