@@ -35,7 +35,11 @@
     $scope.endDate = new Date();
     $scope.generateGraph = generateGraph;
     $scope.width = 0;
-    $scope.rangeSlider=$("#rangeSlider");
+    //init bstable
+    $scope.columns = [];
+    $scope.bsTableControl = {options: {}};
+    //range slider definition
+    $scope.rangeSlider = $("#rangeSlider");
     $scope.rangeSlider.ionRangeSlider({
       type: "double",
       min: moment(new Date(new Date().setYear(new Date().getFullYear() - 15))).startOf('month').format("X"),
@@ -148,7 +152,7 @@
     };
     //Patient List Function to generate data
     $scope.generatePatientList = function (data, obj, startDate, endDate, animation) {
-      if(data && obj && startDate && endDate) {
+      if (data && obj && startDate && endDate) {
         var modalInstance = $modal.open({
           templateUrl: 'views/clinic-dashboard/patient-list-modal.html',
           controller: 'PatientListModalCtrl',
@@ -178,6 +182,21 @@
       }
     };
 
+    //adding click event to bootstrap-table links
+    window.actionEvents = {
+      'click .chartPatientList': function (e, value, row, index) {
+        try {
+          var selectedIndex = e.currentTarget.title.split(',');
+          var selectedMonth = row.reporting_month.split('/');
+          var dateRange = getMonthDateRange(selectedMonth[1], selectedMonth[0]);
+          var value = row[selectedIndex[1]];
+          var data = { x: index, value: value, id:selectedIndex[1], index: index, name: selectedIndex[0]};
+          $scope.generatePatientList(data,  $scope.hivComparative, dateRange.startDate, dateRange.endDate, false);
+        } catch(ex){
+
+        }
+      }
+    };
 
     //formats tooltip values
     $scope.formatTooltipValue = function (value, ratio, id, index) {
@@ -220,8 +239,13 @@
             if (result.result.length === 0) {
               $scope.resultIsEmpty = true;
             } else {
+              //generate chart
               ClinicalAnalyticsService.generateChartObject(result.result, chart.chart,
                 chart.chartDefinition);
+              //build tabular view
+              if (chart.reportName === 'clinical-hiv-comparative-overview-report')
+                $scope.bsTableControl = ClinicalAnalyticsService.generateDataTable(result.result)
+
             }
           }
         },
@@ -246,13 +270,14 @@
 
     });
 
-    function updateRangeSlider(){
-      try{
+    function updateRangeSlider() {
+      try {
         $scope.rangeSlider.data("ionRangeSlider").update({
           from: moment(new Date($scope.startDate)).startOf('month').format("X"),
           to: moment(new Date($scope.endDate)).endOf('month').format("X"),
         });
-      } catch(e){}
+      } catch (e) {
+      }
     }
 
     function isBusy(val, elem) {
