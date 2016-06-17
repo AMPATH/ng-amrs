@@ -22,13 +22,15 @@
     var indicatorTags;
     var indicators=[];
     var pdfReportSections = [
-      ['HIV Exposed Infant (within 2 months)',
+      ['3.1 On cotrimoxazole Prophylaxis (within 2 months)',
         'HIV Exposed Infant (Eligible for CTX 2 months)',
-        'On CTX Below 15 yrs',
-        'On CTX 15 yrs and Older',
+        'On CTX Below 15 yrs(M)',
+        'On CTX Below 15 yrs(F)',
+        'On CTX 15 yrs and Older(M)',
+        'On CTX 15 yrs and Older(F)',
         'Total on CTX (Sum HV03-03 TO HV03-06)'
       ],
-      ['Enrolled in Care',
+      ['3.2 Enrolled in Care',
         'Enrolled in care Below 1yr(M)',
         'Enrolled in care Below 1yr(F)',
         'Enrolled in care Below 15yrs(M)',
@@ -79,8 +81,10 @@
         'Total currently on ART (Sum HV03-35 to HV03-38)'
       ],
       ['3.7 Cumulative Ever on ART',
-        'Ever on ART - Below 15yrs',
-        'Ever on ART - 15yrs & older',
+        'Ever on ART - Below 15yrs(M)',
+        'Ever on ART - Below 15yrs(F)',
+        'Ever on ART - 15yrs & older(M)',
+        'Ever on ART - 15yrs & older(F)',
         'Total Ever on ART (Sum HV03-40 to HV03-43)'
       ],
       ['3.8 Survival and Retention on ART at 12 months',
@@ -110,13 +114,15 @@
       ]
     ];
     var reportSectionsKeys = [
-      ['HIV Exposed Infant (within 2 months)',
+      ['3.1 On cotrimoxazole Prophylaxis (within 2 months)',
         'HIV_Exposed_Infant',
-        'on_pcp_prophylaxis_below_15',
-        'on_pcp_prophylaxis_15_and_above',
+        'on_pcp_prophylaxis_males_below_15',
+        'on_pcp_prophylaxis_females_below_15',
+        'on_pcp_prophylaxis_males_15_and_above',
+        'on_pcp_prophylaxis_females_15_and_above',
         'on_pcp_prophylaxis'
       ],
-      ['Enrolled in Care',
+      ['3.2 Enrolled in Care',
         'enrolled_in_care_males_lt_one',
         'enrolled_in_care_females_lt_one',
         'enrolled_in_care_males_below_15',
@@ -167,8 +173,10 @@
         'on_art_total'
       ],
       ['3.7 Cumulative Ever on ART',
-        'ever_on_art_below_15',
-        'ever_on_art_15_and_older',
+        'ever_on_art_males_below_15',
+        'ever_on_art_females_below_15',
+        'ever_on_art_males_15_and_older',
+        'ever_on_art_females_15_and_older',
         'ever_on_art'
       ],
       ['3.8 Survival and Retention on ART at 12 months',
