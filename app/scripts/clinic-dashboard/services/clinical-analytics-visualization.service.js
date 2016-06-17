@@ -11,37 +11,134 @@
     var serviceDefinition;
     serviceDefinition = {
       generateXAndYAxis: generateXAndYAxis,
-      defineXAndYAxis:defineXAndYAxis,
-      generateChartObject: generateChartObject
+      defineXAndYAxis: defineXAndYAxis,
+      generateChartObject: generateChartObject,
+      generateDataTable: generateDataTable
     };
     return serviceDefinition;
     function defineXAndYAxis(columnDefinition) {
-      var dataColumns=[];
+      var dataColumns = [];
       _.each(columnDefinition, function (column) {
         dataColumns.push({id: column.indicator, type: column.chartType, name: column.name});
       });
       return dataColumns;
     }
 
+    function generateDataTable(data) {
+      var columns = [];
+      var headers = [
+        {indicator: 'reporting_date', title: 'Reporting Month'},
+        {indicator: 'currently_in_care_total', title: 'Patients In Care'},
+        {indicator: 'on_art_total', title: 'Patients On ART'},
+        {indicator: 'perc_tested_appropriately', title: '% on ART with VL'},
+        {indicator: 'perc_virally_suppressed', title: '% Virally Suppressed'}
+      ];
+      _.each(headers, function (header) {
+        //var visible =(header!=='location_uuid');
+        columns.push({
+          field: header.indicator,
+          title: header.title.toString(),
+          align: 'center',
+          valign: 'center',
+          sortable: true,
+          visible: true,
+          tooltip: true,
+          formatter: function (value, row, index) {
+            if (header.indicator === 'reporting_date') return '<div class="text-center" style="" >' +
+              $filter('date')(value, 'MMM, y') + '</div>';
+            return ['<a class="chartPatientList"',
+              'title="' + header.title + ',' + header.indicator + '" data-toggle="tooltip"',
+              'data-placement="top"',
+              'href="javascript:void(0)" >' + value + '</a>'
+            ].join('');
+          },
+          events: 'actionEvents'
+        });
+      });
+      return {
+        options: {
+          data: data,
+          rowStyle: function (row, index) {
+            return {classes: 'none'};
+          },
+          tooltip: true,
+          classes: 'table table-hover',
+          cache: false,
+          height: 360,
+          detailView: true,
+          detailFormatter: function (index, row) {
+            var html = [];
+            $.each(row, function (key, value) {
+              _.each(headers, function (header) {
+                if (key === header.indicator)html.push('<p><b>' + header.title + ':</b> ' + value + '</p>');
+              });
+            });
+            return html.join('');
+          },
+          striped: true,
+          selectableRows: true,
+          showFilter: true,
+          pagination: true,
+          pageSize: 10,
+          pageNumber:1,
+          pageList: [5, 10, 25, 50, 100, 200],
+          search: false,
+          trimOnSearch: true,
+          singleSelect: false,
+          showColumns: true,
+          showRefresh: true,
+          showMultiSort: true,
+          showPaginationSwitch: true,
+          smartDisplay: true,
+          idField: 'location_id',
+          minimumCountColumns: 2,
+          clickToSelect: true,
+          showToggle: false,
+          maintainSelected: true,
+          showExport: true,
+          toolbar: '#toolbar',
+          toolbarAlign: 'left',
+          exportTypes: ['json', 'xml', 'csv', 'txt', 'png', 'sql', 'doc', 'excel', 'powerpoint', 'pdf'],
+          columns: columns,
+          exportOptions: {fileName: ''},
+          iconSize: undefined,
+          iconsPrefix: 'glyphicon', // glyphicon of fa (font awesome)
+          icons: {
+            paginationSwitchDown: 'glyphicon-chevron-down',
+            paginationSwitchUp: 'glyphicon-chevron-up',
+            refresh: 'glyphicon-refresh',
+            toggle: 'glyphicon-list-alt',
+            columns: 'glyphicon-th',
+            sort: 'glyphicon-sort',
+            plus: 'glyphicon-plus',
+            minus: 'glyphicon-minus',
+            detailOpen: 'glyphicon-plus',
+            detailClose: 'glyphicon-minus'
+          }
+        }
+      };
+    }
+
     function generateChartObject(data, chartObject, definition) {
-      var plotValues=[];
-      var xAxis=chartObject.xAxis.id;
-      chartObject.dataColumns=defineXAndYAxis(definition);
+      var plotValues = [];
+      var xAxis = chartObject.xAxis.id;
+      chartObject.dataColumns = defineXAndYAxis(definition);
       //dataPoint Definition
-      chartObject.dataPoints=[];
+      chartObject.dataPoints = [];
       for (var i = 0; i < data.length; ++i) {
         var dataPoint = {};
         dataPoint[xAxis] = data[i][xAxis];
         _.each(chartObject.dataColumns, function (column) {
-          var val=(data[i][column.id]).toFixed(1);
+          data[i][column.id]= (data[i][column.id]).toFixed(1);
+          var val=data[i][column.id];
           plotValues.push(val);
-          dataPoint[column.id] =val;
+          dataPoint[column.id] = val;
         });
         chartObject.dataPoints.push(dataPoint);
       }
       //min and max definition
-      chartObject.min=Math.round(arrayMin(plotValues))||0;
-      chartObject.max=Math.round(arrayMax(plotValues))||100;
+      chartObject.min = Math.round(arrayMin(plotValues)) || 0;
+      chartObject.max = Math.round(arrayMax(plotValues)) || 100;
       return chartObject;
     }
 
@@ -58,6 +155,7 @@
         yAxis: yAxis
       }
     }
+
     //Helpers
     function arrayMin(arr) {
       var len = arr.length, min = Infinity;
