@@ -537,7 +537,7 @@
                         {
                             "label": "Patient's current ART regimen, adults:",
                             "id": "current_art_regimen_adult",
-                            "historicalExpression": "_.isEmpty(HD.getObject('prevEnc').getValue('a89b6a62-1350-11df-a1f1-0026b9348838')) ? HD.getObject('prevEnc').getValue('a8a08344-1350-11df-a1f1-0026b9348838.a899cf5e-1350-11df-a1f1-0026b9348838') : HD.getObject('prevEnc').getValue('a89b6a62-1350-11df-a1f1-0026b9348838')",
+                            "historicalExpression": "HD.getObject('prevEnc').getValue('a8a08344-1350-11df-a1f1-0026b9348838.a899cf5e-1350-11df-a1f1-0026b9348838') || HD.getObject('prevEnc').getValue('a899cf5e-1350-11df-a1f1-0026b9348838');",
                             "questionOptions": {
                                 "concept": "a899cf5e-1350-11df-a1f1-0026b9348838",
                                 "answers": [
