@@ -19,6 +19,7 @@
         endDate: "@",
         indicator: "@",
         selectedLocationName:"@"
+
       },
       controller: patientListController,
       link: patientListLink,
@@ -53,6 +54,7 @@
     $scope.getIndicatorLabelByName = getIndicatorLabelByName;
     $scope.getSelectedLocation =getSelectedLocation;
     $scope.selectedLocationName = $stateParams.locationName || '';
+    $scope.stateChange='';
 
     //Pagination Params
     $scope.nextStartIndex = 0;
@@ -71,7 +73,7 @@
 
 
     function loadIndicatorView() {
-      $state.go('admin.hiv-summary-indicators.indicator');
+      history.back();
     }
 
     function loadPatientList(loadNextOffset) {
