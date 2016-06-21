@@ -109,7 +109,7 @@
       ['3.11 HIV Care Visits',
         'Females (18 years and older)',
         'Scheduled',
-        'unscheduled',
+        'Unscheduled',
         'Total HIV Care visit'
       ]
     ];
