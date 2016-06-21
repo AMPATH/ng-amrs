@@ -2,15 +2,15 @@
 <html class="no-js">
 
 <head>
-    <meta charset="utf-8">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/angular-loading/angular-loading.css" />
-     <!--
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  <!-- build:css(.) styles/vendor.css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <link rel="stylesheet" href="bower_components/angular-loading/angular-loading.css" />
+  <!--
    offline indicator Themes:
    <link rel="stylesheet" href="./themes/offline-theme-default.css" />
    <link rel="stylesheet" href="./themes/offline-theme-default-indicator.css" />
@@ -20,294 +20,297 @@
    <link rel="stylesheet" href="./themes/offline-theme-chrome-indicator.css" />
    <link rel="stylesheet" href="./themes/offline-theme-hubspot.css" />
    -->
-    <!-- <link rel="stylesheet" href="bower_components/bootstrap-vertical-tabs/bootstrap.vertical-tabs.css"> -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
-    <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css" />
-    <link rel="stylesheet" href="bower_components/pivottable/dist/pivot.css" />
-    <link rel="stylesheet" href="bower_components/c3/c3.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap-table/dist/bootstrap-table.min.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap-table-fixed-columns/bootstrap-table-fixed-columns.css" />
-    <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css" />
-    <link rel="stylesheet" href="bower_components/datatables/media/css/jquery.dataTables.css" />
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="bower_components/metisMenu/dist/metisMenu.css" />
-    <link rel="stylesheet" href="bower_components/morrisjs/morris.css" />
-    <link rel="stylesheet" href="bower_components/bootstrap-social/bootstrap-social.css" />
-    <link rel="stylesheet" href="bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css" />
-    <link rel="stylesheet" href="bower_components/kendo-ui/styles/kendo.common.min.css" />
-    <link rel="stylesheet" href="bower_components/kendo-ui/styles/kendo.bootstrap.min.css" />
-    <link rel="stylesheet" href="bower_components/ion.rangeSlider/css/ion.rangeSlider.css" />
-    <link rel="stylesheet" href="bower_components/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/calender.css">
-    <link rel="stylesheet" href="styles/medical-icons/wfmi-style.css">
-    <link rel="stylesheet" href="styles/ng-switcher.css">
-    <link rel="stylesheet" href="styles/offline-fix.css">
-    <link rel="stylesheet" href="styles/notification.css">
-    <link rel="stylesheet" href="styles/visualization.css">
-    <link rel="stylesheet" href="styles/notes.css">
-    <!-- endbuild -->
+  <!-- <link rel="stylesheet" href="bower_components/bootstrap-vertical-tabs/bootstrap.vertical-tabs.css"> -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/angular-ui-select/dist/select.css" />
+  <link rel="stylesheet" href="bower_components/angular-dialog-service/dist/dialogs.css" />
+  <link rel="stylesheet" href="bower_components/pivottable/dist/pivot.css" />
+  <link rel="stylesheet" href="bower_components/c3/c3.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-table/dist/bootstrap-table.min.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-table-fixed-columns/bootstrap-table-fixed-columns.css" />
+  <link rel="stylesheet" href="bower_components/angular-bootstrap-calendar/dist/css/angular-bootstrap-calendar.css" />
+  <link rel="stylesheet" href="bower_components/datatables/media/css/jquery.dataTables.css" />
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+  <link rel="stylesheet" href="bower_components/metisMenu/dist/metisMenu.css" />
+  <link rel="stylesheet" href="bower_components/morrisjs/morris.css" />
+  <link rel="stylesheet" href="bower_components/bootstrap-social/bootstrap-social.css" />
+  <link rel="stylesheet" href="bower_components/startbootstrap-sb-admin-2/dist/css/sb-admin-2.css" />
+  <link rel="stylesheet" href="bower_components/kendo-ui/styles/kendo.common.min.css" />
+  <link rel="stylesheet" href="bower_components/kendo-ui/styles/kendo.bootstrap.min.css" />
+  <link rel="stylesheet" href="bower_components/ion.rangeSlider/css/ion.rangeSlider.css" />
+  <link rel="stylesheet" href="bower_components/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css(.tmp) styles/main.css -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/calender.css">
+  <link rel="stylesheet" href="styles/medical-icons/wfmi-style.css">
+  <link rel="stylesheet" href="styles/ng-switcher.css">
+  <link rel="stylesheet" href="styles/offline-fix.css">
+  <link rel="stylesheet" href="styles/notification.css">
+  <link rel="stylesheet" href="styles/visualization.css">
+  <link rel="stylesheet" href="styles/notes.css">
+  <!-- endbuild -->
 </head>
 
 <body ng-app="ngAmrsApp">
-    <!--[if lt IE 7]>
+  <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]-->
 
-    <!-- Add your site or application content here -->
-    <main-navigation-bar>
+  <!-- Add your site or application content here -->
+  <main-navigation-bar>
 
-    </main-navigation-bar>
+  </main-navigation-bar>
 
-    <sticky-scroll class="container-fluid " id="main-content">
-        <div ui-view></div>
-    </sticky-scroll>
+  <sticky-scroll class="container-fluid " id="main-content">
+    <div ui-view></div>
+  </sticky-scroll>
 
 
-    <div class="navbar navbar-default navbar-fixed-bottom">
-        <div class="footer container-fluid">
-            <span class="pull-right"><version/> </span>
-            <span class="pull-left"><connectivity/> </span>
-        </div>
+  <div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="footer container-fluid">
+      <span class="pull-right"><version/> </span>
+      <span class="pull-left"><connectivity/> </span>
     </div>
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-    <script>
-        !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-     (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-     r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
- }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  </div>
+  <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+  <script>
+    ! function(A, n, g, u, l, a, r) {
+      A.GoogleAnalyticsObject = l, A[l] = A[l] || function() {
+          (A[l].q = A[l].q || []).push(arguments)
+        }, A[l].l = +new Date, a = n.createElement(g),
+        r = n.getElementsByTagName(g)[0], a.src = u, r.parentNode.insertBefore(a, r)
+    }(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
- ga('create', 'UA-XXXXX-X');
- ga('send', 'pageview');
-    </script>
-
-
-
-
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/angular-base64/angular-base64.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="bower_components/api-check/dist/api-check.js"></script>
-    <script src="bower_components/angular-formly/dist/formly.js"></script>
-    <script src="bower_components/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap.js"></script>
-    <script src="bower_components/underscore/underscore.js"></script>
-    <script src="bower_components/underscore.string/dist/underscore.string.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.js"></script>
-    <script src="bower_components/lodash/lodash.js"></script>
-    <script src="bower_components/restangular/dist/restangular.js"></script>
-    <script src="bower_components/angular-ui-select/dist/select.js"></script>
-    <script src="bower_components/datejs/build/production/date.min.js"></script>
-    <script src="bower_components/moment/moment.js"></script>
-    <script src="bower_components/angular-moment/angular-moment.js"></script>
-    <script src="bower_components/angular-translate/angular-translate.js"></script>
-    <script src="bower_components/angular-dialog-service/dist/dialogs.js"></script>
-    <script src="bower_components/angular-dialog-service/dist/dialogs-default-translations.js"></script>
-    <script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.min.js"></script>
-    <script src="bower_components/spin.js/spin.js"></script>
-    <script src="bower_components/angular-loading/angular-loading.js"></script>
-    <script src="bower_components/ui-router-extras/release/ct-ui-router-extras.js"></script>
-    <script src="bower_components/karma-read-json/karma-read-json.js"></script>
-    <script src="bower_components/jqueryui/jquery-ui.js"></script>
-    <script src="bower_components/pivottable/dist/pivot.js"></script>
-    <script src="bower_components/pivottable/dist/c3_renderers.min.js"></script>
-    <script src="bower_components/pivottable/dist/gchart_renderers.min.js"></script>
-    <script src="bower_components/pivottable/dist/export_renderers.min.js"></script>
-    <script src="bower_components/d3/d3.js"></script>
-    <script src="bower_components/c3/c3.js"></script>
-    <script src="bower_components/jsnlog.js/jsnlog.js"></script>
-    <script src="bower_components/angular-environment/dist/angular-environment.js"></script>
-    <script src="bower_components/bootstrap-table/dist/bootstrap-table.min.js"></script>
-    <script src="bower_components/bootstrap-table/dist/extensions/angular/bootstrap-table-angular.min.js"></script>
-    <script src="bower_components/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
-    <script src="bower_components/bootstrap-table/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
-    <script src="bower_components/file-saver.js/FileSaver.js"></script>
-    <script src="bower_components/html2canvas/build/html2canvas.js"></script>
-    <script src="bower_components/jspdf/dist/jspdf.min.js"></script>
-    <script src="bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.js"></script>
-    <script src="bower_components/tableExport.jquery.plugin/tableExport.min.js"></script>
-    <script src="bower_components/matchmedia/matchMedia.js"></script>
-    <script src="bower_components/ngSticky/lib/sticky.js"></script>
-    <script src="bower_components/pdfmake/build/pdfmake.js"></script>
-    <script src="bower_components/pdfmake/build/vfs_fonts.js"></script>
-    <script src="bower_components/bootstrap-table-fixed-columns/bootstrap-table-fixed-columns.js"></script>
-    <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
-    <script src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
-    <script src="bower_components/flot/jquery.flot.js"></script>
-    <script src="bower_components/holderjs/holder.js"></script>
-    <script src="bower_components/metisMenu/dist/metisMenu.js"></script>
-    <script src="bower_components/eve/eve.js"></script>
-    <script src="bower_components/raphael/raphael.min.js"></script>
-    <script src="bower_components/mocha/mocha.js"></script>
-    <script src="bower_components/morrisjs/morris.js"></script>
-    <script src="bower_components/datatables-responsive/js/dataTables.responsive.js"></script>
-    <script src="bower_components/flot.tooltip/js/jquery.flot.tooltip.js"></script>
-    <script src="bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js"></script>
-    <script src="bower_components/kendo-ui/js/kendo.ui.core.min.js"></script>
-    <script src="bower_components/offline/offline.js"></script>
-    <script src="bower_components/angular-ui-ace/ui-ace.js"></script>
-    <script src="bower_components/openmrs-ngresource/dist/scripts/openmrsNgresource.js"></script>
-    <script src="bower_components/angular-formentry/dist/scripts/angularFormentry.js"></script>
-    <script src="bower_components/angular-cache/dist/angular-cache.js"></script>
-    <script src="bower_components/angular-bar-code-scanner/angular-bar-code-scanner.js"></script>
-    <script src="bower_components/angular-bar-code-scanner/angular-bar-code-scanner.min.js"></script>
-    <script src="bower_components/keen-js/dist/keen.min.js"></script>
-    <script src="bower_components/c3-angular/c3-angular.min.js"></script>
-    <script src="bower_components/ion.rangeSlider/js/ion.rangeSlider.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+    ga('create', 'UA-XXXXX-X');
+    ga('send', 'pageview');
+  </script>
 
 
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <!-- Global stuff - Be careful with this kind of stuff -->
-    <script src="scripts/global.utils.js"></script>
-    <!-- end of global stuff -->
-    <!-- Modules -->
-    <script src="scripts/app.module.js"></script>
-    <script src="scripts/authentication/authentication.module.js"></script>
-    <script src="scripts/models/model.module.js"></script>
-    <script src="scripts/patient-search/patient-search.module.js"></script>
-    <script src="scripts/openmrs-rest-services/openmrs-rest-services.module.js"></script>
-    <script src="scripts/patient-dashboard/patient-dashboard.module.js"></script>
-    <script src="scripts/formentry/formentry.module.js"></script>
-    <script src="scripts/etl-rest-services/etl-rest-services.module.js"></script>
-    <script src="scripts/clinic-dashboard/clinic-dashboard.module.js"></script>
-    <script src="scripts/utils/utils.module.js"></script>
-    <script src="scripts/admin/admin.module.js"></script>
-    <script src="scripts/offline/offline.module.js"></script>
-    <script src="scripts/log-to-server/log-to-server.module.js"></script>
-    <script src="scripts/data-analytics/data-analytics.module.js"></script>
-    
-    <!--inteceptors-->
-    <script src="scripts/authentication/interceptors/authorization.interceptor.js"></script>
-    
-    <!-- Services -->
-    <script src="scripts/openmrs-rest-services/user-default-properties.service.js"></script>
-    <script src="scripts/openmrs-rest-services/authentication.service.js"></script>
-    <script src="scripts/openmrs-rest-services/person-attribute.service.js"></script>
-    <script src="scripts/formentry/services/formsmetadata.service.js"></script>
-    <script src="scripts/etl-rest-services/etl-rest-service.service.js"></script>
-    <script src="scripts/etl-rest-services/etl-rest-services-settings.service.js"></script>
-    <script src="scripts/etl-rest-services/location-extention.service.js"></script>
-    <script src="scripts/patient-search/services/patient-search.service.js"></script>
-    <script src="scripts/clinic-dashboard/services/clinic-dashboard.service.js"></script>
-    <script src="scripts/admin/services/hiv-summary-indicator.service.js"></script>
-    <script src="scripts/log-to-server/services/log-to-server.service.js"></script>
-    <script src="scripts/data-analytics/services/data-entry-stats-helpers.service.js"></script>
-    <script src="scripts/admin/services/hiv-monthly-summary-indicator.service.js"></script>
-    <script src="scripts/authentication/services/authentication-interceptor.service.js"></script>
-    <script src="scripts/admin/services/moh-731-report.service.js"></script>
-    <script src="scripts/offline/services/offline.service.js"></script>
-    <script src="scripts/clinic-dashboard/services/clinical-analytics-visualization.service.js"></script>
-    <script src="scripts/patient-dashboard/services/notes.service.js"></script>
-    <script src="scripts/patient-dashboard/services/clinical-summary-pdf-service.js"></script>
-    <!--models-->
 
 
-    <!-- etl models -->
-    <script src="scripts/models/hiv-summary.etl.model.js"></script>
-    <script src="scripts/models/vital.etl.model.js"></script>
-    <script src="scripts/models/patient-test.etl.model.js"></script>
-    <script src="scripts/models/appointment-schedule.etl.model.js"></script>
-    <script src="scripts/models/monthly-appointment.etl.model.js"></script>
-    <script src="scripts/models/defaulter.etl.model.js"></script>
-    <script src="scripts/models/monthly-appointment-visit.etl.model.js"></script>
-    <script src="scripts/models/patient.etl.model.js"></script>
-    <script src="scripts/models/today-vital.model.js"></script>
-
-    <!-- directives -->
-    <script src="scripts/clinic-dashboard/directives/appointments-calendar.directive.js"></script>
-      <script src="scripts/main/directives/main-navigation.directive.js"></script>
-    <script src="scripts/main/directives/version.directive.js"></script>
-    <script src="scripts/main/directives/connectivity.directive.js"></script>
-    <script src="scripts/patient-dashboard/directives/patient-demographics.directive.js"></script>
-    <script src="scripts/patient-dashboard/directives/patient-relationship.directive.js"></script>
-    <script src="scripts/patient-dashboard/directives/hiv-summary.directive.js"></script>
-    <script src="scripts/patient-dashboard/directives/encounters.directive.js"></script>
-    <script src="scripts/patient-dashboard/directives/print-label.directive.js"></script>
-    <script src="scripts/patient-dashboard/directives/vitals.directive.js"></script>
-    <script src="scripts/patient-dashboard/directives/labs-summary.directive.js"></script>
-    <script src="scripts/patient-dashboard/directives/hiv-summary-historical.directive.js"></script>
-    <script src="scripts/patient-dashboard/directives/active-tab-sync.directive.js"></script>
-    <script src="scripts/clinic-dashboard/directives/daily-visits.directive.js"></script>
-    <script src="scripts/clinic-dashboard/directives/active-link-if.directive.js"></script>
-    <script src="scripts/clinic-dashboard/directives/monthly-appointment.directive.js"></script>
-    <script src="scripts/clinic-dashboard/directives/defaulter-list.directive.js"></script>
-    <script src="scripts/patient-search/directives/focus.directive.js"></script>
-    <script src="scripts/patient-dashboard/directives/current-visit.directive.js"></script>
-    <script src="scripts/formentry/directives/openmrs-forms.directive.js"></script>
-    <script src="scripts/admin/directives/patient-list.directive.js"></script>
-    <script src="scripts/admin/directives/patient-monthly-list.directive.js"></script>
-    <script src="scripts/admin/directives/patient-creation-statistics.directive.js"></script>
-    <script src="scripts/admin/directives/report-filter-controls.directive.js"></script>
-    <script src="scripts/admin/directives/tooltip.directive.js"></script>
-    <script src="scripts/data-analytics/directives/data-entry-filter-controls.directive.js"></script>
-    <script src="scripts/data-analytics/directives/data-entry-stats-view-one.directive.js"></script>
-    <script src="scripts/data-analytics/directives/data-entry-stats-view-two.directive.js"></script>
-    <script src="scripts/data-analytics/directives/data-entry-stats-view-three.directive.js"></script>
-    <script src="scripts/data-analytics/directives/data-entry-stats-view-four.directive.js"></script>
-    <script src="scripts/data-analytics/directives/data-entry-stats.directive.js"></script>
-    <script src="scripts/log-to-server/directives/toggle-logging.directive.js"></script>
-    <script src="scripts/patient-dashboard/directives/current-visit-vitals.directive.js"></script>
-    <script src="scripts/patient-dashboard/directives/clinical-reminders.directive.js"></script>
-    <script src="scripts/admin/directives/patient-moh-list.directive.js"></script>
-    <script src="scripts/clinic-dashboard/directives/route-css-classnames.directive.js"></script>
-    <script src="scripts/admin/directives/patient-filter-list.directive.js"></script>
-    <script src="scripts/patient-dashboard/directives/encounter-view.directive.js"></script>
-    <script src="scripts/clinic-dashboard/directives/clinical-analytics-visualization.directive.js"></script>
-    <script src="scripts/patient-dashboard/directives/notes.directive.js"></script>
-    <script src="scripts/admin/directives/data-analytics-visualization.directive.js"></script>
-
-
-    <!-- Controllers -->
-    <script src="scripts/patient-dashboard/controllers/patient-dashboard.controller.js"></script>
-    <script src="scripts/patient-dashboard/controllers/encounter.controller.js"></script>
-    <script src="scripts/patient-dashboard/controllers/print-labels.controller.js"></script>
-    <script src="scripts/patient-dashboard/controllers/view-encounter.controller.js"></script>
-    <script src="scripts/patient-search/controllers/patient-search.controller.js"></script>
-    <script src="scripts/patient-search/directives/patient-search.directive.js"></script>
-    <script src="scripts/authentication/controllers/login.controller.js"></script>
-    <script src="scripts/formentry/controllers/formentry.controller.js"></script>
-    <script src="scripts/main/controllers/url-selector.controller.js"></script>
-    <script src="scripts/main/controllers/user-default-properties.controller.js"></script>
-    <script src="scripts/data-analytics/controllers/data-entry-statistics.controller.js"></script>
-    <script src="scripts/admin/controllers/admin-dashboard.controller.js"></script>
-    <script src="scripts/admin/controllers/hiv-summary-indicators.controller.js"></script>
-    <script src="scripts/admin/controllers/hiv-visual-summary-indicators.controller.js"></script>
-    <script src="scripts/admin/controllers/hiv-monthly-summary-indicators.controller.js"></script>
-    <script src="scripts/admin/controllers/patient-register.controller.js"></script>
-    <script src="scripts/admin/controllers/moh-731-report.controller.js"></script>
-    <script src="scripts/clinic-dashboard/controllers/clinic-dashboard.controller.js"></script>
-    <script src="scripts/clinic-dashboard/controllers/patient-list-modal.controller.js"></script>
-
-    <!-- Filters -->
-    <script src="scripts/clinic-dashboard/filters/props.filter.js"></script>
-    <script src="scripts/clinic-dashboard/filters/day-appointments.filter.js"></script>
-    <script src="scripts/clinic-dashboard/filters/not-returned-date-appointments.filter.js"></script>
-
-    <!-- Others -->
-    <script src="scripts/patient-search/patient-filter.filter.js"></script>
-    <script src="scripts/utils/services/util.service.js"></script>
+  <!-- build:js(.) scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-touch/angular-touch.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angular-base64/angular-base64.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/api-check/dist/api-check.js"></script>
+  <script src="bower_components/angular-formly/dist/formly.js"></script>
+  <script src="bower_components/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap.js"></script>
+  <script src="bower_components/underscore/underscore.js"></script>
+  <script src="bower_components/underscore.string/dist/underscore.string.js"></script>
+  <script src="bower_components/angular-messages/angular-messages.js"></script>
+  <script src="bower_components/lodash/lodash.js"></script>
+  <script src="bower_components/restangular/dist/restangular.js"></script>
+  <script src="bower_components/angular-ui-select/dist/select.js"></script>
+  <script src="bower_components/datejs/build/production/date.min.js"></script>
+  <script src="bower_components/moment/moment.js"></script>
+  <script src="bower_components/angular-moment/angular-moment.js"></script>
+  <script src="bower_components/angular-translate/angular-translate.js"></script>
+  <script src="bower_components/angular-dialog-service/dist/dialogs.js"></script>
+  <script src="bower_components/angular-dialog-service/dist/dialogs-default-translations.js"></script>
+  <script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.min.js"></script>
+  <script src="bower_components/spin.js/spin.js"></script>
+  <script src="bower_components/angular-loading/angular-loading.js"></script>
+  <script src="bower_components/ui-router-extras/release/ct-ui-router-extras.js"></script>
+  <script src="bower_components/karma-read-json/karma-read-json.js"></script>
+  <script src="bower_components/jqueryui/jquery-ui.js"></script>
+  <script src="bower_components/pivottable/dist/pivot.js"></script>
+  <script src="bower_components/pivottable/dist/c3_renderers.min.js"></script>
+  <script src="bower_components/pivottable/dist/gchart_renderers.min.js"></script>
+  <script src="bower_components/pivottable/dist/export_renderers.min.js"></script>
+  <script src="bower_components/d3/d3.js"></script>
+  <script src="bower_components/c3/c3.js"></script>
+  <script src="bower_components/jsnlog.js/jsnlog.js"></script>
+  <script src="bower_components/angular-environment/dist/angular-environment.js"></script>
+  <script src="bower_components/bootstrap-table/dist/bootstrap-table.min.js"></script>
+  <script src="bower_components/bootstrap-table/dist/extensions/angular/bootstrap-table-angular.min.js"></script>
+  <script src="bower_components/bootstrap-table/dist/extensions/export/bootstrap-table-export.js"></script>
+  <script src="bower_components/bootstrap-table/dist/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
+  <script src="bower_components/file-saver.js/FileSaver.js"></script>
+  <script src="bower_components/html2canvas/build/html2canvas.js"></script>
+  <script src="bower_components/jspdf/dist/jspdf.min.js"></script>
+  <script src="bower_components/jspdf-autotable/dist/jspdf.plugin.autotable.js"></script>
+  <script src="bower_components/tableExport.jquery.plugin/tableExport.min.js"></script>
+  <script src="bower_components/matchmedia/matchMedia.js"></script>
+  <script src="bower_components/ngSticky/lib/sticky.js"></script>
+  <script src="bower_components/pdfmake/build/pdfmake.js"></script>
+  <script src="bower_components/pdfmake/build/vfs_fonts.js"></script>
+  <script src="bower_components/bootstrap-table-fixed-columns/bootstrap-table-fixed-columns.js"></script>
+  <script src="bower_components/angular-bootstrap-calendar/dist/js/angular-bootstrap-calendar-tpls.js"></script>
+  <script src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
+  <script src="bower_components/flot/jquery.flot.js"></script>
+  <script src="bower_components/holderjs/holder.js"></script>
+  <script src="bower_components/metisMenu/dist/metisMenu.js"></script>
+  <script src="bower_components/eve/eve.js"></script>
+  <script src="bower_components/raphael/raphael.min.js"></script>
+  <script src="bower_components/mocha/mocha.js"></script>
+  <script src="bower_components/morrisjs/morris.js"></script>
+  <script src="bower_components/datatables-responsive/js/dataTables.responsive.js"></script>
+  <script src="bower_components/flot.tooltip/js/jquery.flot.tooltip.js"></script>
+  <script src="bower_components/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js"></script>
+  <script src="bower_components/kendo-ui/js/kendo.ui.core.min.js"></script>
+  <script src="bower_components/offline/offline.js"></script>
+  <script src="bower_components/angular-ui-ace/ui-ace.js"></script>
+  <script src="bower_components/openmrs-ngresource/dist/scripts/openmrsNgresource.js"></script>
+  <script src="bower_components/angular-formentry/dist/scripts/angularFormentry.js"></script>
+  <script src="bower_components/angular-cache/dist/angular-cache.js"></script>
+  <script src="bower_components/angular-bar-code-scanner/angular-bar-code-scanner.js"></script>
+  <script src="bower_components/angular-bar-code-scanner/angular-bar-code-scanner.min.js"></script>
+  <script src="bower_components/keen-js/dist/keen.min.js"></script>
+  <script src="bower_components/c3-angular/c3-angular.min.js"></script>
+  <script src="bower_components/ion.rangeSlider/js/ion.rangeSlider.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
 
 
-     <!-- endbuild -->
-<!-- build:js({.tmp,app}) scripts/templates.js -->
+  <!-- build:js({.tmp,app}) scripts/scripts.js -->
+  <!-- Global stuff - Be careful with this kind of stuff -->
+  <script src="scripts/global.utils.js"></script>
+  <!-- end of global stuff -->
+  <!-- Modules -->
+  <script src="scripts/app.module.js"></script>
+  <script src="scripts/authentication/authentication.module.js"></script>
+  <script src="scripts/models/model.module.js"></script>
+  <script src="scripts/patient-search/patient-search.module.js"></script>
+  <script src="scripts/openmrs-rest-services/openmrs-rest-services.module.js"></script>
+  <script src="scripts/patient-dashboard/patient-dashboard.module.js"></script>
+  <script src="scripts/formentry/formentry.module.js"></script>
+  <script src="scripts/etl-rest-services/etl-rest-services.module.js"></script>
+  <script src="scripts/clinic-dashboard/clinic-dashboard.module.js"></script>
+  <script src="scripts/utils/utils.module.js"></script>
+  <script src="scripts/admin/admin.module.js"></script>
+  <script src="scripts/offline/offline.module.js"></script>
+  <script src="scripts/log-to-server/log-to-server.module.js"></script>
+  <script src="scripts/data-analytics/data-analytics.module.js"></script>
+
+  <!--inteceptors-->
+  <script src="scripts/authentication/interceptors/authorization.interceptor.js"></script>
+
+  <!-- Services -->
+  <script src="scripts/openmrs-rest-services/user-default-properties.service.js"></script>
+  <script src="scripts/openmrs-rest-services/authentication.service.js"></script>
+  <script src="scripts/openmrs-rest-services/person-attribute.service.js"></script>
+  <script src="scripts/formentry/services/formsmetadata.service.js"></script>
+  <script src="scripts/etl-rest-services/etl-rest-service.service.js"></script>
+  <script src="scripts/etl-rest-services/etl-rest-services-settings.service.js"></script>
+  <script src="scripts/etl-rest-services/location-extention.service.js"></script>
+  <script src="scripts/patient-search/services/patient-search.service.js"></script>
+  <script src="scripts/clinic-dashboard/services/clinic-dashboard.service.js"></script>
+  <script src="scripts/admin/services/hiv-summary-indicator.service.js"></script>
+  <script src="scripts/log-to-server/services/log-to-server.service.js"></script>
+  <script src="scripts/data-analytics/services/data-entry-stats-helpers.service.js"></script>
+  <script src="scripts/admin/services/hiv-monthly-summary-indicator.service.js"></script>
+  <script src="scripts/authentication/services/authentication-interceptor.service.js"></script>
+  <script src="scripts/admin/services/moh-731-report.service.js"></script>
+  <script src="scripts/offline/services/offline.service.js"></script>
+  <script src="scripts/clinic-dashboard/services/clinical-analytics-visualization.service.js"></script>
+  <script src="scripts/patient-dashboard/services/notes.service.js"></script>
+  <script src="scripts/patient-dashboard/services/clinical-summary-pdf-service.js"></script>
+  <!--models-->
+
+
+  <!-- etl models -->
+  <script src="scripts/models/hiv-summary.etl.model.js"></script>
+  <script src="scripts/models/vital.etl.model.js"></script>
+  <script src="scripts/models/patient-test.etl.model.js"></script>
+  <script src="scripts/models/appointment-schedule.etl.model.js"></script>
+  <script src="scripts/models/monthly-appointment.etl.model.js"></script>
+  <script src="scripts/models/defaulter.etl.model.js"></script>
+  <script src="scripts/models/monthly-appointment-visit.etl.model.js"></script>
+  <script src="scripts/models/patient.etl.model.js"></script>
+  <script src="scripts/models/today-vital.model.js"></script>
+
+  <!-- directives -->
+  <script src="scripts/clinic-dashboard/directives/appointments-calendar.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/manage-person-attributes.directive.js"></script>
+  <script src="scripts/main/directives/main-navigation.directive.js"></script>
+  <script src="scripts/main/directives/version.directive.js"></script>
+  <script src="scripts/main/directives/connectivity.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/patient-demographics.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/patient-relationship.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/hiv-summary.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/encounters.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/print-label.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/vitals.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/labs-summary.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/hiv-summary-historical.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/active-tab-sync.directive.js"></script>
+  <script src="scripts/clinic-dashboard/directives/daily-visits.directive.js"></script>
+  <script src="scripts/clinic-dashboard/directives/active-link-if.directive.js"></script>
+  <script src="scripts/clinic-dashboard/directives/monthly-appointment.directive.js"></script>
+  <script src="scripts/clinic-dashboard/directives/defaulter-list.directive.js"></script>
+  <script src="scripts/patient-search/directives/focus.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/current-visit.directive.js"></script>
+  <script src="scripts/formentry/directives/openmrs-forms.directive.js"></script>
+  <script src="scripts/admin/directives/patient-list.directive.js"></script>
+  <script src="scripts/admin/directives/patient-monthly-list.directive.js"></script>
+  <script src="scripts/admin/directives/patient-creation-statistics.directive.js"></script>
+  <script src="scripts/admin/directives/report-filter-controls.directive.js"></script>
+  <script src="scripts/admin/directives/tooltip.directive.js"></script>
+  <script src="scripts/data-analytics/directives/data-entry-filter-controls.directive.js"></script>
+  <script src="scripts/data-analytics/directives/data-entry-stats-view-one.directive.js"></script>
+  <script src="scripts/data-analytics/directives/data-entry-stats-view-two.directive.js"></script>
+  <script src="scripts/data-analytics/directives/data-entry-stats-view-three.directive.js"></script>
+  <script src="scripts/data-analytics/directives/data-entry-stats-view-four.directive.js"></script>
+  <script src="scripts/data-analytics/directives/data-entry-stats.directive.js"></script>
+  <script src="scripts/log-to-server/directives/toggle-logging.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/current-visit-vitals.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/clinical-reminders.directive.js"></script>
+  <script src="scripts/admin/directives/patient-moh-list.directive.js"></script>
+  <script src="scripts/clinic-dashboard/directives/route-css-classnames.directive.js"></script>
+  <script src="scripts/admin/directives/patient-filter-list.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/encounter-view.directive.js"></script>
+  <script src="scripts/clinic-dashboard/directives/clinical-analytics-visualization.directive.js"></script>
+  <script src="scripts/patient-dashboard/directives/notes.directive.js"></script>
+  <script src="scripts/admin/directives/data-analytics-visualization.directive.js"></script>
+
+
+  <!-- Controllers -->
+  <script src="scripts/patient-dashboard/controllers/patient-dashboard.controller.js"></script>
+  <script src="scripts/patient-dashboard/controllers/encounter.controller.js"></script>
+  <script src="scripts/patient-dashboard/controllers/print-labels.controller.js"></script>
+  <script src="scripts/patient-dashboard/controllers/view-encounter.controller.js"></script>
+  <script src="scripts/patient-search/controllers/patient-search.controller.js"></script>
+  <script src="scripts/patient-search/directives/patient-search.directive.js"></script>
+  <script src="scripts/authentication/controllers/login.controller.js"></script>
+  <script src="scripts/formentry/controllers/formentry.controller.js"></script>
+  <script src="scripts/main/controllers/url-selector.controller.js"></script>
+  <script src="scripts/main/controllers/user-default-properties.controller.js"></script>
+  <script src="scripts/data-analytics/controllers/data-entry-statistics.controller.js"></script>
+  <script src="scripts/admin/controllers/admin-dashboard.controller.js"></script>
+  <script src="scripts/admin/controllers/hiv-summary-indicators.controller.js"></script>
+  <script src="scripts/admin/controllers/hiv-visual-summary-indicators.controller.js"></script>
+  <script src="scripts/admin/controllers/hiv-monthly-summary-indicators.controller.js"></script>
+  <script src="scripts/admin/controllers/patient-register.controller.js"></script>
+  <script src="scripts/admin/controllers/moh-731-report.controller.js"></script>
+  <script src="scripts/clinic-dashboard/controllers/clinic-dashboard.controller.js"></script>
+  <script src="scripts/clinic-dashboard/controllers/patient-list-modal.controller.js"></script>
+
+  <!-- Filters -->
+  <script src="scripts/clinic-dashboard/filters/props.filter.js"></script>
+  <script src="scripts/clinic-dashboard/filters/day-appointments.filter.js"></script>
+  <script src="scripts/clinic-dashboard/filters/not-returned-date-appointments.filter.js"></script>
+
+  <!-- Others -->
+  <script src="scripts/patient-search/patient-filter.filter.js"></script>
+  <script src="scripts/utils/services/util.service.js"></script>
+
+
+  <!-- endbuild -->
+  <!-- build:js({.tmp,app}) scripts/templates.js -->
   <script src="scripts/utils/templates.js"></script>
- <!-- endbuild -->
+  <!-- endbuild -->
 </body>
 
 </html>

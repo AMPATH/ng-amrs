@@ -1,38 +1,38 @@
 <div class="panel" ng-class="{'panel-info':!patient.deathDate(), 'panel-danger':patient.deathDate()}" style="padding: 0px;">
 	<div class="panel-heading ">
-    <div class="container-fluid">
-      <div class="row" style="font-size:large">
-            <div class="col-sm-6">
-              <h5  style="padding-top: 10px">{{patient.fullNames() | titlecase}} ({{patient.genderFull()}})</h5>
-               <h5  style="padding-top: 10px">Age: {{patient.age()}} DOB: ({{patient.birthdate()| date:'dd-MM-yyyy'}})</h5>
-               <h5  style="padding-top: 10px">Phone Number: {{patient.phoneNumber()}} <span ng-if="patient.phoneNumber()==null">Not Available</span></h5>
-              <h5  style="padding-top: 10px">Health Center: {{patient.healthCenter()}}</h5>
-              </div>
-        <div class="col-sm-6">
-          <h5  style="padding-top: 10px">AMRS UID: <span ng-if="patient.commonIdentifiers().ampathMrsUId">{{patient.commonIdentifiers().ampathMrsUId}}</span>
+		<div class="container-fluid">
+			<div class="row" style="font-size:large">
+				<div class="col-sm-6">
+					<h5 style="padding-top: 10px">{{patient.fullNames() | titlecase}} ({{patient.genderFull()}})</h5>
+					<h5 style="padding-top: 10px">Age: {{patient.age()}} DOB: ({{patient.birthdate()| date:'dd-MM-yyyy'}})</h5>
+					<h5 style="padding-top: 10px">Phone Number: {{patient.phoneNumber()}} <span ng-if="patient.phoneNumber()==null">Not Available </span></h5>
+					<h5 style="padding-top: 10px">Health Center: {{patient.healthCenter()}}</h5>
+				</div>
+				<div class="col-sm-6">
+					<h5 style="padding-top: 10px">AMRS UID: <span ng-if="patient.commonIdentifiers().ampathMrsUId">{{patient.commonIdentifiers().ampathMrsUId}}</span>
             <span ng-if="patient.commonIdentifiers().ampathMrsUId==null">Not Available</span></h5>
-          <h5  style="padding-top: 10px">AMRS MRN: <span ng-if="patient.commonIdentifiers().amrsMrn">{{patient.commonIdentifiers().amrsMrn}}</span>
+					<h5 style="padding-top: 10px">AMRS MRN: <span ng-if="patient.commonIdentifiers().amrsMrn">{{patient.commonIdentifiers().amrsMrn}}</span>
             <span ng-if="patient.commonIdentifiers().amrsMrn==null">Not Available</span></h5>
-          <h5  style="padding-top: 10px">CCC:<span ng-if="patient.commonIdentifiers().cCC"> {{patient.commonIdentifiers().cCC}} </span>
+					<h5 style="padding-top: 10px">CCC:<span ng-if="patient.commonIdentifiers().cCC"> {{patient.commonIdentifiers().cCC}} </span>
             <span ng-if="patient.commonIdentifiers().cCC==null">Not Available</span></h5>
-          <h5  style="padding-top: 10px">National ID: <span ng-if="patient.commonIdentifiers().kenyaNationalId">{{patient.commonIdentifiers().kenyaNationalId}}</span>
+					<h5 style="padding-top: 10px">National ID: <span ng-if="patient.commonIdentifiers().kenyaNationalId">{{patient.commonIdentifiers().kenyaNationalId}}</span>
             <span ng-if="patient.commonIdentifiers().kenyaNationalId==null">Not Available</span></h5>
 
-            </div>
-        <button data-ng-click='generateClinicalSummaryPdf()'  type="button" class="btn btn-primary pull-right"
-                data-ng-disabled="clinicalRemindersIsBusy||labTestsIsBusy||vitalsIsBusy||hivSummaryIsBusy||clinicalNotesIsBusy||letterHeadIsBusy">
+				</div>
+				<button data-ng-click='generateClinicalSummaryPdf()' type="button" class="btn btn-primary pull-right" data-ng-disabled="clinicalRemindersIsBusy||labTestsIsBusy||vitalsIsBusy||hivSummaryIsBusy||clinicalNotesIsBusy||letterHeadIsBusy">
 
-         <span ng-hide="clinicalRemindersIsBusy||labTestsIsBusy||vitalsIsBusy||hivSummaryIsBusy||clinicalNotesIsBusy||letterHeadIsBusy">
+					<span ng-hide="clinicalRemindersIsBusy||labTestsIsBusy||vitalsIsBusy||hivSummaryIsBusy||clinicalNotesIsBusy||letterHeadIsBusy">
            <span class="glyphicon glyphicon-print"></span> Patient Clinical Summary
-         </span>
-         <span  ng-show="clinicalRemindersIsBusy||labTestsIsBusy||vitalsIsBusy||hivSummaryIsBusy||clinicalNotesIsBusy||letterHeadIsBusy">
+					</span>
+					<span ng-show="clinicalRemindersIsBusy||labTestsIsBusy||vitalsIsBusy||hivSummaryIsBusy||clinicalNotesIsBusy||letterHeadIsBusy">
           <img src="images/ajax-loader.gif" autofocus /> Loading summary data...
          </span>
-        </button>
+				</button>
 
-      </div>
-    </div>
+			</div>
+		</div>
 	</div>
+
 </div>
 <clinical-reminders patient-uuid="{{patient.uuid()}}" critical-reminders="clinicalReminders" is-busy="clinicalRemindersIsBusy"></clinical-reminders>
 <div style="margin-top: 4px; margin-bottom:4px;">
@@ -48,16 +48,16 @@
 				<li active-tab-sync index="4" data-ng-glick="activeList(this, 4)" ng-class="{active: activeListId === 4}">
 					<a data-target="#tab4" data-toggle="tab"><span class="icon-i-cardiology" aria-hidden="true"></span>&nbsp;Vitals</a>
 				</li>
-        <li active-tab-sync index="7" data-ng-glick="activeList(this, 7)" ng-class="{active: activeListId === 7}">
-          <a data-target="#tab7" data-toggle="tab"><span class="icon-i-medical-library" aria-hidden="true"></span>&nbsp;HIV Summary</a>
-        </li>
+				<li active-tab-sync index="7" data-ng-glick="activeList(this, 7)" ng-class="{active: activeListId === 7}">
+					<a data-target="#tab7" data-toggle="tab"><span class="icon-i-medical-library" aria-hidden="true"></span>&nbsp;HIV Summary</a>
+				</li>
 				<li active-tab-sync index="5" data-ng-glick="activeList(this, 5)" ng-class="{active: activeListId === 5}">
 					<a data-target="#tab5" data-toggle="tab"><span class="icon-i-laboratory" aria-hidden="true"></span>&nbsp;Lab Data Summary</a>
 				</li>
 				<li active-tab-sync index="6" data-ng-glick="activeList(this, 6)" ng-class="{active: activeListId === 6}">
 					<a data-target="#tab6" data-toggle="tab"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;Current Visit</a>
 				</li>
-        <li active-tab-sync index="10" data-ng-glick="activeList(this, 10)" ng-class="{active: activeListId === 10}">
+				<li active-tab-sync index="10" data-ng-glick="activeList(this, 10)" ng-class="{active: activeListId === 10}">
 					<a data-target="#notesTab" data-toggle="tab"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp;Clinical Notes</a>
 				</li>
 				<li active-tab-sync index="3" data-ng-glick="activeList(this, 3)" ng-class="{active: activeListId === 3}">
@@ -77,16 +77,16 @@
 				<li active-tab-sync index="4" data-ng-glick="activeList(this, 4)" ng-class="{active: activeListId === 4}">
 					<a data-target="#tab4" data-toggle="tab"><span class="icon-i-cardiology" aria-hidden="true"></span>&nbsp;Vitals</a>
 				</li>
-        <li active-tab-sync index="7" data-ng-glick="activeList(this, 7)" ng-class="{active: activeListId === 7}">
-          <a data-target="#tab7" data-toggle="tab"><span class="icon-i-medical-library" aria-hidden="true"></span>&nbsp;HIV Summary</a>
-        </li>
+				<li active-tab-sync index="7" data-ng-glick="activeList(this, 7)" ng-class="{active: activeListId === 7}">
+					<a data-target="#tab7" data-toggle="tab"><span class="icon-i-medical-library" aria-hidden="true"></span>&nbsp;HIV Summary</a>
+				</li>
 				<li active-tab-sync index="5" data-ng-glick="activeList(this, 5)" ng-class="{active: activeListId === 5}">
 					<a data-target="#tab5" data-toggle="tab"><span class="icon-i-laboratory" aria-hidden="true"></span>&nbsp;Lab Data Summary</a>
 				</li>
 				<li active-tab-sync index="6" data-ng-glick="activeList(this, 6)" ng-class="{active: activeListId === 6}">
 					<a data-target="#tab6" data-toggle="tab"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;Current Visit</a>
 				</li>
-        <li active-tab-sync index="10" data-ng-glick="activeList(this, 10)" ng-class="{active: activeListId === 10}">
+				<li active-tab-sync index="10" data-ng-glick="activeList(this, 10)" ng-class="{active: activeListId === 10}">
 					<a data-target="#notesTab" data-toggle="tab"><span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp;Clinical Notes</a>
 				</li>
 				<li active-tab-sync index="3" data-ng-glick="activeList(this, 3)" ng-class="{active: activeListId === 3}">
@@ -108,7 +108,7 @@
 					<a ng-if="patientRelationships.relationships.length == 0" style="cellpadding:4px;font-size:14px;" data-target="#tab9" data-toggle="tab">&nbsp;&nbsp;&nbsp;Add new Relationships</a>
 				</div>
 			</div>
-      <div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="notesTab">
+			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="notesTab">
 				<div class="page-content">
 					<clinical-notes patient-uuid={{patient.uuid()}} notes="clinicalNotes" is-busy="clinicalNotesIsBusy"></clinical-notes>
 				</div>
@@ -138,24 +138,24 @@
 					<current-visit patient-uuid="{{patient.uuid()}}"></current-visit>
 				</div>
 			</div>
-      <div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab7">
-        <div class="page-content">
+			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab7">
+				<div class="page-content">
 
-          <div style="margin-top: 2px; padding:2px;">
-            <hiv-summary patient-uuid="{{patient.uuid()}}" hiv-summary="hivSummary" is-busy="hivSummaryIsBusy"></hiv-summary>
-          </div>
-          <accordion ng-show="showHivHistoricalSummary">
-            <accordion-group is-open="HivHistoricalExpanded">
-              <accordion-heading>
-                <div style="padding:3px;">Historical Hiv Summary
-                  <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': HivHistoricalExpanded, 'glyphicon-chevron-right': !HivHistoricalExpanded}"></i>
-                </div>
-              </accordion-heading>
-              <hiv-summary-historical patient-uuid="{{patient.uuid()}}"></hiv-summary-historical>
-            </accordion-group>
-          </accordion>
-        </div>
-      </div>
+					<div style="margin-top: 2px; padding:2px;">
+						<hiv-summary patient-uuid="{{patient.uuid()}}" hiv-summary="hivSummary" is-busy="hivSummaryIsBusy"></hiv-summary>
+					</div>
+					<accordion ng-show="showHivHistoricalSummary">
+						<accordion-group is-open="HivHistoricalExpanded">
+							<accordion-heading>
+								<div style="padding:3px;">Historical Hiv Summary
+									<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': HivHistoricalExpanded, 'glyphicon-chevron-right': !HivHistoricalExpanded}"></i>
+								</div>
+							</accordion-heading>
+							<hiv-summary-historical patient-uuid="{{patient.uuid()}}"></hiv-summary-historical>
+						</accordion-group>
+					</accordion>
+				</div>
+			</div>
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="printLabelsTab">
 				<div class="page-content">
 					<print-labels patient-uuid="{{patient.uuid()}}"></print-labels>
