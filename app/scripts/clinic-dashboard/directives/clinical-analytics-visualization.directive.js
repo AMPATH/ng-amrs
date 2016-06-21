@@ -223,8 +223,8 @@
       chart.selectedLocations = selectedLocations;
       //hit the server
       EtlRestService.getHivOverviewVisualizationReport(
-        moment(new Date(startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-        moment(new Date(endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+        moment(new Date(startDate)).startOf('month').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
+        moment(new Date(endDate)).endOf('month').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
         chart.reportName,
         chart.groupBy,
         selectedLocations,
