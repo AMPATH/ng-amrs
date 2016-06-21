@@ -1,0 +1,17 @@
+<form name="attributeForm">
+  <div class="form-group" ng-class="{ 'has-error': attributeForm.attributeValueName.$touched && attributeForm.attributeValueName.$invalid }">
+    <label for="attributeValue">{{attributeName}}</label>
+    <input required ng-model="attributeValue" type="text" class="form-control"
+    name="attributeValueName"
+            ng-minlength="10"
+            required
+             ng-pattern="/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/"
+            ng-maxlength="10"
+    id="attributeValue" placeholder={{attributeName}}>
+    <div ng-messages="attributeForm.attributeValueName.$error">
+      <div class="help-block" ng-message="required">Phone number is required</div>
+      <div class="help-block" ng-message="pattern">Must be a valid 10 digit phone number</div>
+    </div>
+  </div>
+  <button ng-disabled="attributeForm.attributeValueName.$touched && attributeForm.attributeValueName.$invalid "class="btn btn-primary" type="button" ng-click="saveAttribute()"><span>Save<i ng-show="saving" style="font-size:14px" class="fa fa-spinner fa-spin"></i></span></button>
+</form>

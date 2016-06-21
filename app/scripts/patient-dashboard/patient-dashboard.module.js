@@ -6,6 +6,7 @@
             'app.openmrsRestServices',
             'app.etlRestServices',
             'dialogs.main',
-            'kendo.directives'
+            'kendo.directives',
+            'ngMessages'
         ]);
 })();
