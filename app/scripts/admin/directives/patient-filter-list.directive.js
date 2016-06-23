@@ -52,6 +52,9 @@
       },
       {
         name:'person_name'
+      },
+      {
+        name:'location_name'
       }
     ];
 
