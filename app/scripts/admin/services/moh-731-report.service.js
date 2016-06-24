@@ -44,8 +44,8 @@
         'Currently in care Below 1yr(M)',
         'Currently in care Below 1yr(F)',
         'Currently in care Below 15yrs(M)',
-        'Currently in care 15yrs and older(F)',
-        'Currently in care Below 15yrs(M)',
+        'Currently in care Below 15yrs(F)',
+        'Currently in care 15yrs and older(M)',
         'Currently in care 15yrs and older(F)',
         'Currently in Care-Total (Sum HV03-15 to HV03-18)'
       ],
