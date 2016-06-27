@@ -162,7 +162,7 @@
               "label": "Creatinine mmol/L:",
               "questionOptions":{
                 "concept": "a897e450-1350-11df-a1f1-0026b9348838",
-                "render": "number",
+                "rendering": "number",
                 "showDate": "true",
                 "max": "11050",
                 "min": "0"
@@ -212,7 +212,7 @@
                   }
                 ],
                 "showDate": "true",
-                "render":"select"
+                "rendering":"select"
               },
               "type": "obs",
               "validators": [
