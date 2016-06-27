@@ -4,10 +4,10 @@
     "processor": "EncounterFormProcessor",
     "pages": [
         {
-            "label": "Assessment of congenital abnormalities",
+            "label": "Congenital Abnormalities",
             "sections": [
                 {
-                    "label": "Congenital abnormalities",
+                    "label": "Congenital Abnormalities",
                     "questions": [
                          {
                             "label": "Congenital anormaly in newborn::",

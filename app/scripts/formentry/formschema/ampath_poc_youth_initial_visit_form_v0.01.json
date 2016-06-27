@@ -1,0 +1,788 @@
+{
+    "name": "Youth Initial Encounter Form v0.01",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "referencedForms": [
+        {
+            "formName": "component_vitals",
+            "alias": "vt"
+        },
+        {
+            "formName": "component_social-history",
+            "alias": "sh"
+        },
+        {
+            "formName": "component_hospitalization",
+            "alias": "hosp"
+        },
+        {
+            "formName": "component_art",
+            "alias": "art"
+        },
+        {
+            "formName": "component_preclinic-review",
+            "alias": "pcr"
+        },
+        {
+            "formName": "component_pcp-prophy",
+            "alias": "pcp"
+        },
+        {
+            "formName": "component_tb-prophy",
+            "alias": "tbp"
+        },
+        {
+            "formName": "component_tb-treatment",
+            "alias": "tbt"
+        },
+        {
+            "formName": "component_crypto",
+            "alias": "cry"
+        },
+        {
+            "formName": "component_substance-use",
+            "alias": "su"
+        },
+        {
+            "formName": "component_other-medication",
+            "alias": "omed"
+        },
+        {
+            "formName": "component_side-effect",
+            "alias": "se"
+        },
+        {
+            "formName": "component_hpi",
+            "alias": "hpi"
+        },
+        {
+            "formName": "component_physical-exams",
+            "alias": "ppe"
+        },
+        {
+            "formName": "component_review-of-systems",
+            "alias": "rs"
+        },
+        {
+            "formName": "component_lab-results",
+            "alias": "tr"
+        },
+        {
+            "formName": "component_problem-list",
+            "alias": "pl"
+        },
+        {
+            "formName": "component_who-staging",
+            "alias": "ws"
+        },
+        {
+            "formName": "component_lab-orders",
+            "alias": "lo"
+        },
+        {
+            "formName": "component_assessment",
+            "alias": "ass"
+        },
+        {
+            "formName": "component_drug-allergy",
+            "alias": "da"
+        },
+        {
+            "formName": "component_child-labor",
+            "alias": "cl"
+        },
+        {
+            "formName": "component_mental-health",
+            "alias": "mh"
+        },
+        {
+            "formName": "component_child-abuse",
+            "alias": "ca"
+        },
+        {
+            "formName": "component_ob-history",
+            "alias": "gynhist"
+        },
+        {
+            "formName": "component_family-information",
+            "alias": "fi"
+        },
+        {
+            "formName": "component_peds-hiv-status",
+            "alias": "phs"
+        },
+        {
+            "formName": "component_reproductive-health",
+            "alias": "rh"
+        },
+        {
+            "formName": "component_education",
+            "alias": "edu"
+        },
+        {
+            "formName": "component_nutrition",
+            "alias": "ntrn"
+        },
+        {
+            "formName": "component_referral",
+            "alias": "ref"
+        }
+    ],
+    "pages": [
+        {
+            "label": "Encounter Details",
+            "sections": [
+                {
+                    "label": "Encounter Details",
+                    "isExpanded": "true",
+                    "questions": [
+                        {
+                            "label": "Visit date",
+                            "type": "encounterDatetime",
+                            "required": "true",
+                            "default": "",
+                            "id": "encDate",
+                            "questionOptions": {
+                                "rendering": "date"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "encounterProvider",
+                            "label": "Provider",
+                            "id": "provider",
+                            "required": "true",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        },
+                        {
+                            "type": "encounterLocation",
+                            "label": "Facility name (site/satellite clinic required):",
+                            "id": "location",
+                            "required": "true",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Pre-Clinical Review",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "pcr",
+                        "page": "Pre-clinic Review",
+                        "section": "Pre-clinic Review",
+                        "excludeQuestions": [
+                            "scheduledVisit",
+                            "actualDate"
+                        ]
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "pcr",
+                        "page": "Pre-clinic Review",
+                        "section": "Enrollment History"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "phs",
+                        "page": "Child's HIV Status",
+                        "section": "Child's HIV Status",
+                        "excludeQuestions": [
+                            "currStatus"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Family Information",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "fi",
+                        "page": "Family Information",
+                        "section": "Treatment Supporter Details"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "fi",
+                        "page": "Family Information",
+                        "section": "Family Information",
+                        "excludeQuestions": [
+                            "changedResidence",
+                            "motherDeceased",
+                            "fatherDeceased"
+                        ]
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "fi",
+                        "page": "Family Information",
+                        "section": "Family History"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Substance Use",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "su",
+                        "page": "Substance use",
+                        "section": "Tobacco Use History"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "su",
+                        "page": "Substance use",
+                        "section": "Alcohol Use History"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "su",
+                        "page": "Substance use",
+                        "section": "Petrol Use History"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "su",
+                        "page": "Substance use",
+                        "section": "Marijuana Use History"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "su",
+                        "page": "Substance use",
+                        "section": "cocaine Use History"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "su",
+                        "page": "Substance use",
+                        "section": "Heroin Use History"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "su",
+                        "page": "Substance use",
+                        "section": "Other Inhalants"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "su",
+                        "page": "Substance use",
+                        "section": "Other Substance"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Social History",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "sh",
+                        "page": "Social History",
+                        "section": "Social History"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Reproduction Health",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "rh",
+                        "page": "Reproductive health",
+                        "section": "Reproductive Health"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "gynhist",
+                        "page": "OB/Gyn History",
+                        "section": "OB/Gyn History",
+                        "excludeQuestions": [
+                            "menStatus",
+                            "lastDelivery"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Education",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "edu",
+                        "page": "Education",
+                        "section": "Education"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Nutrition",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "ntrn",
+                        "page": "Nutrition",
+                        "section": "Nutrition Meals"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Hospitalization History",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "hosp",
+                        "page": "Hospitalization",
+                        "section": "Hospitalization History"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "hosp",
+                        "page": "Hospitalization",
+                        "section": "Past Diagnosis"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Current Medication",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "art",
+                        "page": "ART ",
+                        "section": "ART First Visit",
+                        "excludeQuestions": [
+                            "pastArvDrugsAdult"
+                        ]
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "art",
+                        "page": "ART ",
+                        "section": "ART History",
+                        "excludeQuestions": [
+                            "current_art_regimen_adult"
+                        ]
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "pcp",
+                        "page": "PCP Prophylaxis",
+                        "section": "PCP Prophylaxis Current"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tbp",
+                        "page": "TB Prophylaxis",
+                        "section": "TB Prophylaxis Current"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "cry",
+                        "page": "Cryptococcal prevention",
+                        "section": "Cryptococcal Secondary Prevention"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tbt",
+                        "page": "TB Treatment",
+                        "section": "Tuberculosis History"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Other Medication",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "omed",
+                        "page": "Other medication",
+                        "section": "Other Medications"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Drug Allergy",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "da",
+                        "page": "Drug Allergy",
+                        "section": "Drug Allergy"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Clinical Review",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "hpi",
+                        "page": "History presenting illness",
+                        "section": "Chief Complaints"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "hpi",
+                        "page": "History presenting illness",
+                        "section": "History Presenting Illness, Notes"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Review of systems",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "rs",
+                        "page": "Review of systems",
+                        "section": "Review of systems General"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "rs",
+                        "page": "Review of systems",
+                        "section": "Review of systems HEENT"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "rs",
+                        "page": "Review of systems",
+                        "section": "Review of systems Cardiopulmonary"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "rs",
+                        "page": "Review of systems",
+                        "section": "Review of systems Gastrointestinal"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "rs",
+                        "page": "Review of systems",
+                        "section": "Review of systems Genitourinary"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "rs",
+                        "page": "Review of systems",
+                        "section": "Review of systems Musculoskeletal"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "rs",
+                        "page": "Review of systems",
+                        "section": "Review of systems CNS"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "TB screening Questions",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "tbt",
+                        "page": "TB Treatment",
+                        "section": "TB Screening Questions"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tbt",
+                        "page": "TB Treatment",
+                        "section": "Tuberculosis Investigations"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "pl",
+                        "page": "Problem list",
+                        "section": "Problem List"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Medication Side Effect",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "se",
+                        "page": "Side Effects/Toxicity",
+                        "section": "Side Effects/Toxicity"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Vitals",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "vt",
+                        "page": "Vitals",
+                        "section": "Vital Signs"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Physical Exam",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "ppe",
+                        "page": "Physical Exams",
+                        "section": "Physical Exams"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "ppe",
+                        "page": "Physical Exams",
+                        "section": "Physical Exams, Notes"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Assessment",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "ws",
+                        "page": "WHO staging",
+                        "section": "Ped Staging"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Test Results",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "Chemistry Lab Tests"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "CBC"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "CD4"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "Viral Load"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "HIV Test",
+                        "excludeQuestions": [
+                            "hivPcr"
+                        ]
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "TB Test"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "Chest Xray"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "Other Test"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Medication Plan",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "art",
+                        "page": "ART ",
+                        "section": "ART Plan",
+                        "excludeQuestions": [
+                            "artStartedAdult"
+                        ]
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "pcp",
+                        "page": "PCP Prophylaxis",
+                        "section": "PCP Prophylaxis Plan"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tbp",
+                        "page": "TB Prophylaxis",
+                        "section": "TB Prophylaxis Plan"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "cry",
+                        "page": "Cryptococcal prevention",
+                        "section": "Cryptococcal Treatment Plan"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tbt",
+                        "page": "TB Treatment",
+                        "section": "TB Treatment Plan"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Additional Medication",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "omed",
+                        "page": "Other medication",
+                        "section": "Additional Medication Orders"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Lab Orders",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "lo",
+                        "page": "Test orders",
+                        "section": "Test Orders"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Referral Orders",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "ref",
+                        "page": "Referrals",
+                        "section": "Referrals"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Next appointment",
+            "sections": [
+                {
+                    "label": "Next appointment",
+                    "isExpanded": "true",
+                    "questions": [
+                        {
+                            "label": "Return to clinic Date:",
+                            "type": "obs",
+                            "required": "true",
+                            "questionOptions": {
+                                "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
+                                "rendering": "date",
+                                "weeksList": [
+                                    2,
+                                    4,
+                                    8,
+                                    12,
+                                    16
+                                ]
+                            },
+                            "validators": [
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "true"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

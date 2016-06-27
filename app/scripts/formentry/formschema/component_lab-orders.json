@@ -8,6 +8,7 @@
             "sections": [
                 {
                     "label": "Test Orders",
+                    "isExpanded": "true",
                     "questions": [
                         {
                             "type": "obsGroup",
@@ -20,6 +21,7 @@
                                 {
                                     "label": "Test(s) order:",
                                     "id": "testOrder",
+                                    "required": "true",
                                     "questionOptions": {
                                         "concept": "a89c2268-1350-11df-a1f1-0026b9348838",
                                         "answers": [
@@ -110,8 +112,8 @@
                                     "type": "obs",
                                     "validators": [],
                                     "hide": {
-                                "hideWhenExpression": "isEmpty(testOrder) || !arrayContains(testOrder, 'a8aaf3e2-1350-11df-a1f1-0026b9348838')"
-                            }
+                                        "hideWhenExpression": "isEmpty(testOrder) || !arrayContains(testOrder, 'a8aaf3e2-1350-11df-a1f1-0026b9348838')"
+                                    }
                                 }
                             ]
                         },

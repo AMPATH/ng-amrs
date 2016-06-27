@@ -175,6 +175,7 @@
                         {
                             "label": "Prevention with positives: At risk population:",
                             "questionOptions": {
+                                "rendering": "select",
                                 "concept": "93aa3f1d-1c39-4196-b5e6-8adc916cd5d6",
                                 "answers": [
                                     {
@@ -201,8 +202,7 @@
                                         "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
                                         "label": "N/A"
                                     }
-                                ],
-                                "rendering": "select"
+                                ]
                             },
                             "type": "obs",
                             "validators": []
