@@ -1,0 +1,82 @@
+<div ng-disabled="isBusy">
+    <div class="well" style="padding:2px;">
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label for="start-date">Select Date</label>
+                <div>
+                    <p class="input-group">
+                        <input type="text" id="start-date" class="form-control" datepicker-popup="mediumDate" ng-model="selectedDate" ng-model-options="{getterSetter: true}"
+                            is-open="dateControlStatus.startOpened" />
+                        <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="openDatePopup($event)">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </button>
+            </span>
+                    </p>
+                    <div style="padding-bottom: 23px">
+                        <button class="btn btn-info previous" style="float:left" ng-click="navigateDay(-1)"> <span class="glyphicon glyphicon-chevron-left"></span>Previous Day</button>
+                        <button class="btn btn-info next" style="float:right" ng-click="navigateDay(1)">Next Day <span class="glyphicon glyphicon-chevron-right"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div ng-show='!isBusy && experiencedLoadingErrors'>
+        <button class="btn btn-info" ng-click="loadSchedule(true)">
+        <span class="glyphicon glyphicon-refresh"></span>
+        <span>Reload</span>
+      </button>
+    </div>
+    <div ng-show='isBusy'>
+        <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+        <b>Loading visits...</b>
+    </div>
+    <div style="margin-bottom:2px"><span style="font-size:24px;"> Clinic Flow</span></div>
+    <hr style="margin-top:1px; margin-bottom:1px;"/>
+    <div style="font-weight: bold; font-size:14px;">
+        <span class="text-warning" >  Total Visits: {{patientStatuses.length}}</span> <br/>
+        <span class="text-warning">  Incomplete Visits: {{incompleteVisitsCount}}</span>
+    </div>
+    <div class="panel panel-default" style="font-weight: bold;">
+
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>Visit Completion Time (mins)</td>
+                    <td>Triage Waiting Time (mins)</td>
+                    <td>Clinician Waiting Time (mins)</td>
+                </tr>
+            </thead>
+            <tr>
+                <td>Average</td>
+                <td>{{averageWaitingTime.averageVisitCompletionTime}}</td>
+                <td>{{averageWaitingTime.averageTriageWaitingTime}}</td>
+                <td>{{averageWaitingTime.averageClinicianWaitingTime}}</td>
+            </tr>
+            <tr>
+                <td>Median</td>
+                <td>{{medianWaitingTime.medianVisitCompletionTime}}</td>
+                <td>{{medianWaitingTime.medianTriageWaitingTime}}</td>
+                <td>{{medianWaitingTime.medianClinicianWaitingTime}}</td>
+            </tr>
+        </table>
+    </div>
+    
+
+    <div ng-show='experiencedLoadingErrors'>
+        <p class="bg-danger" style="padding:4px;">
+            <b>
+        <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
+            <p>
+    </div>
+    <div class="form-group">
+        <div/>
+        <div class="panel panel-default">
+            <table id="bsTable" class="table table-striped table-condensed table-hover" bs-table-control="btTableOptions">
+            </table>
+        </div>
+    </div>
+</div>

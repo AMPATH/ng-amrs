@@ -191,5 +191,44 @@
         etlRestService.getVitals('passed-uuid', 20, 5);
         httpBackend.flush();
       });
+
+       //get patient flow information methods unit tests
+    it('should make an api call to the patient-flow etl rest endpoint when ' +
+      'getPatientFlowData is called with a location uuid and visit date',
+      function() {
+
+        httpBackend.expectGET(settingsService.getCurrentRestUrlBase() 
+        + 'patient-flow-data?dateStarted=2016-06-15&locationUuids=passed-uuid').respond({});
+        etlRestService.getPatientFlowData('passed-uuid',"2016-06-15").then(callbacks.onSuccess);
+        httpBackend.flush();
+      });
+
+    it('should call the onSuccess callback getPatientFlowData request successfully ' +
+      'returns',
+      function() {
+
+         httpBackend.expectGET(settingsService.getCurrentRestUrlBase() 
+        + 'patient-flow-data?dateStarted=2016-06-15&locationUuids=passed-uuid').respond({});
+        etlRestService.getPatientFlowData('passed-uuid',"2016-06-15", callbacks.onSuccess, callbacks.onFailure);
+        httpBackend.flush();
+
+        expect(callbacks.onSuccessCalled).to.equal(true);
+        expect(callbacks.onFailedCalled).to.equal(false);
+      });
+
+    it('should call the onFailed callback when getVitals request is not ' +
+      'successfull',
+      function() {
+
+         httpBackend.expectGET(settingsService.getCurrentRestUrlBase() 
+        + 'patient-flow-data?dateStarted=2016-06-15&locationUuids=passed-uuid').respond(500, errorResponse);
+        etlRestService.getPatientFlowData('passed-uuid',"2016-06-15", callbacks.onSuccess, callbacks.onFailure);
+        httpBackend.flush();
+
+        expect(callbacks.onSuccessCalled).to.equal(false);
+        expect(callbacks.onFailedCalled).to.equal(true);
+        expect(callbacks.message).to.exist;
+        expect(callbacks.message.trim()).not.to.equal('');
+      });
   });
 })();

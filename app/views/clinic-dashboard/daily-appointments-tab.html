@@ -1,21 +1,33 @@
 <style>
-.panel-info > .panel-heading {
- background-color:#5BC0DE;
-}
-.panel-warning > .panel-heading {
- background-color:#F0AD4E;
-}
-.panel-success > .panel-heading {
- background-color:#5CB85C;
-}
+	.panel-info > .panel-heading {
+		background-color: #5BC0DE;
+	}
+	
+	.panel-warning > .panel-heading {
+		background-color: #F0AD4E;
+	}
+	
+	.panel-success > .panel-heading {
+		background-color: #5CB85C;
+	}
 </style>
 
 <div class="panel with-nav-tabs panel-info" route-css-classnames>
 	<div class="panel-heading">
 		<ul class="nav nav-tabs">
-			<li ui-sref-active-if="clinical-dashboard.daily-appointments.appointments"><a ui-sref="clinical-dashboard.daily-appointments.appointments({locationuuid: selectedLocation.selected.uuId()})"><span aria-hidden="true"></span>&nbsp;Appointments</a></li>
-			<li ui-sref-active="active"><a ui-sref="clinical-dashboard.daily-appointments.visits({locationuuid: selectedLocation.selected.uuId()})"><span aria-hidden="true"></span>&nbsp;Visits</a></li>
-			<li ui-sref-active="active"><a ui-sref="clinical-dashboard.daily-appointments.has-not-returned({locationuuid: selectedLocation.selected.uuId()})"><span aria-hidden="true"></span>&nbsp;Has not returned</a></li>
+			<li ui-sref-active-if="clinical-dashboard.daily-appointments.appointments">
+				<a ui-sref="clinical-dashboard.daily-appointments.appointments({locationuuid: selectedLocation.selected.uuId()})"><span aria-hidden="true"></span>&nbsp;Appointments</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="clinical-dashboard.daily-appointments.visits({locationuuid: selectedLocation.selected.uuId()})"><span aria-hidden="true"></span>&nbsp;Visits</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="clinical-dashboard.daily-appointments.patient-flow({locationuuid: selectedLocation.selected.uuId()})"><span aria-hidden="true"></span>&nbsp;Clinic flow</a>
+			</li>
+			<li ui-sref-active="active">
+				<a ui-sref="clinical-dashboard.daily-appointments.has-not-returned({locationuuid: selectedLocation.selected.uuId()})"><span aria-hidden="true"></span>&nbsp;Has not returned</a>
+			</li>
+
 		</ul>
 	</div>
 	<div class="panel-body">
