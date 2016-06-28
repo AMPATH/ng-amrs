@@ -42,10 +42,6 @@
         <span class="note-label">BP: </span><span class="note-info">{{note.vitals.bp}}</span>,
         <span class="note-label">Pulse: </span><span class="note-info">{{note.vitals.pulse}}</span>]
         <br/>
-        <span class="note-label-primary"><b>CC/HPI:</b> </span><i>{{note.ccHpi}}</i>
-        <br/>
-        <span class="note-label-primary"><b>Assessment:</b> </span><i>{{note.assessment}}</i>
-        <br/>
         <span class="note-label">Dispensed ARV drugs: </span>[<span class="note-info">{{note.artRegimen.curArvMeds}}</span>] (
         <span class="note-label">ARV Start Date: </span><span class="note-info">{{note.artRegimen.startDate}}</span>)
         <br/>
@@ -58,6 +54,34 @@
         <br/>
 
         <span class="note-label">RTC Date: </span><span class="note-info">{{note.rtcDate}}</span>
+        <br/>
+        <!-- <span class="note-label-primary"><b>CC/HPI:</b> </span><i>{{note.ccHpi}}</i> -->
+        <!-- <br/>
+        <span class="note-label-primary"><b>Assessment:</b> </span><i>{{note.assessment}}</i>
+        <br/> -->
+        <span data-ng-if="!note.hasCcHpiAssessment" class="note-label">CC/HPI &amp; Assessemnt: </span>
+        <span data-ng-if="!note.hasCcHpiAssessment" class="note-info">None</span>
+        <table data-ng-show="note.hasCcHpiAssessment" 
+              class="table table-stripped table-condensed table-bordered">
+          <thead>
+            <tr><th width="30%">Encounter</th><th colspan="2">CC/HPI &amp; Assessment</th></tr>
+          </thead>
+          <!-- <thead>
+            <tr><th width="30%">Encounter</th><th>CC/HPI</th><th>Assessment</th></tr>
+          </thead> -->
+          <tbody data-ng-repeat="ccHpiAssessment in note.ccHpiAssessment">
+            <tr>
+              <td>{{ccHpiAssessment.encounterType}}</td>
+              <td>
+                <span class="note-label">CC/HPI: </span>
+                <span class="note-info">{{ccHpiAssessment.ccHpi}}</span>
+                <hr/>
+                <span class="note-label">Assessment: </span>
+                <span class="note-info">{{ccHpiAssessment.assessment}}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </td>
     </tr>
   </table>

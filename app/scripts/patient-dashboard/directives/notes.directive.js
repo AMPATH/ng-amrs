@@ -26,13 +26,12 @@ jshint -W003, -W026
 
   notesController.$inject = [
     '$scope',
-    'NotesGeneratorService',
     '$filter',
     '$log',
     'EtlRestService'
   ];
 
-  function notesController($scope, NotesGenSvc, $filter, $log, EtlRestService) {
+  function notesController($scope, $filter, $log, EtlRestService) {
     $scope.isBusy = true;
     $scope.hasNotes = $scope.hasError = false;
     $scope.fetchNotes = fetchNotes;
@@ -161,6 +160,19 @@ jshint -W003, -W026
           note.vitals.bp = note.vitals.systolicBp + '/' + note.vitals.diastolicBp;
         }
         _formatBlank(note.vitals, 'Not Available');
+        
+        // Group ccHpi and Assessemnt
+        var grouped = _groupCCHPIAndAssessment(note.ccHpi, note.assessment);
+        if(_.isEmpty(grouped)) {
+          note.hasCcHpiAssessment = false;
+        } else {
+          // Formant blank values
+          _.each(grouped, function(group) {
+            _formatBlank(group, 'Not Provided');
+          });
+          note.hasCcHpiAssessment = true;
+          note.ccHpiAssessment = grouped;
+        }
       });
       return notes;
     }
@@ -172,8 +184,56 @@ jshint -W003, -W026
         }
       });
     }
-  }
+    
+    function _groupCCHPIAndAssessment(ccHpiArray, assessmentArray) {
+        // Grouping CC/HPI and Assessemnt by encounter
+        if(_.isEmpty(ccHpiArray) && _.isEmpty(assessmentArray)) {
+          return [];
+        }
 
+        var ccHpiAssessment = [];
+        if(!_.isEmpty(ccHpiArray)) {
+          if(_.isEmpty(assessmentArray)) {
+            _.each(ccHpiArray, function(ccHpi) {
+              var o = {
+                encounterType: ccHpi.encounterType,
+                ccHpi: ccHpi.value,
+                assessment: ''
+              };
+              ccHpiAssessment.push(o);
+            });
+          } else {
+            // In case assessmentArray is not empty
+            _.each(ccHpiArray, function(ccHpi) {
+              var o = {
+                encounterType: ccHpi.encounterType,
+                ccHpi: ccHpi.value,
+                assessment: ''
+              };
+              var ass = _.find(assessmentArray, function(assItem) {
+                return ccHpi.encounterType === assItem.encounterType;
+              });
+              if(ass) {
+                o.assessment = ass.value;
+              }
+              ccHpiAssessment.push(o);
+            });
+          } 
+        } else {
+          // ccHpiArray is empty we redo the code the same way.
+          _.each(assessmentArray, function(ass) {
+            var o = {
+              encounterType: ass.encounterType,
+              ccHpi: '',
+              assessment: ass.value
+            };
+            ccHpiAssessment.push(o);
+          });
+        }
+        return ccHpiAssessment;
+     }
+  }
+  
   function linkFn(scope, element, attrs, vm) {
     attrs.$observe('patientUuid', onPatientUuidChanged);
 
