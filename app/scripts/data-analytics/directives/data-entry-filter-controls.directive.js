@@ -48,6 +48,7 @@ jshint -W003, -W026
 		$scope.selectedEncounterTypes = {};
 		$scope.selectedEncounterTypes.selected = [];
 		$scope.selectAllForms = selectAllForms;
+    $scope.selectAllForms.selectedAll = false;
 		$scope.selectAllEncounterTypes = selectAllEncounterTypes;
 		$scope.selectedLocations = {};
 		$scope.selectedLocations.selectedAll = false;
@@ -92,10 +93,16 @@ jshint -W003, -W026
 			return $scope.enabledControls.indexOf(param) > -1;
 		}
 
-		function selectAllForms() {
-			if ($scope.forms)
-				$scope.selectedForms.selected = $scope.forms;
-		}
+    function selectAllForms() {
+        if ($scope.selectAllForms.selectedAll === false) {
+          $scope.selectAllForms.selectedAll = true;
+          $scope.selectedForms.selected = $scope.forms;
+        }
+        else {
+          $scope.selectAllForms.selectedAll = false;
+          $scope.selectedForms.selected = [];
+        }
+      }
 
 		function selectAllEncounterTypes() {
 			if ($scope.forms)
