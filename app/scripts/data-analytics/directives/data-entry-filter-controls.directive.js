@@ -50,6 +50,7 @@ jshint -W003, -W026
 		$scope.selectAllForms = selectAllForms;
     $scope.selectAllForms.selectedAll = false;
 		$scope.selectAllEncounterTypes = selectAllEncounterTypes;
+    $scope.selectAllEncounterTypes.selectedAll = false;
 		$scope.selectedLocations = {};
 		$scope.selectedLocations.selectedAll = false;
 		$scope.selectedLocations.locations = [];
@@ -64,6 +65,7 @@ jshint -W003, -W026
 		$scope.findingProvider = false;
 		$scope.findCreators = findCreators;
 		$scope.findingCreator = false;
+    $scope.isBusy = false;
 		$scope.canView = canView;
 		var locationService = OpenmrsRestService.getLocationResService();
 
@@ -105,8 +107,14 @@ jshint -W003, -W026
       }
 
 		function selectAllEncounterTypes() {
-			if ($scope.forms)
-				$scope.selectedEncounterTypes.selected = $scope.forms;
+      if ($scope.selectAllEncounterTypes.selectedAll === false) {
+        $scope.selectAllEncounterTypes.selectedAll = true;
+        $scope.selectedEncounterTypes.selected = $scope.forms;
+      }
+      else {
+        $scope.selectAllEncounterTypes.selectedAll = false;
+        $scope.selectedEncounterTypes.selected = [];
+      }
 		}
 
 		function findCreators(searchText) {

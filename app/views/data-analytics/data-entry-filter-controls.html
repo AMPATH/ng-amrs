@@ -116,7 +116,10 @@
                   k-options="encounterTypesOptions"
             ></select>
 					<div class="input-group-addon" style="cursor: pointer;" ng-click="selectAllEncounterTypes()">
-						<span ng-hide="isBusy">All</span>
+						<div ng-hide="isBusy">
+							<span ng-hide="selectAllEncounterTypes.selectedAll">All</span>
+							<span ng-hide="!selectAllEncounterTypes.selectedAll">None</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -129,8 +132,10 @@
                   k-options="FormsTypesOptions"
             ></select>
 					<div class="input-group-addon" style="cursor: pointer;" ng-click="selectAllForms()">
-						<span ng-hide="selectAllForms.selectedAll">All</span>
-						<span ng-hide="!selectAllForms.selectedAll">None</span>
+						<div ng-hide="isBusy">
+							<span ng-hide="selectAllForms.selectedAll">All</span>
+							<span ng-hide="!selectAllForms.selectedAll">None</span>
+						</div>
 					</div>
 				</div>
 			</div>
