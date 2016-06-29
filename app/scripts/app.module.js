@@ -1,7 +1,7 @@
 /*jshint -W098, -W030 */
 /*jscs:disable disallowMixedSpacesAndTabs, requireDotNotation, requirePaddingNewLinesBeforeLineComments, requireTrailingComma*/
 
-(function() {
+(function () {
   'use strict';
 
   /**
@@ -34,7 +34,7 @@
       'mwl.calendar',
       'app.offline'
     ])
-    .config(function($stateProvider, $stickyStateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $stickyStateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');
       $stateProvider
         .state('home', {
@@ -143,6 +143,18 @@
             view: null
           }
         })
+        .state('clinical-dashboard.daily-appointments.patient-flow', {
+          url: '/daily-appointments/patient-flow',
+          templateUrl: 'views/clinic-dashboard/patient-flow-container.html',
+          controller: 'ClinicDashboardCtrl',
+          data: {
+            requireLogin: true,
+            cssClassnames: 'panel-success'
+          },
+          params: {
+            view: null
+          }
+        })
         .state('clinical-dashboard.monthly-appointments', {
           url: '/monthly-appointments',
           templateUrl: 'views/clinic-dashboard/monthly-appointments-tab.html',
@@ -184,7 +196,7 @@
           },
         })
 
-      .state('admin', {
+        .state('admin', {
           url: '/admin-dashboard',
           templateUrl: 'views/admin/admin-dashboard.html',
           controller: 'AdminDashboardCtrl',
@@ -291,16 +303,16 @@
           },
         })
 
-      .state('admin.moh-731-report.patients', {
-        url: '/location/:locationuuid/indicator/:indicator/locationName/:locationName',
-        templateUrl: 'views/admin/patient-moh-list-container.html',
-        controller: 'moh731ReportCtrl',
-        data: {
-          requireLogin: true
-        }
-      })
+        .state('admin.moh-731-report.patients', {
+          url: '/location/:locationuuid/indicator/:indicator/locationName/:locationName',
+          templateUrl: 'views/admin/patient-moh-list-container.html',
+          controller: 'moh731ReportCtrl',
+          data: {
+            requireLogin: true
+          }
+        })
 
-      .state('url-selector', {
+        .state('url-selector', {
           url: '/url-selector',
           templateUrl: 'views/main/url-selector.html',
           controller: 'UrlSelectorCtrl',
@@ -348,51 +360,51 @@
         })
         //this is the combined view
 
-      .state('admin.hiv-summary-combined', {
-        url: '/hiv-combine-report',
-        templateUrl: 'views/admin/hiv-summary-combined.html',
-        controller: 'HivSummaryIndicatorsCtrl',
-        data: {
-          requireLogin: true
-        }
-      })
+        .state('admin.hiv-summary-combined', {
+          url: '/hiv-combine-report',
+          templateUrl: 'views/admin/hiv-summary-combined.html',
+          controller: 'HivSummaryIndicatorsCtrl',
+          data: {
+            requireLogin: true
+          }
+        })
 
 
 
-      .state('admin.moh-731-report', {
-        url: '/moh-731-reports',
-        templateUrl: 'views/admin/moh-731-report.html',
-        controller: 'moh731ReportCtrl',
-        data: {
-          requireLogin: true
-        }
-      })
+        .state('admin.moh-731-report', {
+          url: '/moh-731-reports',
+          templateUrl: 'views/admin/moh-731-report.html',
+          controller: 'moh731ReportCtrl',
+          data: {
+            requireLogin: true
+          }
+        })
 
 
-      .state('moh-731-geneuerate-pdf', {
-        url: '/moh-731-generate-pdf',
-        templateUrl: 'views/admin/moh-731-report-container.html',
-        data: {
-          requireLogin: true
-        }
-      }).state('moh-731-report-by-location', {
-        url: '/moh-731-pdf/location/:location',
-        templateUrl: 'views/admin/moh-731-report-container.html',
-        controller: 'moh731ReportCtrl',
-        data: {
-          requireLogin: true
-        }
-      })
-      .state('admin.clinical-visualization', {
-        url: '/clinical-visualization',
-        templateUrl: 'views/admin/clinical-visualization-container.html',
-        controller: 'AdminDashboardCtrl',
-        data: {
-          requireLogin: true
-        }
-      });
+        .state('moh-731-geneuerate-pdf', {
+          url: '/moh-731-generate-pdf',
+          templateUrl: 'views/admin/moh-731-report-container.html',
+          data: {
+            requireLogin: true
+          }
+        }).state('moh-731-report-by-location', {
+          url: '/moh-731-pdf/location/:location',
+          templateUrl: 'views/admin/moh-731-report-container.html',
+          controller: 'moh731ReportCtrl',
+          data: {
+            requireLogin: true
+          }
+        })
+        .state('admin.clinical-visualization', {
+          url: '/clinical-visualization',
+          templateUrl: 'views/admin/clinical-visualization-container.html',
+          controller: 'AdminDashboardCtrl',
+          data: {
+            requireLogin: true
+          }
+        });
 
-    }).config(['$httpProvider', function($httpProvider) {
+    }).config(['$httpProvider', function ($httpProvider) {
       $httpProvider.interceptors.push('authenticationErrorInterceptor');
       $httpProvider.interceptors.push('AuthorizationInterceptor');
     }])
@@ -400,16 +412,16 @@
       $provide.decorator('$q', function ($delegate) {
         function allSettled(promises) {
           var deferred = $delegate.defer(),
-              counter = 0,
-              results = angular.isArray(promises) ? [] : {};
+            counter = 0,
+            results = angular.isArray(promises) ? [] : {};
 
-          angular.forEach(promises, function(promise, key) {
+          angular.forEach(promises, function (promise, key) {
             counter++;
-            $delegate.when(promise).then(function(value) {
+            $delegate.when(promise).then(function (value) {
               if (results.hasOwnProperty(key)) return;
               results[key] = { status: "fulfilled", value: value };
               if (!(--counter)) deferred.resolve(results);
-            }, function(reason) {
+            }, function (reason) {
               if (results.hasOwnProperty(key)) return;
               results[key] = { status: "rejected", reason: reason };
               if (!(--counter)) deferred.resolve(results);
@@ -426,10 +438,10 @@
         return $delegate;
       });
     })
-    .run(function($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings,
+    .run(function ($rootScope, $state, $location, OpenmrsRestService, OpenmrsSettings,
       EtlRestServicesSettings, UtilService) {
 
-      $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
+      $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
 
         //checking if  pdf report generation  path
         if (toState.url === '/moh-731-generate-pdf') {
@@ -479,7 +491,7 @@
       $rootScope.activeEncounter;
       $rootScope.cachedLocations = [];
 
-      $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+      $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
         $rootScope.previousState = from.name;
         $rootScope.currentState = to.name;
         $rootScope.previousStateParams = fromParams;

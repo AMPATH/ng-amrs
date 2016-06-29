@@ -47,7 +47,8 @@
       getPatientLevelReminders: getPatientLevelReminders,
       getPatientListReportByIndicatorAndLocation: getPatientListReportByIndicatorAndLocation,
       getHivOverviewVisualizationReport: getHivOverviewVisualizationReport,
-      getClinicalNotes: getClinicalNotes
+      getClinicalNotes: getClinicalNotes,
+      getPatientFlowData: getPatientFlowData
 
     };
     return serviceDefinition;
@@ -848,6 +849,33 @@
           console.error(error);
         });
 
+    }
+
+    function getPatientFlowData(locationUuids, visitDate, successCallback, failedCallback) {
+      var resource = getResource('patient-flow-data');
+      
+      var params = {
+        locationUuids: locationUuids,
+        dateStarted: visitDate
+      };
+
+      if (typeof successCallback === 'function') {
+        return resource.get(params).$promise.then(function(response) {
+          successCallback(response);
+        }, function(error) {
+          if (typeof failedCallback === 'function') {
+            failedCallback('Error processing request', error);
+          }
+          console.error(error);
+        });
+      } else {
+        return resource.get(params).$promise.then(function(response) {
+          return response;
+        }, function(response) {
+          // Something went crazy
+          return $q.reject(response);
+        });
+      }
     }
 
   }
