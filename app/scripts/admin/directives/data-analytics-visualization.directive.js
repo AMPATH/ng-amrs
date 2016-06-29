@@ -75,7 +75,7 @@
           }
         },
         y2: {
-          show: true,
+          show: false,
           label: {
             text: 'Percent(%)',
             position: 'outer-middle'
