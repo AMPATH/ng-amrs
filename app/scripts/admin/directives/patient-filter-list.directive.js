@@ -2,12 +2,13 @@
 /*
  jshint -W003, -W026
  */
-(function () {
+(function() {
   'use strict';
 
   angular
     .module('app.admin')
     .directive('patientListFilters', directive);
+
   function directive() {
     return {
       restrict: "E",
@@ -15,7 +16,7 @@
         startDate: "=",
         endDate: "=",
         enabledControls: "=",
-
+        supplementColumns: "=",
       },
       controller: patientListFiltersController,
       link: reportFiltersLink,
@@ -24,50 +25,54 @@
   }
 
   patientListFiltersController.$inject = ['$scope', '$rootScope', 'SearchDataService', 'moment', '$state', '$filter',
-    'CachedDataService', 'LocationModel','OpenmrsRestService', 'EtlRestService'];
+    'CachedDataService', 'LocationModel', 'OpenmrsRestService', 'EtlRestService'
+  ];
 
   function patientListFiltersController($scope, $rootScope, SearchDataService, moment, $state, $filter, CachedDataService,
-                                   LocationModel, OpenmrsRestService, EtlRestService ) {
+    LocationModel, OpenmrsRestService, EtlRestService) {
 
 
     $scope.canView = canView;
     $scope.patients = [];
-    $scope.reInitialize =  init;
+    $scope.reInitialize = init;
 
 
     //Dynamic DataTable Params
     // $scope.indicators = [];  //set filtered indicators to []
     $scope.currentPage = 1;
     $scope.counter = 0;
-    $scope.setCountType = function (val) {
+    $scope.setCountType = function(val) {
       $scope.countBy = val;
     };
 
-    $scope.patientTags = [
-      {
-        name:'#'
-      },
-      {
-        name:'identifiers'
-      },
-      {
-        name:'person_name'
-      },
-      {
-        name:'location_name'
-      }
-    ];
-
+    $scope.patientTags = [{
+      name: '#'
+    }, {
+      name: 'identifiers'
+    }, {
+      name: 'person_name'
+    }];
+    if ($scope.supplementColumns) {
+      $scope.patientTags = $scope.patientTags.concat($scope.supplementColumns);
+    }
     //DataTable Options
     $scope.columns = [];
-    $scope.bsTableControl = {options: {}};
-    $scope.exportList = [
-      {name: 'Export Basic', value: ''},
-      {name: 'Export All', value: 'all'},
-      {name: 'Export Selected', value: 'selected'}];
+    $scope.bsTableControl = {
+      options: {}
+    };
+    $scope.exportList = [{
+      name: 'Export Basic',
+      value: ''
+    }, {
+      name: 'Export All',
+      value: 'all'
+    }, {
+      name: 'Export Selected',
+      value: 'selected'
+    }];
     $scope.exportDataType = $scope.exportList[1];
-    $scope.updateSelectedType = function () {
-      console.log('updateSelectedType',$scope.exportDataType.value, $scope.exportDataType.name);
+    $scope.updateSelectedType = function() {
+      console.log('updateSelectedType', $scope.exportDataType.value, $scope.exportDataType.name);
       var bsTable = document.getElementById('bsTable');
       var element = angular.element(bsTable);
       element.bootstrapTable('refreshOptions', {
@@ -76,22 +81,23 @@
     };
 
 
-    $scope.$on("patient", function(event, data){
+    $scope.$on("patient", function(event, data) {
       //use the data
-      $scope.patients =data;
+      $scope.patients = data;
       buildDataTable();
 
     });
 
     //pre-load data
     init();
+
     function init() {
 
-      if(canView('patientable')) buildDataTable();
+      if (canView('patientable')) buildDataTable();
 
     }
 
-    function canView(param){
+    function canView(param) {
       return $scope.enabledControls.indexOf(param) > -1;
     }
 
@@ -106,28 +112,28 @@
 
     function buildColumns() {
       $scope.columns = [];
-      _.each($scope.patientTags, function (header) {
+      _.each($scope.patientTags, function(header) {
         //var visible =(header!=='location_uuid');
         $scope.columns.push({
           field: header.name,
           title: $filter('titlecase')(header.name.toString().split('_').join(' ')),
           align: 'center',
           valign: 'center',
-          sortable:true,
-          visible:true,
+          sortable: true,
+          visible: true,
           tooltip: true,
-          formatter: function (value, row, index) {
+          formatter: function(value, row, index) {
             return cellFormatter(value, row, index, header);
 
           },
-          events:'actionEvents'
+          events: 'actionEvents'
         });
       });
     }
 
     //addding click event to bootstrap-table links
     window.actionEvents = {
-      'click .clickLink': function (e, value, row, index) {
+      'click .clickLink': function(e, value, row, index) {
         console.log(row);
         //fetch patient based on uuid
         OpenmrsRestService.getPatientService().getPatientByUuid({
@@ -135,7 +141,9 @@
           },
           function(data) {
             $rootScope.broadcastPatient = data;
-            $state.go('patient', {uuid: row.patient_uuid});
+            $state.go('patient', {
+              uuid: row.patient_uuid
+            });
           });
       }
     };
@@ -147,8 +155,10 @@
       $scope.bsTableControl = {
         options: {
           data: $scope.patients,
-          rowStyle: function (row, index) {
-            return {classes: 'none'};
+          rowStyle: function(row, index) {
+            return {
+              classes: 'none'
+            };
           },
           tooltip: true,
           classes: 'table table-hover',
@@ -180,7 +190,9 @@
           toolbarAlign: 'left',
           exportTypes: ['json', 'xml', 'csv', 'txt', 'png', 'sql', 'doc', 'excel', 'powerpoint', 'pdf'],
           columns: $scope.columns,
-          exportOptions: {fileName: 'hivSummaryIndicators'},
+          exportOptions: {
+            fileName: 'hivSummaryIndicators'
+          },
           iconSize: undefined,
           iconsPrefix: 'glyphicon', // glyphicon of fa (font awesome)
           icons: {
@@ -206,7 +218,7 @@
      */
     function cellFormatter(value, row, index, header) {
       var numbers = 1 + (index);
-      $scope.selectedLocation =row.location_id;
+      $scope.selectedLocation = row.location_id;
       if (header.name === '#') return '<div class="text-center" style="width:43px;height:23px!important;" >' +
         '<span class="text-info text-capitalize">' + numbers + '</span></div>';
 
@@ -221,11 +233,11 @@
   }
 
 
-    function reportFiltersLink(scope, element, attrs, vm) {
+  function reportFiltersLink(scope, element, attrs, vm) {
 
-      if(!_.isUndefined(scope.$parent.data) && scope.$parent.data.length > 0 ) {
-        scope.patients = scope.$parent.data;
-      }
-      scope.reInitialize();
-     }
+    if (!_.isUndefined(scope.$parent.data) && scope.$parent.data.length > 0) {
+      scope.patients = scope.$parent.data;
+    }
+    scope.reInitialize();
+  }
 })();
