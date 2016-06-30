@@ -1,5 +1,5 @@
 /*jshint -W003, -W117, -W098, -W026 */
-(function() {
+(function () {
   'use strict';
   angular
     .module('app.admin')
@@ -20,10 +20,11 @@
     var indicatorDetails;
     var endDate = new Date();
     var indicatorTags;
-    var indicators=[];
+    var indicators = [];
     var pdfReportSections = [
       ['3.1 On cotrimoxazole Prophylaxis (within 2 months)',
-        'HIV Exposed Infant (Eligible for CTX 2 months)',
+        'HIV Exposed Infants (within 2 months)',
+        'HIV Exposed Infant (Eligible for CTX within 2 months)',
         'On CTX Below 15 yrs(M)',
         'On CTX Below 15 yrs(F)',
         'On CTX 15 yrs and Older(M)',
@@ -115,7 +116,8 @@
     ];
     var reportSectionsKeys = [
       ['3.1 On cotrimoxazole Prophylaxis (within 2 months)',
-        'HIV_Exposed_Infant',
+        'hiv_exposed_infants_below_2_months',
+        'hiv_exposed_infants_on_pcp_prophylaxis_2_months_and_below',
         'on_pcp_prophylaxis_males_below_15',
         'on_pcp_prophylaxis_females_below_15',
         'on_pcp_prophylaxis_males_15_and_above',
@@ -219,19 +221,19 @@
       generateReportSection: generateReportSection,
       getPdfSections: getPdfSections,
       getPdfSectionsKeys: getPdfSectionsKeys,
-      getStartDate:getStartDate,
-      setStartDate:setStartDate,
-      getEndDate:getEndDate,
-      setEndDate:setEndDate,
-      getSelectedLocation:getSelectedLocation,
-      setSelectedLocation:setSelectedLocation,
+      getStartDate: getStartDate,
+      setStartDate: setStartDate,
+      getEndDate: getEndDate,
+      setEndDate: setEndDate,
+      getSelectedLocation: getSelectedLocation,
+      setSelectedLocation: setSelectedLocation,
       resetSelectedLocation: resetSelectedLocation,
-      getIndicatorDetails:getIndicatorDetails,
-      setIndicatorDetails:setIndicatorDetails,
-      getIndicatorTags:getIndicatorTags,
-      setIndicatorTags:setIndicatorTags,
-      getIndicators:getIndicators,
-      setIndicators:setIndicators,
+      getIndicatorDetails: getIndicatorDetails,
+      setIndicatorDetails: setIndicatorDetails,
+      getIndicatorTags: getIndicatorTags,
+      setIndicatorTags: setIndicatorTags,
+      getIndicators: getIndicators,
+      setIndicators: setIndicators,
 
     };
     return serviceDefinition;
@@ -271,7 +273,7 @@
      * @returns {undefined}
      */
     function generateIndicatorSection(reportSchema) {
-      angular.forEach(reportSchema, function(value, key) {
+      angular.forEach(reportSchema, function (value, key) {
         try {
           console.log("ndicaor  key" + value.indicator_key.name +
             ">.section key" + value.section_key);
@@ -300,14 +302,14 @@
       generateIndicatorSection(reportSchema);
 
       if (angular.isDefined(reportData) && angular.isDefined(reportSchema)) {
-        angular.forEach(reportSchema, function(value, key) {
+        angular.forEach(reportSchema, function (value, key) {
           //Get all fields  in a row  in  this  section
           console.log(value);
           console.log("++++++++++");
           if (angular.isDefined(value.indicator_key)) {
             reportSections[value.section_key] = [];
             var indicatorPosition = 0;
-            angular.forEach(reportData[0], function(value_2, key_2) {
+            angular.forEach(reportData[0], function (value_2, key_2) {
               //Get all fields  in a row  in  this  section
               if (getIndicatorSection(key_2) === value.section_key) {
                 reportSections[value.section_key].push(key_2);
@@ -329,7 +331,7 @@
 
     function getReportSectionLabel(sectionKey) {
       if (!angular.isDefined(sectionKeys[sectionKey])) {
-        angular.forEach(getSectionSchema(), function(value, key) {
+        angular.forEach(getSectionSchema(), function (value, key) {
           try {
             if (value.label === sectionKey) {
               sectionKeys[sectionKey] = sectionKey + " " + value.description;
@@ -348,14 +350,14 @@
     }
 
     function generateReport(reportData) {
-      angular.forEach(reportSections, function(value, key) {
+      angular.forEach(reportSections, function (value, key) {
         if (!angular.isDefined(reportDataInSections[getReportSectionLabel(
-            key)])) {
+          key)])) {
           reportDataInSections[getReportSectionLabel(key)] = [];
         }
         reportDataInSections[getReportSectionLabel(key)] = [];
         //get  section  data
-        angular.forEach(value, function(value_2, key_2) {
+        angular.forEach(value, function (value_2, key_2) {
           reportDataInSections[getReportSectionLabel(key)].push({
             value_2: reportData[value_2 + ""]
           });
@@ -390,20 +392,20 @@
     function isSetUp() {
       return setUp;
     }
-    function getSelectedLocation(){
+    function getSelectedLocation() {
       return selectedLocation;
     }
 
 
-    function setSelectedLocation(location){
-      selectedLocation=location;
+    function setSelectedLocation(location) {
+      selectedLocation = location;
     }
-    function getIndicatorDetails(){
+    function getIndicatorDetails() {
       return indicatorDetails;
     }
 
-    function setIndicatorDetails(value){
-      indicatorDetails=value;
+    function setIndicatorDetails(value) {
+      indicatorDetails = value;
     }
     function getIndicators() {
       return indicators;
@@ -421,7 +423,7 @@
       indicatorTags = tags;
     }
     function resetSelectedLocation() {
-      selectedLocation = {selected:undefined};
+      selectedLocation = { selected: undefined };
     }
 
     function generatePdfReportSchema(params) {
@@ -431,10 +433,10 @@
       //                facility:'facility',month:'month',year:'year'};
       return {
         content: [{
-            text: params.facilityName,
-            style: 'header',
-            alignment: 'center'
-          }, {
+          text: params.facilityName,
+          style: 'header',
+          alignment: 'center'
+        }, {
             stack: [
               'National Aids And STI Controll Program', {
                 text: 'MOH-731 Comprehensive hiv/aids Facility Report Form',
@@ -444,9 +446,9 @@
             style: 'subheader'
           }, {
             columns: [{
-                width: '*',
-                text: 'Facility:' + params.facility
-              }
+              width: '*',
+              text: 'Facility:' + params.facility
+            }
 
             ]
           }, {
@@ -454,19 +456,19 @@
               width: '*',
               text: 'District:' + params.district
             }, {
-              width: '*',
-              text: 'County:' + params.county
-            }, {
-              width: '*',
-              text: 'Start date: ' + params.startDate,
-              alignment: 'right'
-            }, {
-              width: '*',
-              text: 'End date: ' + params.endDate,
-              alignment: 'right'
+                width: '*',
+                text: 'County:' + params.county
+              }, {
+                width: '*',
+                text: 'Start date: ' + params.startDate,
+                alignment: 'right'
+              }, {
+                width: '*',
+                text: 'End date: ' + params.endDate,
+                alignment: 'right'
 
 
-            }, ]
+              },]
           }, {}
 
         ],
@@ -515,11 +517,11 @@
               style: 'sectionhead'
             }, '', '', '', ''],
             [{
-                table: {
-                  widths: ['*'],
-                  body: sectionData.sectionLabels
-                }
-              }, {
+              table: {
+                widths: ['*'],
+                body: sectionData.sectionLabels
+              }
+            }, {
                 text: ''
               }, {
                 text: ''
