@@ -10,12 +10,12 @@
         var selectedLocation={selected:undefined};
         var indicatorDetails;
         var serviceDefinition;
-        var selectedIndicatorTags;
+        var selectedIndicatorTags={};
         var locationSelectionEnabled=true;
         var startDate=new Date();
         var endDate=new Date();
         var indicatorTags;
-        var indicators;
+        var indicators={};
         var defaultIndicators;
         var selectedPosition;
         var reportFilters={
@@ -65,20 +65,21 @@
             return selectedPosition;
         }
 
-        function getSelectedIndicatorTags(){
-            return selectedIndicatorTags;
+        function getSelectedIndicatorTags(state) {
+           return selectedIndicatorTags[state]||[];
         }
 
-        function setSelectedIndicatorTags(tags){
-            selectedIndicatorTags=tags;
+        function setSelectedIndicatorTags(value,state) {
+
+            selectedIndicatorTags[state]=value;
         }
 
-        function getIndicators(){
-            return indicators;
+        function getIndicators(state) {
+           return indicators[state]||[];
         }
 
-        function setIndicators(value){
-            indicators=value;
+        function setIndicators(value,state) {
+            indicators[state]=value;
         }
 
         function getReportFilters(){

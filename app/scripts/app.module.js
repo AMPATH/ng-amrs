@@ -187,6 +187,15 @@
             requireLogin: true
           }
         })
+        .state('clinical-dashboard.hiv-summary-indicators', {
+          url: '/hiv-summary-indicators',
+          templateUrl: 'views/clinic-dashboard/hiv-summary-indicators.html',
+          controller: 'HivSummaryIndicatorsCtrl',
+          data: {
+            requireLogin: true
+          }
+        })
+
         .state('encounter', {
           url: '/encounter/:encuuid/patient/:uuid',
           templateUrl: 'views/formentry/formentry.html',
