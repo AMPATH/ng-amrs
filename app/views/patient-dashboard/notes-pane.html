@@ -21,7 +21,64 @@
 <div data-ng-if="!isBusy && hasNotes">
   <table class="table table-bordered table-striped">
     <tr data-ng-repeat="note in notes | filter:searchString" class="note-table-row">
-      <td><span class="note-label-primary">Visit Date: </span><span class="note-info">{{note.visitDate}}
+      <td>
+        <table class="table table-striped">
+          <tbody>
+            <tr>
+              <td><span class="note-label-primary">Visit Date: </span></td>
+              <td><span class="note-info">{{note.visitDate}} ({{note.scheduled}})</span></td>
+            </tr>
+            <tr>
+              <td><span class="note-label">Provider(s):</span> </td>
+              <td><span data-ng-repeat="provider in note.providers">
+                <span class="note-info">{{provider.name}} ({{provider.encounterType}}){{provider.separator}}</span>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td><span class="note-label">Last Viral Load: </span></td>
+              <td data-ng-if="!note.lastViralLoad"><span class="note-info">{{notAvailableMessage}}</span></td>
+              <td data-ng-if="note.lastViralLoad">{{ note.lastViralLoad.value}} (<span class="note-info">{{note.lastViralLoad.date}}</span>)</td>
+            </tr>
+            <tr>
+              <td><span class="note-label">Last CD4 Count: </span></td>
+              <td data-ng-if="!note.lastCD4Count"><span class="note-info">{{notAvailableMessage}}</span></td>
+              <td data-ng-if="note.lastCD4Count">{{ note.lastCD4Count.value}} (<span class="note-info">{{note.lastCD4Count.date}}</span>)</td>
+            </tr>
+            <tr>
+              <td><span class="note-label">Vitals: </span></td>
+              <td>
+              <span class="note-label">Weight</span>(<span class="note-info">{{note.vitals.weight}}</span>),
+              <span class="note-label">Height</span>(<span class="note-info">{{note.vitals.height}}</span>),
+              <span class="note-label">BMI</span>(<span class="note-info">{{note.vitals.bmi}}</span>),
+              <span class="note-label">Oxygen Saturation</span>(<span class="note-info">{{note.vitals.oxygenSaturation}}</span>),
+              <span class="note-label">Temperature</span>(<span class="note-info">{{note.vitals.temperature}}</span>),
+              <span class="note-label">BP(</span><span class="note-info">{{note.vitals.bp}}</span>),
+              <span class="note-label">Pulse</span>(<span class="note-info">{{note.vitals.pulse}}</span>)</td>
+            </tr>
+            <tr>
+              <td><span class="note-label">Dispensed ARV drugs: </span></td>
+              <td data-ng-if="!note.artRegimen.curArvMeds"><span class="note-info">{{notAvailableMessage}}</span></td>
+              <td data-ng-if="note.artRegimen.curArvMeds"><span class="note-info">{{note.artRegimen.curArvMeds}}</span> (
+              <span class="note-label">ARV Start Date: </span><span class="note-info">{{note.artRegimen.startDate}}</span>)</td>
+            </tr>
+            <tr>
+              <td><span class="note-label">TB Prophylaxis Plan: </span></td>
+              <td><span class="note-info">{{note.tbProphylaxisPlan.plan}}</span> (
+              <span class="note-label">Start Date: </span><span class="note-info">{{note.tbProphylaxisPlan.startDate}}</span>,
+              <span class="note-label">Estimated End Date: </span><span class="note-info">{{note.tbProphylaxisPlan.estimatedEndDate}}</span>)</td>
+            </tr>
+            <tr>
+              <td><span class="note-label">RTC Date: </span></td>
+              <td><span class="note-info">{{note.rtcDate}}</span></td>
+            </tr>
+            <tr data-ng-if="!note.hasCcHpiAssessment">
+              <td><span class="note-label">CC/HPI &amp; Assessemnt: </span></td>
+              <td><span class="note-info">None</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <span class="note-label-primary">Visit Date: </span><span class="note-info">{{note.visitDate}}
       ({{note.scheduled}})</span>
         <br/>
         <span class="note-label">Provider(s):</span> <span data-ng-repeat="provider in note.providers">
@@ -54,13 +111,13 @@
         <br/>
 
         <span class="note-label">RTC Date: </span><span class="note-info">{{note.rtcDate}}</span>
-        <br/>
+        <br/> -->
         <!-- <span class="note-label-primary"><b>CC/HPI:</b> </span><i>{{note.ccHpi}}</i> -->
         <!-- <br/>
         <span class="note-label-primary"><b>Assessment:</b> </span><i>{{note.assessment}}</i>
         <br/> -->
-        <span data-ng-if="!note.hasCcHpiAssessment" class="note-label">CC/HPI &amp; Assessemnt: </span>
-        <span data-ng-if="!note.hasCcHpiAssessment" class="note-info">None</span>
+        <!-- <span data-ng-if="!note.hasCcHpiAssessment" class="note-label">CC/HPI &amp; Assessemnt: </span>
+        <span data-ng-if="!note.hasCcHpiAssessment" class="note-info">None</span> -->
         <table data-ng-show="note.hasCcHpiAssessment" 
               class="table table-stripped table-condensed table-bordered">
           <thead>

@@ -1,9 +1,9 @@
 .note-info {
-  font-style: italic;
-  color: green;
+  color: #012100;
 }
 
 .note-label-primary {
+  text-align: right;;
   font-style: oblique;
   font-weight: bold;
   font-size: 14px;
@@ -11,7 +11,8 @@
 }
 
 .note-label {
-  font-style: oblique;
+  font-family: monospace;
+  text-align: right;
   color: #2B3856;
 }
 

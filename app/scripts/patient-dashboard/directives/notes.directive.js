@@ -39,6 +39,7 @@ jshint -W003, -W026
     $scope.disabled = false;
     $scope.fetching = false;
     $scope.allDataLoaded = false;
+    $scope.notAvailableMessage = 'Not Available';
     var arvLine = {
       1: 'First',
       2: 'Second',
@@ -110,18 +111,21 @@ jshint -W003, -W026
         } else {
           note.scheduled = 'scheduled';
         }
-
+        
+        // Format providers
+        _formatProviders(note.providers, ', ');
+        
         // Format Viral load
-        if (note.lastViralLoad.value === '') {
-          note.lastViralLoad.value = notAvailableMessage;
+        if (note.lastViralLoad.value === '' || note.lastViralLoad.value === null) {
+          note.lastViralLoad = false;
         } else {
           // format date
           var d = note.lastViralLoad.date
           note.lastViralLoad.date = $filter('date')(d, dateFormart);
         }
 
-        if (note.lastCD4Count.value === '') {
-          note.lastCD4Count.value = notAvailableMessage;
+        if (note.lastCD4Count.value === '' || note.lastCD4Count.value === null) {
+          note.lastCD4Count = null;
         } else {
           // format date
           var d = note.lastCD4Count.date
@@ -135,11 +139,15 @@ jshint -W003, -W026
         } else {
           note.artRegimen.curArvLine = 'Not Specified';
         }
-
-        note.artRegimen.curArvMeds =
-          $filter('titlecase')(note.artRegimen.curArvMeds);
-        note.artRegimen.startDate =
-          $filter('date')(note.artRegimen.arvStartDate, dateFormart);
+        
+        if(note.artRegimen.curArvMeds === '' || note.artRegimen.curArvMeds === null) {
+          note.artRegimen.curArvMeds = false;
+        } else {
+          note.artRegimen.curArvMeds =
+            $filter('titlecase')(note.artRegimen.curArvMeds);
+          note.artRegimen.startDate =
+            $filter('date')(note.artRegimen.arvStartDate, dateFormart);
+        }  
 
         // Format prophylaxis
         note.tbProphylaxisPlan.plan =
@@ -159,7 +167,7 @@ jshint -W003, -W026
         } else {
           note.vitals.bp = note.vitals.systolicBp + '/' + note.vitals.diastolicBp;
         }
-        _formatBlank(note.vitals, 'Not Available');
+        _formatBlankOrNull(note.vitals, 'Not Available');
         
         // Group ccHpi and Assessemnt
         var grouped = _groupCCHPIAndAssessment(note.ccHpi, note.assessment);
@@ -168,7 +176,7 @@ jshint -W003, -W026
         } else {
           // Formant blank values
           _.each(grouped, function(group) {
-            _formatBlank(group, 'Not Provided');
+            _formatBlankOrNull(group, 'Not Provided');
           });
           note.hasCcHpiAssessment = true;
           note.ccHpiAssessment = grouped;
@@ -177,12 +185,21 @@ jshint -W003, -W026
       return notes;
     }
 
-    function _formatBlank(obj, text) {
+    function _formatBlankOrNull(obj, text) {
       _.each(Object.keys(obj), function(key) {
-        if (obj[key] === '') {
+        if (obj[key] === '' || obj[key] === null) {
           obj[key] = text;
         }
       });
+    }
+    
+    function _formatProviders(providers, separator) {
+      if(providers.length <= 1) return;
+      
+      // Add separator to every provider but the last
+      for(var i=0; i < providers.length-1; i++) {
+        providers[i].separator = separator;
+      }
     }
     
     function _groupCCHPIAndAssessment(ccHpiArray, assessmentArray) {
