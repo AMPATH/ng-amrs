@@ -30,8 +30,12 @@
         {indicator: 'reporting_date', title: 'Reporting Month'},
         {indicator: 'currently_in_care_total', title: 'Patients In Care'},
         {indicator: 'on_art_total', title: 'Patients On ART'},
-        {indicator: 'perc_tested_appropriately', title: '% on ART with VL'},
-        {indicator: 'perc_virally_suppressed', title: '% Virally Suppressed'}
+        {indicator: 'not_on_art_total', title: 'Patients Not On ART'},
+        {indicator: 'patients_requiring_vl', title: 'Patients Qualified For VL'},
+        {indicator: 'tested_appropriately', title: 'On ART with VL'},
+        {indicator: 'not_tested_appropriately', title: 'On ART without VL'},
+        {indicator: 'virally_suppressed', title: 'Virally Suppressed'},
+        {indicator: 'not_virally_suppressed', title: 'Not Virally Suppressed'}
       ];
       _.each(headers, function (header) {
         //var visible =(header!=='location_uuid');
@@ -129,8 +133,8 @@
         var dataPoint = {};
         dataPoint[xAxis] = data[i][xAxis];
         _.each(chartObject.dataColumns, function (column) {
-          data[i][column.id]= (data[i][column.id]).toFixed(1);
-          var val=data[i][column.id];
+          data[i][column.id]= (data[i][column.id]);
+          var val=(data[i][column.id]).toFixed(1);
           plotValues.push(val);
           dataPoint[column.id] = val;
         });
