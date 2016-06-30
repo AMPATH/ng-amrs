@@ -151,8 +151,8 @@
         'starting_art_males_15_and_older',
         'starting_art_females_15_and_older',
         'starting_art_total',
-        'Starting_Preganant',
-        'Starting_TB_Patient'
+        'Starting_Pregnant',
+        'starting_art_and_has_tb'
       ],
       [
         '3.5 Revisits on ART (from the tallay sheet -this month only and from last 2 months)',
