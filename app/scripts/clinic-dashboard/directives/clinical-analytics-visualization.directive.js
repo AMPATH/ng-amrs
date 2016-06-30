@@ -183,20 +183,22 @@
     };
 
     //adding click event to bootstrap-table links
-    window.actionEvents = {
-      'click .chartPatientList': function (e, value, row, index) {
-        try {
-          var selectedIndex = e.currentTarget.title.split(',');
-          var selectedMonth = row.reporting_month.split('/');
-          var dateRange = getMonthDateRange(selectedMonth[1], selectedMonth[0]);
-          var value = row[selectedIndex[1]];
-          var data = { x: index, value: value, id:selectedIndex[1], index: index, name: selectedIndex[0]};
-          $scope.generatePatientList(data,  $scope.hivComparative, dateRange.startDate, dateRange.endDate, false);
-        } catch(ex){
+    function addClickListenerOnTableCells() {
+      window.actionEvents = {
+        'click .chartPatientList': function (e, value, row, index) {
+          try {
+            var selectedIndex = e.currentTarget.title.split(',');
+            var selectedMonth = row.reporting_month.split('/');
+            var dateRange = getMonthDateRange(selectedMonth[1], selectedMonth[0]);
+            var value = row[selectedIndex[1]];
+            var data = {x: index, value: value, id: selectedIndex[1], index: index, name: selectedIndex[0]};
+            $scope.generatePatientList(data, $scope.hivComparative, dateRange.startDate, dateRange.endDate, false);
+          } catch (ex) {
 
+          }
         }
-      }
-    };
+      };
+    }
 
     //formats tooltip values
     $scope.formatTooltipValue = function (value, ratio, id, index) {
@@ -243,9 +245,10 @@
               ClinicalAnalyticsService.generateChartObject(result.result, chart.chart,
                 chart.chartDefinition);
               //build tabular view
-              if (chart.reportName === 'clinical-hiv-comparative-overview-report')
-                $scope.bsTableControl = ClinicalAnalyticsService.generateDataTable(result.result)
-
+              if (chart.reportName === 'clinical-hiv-comparative-overview-report') {
+                $scope.bsTableControl = ClinicalAnalyticsService.generateDataTable(result.result);
+                addClickListenerOnTableCells();
+              }
             }
           }
         },
