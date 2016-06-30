@@ -187,10 +187,20 @@
             requireLogin: true
           }
         })
+
         .state('clinical-dashboard.hiv-summary-indicators', {
           url: '/hiv-summary-indicators',
           templateUrl: 'views/clinic-dashboard/hiv-summary-indicators.html',
           controller: 'HivSummaryIndicatorsCtrl',
+          data: {
+            requireLogin: true
+          }
+        })
+
+        .state('clinical-dashboard.hiv-monthly-summary-stats', {
+          url: '/hiv-monthly-summary-stats',
+          templateUrl: 'views/clinic-dashboard/hiv-monthly-summary-stats.html',
+          controller: 'HivMonthlySummaryIndicatorsCtrl',
           data: {
             requireLogin: true
           }
@@ -296,7 +306,7 @@
           },
         })
         .state('admin.hiv-monthly-summary-indicators.patients', {
-          url: '/month/:month/indicator/:indicator/locationName/:locationName',
+          url: '/location/:locationuuid/month/:month/indicator/:indicator/locationName/:locationName',
           templateUrl: 'views/admin/patient-monthly-list-container.html',
           controller: 'HivMonthlySummaryIndicatorsCtrl',
           data: {

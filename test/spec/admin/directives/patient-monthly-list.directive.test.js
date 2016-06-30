@@ -84,7 +84,7 @@
 			chai.expect(getPatientsSpy.callCount).to.equal(0);
 		});
 
-		it('should make a call getPatientByIndicatorAndLocation when loadPatientList is called with empty location uuid not',
+		it('should not make a call getPatientByIndicatorAndLocation when loadPatientList is called with empty location uuid not',
       function () {
 			var isolateScope = scope.$$childHead;
 			var getPatientsSpy = sinon.spy(etlRestServiceMock, 'getPatientByIndicatorAndLocation');
@@ -92,12 +92,12 @@
 			//case undefined
 			isolateScope.locationUuid = undefined;
 			isolateScope.loadPatientList();
-			chai.expect(getPatientsSpy.callCount).to.equal(1);
+			chai.expect(getPatientsSpy.callCount).to.equal(0);
 
 			//case empty
 			isolateScope.locationUuid = '';
 			isolateScope.loadPatientList();
-			chai.expect(getPatientsSpy.callCount).to.equal(2);
+			chai.expect(getPatientsSpy.callCount).to.equal(0);
 		});
 
     it('should not call getPatientByIndicatorAndLocation when loadPatientList is called and indicator not' +

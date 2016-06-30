@@ -45,6 +45,7 @@ jshint -W003, -W026
         $scope.loadIndicatorView=loadIndicatorView;
         $scope.getIndicatorDetails = getIndicatorDetails;
         $scope.selectedLocationName = $stateParams.locationName || '';
+        $scope.selectedLocation=$stateParams.locationuuid||'';
 
         //Pagination Params
         $scope.nextStartIndex = 0;
@@ -57,20 +58,24 @@ jshint -W003, -W026
 
         function loadIndicatorView ()
         {
-          $state.go('admin.hiv-monthly-summary-indicators.monthly');
+          history.back();
         }
 
         function loadPatientList(loadNextOffset) {
             $scope.experiencedLoadingErrors = false;
             if($scope.isBusy === true) return;
-            $scope.locationUuid=getSelectedLocations(HivMonthlySummaryIndicatorService.getSelectedLocation());
+          var locations = '';
+          if ($scope.selectedLocation && $scope.selectedLocation !=='') {
+            locations = $scope.selectedLocation;
+          }
             $scope.isBusy = true;
             if(loadNextOffset!==true)resetPaging();
-            if ($scope.indicator && $scope.indicator!=='' && $scope.startDate && $scope.startDate!=='' ) {
+            if ($scope.locationUuid && $scope.locationUuid !== ''&& $scope.indicator && $scope.indicator!==''
+              && $scope.startDate && $scope.startDate!=='' ) {
               EtlRestService.getPatientByIndicatorAndLocation($scope.locationUuid,
                 moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
                 moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-                $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError,$scope.locationUuid,
+                $scope.indicator, onFetchPatientsListSuccess, onFetchPatientsListError,locations,
                 $scope.nextStartIndex, 300,  $scope.startAge, $scope.endAge,  $scope.gender);
             }
             else{
