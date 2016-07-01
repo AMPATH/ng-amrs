@@ -21,6 +21,7 @@
             <ul>
               <li class="k-state-active">Graphical View</li>
               <li>Tabular View</li>
+              <li>Indicator Definitions</li>
             </ul>
 
             <div >
@@ -71,6 +72,37 @@
                      bs-table-control="bsTableControl">
               </table>
             </div>
+            <div>
+              <uib-accordion close-others="true">
+                <uib-accordion-group heading="Patients in Care:" is-open="true" style="padding: 5px!important;">
+                  <span class="text-muted "> A patient is in care if it has been less than 90 days from the return to clinic date within the given
+                  reporting period.  For example, if at the last clinical encounter, the patient was given an RTC date of
+                  February 1, she is active in care in February, March and April. If she does not come back to clinic,
+                  she will be first out of care in May. Note, we are using the last RTC  date given by a clinician for
+                  this definition.
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Patients on ART:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                  A patient is on ART if they are in care and was prescribed ART at their last clinical encounter.
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="% on ART with VL:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                  For this indicator the denominator includes patients who are active in care, on ART and require a viral load.
+                  A patient reuires a viral load if they have been on ART more than 6 months. The numerator are those patients
+                  who are active in care, on ART, required a viral load and got a viral load
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="% Virally Suppressed:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                  The denominator includes those patients who are active in care, on ART, required a viral load and got
+                  a viral load. The numerator includes those patients who required a viral load and the result was less than 1000
+                    </span>
+                </uib-accordion-group>
+              </uib-accordion>
+            </div>
+
 
           </div>
 
@@ -93,7 +125,15 @@
         </div>
         <div class="chart-stage" dw-loading="{{patientStatus.reportName}}"
              dw-loading-options="{text: 'Fetching Patient Status analytics...'}">
-          <c3chart bindto-id="patient-status-chart"
+          <div kendo-tab-strip k-content-urls="[ null, null]">
+            <!-- tab list -->
+            <ul>
+              <li class="k-state-active">Graphical View</li>
+              <li>Indicator Definitions</li>
+            </ul>
+
+            <div >
+              <c3chart bindto-id="patient-status-chart"
                    chart-data="patientStatus.chart.dataPoints"
                    chart-columns="patientStatus.chart.dataColumns">
 
@@ -104,7 +144,56 @@
             <chart-legend show-legend="true" legend-position="right"/>
             <chart-tooltip value-format-function="formatTooltipValue"/>
           </c3chart>
-
+            </div>
+            <div>
+              <uib-accordion close-others="true">
+                <uib-accordion-group heading="Patients in Care:" is-open="true" style="padding: 5px!important;">
+                  <span class="text-muted"> A patient is in care if it has been less than 90 days from the return to clinic date within the given
+                  reporting period.  For example, if at the last clinical encounter, the patient was given an RTC date of
+                  February 1, she is active in care in February, March and April. If she does not come back to clinic,
+                  she will be first out of care in May. Note, we are using the last RTC  date given by a clinician for
+                  this definition.
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Transferred Out Patients:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                  A patient is considered to be transferred out if a provider declares the patient as "NON-AMPATH"
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Deceased Patients:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                    This indicator includes all patients with patient care status of "DECEASED"
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Untraceable Patients:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                  This indicator includes all patients with patient care status of "UNTRACEABLE"
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="HIV Negative Patients:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                  This indicator includes all patients with patient care status of "HIV NEGATIVE, NO LONGER AT RISK"
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Self Disengaged From Care:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                  This indicator includes all patients with patient care status of "SELF DISENGAGED FROM CARE"
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Defaulters:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                  This indicator includes all patients with patient care status of "CONTINUE" and their RTC date is greater than 90 days from the reporting
+                    date
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Others:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                  This indicator includes all patients who do not fall in either of the above categories
+                    </span>
+                </uib-accordion-group>
+              </uib-accordion>
+            </div>
+          </div>
         </div>
         <div class="chart-notes">
           A comparative chart showing patient care status statistics
@@ -121,7 +210,15 @@
         </div>
         <div class="chart-stage" dw-loading="{{art.reportName}}"
              dw-loading-options="{text: 'Fetching ART analytics...'}">
-          <c3chart bindto-id="art-chart"
+          <div kendo-tab-strip k-content-urls="[ null, null]">
+            <!-- tab list -->
+            <ul>
+              <li class="k-state-active">Graphical View</li>
+              <li>Indicator Definitions</li>
+            </ul>
+
+            <div >
+               <c3chart bindto-id="art-chart"
                    chart-data="art.chart.dataPoints"
                    chart-columns="art.chart.dataColumns">
 
@@ -131,7 +228,56 @@
             <chart-legend show-legend="true" legend-position="right"/>
             <chart-tooltip value-format-function="formatTooltipValue"/>
           </c3chart>
+            </div>
+            <div>
+              <uib-accordion close-others="true">
+                <uib-accordion-group heading="Not on any ARV Drugs:" is-open="true" style="padding: 5px!important;">
+                  <span class="text-muted">
+                    A patient is considered to be on "Not on any ARV Drugs:" if he/she is not on any ARV drugs.
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Nevirapine:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                 A patient is considered to be on "Nevirapine" if current ARV regimen formulation contains:
+                    NEVIRAPINE or NEVIRAPINE LAMIVUDINE AND ZIDOVUDINE or STAVUDINE LAMIVUDINE AND NEVIRAPINE.
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Efavirenz:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                 A patient is considered to be on "Efavirenz" if current ARV regimen formulation contains:
+                    TDF AND 3TC AND EFV or Efavirenz.
 
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Lopinavir:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                  A patient is considered to be on "Lopinavir" if current ARV regimen formulation contains:
+                    Lopinavir or LOPINAVIR AND RITONAVIR.
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Atazanavir:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                  A patient is considered to be using "Atazanavir" if current ARV regimen formulation contains:
+                    ATAZANAVIR or ATAZANAVIR AND RITONAVIR.
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Raltegravir:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                  A patient is considered to be on "Raltegravir" if current ARV regimen formulation contains: Raltegravir.
+
+                    </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Others:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                 A patient is considered to be on "others" if current ARV regimen formulation neither contains: Raltegravir or
+                  Atazanavir or ATAZANAVIR AND RITONAVIR or Efavirenz or TENOFOVIR AND LAMIVUDINE AND EFAVIRENZ or
+                    LOPINAVIR or LOPINAVIR AND RITONAVIR or NEVIRAPINE or NEVIRAPINE LAMIVUDINE AND ZIDOVUDINE or
+                    STAVUDINE LAMIVUDINE AND NEVIRAPINE.
+                    </span>
+                </uib-accordion-group>
+              </uib-accordion>
+            </div>
+          </div>
         </div>
         <div class="chart-notes">
           A comparative chart showing ARV Drugs consumption statistics
