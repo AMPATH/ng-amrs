@@ -62,7 +62,7 @@
         'Starting -TB Patient'
       ],
       [
-        '3.5 Revisits on ART (from the tallay sheet -this month only and from last 2 months)',
+        '3.5 Revisits on ART (from the tally sheet -this month only and from last 2 months)',
         'Revisit on ART -Below 1yr(M)',
         'Revisit on ART -Below 1yr(F)',
         'Revisit on ART -Below 15yrs(M)',
