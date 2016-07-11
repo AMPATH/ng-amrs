@@ -94,7 +94,7 @@ html, body {
 }
 
  .markDeceased {
-      color: red;
+      color: #CD5C5C;
  }
 
   .show-me{
@@ -540,4 +540,7 @@ width:100%}
 .weeks-control {
     font-size: 20px;
     line-height: 1.5;
+}
+.person-modal .modal-dialog {
+   width:330px;
 }
