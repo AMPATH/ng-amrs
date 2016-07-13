@@ -1,0 +1,33 @@
+<form name="personForm">
+  <div class="form-group">
+    <label for="updateIsPersonDeadSelect">Has patient died?</label>
+    <select class="form-control" ng-model="dead" id="updateIsPersonDeadSelect" ng-options="opt as opt.label for opt in isDeadOptions" placeholder={{dead}}>
+    </select>
+    <div ng-if="dead.val">
+        <label for="death-date">Approximate Death Date:</label>
+        <div class="input-group">
+            <input type="text" id="death-date" class="form-control"  is-open="deathDateIsOpen" date-parser="short" datepicker-popup="mediumDate"
+            ng-model="deathDate" name="deathDate" ng-change="setDeathDate(deathDate)"  placeholder={{deathDate}}
+            required
+            max-date="currentDate">
+            <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="deathDateIsOpen = !deathDateIsOpen">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </button>
+            </span>
+          </div>
+          <div ng-messages="personForm.deathDate.$error">
+            <div class="help-block" ng-message="required">Death date is required.</div>
+          </div>
+    </div>
+    <div ng-if="dead.val">
+      <label for="causeOfDeathSelect">Cause Of Death:</label>
+      <select class="form-control" required ng-model="causeOfDeath" name="causeOfDeath" id="causeOfDeathSelect" ng-options="cause.uuid as cause.display for cause in causesOfDeath" ng-change="setCauseOfDeath(causeOfDeath)"  placeholder={{attributeName}}>
+      </select>
+      <div ng-messages="personForm.causeOfDeath.$error">
+        <div class="help-block" ng-message="required">Cause of death is required.</div>
+      </div>
+    </div>
+  </div>
+  <button ng-disabled="personForm.deathDate.$invalid || personForm.causeOfDeath.$invalid " class="btn btn-primary" type="button" ng-click="updatePerson()"><span>Save<i ng-show="saving" style="font-size:14px" class="fa fa-spinner fa-spin"></i></span></button>
+</form>

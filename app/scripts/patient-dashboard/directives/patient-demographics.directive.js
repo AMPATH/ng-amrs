@@ -25,6 +25,7 @@ jshint -W003, -W026, -W033, -W098
   function PatientDemographicsCtrl($rootScope, $scope, $stateParams,
     OpenmrsRestService, $state, $uibModal) {
     $scope.openPersonAttributeManageModal = openPersonAttributeManageModal;
+    $scope.openPersonManageModal = openPersonManageModal;
 
     function openPersonAttributeManageModal(attributeTypeUuid) {
       var scope = $scope;
@@ -37,6 +38,42 @@ jshint -W003, -W026, -W033, -W098
                 uuid: scope.patient.uuid()
               },
               function(data) {
+                scope.patient = data;
+                $uibModalInstance.dismiss('cancel');
+              });
+          });
+          $scope.patient = scope.patient;
+          $scope.ok = function() {
+            $uibModalInstance.dismiss('cancel');
+          };
+          $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+          };
+        },
+        size: 'sm',
+        resolve: {
+          patient: function() {
+            return {
+              name: 'Name'
+            };
+          }
+        }
+      });
+    }
+
+    function openPersonManageModal(patientUuid) {
+      var scope = $scope;
+      var uibModalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: 'views/patient-dashboard/manage-person-modal.html',
+        windowClass: 'person-modal',
+        controller: function($uibModalInstance, $scope, OpenmrsRestService) {
+          $scope.$on('PersonUpdated', function(event, data) {
+            OpenmrsRestService.getPatientService().getPatientByUuid({
+                uuid: scope.patient.uuid()
+              },
+              function(data) {
+                console.log('Patient Data:', data);
                 scope.patient = data;
                 $uibModalInstance.dismiss('cancel');
               });
