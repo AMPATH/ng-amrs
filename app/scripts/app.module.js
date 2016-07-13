@@ -399,7 +399,6 @@
           }
         })
 
-
         .state('moh-731-geneuerate-pdf', {
           url: '/moh-731-generate-pdf',
           templateUrl: 'views/admin/moh-731-report-container.html',
@@ -421,7 +420,16 @@
           data: {
             requireLogin: true
           }
-        });
+        })
+      .state('admin.clinical-comparator', {
+        url: '/clinical-comparator',
+        templateUrl: 'views/admin/clinic-comparator.html',
+        controller: 'ClinicalComparatorCtrl',
+        data: {
+          requireLogin: true
+        }
+      });
+
 
     }).config(['$httpProvider', function ($httpProvider) {
       $httpProvider.interceptors.push('authenticationErrorInterceptor');

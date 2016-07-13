@@ -85,6 +85,7 @@
       if (canView('location')) fetchLocations();
       if (canView('ageRangeSlider')) renderAgeRangeSlider();
       if (canView('gender')) defineGenderOptions();
+
       defineGenderOptions();
       loadForms();
     }

@@ -1,12 +1,12 @@
-<h3 style=" margin-top: 0px !important; "> <span style="font-size:20px;" class="glyphicon glyphicon-stats text-info"></span><strong>Comparison of HIV Indicators by month for one or more clinics</strong>
+<h3 style=" margin-top: 0px !important; "> <span style="font-size:20px;" class="glyphicon glyphicon-stats text-info"></span><strong>Comparison of clinics by month for a single HIV indicator</strong>
   <a ng-click="ChangeView()">
     <button class="btn btn-info pull-right" >
       Change View
     </button></a>
 </h3>
-<hr style="margin: 1px;" />
 <report-filters enabled-controls="'start-date, end-date,location,indicator,ageRangeSlider,gender'"  start-date="startDate" end-date="endDate"
-                                   selected-locations="selectedLocations" selected-indicator-tags="selectedIndicatorTags" start-age="startAge" end-age="endAge" gender="gender"
+                                   selected-locations="selectedLocations" selected-indicator-tags="selectedIndicatorTags"
+                                  start-age="startAge" end-age="endAge" gender="gender"
                                    start-age="startAge" end-age="endAge" gender="gender"
                                   report-name="reportName">
 </report-filters>
@@ -53,14 +53,7 @@
   </div>
 
 </div>
- <div class="row" >
-  <report-analytics-visualization start-date="startDate" end-date="endDate"
-                                  selected-locations="selectedLocations" is-busy="isBusy" indicators="indicators"
-                                  selected-indicator-tags="selectedIndicatorTags" report-name="reportName"
-                                  chart-filters="chartFilters">
-  </report-analytics-visualization>
 
- </div>
 
 
 

@@ -27,7 +27,8 @@
 						</span>
                         <span ng-hide="indicatorTags.length==0" class="glyphicon glyphicon-map-marker"></span>
                     </div>
-                    <select id="indicator-control" ng-disabled="isBusy" multiple="multiple" kendo-multi-select k-ng-model="selectedIndicatorTags.indicatorTags"
+                    <select id="indicator-control" ng-disabled="isBusy" multiple="multiple"
+                            kendo-multi-select k-ng-model="selectedIndicatorTags.indicatorTags"
                     k-options="indicatorSelectOptions"></select>
                     <div class="input-group-addon" ng-click="selectAllTags()" style="cursor: pointer;">
                         <span ng-show="selectedIndicatorTags.selectedAll" class="glyphicon glyphicon-trash"></span>
@@ -38,10 +39,12 @@
                 </div>
             </div>
 
+
             <div class="form-group col-md-6" ng-show="canView('start-date')">
                 <label for="start-date">Start Date</label>
                 <div class="input-group">
-                    <input type="text" id="start-date" class="form-control" is-open="startDateIsOpen" date-parser="short" datepicker-popup="mediumDate"
+                    <input type="text" id="start-date" class="form-control" is-open="startDateIsOpen"
+                           date-parser="short" datepicker-popup="mediumDate"
                     ng-model="startDate">
                     <span class="input-group-btn">
 							<button type="button" class="btn btn-default" ng-click="startDateIsOpen = !startDateIsOpen">
@@ -53,8 +56,9 @@
             <div class="form-group col-md-6" ng-show="canView('start-date')">
                 <label for="end-date">End Date</label>
                 <div class="input-group">
-                    <input type="text" id="end-date" class="form-control" is-open="endDateIsOpen" date-parser="short" datepicker-popup="mediumDate"
-                    ng-model="endDate">
+                    <input type="text" id="end-date" class="form-control" is-open="endDateIsOpen"
+                           date-parser="short" datepicker-popup="mediumDate"
+                           ng-model="endDate">
                     <span class="input-group-btn">
 							<button type="button" class="btn btn-default" ng-click="endDateIsOpen = !endDateIsOpen">
 								<i class="glyphicon glyphicon-calendar"></i>
@@ -85,8 +89,10 @@
 						</span>
                         <span ng-hide="locations.length==0" class="glyphicon glyphicon-map-marker"></span>
                     </div>
-                    <select ng-disabled="isBusy" multiple="multiple" kendo-multi-select k-ng-model="selectedLocations.locations" k-options="locationsOptions"></select>
-                    <div class="input-group-addon" ng-disabled="selectedLocations.locations.length===0" ng-click="selectAllLocations()" style="cursor: pointer;">
+                    <select ng-disabled="isBusy" multiple="multiple" kendo-multi-select
+                            k-ng-model="selectedLocations.locations" k-options="locationsOptions"></select>
+                    <div class="input-group-addon" ng-disabled="selectedLocations.locations.length===0"
+                         ng-click="selectAllLocations()" style="cursor: pointer;">
                         <span ng-show="selectedLocations.selectedAll" class="glyphicon glyphicon-trash"></span>
                         <span ng-hide="selectedLocations.selectedAll" class="glyphicon glyphicon-pushpin"></span>
                         <span ng-hide="selectedLocations.selectedAll">Select All</span>
@@ -115,7 +121,8 @@
             <div class="form-group col-md-6" ng-show="canView('start-month')">
                 <label for="start-month">Start Month</label>
                 <div class="input-group">
-                    <input type="text" id="start-month" class="form-control" is-open="startMonthIsOpen" datepicker-options="{ 'minMode': 'month' }"
+                    <input type="text" id="start-month" class="form-control" is-open="startMonthIsOpen"
+                           datepicker-options="{ 'minMode': 'month' }"
                     datepicker-popup="MM, yyyy" datepicker-mode="'month'" ng-model="startMonth">
                     <span class="input-group-btn">
 							<button type="button" class="btn btn-default" ng-click="startMonthIsOpen = !startMonthIsOpen">
@@ -127,7 +134,8 @@
             <div class="form-group col-md-6" ng-show="canView('end-month')">
                 <label for="end-month">End Month</label>
                 <div class="input-group">
-                    <input type="text" id="end-month" class="form-control" is-open="endMonthIsOpen" datepicker-options="{ 'minMode': 'month' }"
+                    <input type="text" id="end-month" class="form-control" is-open="endMonthIsOpen"
+                           datepicker-options="{ 'minMode': 'month' }"
                     datepicker-popup="MM, yyyy" datepicker-mode="'month'" ng-model="endMonth">
                     <span class="input-group-btn">
 							<button type="button" class="btn btn-default" ng-click="endMonthIsOpen = !endMonthIsOpen">
