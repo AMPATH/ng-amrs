@@ -49,11 +49,15 @@ jshint -W098, -W117, -W003, -W026
       getDataEntryStatistics: getDataEntryStatistics,
       getPatientLevelReminders:getPatientLevelReminders,
       getHivOverviewVisualizationReport:getHivOverviewVisualizationReport,
+      synchronizeEIDPatientLabResults: synchronizeEIDPatientLabResults,
 
       returnErrorOnNextCall: false
     };
     //debugger;
     return service;
+
+    function synchronizeEIDPatientLabResults(){
+    }
 
     function getHivSummary(patientUuid, startIndex, limit, successCallback, failedCallback) {
       if (!startIndex) {

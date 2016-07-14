@@ -48,8 +48,8 @@
       getPatientListReportByIndicatorAndLocation: getPatientListReportByIndicatorAndLocation,
       getHivOverviewVisualizationReport: getHivOverviewVisualizationReport,
       getClinicalNotes: getClinicalNotes,
+      synchronizeEIDPatientLabResults:synchronizeEIDPatientLabResults,
       getPatientFlowData: getPatientFlowData
-
     };
     return serviceDefinition;
 
@@ -850,10 +850,24 @@
         });
 
     }
-
-    function getPatientFlowData(locationUuids, visitDate, successCallback, failedCallback) {
+    function synchronizeEIDPatientLabResults(startDate,endDate,patientUuId,successCallback,failedCallback){
+      var resource = getResource('patient-lab-orders');
+      var params={
+        startDate:startDate,
+        endDate:endDate,
+        patientUuId:patientUuId
+      }
+      return resource.get(params).$promise
+      .then(function(response){
+        successCallback(response);
+      })
+      .catch(function(error){
+        failedCallback(error);
+      });
+      }
+      function getPatientFlowData(locationUuids, visitDate, successCallback, failedCallback) {
       var resource = getResource('patient-flow-data');
-      
+
       var params = {
         locationUuids: locationUuids,
         dateStarted: visitDate

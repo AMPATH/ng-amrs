@@ -15,7 +15,8 @@ jshint -W003, -W026
             scope: {
               patientUuid: "@",
               isBusy:"=",
-              encounters:"="
+              encounters:"=",
+              isLoadingLabData:"="
             },
             controller: labsSummaryController,
             link: labsSummaryLink,
@@ -23,8 +24,8 @@ jshint -W003, -W026
         };
     }
 
-    labsSummaryController.$inject = ['$scope', 'EtlRestService', 'PatientTestModel', 'UtilService','$filter'];
-    function labsSummaryController($scope, EtlRestService, patientTestModel, UtilService,$filter) {
+    labsSummaryController.$inject = ['$scope', 'EtlRestService', 'PatientTestModel', 'UtilService','$filter','$timeout'];
+    function labsSummaryController($scope, EtlRestService, patientTestModel, UtilService,$filter,$timeout) {
         $scope.injectedEtlRestService = EtlRestService;
         $scope.encounters = [];
         $scope.isBusy = false;
@@ -33,8 +34,14 @@ jshint -W003, -W026
         $scope.allDataLoaded = false;
         $scope.experiencedLoadingError = false;
         $scope.fixedColumns=true;
+        $scope.startDate='2006-01-01';
+        $scope.startDate=moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ');
+        $scope.endDate=moment(new Date()).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ');
+        $scope.showSuccessAlert = false;
+        $scope.labObs='';
+        $scope.isLoadingLabData=false;
        // $scope.testLength;
-
+       $scope.synchronizeEIDPatientLabResults=synchronizeEIDPatientLabResults();
       $scope.labTestTags =[
         {
           name: 'test_datetime',
@@ -93,7 +100,17 @@ jshint -W003, -W026
           exportDataType: $scope.exportDataType.value
         });
       };
-
+      function synchronizeEIDPatientLabResults(){
+        $scope.isLoadingLabData=true;
+        EtlRestService.synchronizeEIDPatientLabResults($scope.startDate,$scope.endDate,$scope.patientUuid,
+        function(response){
+          console.log("synchronizeEIDPatientLabResults response is ",response);
+          displayLabObs(response);
+        },
+      function(error){
+        console.error("synchronizeEIDPatientLabResults error is ",error);
+      });
+      }
       function loadMoreLabs(loadNextOffset) {
         $scope.experiencedLoadingErrors = false;
             if ($scope.isBusy === true) return;
@@ -244,7 +261,11 @@ jshint -W003, -W026
           ''  +row.patient_uuid +'">' + nullToEmptyString(value)
         ].join('');
       }
-
+      function displayLabObs(message){
+        $scope.showSuccessAlert = true;
+        $scope.isLoadingLabData=false;
+        $scope.labObs=message;
+      }
     }
 
     function labsSummaryLink(scope, element, attrs, vm) {
