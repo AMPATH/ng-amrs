@@ -101,7 +101,7 @@
       if (result.size === 0) {
         $scope.allDataLoaded = true;
       } else {
-        $scope.indicators.length === 0 ? $scope.indicators.push.apply($scope.indicators, result.result.formatted) : $scope.indicators = result.result.formatted;
+        $scope.indicators.length === 0 ? $scope.indicators.push.apply($scope.indicators, result.result) : $scope.indicators = result.result;
       }
       buildDataTable();
       $scope.chartFilters = true;
@@ -235,15 +235,19 @@
     }
 
     function buildColumns() {
+      var obj =[];
       var location=getSelectedLocationByName($scope.selectedLocations);
       $scope.Location = location.split(",");
       $scope.Location.unshift('month');
       $scope.columns = [];
       _.each($scope.Location, function (header) {
+
         if (header)
           buildSingleColumn(header);
+        obj.push({name:header});
 
       });
+      $rootScope.$broadcast("location", obj);
     }
 
 
