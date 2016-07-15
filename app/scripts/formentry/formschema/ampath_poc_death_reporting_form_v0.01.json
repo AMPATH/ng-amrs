@@ -1,0 +1,350 @@
+{
+    "name": "AMPATH Death Reporting Form V0.01",
+    "version": "0.01",
+    "encounterType": "uuid",
+    "processor": "EncounterFormProcessor",
+    "form": "uuid",
+    "pages": [
+        {
+            "label": "Death Reporting",
+            "sections": [
+                {
+                    "label": "Encounter Details",
+                    "isExpanded": "true",
+                    "questions": [
+                        {
+                            "label": "Visit Date",
+                            "type": "encounterDatetime",
+                            "required": "true",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "date"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "encounterProvider",
+                            "label": "Provider",
+                            "required": "true",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        },
+                        {
+                            "label": "Provider department",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8afd40c-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "label": "Outreach",
+                                        "concept": "a8afd286-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Social work",
+                                        "concept": "a89e2d1a-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Nutiritional support",
+                                        "concept": "a8a8afd8-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Pychosocial support",
+                                        "concept": "a89e2df6-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Clinical department",
+                                        "concept": "a8afd344-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "type": "encounterLocation",
+                            "label": "Facility name (site/satellite clinic required):",
+                            "required": "true",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "Death Details",
+                    "questions": [
+                        {
+                            "label": "Client category:",
+                            "type": "obs",
+                            "id": "clientCate",
+                            "questionOptions": {
+                                "concept": "a89eea66-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "concept": "a89ee8ea-1350-11df-a1f1-0026b9348838",
+                                        "label": "Adult"
+                                    },
+                                    {
+                                        "concept": "a89ee9a8-1350-11df-a1f1-0026b9348838",
+                                        "label": "Pead"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Date of death:",
+                            "type": "obs",
+                            "id": "deathDate",
+                            "questionOptions": {
+                                "concept": "a89df3d6-1350-11df-a1f1-0026b9348838",
+                                "rendering": "date"
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Is this date confirmed or estimated?",
+                            "type": "obs",
+                            "id": "dateConfirmed",
+                            "questionOptions": {
+                                "concept": "a8af5e46-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "concept": "a8af9046-1350-11df-a1f1-0026b9348838",
+                                        "label": "Confirmed"
+                                    },
+                                    {
+                                        "concept": "a8af9154-1350-11df-a1f1-0026b9348838",
+                                        "label": "Estimated"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Where did the person die?",
+                            "type": "obsGroup",
+                            "questionOptions": {
+                                "concept": "a8afd1c8-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Where did the person die?",
+                                    "type": "obs",
+                                    "id": "deathLoc",
+                                    "questionOptions": {
+                                        "rendering": "select",
+                                        "concept": "a8afd100-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "label": "Home",
+                                                "concept": "a89df17e-1350-11df-a1f1-0026b9348838"
+                                            },
+                                            {
+                                                "label": "Hospital",
+                                                "concept": "a8afd042-1350-11df-a1f1-0026b9348838"
+                                            },
+                                            {
+                                                "label": "Unknown",
+                                                "concept": "a899b50a-1350-11df-a1f1-0026b9348838"
+                                            },
+                                            {
+                                                "label": "Other",
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+                                            }
+                                        ]
+                                    },
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Death location, specify",
+                                    "id": "deathLocSpec",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "text",
+                                        "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                "hideWhenExpression": "isEmpty(deathLoc) || !arrayContains(deathLoc, 'a8aaf3e2-1350-11df-a1f1-0026b9348838')"
+                            }
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Cause of death",
+                            "type": "obsGroup",
+                            "questionOptions": {
+                                "rendering": "group",
+                                "concept": "a8af9910-1350-11df-a1f1-0026b9348838"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Cause of death (if known)",
+                                    "id": "deathCause",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "concept": "a89df750-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "select",
+                                        "answers": [
+                                            {
+                                                "label": "Illness",
+                                                "concept": "a89de2d8-1350-11df-a1f1-0026b9348838"
+                                            },
+                                            {
+                                                "label": "Accident",
+                                                "concept": "a890bfcc-1350-11df-a1f1-0026b9348838"
+                                            },
+                                            {
+                                                "label": "Murder",
+                                                "concept": "a89df67e-1350-11df-a1f1-0026b9348838"
+                                            },
+                                            {
+                                                "label": "Suicide",
+                                                "concept": "a89df49e-1350-11df-a1f1-0026b9348838"
+                                            },
+                                            {
+                                                "label": "Other",
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+                                            }
+                                        ]
+                                    },
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Cause of death, Specify",
+                                    "id": "deathSpecify",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "text"
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                "hideWhenExpression": "isEmpty(deathCause) || !arrayContains(deathCause, 'a8aaf3e2-1350-11df-a1f1-0026b9348838')"
+                            }
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Was investigation on cause of death done?",
+                            "id": "invest",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8af5f04-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Unknown",
+                                        "concept": "a899b50a-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "If yes, which method?",
+                            "id": "methodInvest",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8af612a-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Verbal",
+                                        "concept": "a8af6076-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Postmoterm",
+                                        "concept": "a8af5fc2-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            },
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "isEmpty(invest) || !arrayContains(invest, 'a899b35c-1350-11df-a1f1-0026b9348838')"
+                            }
+                        },
+                        {
+                            "label": "Death reported by:",
+                            "id": "deathReport",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a89ef1f0-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Spouse",
+                                        "concept": "a89ebc80-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Sibling",
+                                        "concept": "a898c262-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Mother",
+                                        "concept": "a898c0dc-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Friend",
+                                        "concept": "a8aaf07c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Grandparent",
+                                        "concept": "a898c32a-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Father",
+                                        "concept": "a898c1a4-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Neighbour",
+                                        "concept": "a89cd352-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Clinician/Health worker",
+                                        "concept": "a8aaf158-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Community contact",
+                                        "concept": "a8af6404-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Other family members",
+                                        "concept": "a8aaf234-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Caretaker/Caregiver/Guardian",
+                                        "concept": "a89cd280-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Other",
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
