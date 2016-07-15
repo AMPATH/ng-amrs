@@ -62,6 +62,7 @@
                 <chart-legend show-legend="true" legend-position="bottom"/>
                 <chart-tooltip value-format-function="roundOffValues"/>
               </c3chart>
+
             </div>
             <div >
               <!-- DATATABLE -->
@@ -90,7 +91,7 @@
                 <uib-accordion-group heading="% on ART with VL:" is-open="false" style="padding: 5px!important;">
                   <span class="text-muted">
                   For this indicator the denominator includes patients who are active in care, on ART and require a viral load.
-                  A patient reuires a viral load if they have been on ART more than 6 months. The numerator are those patients
+                  A patient requires a viral load if they have been on ART more than 6 months. The numerator are those patients
                   who are active in care, on ART, required a viral load and got a viral load
                     </span>
                 </uib-accordion-group>
@@ -144,6 +145,7 @@
             <chart-legend show-legend="true" legend-position="right"/>
             <chart-tooltip value-format-function="formatTooltipValue"/>
           </c3chart>
+              <strong class="pull-right text-muted">Total Patients:{{patientStatus.result[0].patients}}</strong>
             </div>
             <div>
               <uib-accordion close-others="true">
@@ -228,6 +230,7 @@
             <chart-legend show-legend="true" legend-position="right"/>
             <chart-tooltip value-format-function="formatTooltipValue"/>
           </c3chart>
+              <strong class="pull-right text-muted">Total Patients:{{art.result[0].patients}}</strong>
             </div>
             <div>
               <uib-accordion close-others="true">
