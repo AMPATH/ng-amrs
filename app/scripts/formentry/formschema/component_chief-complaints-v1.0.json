@@ -1,0 +1,142 @@
+{
+    "name": "component_chief-complaints-v1.0",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Chief Complaints",
+            "sections": [
+                {
+                    "label": "Chief Complaints",
+                    "questions": [
+                        {
+                            "label": "What are the chief complaints?",
+                            "id": "chiefComplaints",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a6ddb6-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "No complaints",
+                                        "concept": "a899b5e6-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Having complaints",
+                                        "concept": "a8a4cb8e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "Does the patient have symptoms of hypoglycemia?",
+                            "id": "hypoglycemia",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "4b2d8da4-cb40-49b5-9934-c69f8aba7f3c",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "If yes, list:",
+                            "id": "hypoSymptoms",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "4b2d8da4-cb40-49b5-9934-c69f8aba7f3c",
+                                "answers": [
+                                    {
+                                        "label": "Dizziness",
+                                        "concept": "a89836ee-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Sweating",
+                                        "concept": "d301ff85-d21c-4a61-a195-ce7948db423c"
+                                    },
+                                    {
+                                        "label": "Shaking",
+                                        "concept": "ea2aad3e-7630-4bab-bb89-e6fed2475d4c"
+                                    },
+                                    {
+                                        "label": "Fainting",
+                                        "concept": "4ac2bdf3-16ed-4cd1-acd9-d78a1bf1cc85"
+                                    },
+                                    {
+                                        "label": "Confused",
+                                        "concept": "a8ad3b02-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "validator": [],
+                            "hide": {
+                                "hideWhenExpression": "hypoglycemia !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                            }
+                        },
+                        {
+                            "label": "Is the patient dysponeic?",
+                            "id": "dysponeic",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "9e7baa95-f4a4-45f1-b5d9-8cccfb2bd5f6",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "New York Heart Assosication Functional Class:",
+                            "id": "NYHA",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "e216f01b-e5d3-46dd-b60a-e38b8e49afce",
+                               
+                                "answers": [
+                                    {
+                                        "label": "Congestive heart failure, NYHA class I",
+                                        "concept": "838469fb-caa8-4bc5-88df-0cab90ed28f0"
+                                    },
+                                    {
+                                        "label": "Congestive heart failure, NYHA class II",
+                                        "concept": "8d2ca8fc-5601-47cd-918b-8f054dd8172c"
+                                    },
+                                    {
+                                        "label": "Congestive heart failure, NYHA class III",
+                                        "concept": "f40be346-bdbe-4964-8cda-0470386dfa89"
+                                    },
+                                    {
+                                        "label": "Congestive heart failure, NYHA class IV",
+                                        "concept": "38d008db-d504-4ea6-8542-e15115be9ed4"
+                                    }
+                                ],
+                                 "rendering": "select"
+                                 },
+                                "validator": [],
+                                "hide": {
+                                    "hideWhenExpression": "dysponeic !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                }
+                            
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,232 @@
+{
+    "name": "component_physical-exams-v1.0",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Physical Exam",
+            "sections": [
+                {
+                    "label": "Physical Exam",
+                    "questions": [
+                        {
+                            "label": "General exam:",
+                            "questionOptions": {
+                                "concept": "a899eb24-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e7b4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Normal"
+                                    },
+                                    {
+                                        "concept": "a89366a0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Jaundice"
+                                    },
+                                    {
+                                        "concept": "a8a6f9a4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Pallor"
+                                    },
+                                    {
+                                        "concept": "a8965298-1350-11df-a1f1-0026b9348838",
+                                        "label": "Cyanosis"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Respiratory exam:",
+                            "id": "resp",
+                            "questionOptions": {
+                                "concept": "a899eeb2-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e7b4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Normal"
+                                    },
+                                    {
+                                        "concept": "a899e890-1350-11df-a1f1-0026b9348838",
+                                        "label": "Abnormal"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "CNS exam:",
+                            "id": "neuro",
+                            "questionOptions": {
+                                "concept": "a899f380-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e7b4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Normal"
+                                    },
+                                    {
+                                        "concept": "a899e890-1350-11df-a1f1-0026b9348838",
+                                        "label": "Abnormal"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "CVS exam:",
+                            "id": "cardiac",
+                            "questionOptions": {
+                                "concept": "a899ef84-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e7b4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Normal"
+                                    },
+                                    {
+                                        "concept": "a899e890-1350-11df-a1f1-0026b9348838",
+                                        "label": "Abnormal"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Musculoskeletal exam:",
+                            "id": "musculo",
+                            "questionOptions": {
+                                "concept": "a899f2ae-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e7b4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Normal"
+                                    },
+                                    {
+                                        "concept": "a899e890-1350-11df-a1f1-0026b9348838",
+                                        "label": "Abnormal"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "PA exam:",
+                            "id": "abdominal",
+                            "questionOptions": {
+                                "concept": "a899f04c-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e7b4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Normal"
+                                    },
+                                    {
+                                        "concept": "a899e890-1350-11df-a1f1-0026b9348838",
+                                        "label": "Abnormal"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "HEENT:",
+                            "id": "heent",
+                            "questionOptions": {
+                                "concept": "a899edcc-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e7b4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Normal"
+                                    },
+                                    {
+                                        "concept": "a899e890-1350-11df-a1f1-0026b9348838",
+                                        "label": "Abnormal"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Extremies exam:",
+                            "id": "extremies",
+                            "questionOptions": {
+                                "concept": "a899f1e6-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e7b4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Normal"
+                                    },
+                                    {
+                                        "concept": "be87ae99-9e94-4946-bee3-390a40bd8b23",
+                                        "label": "Ulcers"
+                                    },
+                                    {
+                                        "concept": "a896537e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Edema"
+                                    },
+                                    {
+                                        "concept": "0c9973ef-482f-44d0-b7cf-e19e22175f18",
+                                        "label": "Callouses"
+                                    },
+                                    {
+                                        "concept": "a8934012-1350-11df-a1f1-0026b9348838",
+                                        "label": "Fungus"
+                                    },
+                                    {
+                                        "concept": "a892e2ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "Cellulitis"
+                                    },
+                                    {
+                                        "concept": "0b020d52-3382-4964-8834-db92be0e401e",
+                                        "label": "Hardened nails"
+                                    },
+                                    {
+                                        "concept": "ac1df7e6-cc78-4cb6-b3c6-aeef7cfb8182",
+                                        "label": "Dry"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                },
+                {
+                    "label": "Physical Exams, Notes",
+                    "isExpanded": "true",
+                    "questions": [
+                        {
+                            "label": "Physical Exams, Notes:",
+                            "type": "obs",
+                            "id": "phyText",
+                            "questionOptions": {
+                                "concept": "a8a0cc32-1350-11df-a1f1-0026b9348838",
+                                "rendering": "textarea",
+                                "rows": 15
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

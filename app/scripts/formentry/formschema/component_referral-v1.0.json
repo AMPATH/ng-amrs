@@ -1,0 +1,312 @@
+{
+    "name": "component_referral-v1.0",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Referrals",
+            "sections": [
+                {
+                    "label": "Referrals",
+                    "questions": [
+                        {
+                            "type": "obsGroup",
+                            "label": "Referrals",
+                            "questionOptions": {
+                                "concept": "a8a07c8c-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Referrals made to the patient:",
+                                    "id": "referrals",
+                                    "questionOptions": {
+                                        "concept": "a89c2344-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                                "label": "None"
+                                            },
+                                            {
+                                                "concept": "a89fbb12-1350-11df-a1f1-0026b9348838",
+                                                "label": "OVC"
+                                            },
+                                            {
+                                                "concept": "a8a066ca-1350-11df-a1f1-0026b9348838",
+                                                "label": "ENT"
+                                            },
+                                            {
+                                                "concept": "a8a8b352-1350-11df-a1f1-0026b9348838",
+                                                "label": "Adherence counselling"
+                                            },
+                                            {
+                                                "concept": "a2187952-59e0-449b-895f-5102b7aed49c",
+                                                "label": "Cardiology"
+                                            },
+                                            {
+                                                "concept": "0fa18f9a-95c8-4ab3-81ed-a1bac69063fa",
+                                                "label": "Diabetes"
+                                            },
+                                            {
+                                                "concept": "a89accc4-1350-11df-a1f1-0026b9348838",
+                                                "label": "Disclosure counselling"
+                                            },
+                                            {
+                                                "concept": "073ea366-834b-49bd-b4db-ce4e6c61bbc3",
+                                                "label": "Oncology"
+                                            },
+                                            {
+                                                "concept": "a8a8b42e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Mental health services"
+                                            },
+                                            {
+                                                "concept": "a8a8afd8-1350-11df-a1f1-0026b9348838",
+                                                "label": "Nutritional support"
+                                            },
+                                            {
+                                                "concept": "a89e2df6-1350-11df-a1f1-0026b9348838",
+                                                "label": "Psychosocial support"
+                                            },
+                                            {
+                                                "concept": "a8a8b26c-1350-11df-a1f1-0026b9348838",
+                                                "label": "TB/DOT program"
+                                            },
+                                            {
+                                                "concept": "c65fcd72-1f3f-4450-b93f-90a87ae64d55",
+                                                "label": "Surgery"
+                                            },
+                                            {
+                                                "concept": "0d516ea7-218f-43d4-b5c0-58d126529271",
+                                                "label": "Dermatology"
+                                            },
+                                            {
+                                                "concept": "a89e2d1a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Social work"
+                                            },
+                                            {
+                                                "concept": "a89fbbd0-1350-11df-a1f1-0026b9348838",
+                                                "label": "Express care "
+                                            },
+                                            {
+                                                "concept": "a8a06788-1350-11df-a1f1-0026b9348838",
+                                                "label": "Ophthalmology "
+                                            },
+                                            {
+                                                "concept": "a8a002e8-1350-11df-a1f1-0026b9348838",
+                                                "label": "Reproductive health "
+                                            },
+                                            {
+                                                "concept": "f3537f40-193c-4091-b969-88597588b909",
+                                                "label": "Dispensary"
+                                            },
+                                            {
+                                                "concept": "f90652be-7fb6-46cd-9274-99558a1dacd2",
+                                                "label": "COE"
+                                            },
+                                            {
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Other"
+                                            }
+                                        ],
+                                        "rendering": "multiCheckbox"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Referrals made to the patient: Other (specify):",
+                                    "questionOptions": {
+                                        "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "text"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                }
+                            ]
+                        },
+                        {
+                            "label": "If referred for hospitalization, choose location:",
+                            "id": "hospitalization",
+                            "questionOptions": {
+                                "concept": "a89c2420-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a89c25d8-1350-11df-a1f1-0026b9348838",
+                                        "label": "Local health centre/hospital"
+                                    },
+                                    {
+                                        "concept": "a89c24fc-1350-11df-a1f1-0026b9348838",
+                                        "label": "MTRH"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Reason  for hospitalization",
+                            "id": "hospReason",
+                            "type": "obsGroup",
+                            "questionOptions": {
+                                "concept": "a8a07c8c-1350-11df-a1f1-0026b9348838",
+                                "rendering": "repeating"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Reason for hospitalization:",
+                                    "questionOptions": {
+                                        "concept": "a8a07a48-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "problem"
+                                    },
+                                    "type": "obs"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "obsGroup",
+                            "label": "Transfer care to other centre",
+                            "questionOptions": {
+                                "concept": "a8a170e2-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Transfer care to other centre:",
+                                    "id": "tranferCare",
+                                    "questionOptions": {
+                                        "concept": "a89c2e5c-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a89c2f42-1350-11df-a1f1-0026b9348838",
+                                                "label": "Ampath"
+                                            },
+                                            {
+                                                "concept": "a89c301e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Non-Ampath"
+                                            },
+                                            {
+                                                "concept": "a8a17d80-1350-11df-a1f1-0026b9348838",
+                                                "label": "MCH"
+                                            }
+                                        ],
+                                        "rendering": "multiCheckbox"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                }
+                            ]
+                        },
+                        {
+                            "type": "personAttribute",
+                            "label": "Specify name of clinic to which patient is being referred:",
+                            "id": "transfered_out_to_ampath",
+                            "required": "false",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended",
+                                "attributeType": "8d87236c-c2cc-11de-8d13-0010c6dffd0f"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "Continue Care in Clinic",
+                    "questions": [
+                        {
+                            "label": "Patient plans to continue care in clinic:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8afa0cc-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ],
+                                "rendering": "select"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "Continue Care in Dispensary",
+                    "questions": [
+                        {
+                            "label": "Dispensary name:",
+                            "id": "dispensaryCare",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "6f214d38-96af-4f9f-8696-6357205eb4d9",
+                                "answers": [],
+                                "rendering": "text",
+                                "validators": []
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "Reasons for COE referral",
+                    "questions": [
+                        {
+                            "label": "COE referral reasons:",
+                            "id": "coeReferralReason",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "b3d09568-cccd-418c-bc45-c30e4d9cb47f",
+                                "answers": [
+                                    {
+                                        "label": "Diabetes management",
+                                        "concept": "0fa18f9a-95c8-4ab3-81ed-a1bac69063fa"
+                                    },
+                                    {
+                                        "label": "HTN management",
+                                        "concept": "4fd8e08f-2f02-4d07-82e6-3a33ad49ffdd"
+                                    },
+                                    {
+                                        "label": "Eye review",
+                                        "concept": "c6533a94-206e-4687-a2d4-73401e6895cb"
+                                    },
+                                    {
+                                        "label": "Surgical review",
+                                        "concept": "3cfb070d-70ac-4d20-bb60-88ea08e36178"
+                                    },
+                                    {
+                                        "label": "Renal review",
+                                        "concept": "695dd891-c0aa-4ec6-8c4d-2493186c5565"
+                                    },
+                                    {
+                                        "label": "CVD review",
+                                        "concept": "c53e74dd-1d1f-4832-a725-03d32f0a992b"
+                                    },
+                                    {
+                                        "label": "Nutrition",
+                                        "concept": "a8a8afd8-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Physiotherapy",
+                                        "concept": "a8a06f08-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ],
+                                "rendering": "select",
+                                "validators": []
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

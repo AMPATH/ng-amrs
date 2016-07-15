@@ -1,0 +1,501 @@
+{
+    "name": "component_cdm-drugs",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Medication",
+            "sections": [
+                {
+                    "label": "Current Medication",
+                    "questions": [
+                        {
+                            "type": "obsGroup",
+                            "label": "CDM drug missed",
+                            "questionOptions": {
+                                "concept": "a622edd7-5d74-4751-b9e9-7fdadb4d4fea",
+                                "rendering": "repeating"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Drug missed:",
+                                    "questionOptions": {
+                                        "concept": "f9f721e5-d123-49d5-976f-a24d3c5b5a90",
+                                        "answers": [
+                                            {
+                                                "concept": "a8a4344e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Metformin"
+                                            },
+                                            {
+                                                "concept": "a8a4314c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Glibenclamide"
+                                            },
+                                            {
+                                                "concept": "f749638f-ed2d-4a5c-a1e9-759ffe1592eb",
+                                                "label": "Insulin"
+                                            },
+                                            {
+                                                "concept": "a89b5cf2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Enalapril"
+                                            },
+                                            {
+                                                "concept": "a89b5dd8-1350-11df-a1f1-0026b9348838",
+                                                "label": "HCTZ"
+                                            },
+                                            {
+                                                "concept": "a8a43692-1350-11df-a1f1-0026b9348838",
+                                                "label": "Lisinopril/HCTZ"
+                                            },
+                                            {
+                                                "concept": "a8938aa4-1350-11df-a1f1-0026b9348838",
+                                                "label": "Nifedipine"
+                                            },
+                                            {
+                                                "concept": "a8a438cc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Atenolol"
+                                            },
+                                            {
+                                                "concept": "49e26010-8e72-4cdb-baf7-fcbc1aab2de3",
+                                                "label": "Felodipine"
+                                            },
+                                            {
+                                                "concept": "a8a43c96-1350-11df-a1f1-0026b9348838",
+                                                "label": "Amlodipine"
+                                            },
+                                            {
+                                                "concept": "a8a43750-1350-11df-a1f1-0026b9348838",
+                                                "label": "Losartan"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Number of doses missed in the last one week:",
+                                    "id": "missedDose",
+                                    "questionOptions": {
+                                        "concept": "72f25963-d68c-47be-9524-b28953d8d2d8",
+                                        "answers": [
+                                            {
+                                                "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                                "label": "None"
+                                            },
+                                            {
+                                                "concept": "a89ac6b6-1350-11df-a1f1-0026b9348838",
+                                                "label": "Few"
+                                            },
+                                            {
+                                                "concept": "a89ac86e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Most"
+                                            },
+                                            {
+                                                "concept": "a89ac94a-1350-11df-a1f1-0026b9348838",
+                                                "label": "All"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Reason:",
+                                    "id": "reasonMissed",
+                                    "questionOptions": {
+                                        "concept": "d4cc8605-61f5-49cf-92da-d6b39ef4dabb",
+                                        "answers": [
+                                            {
+                                                "concept": "a8af4cee-1350-11df-a1f1-0026b9348838",
+                                                "label": "Ran out of meds"
+                                            },
+                                            {
+                                                "concept": "a89eacc2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Forgot"
+                                            },
+                                            {
+                                                "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
+                                                "label": "Side Effects"
+                                            },
+                                            {
+                                                "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
+                                                "label": "Don't like"
+                                            },
+                                            {
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Other"
+                                            }
+                                        ],
+                                        "rendering": "multiCheckbox"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": " Other Reasons(specify):",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "text"
+                                    },
+                                    "validators": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Medication Plan",
+                    "questions": [
+                        {
+                            "type": "obsGroup",
+                            "label": "Anti diabetic drugs",
+                            "questionOptions": {
+                                "concept": "a6812b99-3126-40b8-8c9c-2f511a6912b1",
+                                "rendering": "repeating"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Plan:",
+                                    "id": "antiDiabeticPlan",
+                                    "questionOptions": {
+                                        "concept": "6dd6392d-c18e-44b7-bbc3-95c6c981de65",
+                                        "answers": [
+                                            {
+                                                "concept": "a89b77aa-1350-11df-a1f1-0026b9348838",
+                                                "label": "Start"
+                                            },
+                                            {
+                                                "concept": "a89b7908-1350-11df-a1f1-0026b9348838",
+                                                "label": "Continue"
+                                            },
+                                            {
+                                                "concept": "a89b7c50-1350-11df-a1f1-0026b9348838",
+                                                "label": "Change Regimen"
+                                            },
+                                            {
+                                                "concept": "a89b7d36-1350-11df-a1f1-0026b9348838",
+                                                "label": " Stop All"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Name of drug:",
+                                    "questionOptions": {
+                                        "concept": "78809200-7f7f-4d6f-b515-31088765d442",
+                                        "answers": [
+                                            {
+                                                "concept": "a8a4344e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Metformin"
+                                            },
+                                            {
+                                                "concept": "a8a4314c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Glibenclamide"
+                                            },
+                                            {
+                                                "concept": "a8a42ecc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Insulin 70/30"
+                                            },
+                                            {
+                                                "concept": "a8a42fbc-1350-11df-a1f1-0026b9348838",
+                                                "label": "NPH"
+                                            },
+                                            {
+                                                "concept": "a8a43084-1350-11df-a1f1-0026b9348838",
+                                                "label": "Humalogue"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Milligrams:",
+                                    "questionOptions": {
+                                        "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
+                                        "max": "1000",
+                                        "min": "0",
+                                        "rendering": "number"
+                                    },
+                                    "type": "obs"
+                                },
+                                {
+                                    "label": "Frequency:",
+                                    "questionOptions": {
+                                        "concept": "a8a06184-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a8a05dc4-1350-11df-a1f1-0026b9348838",
+                                                "label": "OD"
+                                            },
+                                            {
+                                                "concept": "a8a05aea-1350-11df-a1f1-0026b9348838",
+                                                "label": "BD"
+                                            },
+                                            {
+                                                "concept": "a8a05b9e-1350-11df-a1f1-0026b9348838",
+                                                "label": "TDS"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                }
+                            ]
+                        },
+                        {
+                            "label": " Other(specify):",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                                "rendering": "text"
+                            },
+                            "validators": []
+                        },
+                        {
+                            "type": "obsGroup",
+                            "label": "Anti hypertensive drugs",
+                            "questionOptions": {
+                                "concept": "2a6868b8-7142-4e94-acc5-dbcaa95cf822",
+                                "rendering": "repeating"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Plan:",
+                                    "id": "antiHypertensivePlan",
+                                    "questionOptions": {
+                                        "concept": "034bfcf2-d286-4450-93a8-5effe80acda9",
+                                        "answers": [
+                                            {
+                                                "concept": "a89b77aa-1350-11df-a1f1-0026b9348838",
+                                                "label": "Start"
+                                            },
+                                            {
+                                                "concept": "a89b7908-1350-11df-a1f1-0026b9348838",
+                                                "label": "Continue"
+                                            },
+                                            {
+                                                "concept": "a89b7c50-1350-11df-a1f1-0026b9348838",
+                                                "label": "Change Regimen"
+                                            },
+                                            {
+                                                "concept": "a89b7d36-1350-11df-a1f1-0026b9348838",
+                                                "label": " Stop All"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Name of drug:",
+                                    "questionOptions": {
+                                        "concept": "7c4a06ce-11eb-496f-b4db-516ab8d78aa8",
+                                        "answers": [
+                                            {
+                                                "concept": "a89b5cf2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Enalapril"
+                                            },
+                                            {
+                                                "concept": "a89b5dd8-1350-11df-a1f1-0026b9348838",
+                                                "label": "HCTZ"
+                                            },
+                                            {
+                                                "concept": "a8a43692-1350-11df-a1f1-0026b9348838",
+                                                "label": "Lisinopril/HCTZ"
+                                            },
+                                            {
+                                                "concept": "a8a43750-1350-11df-a1f1-0026b9348838",
+                                                "label": "Losartan"
+                                            },
+                                            {
+                                                "concept": "a8938aa4-1350-11df-a1f1-0026b9348838",
+                                                "label": "Nifidipine"
+                                            },
+                                            {
+                                                "concept": "a8a43c96-1350-11df-a1f1-0026b9348838",
+                                                "label": "Amlodipine"
+                                            },
+                                            {
+                                                "concept": "49e26010-8e72-4cdb-baf7-fcbc1aab2de3",
+                                                "label": "Felodipine"
+                                            },
+                                            {
+                                                "concept": "a8a438cc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Atenolol"
+                                            },
+                                            {
+                                                "concept": "dde8dd1e-b8d6-467b-acf0-8b54cf87a9e4",
+                                                "label": "J ASA"
+                                            },
+                                            {
+                                                "concept": "a8a43f98-1350-11df-a1f1-0026b9348838",
+                                                "label": "Atorvastatin"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Milligrams:",
+                                    "questionOptions": {
+                                        "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
+                                        "max": "1000",
+                                        "min": "0",
+                                        "rendering": "number"
+                                    },
+                                    "type": "obs"
+                                },
+                                {
+                                    "label": "Frequency:",
+                                    "questionOptions": {
+                                        "concept": "a8a06184-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a8a05dc4-1350-11df-a1f1-0026b9348838",
+                                                "label": "OD"
+                                            },
+                                            {
+                                                "concept": "a8a05aea-1350-11df-a1f1-0026b9348838",
+                                                "label": "BD"
+                                            },
+                                            {
+                                                "concept": "a8a05b9e-1350-11df-a1f1-0026b9348838",
+                                                "label": "TDS"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                }
+                            ]
+                        },
+                        {
+                            "label": " Other(specify):",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                                "rendering": "text"
+                            },
+                            "validators": []
+                        },
+                        {
+                            "type": "obsGroup",
+                            "label": "Peripheral Neuropathy drugs",
+                            "questionOptions": {
+                                "concept": "f8d6b03b-58d5-44da-8b95-6f9ff0aa8b43",
+                                "rendering": "repeating"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Plan:",
+                                    "id": "peripheralNeuropathyPlan",
+                                    "questionOptions": {
+                                        "concept": "22d69c72-5731-4d91-a7ca-f7c43281cf8d",
+                                        "answers": [
+                                            {
+                                                "concept": "a89b77aa-1350-11df-a1f1-0026b9348838",
+                                                "label": "Start"
+                                            },
+                                            {
+                                                "concept": "a89b7908-1350-11df-a1f1-0026b9348838",
+                                                "label": "Continue"
+                                            },
+                                            {
+                                                "concept": "a89b7c50-1350-11df-a1f1-0026b9348838",
+                                                "label": "Change Regimen"
+                                            },
+                                            {
+                                                "concept": "a89b7d36-1350-11df-a1f1-0026b9348838",
+                                                "label": " Stop All"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Name of drug:",
+                                    "questionOptions": {
+                                        "concept": "b4c2cd42-76d9-41ab-ba8f-1b8537409d02",
+                                        "answers": [
+                                            {
+                                                "concept": "a89b5cf2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Amitriptylline"
+                                            },
+                                            {
+                                                "concept": "a89b5dd8-1350-11df-a1f1-0026b9348838",
+                                                "label": "Carbamazepine"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Milligrams:",
+                                    "questionOptions": {
+                                        "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
+                                        "max": "1000",
+                                        "min": "0",
+                                        "rendering": "number"
+                                    },
+                                    "type": "obs"
+                                },
+                                {
+                                    "label": "Frequency:",
+                                    "questionOptions": {
+                                        "concept": "a8a06184-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a8a05dc4-1350-11df-a1f1-0026b9348838",
+                                                "label": "OD"
+                                            },
+                                            {
+                                                "concept": "a8a05aea-1350-11df-a1f1-0026b9348838",
+                                                "label": "BD"
+                                            },
+                                            {
+                                                "concept": "a8a05b9e-1350-11df-a1f1-0026b9348838",
+                                                "label": "TDS"
+                                            },
+                                            {
+                                                "concept": "a8a358da-1350-11df-a1f1-0026b9348838",
+                                                "label": "NOCTE"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                }
+                            ]
+                        },
+                        {
+                            "label": " Other(specify):",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                                "rendering": "text"
+                            },
+                            "validators": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
