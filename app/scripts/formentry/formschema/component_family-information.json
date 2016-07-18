@@ -149,7 +149,6 @@
                 },
                 {
                     "label": "Parents Medical History",
-                    "id": "parentalInfo",
                     "questions": [
                         {
                             "label": "HIV cause of death of mother:",
@@ -696,7 +695,7 @@
                                     "type": "obs",
                                     "questionOptions": {
                                         "rendering": "select",
-                                        "concept": " e7de7f52-9d91-4be6-a369-6cde2fe2d9a6",
+                                        "concept": "e7de7f52-9d91-4be6-a369-6cde2fe2d9a6",
                                         "answers": [
                                             {
                                                 "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
@@ -736,31 +735,14 @@
                                         ]
                                     },
                                     "validators": []
-                                },
-                                {
-                                    "type": "patientCccNumber",
-                                    "label": "Unique Patient ID Number/GOK ID:",
-                                    "id": "uniqueId",
-                                    "default": "",
-                                    "questionOptions": {
-                                        "rendering": "ui-select-extended"
-                                    }
-                                },
-                                {
-                                    "type": "patientAmrsUniversalNumber",
-                                    "label": "AMRS ID:",
-                                    "id": "amrsUniId",
-                                    "default": "",
-                                    "questionOptions": {
-                                        "rendering": "ui-select-extended"
-                                    }
                                 }
+                                
                             ]
                         }
                     ]
                 },
                 {
-                    "label": "Treatment supporter details",
+                    "label": "Treatment Supporter Details",
                     "questions": [
                         {
                             "type": "personName",

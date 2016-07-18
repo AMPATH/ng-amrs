@@ -110,7 +110,7 @@
 
       for (var i = 0; i < $scope.indicators.length; ++i) {
         $scope.indicators[i].month =
-          $filter('date')($scope.indicators[i].month, 'MM/y');
+          $filter('date')($scope.indicators[i].month, 'MMM, y');
       }
 
     }

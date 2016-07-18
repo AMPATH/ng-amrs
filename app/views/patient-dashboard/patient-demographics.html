@@ -1,13 +1,18 @@
 <ul class="list-group">
-    <li class="list-group-item" style="font-size:large" ng-if="patient.fullNames()">Name: {{patient.fullNames() | titlecase }}</li>
-    <li class="list-group-item" style="font-size:large" ng-if="patient.healthCenter()">Health Center: {{patient.healthCenter()}}</li>
-    <li class="list-group-item" style="font-size:large" ng-if="patient.isTestorFakePatient()">Test Patient</li>
-    <li class="list-group-item markDeceased" style="font-size:large" ng-if="patient.deathDate()">Death Date: {{patient.deathDate()}}</li>
-    <li class="list-group-item" style="font-size:large" ng-if="patient.phoneNumber()">Phone Number: {{patient.phoneNumber()}}</li>
-    <li class="list-group-item" style="font-size:large" ng-if="patient.address().county">County: {{patient.address().county| titlecase }}</li>
-    <li class="list-group-item" style="font-size:large" ng-if="patient.address().subCounty">Sub-County: {{patient.address().subCounty| titlecase }}</li>
-    <li class="list-group-item" style="font-size:large" ng-if="patient.address().estateLandmark">Estate/Landmark: {{patient.address().estateLandmark| titlecase }}</li>
-    <li class="list-group-item" style="font-size:large" ng-if="patient.address().townVillage">Town/Village: {{patient.address().townVillage| titlecase }}</li>
-    <li class="list-group-item" style="font-size:large" ng-if="patient.address().stateProvince">State/Province: {{patient.address().stateProvince| titlecase }}</li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.fullNames()">Name: {{patient.fullNames() | titlecase }}</li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.healthCenter()">Health Center: {{patient.healthCenter()}}</li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.isTestorFakePatient()">Test Patient</li>
+  <li class="list-group-item markDeceased" style="font-size:large" ng-if="patient.deathDate()">Death Date: {{patient.deathDate()}}</li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.phoneNumber()">Phone Number: {{patient.phoneNumber()}}
+    <button type="button" class="btn btn-primary btn-xs" ng-click="openPersonAttributeManageModal(patient.uuid())">
+      <span ng-if="patient.phoneNumber()==null">Add</span> <span ng-if="patient.phoneNumber()">Edit</span></button>
+  </li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.address().county">County: {{patient.address().county| titlecase }}</li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.address().subCounty">Sub-County: {{patient.address().subCounty| titlecase }}</li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.address().estateLandmark">Estate/Landmark: {{patient.address().estateLandmark| titlecase }}</li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.address().townVillage">Town/Village: {{patient.address().townVillage| titlecase }}</li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.address().stateProvince">State/Province: {{patient.address().stateProvince| titlecase }}</li>
   </li>
 </ul>
+<button ng-if="patient.phoneNumber()==null" type="button" class="btn btn-primary btn-xs" ng-click="openPersonAttributeManageModal(patient.uuid())">
+  Add phone number</button>

@@ -17,7 +17,7 @@ jshint -W098, -W117, -W003, -W026
 			getLocationResService: getLocationService,
 		}
 		return service;
-		
+
 		function getLocationService() {
 			//console.log("Get locations called");
 			return LocationResService;

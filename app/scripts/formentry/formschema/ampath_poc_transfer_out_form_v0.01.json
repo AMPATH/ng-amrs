@@ -70,6 +70,14 @@
                                         "label": "Patient self-disengaged from care "
                                     },
                                     {
+                                        "concept": "bea9c288-0650-4b42-a324-1d6d51591c72",
+                                        "label": "Patient cannot be traced by outreach worker"
+                                    },
+                                    {
+                                        "concept": "bea9c288-0650-4b42-a324-1d6d51591c72",
+                                        "label": "Patient in process of being traced by outreach worker"
+                                    },
+                                    {
                                         "concept": "a89c2e5c-1350-11df-a1f1-0026b9348838",
                                         "label": "Transfer to other center"
                                     }
@@ -77,6 +85,7 @@
                                 "rendering": "multiCheckbox"
                             },
                             "type": "obs",
+                            "required": "true",
                             "validators": []
                         },
                         {
