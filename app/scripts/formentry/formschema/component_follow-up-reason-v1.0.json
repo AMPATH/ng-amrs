@@ -1,0 +1,36 @@
+{
+    "name": "component_follow-up-reason-v1.0",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Follow-up Reason",
+            "sections": [
+                {
+                    "label": "Follow-up Reason",
+                    "questions": [
+                        {
+                            "type": "obsGroup",
+                            "questionOptions": {
+                                "concept": "a8a44998-1350-11df-a1f1-0026b9348838",
+                                "rendering": "repeating"
+                            },
+                            "label": "Problem Added",
+                            "questions": [
+                                {
+                                    "label": "Patient followed up for:",
+                                    "questionOptions": {
+                                        "concept": "a8a18e56-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "problem"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

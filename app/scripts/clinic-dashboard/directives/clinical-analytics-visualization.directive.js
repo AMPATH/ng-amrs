@@ -242,6 +242,7 @@
               $scope.resultIsEmpty = true;
             } else {
               //generate chart
+              chart.result=result.result;
               ClinicalAnalyticsService.generateChartObject(result.result, chart.chart,
                 chart.chartDefinition);
               //build tabular view
