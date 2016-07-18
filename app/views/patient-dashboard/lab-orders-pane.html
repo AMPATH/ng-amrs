@@ -1,0 +1,33 @@
+<div>
+  
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Order Date</th>
+        <th>Test Name</th>
+        <th>Ordered By</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="order in labOrders">
+        <td>
+          {{order.dateActivated | date:'dd/MM/yyyy'}}
+        </td>
+        <td>
+          {{order.display}}
+        </td>
+        <td>
+          {{order.orderer.display}}
+        </td>
+        <td>
+          <button ng-click="postOrderToEid(order)" class="btn default">
+            <span class="fa fa-save" aria-hidden="true"></span> Post Order To EID
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
