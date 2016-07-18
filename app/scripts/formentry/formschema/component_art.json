@@ -172,20 +172,8 @@
                                         "label": "ZDV 300mg/3TC 150mg/NVP 200mg >25kgs"
                                     },
                                     {
-                                        "concept": "f7cf0dd2-932f-11df-8193-000d6014b64c",
-                                        "label": "d4T 12mg/3TC 60mg/NVP 100mg (T-jr)"
-                                    },
-                                    {
-                                        "concept": "aad5f784-1350-11df-a1f1-0026b9348838",
-                                        "label": "d4T 30mg/3TC 150mg/NVP 200mg >25kgs"
-                                    },
-                                    {
                                         "concept": "fd4cd670-3115-11e0-8090-0026b9348838",
                                         "label": "3TC 150mg/ZDV 300mg >25kgs"
-                                    },
-                                    {
-                                        "concept": "5b23c99a-87d1-11e0-85d3-000d6014b64c",
-                                        "label": "3TC 150mg/D4T 30mg >25kgs"
                                     },
                                     {
                                         "concept": "b9da84e8-3127-11e0-8090-0026b9348838",
@@ -193,7 +181,7 @@
                                     },
                                     {
                                         "concept": "e0037172-87ce-11e0-85d3-000d6014b64c",
-                                        "label": "TDF 300mg/3TC 300mg/EFV 600mg >25kgs"
+                                        "label": "TDF 300mg/3TC 300mg/EFV 600mg >35kgs"
                                     },
                                     {
                                         "concept": "f8b6299e-6bbf-446a-b3f1-a88f5d6b9da2",
@@ -254,7 +242,7 @@
                             "questionOptions": {
                                 "concept": "a8a318e8-1350-11df-a1f1-0026b9348838",
                                 "answers": [
-                                     {
+                                    {
                                         "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
                                         "label": "NVP200/ZDV300/3TC150"
                                     },
@@ -454,20 +442,8 @@
                                         "label": "ZDV 300mg/3TC 150mg/NVP 200mg >25kgs"
                                     },
                                     {
-                                        "concept": "f7cf0dd2-932f-11df-8193-000d6014b64c",
-                                        "label": "d4T 12mg/3TC 60mg/NVP 100mg (T-jr)"
-                                    },
-                                    {
-                                        "concept": "aad5f784-1350-11df-a1f1-0026b9348838",
-                                        "label": "d4T 30mg/3TC 150mg/NVP 200mg >25kgs"
-                                    },
-                                    {
                                         "concept": "fd4cd670-3115-11e0-8090-0026b9348838",
                                         "label": "3TC 150mg/ZDV 300mg >25kgs"
-                                    },
-                                    {
-                                        "concept": "5b23c99a-87d1-11e0-85d3-000d6014b64c",
-                                        "label": "3TC 150mg/D4T 30mg >25kgs"
                                     },
                                     {
                                         "concept": "b9da84e8-3127-11e0-8090-0026b9348838",
@@ -475,7 +451,7 @@
                                     },
                                     {
                                         "concept": "e0037172-87ce-11e0-85d3-000d6014b64c",
-                                        "label": "TDF 300mg/3TC 300mg/EFV 600mg >25kgs"
+                                        "label": "TDF 300mg/3TC 300mg/EFV 600mg >35kgs"
                                     },
                                     {
                                         "concept": "f8b6299e-6bbf-446a-b3f1-a88f5d6b9da2",
@@ -541,7 +517,7 @@
                             "questionOptions": {
                                 "concept": "a899cf5e-1350-11df-a1f1-0026b9348838",
                                 "answers": [
-                                     {
+                                    {
                                         "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
                                         "label": "NVP200/ZDV300/3TC150"
                                     },
@@ -835,6 +811,10 @@
                                     {
                                         "concept": "a8909060-1350-11df-a1f1-0026b9348838",
                                         "label": "Hepatitis"
+                                    },
+                                    {
+                                        "concept": "7fa72118-ef2a-4694-993a-014440024bbc",
+                                        "label": "Test and treat"
                                     }
                                 ],
                                 "rendering": "select"
@@ -1144,20 +1124,8 @@
                                         "label": "ZDV 300mg/3TC 150mg/NVP 200mg >25kgs"
                                     },
                                     {
-                                        "concept": "f7cf0dd2-932f-11df-8193-000d6014b64c",
-                                        "label": "d4T 12mg/3TC 60mg/NVP 100mg (T-jr)"
-                                    },
-                                    {
-                                        "concept": "aad5f784-1350-11df-a1f1-0026b9348838",
-                                        "label": "d4T 30mg/3TC 150mg/NVP 200mg >25kgs"
-                                    },
-                                    {
                                         "concept": "fd4cd670-3115-11e0-8090-0026b9348838",
                                         "label": "3TC 150mg/ZDV 300mg >25kgs"
-                                    },
-                                    {
-                                        "concept": "5b23c99a-87d1-11e0-85d3-000d6014b64c",
-                                        "label": "3TC 150mg/D4T 30mg >25kgs"
                                     },
                                     {
                                         "concept": "b9da84e8-3127-11e0-8090-0026b9348838",
@@ -1165,7 +1133,7 @@
                                     },
                                     {
                                         "concept": "e0037172-87ce-11e0-85d3-000d6014b64c",
-                                        "label": "TDF 300mg/3TC 300mg/EFV 600mg >25kgs"
+                                        "label": "TDF 300mg/3TC 300mg/EFV 600mg >35kgs"
                                     },
                                     {
                                         "concept": "f8b6299e-6bbf-446a-b3f1-a88f5d6b9da2",
