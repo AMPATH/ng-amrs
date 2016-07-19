@@ -41,7 +41,7 @@ jshint -W003, -W026
             scope.hasSummary = true;
             scope.experiencedLoadingError = false;
             scope.isBusy = true;
-            EtlRestService.getHivSummary(patientUuid, undefined, undefined, onFetchHivSummarySuccess, onFetchHivSummaryFailed);
+            EtlRestService.getHivSummary(patientUuid, undefined, undefined, onFetchHivSummarySuccess, onFetchHivSummaryFailed, true);
         }
 
         function onFetchHivSummarySuccess(hivData) {
