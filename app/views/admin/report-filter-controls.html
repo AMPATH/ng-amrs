@@ -39,6 +39,21 @@
                 </div>
             </div>
 
+          <div class="form-group col-md-12" ng-show="canView('singleIndicator')">
+            <label for="single-indicator-control">Indicator</label>
+            <div class="input-group">
+              <div class="input-group-addon">
+                        <span class="text-danger">
+							<img ng-show="indicatorTags.length==0" src="images/ajax-loader.gif" />
+						</span>
+                <span ng-hide="indicatorTags.length==0" class="glyphicon glyphicon-map-marker"></span>
+              </div>
+              <select id="single-indicator-control" ng-disabled="isBusy" kendo-combo-box
+                       k-ng-model="selectedIndicatorTags.indicatorTags"
+                      k-options="indicatorSelectOptions" style="width: 100%"></select>
+            </div>
+          </div>
+
 
             <div class="form-group col-md-6" ng-show="canView('start-date')">
                 <label for="start-date">Start Date</label>
