@@ -85,6 +85,10 @@ jshint -W003, -W026
         {
           name: 'tests_ordered',
           headers:'Tests Ordered'
+        },
+        {
+          name: 'lab_errors',
+          headers:'Lab Errors'
         }
       ] ;
       //DataTable Options
