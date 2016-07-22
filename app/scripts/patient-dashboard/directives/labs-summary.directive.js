@@ -40,6 +40,9 @@ jshint -W003, -W026
         $scope.showSuccessAlert = false;
         $scope.labObs='';
         $scope.isLoadingLabData=false;
+        $scope.serverNotReachable=false;
+        $scope.errorMessage='';
+        $scope.nameOfServer='';
        // $scope.testLength;
        $scope.synchronizeEIDPatientLabResults=synchronizeEIDPatientLabResults();
       $scope.labTestTags =[
@@ -108,7 +111,16 @@ jshint -W003, -W026
           displayLabObs(response);
         },
       function(error){
+        $scope.serverNotReachable=true;
+        $scope.isLoadingLabData=false;
+        $scope.nameOfServer=error.config.url;
         console.error("synchronizeEIDPatientLabResults error is ",error);
+        if(error.status==503){
+          $scope.errorMessage="New lab results service temporarily unavailable,please try again later";
+        }
+        else{
+          $scope.errorMessage='Error processing request for new lab results';
+        }
       });
       }
       function loadMoreLabs(loadNextOffset) {

@@ -9,8 +9,10 @@
     </div>
     <div>
         <div ng-show='isLoadingLabData'>
-          <img ng-show="isLoadingLabData" src="images/ajax-loader.gif" autofocus />
           <b>Contacting lab for new results...</b>
+        </div>
+        <div ng-if='serverNotReachable' style="text-align: center;">
+          <span style="color:red;">{{errorMessage}}</span>
         </div>
         <div class="panel panel-success" style="margin: 0px;" ng-show="showSuccessAlert">
           <table class="table table-striped table-condensed table-hover">
