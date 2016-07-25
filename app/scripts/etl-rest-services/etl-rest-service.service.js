@@ -83,7 +83,7 @@
       });
     }
 
-    function getHivSummary(patientUuid, startIndex, limit, successCallback, failedCallback) {
+    function getHivSummary(patientUuid, startIndex, limit, successCallback, failedCallback, includeNonClinicalEncounter) {
       var resource = getResource('patient/:uuid/hiv-summary');
       if (!startIndex) {
         startIndex = 0;
@@ -99,7 +99,7 @@
         limit: limit,
 
       };
-
+      if(includeNonClinicalEncounter) params.includeNonClinicalEncounter=includeNonClinicalEncounter;
       if (typeof successCallback === 'function') {
         return resource.get(params).$promise.then(function(response) {
           successCallback(response);
