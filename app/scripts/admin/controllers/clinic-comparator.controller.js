@@ -137,15 +137,7 @@
 
     function getSelectedIndicators(selectedIndicatorObject) {
       var indicators;
-      if (selectedIndicatorObject.indicatorTags)
-        for (var i = 0; i < selectedIndicatorObject.indicatorTags.length; i++) {
-          if (i === 0) {
-            indicators = '' + selectedIndicatorObject.indicatorTags[i].name;
-          } else {
-            indicators =
-              indicators + ',' + selectedIndicatorObject.indicatorTags[i].name;
-          }
-        }
+      indicators = '' + selectedIndicatorObject.indicatorTags.name;
       return indicators;
     }
 
