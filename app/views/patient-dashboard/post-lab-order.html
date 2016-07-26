@@ -1,0 +1,78 @@
+<h4 style="margin-top: 0px; margin-bottom:2px;"><span class="text-primary">{{orderType.display}}</span></h4>
+
+<hr style="margin-top: 1px; margin-bottom: 2px;" />
+<h5 style="margin-top: 2px; margin-bottom:2px; font-weight:bold;"><span>Patient Info</span></h5>
+<hr style="margin-top: 1px; margin-bottom: 2px;" />
+<div style="font-size:14px;">
+    <span>{{'Name: ' + patientName + ' '}}</span></br><span>{{ ' Identifier: ' + patientIdentifier + ' '}}</span> </br>
+    <span>{{'Gender: ' + sex + ' '}}</span></br><span>{{' DOB: ' + (birthDate | date:'dd-MM-yyyy') }}</span>
+</div>
+<br/>
+
+<hr style="margin-top: 1px; margin-bottom: 2px;" />
+<h5 style="margin-top: 2px; margin-bottom:2px; font-weight:bold;"><span>HIV Summary Info</span></h5>
+<hr style="margin-top: 1px; margin-bottom: 2px;" />
+<div style="font-size:14px;">
+    <span>{{'ART Initial Start Date: ' + (artStartDateInitial | date:'dd-MM-yyyy') }}</span></br>
+    <span>{{'ART Current Start Date: ' + (artStartDateCurrent | date:'dd-MM-yyyy')}}</span> </br>
+    <span>{{'Current ART Regimen: ' + currentArtRegimen + ' '}}</span>
+</div>
+</br>
+
+<div ng-hide="isBusy" class="container-fluid">
+
+    <div class="row">
+        <div>
+            <div class="form-group">
+                <label for="eidServer">Lab Location</label>
+                <select class="form-control" id="eidServer" ng-model="selectedLabLocation">
+                    <option ng-repeat="lab in labLocations" value="{{lab.value}}">{{lab.name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-show="orderType.type === 'VL'">
+        <!--ng-if="orderType.type === 'VL'"-->
+        <div>
+            <div class="form-group">
+                <label for="sampleType">Sample Type</label>
+                <select class="form-control" id="sampleType" ng-model="selectedSampleType">
+                    <option ng-repeat="sample in sampleTypes" value="{{sample.id}}" >{{sample.display}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div>
+            <div class="form-group">
+                <label for="dateReceived">Date Received</label>
+                <div class="input-group">
+                    <input type="text" id="dateReceived" class="form-control" is-open="dateReceivedOpened" datepicker-popup="mediumDate" ng-model="dateReceived"
+                        style="">
+                    <span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="dateReceivedOpened = !dateReceivedOpened">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+            			</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div ng-show="isBusy">
+    Processing request...
+</div>
+<div ng-show="hasError">
+    <span class="text-danger"> <i class="glyphicon glyphicon-exclamation-sign"></i> {{errorMessage}}</span>
+</div>
+<hr style="margin-top: 1px; margin-bottom: 5px;" />
+<div>
+    <button ng-disabled="isBusy || hasLoadingError" class="btn btn-primary" ng-click="postOrder()">
+          <span>Post Order<i ng-show="isBusy" style="font-size: 14px;" class="fa fa-spinner fa-spin ng-hide"></i></span>
+          </button>
+    <button class="btn btn-default" style="margin-left:4px;" ng-click="closeDialogWindow()">Cancel</button>
+</div>

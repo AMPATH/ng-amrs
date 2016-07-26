@@ -51,7 +51,7 @@
     }
 
     function isNullOrUndefined(obj) {
-      return angular.isUndefined(obj) || obj === null || 
+      return angular.isUndefined(obj) || obj === null ||
       (typeof obj === 'string' && (obj.length ===0 || !obj.trim()));
     }
 

@@ -1,5 +1,5 @@
 /*jshint -W003, -W098, -W117, -W026 */
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -49,7 +49,8 @@
       getHivOverviewVisualizationReport: getHivOverviewVisualizationReport,
       getClinicalNotes: getClinicalNotes,
       synchronizeEIDPatientLabResults:synchronizeEIDPatientLabResults,
-      getPatientFlowData: getPatientFlowData
+      getPatientFlowData: getPatientFlowData,
+      postOrderToEid: postOrderToEid
     };
     return serviceDefinition;
 
@@ -61,11 +62,11 @@
       return $resource(EtlRestServicesSettings.getCurrentRestUrlBase().trim() + path, {
         uuid: '@uuid'
       }, {
-        get: {
-          method: 'GET',
-          cache: caching
-        }
-      });
+          get: {
+            method: 'GET',
+            cache: caching
+          }
+        });
     }
 
     function getClinicalNotesResource(path, cacheProperty) {
@@ -76,11 +77,11 @@
       return $resource(EtlRestServicesSettings.getCurrentRestUrlBase().trim() + path, {
         uuid: '@uuid'
       }, {
-        get: {
-          method: 'GET',
-          cache: caching
-        }
-      });
+          get: {
+            method: 'GET',
+            cache: caching
+          }
+        });
     }
 
     function getHivSummary(patientUuid, startIndex, limit, successCallback, failedCallback, includeNonClinicalEncounter) {
@@ -101,18 +102,18 @@
       };
       if(includeNonClinicalEncounter) params.includeNonClinicalEncounter=includeNonClinicalEncounter;
       if (typeof successCallback === 'function') {
-        return resource.get(params).$promise.then(function(response) {
+        return resource.get(params).$promise.then(function (response) {
           successCallback(response);
-        }, function(error) {
+        }, function (error) {
           if (typeof failedCallback === 'function') {
             failedCallback('Error processing request', error);
           }
           console.error(error);
         });
       } else {
-        return resource.get(params).$promise.then(function(response) {
+        return resource.get(params).$promise.then(function (response) {
           return response;
-        }, function(response) {
+        }, function (response) {
           // Something went crazy
           return $q.reject(response);
         });
@@ -155,18 +156,18 @@
       };
 
       if (typeof successCallback === 'function') {
-        return resource.get(params).$promise.then(function(response) {
+        return resource.get(params).$promise.then(function (response) {
           successCallback(response);
-        }, function(error) {
+        }, function (error) {
           if (typeof failedCallback === 'function') {
             failedCallback('Error processing request', error);
           }
           console.error(error);
         });
       } else {
-        return resource.get(params).$promise.then(function(response) {
+        return resource.get(params).$promise.then(function (response) {
           return response;
-        }, function(response) {
+        }, function (response) {
           // Something went crazy
           return $q.reject(response);
         });
@@ -188,10 +189,10 @@
         limit: limit
       };
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -216,10 +217,10 @@
       }
 
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -245,10 +246,10 @@
         params.limit = limit;
       }
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -279,10 +280,10 @@
       console.log(startIndex);
 
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -310,10 +311,10 @@
       console.log(startIndex);
 
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           //console.error(error);
         });
@@ -340,10 +341,10 @@
       console.log(startIndex);
 
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -373,10 +374,10 @@
       console.log(startIndex);
 
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -384,7 +385,7 @@
     }
 
     function getPatientListByIndicator(locationUuid, startDate, endDate, indicator, successCallback, failedCallback, startIndex, limit,
-    startAge,endAge,gender) {
+      startAge, endAge, gender) {
       var resource = getResource('location/:uuid/patient-by-indicator');
 
       var params = {
@@ -392,9 +393,9 @@
         indicator: indicator,
         startDate: startDate,
         uuid: locationUuid,
-        startAge:startAge,
-        endAge:endAge,
-        gender:(gender||['M','F']).toString()
+        startAge: startAge,
+        endAge: endAge,
+        gender: (gender || ['M', 'F']).toString()
       };
 
       if (startIndex !== undefined) {
@@ -407,10 +408,10 @@
 
 
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -418,7 +419,7 @@
     }
 
     function getPatientByIndicatorAndLocation(locationIds, startDate, endDate, indicator, successCallback,
-      failedCallback, locationUuids, startIndex, limit,  startAge,endAge,gender) {
+      failedCallback, locationUuids, startIndex, limit, startAge, endAge, gender) {
       var resource = getResource('patient-by-indicator');
       var params = {
         endDate: endDate,
@@ -426,9 +427,9 @@
         startDate: startDate,
         locationIds: locationIds,
         locationUuids: locationUuids,
-        startAge:startAge,
-        endAge:endAge,
-        gender:(gender||['M','F']).toString()
+        startAge: startAge,
+        endAge: endAge,
+        gender: (gender || ['M', 'F']).toString()
       };
       if (startIndex !== undefined) {
         params.startIndex = startIndex;
@@ -439,10 +440,10 @@
       }
 
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
         });
     }
@@ -467,10 +468,10 @@
       }
 
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
         });
 
@@ -486,10 +487,10 @@
         locationUuids: locationUuids
       };
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -497,7 +498,7 @@
 
 
     function getHivSummaryIndicators(startDate, endDate, report, countBy, successCallback, failedCallback,
-      groupBy, locationUuids, orderBy, indicators, startIndex, limit, startAge,endAge,gender ) {
+      groupBy, locationUuids, orderBy, indicators, startIndex, limit, startAge, endAge, gender) {
       var resource = getResource('get-report-by-report-name');
 
       var params = {
@@ -509,9 +510,9 @@
         locationUuids: locationUuids,
         indicators: indicators,
         order: orderBy,
-        startAge:startAge,
-        endAge:endAge,
-        gender:(gender||['M','F']).toString()
+        startAge: startAge,
+        endAge: endAge,
+        gender: (gender || ['M', 'F']).toString()
 
       };
 
@@ -528,10 +529,10 @@
       console.log(startIndex);
 
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -554,10 +555,10 @@
       }
       console.log(params);
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -579,10 +580,10 @@
       }
       console.log(params);
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -600,10 +601,10 @@
         formUuids, providerUuid, creatorUuid, groupBy);
 
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -615,15 +616,15 @@
         id: 'view1',
         subType: 'by-date-by-encounter-type'
       }, {
-        id: 'view2',
-        subType: 'by-month-by-encounter-type'
-      }, {
-        id: 'view3',
-        subType: 'by-provider-by-encounter-type'
-      }, {
-        id: 'view4',
-        subType: 'by-creator-by-encounter-type'
-      }];
+          id: 'view2',
+          subType: 'by-month-by-encounter-type'
+        }, {
+          id: 'view3',
+          subType: 'by-provider-by-encounter-type'
+        }, {
+          id: 'view4',
+          subType: 'by-creator-by-encounter-type'
+        }];
     }
 
     function getDataEntryStatisticsQueryParam(subType, startDate, endDate, locationUuids, encounterTypeUuids, formUuids, providerUuid, creatorUuid, groupBy) {
@@ -636,7 +637,7 @@
 
       var paramConfig = {};
 
-      var getParamConfigObj = function(arrayProperties) {
+      var getParamConfigObj = function (arrayProperties) {
         var obj = {};
         for (var i = 0; i < arrayProperties.length; i++) {
           obj[arrayProperties[i]] = 'prop';
@@ -702,10 +703,10 @@
       console.log(startIndex);
 
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -732,10 +733,10 @@
       console.log(startIndex);
 
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -766,10 +767,10 @@
       console.log(params);
       console.log(startIndex);
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -800,10 +801,10 @@
       console.log(startIndex);
 
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -811,8 +812,8 @@
     }
 
     function getHivOverviewVisualizationReport(startDate, endDate, report, groupBy, locationUuids, orderBy,
-                                               indicators,  successCallback, failedCallback, startIndex, limit,
-                                                startAge,endAge,gender ) {
+      indicators, successCallback, failedCallback, startIndex, limit,
+      startAge, endAge, gender) {
       var resource = getResource('get-report-by-report-name');
 
       var params = {
@@ -823,9 +824,9 @@
         locationUuids: locationUuids,
         indicators: indicators,
         order: orderBy,
-        startAge:startAge,
-        endAge:endAge,
-        gender:(gender||['M','F']).toString()
+        startAge: startAge,
+        endAge: endAge,
+        gender: (gender || ['M', 'F']).toString()
       };
 
 
@@ -841,10 +842,10 @@
       console.log(startIndex);
 
       return resource.get(params).$promise
-        .then(function(response) {
+        .then(function (response) {
           successCallback(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           failedCallback('Error processing request', error);
           console.error(error);
         });
@@ -874,22 +875,40 @@
       };
 
       if (typeof successCallback === 'function') {
-        return resource.get(params).$promise.then(function(response) {
+        return resource.get(params).$promise.then(function (response) {
           successCallback(response);
-        }, function(error) {
+        }, function (error) {
           if (typeof failedCallback === 'function') {
             failedCallback('Error processing request', error);
           }
           console.error(error);
         });
       } else {
-        return resource.get(params).$promise.then(function(response) {
+        return resource.get(params).$promise.then(function (response) {
           return response;
-        }, function(response) {
+        }, function (response) {
           // Something went crazy
           return $q.reject(response);
         });
       }
+    }
+
+    function postOrderToEid(labLocation, eidOrder, successCallback, errorCallback) {
+      var resource = getResource('eid/order/:labLocation');
+
+      var payload = JSON.stringify(eidOrder);
+
+      return resource.save({ labLocation: labLocation }, payload).$promise
+        .then(function (data) {
+          console.log('Order posted successfully to EID: ', data);
+          if (typeof successCallback === 'function')
+            successCallback(data);
+        })
+        .catch(function (error) {
+          console.log('Error posting order to EID: ', error);
+          if (typeof errorCallback === 'function')
+            errorCallback(error);
+        });
     }
 
   }

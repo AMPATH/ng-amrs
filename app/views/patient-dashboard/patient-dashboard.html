@@ -156,9 +156,22 @@
 					</accordion>
 				</div>
 			</div>
-			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="printLabelsTab">
+			<div class="tab-pane fade in panel panel-default  "id="printLabelsTab">
 				<div class="page-content">
-					<print-labels patient-uuid="{{patient.uuid()}}"></print-labels>
+          <div kendo-tab-strip k-content-urls="[ null, null]" >
+            <!-- tab list -->
+            <ul>
+              <li class="k-state-active">Print Specimen Label</li>
+              <li>Lab Test Orders</li>
+            </ul>
+
+            <div style="height:500px">
+					    <print-labels  patient-uuid="{{patient.uuid()}}"></print-labels>
+            </div>
+            <div style="height:500px">
+              <lab-orders patient-uuid="{{patient.uuid()}}"  current-patient="patient" hiv-summary="hivSummary"></lab-orders>
+            </div>
+          </div>
 				</div>
 			</div>
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab9">
@@ -169,3 +182,9 @@
 		</div>
 	</div>
 </div>
+<style>
+  .k-widget *{
+    -webkit-box-sizing: border-box !important;
+    box-sizing:  border-box !important;
+  }
+</style>
