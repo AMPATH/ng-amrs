@@ -26,7 +26,8 @@ jshint -W098, -W117, -W030
         var mockFormMetadata = {
             encounterTypeName: 'adultEncounter',
             name: 'test-form',
-            encounterTypeUuid: 'encounterTypeUuid'
+            encounterTypeUuid: 'encounterTypeUuid',
+            resources: [],
         };
 
 
@@ -609,7 +610,8 @@ jshint -W098, -W117, -W030
         var mockFormMetadata = {
             encounterTypeName: 'adultEncounter',
             name: 'test-form',
-            encounterTypeUuid: 'encounterTypeUuid'
+            encounterTypeUuid: 'encounterTypeUuid',
+            resources:[]
         };
 
         var mockEncounterFromEncountersTab = {
