@@ -23,6 +23,7 @@
       'ui.bootstrap',
       'app.authentication',
       'app.patientsearch',
+      'app.labordersearch',
       'app.patientdashboard',
       'app.clinicDashboard',
       'app.admin',
@@ -56,6 +57,14 @@
           url: '/patientsearch',
           templateUrl: 'views/patient-search/patient-search.html',
           controller: 'PatientSearchCtrl',
+          data: {
+            requireLogin: true
+          },
+        })
+        .state('labordersearch', {
+          url: '/labordersearch',
+          templateUrl: 'views/lab-order-search/lab-order-search.html',
+          controller: 'LabOrderSearchCtrl',
           data: {
             requireLogin: true
           },

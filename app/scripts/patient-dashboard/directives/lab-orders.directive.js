@@ -12,7 +12,7 @@
   function labOrders() {
     return {
       restict: 'E',
-      scope: { 
+      scope: {
         patientUuid: '@',
         currentPatient: '=',
         hivSummary: '='
@@ -46,7 +46,7 @@
         function (error) {
           $scope.isBusy = false;
           $scope.labOrders = [];
-        }
+        }, true
       );
     }
 
