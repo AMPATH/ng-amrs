@@ -17,7 +17,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         , 'FormentryUtilService', 'configService', 'SearchDataService',
         '$log', 'FormEntry', 'PersonAttributesRestService',
         'CurrentLoadedFormService', 'UtilService', 'moment', 'EncounterDataService',
-        'HistoricalDataService'
+        'HistoricalDataService', 'FormResService', '$q'
     ];
 
     function FormentryCtrl($translate, dialogs, $location,
@@ -26,7 +26,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         $loading, $anchorScroll, UserDefaultPropertiesService, FormentryUtilService,
         configService, SearchDataService,
         $log, FormEntry, PersonAttributesRestService,
-        CurrentLoadedFormService, UtilService, moment, EncounterDataService, HistoricalDataService) {
+        CurrentLoadedFormService, UtilService, moment, EncounterDataService,
+        HistoricalDataService, FormResService, $q) {
         var vm = $scope;
 
         //Patient variables
@@ -378,8 +379,17 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function loadFormSchemaForSelectedForm(createFormAfterLoading) {
             isSpinnerBusy(true);
             $log.log('Loading form schema for ' + selectedFormMetadata.name);
-            FormsMetaData.getFormSchema(selectedFormMetadata.name,
-                function (schema) {
+            
+            // Get the resource associated with json schema
+            var resource = _findResource(selectedFormMetadata.resources);
+            if(resource === null) {
+              // TODO: Throw error when we completely move to using database
+              // throw new Error('Form ' + selectedFormMetadata.name + ' has no '
+              //        + 'JSON schema associated with it!');
+              
+              // For now try the filesystem
+              FormsMetaData.getFormSchema(selectedFormMetadata.name,
+                function(schema) {
                     isSpinnerBusy(false);
                     selectedFormSchema = schema;
                     $log.info('Form schema loadded..', selectedFormSchema);
@@ -388,28 +398,111 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     } else if (!_.isEmpty(selectedFormSchema.referencedForms)) {
                         getFormSchemaReferences(createFormAfterLoading);
                     }
+                }, function(err) {
+                  isSpinnerBusy(false);
+                  $log.error('An error occured while fetching schema for form '
+                              + selectedFormMetadata.name);
+                  $log.error(err);
                 });
+            } else {
+              // Fetch from OpenMRS backend.
+              FormResService.getFormSchemaByUuid(resource.valueReference).then(
+                function (schema) {
+                    isSpinnerBusy(false);
+                    selectedFormSchema = schema;
+                    $log.info('Form schema loaded: ', selectedFormSchema);
+                    if (createFormAfterLoading && _.isEmpty(selectedFormSchema.referencedForms)) {
+                        createFormFromSchema();
+                    } else if (!_.isEmpty(selectedFormSchema.referencedForms)) {
+                        getFormSchemaReferences(createFormAfterLoading);
+                    }
+                })
+                .catch(function(err) {
+                  isSpinnerBusy(false);
+                  $log.error('An error occured while fetching schema for form '
+                              + selectedFormMetadata.name);
+                  $log.error(err);
+                });
+            }  
         }
 
         function getFormSchemaReferences(createFormAfterLoading) {
-
             var referencedFormNames = [];
+            var refs = [];
             _.each(selectedFormSchema.referencedForms, function (reference) {
-                referencedFormNames.push(reference.formName);
+                if(reference.ref) {
+                  refs.push(reference.ref);
+                } else {
+                  referencedFormNames.push(reference.formName);
+                }
             });
             isSpinnerBusy(true);
-            FormsMetaData.getFormSchemasArray(referencedFormNames, function (formSchemas) {
+            // Get from server.
+            if(!_.isEmpty(refs)) {
+              var promises = [];
+              _.each(refs, function(ref) {
+                promises.push(FormResService.getFormByUuid(ref.uuid));
+              });
+              $q.allSettled(promises).then(function(resolvedForms) {
+                  // Get the schema for all components
+                  var schemaMetadataArray = [];
+                  _.each(resolvedForms, function(form) {
+                    $log.debug('Fetching schema details for:',form);
+                    var ampathSchema = _findResource(form.value.resources);
+                    if(ampathSchema === null) {
+                      throw new ReferenceError(
+                        'Form ' + form.name +'has no ampath json schema associated with it'
+                      );
+                    }
+                    ampathSchema.formUuid = form.value.uuid;
+                    schemaMetadataArray.push(ampathSchema);
+                  });
+                  
+                  // Now pull schemas
+                  var schemaPromises = {};
+                  _.each(schemaMetadataArray, function(schemaData) {
+                    schemaPromises[schemaData.formUuid] = 
+                      FormResService.getFormSchemaByUuid(schemaData.valueReference);
+                  });
+                  
+                  // resolve
+                  $q.allSettled(schemaPromises).then(function(resolved) {
+                    isSpinnerBusy(false);
+                    $log.debug('Number of json schema fetched: ', resolved);
+                    var schemas = {};
+                    _.each(schemaMetadataArray, function(schemaData) {
+                      schemas[schemaData.formUuid] = resolved[schemaData.formUuid].value;
+                    });
+                    FormEntry.compileFormSchema(selectedFormSchema, schemas);
+                    if (createFormAfterLoading) {
+                        createFormFromSchema();
+                    }
+                  })
+                  .catch(function(err) {
+                    isSpinnerBusy(false);
+                    console.error('Could not load component schemas', err);
+                    vm.errorMessage = 'Could not load component schemas';
+                  });
+              })
+              .catch(function(err) {
                 isSpinnerBusy(false);
-                FormEntry.compileFormSchema(selectedFormSchema, formSchemas);
-                if (createFormAfterLoading) {
-                    createFormFromSchema();
-                }
-            }, function (error) {
-                isSpinnerBusy(false);
-                console.error('Could not load referenced forms', error);
+                console.error('Could not load referenced forms', err);
                 vm.errorMessage = 'Could not load referenced forms';
-            });
-
+              });
+            } else {
+              // Go the filesystem way
+              FormsMetaData.getFormSchemasArray(referencedFormNames, function (formSchemas) {
+                  isSpinnerBusy(false);
+                  FormEntry.compileFormSchema(selectedFormSchema, formSchemas);
+                  if (createFormAfterLoading) {
+                      createFormFromSchema();
+                  }
+              }, function (error) {
+                  isSpinnerBusy(false);
+                  console.error('Could not load referenced forms', error);
+                  vm.errorMessage = 'Could not load referenced forms';
+              });
+           }  
         }
 
         function determineFormToLoad() {
@@ -1001,5 +1094,22 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         //Endregion: PatientSummary
+        
+        /**
+         * Find a resource of a particular type in an array of resources.
+         */
+        function _findResource(formResources, resourceType) {
+          var resourceType = resourceType || 'AmpathJsonSchema';
+          if(_.isUndefined(formResources) || !Array.isArray(formResources)) {
+            throw new Error('Argument should be array of form resources');
+          }
+          
+          var found = _.find(formResources, function(resource) {
+            return resource.dataType === resourceType;
+          });
+          
+          if(found === undefined) return null;
+          return found;
+        }
     }
 })();

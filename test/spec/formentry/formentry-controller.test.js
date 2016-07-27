@@ -26,7 +26,8 @@ jshint -W098, -W117, -W030
         var mockFormMetadata = {
             encounterTypeName: 'adultEncounter',
             name: 'test-form',
-            encounterTypeUuid: 'encounterTypeUuid'
+            encounterTypeUuid: 'encounterTypeUuid',
+            resources: [],
         };
 
 
@@ -487,6 +488,7 @@ jshint -W098, -W117, -W030
 
                 //prevent test from failing
                 rootScope.previousStateParams = {};
+               httpBackend.expectGET('views/main/url-selector.html').respond('');
 
                 var called = false;
                 var personAttributesServiceStub = sinon.stub(PersonAttributesRestService,
@@ -514,6 +516,7 @@ jshint -W098, -W117, -W030
                 var encounterServiceStub = getEncounterServiceSaveEncounterStub(false);
                 //prevent test from failing
                 rootScope.previousStateParams = {};
+              httpBackend.expectGET('views/main/url-selector.html').respond('');
 
                 //mock personAttributesService saveUpdatePersonAttribute to return success
                 var personAttributesServiceStub = sinon.stub(PersonAttributesRestService,
@@ -562,7 +565,8 @@ jshint -W098, -W117, -W030
                 var encounterServiceStub = getEncounterServiceSaveEncounterStub(false);
                 //prevent test from failing
                 rootScope.previousStateParams = {};
-                
+              httpBackend.expectGET('views/main/url-selector.html').respond('');
+
                 //mock personAttributesService saveUpdatePersonAttribute to return success
                 var personAttributesServiceStub = sinon.stub(PersonAttributesRestService,
                 'saveUpdatePersonAttribute', function(payload, person, callback) {
@@ -606,7 +610,8 @@ jshint -W098, -W117, -W030
         var mockFormMetadata = {
             encounterTypeName: 'adultEncounter',
             name: 'test-form',
-            encounterTypeUuid: 'encounterTypeUuid'
+            encounterTypeUuid: 'encounterTypeUuid',
+            resources:[]
         };
 
         var mockEncounterFromEncountersTab = {
