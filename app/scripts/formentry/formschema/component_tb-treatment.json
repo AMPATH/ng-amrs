@@ -14,7 +14,7 @@
                             "id": "onTbTreatment",
                             "required": "true",
                             "label": "Is patient on TB treatment?",
-                             "historicalExpression":"HD.getObject('prevEnc').getValue('a8afcc82-1350-11df-a1f1-0026b9348838')",
+                            "historicalExpression": "HD.getObject('prevEnc').getValue('a8afcc82-1350-11df-a1f1-0026b9348838')",
                             "questionOptions": {
                                 "concept": "a8afcc82-1350-11df-a1f1-0026b9348838",
                                 "answers": [
@@ -42,7 +42,7 @@
                                 {
                                     "label": "Start date of TB treatment:",
                                     "id": "startDateOfTbTreatment",
-                                    "historicalExpression":"HD.getObject('prevEnc').getValue('a8afdb8c-1350-11df-a1f1-0026b9348838.a899e5f2-1350-11df-a1f1-0026b9348838')",
+                                    "historicalExpression": "HD.getObject('prevEnc').getValue('a8afdb8c-1350-11df-a1f1-0026b9348838.a899e5f2-1350-11df-a1f1-0026b9348838')",
                                     "questionOptions": {
                                         "concept": "a899e5f2-1350-11df-a1f1-0026b9348838",
                                         "rendering": "date"
@@ -460,7 +460,7 @@
                         },
                         {
                             "label": "TB Status:",
-                            "id":"tbstatus",
+                            "id": "tbstatus",
                             "required": "true",
                             "questionOptions": {
                                 "concept": "02ad9357-b996-4530-b1a4-aff91a105383",
@@ -512,7 +512,7 @@
                                     },
                                     {
                                         "concept": "a8a0d0ce-1350-11df-a1f1-0026b9348838",
-                                       "label": "Household contact"
+                                        "label": "Household contact"
                                     },
                                     {
                                         "concept": "a8985fc0-1350-11df-a1f1-0026b9348838",
@@ -607,7 +607,7 @@
                                 {
                                     "label": "TB Treatment plan:",
                                     "id": "tbTreatmentPlan",
-                                    "required":"true",
+                                    "required": "true",
                                     "questionOptions": {
                                         "concept": "a89c1fd4-1350-11df-a1f1-0026b9348838",
                                         "answers": [
@@ -800,6 +800,7 @@
                                 },
                                 {
                                     "label": "If re/starting, reason:",
+                                    "id": "tbRestart",
                                     "type": "obs",
                                     "questionOptions": {
                                         "concept": "749d07cb-4994-4ce9-a39c-8a655a487fdd",
@@ -878,6 +879,7 @@
                                 },
                                 {
                                     "label": "Other Specify:",
+                                    "id":"medspickOther",
                                     "questionOptions": {
                                         "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                                         "rendering": "text"

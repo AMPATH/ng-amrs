@@ -44,6 +44,7 @@
                         {
                             "label": "Visit Date",
                             "type": "encounterDatetime",
+                            "id":"encDate",
                             "required": "true",
                             "default": "",
                             "questionOptions": {
@@ -84,6 +85,7 @@
                     "questions": [
                         {
                             "label": "Patient type:",
+                            "required": "true",
                             "id": "pattype",
                             "questionOptions": {
                                 "rendering": "select",
@@ -335,28 +337,47 @@
                     "reference": {
                         "form": "art",
                         "page": "ART ",
-                        "section": "ART History"
+                        "section": "ART History",
+                        "excludeQuestions": [
+                            "reasonUse",
+                            "artAdherence",
+                            "startDate"
+                        ]
                     }
                 },
                 {
                     "reference": {
                         "form": "pcp",
                         "page": "PCP Prophylaxis",
-                        "section": "PCP Prophylaxis Current"
+                        "section": "PCP Prophylaxis Current",
+                        "excludeQuestions": [
+                            "pcpProphylaxisAdherence"
+                        ]
                     }
                 },
                 {
                     "reference": {
                         "form": "tbp",
                         "page": "TB Prophylaxis",
-                        "section": "TB Prophylaxis Current"
+                        "section": "TB Prophylaxis Current",
+                        "excludeQuestions": [
+                            "q16c",
+                            "pcpOtherAdherence",
+                            "pcpAdherence"
+                        ]
                     }
                 },
                 {
                     "reference": {
                         "form": "tbt",
                         "page": "TB Treatment",
-                        "section": "Tuberculosis History"
+                        "section": "Tuberculosis History",
+                        "excludeQuestions": [
+                            "tbPhase",
+                            "tbComplDate",
+                            "tbDefaultDate",
+                            "tb_adherence"
+                        ]
                     }
                 },
                 {
@@ -382,28 +403,55 @@
                     "reference": {
                         "form": "art",
                         "page": "ART ",
-                        "section": "ART Plan"
+                        "section": "ART Plan",
+                        "excludeQuestions": [
+                            "arvStartReason",
+                            "arvToxicityCause",
+                            "q24cToxOther",
+                            "artEligibleNotStarted",
+                            "q24dOther",
+                            "planCate"
+                        ]
                     }
                 },
                 {
                     "reference": {
                         "form": "pcp",
                         "page": "PCP Prophylaxis",
-                        "section": "PCP Prophylaxis Plan"
+                        "section": "PCP Prophylaxis Plan",
+                        "excludeQuestions": [
+                            "pcpProphylaxisChangeReason",
+                            "pcpToxicityCause",
+                            "q25OtherToxicity",
+                            "pcpPlanMedication"
+                        ]
                     }
                 },
                 {
                     "reference": {
                         "form": "tbp",
                         "page": "TB Prophylaxis",
-                        "section": "TB Prophylaxis Plan"
+                        "section": "TB Prophylaxis Plan",
+                        "excludeQuestions": [
+                            "tbpropreasonstop",
+                            "toxCause",
+                            "toxcauseOther"
+                        ]
                     }
                 },
                 {
                     "reference": {
                         "form": "tbt",
                         "page": "TB Treatment",
-                        "section": "TB Treatment Plan"
+                        "section": "TB Treatment Plan",
+                        "excludeQuestions": [
+                            "tbMedPickupSite",
+                            "tbRestart",
+                            "tbPlanChangeReason",
+                            "tbToxicityCause",
+                            "26bToxicityOther",
+                            "medspickOther"
+                        ]
                     }
                 },
                 {
@@ -461,12 +509,17 @@
                                     16
                                 ]
                             },
-                            "validators": [
-                                {
-                                    "type": "date",
-                                    "allowFutureDates": "true"
-                                }
-                            ]
+                           "validators": [
+                               {
+                                   "type": "date",
+                                   "allowFutureDates": "true"
+                               },
+                               {
+                                   "type": "js_expression",
+                                   "failsWhenExpression": "(new moment(encDate)).isAfter((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                   "message": "Return to clinic date should be greater than the encounter date."
+                               }
+                           ]
                         }
                     ]
                 }

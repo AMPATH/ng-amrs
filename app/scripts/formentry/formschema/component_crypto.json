@@ -12,6 +12,7 @@
                     "questions": [
                         {
                             "label": "Cryptococcus Tx:",
+                            "id":"cryptCurrent",
                             "questionOptions": {
                                 "concept": "a899e516-1350-11df-a1f1-0026b9348838",
                                 "answers": [
@@ -47,7 +48,7 @@
                                     },
                                     {
                                         "concept": "a89b7c50-1350-11df-a1f1-0026b9348838",
-                                        "label": "Change Regimen"
+                                        "label": "Change regimen"
                                     },
                                     {
                                         "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -63,7 +64,14 @@
                                     }
                                 ],
                                 "rendering": "select"
-                            }
+                            },
+                            "validators": [
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "!isEmpty(cryptCurrent) && !isEmpty(myValue) && !arrayContains(['a899e0ac-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'],myValue)&&(cryptCurrent==='a899e0ac-1350-11df-a1f1-0026b9348838')",
+                                    "message": "Patient marked as not on Cryptococcus Treatment. Therefore plan can only be none or start."
+                                }
+                            ]
                         }
                     ]
                 }
