@@ -1,0 +1,191 @@
+{
+    "name": "AMPATH POC Adult Nutrition Visit Form V0.01",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "referencedForms": [
+      
+        {
+            "formName": "component_vitals",
+            "alias": "vts"
+        },
+        {
+            "formName": "component_adult-hiv-status",
+            "alias": "hivst"
+        },
+        {
+            "formName": "component_art",
+            "alias": "art"
+        },
+        {
+            "formName": "component_nutrition",
+            "alias": "ntrn"
+        },
+       
+        {
+            "formName": "component_referral",
+            "alias": "rfr"
+        }
+    ],
+    "pages": [
+        {
+            "label": "Encounter Details",
+            "sections": [
+                {
+                    "label": "Encounter Details",
+                    "isExpanded": "true",
+                    "questions": [
+                        {
+                            "label": "Visit Date",
+                            "type": "encounterDatetime",
+                            "required": "true",
+                            "default": "",
+                            "id": "encDate",
+                            "questionOptions": {
+                                "rendering": "date"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "encounterProvider",
+                            "label": "Provider",
+                            "id": "provider",
+                            "required": "true",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        },
+                        {
+                            "type": "encounterLocation",
+                            "label": "Facility name (site/satellite clinic required):",
+                            "id": "location",
+                            "required": "true",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Nutrition Assessment and Diagnosis",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "ntrn",
+                        "page": "Nutrition",
+                        "section": "Nutrition Assessment and Diagnosis"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Vitals",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "vts",
+                        "page": "Vitals",
+                        "section": "Vital Signs"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Adult HIV Status",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "hivst",
+                        "page": "Adult HIV Status",
+                        "section": "HIV Status"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "ART",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "art",
+                        "page": "ART ",
+                        "section": "ART History"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Nutrition",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "ntrn",
+                        "page": "Nutrition",
+                        "section": "Nutrition Intervention"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Nutrition Outcome",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "ntrn",
+                        "page": "Nutrition",
+                        "section": "Nutrition Outcome"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Referral",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "rfr",
+                        "page": "Referrals",
+                        "section": "Referrals"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Next Appointment",
+            "sections": [
+                {
+                    "label": "Next appointment",
+                    "isExpanded": "true",
+                    "questions": [
+                        {
+                            "label": "Return to clinic Date:",
+                            "type": "obs",
+                            "required": "true",
+                            "questionOptions": {
+                                "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
+                                "rendering": "date"
+                            },
+                            "validators": [
+                               {
+                                   "type": "date",
+                                   "allowFutureDates": "true"
+                               },
+                               {
+                                   "type": "js_expression",
+                                   "failsWhenExpression": "(new moment(encDate)).isAfter((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                   "message": "Return to clinic date should be greater than the encounter date."
+                               }
+                           ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

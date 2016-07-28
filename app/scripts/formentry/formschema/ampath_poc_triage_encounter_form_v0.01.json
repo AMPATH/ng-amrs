@@ -10,7 +10,7 @@
                     "label": "Encounter Details",
                     "questions": [
                         {
-                            "label": "Visit Date",
+                            "label": "Visit date",
                             "type": "encounterDatetime",
                             "required": "true",
                             "default": "",
@@ -136,7 +136,7 @@
                     "label": "PWPs",
                     "questions": [
                         {
-                            "label": "Civil Status:",
+                            "label": "Civil status:",
                             "questionOptions": {
                                 "rendering": "select",
                                 "concept": "a899a9f2-1350-11df-a1f1-0026b9348838",
@@ -243,7 +243,7 @@
                                 "concept": "9ce5dbf0-a141-4ad8-8c9d-cd2bf84fe72b",
                                 "answers": [
                                     {
-                                        "concept": "f0a280e8-eb88-41a8-837a-f9949ed1b9cd",
+                                        "concept": "f0a280e8-eb88-41a8-837a-f9949ed1b9cd0",
                                         "label": "Condom promotion/provision"
                                     },
                                     {
@@ -251,7 +251,7 @@
                                         "label": "Couple counseling"
                                     },
                                     {
-                                        "concept": "91f43249-73c7-427c-8300-2038fc0d6be8",
+                                        "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
                                         "label": "Needle exchange"
                                     },
                                     {
@@ -442,7 +442,7 @@
                                                 "label": "Childrens home"
                                             },
                                             {
-                                                "concept": "89c9f54-1350-11df-a1f1-0026b9348838",
+                                                "concept": "a89c9f54-1350-11df-a1f1-0026b9348838",
                                                 "label": "Paternal grandparent"
                                             },
                                             {

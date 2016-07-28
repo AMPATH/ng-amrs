@@ -13,7 +13,7 @@
                     "isExpanded": "true",
                     "questions": [
                         {
-                            "label": "Visit Date",
+                            "label": "Visit date",
                             "type": "encounterDatetime",
                             "required": "true",
                             "default": "",
@@ -50,18 +50,29 @@
                     ]
                 },
                 {
-                    "label": "Pre-Clinic Review:",
+                    "label": "Pre-Clinical Review",
                     "questions": [
                         {
                             "type": "obs",
-                            "label": "Date of Missed Appointment:",
+                            "label": "Date of missed appointment:",
                             "id": "date_missed_appointment",
                             "required": "true",
                             "default": "",
                             "questionOptions": {
                                 "rendering": "date",
                                 "concept": "a89e3896-1350-11df-a1f1-0026b9348838"
-                            }
+                            },
+                            "validators": [
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "true"
+                                },
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "(new moment(encDate)).isBefore((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                    "message": "Missed appointment date should be less than the encounter date."
+                                }
+                            ]
                         },
                         {
                             "label": "Patient category:",
@@ -74,7 +85,7 @@
                                     },
                                     {
                                         "concept": "a89ee9a8-1350-11df-a1f1-0026b9348838",
-                                        "label": "Pead"
+                                        "label": "Pediatric"
                                     }
                                 ],
                                 "concept": "a89eea66-1350-11df-a1f1-0026b9348838",
@@ -106,7 +117,7 @@
                                             },
                                             {
                                                 "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                                                "label": "Other non coded"
+                                                "label": "Other"
                                             }
                                         ],
                                         "rendering": "select",
@@ -114,22 +125,22 @@
                                     }
                                 },
                                 {
-                                    "label": "Outreach followup category:",
+                                    "label": "Outreach follow-up category:",
                                     "id": "outreachFollowupCategory",
                                     "type": "obs",
                                     "questionOptions": {
                                         "answers": [
                                             {
                                                 "concept": "7a1f0cec-d378-4099-9cef-66ff675a5004",
-                                                "label": "High Risk"
+                                                "label": "High risk"
                                             },
                                             {
                                                 "concept": "83b589e1-ea64-4ed5-8c73-de78f674dda2",
-                                                "label": "Medium Risk"
+                                                "label": "Medium risk"
                                             },
                                             {
                                                 "concept": "06eb5a64-5b0d-47f9-929f-30e6c51f365e",
-                                                "label": "Low Risk"
+                                                "label": "Low risk"
                                             }
                                         ],
                                         "rendering": "select",
@@ -137,7 +148,7 @@
                                     }
                                 },
                                 {
-                                    "label": "Other non-coded",
+                                    "label": "Other, specify:",
                                     "id": "otherFollowupContact",
                                     "type": "obs",
                                     "questionOptions": {
@@ -150,7 +161,7 @@
                     ]
                 },
                 {
-                    "label": "Phone Follow-up:",
+                    "label": "Phone Follow-up",
                     "questions": [
                         {
                             "type": "obs",
@@ -177,7 +188,7 @@
                                     },
                                     {
                                         "concept": "a8aaf234-1350-11df-a1f1-0026b9348838",
-                                        "label": "Family Member"
+                                        "label": "Family member"
                                     },
                                     {
                                         "concept": "a8aaf07c-1350-11df-a1f1-0026b9348838",
@@ -223,7 +234,7 @@
                                     },
                                     {
                                         "concept": "a89dec06-1350-11df-a1f1-0026b9348838",
-                                        "label": "Phone Inactive"
+                                        "label": "Phone inactive"
                                     },
                                     {
                                         "concept": "1965eb6f-fc86-4f44-b3b8-59772b1daa20",
@@ -254,7 +265,7 @@
                         },
                         {
                             "type": "obs",
-                            "label": "Refer for field follow up:",
+                            "label": "Refer for field follow-up:",
                             "id": "referFieldFollowUp",
                             "questionOptions": {
                                 "answers": [
@@ -272,7 +283,7 @@
                                     },
                                     {
                                         "concept": "83df5f26-f97a-4cda-9c05-d0bdc6e4ebee",
-                                        "label": "Out of Catchment"
+                                        "label": "Out of catchment"
                                     },
                                     {
                                         "concept": "a89decc4-1350-11df-a1f1-0026b9348838",
@@ -286,11 +297,11 @@
                     ]
                 },
                 {
-                    "label": "Field Follow-up:",
+                    "label": "Field Follow-up",
                     "questions": [
                         {
                             "type": "obs",
-                            "label": "If field follow up not attempted:",
+                            "label": "Reason field follow-up was not attempted:",
                             "id": "notAttempt",
                             "questionOptions": {
                                 "answers": [
@@ -303,7 +314,7 @@
                                         "concept": "a89de526-1350-11df-a1f1-0026b9348838"
                                     },
                                     {
-                                        "label": "Out of Catchment",
+                                        "label": "Out of catchment",
                                         "concept": "83df5f26-f97a-4cda-9c05-d0bdc6e4ebee"
                                     },
                                     {
@@ -311,7 +322,7 @@
                                         "concept": "a89decc4-1350-11df-a1f1-0026b9348838"
                                     },
                                     {
-                                        "label": "Insufficient Funds",
+                                        "label": "Insufficient funds",
                                         "concept": "a8b03af0-1350-11df-a1f1-0026b9348838"
                                     }
                                 ],
@@ -321,7 +332,7 @@
                         },
                         {
                             "type": "obsGroup",
-                            "label": "Field Follow-up Method, detailed",
+                            "label": "Field Follow-up Method, Detailed",
                             "questionOptions": {
                                 "rendering": "group",
                                 "concept": "277bf7bf-7171-44fd-aaf6-54a33c5a4680"
@@ -329,7 +340,7 @@
                             "questions": [
                                 {
                                     "type": "obs",
-                                    "label": "Field Follow-up Method:",
+                                    "label": "Field follow-up method:",
                                     "questionOptions": {
                                         "concept": "a89dea80-1350-11df-a1f1-0026b9348838",
                                         "answers": [
@@ -347,7 +358,7 @@
                                 },
                                 {
                                     "type": "obs",
-                                    "label": "Number of Attempts:",
+                                    "label": "Number of attempts:",
                                     "id": "noAtt",
                                     "questionOptions": {
                                         "rendering": "number",
@@ -359,8 +370,8 @@
                         },
                         {
                             "type": "obs",
+                            "label": "Was the patient found?",
                             "id": "patientFound",
-                            "label": "Was the Patient Found?",
                             "questionOptions": {
                                 "answers": [
                                     {
@@ -378,7 +389,7 @@
                         },
                         {
                             "type": "obsGroup",
-                            "label": "Reason not Found:",
+                            "label": "Reason not found:",
                             "questionOptions": {
                                 "rendering": "group",
                                 "concept": "a8af541e-1350-11df-a1f1-0026b9348838"
@@ -386,7 +397,7 @@
                             "questions": [
                                 {
                                     "type": "obs",
-                                    "label": "Reason not Found:",
+                                    "label": "Reason not found:",
                                     "id": "reasonNotFound",
                                     "questionOptions": {
                                         "answers": [
@@ -413,32 +424,30 @@
                                         ],
                                         "rendering": "select",
                                         "concept": "a89de5e4-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "patientFound !== 'a899b42e-1350-11df-a1f1-0026b9348838'"
                                     }
                                 },
                                 {
                                     "type": "obs",
-                                    "label": "Other reason not Found:",
+                                    "label": "Other reason not found:",
+                                    "id": "otherReason",
                                     "questionOptions": {
                                         "rendering": "text",
                                         "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "patientFound !== 'a899b42e-1350-11df-a1f1-0026b9348838'||reasonNotFound !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
                                     }
                                 }
-                            ],
-                            "type": "obs",
-                            "validators": [
-                                {
-                                    "type": "js_expression",
-                                    "failsWhenExpression": "isEmpty(myValue) && patientFound === 'a899b42e-1350-11df-a1f1-0026b9348838'",
-                                    "message": "Patient was contacted."
-                                }
-                            ],
-                            "hide": {
-                                "hideWhenExpression": "patientFound !== 'a899b42e-1350-11df-a1f1-0026b9348838'"
-                            }
+                            ]
                         },
                         {
                             "type": "obs",
-                            "label": "Does Patient Have Medications Remaining?If yes,How Many Days Worth?",
+                            "label": "Does patient have medications remaining?If yes, how many days worth?",
                             "id": "medsRemDays",
                             "questionOptions": {
                                 "rendering": "number",
@@ -447,7 +456,7 @@
                         },
                         {
                             "type": "obs",
-                            "label": "Date Patient Found;",
+                            "label": "Date patient found:",
                             "id": "dateFound",
                             "questionOptions": {
                                 "rendering": "date",
@@ -457,11 +466,11 @@
                     ]
                 },
                 {
-                    "label": "If Found or Information Supplied:",
+                    "label": "If Found or Information Supplied",
                     "questions": [
                         {
                             "type": "obsGroup",
-                            "label": "Location of Contact, Detailed:",
+                            "label": "Location of contact, detailed:",
                             "questionOptions": {
                                 "rendering": "group",
                                 "concept": "a8af5d74-1350-11df-a1f1-0026b9348838"
@@ -469,7 +478,7 @@
                             "questions": [
                                 {
                                     "type": "obs",
-                                    "label": "Location of Contact:",
+                                    "label": "Location of contact:",
                                     "id": "locCont",
                                     "questionOptions": {
                                         "answers": [
@@ -500,7 +509,7 @@
                                 },
                                 {
                                     "type": "obs",
-                                    "label": "Other Location of Contact:",
+                                    "label": "Other location of contact:",
                                     "id": "otherlocCont",
                                     "questionOptions": {
                                         "rendering": "text",
@@ -511,12 +520,12 @@
                         },
                         {
                             "type": "obs",
-                            "label": "Directed Toward:",
+                            "label": "Directed towards:",
                             "id": "dirtoward",
                             "questionOptions": {
                                 "answers": [
                                     {
-                                        "label": "The Patient",
+                                        "label": "The patient",
                                         "concept": "a8a089fc-1350-11df-a1f1-0026b9348838"
                                     },
                                     {
@@ -530,7 +539,7 @@
                         },
                         {
                             "type": "obs",
-                            "label": "Is Caregiver Ampath Patient?",
+                            "label": "Is caregiver an Ampath patient?",
                             "id": "careampathpat",
                             "questionOptions": {
                                 "rendering": "select",
@@ -553,14 +562,14 @@
                         },
                         {
                             "type": "obsGroup",
-                            "label": "Reason for Missed Visit:",
+                            "label": "Reason for missed visit:",
                             "questionOptions": {
                                 "rendering": "group",
                                 "concept": "a8afd4ca-1350-11df-a1f1-0026b9348838"
                             },
                             "questions": [
                                 {
-                                    "label": "Reason for Missed Visit (tick all that apply):",
+                                    "label": "Reason for missed visit (tick all that apply):",
                                     "questionOptions": {
                                         "concept": "a89ef11e-1350-11df-a1f1-0026b9348838",
                                         "answers": [
@@ -574,7 +583,7 @@
                                             },
                                             {
                                                 "concept": "a89ef060-1350-11df-a1f1-0026b9348838",
-                                                "label": "Transferred Clinic"
+                                                "label": "Transferred clinic"
                                             },
                                             {
                                                 "concept": "a89e26d0-1350-11df-a1f1-0026b9348838",
@@ -586,23 +595,23 @@
                                             },
                                             {
                                                 "concept": "ec9227a3-d078-4ed0-bdc3-e8328a9e549e",
-                                                "label": "Family Conflicts"
+                                                "label": "Family conflicts"
                                             },
                                             {
                                                 "concept": "a89e291e-1350-11df-a1f1-0026b9348838",
-                                                "label": "Family Commitments"
+                                                "label": "Family commitments"
                                             },
                                             {
                                                 "concept": "a89ecaa4-1350-11df-a1f1-0026b9348838",
-                                                "label": "Disclosure Issues"
+                                                "label": "Disclosure issues"
                                             },
                                             {
                                                 "concept": "057dae68-3d6f-4d79-926c-ed75a0ce7fd5",
-                                                "label": "Patient was Admitted"
+                                                "label": "Patient was admitted"
                                             },
                                             {
                                                 "concept": "a89e2b30-1350-11df-a1f1-0026b9348838",
-                                                "label": "Transport Costs"
+                                                "label": "Transport costs"
                                             },
                                             {
                                                 "concept": "a8a08cfe-1350-11df-a1f1-0026b9348838",
@@ -614,15 +623,15 @@
                                             },
                                             {
                                                 "concept": "a89e2a54-1350-11df-a1f1-0026b9348838",
-                                                "label": "Work Commitments"
+                                                "label": "Work commitments"
                                             },
                                             {
                                                 "concept": "c042afc9-2dd9-4735-bd1b-60df518b7dbf",
-                                                "label": "School Commitments"
+                                                "label": "School commitments"
                                             },
                                             {
                                                 "concept": "a8a08f38-1350-11df-a1f1-0026b9348838",
-                                                "label": "Too Ill to come"
+                                                "label": "Too ill to come"
                                             },
                                             {
                                                 "concept": "04b9e1ce-3463-495b-9c08-7a1a2db779ba",
@@ -654,7 +663,7 @@
                             ]
                         },
                         {
-                            "label": "Reason for Death:",
+                            "label": "Reason for death:",
                             "id": "reasdeath",
                             "questionOptions": {
                                 "concept": "a89df750-1350-11df-a1f1-0026b9348838",
@@ -690,7 +699,7 @@
                         },
                         {
                             "type": "obs",
-                            "label": "Death Reported by:",
+                            "label": "Death reported by:",
                             "questionOptions": {
                                 "rendering": "select",
                                 "concept": "a89ef1f0-1350-11df-a1f1-0026b9348838",
@@ -732,7 +741,7 @@
                         },
                         {
                             "type": "obsGroup",
-                            "label": "Patient Refused Detailed:",
+                            "label": "Patient refused detailed:",
                             "questionOptions": {
                                 "rendering": "group",
                                 "concept": "a8a0917c-1350-11df-a1f1-0026b9348838"
@@ -740,14 +749,14 @@
                             "questions": [
                                 {
                                     "type": "obs",
-                                    "label": "Refused Care:",
+                                    "label": "Refused care:",
                                     "id": "refcare",
                                     "questionOptions": {
                                         "concept": "a8a0917c-1350-11df-a1f1-0026b9348838",
                                         "answers": [
                                             {
                                                 "concept": "a8a089fc-1350-11df-a1f1-0026b9348838",
-                                                "label": "patient"
+                                                "label": "Patient"
                                             },
                                             {
                                                 "concept": "a89cd280-1350-11df-a1f1-0026b9348838",
@@ -760,14 +769,14 @@
                             ]
                         },
                         {
-                            "label": "Reason:",
+                            "label": "Refused care, reason:",
                             "id": "reasref",
                             "questionOptions": {
                                 "concept": "a89e3468-1350-11df-a1f1-0026b9348838",
                                 "answers": [
                                     {
                                         "concept": "a89e30e4-1350-11df-a1f1-0026b9348838",
-                                        "label": "Family Discrimination(disclosure)"
+                                        "label": "Family discrimination (disclosure)"
                                     },
                                     {
                                         "concept": "a89e3396-1350-11df-a1f1-0026b9348838",
@@ -775,11 +784,11 @@
                                     },
                                     {
                                         "concept": "a89e3274-1350-11df-a1f1-0026b9348838",
-                                        "label": "Denial of Status "
+                                        "label": "Denial of status "
                                     },
                                     {
                                         "concept": "a89e31ac-1350-11df-a1f1-0026b9348838",
-                                        "label": "Community Discrimination "
+                                        "label": "Community discrimination "
                                     },
                                     {
                                         "concept": "a8a097bc-1350-11df-a1f1-0026b9348838",
@@ -802,7 +811,7 @@
                                 "answers": [
                                     {
                                         "concept": "9407c0db-5cdc-48a9-8750-85961cf9804f",
-                                        "label": "Very Low"
+                                        "label": "Very low"
                                     },
                                     {
                                         "concept": "af3afb20-ab67-45e7-ad5e-74d6daa06e84",
@@ -818,7 +827,7 @@
                                     },
                                     {
                                         "concept": "7a260efe-bd7e-4926-87d9-b9e008956873",
-                                        "label": "Very High"
+                                        "label": "Very high"
                                     }
                                 ],
                                 "rendering": "select"
@@ -828,10 +837,12 @@
                     ]
                 },
                 {
-                    "label": "Patient Status:",
+                    "label": "Patient Care Status",
+                    "isExpanded": "true",
                     "questions": [
                         {
-                            "label": "Patient Status(choose one):",
+                            "label": "Patient care status (choose one):",
+                            "required": "true",
                             "id": "patstat",
                             "questionOptions": {
                                 "concept": "7c579743-5ef7-4e2c-839f-5b95597cb01c",
@@ -846,11 +857,11 @@
                                     },
                                     {
                                         "concept": "a8af50f4-1350-11df-a1f1-0026b9348838",
-                                        "label": "patient sel disengaged from care"
+                                        "label": "Patient self-disengaged from care"
                                     },
                                     {
                                         "concept": "636b7246-51f7-4985-9430-431b09d39bea",
-                                        "label": "patient HIV negative"
+                                        "label": "Patient HIV negative"
                                     },
                                     {
                                         "concept": "bea9c288-0650-4b42-a324-1d6d51591c72",
@@ -858,11 +869,11 @@
                                     },
                                     {
                                         "concept": "a89e3ad0-1350-11df-a1f1-0026b9348838",
-                                        "label": "patient transfered out"
+                                        "label": "Patient transfered out"
                                     },
                                     {
                                         "concept": "07c536bc-19f2-4296-9c4a-edd85f070095",
-                                        "label": "patient in process of being traced"
+                                        "label": "Patient in process of being traced"
                                     }
                                 ],
                                 "rendering": "select"
@@ -893,6 +904,10 @@
                                             {
                                                 "concept": "7e381b07-81d5-4425-be84-f188b61b4bd1",
                                                 "label": "Ampath non-AMRS"
+                                            },
+                                            {
+                                                "concept": "a8a17d80-1350-11df-a1f1-0026b9348838",
+                                                "label": "MNCH for pMTCT"
                                             }
                                         ],
                                         "rendering": "select"
@@ -914,7 +929,7 @@
                             ]
                         },
                         {
-                            "label": "Refer to Outreach to update Locator Information?",
+                            "label": "Refer to outreach to update locator information?",
                             "id": "reftoout",
                             "questionOptions": {
                                 "concept": "a89e3008-1350-11df-a1f1-0026b9348838",
@@ -939,7 +954,7 @@
                     "isExpanded": "true",
                     "questions": [
                         {
-                            "label": "Please enter the Assessment below:",
+                            "label": "Please enter the assessment notes below:",
                             "type": "obs",
                             "id": "assNote",
                             "required": "false",
@@ -953,11 +968,11 @@
                     ]
                 },
                 {
-                    "label": "Next appointment",
+                    "label": "Next Appointment",
                     "isExpanded": "true",
                     "questions": [
                         {
-                            "label": "Return to clinic Date:",
+                            "label": "Return to clinic date:",
                             "type": "obs",
                             "questionOptions": {
                                 "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
@@ -974,6 +989,11 @@
                                 {
                                     "type": "date",
                                     "allowFutureDates": "true"
+                                },
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "(new moment(encDate)).isAfter((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                    "message": "Return to clinic date should be greater than the encounter date."
                                 }
                             ]
                         }

@@ -453,12 +453,17 @@
                                     16
                                 ]
                             },
-                            "validators": [
-                                {
-                                    "type": "date",
-                                    "allowFutureDates": "true"
-                                }
-                            ]
+                           "validators": [
+                               {
+                                   "type": "date",
+                                   "allowFutureDates": "true"
+                               },
+                               {
+                                   "type": "js_expression",
+                                   "failsWhenExpression": "(new moment(encDate)).isAfter((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                   "message": "Return to clinic date should be greater than the encounter date."
+                               }
+                           ]
                         }
                     ]
                 }
