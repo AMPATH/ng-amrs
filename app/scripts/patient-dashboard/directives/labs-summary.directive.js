@@ -119,7 +119,7 @@ jshint -W003, -W026
         $scope.isLoadingLabData=false;
         $scope.nameOfServer=error.config.url;
         console.error("synchronizeEIDPatientLabResults error is ",error);
-        if(error.status==503){
+        if(error.status==503 || error.status==501 ){
           $scope.errorMessage="New lab results service temporarily unavailable,please try again later";
         }
         else{
