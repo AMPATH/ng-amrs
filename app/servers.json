@@ -8,8 +8,13 @@
   "amrs": "https://amrs.ampath.or.ke:8443/amrs/ws/rest/v1/"
 },
 {
-  "name": "Single  Server",
+  "name": "Single Server",
   "etl": "/etl-server/etl/",
+  "amrs": "/amrs/ws/rest/v1/"
+},
+{
+  "name": "Single Server Demo",
+  "etl": "/etl-server-demo/etl/",
   "amrs": "/amrs/ws/rest/v1/"
 },
  {
