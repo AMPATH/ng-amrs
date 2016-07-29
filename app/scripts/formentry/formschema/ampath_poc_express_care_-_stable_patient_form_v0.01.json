@@ -119,11 +119,16 @@
                             },
                             "type": "obs",
                             "validators": [
-                                {
-                                    "type": "date",
-                                    "allowFutureDates": "true"
-                                }
-                            ]
+                               {
+                                   "type": "date",
+                                   "allowFutureDates": "true"
+                               },
+                               {
+                                   "type": "js_expression",
+                                   "failsWhenExpression": "(new moment(encDate)).isAfter((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                   "message": "Next viral date should be greater than the encounter date."
+                               }
+                           ]
                         },
                         {
                             "label": "Refer to clinician today:",
@@ -166,11 +171,16 @@
                                 ]
                             },
                             "validators": [
-                                {
-                                    "type": "date",
-                                    "allowFutureDates": "true"
-                                }
-                            ]
+                               {
+                                   "type": "date",
+                                   "allowFutureDates": "true"
+                               },
+                               {
+                                   "type": "js_expression",
+                                   "failsWhenExpression": "(new moment(encDate)).isAfter((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                   "message": "Express care date should be greater than the encounter date."
+                               }
+                           ]
                         },
                         {
                             "label": "Clinician:",

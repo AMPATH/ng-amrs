@@ -364,7 +364,7 @@
                                 }
                             ],
                             "hide": {
-                                "hideWhenExpression": "!arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838', 'a89b7908-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838'], pcpProphylaxisPlan)"
+                                "hideWhenExpression": "!arrayContains(['a89b77aa-1350-11df-a1f1-0026b9348838', 'a89b7c50-1350-11df-a1f1-0026b9348838'], pcpProphylaxisPlan)"
                             }
                         }
                     ]

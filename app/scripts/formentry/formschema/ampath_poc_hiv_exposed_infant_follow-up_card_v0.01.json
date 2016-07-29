@@ -250,7 +250,18 @@
                             "questionOptions": {
                                 "concept": "a89d200a-1350-11df-a1f1-0026b9348838",
                                 "rendering": "date"
-                            }
+                            },
+                            "validators": [
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "false"
+                                },
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "(new moment(encDate)).isBefore((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                    "message": "Date started should be less than the encounter date."
+                                }
+                            ]
                         },
                         {
                             "label": "If yes,(select drug combination):",

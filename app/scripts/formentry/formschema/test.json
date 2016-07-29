@@ -508,7 +508,7 @@
                             "type": "obs",
                             "validators": [],
                             "hide": {
-                                "hideWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                "hideWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'|| pattype !== 'a89ee9a8-1350-11df-a1f1-0026b9348838'"
                             }
                         },
                         {
@@ -592,7 +592,7 @@
                             "type": "obs",
                             "validators": [],
                             "hide": {
-                                "hideWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                                "hideWhenExpression": "onArt !== 'a899b35c-1350-11df-a1f1-0026b9348838'||pattype !== 'a89ee8ea-1350-11df-a1f1-0026b9348838'"
                             }
                         },
                         {
@@ -1201,7 +1201,7 @@
                                 }
                             ],
                             "hide": {
-                                "hideWhenExpression": "!arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'],arvPlan)"
+                                "hideWhenExpression": "pattype !== 'a89ee9a8-1350-11df-a1f1-0026b9348838'||!arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'],arvPlan)"
                             }
                             
                         },
@@ -1296,7 +1296,7 @@
                                 }
                             ],
                             "hide": {
-                                "hideWhenExpression": "!arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'],arvPlan)"
+                                "hideWhenExpression": "pattype !== 'a89ee8ea-1350-11df-a1f1-0026b9348838'||!arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'],arvPlan)"
                             }
                             
                         }
