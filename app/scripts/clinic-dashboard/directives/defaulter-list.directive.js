@@ -77,6 +77,10 @@ jshint -W003, -W026
       {
         name: 'encounter_datetime',
         headers:'Last_Appointment'
+      },
+      {
+        name: 'filed_id',
+        headers:'Filing ID'
       }
     ] ;
 
@@ -226,7 +230,7 @@ jshint -W003, -W026
       _.each($scope.patientTags, function (header) {
         //var visible =(header!=='location_uuid');
         $scope.columns.push({
-          field: header.headers,
+          field: header.name,
           title: $filter('titlecase')(header.headers.toString().split('_').join(' ')),
           align: 'center',
           valign: 'center',
