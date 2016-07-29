@@ -141,6 +141,10 @@
                                             {
                                                 "concept": "06eb5a64-5b0d-47f9-929f-30e6c51f365e",
                                                 "label": "Low risk"
+                                            },
+                                            {
+                                                "concept": "9f14a13e-b158-4df8-b5ee-45fbf35bd36d",
+                                                "label": "LFTU"
                                             }
                                         ],
                                         "rendering": "select",
