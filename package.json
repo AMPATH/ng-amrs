@@ -1,6 +1,6 @@
 {
   "name": "ngamrs",
-  "version": "1.4.6-SNAPSHOT",
+  "version": "1.4.6",
   "license": "UNLICENSED",
   "dependencies": {
     "angular-environment": "^1.0.3",
