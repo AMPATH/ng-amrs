@@ -262,7 +262,7 @@
           clickToSelect: true,
           showToggle: false,
           maintainSelected: true,
-          showExport: false,
+          showExport: true,
           toolbar: '#toolbar',
           toolbarAlign: 'left',
           exportTypes: ['json', 'xml', 'csv', 'txt', 'png', 'sql', 'doc', 'excel', 'powerpoint', 'pdf'],
