@@ -852,7 +852,7 @@
 
     }
     function synchronizeEIDPatientLabResults(startDate,endDate,patientUuId,successCallback,failedCallback){
-      var resource = getResource('patient-lab-orders');
+      var resource = getResource('patient-lab-orders',false);
       var params={
         startDate:startDate,
         endDate:endDate,
