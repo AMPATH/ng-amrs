@@ -228,7 +228,7 @@
                     striped: true,
                     selectableRows: true,
                     showFilter: true,
-                    pagination: true,
+                    pagination: false,
                     pageSize: 20,
                     pageList: [5, 10, 25, 50, 100, 200],
                     search: true,
