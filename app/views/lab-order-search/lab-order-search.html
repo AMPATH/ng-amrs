@@ -1,0 +1,36 @@
+<div class="lab-order-search">
+  <form name="orderSearchForm" ng-submit="submitForm()">
+    <div class="form-group">
+      <label for="search-textbox">Search by Order ID</label>
+      <div class="input-group">
+        <input type="text" ng-disabled="isLoading" name="orderID" id="search-textbox" class="form-control"
+          ng-model="orderID" placeholder="Enter Order ID and press Enter or Search button"
+        focus="true" data-bar-code-scanner required>
+        <div class="input-group-btn">
+          <button ng-show="isLoading" class="btn btn-primary ladda-button" data-style="expand-right">
+            <img ng-style="{background:'white'}" src="images/ajax-loader.gif" />
+          </button>
+          <button  ng-show="showSearchButton"  class="btn btn-primary ladda-button" data-style="expand-right">
+            <span class="glyphicon glyphicon-search"> Search</span>
+          </button>
+        </div>
+        <div class="input-group-btn">
+          <button ng-show="showResetButton" class="btn  pull-right " ng-click="reset()">
+            <span class="glyphicon glyphicon-trash"> Reset</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="has-error" ng-show="isFormInvalid">
+    <span ng-show="orderSearchForm.orderID.$error.required">Name is required</span>
+  </div>
+
+  <div class="search-result"></div>
+  <div ng-show="order != null" class="order-info">
+    <p>
+      <em>This order was created on {{order.dateActivated}}.</em><em>&nbsp;It was provided by {{order.orderer.display}}</em>
+    </p>
+  </div>
+  <div ng-show="showNoResult" class="search-no-result">0 result found for <span style="color:grey">{{orderID}}</span></div>
+</div>

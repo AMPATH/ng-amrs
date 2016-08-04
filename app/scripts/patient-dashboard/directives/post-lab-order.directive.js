@@ -25,11 +25,11 @@
     }
 
     postLabOrderController.$inject = ['$scope', 'IdentifierResService', 'UtilService',
-        'OrderResService', 'LabPostingHelperService', 'EtlRestService', '$filter',
+        'OrderResService', 'LabPostingHelperService', 'EtlRestService', 'LabOrderSearchService', '$filter',
         'moment'];
 
     function postLabOrderController($scope, IdentifierResService, UtilService,
-        OrderResService, labPostingHelper, EtlRestService, $filter, moment) {
+        OrderResService, labPostingHelper, EtlRestService, LabOrderSearchService, $filter, moment) {
 
         var customOrderObjectDefinition =
             'custom:(display,uuid,orderNumber,accessionNumber,orderReason,orderReasonNonCoded,urgency,action,' +
@@ -61,7 +61,11 @@
         $scope.currentArtRegimen = '';
         $scope.currentArtRegimenId = null;
 
-        //used for mocking 
+        $scope.patientUuid = LabOrderSearchService.getOrderData().patient.uuid;
+        $scope.isOrderSearch = LabOrderSearchService.getIsOrderSearch();
+        LabOrderSearchService.setIsOrderSearch(false);
+
+        //used for mocking
         // $scope.artStartDateInitial = new Date(2014,1,1);
         // $scope.artStartDateCurrent = new Date(2015, 1, 1);
         // $scope.currentArtRegimen = 'Nevirapine';
@@ -87,7 +91,7 @@
             extractPatientInformation();
             extractHivSummaryInformation();
         }
-
+        
         //functions to validate data
         function hasLoadingTimeRequiredInputs() {
             if (_.isEmpty($scope.order)) {
