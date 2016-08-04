@@ -30,7 +30,7 @@
             </tr>
           </thead>
           <tbody>
-          <div ng-if="labObs.updatedObs.length>0">
+          <div ng-if="labObs.updatedObs.length>1">
           <tr ng-repeat="test in labObs.updatedObs">
             <td>{{test.obsDatetime | date:'yyyy/MM/dd'}}</td>
             <td><span ng-if="test.concept.uuid==='a898fe80-1350-11df-a1f1-0026b9348838'">{{test.value.display}}</span></td>
@@ -41,11 +41,17 @@
             {{test.groupMembers[0].display}}</span></td>
           </tr>
         </div>
-        <div ng-if="labObs.updatedObs.length==0">
+        <div ng-if="labObs.updatedObs.length==1">
         <tr>
-          <td colspan="6" ng-if="labObs.updatedObs.length==0" style="text-align:center;">
+          <td colspan="6" ng-if="labObs.updatedObs.length==0" style="text-align:left;">
             There are no new lab results for this patient</td>
         </tr>
+        </div>
+        <div ng-if="labObs.updatedObs[labObs.updatedObs.length-1].serverStatus.length>0">
+          <tr ng-repeat="serverIsDown in labObs.updatedObs[labObs.updatedObs.length-1].serverStatus">
+            <td colspan="6"  style="text-align:left;color:red;">
+              {{serverIsDown}} server is currently unreachable</td>
+          </tr>
         </div>
         </tbody>
         </table>
