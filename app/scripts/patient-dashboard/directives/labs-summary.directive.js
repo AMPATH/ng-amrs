@@ -43,7 +43,6 @@ jshint -W003, -W026
         $scope.serverNotReachable=false;
         $scope.errorMessage='';
         $scope.nameOfServer='';
-       // $scope.testLength;
        $scope.synchronizeEIDPatientLabResults=synchronizeEIDPatientLabResults();
       $scope.labTestTags =[
         {
