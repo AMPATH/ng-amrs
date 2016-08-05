@@ -37,131 +37,149 @@
         $state, EtlRestService, moment, ClinicDashboardService, OpenmrsRestService,
         $filter) {
 
-        //scope variables
-        $scope.patientStatuses = [];
-        $scope.isBusy = false;
-        $scope.experiencedLoadingErrors = false;
-        $scope.averageWaitingTime = null;
-        $scope.medianWaitingTime = null;
-        $scope.incompleteVisitsCount = null;
+      //scope variables
+      $scope.patientStatuses = [];
+      $scope.isBusy = false;
+      $scope.experiencedLoadingErrors = false;
+      $scope.averageWaitingTime = null;
+      $scope.medianWaitingTime = null;
+      $scope.incompleteVisitsCount = null;
+      $scope.providerEncounters = [];
+      $scope.finalProviderReport = [];
 
-        //getter setter binding
-        $scope.startDate = ClinicDashboardService.getStartDate() || new Date();
-        $scope.selectedDate = function (value) {
-            if (value) {
-                $scope.startDate = value;
-                ClinicDashboardService.setStartDate(value);
-                $scope.loadPatientFlowInformation();
-            } else {
-                return $scope.startDate;
-            }
-        };
-
-        //date controll functions
-
-        $scope.openDatePopup = openDatePopup;
-        $scope.dateControlStatus = {
-            startOpened: false,
-        };
-        $scope.navigateDay = navigateDay;
-
-
-        //Bootrap table options
-        var columns = [
-            {
-                field: '#',
-                title: '#',
-                visible: true,
-                isDate: false
-            },
-            {
-                field: 'visit_id',
-                title: 'Visit #',
-                visible: false,
-                isDate: false
-            },
-            {
-                field: 'names',
-                title: 'Names',
-                visible: true,
-                isDate: false
-            },
-            {
-                field: 'identifiers',
-                title: 'Identifiers',
-                visible: false,
-                isDate: false
-            },
-            {
-                field: 'registered',
-                title: 'Registered',
-                visible: true,
-                isDate: true
-            },
-            {
-                field: 'triaged',
-                title: 'Triaged',
-                visible: true,
-                isDate: true
-            },
-            {
-                field: 'time_to_be_triaged',
-                title: 'Triage Waiting Time (mins)',
-                visible: true,
-                isDate: false
-            },
-            {
-                field: 'seen_by_clinician',
-                title: 'Seen by Clinician',
-                visible: true,
-                isDate: true
-            },
-            {
-                field: 'time_to_be_seen_by_clinician',
-                title: 'Clinician Waiting Time (mins)',
-                visible: true,
-                isDate: false
-            },
-            {
-                field: 'time_to_complete_visit',
-                title: 'Time to Complete Visit (mins)',
-                visible: true,
-                isDate: false
-            }
-        ];
-
-        $scope.btTableOptions = {};
-
-        //methods
-        $scope.loadPatientFlowInformation = loadPatientFlowInformation;
-
-        activate();
-
-        function activate() {
-            _registerBTtableClickEvents();
+      //getter setter binding
+      $scope.startDate = ClinicDashboardService.getStartDate() || new Date();
+      $scope.selectedDate = function (value) {
+        if (value) {
+          $scope.startDate = value;
+          ClinicDashboardService.setStartDate(value);
+          $scope.loadPatientFlowInformation();
+        } else {
+          return $scope.startDate;
         }
+      };
+      //
+      //DataTable Options for providers
+      $scope.columns = [];
+      $scope.bsTableControl = {options: {}};
+      $scope.exportList = [
+        {name: 'Export Basic', value: ''},
+        {name: 'Export All', value: 'all'},
+        {name: 'Export Selected', value: 'selected'}];
+      $scope.exportDataType = $scope.exportList[1];
+      $scope.updateSelectedType = function () {
+        console.log($scope.exportDataType.value, $scope.exportDataType.name);
+        var bsTable = document.getElementById('bsTable1');
+        var element = angular.element(bsTable);
+        element.bootstrapTable('refreshOptions', {
+          exportDataType: $scope.exportDataType.value
+        });
+      };
 
-        function openDatePopup($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            $scope.dateControlStatus.startOpened = true;
+      //date controll functions
+
+      $scope.openDatePopup = openDatePopup;
+      $scope.dateControlStatus = {
+        startOpened: false,
+      };
+      $scope.navigateDay = navigateDay;
+
+
+      //Bootrap table options
+      var columns = [
+        {
+          field: '#',
+          title: '#',
+          visible: true,
+          isDate: false
+        },
+        {
+          field: 'visit_id',
+          title: 'Visit #',
+          visible: false,
+          isDate: false
+        },
+        {
+          field: 'names',
+          title: 'Names',
+          visible: true,
+          isDate: false
+        },
+        {
+          field: 'identifiers',
+          title: 'Identifiers',
+          visible: false,
+          isDate: false
+        },
+        {
+          field: 'registered',
+          title: 'Registered',
+          visible: true,
+          isDate: true
+        },
+        {
+          field: 'triaged',
+          title: 'Triaged',
+          visible: true,
+          isDate: true
+        },
+        {
+          field: 'time_to_be_triaged',
+          title: 'Triage Waiting Time (mins)',
+          visible: true,
+          isDate: false
+        },
+        {
+          field: 'seen_by_clinician',
+          title: 'Seen by Clinician',
+          visible: true,
+          isDate: true
+        },
+        {
+          field: 'time_to_be_seen_by_clinician',
+          title: 'Clinician Waiting Time (mins)',
+          visible: true,
+          isDate: false
+        },
+        {
+          field: 'time_to_complete_visit',
+          title: 'Time to Complete Visit (mins)',
+          visible: true,
+          isDate: false
         }
+      ];
 
-        function utcDateToLocal(date) {
-            var day = new moment(date).format();
-            return day;
+      $scope.btTableOptions = {};
+
+      //methods
+      $scope.loadPatientFlowInformation = loadPatientFlowInformation;
+
+      activate();
+
+      function activate() {
+        _registerBTtableClickEvents();
+      }
+
+      function openDatePopup($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.dateControlStatus.startOpened = true;
+      }
+
+      function utcDateToLocal(date) {
+        var day = new moment(date).format();
+        return day;
+      }
+
+      function navigateDay(value) {
+        if (value) {
+          $scope.selectedDate(new Date($scope.startDate).addDays(value));
+          var selectedDateField = document.getElementById('start-date');
+          var element = angular.element(selectedDateField);
+          element.val($filter('date')($scope.startDate, 'mediumDate'));
+          element.triggerHandler('input');
         }
-
-        function navigateDay(value) {
-            if (value) {
-                $scope.selectedDate(new Date($scope.startDate).addDays(value));
-                var selectedDateField = document.getElementById('start-date');
-                var element = angular.element(selectedDateField);
-                element.val($filter('date')($scope.startDate, 'mediumDate'));
-                element.triggerHandler('input');
-            }
-        }
-
+      }
 
         function loadPatientFlowInformation() {
             if ($scope.isBusy) return;
@@ -180,17 +198,73 @@
             $scope.averageWaitingTime = results.averageWaitingTime;
             $scope.medianWaitingTime = results.medianWaitingTime;
             $scope.incompleteVisitsCount = results.incompleteVisitsCount;
+
+
             $scope.isBusy = false;
             displayCurrentPatientStatusInfo();
+
+            transformVisitsToDummyEncounters();
+            groupEncountersByProvider();
+            buildDataTable();
+
         }
 
         function loadPatientFlowFailed(error) {
             $scope.isBusy = false;
             $scope.experiencedLoadingErrors = true;
         }
+        function transformVisitsToDummyEncounters(){
+          _.each($scope.patientStatuses,function(patient){
+            //reconstructing an array of objects to contain all provider encounters
+            $scope.providerEncounters.push.apply($scope.providerEncounters,patient.encounters);
+
+             /* adding a dummy encounter type to be used to keep track of visits started and the
+                details of the person who started the visit
+            */
+            $scope.providerEncounters.unshift( {
+              person_name:patient.visit_person_Name,
+              encounter_type:8888,
+              person_id:patient.visit_person_id,
+              encounter_type_name:'Visits_Started'
+            });
+
+          });
+
+        }
+        function groupEncountersByProvider(){
+
+          var providersPersonIds =[];
+          var uniqueProviderPersonIds = {};
+          for( var i in $scope.providerEncounters ){
+            if( typeof(uniqueProviderPersonIds[$scope.providerEncounters[i].person_id]) == "undefined"){
+              providersPersonIds.push($scope.providerEncounters[i].person_id);
+
+            }
+            uniqueProviderPersonIds[$scope.providerEncounters[i].person_id] = 0;
+          }
+
+          _.each(providersPersonIds, function(provider){
+                var row={};
+                _.each($scope.providerEncounters,  function(result){
+
+                  if(provider===result.person_id) {
+                    row['Person Name'] = result.person_name;
+                    //count encounter type per provider
+                    row[result.encounter_type_name] = (row[result.encounter_type_name] || 0) + 1;
+
+                  }
+                });
+
+            $scope.finalProviderReport.push(row);
+
+          });
+
+        }
 
         function clearVariables() {
             $scope.patientStatuses = [];
+            $scope.providerEncounters =[];
+            $scope.finalProviderReport=[];
             $scope.experiencedLoadingErrors = false;
             _clearDisplayedPatientStatus();
         }
@@ -332,6 +406,159 @@
             };
 
         }
+
+      // provider details table
+
+      function buildDataTable() {
+        buildColumns();
+        buildTableControls();
+
+      }
+
+      function buildSingleColumn(header) {
+        var visible = true;
+        if (header==='provider_id'){
+          visible =false;
+        }
+        $scope.columns.push({
+          field: header,
+          title: header.toString().split('_').join(' '),
+          align: 'center',
+          valign: 'center',
+          visible: visible,
+          tooltip: true,
+          sortable: true,
+          formatter: function(value, row, index) {
+            return cellFormatter(value, row, index, header);
+          }
+        });
+      }
+
+      function buildColumns() {
+        var ProviderTableColumns =[];
+        var unique = {};
+        for( var i in $scope.finalProviderReport ){
+          if( typeof(unique[Object.keys($scope.finalProviderReport[i])]) == "undefined"){
+            ProviderTableColumns.push.apply(ProviderTableColumns,Object.keys($scope.finalProviderReport[i]));
+
+          }
+          unique[Object.keys($scope.finalProviderReport[i])] = 0;
+        }
+        //remove duplicate elements from the array
+        var uniqueArray = ProviderTableColumns.filter(function(elem, pos) {
+          return ProviderTableColumns.indexOf(elem) == pos;
+        });
+
+        uniqueArray.push('Total Patient Seen');
+
+          $scope.columns = [];
+          _.each(uniqueArray, function (header) {
+            buildSingleColumn(header);
+          });
+      }
+
+
+      function buildTableControls() {
+        $scope.bsTableControl = {
+          options: {
+            data: $scope.finalProviderReport,
+            rowStyle: function (row, index) {
+              return {classes: 'none'};
+            },
+            tooltip: true,
+            classes: 'table table-hover',
+            cache: false,
+            height: 550,
+            detailView: false,
+            //detailFormatter: detailFormatter,
+            striped: true,
+            selectableRows: true,
+            showFilter: true,
+            pagination: true,
+            pageSize: 20,
+            pageList: [5, 10, 25, 50, 100, 200],
+            search: true,
+            trimOnSearch: true,
+            singleSelect: false,
+            showColumns: true,
+            showRefresh: true,
+            showMultiSort: true,
+            showPaginationSwitch: true,
+            smartDisplay: true,
+            idField: 'patientUuid',
+            minimumCountColumns: 2,
+            clickToSelect: true,
+            showToggle: false,
+            maintainSelected: true,
+            showExport: true,
+            toolbar: '#toolbar',
+            toolbarAlign: 'left',
+            exportTypes: ['json', 'xml', 'csv', 'txt', 'png', 'sql', 'doc', 'excel', 'powerpoint', 'pdf'],
+            columns: $scope.columns,
+            exportOptions: {fileName: ''},
+            iconSize: undefined,
+            iconsPrefix: 'glyphicon', // glyphicon of fa (font awesome)
+            icons: {
+              paginationSwitchDown: 'glyphicon-chevron-down',
+              paginationSwitchUp: 'glyphicon-chevron-up',
+              refresh: 'glyphicon-refresh',
+              toggle: 'glyphicon-list-alt',
+              columns: 'glyphicon-th',
+              sort: 'glyphicon-sort',
+              plus: 'glyphicon-plus',
+              minus: 'glyphicon-minus',
+              detailOpen: 'glyphicon-plus',
+              detailClose: 'glyphicon-minus'
+            }
+
+          }
+        };
+      }
+
+      function totalPatientSeen(row) {
+        var total =0;
+        delete row.Visits_Started;
+        for (var x in row) {
+          var value = row[x];
+          if(typeof value === 'number'){
+            total +=value;
+          }
+        }
+        return total;
+
+      }
+
+
+      /**
+       * Function to add button on each cell
+       */
+      function cellFormatter(value, row, index, header) {
+
+        if(header ==='Person Name'){
+
+              return '<div class="" style="padding: inherit; width:100%; max-width: 300px" ><span ' +
+                'class="text-info text-capitalize">'+value+'</span></div>';
+
+        }
+
+        if(header ==='Total Patient Seen'){
+
+          return '<div class="" style="padding: inherit; width:100%; max-width: 300px" ><span ' +
+            'class="text-info text-capitalize">'+totalPatientSeen(row)+'</span></div>';
+
+        }
+        if (value === null || value === undefined) {
+          return '-';
+        }
+
+        return ['<a class="clickLink"',
+          'title="  " data-toggle="tooltip"',
+          'data-placement="top"',
+          'href="javascript:void(0)" >' + value + '</a>'
+        ].join('');
+
+      }
+
 
     }
 })();
