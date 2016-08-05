@@ -64,7 +64,7 @@
             </tr>
         </table>
     </div>
-    
+
 
     <div ng-show='experiencedLoadingErrors'>
         <p class="bg-danger" style="padding:4px;">
@@ -72,11 +72,39 @@
         <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
             <p>
     </div>
-    <div class="form-group">
-        <div/>
+
+  <div kendo-tab-strip  k-options="{ tabPosition: 'top'}" k-content-urls="[ null, null]" >
+    <!-- tab list -->
+    <ul>
+      <li class="k-state-active">Visits</li>
+      <li>Provider Statistics</li>
+    </ul>
+    <div style="min-height:500px">
+      <div class="form-group">
+        <!--<div/>-->
         <div class="panel panel-default">
-            <table id="bsTable" class="table table-striped table-condensed table-hover" bs-table-control="btTableOptions">
-            </table>
+          <table id="bsTable" class="table table-striped table-condensed table-hover" bs-table-control="btTableOptions">
+          </table>
         </div>
+      </div>
+
     </div>
+
+    <div style="min-height:500px">
+      <div class="form-group">
+      <!--  <div/>-->
+        <div class="panel panel-default">
+          <table id="bsTable1" class="table table-striped table-condensed table-hover" bs-table-control="bsTableControl">
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
+<style>
+  .k-widget * {
+    -webkit-box-sizing: border-box !important;
+    box-sizing: border-box !important;
+  }
+</style>

@@ -70,7 +70,7 @@
     it('should ensure getIndicatorLabelByName method is defined', function(){
       expect(scope.getIndicatorLabelByName).to.exist;
     });
-    
+
     it('should ensure main variables needed for the controller are initialised', function(){
       expect(scope.isBusy).to.be.equal(false);
       expect(scope.currentPage).to.be.equal(1);
