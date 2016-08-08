@@ -33,7 +33,8 @@
       'ct.ui.router.extras',
       'sticky',
       'mwl.calendar',
-      'app.offline'
+      'app.offline',
+      'app.administration'
     ])
     .config(function ($stateProvider, $stickyStateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');
@@ -445,7 +446,16 @@
         data: {
           requireLogin: true
         }
-      });
+      })
+        .state('system-administration', {
+          url: '/administration',
+          templateUrl: 'views/administration/administration-dashboard.html',
+          controller: 'AdministrationCtrl',
+          data: {
+            requireLogin: true
+          },
+          cache: false
+        });
 
 
     }).config(['$httpProvider', function ($httpProvider) {
