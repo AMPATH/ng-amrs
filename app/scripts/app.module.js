@@ -437,6 +437,14 @@
         data: {
           requireLogin: true
         }
+      })
+      .state('admin.clinic-flow', {
+        url: '/clinic-flow',
+        templateUrl: 'views/admin/clinic-flow-container.html',
+        controller: 'AdminDashboardCtrl',
+        data: {
+          requireLogin: true
+        }
       });
 
 

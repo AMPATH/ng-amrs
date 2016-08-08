@@ -32,6 +32,15 @@
         <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
         <b>Loading visits...</b>
     </div>
+  <div style="height: 35px" ng-show='!isBusy && !experiencedLoadingErrors'>
+      <button  data-ng-disabled="selectedLocations.locations.length===0  "
+                          class="btn btn-info pull-right" ng-click="loadPatientFlowInformation()"
+        ng-show="generateButton">
+         <span class="glyphicon glyphicon-refresh"></span>
+        <span>Generate</span>
+      </button>
+
+     </div>
     <div style="margin-bottom:2px"><span style="font-size:24px;"> Clinic Flow</span></div>
     <hr style="margin-top:1px; margin-bottom:1px;"/>
     <div style="font-weight: bold; font-size:14px;">
