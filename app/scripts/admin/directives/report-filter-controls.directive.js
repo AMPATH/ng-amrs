@@ -24,7 +24,8 @@
         isBusy: "=",
         startAge:"=",
         endAge:"=",
-        gender:'='
+        gender:'=',
+        reportHeader:'='
 
 
       },

@@ -15,6 +15,7 @@
             templateUrl: 'views/clinic-dashboard/patient-flow.html',
             scope: {
                 locationUuid: '@',
+              selectedLocations:"="
             }
         };
         return directive;
@@ -46,6 +47,8 @@
       $scope.incompleteVisitsCount = null;
       $scope.providerEncounters = [];
       $scope.finalProviderReport = [];
+      $scope.selectedLocation = $stateParams.locationuuid || '';
+      $scope.showGenerateButton=showGenerateButton;
 
       //getter setter binding
       $scope.startDate = ClinicDashboardService.getStartDate() || new Date();
@@ -75,6 +78,7 @@
           exportDataType: $scope.exportDataType.value
         });
       };
+      $scope.state = $state.current.name;
 
       //date controll functions
 
@@ -158,12 +162,24 @@
 
       function activate() {
         _registerBTtableClickEvents();
+        showGenerateButton();
       }
 
       function openDatePopup($event) {
         $event.preventDefault();
         $event.stopPropagation();
         $scope.dateControlStatus.startOpened = true;
+      }
+      function showGenerateButton(){
+
+        if($scope.state==='clinical-dashboard.daily-appointments.patient-flow'){
+          $scope.generateButton= false;
+
+        }
+        else{
+          $scope.generateButton= true;
+        }
+
       }
 
       function utcDateToLocal(date) {
@@ -186,9 +202,10 @@
 
             clearVariables();
             $scope.isBusy = true;
+            var selectedLocations = getSelectedLocations();
 
             EtlRestService.
-                getPatientFlowData($scope.locationUuid, $scope.startDate,
+                getPatientFlowData(selectedLocations, $scope.startDate,
                 loadPatientFlowSuccessful, loadPatientFlowFailed);
 
         }
@@ -231,6 +248,7 @@
           });
 
         }
+
         function groupEncountersByProvider(){
 
           var providersPersonIds =[];
@@ -556,6 +574,30 @@
           'data-placement="top"',
           'href="javascript:void(0)" >' + value + '</a>'
         ].join('');
+
+      }
+      function getSelectedLocations() {
+        if ($stateParams.locationuuid) {
+          return $stateParams.locationuuid;
+        }
+        if ($scope.selectedLocations) {
+          var selectedLocationObject = $scope.selectedLocations;
+          if (selectedLocationObject.selectedAll === true)
+            return '';
+          var locations;
+          if (selectedLocationObject.locations)
+            for (var i = 0; i < selectedLocationObject.locations.length; i++) {
+              if (i === 0) {
+                locations = '' + selectedLocationObject.locations[i].uuId();
+              } else {
+                locations =
+                  locations + ',' + selectedLocationObject.locations[i].uuId();
+              }
+            }
+          return locations;
+        } else {
+          return undefined;
+        }
 
       }
 
