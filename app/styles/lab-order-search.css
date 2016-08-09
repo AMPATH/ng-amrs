@@ -61,3 +61,11 @@
 table tr.after_table.row_0 td {
     border-top: 0 !important;
 }
+
+@media only screen and (max-device-width: 768px){
+  .search-result .panel-info {
+    width: 100%;
+    float: none;
+    padding: 20px 10px 10px;
+  }
+}

@@ -60,8 +60,9 @@
         $scope.artStartDateCurrent = null;
         $scope.currentArtRegimen = '';
         $scope.currentArtRegimenId = null;
+        $scope.locationDisplay = "";
 
-        $scope.patientUuid = LabOrderSearchService.getOrderData().patient.uuid;
+        $scope.patientUuid = LabOrderSearchService.getPatient() ? LabOrderSearchService.getPatient().uuid : null;
         $scope.isOrderSearch = LabOrderSearchService.getIsOrderSearch();
         LabOrderSearchService.setIsOrderSearch(false);
 
@@ -84,14 +85,15 @@
         activate();
 
         function activate() {
+
             $scope.orderType = labPostingHelper.determineOrderType($scope.order);
-            if (!hasLoadingTimeRequiredInputs())
-                return;
+            //if (!hasLoadingTimeRequiredInputs())
+              //  return;
             loadOrder($scope.order.uuid);
             extractPatientInformation();
             extractHivSummaryInformation();
         }
-        
+
         //functions to validate data
         function hasLoadingTimeRequiredInputs() {
             if (_.isEmpty($scope.order)) {
@@ -167,6 +169,7 @@
         function onLoadOrderSuccess(order) {
             $scope.isBusy = false;
             $scope.order = order;
+            $scope.locationDisplay = $scope.order.encounter.location.display;
         }
 
         function onLoadOrderError(error) {
