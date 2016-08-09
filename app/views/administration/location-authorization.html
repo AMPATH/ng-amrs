@@ -1,0 +1,108 @@
+<div class="panel panel-info ">
+  <div class="panel-heading">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="form-group col-md-12" style="margin-top: 10px">
+          <label for="system-user">Select System User</label>
+
+          <div id="system-user" class="input-group">
+            <ui-select ng-model="selectedUser.selected" ng-disabled="findingUser" reset-search-input="false"
+                       theme="bootstrap">
+              <ui-select-match placeholder="Type to search for a user"> {{$select.selected.display}}</ui-select-match>
+              <ui-select-choices refresh="findUsers($select.search)" repeat="user in users">
+                <div ng-bind-html="user.display | highlight: $select.search "></div>
+                <i class="text-muted" ng-bind-html="user.person.display "></i>
+              </ui-select-choices>
+            </ui-select>
+            <div class="input-group-addon">
+                  <span class="text-danger">
+                    <img ng-show="findingUser" src="images/ajax-loader.gif"/>
+                  </span>
+              <span class="glyphicon glyphicon-remove-circle" ng-click="selectedUser.selected = null"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <span class="text-muted">
+ 		<div class="container-fluid">
+      <div class="row" style="" ng-if="selectedUser.selected">
+        <div class="col-sm-3">
+          <h5 style=""><strong>Username: </strong>{{selectedUser.selected.display | titlecase}}</h5>
+        </div>
+        <div class="col-sm-3">
+          <h5 style=""><strong>Full Names: </strong>{{selectedUser.selected.person.display | titlecase}}</h5>
+        </div>
+        <div class="col-sm-3">
+          <h5 style=""><strong>Gender: </strong>{{selectedUser.selected.person.gender | titlecase}}</h5>
+        </div>
+        <div class="col-sm-3">
+          <h5 style=""><strong>Age: </strong>{{selectedUser.selected.person.age | titlecase}}</h5>
+        </div>
+      </div>
+    </div>
+    </span>
+
+  </div>
+  <!--<div class="panel-body" style="  padding:5px!important">-->
+  <!--</div>-->
+</div>
+<div ng-if="selectedUser.selected">
+  <div class="panel panel-info ">
+    <div class="panel-body">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="form-group col-md-12">
+            <label for="location">Select Locations/Facilities which <strong>{{selectedUser.selected.display}}</strong> is
+              authorized to generate reports/analytics</label>
+
+            <div id="location" class="input-group">
+              <div class="input-group-addon">
+						<span class="text-danger">
+               <span ng-show="isBusy" class="fa fa-spinner fa-spin"></span>
+						</span>
+                <span ng-hide="isBusy" class="glyphicon glyphicon-map-marker"></span>
+              </div>
+              <select ng-disabled="isBusy||selectedLocations.selectedAll" multiple="multiple"
+                      kendo-multi-select
+                      k-ng-model="selectedLocations.locations"
+                      k-options="locationsOptions"
+                ></select>
+
+              <div class="input-group-addon" ng-disabled="selectedLocations.locations.length===0"
+                   ng-click="selectAllLocations()" style="cursor: pointer;">
+                <span ng-show="selectedLocations.selectedAll" class="glyphicon glyphicon-trash"></span>
+                <span ng-hide="selectedLocations.selectedAll" class="glyphicon glyphicon-pushpin"></span>
+                <span ng-hide="selectedLocations.selectedAll">Select All</span>
+                <span ng-hide="!selectedLocations.selectedAll">Select None</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="height: 35px" ng-show='!isBusy && !experiencedLoadingErrors'>
+    <div class="btn-group pull-right" >
+      <button  class="btn btn-info pull-right"
+               ng-disabled="savingProperty||isBusy"
+               ng-click="saveUserAttribute()">
+        <span ng-show="savingProperty" class="fa fa-spinner fa-spin"></span>
+        <span ng-hide="savingProperty" class="fa fa-save"></span>
+        <span>Save</span>
+      </button>
+      </ul>
+    </div>
+  </div>
+  <div class="alert alert-danger" style="margin-top: 5px" ng-if="experiencedSavingErrors!==null">
+    <a href class="close" data-dismiss="alert">&times;</a>
+    <strong>Error!</strong> An error occurred while saving, please try again: {{experiencedSavingErrors}}
+  </div>
+</div>
+<style>
+  .k-widget * {
+    -webkit-box-sizing: border-box !important;
+    box-sizing: border-box !important;
+  }
+</style>
