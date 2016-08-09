@@ -8,3 +8,4 @@ app/version.json
 dist.tar.gz
 npm-debug.log
 settings.json
+conf/*

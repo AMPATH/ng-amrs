@@ -33,6 +33,7 @@
       compile = $injector.get('$compile');
 
       controller =$controller('LabOrderSearchCtrl', {
+        $rootScope:$rootScope,
         $scope:scope,
         OpenmrsRestService:openmrsRestService,
         EtlRestService: etlRestService,
@@ -43,7 +44,7 @@
       });
     }));
 
-    //$scope,  OpenmrsRestService, EtlRestService, LabOrderSearchService, PatientModel, HivSummaryModel, $element, $compile
+    //$rootScope, $scope, OpenmrsRestService, EtlRestService, LabOrderSearchService, PatientModel, HivSummaryModel, $element, $compile
 
       it('LabOrderSearchCtrl controller should be created successfully', function() {
         expect(controller).to.exist;

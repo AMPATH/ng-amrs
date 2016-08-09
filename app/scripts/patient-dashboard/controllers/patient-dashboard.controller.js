@@ -15,7 +15,7 @@
   PatientDashboardCtrl.$nject = ['$rootScope', '$scope', '$stateParams', '$timeout',
     'OpenmrsRestService', 'ClinicalSummaryPdfService'
   ];
-
+  
   function PatientDashboardCtrl($rootScope, $scope, $stateParams, $timeout,
     OpenmrsRestService, ClinicalSummaryPdfService) {
     $scope.patient = {};

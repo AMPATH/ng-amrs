@@ -11,9 +11,9 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
     .module('app.labordersearch')
     .controller('LabOrderSearchCtrl', LabOrderSearchCtrl);
 
-    LabOrderSearchCtrl.$inject = ['$scope', 'OpenmrsRestService', 'EtlRestService', 'LabOrderSearchService', 'PatientModel', 'HivSummaryModel' , '$compile'];
+    LabOrderSearchCtrl.$inject = ['$rootScope','$scope', 'OpenmrsRestService', 'EtlRestService', 'LabOrderSearchService', 'PatientModel', 'HivSummaryModel' , '$compile'];
 
-    function LabOrderSearchCtrl($scope,  OpenmrsRestService, EtlRestService, LabOrderSearchService, PatientModel, HivSummaryModel, $compile) {
+    function LabOrderSearchCtrl($rootScope, $scope,  OpenmrsRestService, EtlRestService, LabOrderSearchService, PatientModel, HivSummaryModel, $compile) {
 
       $scope.fetchHivSummary = fetchHivSummary;
       $scope.searchLabOrders = searchLabOrders;
@@ -32,6 +32,13 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
       $scope.order = null;
       $scope.patient = {};
       $scope.hivSummary = {};
+
+      //used to clear search after posting an order
+      $scope.modalObject = {
+        dismiss: function(txt) {
+          $scope.reset();
+        }
+      };
 
       $scope.$watch('orderID', function(searchString) {
 
@@ -82,6 +89,8 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
 
           $scope.patient = new PatientModel.patient(data.patient);
 
+          $rootScope.broadcastPatient = $scope.patient;
+
           var uuid = data.patient.person.uuid;
           $scope.fetchHivSummary(uuid);
         }
@@ -113,10 +122,9 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
       };
 
       function showResult() {
-        var el = $compile( '<post-lab-order patient="patient" hiv-summary="hivSummary" order="order" isOrderSearch="isOrderSearch"></post-lab-order>' )( $scope );
-        angular.element( document.querySelector( '.search-result' )).append(el);
 
-        //LabOrderSearchService.setIsOrderSearch(false);
+        var el = $compile( '<post-lab-order patient="patient" hiv-summary="hivSummary" order="order" modal-object="modalObject" isOrderSearch="isOrderSearch"></post-lab-order>' )( $scope );
+        angular.element( document.querySelector( '.search-result' )).append(el);
       };
 
       function reset() {

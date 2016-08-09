@@ -3,6 +3,13 @@
 
   <hr class="header-hr" style="margin-top: 1px; margin-bottom: 2px;" />
 
+  <div ng-show="order != null" class="order-info">
+    <p>
+      <em>Location: <strong ng-bind="locationDisplay"></strong>.</em>
+      <em>&nbsp;Date Collected: <strong>{{order.dateActivated | date:'dd-MM-yyyy HH:mm'}}</strong>.</em>
+      <em>&nbsp;Provider: <strong>{{order.orderer.display}}</strong></em>
+    </p>
+  </div>
   <div ng-show="isOrderSearch">
     <a ng-href="#/patient/{{patientUuid}}" class="btn btn-primary ladda-button">
       <span class="icon-i-administration">View Patient</span>

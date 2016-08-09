@@ -13,7 +13,7 @@
     var orderData = null;
     var hivSummaryData = null;
     var isOrderSearch = false;
-    
+
     return {
       getOrderData: getOrderData,
       setOrderData: setOrderData,
@@ -23,6 +23,7 @@
       getOrderID: getOrderID,
       setIsOrderSearch: setIsOrderSearch,
       getIsOrderSearch: getIsOrderSearch,
+      getPatient: getPatient,
       reset: reset
     };
 
@@ -31,6 +32,14 @@
     }
     function getOrderData() {
       return orderData;
+    }
+
+    function getPatient() {
+
+      if(orderData && orderData.patient)
+        return orderData.patient;
+
+      return null;
     }
 
     function setHivSummaryData(data) {
