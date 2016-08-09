@@ -1,7 +1,7 @@
 /* global angular */
 /*jshint -W003, -W098, -W117, -W026, -W040, -W004 */
 /*jshint camelcase: false */
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -21,6 +21,7 @@
         //madnatory fields givenName, familyName
         function hivSummary(hivSummaryEtl) {
             var modelDefinition = this;
+
 
             //initialize private members
             var _personId = !UtilService.isNullOrUndefined(hivSummaryEtl.person_id) ?
@@ -60,6 +61,16 @@
                 hivSummaryEtl.arv_start_date : '';
             var _arvFirstRegimen = !UtilService.isNullOrUndefined(hivSummaryEtl.arv_first_regimen) ?
                 hivSummaryEtl.arv_first_regimen : '';
+
+            var _arvFirstRegimenStartDate = !UtilService.isNullOrUndefined(hivSummaryEtl.arv_first_regimen_start_date) ?
+                hivSummaryEtl.arv_first_regimen_start_date : '';
+
+            var _arvFirstRegimenId = !UtilService.isNullOrUndefined(hivSummaryEtl.arv_first_regimen_id) ?
+                hivSummaryEtl.arv_first_regimen_id : null; //_curArvMedsId
+
+            var _curArvMedsId = !UtilService.isNullOrUndefined(hivSummaryEtl.cur_arv_meds_id) ?
+                hivSummaryEtl.cur_arv_meds_id : null;
+
             var _curArvMeds = !UtilService.isNullOrUndefined(hivSummaryEtl.cur_arv_meds) ?
                 hivSummaryEtl.cur_arv_meds : '';
             var _curArvLine = !UtilService.isNullOrUndefined(hivSummaryEtl.cur_arv_line) ?
@@ -120,12 +131,12 @@
                 hivSummaryEtl.enrollment_date : '';
 
             var _curWhoStage = !UtilService.isNullOrUndefined(hivSummaryEtl.cur_who_stage) ?
-                    hivSummaryEtl.cur_who_stage : '';
+                hivSummaryEtl.cur_who_stage : '';
 
             var _tbProphylaxisStartDate = !UtilService.isNullOrUndefined(hivSummaryEtl.tb_prophylaxis_start_date) ?
-                    hivSummaryEtl.tb_prophylaxis_start_date : '';
+                hivSummaryEtl.tb_prophylaxis_start_date : '';
 
-            modelDefinition.personId = function(value) {
+            modelDefinition.personId = function (value) {
                 if (angular.isDefined(value)) {
                     _personId = value;
                 }
@@ -134,7 +145,7 @@
                 }
             };
 
-            modelDefinition.uuid = function(value) {
+            modelDefinition.uuid = function (value) {
                 if (angular.isDefined(value)) {
                     _uuid = value;
                 }
@@ -143,7 +154,7 @@
                 }
             };
 
-            modelDefinition.encounterId = function(value) {
+            modelDefinition.encounterId = function (value) {
                 if (angular.isDefined(value)) {
                     _encounterId = value;
                 }
@@ -152,7 +163,7 @@
                 }
             };
 
-            modelDefinition.encounterDatetime = function(value) {
+            modelDefinition.encounterDatetime = function (value) {
                 if (angular.isDefined(value)) {
                     _encounterDatetime = value;
                 }
@@ -161,15 +172,15 @@
                 }
             };
 
-            modelDefinition.encounterType = function(value) {
-              if(angular.isDefined(value)) {
-                _encounterType = value;
-              } else {
-                return _encounterType;
-              }
+            modelDefinition.encounterType = function (value) {
+                if (angular.isDefined(value)) {
+                    _encounterType = value;
+                } else {
+                    return _encounterType;
+                }
             };
 
-            modelDefinition.encounterTypeName = function(value) {
+            modelDefinition.encounterTypeName = function (value) {
                 if (angular.isDefined(value)) {
                     _encounterTypeName = value;
                 }
@@ -178,7 +189,7 @@
                 }
             };
 
-            modelDefinition.locationId = function(value) {
+            modelDefinition.locationId = function (value) {
                 if (angular.isDefined(value)) {
                     _locationId = value;
                 }
@@ -187,7 +198,7 @@
                 }
             };
 
-            modelDefinition.locationUuid = function(value) {
+            modelDefinition.locationUuid = function (value) {
                 if (angular.isDefined(value)) {
                     _locationUuid = value;
                 }
@@ -196,7 +207,7 @@
                 }
             };
 
-            modelDefinition.visitNum = function(value) {
+            modelDefinition.visitNum = function (value) {
                 if (angular.isDefined(value)) {
                     _visitNum = value;
                 }
@@ -205,7 +216,7 @@
                 }
             };
 
-            modelDefinition.deathDate = function(value) {
+            modelDefinition.deathDate = function (value) {
                 if (angular.isDefined(value)) {
                     _deathDate = value;
                 }
@@ -214,7 +225,7 @@
                 }
             };
 
-            modelDefinition.scheduledVisit = function(value) {
+            modelDefinition.scheduledVisit = function (value) {
                 if (angular.isDefined(value)) {
                     _scheduledVisit = value;
                 }
@@ -223,7 +234,7 @@
                 }
             };
 
-            modelDefinition.transferOut = function(value) {
+            modelDefinition.transferOut = function (value) {
                 if (angular.isDefined(value)) {
                     _transferOut = value;
                 }
@@ -232,7 +243,7 @@
                 }
             };
 
-            modelDefinition.outOfCare = function(value) {
+            modelDefinition.outOfCare = function (value) {
                 if (angular.isDefined(value)) {
                     _outOfCare = value;
                 }
@@ -241,7 +252,7 @@
                 }
             };
 
-            modelDefinition.prevRtcDate = function(value) {
+            modelDefinition.prevRtcDate = function (value) {
                 if (angular.isDefined(value)) {
                     _prevRtcDate = value;
                 }
@@ -250,7 +261,7 @@
                 }
             };
 
-            modelDefinition.prevEncounterTypeName = function(value) {
+            modelDefinition.prevEncounterTypeName = function (value) {
                 if (angular.isDefined(value)) {
                     _prevEncounterTypeName = value;
                 }
@@ -259,7 +270,7 @@
                 }
             };
 
-            modelDefinition.rtcDate = function(value) {
+            modelDefinition.rtcDate = function (value) {
                 if (angular.isDefined(value)) {
                     _rtcDate = value;
                 }
@@ -268,7 +279,7 @@
                 }
             };
 
-            modelDefinition.arvStartDate = function(value) {
+            modelDefinition.arvStartDate = function (value) {
                 if (angular.isDefined(value)) {
                     _arvStartDate = value;
                 }
@@ -277,7 +288,7 @@
                 }
             };
 
-            modelDefinition.arvFirstRegimen = function(value) {
+            modelDefinition.arvFirstRegimen = function (value) {
                 if (angular.isDefined(value)) {
                     _arvFirstRegimen = value;
                 }
@@ -286,7 +297,25 @@
                 }
             };
 
-            modelDefinition.curArvMeds = function(value) {
+            modelDefinition.arvFirstRegimenId = function (value) {
+                if (angular.isDefined(value)) {
+                    _arvFirstRegimenId = value;
+                }
+                else {
+                    return _arvFirstRegimenId;
+                }
+            };
+
+            modelDefinition.arvFirstRegimenStartDate = function (value) {
+                if (angular.isDefined(value)) {
+                    _arvFirstRegimenStartDate = value;
+                }
+                else {
+                    return _arvFirstRegimenStartDate;
+                }
+            };
+
+            modelDefinition.curArvMeds = function (value) {
                 if (angular.isDefined(value)) {
                     _curArvMeds = value;
                 }
@@ -295,7 +324,16 @@
                 }
             };
 
-            modelDefinition.curArvLine = function(value) {
+            modelDefinition.curArvMedsId = function (value) {
+                if (angular.isDefined(value)) {
+                    _curArvMedsId = value;
+                }
+                else {
+                    return _curArvMedsId;
+                }
+            };
+
+            modelDefinition.curArvLine = function (value) {
                 if (angular.isDefined(value)) {
                     _curArvLine = value;
                 }
@@ -304,7 +342,7 @@
                 }
             };
 
-            modelDefinition.firstEvidencePatientPregnant = function(value) {
+            modelDefinition.firstEvidencePatientPregnant = function (value) {
                 if (angular.isDefined(value)) {
                     _firstEvidencePatientPregnant = value;
                 }
@@ -313,7 +351,7 @@
                 }
             };
 
-            modelDefinition.edd = function(value) {
+            modelDefinition.edd = function (value) {
                 if (angular.isDefined(value)) {
                     _edd = value;
                 }
@@ -322,7 +360,7 @@
                 }
             };
 
-            modelDefinition.screenedForTb = function(value) {
+            modelDefinition.screenedForTb = function (value) {
                 if (angular.isDefined(value)) {
                     _screenedForTb = value;
                 }
@@ -331,7 +369,7 @@
                 }
             };
 
-            modelDefinition.tbTxStartDate = function(value) {
+            modelDefinition.tbTxStartDate = function (value) {
                 if (angular.isDefined(value)) {
                     _tbTxStartDate = value;
                 }
@@ -340,7 +378,7 @@
                 }
             };
 
-            modelDefinition.pcpProphylaxisStartDate = function(value) {
+            modelDefinition.pcpProphylaxisStartDate = function (value) {
                 if (angular.isDefined(value)) {
                     _pcpProphylaxisStartDate = value;
                 }
@@ -349,7 +387,7 @@
                 }
             };
 
-            modelDefinition.cd4Resulted = function(value) {
+            modelDefinition.cd4Resulted = function (value) {
                 if (angular.isDefined(value)) {
                     _cd4Resulted = value;
                 }
@@ -358,7 +396,7 @@
                 }
             };
 
-            modelDefinition.cd4ResultedDate = function(value) {
+            modelDefinition.cd4ResultedDate = function (value) {
                 if (angular.isDefined(value)) {
                     _cd4ResultedDate = value;
                 }
@@ -367,7 +405,7 @@
                 }
             };
 
-            modelDefinition.cd4_1 = function(value) {
+            modelDefinition.cd4_1 = function (value) {
                 if (angular.isDefined(value)) {
                     _cd4_1 = value;
                 }
@@ -376,7 +414,7 @@
                 }
             };
 
-            modelDefinition.cd4_1Date = function(value) {
+            modelDefinition.cd4_1Date = function (value) {
                 if (angular.isDefined(value)) {
                     _cd4_1Date = value;
                 }
@@ -385,7 +423,7 @@
                 }
             };
 
-            modelDefinition.cd4_2Date = function(value) {
+            modelDefinition.cd4_2Date = function (value) {
                 if (angular.isDefined(value)) {
                     _cd4_2Date = value;
                 }
@@ -394,7 +432,7 @@
                 }
             };
 
-            modelDefinition.cd4Percent_1 = function(value) {
+            modelDefinition.cd4Percent_1 = function (value) {
                 if (angular.isDefined(value)) {
                     _cd4Percent_1 = value;
                 }
@@ -403,7 +441,7 @@
                 }
             };
 
-            modelDefinition.cd4Percent_1Date = function(value) {
+            modelDefinition.cd4Percent_1Date = function (value) {
                 if (angular.isDefined(value)) {
                     _cd4Percent_1Date = value;
                 }
@@ -412,7 +450,7 @@
                 }
             };
 
-            modelDefinition.cd4Percent_2 = function(value) {
+            modelDefinition.cd4Percent_2 = function (value) {
                 if (angular.isDefined(value)) {
                     _cd4Percent_2 = value;
                 }
@@ -421,7 +459,7 @@
                 }
             };
 
-            modelDefinition.cd4Percent_2Date = function(value) {
+            modelDefinition.cd4Percent_2Date = function (value) {
                 if (angular.isDefined(value)) {
                     _cd4Percent_2Date = value;
                 }
@@ -430,7 +468,7 @@
                 }
             };
 
-            modelDefinition.vlResulted = function(value) {
+            modelDefinition.vlResulted = function (value) {
                 if (angular.isDefined(value)) {
                     _vlResulted = value;
                 }
@@ -439,7 +477,7 @@
                 }
             };
 
-            modelDefinition.vlResultedDate = function(value) {
+            modelDefinition.vlResultedDate = function (value) {
                 if (angular.isDefined(value)) {
                     _vlResultedDate = value;
                 }
@@ -448,7 +486,7 @@
                 }
             };
 
-            modelDefinition.vl_1 = function(value) {
+            modelDefinition.vl_1 = function (value) {
                 if (angular.isDefined(value)) {
                     _vl_1 = value;
                 }
@@ -457,7 +495,7 @@
                 }
             };
 
-            modelDefinition.vl_1Date = function(value) {
+            modelDefinition.vl_1Date = function (value) {
                 if (angular.isDefined(value)) {
                     _vl_1Date = value;
                 }
@@ -466,7 +504,7 @@
                 }
             };
 
-            modelDefinition.vl_2 = function(value) {
+            modelDefinition.vl_2 = function (value) {
                 if (angular.isDefined(value)) {
                     _vl_2 = value;
                 }
@@ -475,7 +513,7 @@
                 }
             };
 
-            modelDefinition.vl_2Date = function(value) {
+            modelDefinition.vl_2Date = function (value) {
                 if (angular.isDefined(value)) {
                     _vl_2Date = value;
                 }
@@ -484,7 +522,7 @@
                 }
             };
 
-            modelDefinition.vlOrderDate = function(value) {
+            modelDefinition.vlOrderDate = function (value) {
                 if (angular.isDefined(value)) {
                     _vlOrderDate = value;
                 }
@@ -493,16 +531,16 @@
                 }
             };
 
-            modelDefinition.isPendingViralLoad = function(value) {
-              if (angular.isDefined(value)) {
-                _isPendingViralLoad=value;
-              }
-              else {
-                return _isPendingViralLoad;
-              }
+            modelDefinition.isPendingViralLoad = function (value) {
+                if (angular.isDefined(value)) {
+                    _isPendingViralLoad = value;
+                }
+                else {
+                    return _isPendingViralLoad;
+                }
             };
 
-            modelDefinition.cd4OrderDate = function(value) {
+            modelDefinition.cd4OrderDate = function (value) {
                 if (angular.isDefined(value)) {
                     _cd4OrderDate = value;
                 }
@@ -511,16 +549,16 @@
                 }
             };
 
-            modelDefinition.isPendingCD4 = function(value) {
-              if (angular.isDefined(value)) {
-                _isPendingCD4=value;
-              }
-              else {
-                return _isPendingCD4;
-              }
+            modelDefinition.isPendingCD4 = function (value) {
+                if (angular.isDefined(value)) {
+                    _isPendingCD4 = value;
+                }
+                else {
+                    return _isPendingCD4;
+                }
             };
 
-            modelDefinition.enrollmentDate = function(value) {
+            modelDefinition.enrollmentDate = function (value) {
                 if (angular.isDefined(value)) {
                     _enrollmentDate = value;
                 }
@@ -529,7 +567,7 @@
                 }
             };
 
-            modelDefinition.curWhoStage = function(value) {
+            modelDefinition.curWhoStage = function (value) {
                 if (angular.isDefined(value)) {
                     _curWhoStage = value;
                 }
@@ -538,71 +576,71 @@
                 }
             };
 
-            modelDefinition.tbProphylaxisStartDate = function(value) {
-              if(angular.isDefined(value)) {
-                _tbProphylaxisStartDate = value;
-              } else {
-                return _tbProphylaxisStartDate;
-              }
+            modelDefinition.tbProphylaxisStartDate = function (value) {
+                if (angular.isDefined(value)) {
+                    _tbProphylaxisStartDate = value;
+                } else {
+                    return _tbProphylaxisStartDate;
+                }
             }
         }
-        function determineIfVlIsPending(hivSummaryEtl){
-          var overDueDays=!UtilService.isNullOrUndefined(hivSummaryEtl.vl_order_date) ?
-            dateDiffInDays(new Date(hivSummaryEtl.vl_order_date),new Date()): 0;
-          if(overDueDays>0){
-            if(!UtilService.isNullOrUndefined(hivSummaryEtl.vl_1_date)) {
-              if (!UtilService.isNullOrUndefined(hivSummaryEtl.vl_order_date)) {
+        function determineIfVlIsPending(hivSummaryEtl) {
+            var overDueDays = !UtilService.isNullOrUndefined(hivSummaryEtl.vl_order_date) ?
+                dateDiffInDays(new Date(hivSummaryEtl.vl_order_date), new Date()) : 0;
+            if (overDueDays > 0) {
+                if (!UtilService.isNullOrUndefined(hivSummaryEtl.vl_1_date)) {
+                    if (!UtilService.isNullOrUndefined(hivSummaryEtl.vl_order_date)) {
+                        return {
+                            status: hivSummaryEtl.vl_order_date > hivSummaryEtl.vl_1_date,
+                            days: overDueDays
+                        };
+                    }
+                } else {
+                    return {
+                        status: true,
+                        days: overDueDays
+                    }
+                }
+            } else {
                 return {
-                  status:hivSummaryEtl.vl_order_date>hivSummaryEtl.vl_1_date,
-                  days:overDueDays
+                    status: false,
+                    days: overDueDays
                 };
-              }
-            } else{
-              return  {
-                status:true,
-                days:overDueDays
-              }
             }
-          }else{
-            return  {
-              status:false,
-              days:overDueDays
-            };
-          }
         }
-        function determineIfCD4IsPending(hivSummaryEtl){
-          var overDueDays=!UtilService.isNullOrUndefined(hivSummaryEtl.cd4_order_date) ?
-            dateDiffInDays(new Date(hivSummaryEtl.cd4_order_date),new Date()): 0;
-          if(overDueDays>0){
-            if(!UtilService.isNullOrUndefined(hivSummaryEtl.cd4_1_date)) {
-              if (!UtilService.isNullOrUndefined(hivSummaryEtl.cd4_order_date)) {
-                return {
-                  status:hivSummaryEtl.cd4_order_date>hivSummaryEtl.cd4_1_date,
-                  days:overDueDays
-                };
-              }
-            } else{
-              return  {
-                status:true,
-                days:overDueDays
-              }
-            }
+        function determineIfCD4IsPending(hivSummaryEtl) {
+            var overDueDays = !UtilService.isNullOrUndefined(hivSummaryEtl.cd4_order_date) ?
+                dateDiffInDays(new Date(hivSummaryEtl.cd4_order_date), new Date()) : 0;
+            if (overDueDays > 0) {
+                if (!UtilService.isNullOrUndefined(hivSummaryEtl.cd4_1_date)) {
+                    if (!UtilService.isNullOrUndefined(hivSummaryEtl.cd4_order_date)) {
+                        return {
+                            status: hivSummaryEtl.cd4_order_date > hivSummaryEtl.cd4_1_date,
+                            days: overDueDays
+                        };
+                    }
+                } else {
+                    return {
+                        status: true,
+                        days: overDueDays
+                    }
+                }
 
-          }else{
-            return  {
-              status:false,
-              days:overDueDays
-            };
-          }
+            } else {
+                return {
+                    status: false,
+                    days: overDueDays
+                };
+            }
         }
         function dateDiffInDays(a, b) {
-          var _MS_PER_DAY = 1000 * 60 * 60 * 24;
-         // a and b are javascript Date objects
-          // Discard the time and time-zone information.
-          var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-          var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+            var _MS_PER_DAY = 1000 * 60 * 60 * 24;
+            // a and b are javascript Date objects
+            // Discard the time and time-zone information.
+            var utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+            var utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
 
-          return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+            return Math.floor((utc2 - utc1) / _MS_PER_DAY);
         }
 
         function toArrayOfModels(unwrappedObjects) {

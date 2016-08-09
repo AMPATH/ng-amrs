@@ -1,0 +1,473 @@
+{
+    "name": "ampath_poc_adult_return_visit_form_v0.01",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "referencedForms": [
+        {
+            "formName": "component_preclinic-review",
+            "alias": "pcr"
+        },
+        {
+            "formName": "component_hospitalization",
+            "alias": "hosp"
+        },
+        {
+            "formName": "component_art",
+            "alias": "art"
+        },
+        {
+            "formName": "component_pcp-prophy",
+            "alias": "pcp"
+        },
+        {
+            "formName": "component_tb-prophy",
+            "alias": "tbp"
+        },
+        {
+            "formName": "component_tb-treatment",
+            "alias": "tbt"
+        },
+        {
+            "formName": "component_other-medication",
+            "alias": "omed"
+        },
+        {
+            "formName": "component_crypto",
+            "alias": "cryp"
+        },
+        {
+            "formName": "component_side-effect",
+            "alias": "se"
+        },
+        {
+            "formName": "component_vitals",
+            "alias": "vt"
+        },
+        {
+            "formName": "component_hpi",
+            "alias": "hpi"
+        },
+        {
+            "formName": "component_problem-list",
+            "alias": "pl"
+        },
+        {
+            "formName": "component_who-staging",
+            "alias": "who"
+        },
+        {
+            "formName": "component_lab-results",
+            "alias": "tr"
+        },
+        {
+            "formName": "component_assessment",
+            "alias": "ass"
+        },
+        {
+            "formName": "component_ob-history",
+            "alias": "gynhist"
+        },
+        {
+            "formName": "component_lab-orders_v1.0",
+            "alias": "to"
+        },
+        {
+            "formName": "component_referral",
+            "alias": "ref"
+        },
+        {
+            "formName": "component_vl-justification",
+            "alias": "vljust"
+        }
+    ],
+    "pages": [
+        {
+            "label": "Encounter Details",
+            "sections": [
+                {
+                    "label": "Encounter Details",
+                    "isExpanded": "True",
+                    "questions": [
+                        {
+                            "label": "Visit date",
+                            "type": "encounterDatetime",
+                            "required": "true",
+                            "default": "",
+                            "id": "encDate",
+                            "questionOptions": {
+                                "rendering": "date"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "encounterProvider",
+                            "label": "Provider",
+                            "id": "provider",
+                            "required": "true",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        },
+                        {
+                            "type": "encounterLocation",
+                            "label": "Facility name (site/satellite clinic required):",
+                            "id": "location",
+                            "required": "true",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Pre-Clinic Review",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "pcr",
+                        "page": "Pre-clinic Review",
+                        "section": "Pre-clinic Review"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Medical History",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "pcr",
+                        "page": "Pre-clinic Review",
+                        "section": "Social History"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "pcr",
+                        "page": "Pre-clinic Review",
+                        "section": "Prevention With Positives"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "hosp",
+                        "page": "Hospitalization",
+                        "section": "Hospitalization History"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "gynhist",
+                        "page": "OB/Gyn History",
+                        "section": "OB/Gyn History",
+                        "excludeQuestions": [
+                            "deliveryDate"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "label": "ART History",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "art",
+                        "page": "ART ",
+                        "section": "ART History",
+                        "excludeQuestions": [
+                            "current_art_regimen_ped"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "label": "PCP & TB Prophylaxis History",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "pcp",
+                        "page": "PCP Prophylaxis",
+                        "section": "PCP Prophylaxis Current"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tbp",
+                        "page": "TB Prophylaxis",
+                        "section": "TB Prophylaxis Current"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "TB History",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "tbt",
+                        "page": "TB Treatment",
+                        "section": "Tuberculosis History"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Other Medications History",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "cryp",
+                        "page": "Cryptococcal prevention",
+                        "section": "Cryptococcal Secondary Prevention"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "omed",
+                        "page": "Other medication",
+                        "section": "Other Medications"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Med Side Effects",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "se",
+                        "page": "Side Effects/Toxicity",
+                        "section": "Side Effects/Toxicity"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Vitals",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "vt",
+                        "page": "Vitals",
+                        "section": "Vital Signs"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "CC/HPI",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "hpi",
+                        "page": "History presenting illness",
+                        "section": "History Presenting Illness, Notes"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Current Symptoms",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "pl",
+                        "page": "Problem list",
+                        "section": "Problem List"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tbt",
+                        "page": "TB Treatment",
+                        "section": "TB Screening Questions"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "gynhist",
+                        "page": "OB/Gyn History",
+                        "section": "STI"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "who",
+                        "page": "WHO staging",
+                        "section": "Adult WHO Staging"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Test Results",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "Chemistry Lab Tests"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "CBC"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "CD4"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "Viral Load"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "TB Test"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "Chest Xray"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Assessment",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "ass",
+                        "page": "Assessment",
+                        "section": "Assessment Notes"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Medication Plan",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "art",
+                        "page": "ART ",
+                        "section": "ART Plan",
+                        "excludeQuestions": [
+                            "artStartedPed"
+                        ]
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "pcp",
+                        "page": "PCP Prophylaxis",
+                        "section": "PCP Prophylaxis Plan"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tbp",
+                        "page": "TB Prophylaxis",
+                        "section": "TB Prophylaxis Plan"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tbt",
+                        "page": "TB Treatment",
+                        "section": "TB Treatment Plan"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "cryp",
+                        "page": "Cryptococcal prevention",
+                        "section": "Cryptococcal Treatment Plan"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "omed",
+                        "page": "Other medication",
+                        "section": "Additional Medication Orders"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Plan",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "to",
+                        "page": "Test orders",
+                        "section": "Test Orders"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "ref",
+                        "page": "Referrals",
+                        "section": "Referrals"
+                    }
+                },
+                {
+                    "label": "Next appointment",
+                    "isExpanded": "true",
+                    "questions": [
+                        {
+                            "label": "Return to clinic Date:",
+                            "type": "obs",
+                            "required": "true",
+                            "questionOptions": {
+                                "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
+                                "rendering": "date",
+                                "weeksList": [
+                                    2,
+                                    4,
+                                    8,
+                                    12,
+                                    16
+                                ]
+                            },
+                           "validators": [
+                               {
+                                   "type": "date",
+                                   "allowFutureDates": "true"
+                               },
+                               {
+                                   "type": "js_expression",
+                                   "failsWhenExpression": "(new moment(encDate)).isAfter((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                   "message": "Return to clinic date should be greater than the encounter date."
+                               }
+                           ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
