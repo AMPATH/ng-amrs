@@ -324,7 +324,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         function subsribeToRootScopeMessages() {
             //navigate to question request from form entry module
-            $rootScope.$on("navigateToQuestion", onNavigateToQuestionRequest);
+            $rootScope.$on('navigateToQuestion', onNavigateToQuestionRequest);
         }
 
 
@@ -775,11 +775,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function getFinalPersonattributePayload(payload) {
             var formatedPayload = {
                 attributes: []
-            }
+            };
             _.each(payload, function (attribute) {
                 formatedPayload.attributes.push(attribute);
             });
-            console.log("formatedPayload is ", formatedPayload);
+            console.log('formatedPayload is ', formatedPayload);
             return formatedPayload;
         }
 
@@ -965,7 +965,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     onSubmitStageUpdated();
                 }
                 //forth stage of submitting is to submit person attributes
-                console.log('Payload person attributes=====', JSON.stringify(lastPersonAttributePayload))
+                console.log('Payload person attributes=====', JSON.stringify(lastPersonAttributePayload));
                 if (lastPersonAttributePayload !== undefined &&
                  angular.isArray(lastPersonAttributePayload.attributes) &&
                  lastPersonAttributePayload.attributes.length > 0) {

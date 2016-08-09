@@ -7,7 +7,7 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
   // Load grunt tasks automatically
   require('load-grunt-tasks')(grunt);
@@ -21,6 +21,7 @@ module.exports = function (grunt) {
     dist: 'dist'
   };
   grunt.loadNpmTasks('grunt-mkdir');
+  grunt.loadNpmTasks('gruntify-eslint');
   // Define the configuration for all the tasks
   grunt.initConfig({
     bower: grunt.file.readJSON('bower.json'),
@@ -35,14 +36,14 @@ module.exports = function (grunt) {
       },
       js: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-        tasks: ['newer:jshint:all'],
+        tasks: ['newer:eslint:all'],
         options: {
           livereload: '<%= connect.options.livereload %>'
         }
       },
       jsTest: {
         files: ['test/spec/{,*/}*.js'],
-        tasks: ['newer:jshint:test', 'karma']
+        tasks: ['newer:eslint:test', 'karma']
       },
       styles: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
@@ -64,12 +65,12 @@ module.exports = function (grunt) {
     },
 
     mkdir: {
-    all: {
-      options: {
-        create: ['dist/img']
+      all: {
+        options: {
+          create: ['dist/img']
+        },
       },
     },
-  },
 
     // The actual grunt server settings
     connect: {
@@ -82,7 +83,7 @@ module.exports = function (grunt) {
       livereload: {
         options: {
           open: true,
-          middleware: function (connect) {
+          middleware: function(connect) {
             return [
               connect.static('.tmp'),
               connect().use(
@@ -101,7 +102,7 @@ module.exports = function (grunt) {
       test: {
         options: {
           port: 9001,
-          middleware: function (connect) {
+          middleware: function(connect) {
             return [
               connect.static('.tmp'),
               connect.static('test'),
@@ -123,23 +124,8 @@ module.exports = function (grunt) {
     },
 
     // Make sure code styles are up to par and there are no obvious mistakes
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc',
-        reporter: require('jshint-stylish')
-      },
-      all: {
-        src: [
-          'Gruntfile.js',
-          '<%= yeoman.app %>/scripts/{,*/}*.js'
-        ]
-      },
-      test: {
-        options: {
-          jshintrc: 'test/.jshintrc'
-        },
-        src: ['test/spec/{,*/}*.js']
-      }
+    eslint: {
+      src: ['app/**/*.js', 'test/**/*.js']
     },
 
     // Empties folders to start fresh
@@ -187,23 +173,23 @@ module.exports = function (grunt) {
     wiredep: {
       app: {
         src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
+        ignorePath: /\.\.\//
       },
       test: {
         devDependencies: true,
         src: '<%= karma.unit.configFile %>',
-        ignorePath:  /\.\.\//,
-        fileTypes:{
+        ignorePath: /\.\.\//,
+        fileTypes: {
           js: {
             block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
-              detect: {
-                js: /'(.*\.js)'/gi
-              },
-              replace: {
-                js: '\'{{filePath}}\','
-              }
+            detect: {
+              js: /'(.*\.js)'/gi
+            },
+            replace: {
+              js: '\'{{filePath}}\','
             }
           }
+        }
       }
     },
 
@@ -326,64 +312,64 @@ module.exports = function (grunt) {
     copy: {
       dist: {
         files: [{
-          expand: true,
-          dot: true,
-          cwd: '<%= yeoman.app %>',
-          dest: '<%= yeoman.dist %>',
-          src: [
-            '*.{ico,png,txt}',
-            '.htaccess',
-            '*.html',
-            'version.json',
-            'servers.json',
-            'views/{,*/}*.html',
-            'images/{,*/}*.{webp}',
-            'styles/fonts/{,*/}*.*',
-            'styles/medical-icons/{,*/}*.*',
-            '!styles/medical-icons/fonts/*'
-          ]
-        }, {
-          // FIXME: Very specific section for medical fonts, may need to refactor
-          expand: true,
-          cwd: '<%= yeoman.app %>/styles/medical-icons',
-          dest: '<%= yeoman.dist %>/styles',
-          src: ['fonts/*']
-        },  {
-          expand: true,
-          cwd: '.tmp/images',
-          dest: '<%= yeoman.dist %>/images',
-          src: ['generated/*']
-        }, {
-          expand: true,
-          cwd: 'bower_components/font-awesome/fonts',
-          src: ['*.*'],
-          dest: '<%= yeoman.dist %>/fonts'
-        }, {
-          expand: true,
-          cwd: 'bower_components/bootstrap/dist',
-          src: 'fonts/*',
-          dest: '<%= yeoman.dist %>'
-        }, {
+            expand: true,
+            dot: true,
+            cwd: '<%= yeoman.app %>',
+            dest: '<%= yeoman.dist %>',
+            src: [
+              '*.{ico,png,txt}',
+              '.htaccess',
+              '*.html',
+              'version.json',
+              'servers.json',
+              'views/{,*/}*.html',
+              'images/{,*/}*.{webp}',
+              'styles/fonts/{,*/}*.*',
+              'styles/medical-icons/{,*/}*.*',
+              '!styles/medical-icons/fonts/*'
+            ]
+          }, {
+            // FIXME: Very specific section for medical fonts, may need to refactor
+            expand: true,
+            cwd: '<%= yeoman.app %>/styles/medical-icons',
+            dest: '<%= yeoman.dist %>/styles',
+            src: ['fonts/*']
+          }, {
+            expand: true,
+            cwd: '.tmp/images',
+            dest: '<%= yeoman.dist %>/images',
+            src: ['generated/*']
+          }, {
+            expand: true,
+            cwd: 'bower_components/font-awesome/fonts',
+            src: ['*.*'],
+            dest: '<%= yeoman.dist %>/fonts'
+          }, {
+            expand: true,
+            cwd: 'bower_components/bootstrap/dist',
+            src: 'fonts/*',
+            dest: '<%= yeoman.dist %>'
+          }, {
             expand: true,
             cwd: 'bower_components/kendo-ui/styles/Default',
             src: ['*'],
             dest: '<%= yeoman.dist %>/styles/Bootstrap'
           }, {
-         expand: true,
-         cwd: 'bower_components/ion.rangeSlider/img',
-         src: ['*'],
-         dest: '<%= yeoman.dist %>/img'
-       }
+            expand: true,
+            cwd: 'bower_components/ion.rangeSlider/img',
+            src: ['*'],
+            dest: '<%= yeoman.dist %>/img'
+          }
 
         ]
       },
       json: {
         files: [{
-            expand: true,
-            cwd: '<%= yeoman.app %>/scripts/formentry/formschema',
-            src: '*.json',
-            dest: '<%= yeoman.dist %>/scripts/formentry/formschema'
-          }]
+          expand: true,
+          cwd: '<%= yeoman.app %>/scripts/formentry/formschema',
+          src: '*.json',
+          dest: '<%= yeoman.dist %>/scripts/formentry/formschema'
+        }]
       },
       styles: {
         expand: true,
@@ -394,25 +380,25 @@ module.exports = function (grunt) {
     },
 
     revision: {
-        options: {
-          property: 'meta.revision',
-          ref: 'HEAD',
-          short: true
-        }
+      options: {
+        property: 'meta.revision',
+        ref: 'HEAD',
+        short: true
+      }
     },
 
     'file-creator': {
-        'tag-revision': {
-          'app/version.json': function(fs, fd, done) {
-            grunt.task.requires('revision');
-            fs.writeSync(fd, JSON.stringify({
-                version: grunt.config('bower.version'),
-                revision: grunt.config('meta.revision'),
-                date: grunt.template.today()
-            }));
-            done();
-          }
+      'tag-revision': {
+        'app/version.json': function(fs, fd, done) {
+          grunt.task.requires('revision');
+          fs.writeSync(fd, JSON.stringify({
+            version: grunt.config('bower.version'),
+            revision: grunt.config('meta.revision'),
+            date: grunt.template.today()
+          }));
+          done();
         }
+      }
     },
 
     // Run some tasks in parallel to speed up the build process
@@ -448,33 +434,33 @@ module.exports = function (grunt) {
      * (Otherwise hell is gonna break loose when you do!)
      */
     release: {
-        options: {
-          npm: false,
-          indentation: '\t',
-          tagMessage: 'Tagging version <%= version %>', //default: 'Version <%= version %>',
-          additionalFiles: ['bower.json']
-        }
+      options: {
+        npm: false,
+        indentation: '\t',
+        tagMessage: 'Tagging version <%= version %>', //default: 'Version <%= version %>',
+        additionalFiles: ['bower.json']
+      }
     },
 
     gitcommit: {
-        snapshot: {
-            options: {
-                message: 'Committing version change to SNAPSHOT version',
-                noVerify: false,
-                noStatus: false
-            },
-            files: {
-                src: ['package.json', 'bower.json']
-            }
+      snapshot: {
+        options: {
+          message: 'Committing version change to SNAPSHOT version',
+          noVerify: false,
+          noStatus: false
+        },
+        files: {
+          src: ['package.json', 'bower.json']
         }
+      }
     },
 
     gitpush: {
-        snapshot: {
-            options: {
-                remote: 'upstream'
-            }
+      snapshot: {
+        options: {
+          remote: 'upstream'
         }
+      }
     }
   });
 
@@ -485,76 +471,76 @@ module.exports = function (grunt) {
    * needs to invoke only this task with appropriate target.
    */
   grunt.registerTask('maintenance-branch', function(upstream) {
-      var upstream = upstream || 'upstream';
-      var npmProps = grunt.file.readJSON('package.json');
-      var versionParts = _splitVersionNumber(npmProps.version);
+    var upstream = upstream || 'upstream';
+    var npmProps = grunt.file.readJSON('package.json');
+    var versionParts = _splitVersionNumber(npmProps.version);
 
-      var branch = versionParts.major + '.' + versionParts.minor + '.x';
+    var branch = versionParts.major + '.' + versionParts.minor + '.x';
 
-      //Create the maintenance branch.
-      grunt.log.writeln('Creating maintenance branch => ', branch);
+    //Create the maintenance branch.
+    grunt.log.writeln('Creating maintenance branch => ', branch);
 
-      //Make native calls
-      var exec = require('sync-exec');
+    //Make native calls
+    var exec = require('sync-exec');
 
-      // Cache current branch which will mostly be 'master'
-      var curBranch = exec('git symbolic-ref HEAD --short').stdout;
-      var ret = exec('git checkout -b ' + branch);
-      if(ret.stdout !== '') grunt.log.writeln(ret.stdout);
-      if(ret.stderr !== '') grunt.log.errorlns(ret.stderr);
+    // Cache current branch which will mostly be 'master'
+    var curBranch = exec('git symbolic-ref HEAD --short').stdout;
+    var ret = exec('git checkout -b ' + branch);
+    if (ret.stdout !== '') grunt.log.writeln(ret.stdout);
+    if (ret.stderr !== '') grunt.log.errorlns(ret.stderr);
 
-      if(ret.status === 0) {
-          // Update version to SNAPSHOT on the maintenance branch
-          exec('grunt snapshot');
+    if (ret.status === 0) {
+      // Update version to SNAPSHOT on the maintenance branch
+      exec('grunt snapshot');
 
-          grunt.log.writeln('Setting ' + branch + ' to track '+ upstream
-                            + '/' + branch);
-          ret = exec('git push -u ' + upstream + ' ' + branch);
-          if(ret.stdout !== '') grunt.log.writeln(ret.stdout);
-          if(ret.stderr !== '') grunt.log.errorlns(ret.stderr);
+      grunt.log.writeln('Setting ' + branch + ' to track ' + upstream +
+        '/' + branch);
+      ret = exec('git push -u ' + upstream + ' ' + branch);
+      if (ret.stdout !== '') grunt.log.writeln(ret.stdout);
+      if (ret.stderr !== '') grunt.log.errorlns(ret.stderr);
 
-          //Switch back to the original branch
-          exec('git checkout ' + curBranch);
-      }
+      //Switch back to the original branch
+      exec('git checkout ' + curBranch);
+    }
   });
 
   grunt.registerTask('snapshot', function(target) {
-      //Here we update the master to snapshot version.
-      var npmProps = grunt.file.readJSON('package.json');
+    //Here we update the master to snapshot version.
+    var npmProps = grunt.file.readJSON('package.json');
 
-      var vParts = _splitVersionNumber(npmProps.version);
-      var minor = Number(vParts.minor);
-      var patch = 0;
-      if(target === 'minor') {
-          minor++;
-      } else {  //Patch version is to be upgraded
-          if(!isNaN(vParts.patch)) {
-              patch = Number(vParts.patch) + 1;
-          } else {
-              // Try to get the initial part.
-              var i=0;
-              var num = '';
-              while(i < vParts.patch.length) {
-                  if(isNaN(vParts.patch[i])){
-                      break;
-                  }
-                  num = num.concat(vParts.patch[i]);
-                  i++;
-              }
-              patch = num.length>0 ? Number(num) + 1 : 0;
+    var vParts = _splitVersionNumber(npmProps.version);
+    var minor = Number(vParts.minor);
+    var patch = 0;
+    if (target === 'minor') {
+      minor++;
+    } else { //Patch version is to be upgraded
+      if (!isNaN(vParts.patch)) {
+        patch = Number(vParts.patch) + 1;
+      } else {
+        // Try to get the initial part.
+        var i = 0;
+        var num = '';
+        while (i < vParts.patch.length) {
+          if (isNaN(vParts.patch[i])) {
+            break;
           }
+          num = num.concat(vParts.patch[i]);
+          i++;
+        }
+        patch = num.length > 0 ? Number(num) + 1 : 0;
       }
-      var snapshotVersion = vParts.major + '.' + minor + '.' + patch + '-SNAPSHOT';
+    }
+    var snapshotVersion = vParts.major + '.' + minor + '.' + patch + '-SNAPSHOT';
 
-      //Update package.json & bower.json
-      var bower = grunt.file.readJSON('bower.json');
-      bower.version = npmProps.version = snapshotVersion;
-      grunt.file.write('package.json', JSON.stringify(npmProps, null, 2));
-      grunt.file.write('bower.json', JSON.stringify(bower, null, 2));
+    //Update package.json & bower.json
+    var bower = grunt.file.readJSON('bower.json');
+    bower.version = npmProps.version = snapshotVersion;
+    grunt.file.write('package.json', JSON.stringify(npmProps, null, 2));
+    grunt.file.write('bower.json', JSON.stringify(bower, null, 2));
     //   grunt.task.run(['jsonprettify']);
 
-      //Commit the changes & push to remote
-      grunt.task.run(['gitcommit:snapshot']);
+    //Commit the changes & push to remote
+    grunt.task.run(['gitcommit:snapshot']);
   });
 
   /**
@@ -569,33 +555,33 @@ module.exports = function (grunt) {
    *            maintenance branch for patches/maintenance releases.
    */
   grunt.registerTask('release-prepare', function(target) {
-      // release
-      if(target) {
-          grunt.task.run('release:'+target);
-      } else {
-          grunt.task.run('release');
-      }
+    // release
+    if (target) {
+      grunt.task.run('release:' + target);
+    } else {
+      grunt.task.run('release');
+    }
 
-      // build
-      grunt.task.run('build');
+    // build
+    grunt.task.run('build');
 
-      // Create maintenance branch if minor or major
-      if(target === 'major' || target === 'minor') {
-          grunt.task.run('maintenance-branch');
-      }
+    // Create maintenance branch if minor or major
+    if (target === 'major' || target === 'minor') {
+      grunt.task.run('maintenance-branch');
+    }
 
-      // Update versions to snapshot.
-      if(target === 'major' || target === 'minor') { //Both update minor version
-          grunt.task.run('snapshot:minor');
-      } else {
-          grunt.task.run('snapshot');
-      }
+    // Update versions to snapshot.
+    if (target === 'major' || target === 'minor') { //Both update minor version
+      grunt.task.run('snapshot:minor');
+    } else {
+      grunt.task.run('snapshot');
+    }
 
-      // Push snapshot version
-      grunt.task.run('gitpush:snapshot')
+    // Push snapshot version
+    grunt.task.run('gitpush:snapshot');
   });
 
-  grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
+  grunt.registerTask('serve', 'Compile then start a connect web server', function(target) {
     if (target === 'dist') {
       return grunt.task.run(['build', 'connect:dist:keepalive']);
     }
@@ -621,7 +607,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('version', 'Update the build number', function() {
-     grunt.task.run(['revision', 'file-creator']);
+    grunt.task.run(['revision', 'file-creator']);
   });
 
   grunt.registerTask('build', [
@@ -645,18 +631,19 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', [
-    'newer:jshint',
+    'newer:eslint',
     'test',
     'build'
   ]);
   grunt.loadNpmTasks('grunt-angular-templates');
+
   function _splitVersionNumber(version) {
-      var parts = version.split('.');
-      return {
-          array: parts,
-          major: parts[0],
-          minor: parts[1],
-          patch: parts[2]
-      };
+    var parts = version.split('.');
+    return {
+      array: parts,
+      major: parts[0],
+      minor: parts[1],
+      patch: parts[2]
+    };
   }
 };
