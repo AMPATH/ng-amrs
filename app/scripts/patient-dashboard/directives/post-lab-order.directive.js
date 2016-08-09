@@ -140,10 +140,10 @@
         //functions to extract required data from the various loading time inputs
 
         function extractHivSummaryInformation() {
-            $scope.artStartDateInitial = new Date($scope.hivSummary.arv_first_regimen_start_date);
-            $scope.artStartDateCurrent = new Date($scope.hivSummary.arv_first_regimen_start_date);
-            $scope.currentArtRegimenId = $scope.hivSummary.cur_arv_meds_id;
-            $scope.currentArtRegimen = $scope.hivSummary.cur_arv_meds;
+            $scope.artStartDateInitial = new Date($scope.hivSummary.arvFirstRegimenStartDate());
+            $scope.artStartDateCurrent = new Date($scope.hivSummary.arvStartDate());
+            $scope.currentArtRegimenId = $scope.hivSummary.curArvMedsId();
+            $scope.currentArtRegimen = $scope.hivSummary.curArvMeds();
         }
 
         function extractPatientInformation() {
