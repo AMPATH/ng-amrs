@@ -17,9 +17,10 @@
 
             if (config.status === 403) {
                 console.error('Authorization Error!', config.config.url);
-
+                var errorDetails=config.data.message||'';
                 var message = 'You require certain privileges to'+
-                ' access this feature without errors. Please contact IT support';
+                ' access this feature without errors. ' +errorDetails+
+                  '. Please contact IT support if you think this is an error';
 
                 $rootScope.$broadcast('Unauthorized', message);
             }
