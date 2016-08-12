@@ -200,7 +200,6 @@ jshint -W003, -W026
       if (defaulters.size === 0){
         $scope.allDataLoaded = true;
       }else{
-        _sortDefaulterList(defaulters.result);
         $scope.patients.length!=0?$scope.patients.push.apply($scope.patients,defaulters.result):
           $scope.patients =defaulters.result;
         $scope.nextStartIndex +=  defaulters.size;
