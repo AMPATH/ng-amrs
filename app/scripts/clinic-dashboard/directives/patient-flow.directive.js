@@ -150,6 +150,12 @@
           title: 'Time to Complete Visit (mins)',
           visible: true,
           isDate: false
+        },
+        {
+          field: 'location',
+          title: 'Location',
+          visible: true,
+          isDate: false
         }
       ];
 
@@ -238,11 +244,15 @@
              /* adding a dummy encounter type to be used to keep track of visits started and the
                 details of the person who started the visit
             */
-            $scope.providerEncounters.unshift( {
+            $scope.providerEncounters.unshift(
+              {
               person_name:patient.visit_person_Name,
+              location:patient.location,
               encounter_type:8888,
               person_id:patient.visit_person_id,
+
               encounter_type_name:'Visits_Started'
+
             });
 
           });
@@ -266,18 +276,49 @@
                 _.each($scope.providerEncounters,  function(result){
 
                   if(provider===result.person_id) {
-                    row['Person Name'] = result.person_name;
+                    row['Person_Name'] = result.person_name;
+                    row['Location'] = result.location;
                     //count encounter type per provider
                     row[result.encounter_type_name] = (row[result.encounter_type_name] || 0) + 1;
 
+
                   }
+
                 });
 
             $scope.finalProviderReport.push(row);
-
           });
 
+          $scope.finalProviderReport=totalPatientSeenByProvider($scope.finalProviderReport,'Visits_Started');
         }
+
+        function totalPatientSeenByProvider(arrayOfObjects,visits){
+
+          var result=[];
+
+          for (var i=0; i < arrayOfObjects.length ; ++i){
+            var data =arrayOfObjects[i]
+            var sum = 0;
+            for (var x in data) {
+              if (x !== visits) {
+
+                var value = data[x];
+
+                if (typeof value === 'number') {
+                  sum += value;
+                }
+              }
+            }
+            data['#Seen'] = sum;
+            result.push(data)
+
+          }
+          return result;
+
+
+        }
+
+
 
         function clearVariables() {
             $scope.patientStatuses = [];
@@ -462,12 +503,14 @@
           }
           unique[Object.keys($scope.finalProviderReport[i])] = 0;
         }
+
         //remove duplicate elements from the array
         var uniqueArray = ProviderTableColumns.filter(function(elem, pos) {
           return ProviderTableColumns.indexOf(elem) == pos;
         });
 
-        uniqueArray.push('Total Patient Seen');
+        uniqueArray.splice(uniqueArray.indexOf("#Seen"), 1 );
+        uniqueArray.splice(uniqueArray.length, 0, "#Seen");
 
           $scope.columns = [];
           _.each(uniqueArray, function (header) {
@@ -492,7 +535,7 @@
             striped: true,
             selectableRows: true,
             showFilter: true,
-            pagination: true,
+            pagination: false,
             pageSize: 20,
             pageList: [5, 10, 25, 50, 100, 200],
             search: true,
@@ -503,7 +546,7 @@
             showMultiSort: true,
             showPaginationSwitch: true,
             smartDisplay: true,
-            idField: 'patientUuid',
+            idField: 'visit_id',
             minimumCountColumns: 2,
             clickToSelect: true,
             showToggle: false,
@@ -533,18 +576,6 @@
         };
       }
 
-      function totalPatientSeen(row) {
-        var total =0;
-        delete row.Visits_Started;
-        for (var x in row) {
-          var value = row[x];
-          if(typeof value === 'number'){
-            total +=value;
-          }
-        }
-        return total;
-
-      }
 
 
       /**
@@ -559,12 +590,6 @@
 
         }
 
-        if(header ==='Total Patient Seen'){
-
-          return '<div class="" style="padding: inherit; width:100%; max-width: 300px" ><span ' +
-            'class="text-info text-capitalize">'+totalPatientSeen(row)+'</span></div>';
-
-        }
         if (value === null || value === undefined) {
           return '-';
         }
@@ -582,8 +607,8 @@
         }
         if ($scope.selectedLocations) {
           var selectedLocationObject = $scope.selectedLocations;
-          if (selectedLocationObject.selectedAll === true)
-            return '';
+          /*if (selectedLocationObject.selectedAll === true)
+            return '';*/
           var locations;
           if (selectedLocationObject.locations)
             for (var i = 0; i < selectedLocationObject.locations.length; i++) {
