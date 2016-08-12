@@ -140,6 +140,10 @@
         //functions to extract required data from the various loading time inputs
 
         function extractHivSummaryInformation() {
+
+            if($scope.hivSummary && !$scope.hivSummary.hasOwnProperty('arvFirstRegimenStartDate'))
+              return;
+
             $scope.artStartDateInitial = new Date($scope.hivSummary.arvFirstRegimenStartDate());
             $scope.artStartDateCurrent = new Date($scope.hivSummary.arvStartDate());
             $scope.currentArtRegimenId = $scope.hivSummary.curArvMedsId();
