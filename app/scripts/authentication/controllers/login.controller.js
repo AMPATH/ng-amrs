@@ -6,9 +6,9 @@
     .module('app.authentication')
     .controller('LoginCtrl', LoginCtrl);
 
-  LoginCtrl.$inject = ['$scope', 'OpenmrsRestService', '$timeout', 'SessionResService'];
+  LoginCtrl.$inject = ['$scope', 'OpenmrsRestService', '$timeout', 'SessionResService', 'EtlRestService'];
 
-  function LoginCtrl($scope, OpenmrsRestService, $timeout, SessionResService) {
+  function LoginCtrl($scope, OpenmrsRestService, $timeout, SessionResService, EtlRestService) {
     $scope.errors = '';
     $scope.isVisible = false;
     $scope.CurrentUser = {
@@ -17,7 +17,7 @@
     };
 
     $scope.isBusy = false;
-    
+
     clearCurrentSession();
 
     $scope.authenticate = function () {
@@ -37,11 +37,14 @@
               console.log('Logged in user:', data);
 
             });
+          //invalidate etl session
+          EtlRestService.invalidateUserSession( function (data) {},function (data) {})
+
         }
 
       }); // authenticate user
     };
-    
+
     function clearCurrentSession() {
       $scope.isBusy = true;
 

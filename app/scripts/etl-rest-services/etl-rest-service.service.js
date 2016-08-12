@@ -50,7 +50,8 @@
       getClinicalNotes: getClinicalNotes,
       synchronizeEIDPatientLabResults:synchronizeEIDPatientLabResults,
       getPatientFlowData: getPatientFlowData,
-      postOrderToEid: postOrderToEid
+      postOrderToEid: postOrderToEid,
+      invalidateUserSession: invalidateUserSession
     };
     return serviceDefinition;
 
@@ -908,6 +909,18 @@
           console.log('Error posting order to EID: ', error);
           if (typeof errorCallback === 'function')
             errorCallback(error);
+        });
+    }
+
+    function invalidateUserSession( successCallback, failedCallback) {
+      var resource = getResource('session/invalidate',false);
+      return resource.get().$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
         });
     }
 
