@@ -93,6 +93,8 @@ module.exports = function (config) {
     'bower_components/offline/offline.js',
     'bower_components/angular-ui-ace/ui-ace.js',
     'bower_components/openmrs-ngresource/dist/scripts/openmrsNgresource.js',
+    'bower_components/datatables.net/js/jquery.dataTables.js',
+    'bower_components/datatables.net-bs/js/dataTables.bootstrap.js',
     'bower_components/angular-formentry/dist/scripts/angularFormentry.js',
     'bower_components/angular-cache/dist/angular-cache.js',
     'bower_components/angular-bar-code-scanner/angular-bar-code-scanner.js',
