@@ -510,7 +510,7 @@
         });
 
         uniqueArray.splice(uniqueArray.indexOf("#Seen"), 1 );
-        uniqueArray.splice(uniqueArray.length, 0, "#Seen");
+        uniqueArray.splice(2, 0, "#Seen");
 
           $scope.columns = [];
           _.each(uniqueArray, function (header) {
