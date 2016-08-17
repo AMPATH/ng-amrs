@@ -22,9 +22,9 @@
     };
   }
 
-  locationAuthorizationController.$inject = ['$scope','LocationAuthorizationService', 'OpenmrsRestService'];
+  locationAuthorizationController.$inject = ['$scope','LocationAuthorizationService', 'OpenmrsRestService','dialogs'];
 
-  function locationAuthorizationController($scope, LocationAuthorizationService, OpenmrsRestService) {
+  function locationAuthorizationController($scope, LocationAuthorizationService, OpenmrsRestService,dialogs) {
     //system user
     $scope.selectedUser = {};
     $scope.users = [];
@@ -38,6 +38,11 @@
     $scope.selectedLocations.locations = [];
     $scope.selectAllLocations = selectAllLocations;
     $scope.fetchLocations = fetchLocations;
+    //locations to generate aggregate data
+    $scope.selectedLocationsAggregateData = {};
+    $scope.selectedLocationsAggregateData.selectedAllAgg = false;
+    $scope.selectedLocationsAggregateData.locations = [];
+    $scope.selectAllAggregateLocations = selectAllAggregateLocations;
 
     //save location privileges
     $scope.saveUserAttribute = saveUserProperty;
@@ -52,15 +57,24 @@
         //reset
         $scope.selectedLocations.selectedAll = false;
         $scope.selectedLocations.locations = [];
+        $scope.selectedLocationsAggregateData.locations = [];
         var userProperties = newValues.userProperties || {};
         for (var key in userProperties) {
-          if (/^grantAccessToLocation/.test(key)) {
+          if (/^grantAccessToLocationOperationalData/.test(key)) {
             if (userProperties[key] === '*') {
               selectAllLocations();
             } else {
               scope.selectedLocations.selectedAll = false;
               var location =LocationAuthorizationService.getLocationByUuid(userProperties[key], $scope.locations);
               $scope.selectedLocations.locations.push(location);
+            }
+          }else if (/^grantAccessToLocationAggregateData/.test(key)) {
+            if (userProperties[key] === '*') {
+              selectAllAggregateLocations();
+            } else {
+              $scope.selectedLocationsAggregateData.selectedAll = false;
+              var location =LocationAuthorizationService.getLocationByUuid(userProperties[key], $scope.locations);
+              $scope.selectedLocationsAggregateData.locations.push(location);
             }
           }
         }
@@ -73,7 +87,7 @@
       $scope.experiencedSavingErrors=null;
       //generate payload
       var payload =
-        LocationAuthorizationService.generateUserPropertyPayload($scope.selectedUser, $scope.selectedLocations);
+        LocationAuthorizationService.generateUserPropertyPayload($scope.selectedUser, $scope.selectedLocations, $scope.selectedLocationsAggregateData);
       OpenmrsRestService.getUserService().saveUpdateUserProperty(payload,
         onSaveUserPropertySuccess, onSaveUserPropertyError);
     }
@@ -82,6 +96,7 @@
     function onSaveUserPropertySuccess(data) {
         $scope.savingProperty = false;
         $scope.experiencedSavingErrors = null;
+      dialogs.notify('Success', 'location saved successfully for the selected user');
     }
 
     function onSaveUserPropertyError(error) {
@@ -140,6 +155,19 @@
         $scope.selectedLocations.locations = [];
       }
     }
+
+
+    function selectAllAggregateLocations() {
+      if ($scope.selectedLocationsAggregateData.selectedAllAgg === false) {
+        $scope.selectedLocationsAggregateData.selectedAllAgg = true;
+        $scope.selectedLocationsAggregateData.locations = $scope.locations;
+      }
+      else {
+        $scope.selectedLocationsAggregateData.selectedAllAgg = false;
+        $scope.selectedLocationsAggregateData.locations = [];
+      }
+    }
+
 
 
   }

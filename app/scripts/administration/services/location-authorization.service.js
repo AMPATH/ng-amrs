@@ -40,21 +40,34 @@
       return _location;
     }
 
-    function generateUserPropertyPayload(selectedUser, selectedLocations) {
+    function generateUserPropertyPayload(selectedUser, selectedLocations,aggregateLocations) {
       //first remove previous location access in selectedUser.userProperties
       var userProperties = selectedUser.selected.userProperties || {};
       var payload={};
       for (var key in userProperties) {
-        if (/^grantAccessToLocation/.test(key))
+        if (/^grantAccessToLocationOperationalData/.test(key))
           delete userProperties[key];
       }
 
       // then now add the new location privileges
       if (selectedLocations.selectedAll) {
-        userProperties['grantAccessToLocation[*]'] = '*';
+        userProperties['grantAccessToLocationOperationalData[*]'] = '*';
       } else if (selectedLocations.locations.length > 0) {
         for (var i = 0; i < selectedLocations.locations.length; i++) {
-          userProperties['grantAccessToLocation[' + i + ']'] = selectedLocations.locations[i].uuId();
+          userProperties['grantAccessToLocationOperationalData[' + i + ']'] = selectedLocations.locations[i].uuId();
+        }
+      }
+      //location privileges for aggregate data
+      for (var key in userProperties) {
+        if (/^grantAccessToLocationAggregateData/.test(key))
+          delete userProperties[key];
+      }
+
+      if (aggregateLocations.selectedAllAgg) {
+        userProperties['grantAccessToLocationAggregateData[*]'] = '*';
+      } else if (aggregateLocations.locations.length > 0) {
+        for (var i = 0; i < aggregateLocations.locations.length; i++) {
+          userProperties['grantAccessToLocationAggregateData[' + i + ']'] = aggregateLocations.locations[i].uuId();
         }
       }
 
