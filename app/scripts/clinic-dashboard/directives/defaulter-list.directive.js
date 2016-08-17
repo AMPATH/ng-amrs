@@ -63,10 +63,6 @@ jshint -W003, -W026
         headers:'identifiers'
       },
       {
-        name: 'universalId',
-        headers:'amrs_universal_id'
-      },
-      {
         name: 'person_name',
         headers:'person_name'
       },
