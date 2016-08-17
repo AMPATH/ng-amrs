@@ -9,6 +9,7 @@
       'ui.bootstrap',
       'darthwade.dwLoading',
       'gridshore.c3js.chart',
-      'kendo.directives'
+      'kendo.directives',
+      'dialogs.main'
     ]);
 })();

@@ -55,7 +55,7 @@
 
           <div class="form-group col-md-12">
             <label for="location">Select Locations/Facilities which <strong>{{selectedUser.selected.display}}</strong> is
-              authorized to generate reports/analytics</label>
+              authorized to generate operational data</label>
 
             <div id="location" class="input-group">
               <div class="input-group-addon">
@@ -83,6 +83,42 @@
       </div>
     </div>
   </div>
+  <div class="panel panel-info ">
+    <div class="panel-body">
+      <div class="container-fluid">
+        <div class="row">
+
+          <div class="form-group col-md-12">
+            <label for="location">Select Locations/Facilities which <strong>{{selectedUser.selected.display}}</strong> is
+              authorized to generate aggregate data</label>
+
+            <div id="aggregate" class="input-group">
+              <div class="input-group-addon">
+						<span class="text-danger">
+               <span ng-show="isBusy" class="fa fa-spinner fa-spin"></span>
+						</span>
+                <span ng-hide="isBusy" class="glyphicon glyphicon-map-marker"></span>
+              </div>
+              <select ng-disabled="isBusy||selectedLocationsAggregateData.selectedAllAgg" multiple="multiple"
+                      kendo-multi-select
+                      k-ng-model="selectedLocationsAggregateData.locations"
+                      k-options="locationsOptions"
+                ></select>
+
+              <div class="input-group-addon" ng-disabled="selectedLocationsAggregateData.locations.length===0"
+                   ng-click="selectAllAggregateLocations()" style="cursor: pointer;">
+                <span ng-show="selectedLocationsAggregateData.selectedAllAgg" class="glyphicon glyphicon-trash"></span>
+                <span ng-hide="selectedLocationsAggregateData.selectedAllAgg" class="glyphicon glyphicon-pushpin"></span>
+                <span ng-hide="selectedLocationsAggregateData.selectedAllAgg">Select All</span>
+                <span ng-hide="!selectedLocationsAggregateData.selectedAllAgg">Select None</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div style="height: 35px" ng-show='!isBusy && !experiencedLoadingErrors'>
     <div class="btn-group pull-right" >
       <button  class="btn btn-info pull-right"
