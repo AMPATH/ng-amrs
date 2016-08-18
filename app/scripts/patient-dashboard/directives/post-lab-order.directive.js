@@ -26,10 +26,10 @@
 
     postLabOrderController.$inject = ['$scope', 'IdentifierResService', 'UtilService',
         'OrderResService', 'LabPostingHelperService', 'EtlRestService', 'LabOrderSearchService', '$filter',
-        'moment'];
+        'moment', 'dialogs'];
 
     function postLabOrderController($scope, IdentifierResService, UtilService,
-        OrderResService, labPostingHelper, EtlRestService, LabOrderSearchService, $filter, moment) {
+        OrderResService, labPostingHelper, EtlRestService, LabOrderSearchService, $filter, moment, dialogs) {
 
         var customOrderObjectDefinition =
             'custom:(display,uuid,orderNumber,accessionNumber,orderReason,orderReasonNonCoded,urgency,action,' +
@@ -42,6 +42,7 @@
 
         //variables
         $scope.isBusy = false;
+        $scope.orderLoading = false;
         $scope.hasError = false;
         $scope.hasLaodingError = false;
         $scope.errorMessage = '';
@@ -61,6 +62,7 @@
         $scope.currentArtRegimen = '';
         $scope.currentArtRegimenId = null;
         $scope.locationDisplay = "";
+        $scope.justification = null;
 
         $scope.patientUuid = LabOrderSearchService.getPatient() ? LabOrderSearchService.getPatient().uuid : null;
         $scope.isOrderSearch = LabOrderSearchService.getIsOrderSearch();
@@ -81,6 +83,7 @@
         $scope.loadOrder = loadOrder;
         $scope.postOrder = postOrder;
         $scope.closeDialogWindow = closeDialogWindow;
+        $scope.hasLoadingTimeRequiredInputs = true;
 
         activate();
 
@@ -89,13 +92,16 @@
             $scope.orderType = labPostingHelper.determineOrderType($scope.order);
             //if (!hasLoadingTimeRequiredInputs())
               //  return;
+            loadJustification($scope.order);
             loadOrder($scope.order.uuid);
             extractPatientInformation();
             extractHivSummaryInformation();
+            $scope.hasLoadingTimeRequiredInputs = hasLoadingTimeRequiredInputs();
         }
 
         //functions to validate data
         function hasLoadingTimeRequiredInputs() {
+
             if (_.isEmpty($scope.order)) {
                 displayError('Error loading order information. Please try again.');
                 $scope.hasLaodingError = true;
@@ -164,7 +170,7 @@
         function loadOrder(orderUuid) {
             if ($scope.isBusy === true)
                 return;
-
+            $scope.orderLoading = true;
             $scope.isBusy = true;
             $scope.hasError = false;
             OrderResService.getOrderByUuid(orderUuid, onLoadOrderSuccess, onLoadOrderError, customOrderObjectDefinition);
@@ -172,12 +178,25 @@
 
         function onLoadOrderSuccess(order) {
             $scope.isBusy = false;
+            $scope.orderLoading = false;
             $scope.order = order;
             $scope.locationDisplay = $scope.order.encounter.location.display;
+            loadJustification(order);
+        }
+
+        function loadJustification(order) {
+          var ot = $scope.orderType.type;
+          if ($scope.orderType.type === 'VL') {
+            labPostingHelper.getViralLoadJustification($scope.order.encounter.obs)
+              .then(function(justification) {
+                $scope.justification = justification;
+              });
+          }
         }
 
         function onLoadOrderError(error) {
             $scope.isBusy = false;
+            $scope.orderLoading = false;
             displayError('Error loading order information. Please try again.');
         }
 
@@ -187,14 +206,22 @@
             if (!isUserInputValid()) return;
             var payload = getPayload();
 
-            clearErrorMessage();
-            $scope.isBusy = true;
+            if(!$scope.hasError) {
 
-            EtlRestService.postOrderToEid($scope.selectedLabLocation, payload,
-                postOrderSuccessful, postOrderError);
+              $scope.isBusy = true;
+
+              EtlRestService.postOrderToEid($scope.selectedLabLocation, payload,
+                  postOrderSuccessful, postOrderError);
+            }
+
+            //clearErrorMessage();
+
         }
 
         function getPayload() {
+
+            clearErrorMessage();
+
             var payload;
             var order = $scope.order;
             var obs = $scope.order.encounter.obs;
@@ -210,6 +237,7 @@
             }
 
             if ($scope.orderType.type === 'Other') {
+                $scope.hasLoadingTimeRequiredInputs = false;
                 displayError('Unsupported order type.');
                 return;
             }
@@ -248,8 +276,10 @@
         function closeDialogWindow() {
             if ($scope.modalObject) {
                 $scope.modalObject.dismiss('ok');
+                dialogs.notify('Success', 'Order has been successfully posted to EID');
             }
         }
+
         function displayError(message) {
             $scope.hasError = true;
             $scope.errorMessage = message;

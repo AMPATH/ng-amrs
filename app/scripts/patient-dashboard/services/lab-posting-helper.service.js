@@ -66,13 +66,27 @@
             createDnaPcrPayload: createDnaPcrPayload,
             createViralLoadPayload: createViralLoadPayload,
             createCD4Payload: createCD4Payload,
-
+            getViralLoadJustification: getViralLoadJustification,
             getOrderTypes: getOrderTypes,
             determineOrderType: determineOrderType,
             getSampleTypes: getSampleTypes,
             getLabLocations: getLabLocations
         };
         return definition;
+
+        function getViralLoadJustification(encounterObs) {
+
+          return new Promise(function(resolve, reject) {
+            var obsObject = findObsByConceptUuid(encounterObs, '0a98f01f-57f1-44b7-aacf-e1121650a967');
+            if (obsObject && obsObject !== null && obsObject.value) {
+                if (typeof obsObject.value === 'object' && obsObject.value.uuid)
+                    resolve(obsObject.value.display);
+                resolve(obsObject.value); //TODO - load justification base on uuid
+            }else {
+              resolve(null);
+            }
+          });
+        };
 
         //function to find the obs with given concept uuid
         function findObsByConceptUuid(obsObject, conceptUuid) {
@@ -232,7 +246,7 @@
         //function to create CD4 payload
         function createCD4Payload(order, encounterObs, encounterLocationUuid,
             patientIdentifier, patientName, sex, birthDate, dateRecieved) {
-
+              
             return {
                 type: "CD4",
                 locationUuid: encounterLocationUuid,
