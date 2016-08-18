@@ -9,7 +9,14 @@
       <em>&nbsp;Date Collected: <strong>{{order.dateActivated | date:'dd-MM-yyyy HH:mm'}}</strong>.</em>
       <em>&nbsp;Provider: <strong>{{order.orderer.display}}</strong></em>
     </p>
+    <p ng-show="justification != null">
+      <em>Justification:&nbsp;<strong ng-bind="justification"></strong>.</em>
+    </p>
+    <p ng-show="orderLoading == true">
+      <em>Loading justification...</em>
+    </p>
   </div>
+  <hr class="header-hr" style="margin-top: 1px; margin-bottom: 2px;" />
   <div ng-show="isOrderSearch">
     <a ng-href="#/patient/{{patientUuid}}" class="btn btn-primary ladda-button">
       <span class="icon-i-administration">View Patient</span>
@@ -116,7 +123,7 @@
       <span class="text-danger"> <i class="glyphicon glyphicon-exclamation-sign"></i> {{errorMessage}}</span>
   </div>
   <div>
-      <button ng-disabled="isBusy || hasLoadingError" class="btn btn-primary" ng-click="postOrder()">
+      <button ng-disabled="isBusy || hasError | hasLoadingError || !hasLoadingTimeRequiredInputs" class="btn btn-primary" ng-click="postOrder()">
             <span>Post Order<i ng-show="isBusy" style="font-size: 14px;" class="fa fa-spinner fa-spin ng-hide"></i></span>
             </button>
       <button class="btn btn-default" style="margin-left:4px;" ng-click="closeDialogWindow()">Cancel</button>

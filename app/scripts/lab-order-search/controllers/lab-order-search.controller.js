@@ -40,19 +40,8 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
         }
       };
 
-      $scope.$watch('orderID', function(searchString) {
-
-        if($scope.isInitial) {
-          $scope.isInitial = false;
-          if(LabOrderSearchService.getOrderID != null) {
-            LabOrderSearchService.setIsOrderSearch(true);
-            $scope.orderID = LabOrderSearchService.getOrderID();
-            $scope.order = LabOrderSearchService.getOrderData();
-            $scope.patient = new PatientModel.patient(LabOrderSearchService.getOrderData().patient);
-            $scope.hivSummary = new HivSummaryModel.hivSummary(LabOrderSearchService.getHivSummaryData());
-            $scope.showResult();
-          }
-        }
+      $scope.$on('bar-code-scan-event', function(event, parameters) {
+        submitForm();
       });
 
       function submitForm() {
@@ -110,7 +99,7 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
           if(hivData.result[0])
               $scope.hivSummary = new HivSummaryModel.hivSummary(hivData.result[0]);
 
-          LabOrderSearchService.setHivSummaryData(hivData);
+          LabOrderSearchService.setHivSummaryData($scope.hivSummary);
           $scope.onLoadComplete();
           $scope.showResult();
       };
