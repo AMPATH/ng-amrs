@@ -447,15 +447,23 @@
           requireLogin: true
         }
       })
-        .state('system-administration', {
-          url: '/administration',
-          templateUrl: 'views/administration/administration-dashboard.html',
-          controller: 'AdministrationCtrl',
-          data: {
-            requireLogin: true
-          },
-          cache: false
-        });
+      .state('system-administration', {
+        url: '/administration',
+        templateUrl: 'views/administration/administration-dashboard.html',
+        controller: 'AdministrationCtrl',
+        data: {
+          requireLogin: true
+        },
+        cache: false
+      })
+      .state('admin.patient-requiring-viral-load', {
+        url: '/patient-requiring-viral-load',
+        templateUrl: 'views/admin/patient-requiring-viral-load-container.html',
+        controller: 'AdminDashboardCtrl',
+        data: {
+          requireLogin: true
+        }
+      });
 
 
     }).config(['$httpProvider', function ($httpProvider) {

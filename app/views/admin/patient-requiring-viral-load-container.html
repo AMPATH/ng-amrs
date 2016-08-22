@@ -1,0 +1,15 @@
+<h3 class="text-warning">Patient Requiring viral load Test:
+  Between {{ startDate | date: 'dd, MMMM, y'}} and {{ endDate | date: 'dd, MMMM, y'}}
+</h3>
+<hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;"/>
+<report-filters enabled-controls="'start-date, end-date, location'" start-date="startDate" end-date="endDate"
+                selected-locations="selectedLocations"
+  >
+</report-filters>
+<div class="well" style="padding:2px; cursor:pointer;">
+  <div class="panel panel-default" style="padding: 4px; margin: 2px;" collapse="isExpanded">
+    <patient-requiring-viral-load indicator="'needs_vl_in_period'" start-date="startDate" end-date="endDate"
+                                  selected-locations="selectedLocations"></patient-requiring-viral-load>
+  </div>
+</div>
+
