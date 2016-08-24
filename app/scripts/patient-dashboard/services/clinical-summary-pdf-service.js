@@ -654,7 +654,7 @@
                     width: 48,
                     bold: true,
                   }, {
-                    text: (patient.clinicalNotes.ccHpi || 'N/A').toString() || 'N/A',
+                    text: (patient.clinicalNotes.ccHpi[0].value || 'N/A').toString() || 'N/A',
                     width: '*',
                     alignment: 'left',
                     color: '#2a2a2a',
@@ -669,7 +669,7 @@
                     width: 50,
                     bold: true,
                   }, {
-                    text: patient.clinicalNotes.assessment || 'N/A',
+                    text: (patient.clinicalNotes.assessment[0].value || 'N/A').toString() || 'N/A',
                     width: '*',
                     alignment: 'left',
                     color: '#2a2a2a',
