@@ -379,14 +379,14 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         function loadFormSchemaForSelectedForm(createFormAfterLoading) {
             isSpinnerBusy(true);
             $log.log('Loading form schema for ' + selectedFormMetadata.name);
-
+            
             // Get the resource associated with json schema
             var resource = _findResource(selectedFormMetadata.resources);
             if(resource === null) {
               // TODO: Throw error when we completely move to using database
               // throw new Error('Form ' + selectedFormMetadata.name + ' has no '
               //        + 'JSON schema associated with it!');
-
+              
               // For now try the filesystem
               FormsMetaData.getFormSchema(selectedFormMetadata.name,
                 function(schema) {
@@ -423,7 +423,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                               + selectedFormMetadata.name);
                   $log.error(err);
                 });
-            }
+            }  
         }
 
         function getFormSchemaReferences(createFormAfterLoading) {
@@ -457,14 +457,14 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     ampathSchema.formUuid = form.value.uuid;
                     schemaMetadataArray.push(ampathSchema);
                   });
-
+                  
                   // Now pull schemas
                   var schemaPromises = {};
                   _.each(schemaMetadataArray, function(schemaData) {
-                    schemaPromises[schemaData.formUuid] =
+                    schemaPromises[schemaData.formUuid] = 
                       FormResService.getFormSchemaByUuid(schemaData.valueReference);
                   });
-
+                  
                   // resolve
                   $q.allSettled(schemaPromises).then(function(resolved) {
                     isSpinnerBusy(false);
@@ -502,7 +502,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                   console.error('Could not load referenced forms', error);
                   vm.errorMessage = 'Could not load referenced forms';
               });
-           }
+           }  
         }
 
         function determineFormToLoad() {
@@ -873,14 +873,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 updatePayloadFormUuid(lastPayload, selectedFormUuid);
                 submitFormPayload();
             } else {
-              var dialogPromise = dialogs.confirm('No Obs Entered',
-                'You have not entered any Observations, are you sure you want to proceed and save this form?');
-              dialogPromise.result.then(function () {
-                updatePayloadFormUuid(lastPayload, selectedFormUuid);
-                submitFormPayload()
-              }, function () {
-
-              });
+                dialogs.notify('Info', 'Can\'t submit, no obs entered. ' +
+                    ' To submit enter some obs');
             }
 
         }
@@ -1100,7 +1094,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         //Endregion: PatientSummary
-
+        
         /**
          * Find a resource of a particular type in an array of resources.
          */
@@ -1109,11 +1103,11 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
           if(_.isUndefined(formResources) || !Array.isArray(formResources)) {
             throw new Error('Argument should be array of form resources');
           }
-
+          
           var found = _.find(formResources, function(resource) {
             return resource.dataType === resourceType;
           });
-
+          
           if(found === undefined) return null;
           return found;
         }

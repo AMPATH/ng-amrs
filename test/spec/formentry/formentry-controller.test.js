@@ -413,6 +413,27 @@ jshint -W098, -W117, -W030
                  expect(personAttributeGeneratePayloadStub.callCount).to.equal(1);
             });
 
+            it('should call the notify method of dialog to notify user when no obs entered and submit is triggers',
+            function () {
+
+                //simulate valid form state after user has input some valid obs
+                controllerScope.form = {};
+                controllerScope.form.$dirty = true;
+                controllerScope.form.$valid = true;
+                controllerScope.changesSaved = false;
+
+                //Not filling in any obs to trigger
+
+                var dialogServiceNotifySpy = sinon.spy(dialogService, 'notify');
+
+                controllerScope.submit();
+
+                $timeout.flush();
+
+                expect(dialogServiceNotifySpy.callCount).to.equal(1);
+
+            });
+
             it('should updated the payload with current form, patient, encountertype, visit' +
             'when payload is generating',
             function () {
