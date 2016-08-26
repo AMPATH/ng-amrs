@@ -56,6 +56,7 @@
       if(newValues!=oldValues) {
         //reset
         $scope.selectedLocations.selectedAll = false;
+        $scope.selectedLocationsAggregateData.selectedAllAgg = false;
         $scope.selectedLocations.locations = [];
         $scope.selectedLocationsAggregateData.locations = [];
         var userProperties = newValues.userProperties || {};
@@ -96,7 +97,7 @@
     function onSaveUserPropertySuccess(data) {
         $scope.savingProperty = false;
         $scope.experiencedSavingErrors = null;
-      dialogs.notify('Success', 'location saved successfully for the selected user');
+      dialogs.notify('Success', 'Location(s) saved successfully for the selected user.');
     }
 
     function onSaveUserPropertyError(error) {
