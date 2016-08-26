@@ -1000,9 +1000,34 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             $log.error('Submitting new obs failed', error);
             initializeSubmitStagingObject(vm.fourStageSubmitProcess, false);
             vm.hasFailedNewingRequest = true;
-            vm.errorMessage =
-                'An error occured when trying to save the obs';
-            onSubmitStageUpdated();
+            var errorMessage= error.statusText +' ('+error.status+')';
+            switch (error.status||0) {
+              case 500:
+                vm.errorMessage =
+                  'An internal server error occurred while trying to save observation. *Error: ' + errorMessage;
+                break;
+              case 400:
+                vm.errorMessage =
+                  'An error occurred while trying to save observation, report this error to your system administrator.' +
+                  ' *Error: ' + errorMessage;
+                break;
+              case 401:
+                vm.errorMessage =
+                  'Your session has expired, please re-login and try again. *Error:' + errorMessage;
+                break;
+              case -1:
+                vm.errorMessage =
+                  'You seem to be offline, please check your internet connection and try again';
+                break;
+              case 403:
+                vm.errorMessage =
+                  'You require certain privilege(s) for you to submit this form successfully. *Error: ' + errorMessage;
+                break;
+              default:
+                vm.errorMessage =
+                  'An error occurred while trying to save observations. *Error:' + errorMessage;
+            }
+          onSubmitStageUpdated();
         }
 
         function submitVoidedObs(voidedObsPayload, finalCallback) {
