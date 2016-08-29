@@ -26,17 +26,17 @@
     }
   }
 
-    Controller.$inject = ['$scope', 'OpenmrsRestService', 
-    'UserDefaultPropertiesService', 'dialogs', '$rootScope'];
+    Controller.$inject = ['$scope', 'OpenmrsRestService',
+    'UserDefaultPropertiesService', 'dialogs', '$rootScope', 'permissionService'];
 
     function Controller($scope, OpenmrsRestService,
-     UserDefaultPropertiesService, dialogs, $rootScope) {
+     UserDefaultPropertiesService, dialogs, $rootScope, permissionService) {
     var vm = this;
-     
+
     var authenticationService = OpenmrsRestService.getAuthService();
-    
+
     var isShowingErrorDialog = false;
-    
+
     $rootScope.$on('Unauthorized', onUnauthorized);
 
     $scope.showNavigationBar = false;
@@ -53,13 +53,15 @@
 
     $scope.logOut = logOut;
 
+    $scope.hasPrivileges = permissionService.hasPrivileges; //user roles and privileges check
+
     $scope.$on('loggedUser', function () {
             console.log(OpenmrsRestService.getUserService().user.openmrsModel());
             $scope.username = OpenmrsRestService.getUserService().user.userName();
             $scope.role = OpenmrsRestService.getUserService().user.userRole()[0].name;
             $scope.location = UserDefaultPropertiesService.getCurrentUserDefaultLocation().name;
             $scope.$on('defaultUserLocationBroadcast', function(event, location) {
-            $scope.location = location.name;     
+            $scope.location = location.name;
            });
 
         });
@@ -91,14 +93,14 @@
     function updateLoginLogoutMenutItems() {
       $scope.isUserLoggedIn = authenticationService.authenticated;
     }
-    
+
     function onUnauthorized(eventInfo, message) {
       if(isShowingErrorDialog){
         return; //don't show multiple error messages
       }
-      
+
       isShowingErrorDialog = true;
-      
+
       var errorPromise = dialogs.error('Unauthorized', message);
       errorPromise.result.then(
         function(btn){
