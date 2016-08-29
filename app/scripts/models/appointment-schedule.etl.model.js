@@ -39,6 +39,8 @@
       var _middleName = appointmentScheduleEtl.middle_name ? appointmentScheduleEtl.middle_name : '';
       var _familyName = appointmentScheduleEtl.family_name ? appointmentScheduleEtl.family_name : '';
       var _identifiers = appointmentScheduleEtl.identifiers ? appointmentScheduleEtl.identifiers : '';
+      var _gender = appointmentScheduleEtl.gender ? appointmentScheduleEtl.gender : '';
+      var _age = appointmentScheduleEtl.age ? appointmentScheduleEtl.age : '';
       var _rtc_date= formatDate(appointmentScheduleEtl.rtc_date) || '';
       var _next_encounter_datetime= formatDate(appointmentScheduleEtl.next_encounter_datetime) || '';
       modelDefinition.givenName = function (value) {
@@ -92,6 +94,22 @@
         }
         else {
           return _identifiers;
+        }
+      };
+      modelDefinition.gender = function (value) {
+        if (angular.isDefined(value)) {
+          _gender = value;
+        }
+        else {
+          return _gender;
+        }
+      };
+      modelDefinition.age = function (value) {
+        if (angular.isDefined(value)) {
+          _age = value;
+        }
+        else {
+          return _age;
         }
       };
 
