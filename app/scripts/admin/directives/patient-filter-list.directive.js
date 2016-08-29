@@ -51,6 +51,10 @@
       name: 'identifiers'
     }, {
       name: 'person_name'
+    }, {
+      name: 'gender'
+    }, {
+      name: 'age'
     }];
     if ($scope.supplementColumns) {
       $scope.patientTags = $scope.patientTags.concat($scope.supplementColumns);

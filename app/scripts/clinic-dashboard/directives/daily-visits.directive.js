@@ -130,6 +130,8 @@
           patient_uuid: patient.uuid(),
           identifiers: patient.identifiers(),
           person_name: patient.givenName() + ' ' + patient.familyName() + ' ' + patient.middleName(),
+          gender: patient.gender(),
+          age : patient.age(),
           rtc_date: patient.rtc_date(),
           status: Math.round(Math.abs((patient.rtc_date()) - (patient.next_encounter_datetime())) / 8.64e7) <= 7
         };
