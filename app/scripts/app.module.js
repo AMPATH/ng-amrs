@@ -393,7 +393,6 @@
         .state('admin.hiv-summary-combined', {
           url: '/hiv-combine-report',
           templateUrl: 'views/admin/hiv-summary-combined.html',
-          controller: 'HivSummaryIndicatorsCtrl',
           data: {
             requireLogin: true
           }
