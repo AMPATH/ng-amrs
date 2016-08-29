@@ -20,15 +20,16 @@
   </div>
   <div ng-hide="patients.length<1 || experiencedLoadingErrors">
     <hr class="bg-danger" style="margin-top: 0px; margin-bottom: 2px;"/>
-    <patient-list-filters enabled-controls="' patientable'" ng-hide="isBusy">
+    <patient-list-filters enabled-controls="' patientable'" >
     </patient-list-filters>
     <!-- END DATATABLE -->
     <hr style="margin: 4px;"/>
     <div style="padding:2px; margin-bottom: 30px !important; ">
-      <div ng-show='!isBusy && !allDataLoaded'>
+      <div ng-show='!allDataLoaded'>
         <span class="text-success">{{patients.length}} Records Loaded. Click 'Load More' to fetch more records</span>
-        <button class="btn btn-info pull-right " ng-click="loadPatientList(true)" ng-disabled="">
-          <span class="glyphicon glyphicon-refresh"></span> Load More
+        <button class="btn btn-info pull-right " ng-click="loadPatientList(true)" ng-disabled="isBusy">
+          <span ng-show="isBusy" class="fa fa-spinner fa-spin"></span>
+          <span ng-hide="isBusy" class="glyphicon glyphicon-refresh"></span> Load More
         </button>
       </div>
       <div ng-show='allDataLoaded'>
