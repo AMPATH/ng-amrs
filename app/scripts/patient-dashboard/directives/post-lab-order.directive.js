@@ -264,7 +264,7 @@
         function postOrderSuccessful(savedEidOrder) {
             $scope.isBusy = false;
             //close window logic
-            closeDialogWindow();
+            closeDialogWindow(true);
         }
 
         function postOrderError(error) {
@@ -273,10 +273,11 @@
         }
 
         //helper functions
-        function closeDialogWindow() {
+        function closeDialogWindow(success) {
             if ($scope.modalObject) {
                 $scope.modalObject.dismiss('ok');
-                dialogs.notify('Success', 'Order has been successfully posted to EID');
+                if(success)
+                  dialogs.notify('Success', 'Order has been successfully posted to EID');
             }
         }
 
