@@ -118,6 +118,22 @@
             }
           },
         })
+        .state('clinical-dashboard.viral-load-monitoring', {
+          url: '/viral-load-monitoring',
+          templateUrl: 'views/clinic-dashboard/viral-monitoring.html',
+          controller: 'ClinicDashboardCtrl',
+          data: {
+            requireLogin: true
+          }
+        })
+        .state('admin.viral-load-monitoring', {
+          url: '/viral-load-monitoring',
+          templateUrl: 'views/admin/viral-load-monitoring.html',
+          controller: 'ViralLoadMonitoringCtrl',
+          data: {
+            requireLogin: true
+          },
+        })
         .state('clinical-dashboard.daily-appointments.visits', {
           url: '/daily-appointments/visits',
           templateUrl: 'views/clinic-dashboard/daily-visits-tab.html',

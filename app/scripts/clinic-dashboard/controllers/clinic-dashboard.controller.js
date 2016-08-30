@@ -13,11 +13,12 @@
     .module('app.clinicDashboard')
     .controller('ClinicDashboardCtrl', ClinicDashboardCtrl);
   ClinicDashboardCtrl.$nject = ['$rootScope', '$scope', '$stateParams',
-   'OpenmrsRestService', 'LocationModel','$state',
-    'ClinicDashboardService','UserDefaultPropertiesService','CachedDataService'];
+    'OpenmrsRestService', 'LocationModel', '$state',
+    'ClinicDashboardService', 'UserDefaultPropertiesService', 'CachedDataService'
+  ];
 
   function ClinicDashboardCtrl($rootScope, $scope, $stateParams,
-    OpenmrsRestService, LocationModel,$state, ClinicDashboardService,UserDefaultPropertiesService,
+    OpenmrsRestService, LocationModel, $state, ClinicDashboardService, UserDefaultPropertiesService,
     CachedDataService) {
     var locationService = OpenmrsRestService.getLocationResService();
     $scope.selectedLocation = ClinicDashboardService.getSelectedLocation();
@@ -35,6 +36,11 @@
 
     $scope.setDefaultUserLocation = setDefaultUserLocation;
 
+    $scope.viralLoadParams = {
+      countBy: '',
+      order: '',
+    };
+
     activate();
 
     function activate() {
@@ -45,18 +51,18 @@
       $scope.activeTabId = index;
     }
 
-    function setDefaultUserLocation(){
+    function setDefaultUserLocation() {
       var definedDefaultUserLocation = UserDefaultPropertiesService.getCurrentUserDefaultLocation();
       if (angular.isDefined(definedDefaultUserLocation)) {
         //use defined default user location to prefill the clinical dashboard
-        if (ClinicDashboardService.getSelectedLocation().selected===undefined){
+        if (ClinicDashboardService.getSelectedLocation().selected === undefined) {
           var uuid = UserDefaultPropertiesService.getCurrentUserDefaultLocation().uuid;
-          CachedDataService.getCachedLocationByUuid(uuid,function(results){
-              var location = wrapLocation(results);
-              $scope.selectedLocation.selected =location;
-              ClinicDashboardService.setSelectedLocation(location);
-              $scope.locationSelectionEnabled = false;
-            });
+          CachedDataService.getCachedLocationByUuid(uuid, function(results) {
+            var location = wrapLocation(results);
+            $scope.selectedLocation.selected = location;
+            ClinicDashboardService.setSelectedLocation(location);
+            $scope.locationSelectionEnabled = false;
+          });
         }
 
       }
@@ -67,10 +73,17 @@
     function onLocationSelection($event) {
       $scope.locationSelectionEnabled = false;
       ClinicDashboardService.setLocationSelectionEnabled(false);
-      ClinicDashboardService.setSelectedLocation({selected:$scope.selectedLocation.selected});
-      console.log('Selected Location===>',$scope.selectedLocation.selected.uuId());
-      $state.transitionTo($state.current, {locationuuid: $scope.selectedLocation.selected.uuId()},
-         { reload: true, inherit: true, notify: true });
+      ClinicDashboardService.setSelectedLocation({
+        selected: $scope.selectedLocation.selected
+      });
+      console.log('Selected Location===>', $scope.selectedLocation.selected.uuId());
+      $state.transitionTo($state.current, {
+        locationuuid: $scope.selectedLocation.selected.uuId()
+      }, {
+        reload: true,
+        inherit: true,
+        notify: true
+      });
       $rootScope.$broadcast('location:change');
     }
 
