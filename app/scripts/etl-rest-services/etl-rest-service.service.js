@@ -51,7 +51,8 @@
       synchronizeEIDPatientLabResults:synchronizeEIDPatientLabResults,
       getPatientFlowData: getPatientFlowData,
       postOrderToEid: postOrderToEid,
-      invalidateUserSession: invalidateUserSession
+      invalidateUserSession: invalidateUserSession,
+      getReport:getReport
     };
     return serviceDefinition;
 
@@ -496,7 +497,18 @@
           console.error(error);
         });
     }
+    function getReport(params,successCallback,failedCallback) {
+      var resource = getResource('get-report-by-report-name');
+      return resource.get(params).$promise
+        .then(function (response) {
+          successCallback(response);
+        })
+        .catch(function (error) {
+          failedCallback('Error processing request', error);
+          console.error(error);
+        });
 
+    }
 
     function getHivSummaryIndicators(startDate, endDate, report, countBy, successCallback, failedCallback,
       groupBy, locationUuids, orderBy, indicators, startIndex, limit, startAge, endAge, gender) {

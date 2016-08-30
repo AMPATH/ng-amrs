@@ -34,7 +34,8 @@
       'sticky',
       'mwl.calendar',
       'app.offline',
-      'app.administration'
+      'app.administration',
+      'app.openmrsRestServices'
     ])
     .config(function ($stateProvider, $stickyStateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');
@@ -115,6 +116,22 @@
             default: {
               state: 'clinical-dashboard.daily-appointments.appointments'
             }
+          },
+        })
+        .state('clinical-dashboard.viral-load-monitoring', {
+          url: '/viral-load-monitoring',
+          templateUrl: 'views/clinic-dashboard/viral-monitoring.html',
+          controller: 'ClinicDashboardCtrl',
+          data: {
+            requireLogin: true
+          }
+        })
+        .state('admin.viral-load-monitoring', {
+          url: '/viral-load-monitoring',
+          templateUrl: 'views/admin/viral-load-monitoring.html',
+          controller: 'ViralLoadMonitoringCtrl',
+          data: {
+            requireLogin: true
           },
         })
         .state('clinical-dashboard.daily-appointments.visits', {
