@@ -1,0 +1,112 @@
+[
+  {
+    "uuid": "59cbf52d-b214-48c2-b43a-db236b94ec42",
+    "name": "AMPATH POC Triage Encounter Form v1.0",
+    "isVisible":  true
+  },
+  {
+    "uuid": "81f92a8a-ff5c-415d-a34c-b5bdca2406be",
+    "name": "AMPATH POC Adult Return Visit Form v1.0",
+    "isVisible":  true
+  },
+  {
+    "uuid": "4bdcbc5b-f40c-4028-ab2c-23314983ee89",
+    "name": "AMPATH POC Resistance Clinic Encounter Form V1.0",
+    "isVisible":  true
+  },
+  {
+    "uuid": "1339a535-e38f-44cd-8cf8-f42f7c5f2ab7",
+    "name": "AMPATH POC Adult Return Visit Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "585ac02c-96f6-4e3b-b41f-8d8d04f149bf",
+    "name": "AMPATH POC Pediatric Return Visit Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "bd5908a8-9d8d-41a4-a351-2f70fe00eae6",
+    "name": "AMPATH POC PMTCT Postnatal Care Encounter Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "a2b811ed-6942-405a-b7f8-e7ad6143966c",
+    "name": "AMPATH POC Triage Encounter Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "6e6a4eef-4387-413d-b313-d1fc8cd32fd6",
+    "name": "AMPATH POC Lab Entry Encounter Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "3881c2bc-8644-49c2-874c-0e6fc5b8ddd2",
+    "name": "AMPATH POC Outreach field follow-up Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "bc359396-5906-4410-af2e-686aa39d2734",
+    "name": "AMPATH POC Adult/Pediatric Transit and between Visit Medication Refill Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "80862073-22cc-4e04-b034-e412c7fd1883",
+    "name": "AMPATH POC Express Care - Stable Patient Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "16114361-4aa1-4232-8288-c26b6a66b4e5",
+    "name": "AMPATH POC Youth Return Visit Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "9416746d-1e9f-47e8-aa2d-035aab6f3824",
+    "name": "AMPATH POC Adult Initial Visit Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "8bc78a93-fb32-4f3f-8dfc-59c45f75aac8",
+    "name": "AMPATH POC Pediatric Initial Visit Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "b12b8fcc-1a4c-456c-b3d3-df7bf9c077bc",
+    "name": "AMPATH POC Adult Nutrition Visit Form V0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "54994f49-504d-4ee9-a6c3-2bd3651fc949",
+    "name": "AMPATH POC Clinical Review Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "7fbeecb0-f97f-4be4-8569-36c4ff7f7db9",
+    "name": "AMPATH POC MOH 257 Blue Card Return Visit Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "a4cb03c5-5721-42da-9aa2-181056250f56",
+    "name": "AMPATH POC Youth Initial Visit Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "1c56b92f-f78a-4104-b8b5-63c964aacaa5",
+    "name": "AMPATH POC HIV Exposed Infant Follow-up Card v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "f8322fde-6160-4e70-8b49-e266022f1108",
+    "name": "AMPATH POC Transfer Out Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "3ca02237-9172-4dbc-868c-7b2f508c2d10",
+    "name": "AMPATH POC Death Reporting Form v0.01",
+    "isVisible":  true
+  },
+  {
+    "uuid": "67773c89-32be-4d85-a132-db0efed71324",
+    "name": "CDM POC Hypertension and Diabetes Return Visit Form v0.01",
+    "isVisible":  true
+  }
+]
