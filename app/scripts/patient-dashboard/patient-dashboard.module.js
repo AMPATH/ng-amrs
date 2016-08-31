@@ -7,6 +7,7 @@
             'app.etlRestServices',
             'dialogs.main',
             'kendo.directives',
-            'ngMessages'
+            'ngMessages',
+            'app.formentry'
         ]);
 })();

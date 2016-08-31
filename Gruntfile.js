@@ -364,12 +364,20 @@ module.exports = function(grunt) {
         ]
       },
       json: {
-        files: [{
+        files: [
+          {
           expand: true,
           cwd: '<%= yeoman.app %>/scripts/formentry/formschema',
           src: '*.json',
           dest: '<%= yeoman.dist %>/scripts/formentry/formschema'
-        }]
+          },
+          {
+            expand: true,
+            cwd: '<%= yeoman.app %>/scripts/formentry',
+            src: 'form-order.json',
+            dest: '<%= yeoman.dist %>/scripts/formentry'
+          }
+        ]
       },
       styles: {
         expand: true,

@@ -29,12 +29,13 @@ jshint -W003, -W026, -W117, -W098
         '$timeout',
         '$location',
         'dialogs',
-        'UserDefaultPropertiesService'
+        'UserDefaultPropertiesService',
+        'FormsMetaData'
   ];
 
   function currentVisitController($scope, $rootScope, vService, $stateParams,
                                     encService, encModel, $filter, $timeout,
-                                    $location, dialogs, userDefPropService) {
+                                    $location, dialogs, userDefPropService, FormsMetaData) {
 
         $scope.currentVisit = initializeCurrentVisit();
         $scope.loadingVisitTypes = true;
@@ -42,11 +43,23 @@ jshint -W003, -W026, -W117, -W098
         $scope.visitTypesLoaded = false;
         $scope.formsFilledStatus = [];
 
-        _.each($rootScope.cachedPocForms, function(form)
-          {
-              form.filled=false;
-              $scope.formsFilledStatus.push(form)
+        FormsMetaData.getFormOrder(function(formOrder){
+          _.each(formOrder, function(order){
+            _.each($rootScope.cachedPocForms, function(form) {
+              if(order.isVisible && order.uuid ===form.uuid) {
+                form.filled = false;
+                $scope.formsFilledStatus.push(form)
+              }
+            });
           });
+        },function(error){
+          _.each($rootScope.cachedPocForms, function(form)
+          {
+            form.filled=false;
+            $scope.formsFilledStatus.push(form)
+          });
+        });
+
 
         $scope.startNewVisit = function() {
              $scope.currentVisit.startDatetime = new Date();
@@ -56,13 +69,13 @@ jshint -W003, -W026, -W117, -W098
                  visitType: $scope.currentVisit.visitType,
                  startDatetime: getFormattedDate($scope.currentVisit.startDatetime)
              };
-             
+
              // Set location to default user's if available.
              var location = userDefPropService.getCurrentUserDefaultLocation();
              if(angular.isDefined(location.uuid)) {
                newVisit.location = location.uuid;
              }
-             
+
              vService.saveVisit(newVisit, function(data) {
                  $scope.currentVisit.uuid = data.uuid;
                  $scope.visitStarted = true;
