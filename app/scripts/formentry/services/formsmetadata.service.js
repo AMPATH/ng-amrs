@@ -24,10 +24,12 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
         };
 
         forms = CachedDataService.getCachedPocForms();
+
         var service = {
             getForm: getForm,
             getFormSchema: getFormSchema,
-            getFormSchemasArray: getFormSchemasArray
+            getFormSchemasArray: getFormSchemasArray,
+            getFormOrder : getFormOrder
         };
 
         return service;
@@ -44,7 +46,7 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
             if (result === undefined) return defaultForm;
             return result;
         }
-        
+
         function getFormSchema(formName, onSuccess, onError) {
             formName = createValidFormName(formName);
             // this should de dropped once we align all forms related issues
@@ -66,11 +68,23 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
                     //console.log(data);
                     //console.log(status);
                     if (status === 404) { alert('Form Resource not Available'); }
-                    
+
                     onError(data);
                 });
         }
-        
+
+        function getFormOrder(onSuccess, onError) {
+          var url = 'scripts/formentry/form-order.json';
+          $http.get(url, { cache: true })
+            .success(function (response) {
+              onSuccess(response);
+            })
+            .error(function (data, status, headers, config) {
+              if (status === 404) { alert('form-order.json not Available'); }
+              onError(data);
+            });
+        }
+
         function getFormSchemasArray(arrayFormNames, onSuccess, onError) {
             var numberOfRequests = arrayFormNames.length;
             var formSchemas = [];
