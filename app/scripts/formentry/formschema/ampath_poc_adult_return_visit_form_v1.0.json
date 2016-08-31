@@ -1,5 +1,5 @@
 {
-    "name": "ampath_poc_adult_return_visit_form_v0.01",
+    "name": "ampath_poc_adult_return_visit_form_v1.0",
     "uuid": "xxxx",
     "processor": "EncounterFormProcessor",
     "referencedForms": [
@@ -64,11 +64,11 @@
             "alias": "ass"
         },
         {
-            "formName": "component_ob-history",
-            "alias": "gynhist"
+            "formName": "component_ob-history-v1.0",
+            "alias": "gynhist1"
         },
         {
-            "formName": "component_lab-orders_v1.0",
+            "formName": "component_lab-orders-v1.0",
             "alias": "to"
         },
         {
@@ -78,6 +78,10 @@
         {
             "formName": "component_vl-justification",
             "alias": "vljust"
+        },
+        {
+            "formName": "component_family-planning",
+            "alias": "fp"
         }
     ],
     "pages": [
@@ -164,7 +168,14 @@
                 },
                 {
                     "reference": {
-                        "form": "gynhist",
+                        "form": "fp",
+                        "page": "Family Planning",
+                        "section": "Family Planning"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "gynhist1",
                         "page": "OB/Gyn History",
                         "section": "OB/Gyn History",
                         "excludeQuestions": [
@@ -294,7 +305,7 @@
                 },
                 {
                     "reference": {
-                        "form": "gynhist",
+                        "form": "gynhist1",
                         "page": "OB/Gyn History",
                         "section": "STI"
                     }

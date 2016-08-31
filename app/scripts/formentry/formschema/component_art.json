@@ -35,7 +35,18 @@
                             "questionOptions": {
                                 "concept": "81608e3b-fece-4136-8def-b822b54de197",
                                 "rendering": "date"
-                            }
+                            },
+                            "validators": [
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "false"
+                                },
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "(new moment(encDate)).isBefore((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                    "message": "Date should be before the encounter date."
+                                }
+                            ]
                         },
                         {
                             "label": "Reason for eligibility:",
@@ -65,6 +76,10 @@
                                         "label": "Hepatitis"
                                     },
                                     {
+                                        "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
+                                        "label": "Discordant couple"
+                                    },
+                                    {
                                         "concept": "a89b2606-1350-11df-a1f1-0026b9348838",
                                         "label": "WHO Stage 1"
                                     },
@@ -91,7 +106,38 @@
                             "questionOptions": {
                                 "concept": "a89d200a-1350-11df-a1f1-0026b9348838",
                                 "rendering": "date"
-                            }
+                            },
+                            "validators": [
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "false"
+                                },
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "(new moment(encDate)).isBefore((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                    "message": "ARV start date should be before the encounter date."
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Date last used:",
+                            "type": "obs",
+                            "id": "pastArtDateLastUsed",
+                            "questionOptions": {
+                                "concept": "a67ffb12-761b-48cb-a670-ce0bc0a50d60",
+                                "rendering": "date"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "false"
+                                },
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "(new moment(encDate)).isBefore((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                    "message": "ARV start date should be before the encounter date."
+                                }
+                            ]
                         },
                         {
                             "label": "Date stopped:",
@@ -100,7 +146,18 @@
                             "questionOptions": {
                                 "concept": "a89ec270-1350-11df-a1f1-0026b9348838",
                                 "rendering": "date"
-                            }
+                            },
+                            "validators": [
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "false"
+                                },
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "(new moment(encDate)).isBefore((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                    "message": "ARV start date should be before the encounter date."
+                                }
+                            ]
                         },
                         {
                             "label": "Reason for use in past:",
@@ -196,8 +253,28 @@
                                         "label": " Atazanavir 300mg/ritonavir 100mg"
                                     },
                                     {
+                                        "concept": "2fc1f68c-9939-44d4-b5f4-e064ed4073ca",
+                                        "label": "Nevirapine 100mg"
+                                    },
+                                    {
                                         "concept": "0485075a-3111-11e0-8090-0026b9348838",
                                         "label": "Nevirapine 200mg"
+                                    },
+                                    {
+                                        "concept": "db3c194b-3e1b-4001-9a1c-a5df1728fc28",
+                                        "label": "Efavirenz 200mg"
+                                    },
+                                    {
+                                        "concept": "ff9096b6-d86c-403a-9bda-eab02252dbf3",
+                                        "label": "Efavirenz 250mg"
+                                    },
+                                    {
+                                        "concept": "55e0461f-b28f-42de-a3c6-328d7f17c44b",
+                                        "label": "Efavirenz 350mg"
+                                    },
+                                    {
+                                        "concept": "81a41a82-fd72-4da4-8d47-edd5672549ce",
+                                        "label": "Efavirenz 400mg"
                                     },
                                     {
                                         "concept": "4677ad3e-3120-11e0-8090-0026b9348838",
@@ -279,6 +356,10 @@
                                         "label": "Atazanavir300/Ritonavir100"
                                     },
                                     {
+                                        "concept": "dabf36cb-dd9a-4542-a8ef-874c1ee5be4a",
+                                        "label": "FTC200mg/RPV25mg/TDF245mg(Eviplera)"
+                                    },
+                                    {
                                         "concept": "a897f8a0-1350-11df-a1f1-0026b9348838",
                                         "label": "Abacavir300mg"
                                     },
@@ -301,6 +382,14 @@
                                     {
                                         "concept": "a897ea4a-1350-11df-a1f1-0026b9348838",
                                         "label": "Zidovudine300mg"
+                                    },
+                                    {
+                                        "concept": "68a0a5dd-1e91-43a2-8dce-c6e84a14de04",
+                                        "label": "Darunavir 600mg"
+                                    },
+                                    {
+                                        "concept": "38fbba9c-4b26-412d-9659-8dd649514d66",
+                                        "label": "Etravirine 100mg"
                                     },
                                     {
                                         "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -371,7 +460,7 @@
                         },
                         {
                             "label": "If patient started ART since last visit, enter start date:",
-                            "id":"startDate",
+                            "id": "startDate",
                             "questionOptions": {
                                 "concept": "a89d200a-1350-11df-a1f1-0026b9348838",
                                 "rendering": "date"
@@ -467,8 +556,28 @@
                                         "label": " Atazanavir 300mg/ritonavir 100mg"
                                     },
                                     {
+                                        "concept": "2fc1f68c-9939-44d4-b5f4-e064ed4073ca",
+                                        "label": "Nevirapine 100mg"
+                                    },
+                                    {
                                         "concept": "0485075a-3111-11e0-8090-0026b9348838",
                                         "label": "Nevirapine 200mg"
+                                    },
+                                    {
+                                        "concept": "db3c194b-3e1b-4001-9a1c-a5df1728fc28",
+                                        "label": "Efavirenz 200mg"
+                                    },
+                                    {
+                                        "concept": "ff9096b6-d86c-403a-9bda-eab02252dbf3",
+                                        "label": "Efavirenz 250mg"
+                                    },
+                                    {
+                                        "concept": "55e0461f-b28f-42de-a3c6-328d7f17c44b",
+                                        "label": "Efavirenz 350mg"
+                                    },
+                                    {
+                                        "concept": "81a41a82-fd72-4da4-8d47-edd5672549ce",
+                                        "label": "Efavirenz 400mg"
                                     },
                                     {
                                         "concept": "4677ad3e-3120-11e0-8090-0026b9348838",
@@ -555,6 +664,10 @@
                                         "label": "Atazanavir300/Ritonavir100"
                                     },
                                     {
+                                        "concept": "dabf36cb-dd9a-4542-a8ef-874c1ee5be4a",
+                                        "label": "FTC200mg/RPV25mg/TDF245mg(Eviplera)"
+                                    },
+                                    {
                                         "concept": "a897f8a0-1350-11df-a1f1-0026b9348838",
                                         "label": "Abacavir300mg"
                                     },
@@ -577,6 +690,14 @@
                                     {
                                         "concept": "a897ea4a-1350-11df-a1f1-0026b9348838",
                                         "label": "Zidovudine300mg"
+                                    },
+                                    {
+                                        "concept": "68a0a5dd-1e91-43a2-8dce-c6e84a14de04",
+                                        "label": "Darunavir 600mg"
+                                    },
+                                    {
+                                        "concept": "38fbba9c-4b26-412d-9659-8dd649514d66",
+                                        "label": "Etravirine 100mg"
                                     },
                                     {
                                         "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -1149,8 +1270,28 @@
                                         "label": " Atazanavir 300mg/ritonavir 100mg"
                                     },
                                     {
+                                        "concept": "2fc1f68c-9939-44d4-b5f4-e064ed4073ca",
+                                        "label": "Nevirapine 100mg"
+                                    },
+                                    {
                                         "concept": "0485075a-3111-11e0-8090-0026b9348838",
                                         "label": "Nevirapine 200mg"
+                                    },
+                                    {
+                                        "concept": "db3c194b-3e1b-4001-9a1c-a5df1728fc28",
+                                        "label": "Efavirenz 200mg"
+                                    },
+                                    {
+                                        "concept": "ff9096b6-d86c-403a-9bda-eab02252dbf3",
+                                        "label": "Efavirenz 250mg"
+                                    },
+                                    {
+                                        "concept": "55e0461f-b28f-42de-a3c6-328d7f17c44b",
+                                        "label": "Efavirenz 350mg"
+                                    },
+                                    {
+                                        "concept": "81a41a82-fd72-4da4-8d47-edd5672549ce",
+                                        "label": "Efavirenz 400mg"
                                     },
                                     {
                                         "concept": "4677ad3e-3120-11e0-8090-0026b9348838",
@@ -1203,7 +1344,6 @@
                             "hide": {
                                 "hideWhenExpression": "!arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'],arvPlan)"
                             }
-                            
                         },
                         {
                             "label": "ART regimen started, adult:",
@@ -1248,6 +1388,10 @@
                                         "label": "Atazanavir300/Ritonavir100"
                                     },
                                     {
+                                        "concept": "dabf36cb-dd9a-4542-a8ef-874c1ee5be4a",
+                                        "label": "FTC200mg/RPV25mg/TDF245mg(Eviplera)"
+                                    },
+                                    {
                                         "concept": "a897f8a0-1350-11df-a1f1-0026b9348838",
                                         "label": "Abacavir300mg"
                                     },
@@ -1270,6 +1414,14 @@
                                     {
                                         "concept": "a897ea4a-1350-11df-a1f1-0026b9348838",
                                         "label": "Zidovudine300mg"
+                                    },
+                                    {
+                                        "concept": "68a0a5dd-1e91-43a2-8dce-c6e84a14de04",
+                                        "label": "Darunavir 600mg"
+                                    },
+                                    {
+                                        "concept": "38fbba9c-4b26-412d-9659-8dd649514d66",
+                                        "label": "Etravirine 100mg"
                                     },
                                     {
                                         "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -1298,7 +1450,6 @@
                             "hide": {
                                 "hideWhenExpression": "!arrayContains(['a89b7ae8-1350-11df-a1f1-0026b9348838', 'a898c938-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838','a8a00158-1350-11df-a1f1-0026b9348838','a89b7c50-1350-11df-a1f1-0026b9348838', 'a8a00220-1350-11df-a1f1-0026b9348838'],arvPlan)"
                             }
-                            
                         }
                     ]
                 },

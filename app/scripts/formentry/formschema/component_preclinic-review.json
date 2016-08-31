@@ -113,7 +113,7 @@
                                         "label": "Cohabitating"
                                     },
                                     {
-                                        "concept": "a899af10-1350-11df-a1f1-0026b9348838",
+                                        "concept": "a899ad58-1350-11df-a1f1-0026b9348838",
                                         "label": "Divorced"
                                     },
                                     {
@@ -174,6 +174,7 @@
                     "questions": [
                         {
                             "label": "Prevention with positives: At risk population:",
+                            "required": "true",
                             "questionOptions": {
                                 "rendering": "select",
                                 "concept": "93aa3f1d-1c39-4196-b5e6-8adc916cd5d6",
@@ -209,6 +210,7 @@
                         },
                         {
                             "label": "Prevention with positives: PWP services:",
+                            "required": "true",
                             "questionOptions": {
                                 "rendering": "select",
                                 "concept": "9ce5dbf0-a141-4ad8-8c9d-cd2bf84fe72b",

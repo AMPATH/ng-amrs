@@ -90,7 +90,7 @@
                         },
                         {
                             "label": "Delivered since last visit? (If yes, fill out pMTCT form)",
-                            "id":"lastDelivery",
+                            "id": "lastDelivery",
                             "questionOptions": {
                                 "concept": "a89a94ca-1350-11df-a1f1-0026b9348838",
                                 "answers": [
@@ -172,6 +172,22 @@
                                     {
                                         "concept": "a8a713f8-1350-11df-a1f1-0026b9348838",
                                         "label": "Sterilization"
+                                    },
+                                    {
+                                        "concept": "a8a71588-1350-11df-a1f1-0026b9348838",
+                                        "label": "Diaphragm/cervical cap"
+                                    },
+                                    {
+                                        "concept": "a8a714c0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Fertilty awareness"
+                                    },
+                                    {
+                                        "concept": "eaa5796d-0b1c-478b-8c9d-d23cf4c3bddc",
+                                        "label": "Vasectomy"
+                                    },
+                                    {
+                                        "concept": "856a7f0d-8359-4316-97c1-2d37813414f0",
+                                        "label": "Undecided"
                                     },
                                     {
                                         "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",

@@ -27,7 +27,7 @@
                                         {
                                             "type": "js_expression",
                                             "failsWhenExpression": "!isEmpty(creatinine_test) && isEmpty(myValue)",
-                                            "message": "Date is result is required."
+                                            "message": "Date result is required."
                                         }
                                     ],
                                     "hde": {
@@ -68,18 +68,30 @@
                         {
                             "type": "obs",
                             "label": "AST:",
+                            "id": "ast_test",
                             "questionOptions": {
                                 "concept": "a896c8ae-1350-11df-a1f1-0026b9348838",
                                 "rendering": "number",
                                 "max": "3500",
                                 "min": "0",
-                                "showDate": "true"
-                            },
-                            "validators": [
-                                {
-                                    "type": "date"
+                                "showDate": "true",
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(ast_test) && isEmpty(myValue)",
+                                            "message": "Date is result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(ast_test)"
+                                    }
                                 }
-                            ]
+                            },
+                            "validators": []
                         }
                     ]
                 },
@@ -143,20 +155,32 @@
                             "validators": []
                         },
                         {
-                            "type": "obs",
-                            "label": "Platelets:",
+                            "label": "Platelets",
+                            "id": "platelets_test",
                             "questionOptions": {
                                 "concept": "a8970954-1350-11df-a1f1-0026b9348838",
                                 "rendering": "number",
                                 "max": "1000",
                                 "min": "0",
-                                "showDate": "true"
-                            },
-                            "validators": [
-                                {
-                                    "type": "date"
+                                "showDate": "true",
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(platelets_test) && isEmpty(myValue)",
+                                            "message": "Date is result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(platelets_test)"
+                                    }
                                 }
-                            ]
+                            },
+                            "type": "obs",
+                            "validators": []
                         },
                         {
                             "label": "ALC/ mm3",
@@ -313,9 +337,11 @@
                     "questions": [
                         {
                             "label": "Rapid HIV:",
+                            "type": "obs",
                             "id": "hivRapid",
                             "questionOptions": {
                                 "concept": "a8999dfe-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
                                 "answers": [
                                     {
                                         "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
@@ -343,17 +369,27 @@
                                     }
                                 ],
                                 "showDate": "true",
-                                "rendering": "select"
-                            },
-                            "type": "obs",
-                            "validators": [
-                                {
-                                    "type": "date"
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(hivRapid) && isEmpty(myValue)",
+                                            "message": "Date result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(hivRapid)"
+                                    }
                                 }
-                            ]
+                            },
+                            "validators": []
                         },
                         {
                             "label": "HIV Long Eliza:",
+                            "type": "obs",
                             "questionOptions": {
                                 "id": "longEliza",
                                 "concept": "a8999fb6-1350-11df-a1f1-0026b9348838",
@@ -384,14 +420,24 @@
                                     }
                                 ],
                                 "showDate": "true",
-                                "rendering": "select"
-                            },
-                            "type": "obs",
-                            "validators": [
-                                {
-                                    "type": "date"
+                                "rendering": "select",
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(longEliza) && isEmpty(myValue)",
+                                            "message": "Date result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(longEliza)"
+                                    }
                                 }
-                            ]
+                            },
+                            "validators": []
                         },
                         {
                             "label": "HIV DNA PCR:",
@@ -421,14 +467,25 @@
                                     }
                                 ],
                                 "showDate": "true",
-                                "rendering": "select"
-                            },
-                            "type": "obs",
-                            "validators": [
-                                {
-                                    "type": "date"
+                                "rendering": "select",
+                                "type": "obs",
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(hivPcr) && isEmpty(myValue)",
+                                            "message": "Date result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(hivPcr)"
+                                    }
                                 }
-                            ]
+                            },
+                            "validators": []
                         }
                     ]
                 },
@@ -729,24 +786,35 @@
                                     }
                                 ],
                                 "showDate": "true",
-                                "rendering": "select"
+                                "rendering": "select",
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(vdrl_test) && isEmpty(myValue)",
+                                            "message": "Date result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(vdrl_test)"
+                                    }
+                                }
                             },
                             "type": "obs",
-                            "validators": [
-                                {
-                                    "type": "date"
-                                }
-                            ]
+                            "validators": []
                         },
                         {
-                            "label": "High Vaginal Swab:",
+                            "label": "High vaginal swab:",
                             "questionOptions": {
                                 "id": "highvaginalswab_test",
                                 "concept": "a8a0ab58-1350-11df-a1f1-0026b9348838",
                                 "answers": [
                                     {
                                         "concept": "a896dea2-1350-11df-a1f1-0026b9348838",
-                                        "label": "Serum white blood ccell counts"
+                                        "label": "Serum white blood cell counts"
                                     },
                                     {
                                         "concept": "a896e56e-1350-11df-a1f1-0026b9348838",
@@ -754,19 +822,19 @@
                                     },
                                     {
                                         "concept": "a896d8bc-1350-11df-a1f1-0026b9348838",
-                                        "label": "Gram Negative Rods"
+                                        "label": "Gram negative rods"
                                     },
                                     {
                                         "concept": "a8a0acde-1350-11df-a1f1-0026b9348838",
-                                        "label": "Gram Negative Cocci"
+                                        "label": "Gram negative cocci"
                                     },
                                     {
                                         "concept": "a896d632-1350-11df-a1f1-0026b9348838",
-                                        "label": "Gram Positive Rods"
+                                        "label": "Gram positive rods"
                                     },
                                     {
                                         "concept": "a8a0ac20-1350-11df-a1f1-0026b9348838",
-                                        "label": "Gram Positive Rods"
+                                        "label": "Gram positive rods"
                                     },
                                     {
                                         "concept": "a8a0a856-1350-11df-a1f1-0026b9348838",
@@ -774,18 +842,29 @@
                                     },
                                     {
                                         "concept": "a8a0a91e-1350-11df-a1f1-0026b9348838",
-                                        "label": "Presence of Pus cells,Urine"
+                                        "label": "Presence of pus cells, Urine"
                                     }
                                 ],
                                 "showDate": "true",
-                                "rendering": "select"
+                                "rendering": "select",
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(highvaginalswab_test) && isEmpty(myValue)",
+                                            "message": "Date result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(highvaginalswab_test)"
+                                    }
+                                }
                             },
                             "type": "obs",
-                            "validators": [
-                                {
-                                    "type": "date"
-                                }
-                            ]
+                            "validators": []
                         }
                     ]
                 }

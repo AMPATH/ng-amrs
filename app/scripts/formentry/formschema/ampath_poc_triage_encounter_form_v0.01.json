@@ -4,7 +4,7 @@
     "processor": "EncounterFormProcessor",
     "pages": [
         {
-            "label": "Page 1",
+            "label": "Triage v0.01",
             "sections": [
                 {
                     "label": "Encounter Details",
@@ -146,7 +146,7 @@
                                         "label": "Cohabitating"
                                     },
                                     {
-                                        "concept": "a899af10-1350-11df-a1f1-0026b9348838",
+                                        "concept": "a899ad58-1350-11df-a1f1-0026b9348838",
                                         "label": "Divorced"
                                     },
                                     {
@@ -203,10 +203,15 @@
                         },
                         {
                             "label": "Prevention with positives: At risk population:",
+                            "required": "true",
                             "questionOptions": {
                                 "rendering": "select",
                                 "concept": "93aa3f1d-1c39-4196-b5e6-8adc916cd5d6",
                                 "answers": [
+                                    {
+                                        "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
+                                        "label": "N/A"
+                                    },
                                     {
                                         "concept": "5da55301-e28e-4fdf-8b64-02622dedc8b0",
                                         "label": "Client of sex worker"
@@ -226,10 +231,6 @@
                                     {
                                         "concept": "e19c35f0-12f0-46c2-94ea-97050f37b811",
                                         "label": "MSM"
-                                    },
-                                    {
-                                        "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
-                                        "label": "N/A"
                                     }
                                 ]
                             },
@@ -238,10 +239,15 @@
                         },
                         {
                             "label": "Prevention with positives: PWP services:",
+                            "required": "true",
                             "questionOptions": {
                                 "rendering": "select",
                                 "concept": "9ce5dbf0-a141-4ad8-8c9d-cd2bf84fe72b",
                                 "answers": [
+                                    {
+                                        "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
+                                        "label": "N/A"
+                                    },
                                     {
                                         "concept": "f0a280e8-eb88-41a8-837a-f9949ed1b9cd",
                                         "label": "Condom promotion/provision"
@@ -257,10 +263,6 @@
                                     {
                                         "concept": "05656545-86be-4605-9527-34fb580534b1",
                                         "label": "Targeted risk reduction"
-                                    },
-                                    {
-                                        "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
-                                        "label": "N/A"
                                     }
                                 ]
                             },

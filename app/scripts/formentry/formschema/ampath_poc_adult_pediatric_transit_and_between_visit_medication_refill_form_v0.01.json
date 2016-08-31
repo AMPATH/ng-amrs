@@ -441,8 +441,28 @@
                                         "label": " Atazanavir 300mg/ritonavir 100mg"
                                     },
                                     {
+                                        "concept": "2fc1f68c-9939-44d4-b5f4-e064ed4073ca",
+                                        "label": "Nevirapine 100mg"
+                                    },
+                                    {
                                         "concept": "0485075a-3111-11e0-8090-0026b9348838",
                                         "label": "Nevirapine 200mg"
+                                    },
+                                    {
+                                        "concept": "db3c194b-3e1b-4001-9a1c-a5df1728fc28",
+                                        "label": "Efavirenz 200mg"
+                                    },
+                                    {
+                                        "concept": "ff9096b6-d86c-403a-9bda-eab02252dbf3",
+                                        "label": "Efavirenz 250mg"
+                                    },
+                                    {
+                                        "concept": "55e0461f-b28f-42de-a3c6-328d7f17c44b",
+                                        "label": "Efavirenz 350mg"
+                                    },
+                                    {
+                                        "concept": "81a41a82-fd72-4da4-8d47-edd5672549ce",
+                                        "label": "Efavirenz 400mg"
                                     },
                                     {
                                         "concept": "4677ad3e-3120-11e0-8090-0026b9348838",
@@ -492,7 +512,7 @@
                             "questionOptions": {
                                 "concept": "a899cf5e-1350-11df-a1f1-0026b9348838",
                                 "answers": [
-                                    {
+                                     {
                                         "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
                                         "label": "NVP200/ZDV300/3TC150"
                                     },
@@ -529,6 +549,10 @@
                                         "label": "Atazanavir300/Ritonavir100"
                                     },
                                     {
+                                        "concept": "dabf36cb-dd9a-4542-a8ef-874c1ee5be4a",
+                                        "label": "FTC200mg/RPV25mg/TDF245mg(Eviplera)"
+                                    },
+                                    {
                                         "concept": "a897f8a0-1350-11df-a1f1-0026b9348838",
                                         "label": "Abacavir300mg"
                                     },
@@ -551,6 +575,14 @@
                                     {
                                         "concept": "a897ea4a-1350-11df-a1f1-0026b9348838",
                                         "label": "Zidovudine300mg"
+                                    },
+                                    {
+                                        "concept": "68a0a5dd-1e91-43a2-8dce-c6e84a14de04",
+                                        "label": "Darunavir 600mg"
+                                    },
+                                    {
+                                        "concept": "38fbba9c-4b26-412d-9659-8dd649514d66",
+                                        "label": "Etravirine 100mg"
                                     },
                                     {
                                         "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
@@ -1148,7 +1180,7 @@
                             "questionOptions": {
                                 "concept": "a89b6a62-1350-11df-a1f1-0026b9348838",
                                 "answers": [
-                                    {
+                                   {
                                         "concept": "b58a28d2-36de-11e0-93be-0026b9348838",
                                         "label": "ABC 60mg/3TC 30mg"
                                     },
@@ -1189,8 +1221,28 @@
                                         "label": " Atazanavir 300mg/ritonavir 100mg"
                                     },
                                     {
+                                        "concept": "2fc1f68c-9939-44d4-b5f4-e064ed4073ca",
+                                        "label": "Nevirapine 100mg"
+                                    },
+                                    {
                                         "concept": "0485075a-3111-11e0-8090-0026b9348838",
                                         "label": "Nevirapine 200mg"
+                                    },
+                                    {
+                                        "concept": "db3c194b-3e1b-4001-9a1c-a5df1728fc28",
+                                        "label": "Efavirenz 200mg"
+                                    },
+                                    {
+                                        "concept": "ff9096b6-d86c-403a-9bda-eab02252dbf3",
+                                        "label": "Efavirenz 250mg"
+                                    },
+                                    {
+                                        "concept": "55e0461f-b28f-42de-a3c6-328d7f17c44b",
+                                        "label": "Efavirenz 350mg"
+                                    },
+                                    {
+                                        "concept": "81a41a82-fd72-4da4-8d47-edd5672549ce",
+                                        "label": "Efavirenz 400mg"
                                     },
                                     {
                                         "concept": "4677ad3e-3120-11e0-8090-0026b9348838",
@@ -1250,7 +1302,7 @@
                             "questionOptions": {
                                 "concept": "a89b6a62-1350-11df-a1f1-0026b9348838",
                                 "answers": [
-                                    {
+                                     {
                                         "concept": "6a73f32d-1870-4527-af6e-74443251ded2",
                                         "label": "NVP200/ZDV300/3TC150"
                                     },
@@ -1287,6 +1339,10 @@
                                         "label": "Atazanavir300/Ritonavir100"
                                     },
                                     {
+                                        "concept": "dabf36cb-dd9a-4542-a8ef-874c1ee5be4a",
+                                        "label": "FTC200mg/RPV25mg/TDF245mg(Eviplera)"
+                                    },
+                                    {
                                         "concept": "a897f8a0-1350-11df-a1f1-0026b9348838",
                                         "label": "Abacavir300mg"
                                     },
@@ -1309,6 +1365,14 @@
                                     {
                                         "concept": "a897ea4a-1350-11df-a1f1-0026b9348838",
                                         "label": "Zidovudine300mg"
+                                    },
+                                    {
+                                        "concept": "68a0a5dd-1e91-43a2-8dce-c6e84a14de04",
+                                        "label": "Darunavir 600mg"
+                                    },
+                                    {
+                                        "concept": "38fbba9c-4b26-412d-9659-8dd649514d66",
+                                        "label": "Etravirine 100mg"
                                     },
                                     {
                                         "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",

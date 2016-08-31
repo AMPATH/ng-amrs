@@ -9,8 +9,8 @@
                 {
                     "label": "Congenital Abnormalities",
                     "questions": [
-                         {
-                            "label": "Congenital anormaly in newborn::",
+                        {
+                            "label": "Congenital abnormaly in newborn::",
                             "type": "obs",
                             "questionOptions": {
                                 "rendering": "select",
@@ -19,8 +19,11 @@
                                     {
                                         "concept": "a8b00d6e-1350-11df-a1f1-0026b9348838",
                                         "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
                                     }
-                                    
                                 ]
                             },
                             "validators": []

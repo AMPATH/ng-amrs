@@ -1,0 +1,610 @@
+{
+    "name": "component_peds-review-of-systems",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Review of systems",
+            "sections": [
+                {
+                    "label": "Chief complaint",
+                    "questions": [
+                        {
+                            "label": "Chief complaint:",
+                            "questionOptions": {
+                                "concept": "a8a6ddb6-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "No Complaint"
+                                    },
+                                    {
+                                        "concept": "a899b5e6-1350-11df-a1f1-0026b9348838",
+                                        "label": "Having symptoms"
+                                    }
+                                    
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                },
+                {
+                    "label": "Review of systems General",
+                    "questions": [
+                        {
+                            "label": "General:",
+                            "questionOptions": {
+                                "concept": "a899b6c2-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "No complaints"
+                                    },
+                                    {
+                                        "concept": "a8ad0038-1350-11df-a1f1-0026b9348838",
+                                        "label": "Fever"
+                                    },
+                                    {
+                                        "concept": "a895776a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Rash"
+                                    },
+                                    {
+                                        "concept": "a89807f0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Weight Loss"
+                                    },
+                                    {
+                                        "concept": "a89cb0d4-1350-11df-a1f1-0026b9348838",
+                                        "label": " Poor Weight gain"
+                                    },
+                                    {
+                                        "concept": "a8ad49a8-1350-11df-a1f1-0026b9348838",
+                                        "label": "Lethargy/Irritability"
+                                    },
+                                    {
+                                        "concept": "a8ad042a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Fatigue"
+                                    },
+                                    {
+                                        "concept": "a8ad28ba-1350-11df-a1f1-0026b9348838",
+                                        "label": "Jaundice"
+                                    },
+                                    {
+                                        "concept": "a890bb26-1350-11df-a1f1-0026b9348838",
+                                        "label": "Major congenital abnormality"
+                                    },
+                                    {
+                                        "concept": "a8ad4ed0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Night sweats"
+                                    },
+                                    {
+                                        "concept": "1811b444-93be-4e19-8bc5-c559f70e66b6",
+                                        "label": "Pain"
+                                    },
+                                    {
+                                        "concept": "a8ad3576-1350-11df-a1f1-0026b9348838",
+                                        "label": "Swelling"
+                                    },
+                                    {
+                                        "concept": "4639388c-ee31-4dcf-abb4-ad71253493bb",
+                                        "label": "Neck swelling"
+                                    },
+                                    {
+                                        "concept": "5c5e5e89-8e4d-451d-9471-fbe359d40b00",
+                                        "label": "Armpit swelling"
+                                    },
+                                    {
+                                        "concept": "a8ad462e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Abdominal swelling"
+                                    },
+                                    {
+                                        "concept": "a8a774b0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Joint swelling"
+                                    },
+                                    {
+                                        "concept": "a896537e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Edema of legs"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                },
+                {
+                    "label": "Review of systems HEENT",
+                    "questions": [
+                        {
+                            "label": "HEENT :",
+                            "questionOptions": {
+                                "concept": "a899b79e-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                                        "label": "No complaints"
+                                    },
+                                    {
+                                        "concept": "a8a8209a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Oral thrush"
+                                    },
+                                    {
+                                        "concept": "a8a6f8d2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Mouth sores"
+                                    },
+                                    {
+                                        "concept": "a8ad3576-1350-11df-a1f1-0026b9348838",
+                                        "label": "Swelling"
+                                    },
+                                    {
+                                        "concept": "a8ad0b1e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Swallowing difficulties"
+                                    },
+                                    {
+                                        "concept": "a8ad09ca-1350-11df-a1f1-0026b9348838",
+                                        "label": "Vision difficulties"
+                                    },
+                                    {
+                                        "concept": "a8983374-1350-11df-a1f1-0026b9348838",
+                                        "label": "Ear discharge"
+                                    },
+                                    {
+                                        "concept": "a8ad439a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Nasal discharge"
+                                    },
+                                    {
+                                        "concept": "1811b444-93be-4e19-8bc5-c559f70e66b6",
+                                        "label": "Pain"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                },
+                {
+                    "label": "Review of systems Cardiopulmonary",
+                    "questions": [
+                        {
+                            "label": "Cardiopulmonary:",
+                            "questionOptions": {
+                                "id": "revcardio",
+                                "concept": "a899b87a-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "No Complaint"
+                                    },
+                                    {
+                                        "concept": "a890d73c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Cough"
+                                    },
+                                    {
+                                        "concept": "a897eda6-1350-11df-a1f1-0026b9348838",
+                                        "label": "Rapid breathing"
+                                    },
+                                    {
+                                        "concept": "a8ad1276-1350-11df-a1f1-0026b9348838",
+                                        "label": "Shortness of breath"
+                                    },
+                                    {
+                                        "concept": "a8a18d8e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Pneumonia in the past 2 years  "
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Cough:",
+                            "id": "cardiocough",
+                            "questionOptions": {
+                                "concept": "a8ad1190-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Days"
+                                    },
+                                    {
+                                        "concept": "a899baaa-1350-11df-a1f1-0026b9348838",
+                                        "label": "Weeks"
+                                    },
+                                    {
+                                        "concept": "a899bb90-1350-11df-a1f1-0026b9348838",
+                                        "label": "Months"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "revcardio !== 'a890d73c-1350-11df-a1f1-0026b9348838'"
+                            }
+                        },
+                        {
+                            "label": "Cough productive:",
+                            "questionOptions": {
+                                "concept": "a8ad1046-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899bc6c-1350-11df-a1f1-0026b9348838",
+                                        "label": "White"
+                                    },
+                                    {
+                                        "concept": "a899bd52-1350-11df-a1f1-0026b9348838",
+                                        "label": "Purulent"
+                                    },
+                                    {
+                                        "concept": "a899be2e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Blood"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "revcardio !== 'a890d73c-1350-11df-a1f1-0026b9348838'"
+                            }
+                        },
+                        {
+                            "label": "SOB:",
+                            "questionOptions": {
+                                "concept": "a8ad142e-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Days"
+                                    },
+                                    {
+                                        "concept": "a899baaa-1350-11df-a1f1-0026b9348838",
+                                        "label": "Weeks"
+                                    },
+                                    {
+                                        "concept": "a899bb90-1350-11df-a1f1-0026b9348838",
+                                        "label": "Months"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "revcardio !== 'a8ad1276-1350-11df-a1f1-0026b9348838'"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "Review of systems Gastrointestinal",
+                    "questions": [
+                        {
+                            "label": "Gastrointestinal:",
+                            "questionOptions": {
+                                "concept": "a899c13a-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "No Complaint"
+                                    },
+                                    {
+                                        "concept": "a8932f00-1350-11df-a1f1-0026b9348838",
+                                        "label": "Abdominal Pain"
+                                    },
+                                    {
+                                        "concept": "a8ad462e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Abdominal swelling"
+                                    },
+                                    {
+                                        "concept": "a8ad5092-1350-11df-a1f1-0026b9348838",
+                                        "label": "Poor Appetite"
+                                    },
+                                    {
+                                        "concept": "a8ad28ba-1350-11df-a1f1-0026b9348838",
+                                        "label": "Hx of Jaundice"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Refusal to feed:",
+                            "questionOptions": {
+                                "concept": "a8ad4552-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Days"
+                                    },
+                                    {
+                                        "concept": "a899baaa-1350-11df-a1f1-0026b9348838",
+                                        "label": "Weeks"
+                                    },
+                                    {
+                                        "concept": "a899bb90-1350-11df-a1f1-0026b9348838",
+                                        "label": "Months"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Vomiting:",
+                            "questionOptions": {
+                                "concept": "a8ad239c-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Days"
+                                    },
+                                    {
+                                        "concept": "a899baaa-1350-11df-a1f1-0026b9348838",
+                                        "label": "Weeks"
+                                    },
+                                    {
+                                        "concept": "a899bb90-1350-11df-a1f1-0026b9348838",
+                                        "label": "Months"
+                                    },
+                                    {
+                                        "concept": "a899c220-1350-11df-a1f1-0026b9348838",
+                                        "label": "Continous"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Diarrhea:",
+                            "questionOptions": {
+                                "concept": "a8ad270c-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Days"
+                                    },
+                                    {
+                                        "concept": "a899baaa-1350-11df-a1f1-0026b9348838",
+                                        "label": "Weeks"
+                                    },
+                                    {
+                                        "concept": "a899bb90-1350-11df-a1f1-0026b9348838",
+                                        "label": "Months"
+                                    },
+                                    {
+                                        "concept": "a899c220-1350-11df-a1f1-0026b9348838",
+                                        "label": "Continous"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                },
+                {
+                    "label": "Review of systems Genitourinary",
+                    "questions": [
+                        {
+                            "label": "Genitourinary:",
+                            "questionOptions": {
+                                "concept": "a899c2fc-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "No Complaint"
+                                    },
+                                    {
+                                        "concept": "a890a71c-1350-11df-a1f1-0026b9348838",
+                                        "label": "UTI"
+                                    },
+                                    {
+                                        "concept": "a8981696-1350-11df-a1f1-0026b9348838",
+                                        "label": "Hematuria"
+                                    },
+                                    {
+                                        "concept": "a8ad4714-1350-11df-a1f1-0026b9348838",
+                                        "label": "Dysuria"
+                                    },
+                                    {
+                                        "concept": "a8ad47f0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Oliguria"
+                                    },
+                                    {
+                                        "concept": "a8ad5254-1350-11df-a1f1-0026b9348838",
+                                        "label": "Renal disease"
+                                    },
+                                    {
+                                        "concept": "2e776cc4-0bbb-40e1-91da-ea5a7cd876fa",
+                                        "label": "History of sexual abuse"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Urethral Discharge:",
+                            "questionOptions": {
+                                "concept": "a8ad313e-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b9c4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Days"
+                                    },
+                                    {
+                                        "concept": "a899baaa-1350-11df-a1f1-0026b9348838",
+                                        "label": "Weeks"
+                                    },
+                                    {
+                                        "concept": "a899bb90-1350-11df-a1f1-0026b9348838",
+                                        "label": "Months"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                },
+                {
+                    "label": "Review of systems Musculoskeletal",
+                    "questions": [
+                        {
+                            "label": "Musculoskeletal:",
+                            "questionOptions": {
+                                "concept": "a899c3d8-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "No Complaint"
+                                    },
+                                    {
+                                        "concept": "a890ba5e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Joint Pains"
+                                    },
+                                    {
+                                        "concept": "a8a774b0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Swelling of joints"
+                                    },
+                                    {
+                                        "concept": "a896537e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Edema of legs"
+                                    },
+                                    {
+                                        "concept": "a8ad5330-1350-11df-a1f1-0026b9348838",
+                                        "label": "Muscle Pains"
+                                    },
+                                    {
+                                        "concept": "a8ae7c9c-1350-11df-a1f1-0026b9348838",
+                                        "label": " Pain in the legs/feet"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                },
+                {
+                    "label": "Review of systems Psychiatric",
+                    "questions": [
+                        {
+                            "label": "Psychiatric:",
+                            "questionOptions": {
+                                "concept": "a8a35e34-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "No Complaint"
+                                    },
+                                    {
+                                        "concept": "a8935fde-1350-11df-a1f1-0026b9348838",
+                                        "label": "Feeling low"
+                                    },
+                                    {
+                                        "concept": "a8ad3b02-1350-11df-a1f1-0026b9348838",
+                                        "label": "Confusion"
+                                    },
+                                    {
+                                        "concept": "f5b8f79a-5460-49a5-983e-78cc203673da",
+                                        "label": "Suicidal"
+                                    },
+                                    {
+                                        "concept": "a8ae7ecc-1350-11df-a1f1-0026b9348838",
+                                        "label": "Memory problems"
+                                    },
+                                    {
+                                        "concept": "a89cec02-1350-11df-a1f1-0026b9348838",
+                                        "label": " Anxiety"
+                                    },
+                                    {
+                                        "concept": "417b42d9-40f8-4f89-b39f-5df23f525202",
+                                        "label": "Over-excited"
+                                    },
+                                    {
+                                        "concept": "1f515e42-00fe-4db9-942a-6c07a1d38692",
+                                        "label": "Abnormal behavior"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                },
+                {
+                    "label": "Review of systems Developmental",
+                    "questions": [
+                        {
+                            "label": "Developmental:",
+                            "questionOptions": {
+                                "concept": "a899c4be-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "No Complaint"
+                                    },
+                                    {
+                                        "concept": "a8ad392c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Delayed milestones"
+                                    },
+                                    {
+                                        "concept": "a8ad3a26-1350-11df-a1f1-0026b9348838",
+                                        "label": "Regressed milestones"
+                                    },
+                                    {
+                                        "concept": "a8966d1e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Learning and Educational problems"
+                                    },
+                                    {
+                                        "concept": "a8935fde-1350-11df-a1f1-0026b9348838",
+                                        "label": "Depression"
+                                    },
+                                    {
+                                        "concept": "a8ad3b02-1350-11df-a1f1-0026b9348838",
+                                        "label": "Confusion"
+                                    },
+                                    {
+                                        "concept": "a890b810-1350-11df-a1f1-0026b9348838",
+                                        "label": "Mental Illness"
+                                    },
+                                    {
+                                        "concept": "a8ae7ecc-1350-11df-a1f1-0026b9348838",
+                                        "label": "Memory Problem"
+                                    }
+                                ],
+                                "type": "obs",
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
