@@ -307,46 +307,6 @@
                                 }
                             },
                             "validators": []
-                        },
-                        {
-                            "label": "Viral load justification:",
-                            "type": "obs",
-                            "id": "vljust",
-                            "questionOptions": {
-                                "concept": "0a98f01f-57f1-44b7-aacf-e1121650a967",
-                                "rendering": "select",
-                                "answers": [
-                                    {
-                                        "concept": "5931c4d4-4406-4d71-b75d-2205d905cc24",
-                                        "label": "Routine VL"
-                                    },
-                                    {
-                                        "concept": "e43ddeb6-3984-499c-a280-3bade1039608",
-                                        "label": "Confirmation of treatment failure (repeat VL at 3M) "
-                                    },
-                                    {
-                                        "concept": "a8981934-1350-11df-a1f1-0026b9348838",
-                                        "label": "Clinical failure"
-                                    },
-                                    {
-                                        "concept": "c6537e06-9fc2-47da-b679-e2a32824407f",
-                                        "label": "Immunological failure"
-                                    },
-                                    {
-                                        "concept": "a8a00158-1350-11df-a1f1-0026b9348838",
-                                        "label": "Single Drug Substitution"
-                                    },
-                                    {
-                                        "concept": "a89d109c-1350-11df-a1f1-0026b9348838",
-                                        "label": "Pregnant Mother"
-                                    },
-                                    {
-                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                                        "label": "Other"
-                                    }
-                                ]
-                            },
-                            "validators": []
                         }
                     ]
                 },
@@ -781,14 +741,14 @@
                             ]
                         },
                         {
-                            "label": "High Vaginal Swab:",
+                            "label": "High vaginal swab:",
                             "questionOptions": {
                                 "id": "highvaginalswab_test",
                                 "concept": "a8a0ab58-1350-11df-a1f1-0026b9348838",
                                 "answers": [
                                     {
                                         "concept": "a896dea2-1350-11df-a1f1-0026b9348838",
-                                        "label": "Serum white blood ccell counts"
+                                        "label": "Serum white blood cell counts"
                                     },
                                     {
                                         "concept": "a896e56e-1350-11df-a1f1-0026b9348838",
@@ -796,19 +756,19 @@
                                     },
                                     {
                                         "concept": "a896d8bc-1350-11df-a1f1-0026b9348838",
-                                        "label": "Gram Negative Rods"
+                                        "label": "Gram negative rods"
                                     },
                                     {
                                         "concept": "a8a0acde-1350-11df-a1f1-0026b9348838",
-                                        "label": "Gram Negative Cocci"
+                                        "label": "Gram negative cocci"
                                     },
                                     {
                                         "concept": "a896d632-1350-11df-a1f1-0026b9348838",
-                                        "label": "Gram Positive Rods"
+                                        "label": "Gram positive rods"
                                     },
                                     {
                                         "concept": "a8a0ac20-1350-11df-a1f1-0026b9348838",
-                                        "label": "Gram Positive Rods"
+                                        "label": "Gram positive rods"
                                     },
                                     {
                                         "concept": "a8a0a856-1350-11df-a1f1-0026b9348838",
@@ -816,7 +776,7 @@
                                     },
                                     {
                                         "concept": "a8a0a91e-1350-11df-a1f1-0026b9348838",
-                                        "label": "Presence of Pus cells,Urine"
+                                        "label": "Presence of pus cells, Urine"
                                     }
                                 ],
                                 "showDate": "true",

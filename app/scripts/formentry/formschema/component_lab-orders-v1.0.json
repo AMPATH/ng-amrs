@@ -4,24 +4,29 @@
     "processor": "EncounterFormProcessor",
     "pages": [
         {
-            "label": "Test ordered",
+            "label": "Test orders",
             "sections": [
                 {
-                    "label": "Test ordered",
+                    "label": "Test Orders",
+                    "isExpanded": "true",
                     "questions": [
                         {
                             "type": "obsGroup",
-                            "label": "Test Orders",
+                            "label": "Test orders",
                             "questionOptions": {
                                 "concept": "af46861e-597a-48a3-b3d4-a134d0b1c5fa",
                                 "rendering": "group"
                             },
                             "questions": [
                                 {
-                                    "label": "Test(s) ordered:",
+                                    "label": "Tests Ordered",
+                                    "id": "order1",
+                                    "type": "testOrder",
                                     "questionOptions": {
-                                        "concept": "a89c2268-1350-11df-a1f1-0026b9348838",
-                                        "answers": [
+                                        "rendering": "repeating",
+                                        "orderSettingUuid": "6f0c9a92-6f24-11e3-af88-005056821db0",
+                                        "orderType": "testorder",
+                                        "selectableOrders": [
                                             {
                                                 "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
                                                 "label": "None"
@@ -134,11 +139,8 @@
                                                 "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
                                                 "label": "Other"
                                             }
-                                        ],
-                                        "rendering": "multiCheckbox"
-                                    },
-                                    "type": "obs",
-                                    "validators": []
+                                        ]
+                                    }
                                 },
                                 {
                                     "label": "Test ordered: Other (specify):",
@@ -147,51 +149,54 @@
                                         "rendering": "text"
                                     },
                                     "type": "obs",
-                                    "validators": []
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(order1) || !arrayContains(order1, 'a8aaf3e2-1350-11df-a1f1-0026b9348838')"
+                                    }
                                 },
                                 {
-                            "label": "Viral load justification:",
-                            "type": "obs",
-                            "id": "vljust",
-                            "questionOptions": {
-                                "concept": "0a98f01f-57f1-44b7-aacf-e1121650a967",
-                                "rendering": "select",
-                                "answers": [
-                                    {
-                                        "concept": "5931c4d4-4406-4d71-b75d-2205d905cc24",
-                                        "label": "Routine VL"
+                                    "label": "Viral load justification:",
+                                    "type": "obs",
+                                    "id": "vljust",
+                                    "questionOptions": {
+                                        "concept": "0a98f01f-57f1-44b7-aacf-e1121650a967",
+                                        "rendering": "select",
+                                        "answers": [
+                                            {
+                                                "concept": "5931c4d4-4406-4d71-b75d-2205d905cc24",
+                                                "label": "Routine VL"
+                                            },
+                                            {
+                                                "concept": "e43ddeb6-3984-499c-a280-3bade1039608",
+                                                "label": "Confirmation of treatment failure (repeat VL at 3M) "
+                                            },
+                                            {
+                                                "concept": "a8981934-1350-11df-a1f1-0026b9348838",
+                                                "label": "Clinical failure"
+                                            },
+                                            {
+                                                "concept": "c6537e06-9fc2-47da-b679-e2a32824407f",
+                                                "label": "Immunological failure"
+                                            },
+                                            {
+                                                "concept": "a8a00158-1350-11df-a1f1-0026b9348838",
+                                                "label": "Single Drug Substitution"
+                                            },
+                                            {
+                                                "concept": "a89d109c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Pregnant Mother"
+                                            },
+                                            {
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Other"
+                                            }
+                                        ]
                                     },
-                                    {
-                                        "concept": "e43ddeb6-3984-499c-a280-3bade1039608",
-                                        "label": "Confirmation of treatment failure (repeat VL at 3M) "
-                                    },
-                                    {
-                                        "concept": "a8981934-1350-11df-a1f1-0026b9348838",
-                                        "label": "Clinical failure"
-                                    },
-                                    {
-                                        "concept": "c6537e06-9fc2-47da-b679-e2a32824407f",
-                                        "label": "Immunological failure"
-                                    },
-                                    {
-                                        "concept": "a8a00158-1350-11df-a1f1-0026b9348838",
-                                        "label": "Single Drug Substitution"
-                                    },
-                                    {
-                                        "concept": "a89d109c-1350-11df-a1f1-0026b9348838",
-                                        "label": "Pregnant Mother"
-                                    },
-                                    {
-                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                                        "label": "Other"
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(order1) || !arrayContains(order1, 'a8982474-1350-11df-a1f1-0026b9348838')"
                                     }
-                                ]
-                            },
-                            "validators": [],
-                            "hide": {
-                                "hideWhenExpression": "isEmpty(testOrder) || !arrayContains(testOrder, 'a8982474-1350-11df-a1f1-0026b9348838')"
-                            }
-                        }
+                                }
                             ]
                         }
                     ]

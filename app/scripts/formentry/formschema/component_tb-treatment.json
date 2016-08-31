@@ -159,12 +159,16 @@
                                                 "label": "Streptomycin"
                                             },
                                             {
-                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                                                "label": "Other"
-                                            },
-                                            {
                                                 "concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4",
                                                 "label": "Rifabutin"
+                                            },
+                                            {
+                                                "concept": "a897d0be-1350-11df-a1f1-0026b9348838",
+                                                "label": "Rifampicin"
+                                            },
+                                            {
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Other"
                                             }
                                         ],
                                         "rendering": "select"
@@ -271,6 +275,7 @@
                         },
                         {
                             "type": "obsGroup",
+                            "id":"tbadhere",
                             "label": "Patient adherence to TB medications",
                             "questionOptions": {
                                 "concept": "2a4b87dd-977d-4ce8-a321-1f13df4a31b2",
@@ -879,7 +884,7 @@
                                 },
                                 {
                                     "label": "Other Specify:",
-                                    "id":"medspickOther",
+                                    "id": "medspickOther",
                                     "questionOptions": {
                                         "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                                         "rendering": "text"
@@ -952,6 +957,14 @@
                                             {
                                                 "concept": "b8aa06ca-93c6-40ea-b144-c74f841926f4",
                                                 "label": "Rifabutin"
+                                            },
+                                            {
+                                                "concept": "a897d0be-1350-11df-a1f1-0026b9348838",
+                                                "label": "Rifampicin"
+                                            },
+                                            {
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Other"
                                             }
                                         ],
                                         "rendering": "select"

@@ -198,8 +198,12 @@
                                         "label": "RV lift"
                                     },
                                     {
-                                        "concept": "a899e96c-1350-11df-a1f1-0026b9348838",
-                                        "label": "Abnormal sounds"
+                                        "concept": "a8962bec-1350-11df-a1f1-0026b9348838",
+                                        "label": "S3 Gallop"
+                                    },
+                                    {
+                                        "concept": "a8a6b980-1350-11df-a1f1-0026b9348838",
+                                        "label": "Pericardial friction rub"
                                     }
                                 ],
                                 "rendering": "select"

@@ -1,0 +1,1592 @@
+{
+    "name": "triage_v1.0",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Encounter Details",
+            "sections": [
+                {
+                    "label": "Encounter Details",
+                    "questions": [
+                        {
+                            "label": "Visit Date",
+                            "type": "encounterDatetime",
+                            "required": "true",
+                            "default": "",
+                            "id": "encDate",
+                            "questionOptions": {
+                                "rendering": "date"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "encounterProvider",
+                            "label": "Provider",
+                            "id": "provider",
+                            "required": "true",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        },
+                        {
+                            "type": "encounterLocation",
+                            "label": "Facility name (site/satellite clinic required):",
+                            "id": "location",
+                            "required": "true",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        },
+                        {
+                            "label": "Patient covered by NHIF:",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8b02524-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "8b715fed-97f6-4e38-8f6a-c167a42f8923",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ]
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "type": "personAttribute",
+                            "label": "Transfer in from other AMPATH clinic (specify):",
+                            "id": "transfered_in_to_ampath",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended",
+                                "attributeType": "7ef225db-94db-4e40-9dd8-fb121d9dc370"
+                            }
+                        },
+                        {
+                            "label": "Was this visit scheduled?",
+                            "id": "scheduledVisit",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a89ff9a6-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a89b6440-1350-11df-a1f1-0026b9348838",
+                                        "label": "Scheduled visit"
+                                    },
+                                    {
+                                        "concept": "a89ff816-1350-11df-a1f1-0026b9348838",
+                                        "label": "Unscheduled Visit Early"
+                                    },
+                                    {
+                                        "concept": "a89ff8de-1350-11df-a1f1-0026b9348838",
+                                        "label": "Unscheduled Visit Late"
+                                    }
+                                ]
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "If Unscheduled, actual scheduled date",
+                            "id": "actualDate",
+                            "type": "obs",
+                            "required": {
+                                "type": "conditionalRequired",
+                                "message": "Patient visit marked as unscheduled. Please provide the scheduled date.",
+                                "referenceQuestionId": "scheduledVisit",
+                                "referenceQuestionAnswers": [
+                                    "a89ff816-1350-11df-a1f1-0026b9348838",
+                                    "a89ff8de-1350-11df-a1f1-0026b9348838"
+                                ]
+                            },
+                            "questionOptions": {
+                                "rendering": "date",
+                                "concept": "dc1942b2-5e50-4adc-949d-ad6c905f054e"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "true"
+                                },
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "!isEmpty(scheduledVisit) && arrayContains(['a89ff816-1350-11df-a1f1-0026b9348838','a89ff8de-1350-11df-a1f1-0026b9348838'], scheduledVisit) && isEmpty(myValue)",
+                                    "message": "Patient visit marked as unscheduled. Please provide the scheduled date."
+                                }
+                            ],
+                            "hide": {
+                                "hideWhenExpression": "!arrayContains(['a89ff816-1350-11df-a1f1-0026b9348838','a89ff8de-1350-11df-a1f1-0026b9348838'], scheduledVisit)"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "PWPs",
+                    "questions": [
+                        {
+                            "label": "Civil status:",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a899a9f2-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899af10-1350-11df-a1f1-0026b9348838",
+                                        "label": "Cohabitating"
+                                    },
+                                    {
+                                        "concept": "a899ad58-1350-11df-a1f1-0026b9348838",
+                                        "label": "Divorced"
+                                    },
+                                    {
+                                        "concept": "a8aa76b0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Married monogamous"
+                                    },
+                                    {
+                                        "concept": "a8b03712-1350-11df-a1f1-0026b9348838",
+                                        "label": "Married polygamous"
+                                    },
+                                    {
+                                        "concept": "a899aba0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Separated"
+                                    },
+                                    {
+                                        "concept": "a899ac7c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Single"
+                                    },
+                                    {
+                                        "concept": "a899ae34-1350-11df-a1f1-0026b9348838",
+                                        "label": "Widowed"
+                                    }
+                                ]
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Discordant couple:",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    },
+                                    {
+                                        "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Unknown"
+                                    },
+                                    {
+                                        "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
+                                        "label": "N/A"
+                                    }
+                                ]
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Prevention with positives: At risk population:",
+                            "required": "true",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "93aa3f1d-1c39-4196-b5e6-8adc916cd5d6",
+                                "answers": [
+                                    {
+                                        "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
+                                        "label": "N/A"
+                                    },
+                                    {
+                                        "concept": "5da55301-e28e-4fdf-8b64-02622dedc8b0",
+                                        "label": "Client of sex worker"
+                                    },
+                                    {
+                                        "concept": "a89ff438-1350-11df-a1f1-0026b9348838",
+                                        "label": "Commercial sex worker"
+                                    },
+                                    {
+                                        "concept": "a8af49d8-1350-11df-a1f1-0026b9348838",
+                                        "label": "Discordant couple"
+                                    },
+                                    {
+                                        "concept": "a890d57a-1350-11df-a1f1-0026b9348838",
+                                        "label": "IV drug use"
+                                    },
+                                    {
+                                        "concept": "e19c35f0-12f0-46c2-94ea-97050f37b811",
+                                        "label": "MSM"
+                                    }
+                                ]
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Prevention with positives: PWP services:",
+                            "required": "true",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "9ce5dbf0-a141-4ad8-8c9d-cd2bf84fe72b",
+                                "answers": [
+                                    {
+                                        "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
+                                        "label": "N/A"
+                                    },
+                                    {
+                                        "concept": "f0a280e8-eb88-41a8-837a-f9949ed1b9cd",
+                                        "label": "Condom promotion/provision"
+                                    },
+                                    {
+                                        "concept": "bf51f71e-937c-4da5-ae07-654acf59f5bb",
+                                        "label": "Couple counseling"
+                                    },
+                                    {
+                                        "concept": "91f43249-73c7-427c-8300-2038fc0d6be8",
+                                        "label": "Needle exchange"
+                                    },
+                                    {
+                                        "concept": "05656545-86be-4605-9527-34fb580534b1",
+                                        "label": "Targeted risk reduction"
+                                    }
+                                ]
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                },
+                {
+                    "label": "Vital Signs",
+                    "questions": [
+                        {
+                            "type": "obsGroup",
+                            "label": "test group",
+                            "questionOptions": {
+                                "rendering": "group",
+                                "concept": "a899e6d8-1350-11df-a1f1-0026b9348838"
+                            },
+                            "questions": [
+                                {
+                                    "label": "BP:Systolic:",
+                                    "questionOptions": {
+                                        "rendering": "number",
+                                        "concept": "a8a65d5a-1350-11df-a1f1-0026b9348838",
+                                        "max": "250",
+                                        "min": "0"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "BP:Diastolic:",
+                                    "questionOptions": {
+                                        "rendering": "number",
+                                        "concept": "a8a65e36-1350-11df-a1f1-0026b9348838",
+                                        "max": "150",
+                                        "min": "0"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Pulse(Rate/Min):",
+                                    "questionOptions": {
+                                        "rendering": "number",
+                                        "concept": "a8a65f12-1350-11df-a1f1-0026b9348838",
+                                        "max": "230",
+                                        "min": "0"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "RR(Breath/Min):",
+                                    "questionOptions": {
+                                        "rendering": "number",
+                                        "concept": "a8a6f71a-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Temp(C):",
+                                    "questionOptions": {
+                                        "rendering": "number",
+                                        "concept": "a8a65fee-1350-11df-a1f1-0026b9348838",
+                                        "max": "43",
+                                        "min": "25"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Weight(Kg):",
+                                    "id": "weight",
+                                    "questionOptions": {
+                                        "rendering": "number",
+                                        "concept": "a8a660ca-1350-11df-a1f1-0026b9348838",
+                                        "max": "150",
+                                        "min": "0"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Height(CM):",
+                                    "id": "height",
+                                    "historicalExpression": "HD.getObject('prevEnc').getValue('a8a6619c-1350-11df-a1f1-0026b9348838')",
+                                    "questionOptions": {
+                                        "rendering": "number",
+                                        "concept": "a8a6619c-1350-11df-a1f1-0026b9348838",
+                                        "max": "350",
+                                        "min": "0"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Sp02:",
+                                    "questionOptions": {
+                                        "rendering": "number",
+                                        "concept": "a8a66354-1350-11df-a1f1-0026b9348838",
+                                        "max": "100",
+                                        "min": "0"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "BMI:Kg/M2",
+                                    "questionOptions": {
+                                        "rendering": "number",
+                                        "concept": "a89c60c0-1350-11df-a1f1-0026b9348838",
+                                        "max": "100",
+                                        "min": "0",
+                                        "calculate": {
+                                            "calculateExpression": "calcBMI(height,weight)"
+                                        }
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "BMI for Age Z-Score:",
+                                    "questionOptions": {
+                                        "rendering": "number",
+                                        "concept": "9061e5d5-8478-4d16-be44-bfec05b6705a",
+                                        "max": "0",
+                                        "min": "-4"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "MUAC:MM",
+                                    "questionOptions": {
+                                        "rendering": "number",
+                                        "concept": "a89c6188-1350-11df-a1f1-0026b9348838",
+                                        "max": "230",
+                                        "min": "60"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "General History (Ped/Youth Specific)",
+                    "questions": [
+                        {
+                            "type": "obsGroup",
+                            "label": "Person bringing patient",
+                            "questionOptions": {
+                                "concept": "a8a0798a-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Person bringing patient:",
+                                    "questionOptions": {
+                                        "concept": "a898c01e-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a898c0dc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Mother"
+                                            },
+                                            {
+                                                "concept": "a898c1a4-1350-11df-a1f1-0026b9348838",
+                                                "label": "Father"
+                                            },
+                                            {
+                                                "concept": "a898c262-1350-11df-a1f1-0026b9348838",
+                                                "label": "Sibling"
+                                            },
+                                            {
+                                                "concept": "a8a171a0-1350-11df-a1f1-0026b9348838",
+                                                "label": "Childrens home"
+                                            },
+                                            {
+                                                "concept": "a89c9f54-1350-11df-a1f1-0026b9348838",
+                                                "label": "Paternal grandparent"
+                                            },
+                                            {
+                                                "concept": "a89c9e3c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Maternal grandparent"
+                                            },
+                                            {
+                                                "concept": "a898c6f4-1350-11df-a1f1-0026b9348838",
+                                                "label": "Self"
+                                            },
+                                            {
+                                                "concept": "a8a17470-1350-11df-a1f1-0026b9348838",
+                                                "label": "Paternal aunt"
+                                            },
+                                            {
+                                                "concept": "a8a17394-1350-11df-a1f1-0026b9348838",
+                                                "label": "Maternal aunt"
+                                            },
+                                            {
+                                                "concept": "a8a175f6-1350-11df-a1f1-0026b9348838",
+                                                "label": "Paternal uncle"
+                                            },
+                                            {
+                                                "concept": "a8a1752e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Maternal uncle"
+                                            },
+                                            {
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Other"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Patient changed their residence:",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "d9a414af-021b-459f-bcea-4c88b1382e39",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ]
+                            },
+                            "type": "obs"
+                        },
+                        {
+                            "label": "Mother deceased:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8a0b670-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "Father deceased:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8a0b788-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "HIV disclosure:",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "cd8ead74-96fc-4764-a9fa-c9ee059c59c5",
+                                "answers": [
+                                    {
+                                        "concept": "a899ea48-1350-11df-a1f1-0026b9348838",
+                                        "label": "Not disclosed"
+                                    },
+                                    {
+                                        "concept": "40c4e9fa-0fc0-4ceb-89d6-1c8cfebb9bae",
+                                        "label": "Partially disclosed"
+                                    },
+                                    {
+                                        "concept": "a89c1ef8-1350-11df-a1f1-0026b9348838",
+                                        "label": "Disclosure completed"
+                                    },
+                                    {
+                                        "concept": "e30f9b6c-e4b2-4cd0-83be-8d0d487f57fe",
+                                        "label": "Acceptance of diagnosis and management ongoing"
+                                    },
+                                    {
+                                        "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Unknown"
+                                    },
+                                    {
+                                        "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
+                                        "label": "N/A"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "Assessment Notes",
+                    "isExpanded": "true",
+                    "questions": [
+                        {
+                            "label": "Please enter the assessment below:",
+                            "type": "obs",
+                            "id": "assNote",
+                            "required": "false",
+                            "default": "",
+                            "questionOptions": {
+                                "concept": "23f710cc-7f9c-4255-9b6b-c3e240215dba",
+                                "rendering": "textarea",
+                                "rows": 18
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Diagnosis History",
+            "sections": [
+                {
+                    "label": "Diagnosis History",
+                    "questions": [
+                        {
+                            "type": "obsGroup",
+                            "label": "Point of HIV Testing",
+                            "questionOptions": {
+                                "concept": "a8a17f06-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Point of HIV Testing:",
+                                    "id": "testingPoint",
+                                    "questionOptions": {
+                                        "concept": "a8a17e48-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a89fbedc-1350-11df-a1f1-0026b9348838",
+                                                "label": "pMTCT"
+                                            },
+                                            {
+                                                "concept": "a8a17b3c-1350-11df-a1f1-0026b9348838",
+                                                "label": "VCT"
+                                            },
+                                            {
+                                                "concept": "f6dd6114-a212-4187-b76c-5b6fd8a9e7ba",
+                                                "label": "PHCT"
+                                            },
+                                            {
+                                                "concept": "a8a359a2-1350-11df-a1f1-0026b9348838",
+                                                "label": "DTC/PITC"
+                                            },
+                                            {
+                                                "concept": "a890a96a-1350-11df-a1f1-0026b9348838",
+                                                "label": "TB Clinic"
+                                            },
+                                            {
+                                                "concept": "ff3243bf-05f6-426d-aa49-969034962e45",
+                                                "label": "Adult Inpatient"
+                                            },
+                                            {
+                                                "concept": "3e5ad07b-2ced-4925-8264-cc4d8d1438d4",
+                                                "label": "Pediatric Inpatient"
+                                            },
+                                            {
+                                                "concept": "a8a17d80-1350-11df-a1f1-0026b9348838",
+                                                "label": "MCH"
+                                            },
+                                            {
+                                                "concept": "a8a09ac8-1350-11df-a1f1-0026b9348838",
+                                                "label": "OPD"
+                                            },
+                                            {
+                                                "concept": "a8934292-1350-11df-a1f1-0026b9348838",
+                                                "label": "STI"
+                                            },
+                                            {
+                                                "concept": "3ddd3de4-dbf1-4ae9-8caf-aca6383bfd5e",
+                                                "label": "OSCAR"
+                                            },
+                                            {
+                                                "concept": "7d2c77f9-091b-41d7-8608-aff8985fd708",
+                                                "label": "Tumaini"
+                                            },
+                                            {
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Other"
+                                            }
+                                        ],
+                                        "rendering": "select"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Other (specify):",
+                                    "questionOptions": {
+                                        "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "text"
+                                    },
+                                    "type": "obs",
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(testingPoint) || !arrayContains(testingPoint, 'a8aaf3e2-1350-11df-a1f1-0026b9348838')"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Date confirmed HIV positive:",
+                            "id": "dateConfHiv+",
+                            "questionOptions": {
+                                "concept": "6d557eec-82f7-4840-a865-a02ac69d93a5",
+                                "rendering": "date"
+                            },
+                            "type": "obs",
+                            "validators": [
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "false"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Date enrolled in HIV care:",
+                            "questionOptions": {
+                                "concept": "edda0fe9-73ba-4dbe-8739-dd8d0a8f1700",
+                                "rendering": "date"
+                            },
+                            "type": "obs",
+                            "validators": [
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "false"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Where was the test done?",
+                            "id": "testDone",
+                            "questionOptions": {
+                                "concept": "12fa8c7d-0e51-42d0-a381-4db7d34b1fcb",
+                                "rendering": "text"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "WHO stage at enrollment",
+                            "id": "whoStageEnrol",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "1ea9d6ba-2084-4bc0-97a6-46fe677d40e5",
+                                "answers": [
+                                    {
+                                        "label": "1",
+                                        "concept": "a89b2606-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "2",
+                                        "concept": "a89b26d8-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "3",
+                                        "concept": "a89b27be-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "4",
+                                        "concept": "a89b289a-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ],
+                                "rendering": "select"
+                            }
+                        },
+                        {
+                            "label": "Ampath catchment area:",
+                            "questionOptions": {
+                                "concept": "65c5071a-0cf8-49d4-99d1-5f7da6ef6503",
+                                "answers": [
+                                    {
+                                        "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Unknown"
+                                    },
+                                    {
+                                        "concept": "5066b630-842b-4105-a66d-74f8aa50aacb",
+                                        "label": "In Ampath catchment area"
+                                    },
+                                    {
+                                        "concept": "83df5f26-f97a-4cda-9c05-d0bdc6e4ebee",
+                                        "label": "Out of Ampath catchment area"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "type": "personAttribute",
+                            "label": "Transfer in from other AMPATH clinic (specify):",
+                            "id": "transfered_in_to_ampath",
+                            "required": "false",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended",
+                                "attributeType": "7ef225db-94db-4e40-9dd8-fb121d9dc370"
+                            }
+                        },
+                        {
+                            "label": "Transfer in district:",
+                            "questionOptions": {
+                                "concept": "10bca44a-930f-46ae-b686-63ddb36a713f",
+                                "rendering": "text"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Family History",
+            "sections": [
+                {
+                    "label": "Family History",
+                    "questions": [
+                        {
+                            "label": "Family History",
+                            "type": "obsGroup",
+                            "questionOptions": {
+                                "concept": "aeddf768-5ac0-45e4-934b-bf69730a8c2d",
+                                "rendering": "repeating"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Age of family member:",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "number",
+                                        "concept": "d67c7f03-7559-46bd-972b-6520769ec2b7",
+                                        "answers": []
+                                    },
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Relation:",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "select",
+                                        "concept": "2ec6c229-afb6-4d95-89d2-c2f5e2715e9a",
+                                        "answers": [
+                                            {
+                                                "concept": "a898c0dc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Mother"
+                                            },
+                                            {
+                                                "concept": "a898c1a4-1350-11df-a1f1-0026b9348838",
+                                                "label": "Father"
+                                            },
+                                            {
+                                                "concept": "a898c262-1350-11df-a1f1-0026b9348838",
+                                                "label": "Sibling"
+                                            },
+                                            {
+                                                "concept": "a8a171a0-1350-11df-a1f1-0026b9348838",
+                                                "label": "Childrens home"
+                                            },
+                                            {
+                                                "concept": "a89c9f54-1350-11df-a1f1-0026b9348838",
+                                                "label": "Paternal grandparent"
+                                            },
+                                            {
+                                                "concept": "a89c9e3c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Maternal grandparent"
+                                            },
+                                            {
+                                                "concept": "a898c6f4-1350-11df-a1f1-0026b9348838",
+                                                "label": "Self"
+                                            },
+                                            {
+                                                "concept": "a8a17470-1350-11df-a1f1-0026b9348838",
+                                                "label": "Paternal aunt"
+                                            },
+                                            {
+                                                "concept": "a8a17394-1350-11df-a1f1-0026b9348838",
+                                                "label": "Maternal aunt"
+                                            },
+                                            {
+                                                "concept": "a8a175f6-1350-11df-a1f1-0026b9348838",
+                                                "label": "Paternal uncle"
+                                            },
+                                            {
+                                                "concept": "a8a1752e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Maternal uncle"
+                                            },
+                                            {
+                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Other"
+                                            }
+                                        ]
+                                    },
+                                    "validators": []
+                                },
+                                {
+                                    "label": "HIV status of family member:",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "select",
+                                        "concept": "e7de7f52-9d91-4be6-a369-6cde2fe2d9a6",
+                                        "answers": [
+                                            {
+                                                "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                                                "label": "Positive"
+                                            },
+                                            {
+                                                "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Negative"
+                                            },
+                                            {
+                                                "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Unknown"
+                                            }
+                                        ]
+                                    },
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Year tested",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "number",
+                                        "concept": "2a1066f8-35c7-48b3-ad53-d692ca6bda3d",
+                                        "answers": [],
+                                        "min": "0"
+                                    },
+                                    "validators": []
+                                },
+                                {
+                                    "label": "In care?:",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "select",
+                                        "concept": "85c60aac-51e2-411c-98c5-56ffc0169b11",
+                                        "answers": [
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Yes"
+                                            },
+                                            {
+                                                "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                                "label": "No"
+                                            },
+                                            {
+                                                "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Unknown"
+                                            }
+                                        ]
+                                    },
+                                    "validators": []
+                                },
+                                {
+                                    "label": "Family member deceased?",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "select",
+                                        "concept": "1158dfed-993a-477e-9ecc-ccdde2aa382c",
+                                        "answers": [
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Yes"
+                                            },
+                                            {
+                                                "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                                "label": "No"
+                                            },
+                                            {
+                                                "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Unknown"
+                                            }
+                                        ]
+                                    },
+                                    "validators": []
+                                },
+                                {
+                                    "label": "If deceased,HIV cause of death?",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "select",
+                                        "concept": "758c85ed-2239-470e-a8a4-d6083ab3d0ee",
+                                        "answers": [
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Yes"
+                                            },
+                                            {
+                                                "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                                "label": "No"
+                                            },
+                                            {
+                                                "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Unknown"
+                                            }
+                                        ]
+                                    },
+                                    "validators": []
+                                },
+                                {
+                                    "label": "On anti-TB meds",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "rendering": "select",
+                                        "concept": "a8afcc82-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Yes"
+                                            },
+                                            {
+                                                "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                                "label": "No"
+                                            },
+                                            {
+                                                "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Unknown"
+                                            }
+                                        ]
+                                    },
+                                    "validators": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Treatment Supporter Details",
+                    "questions": [
+                        {
+                            "type": "personName",
+                            "label": "Name",
+                            "id": "name",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        },
+                        {
+                            "label": "Relationship:",
+                            "questionOptions": {
+                                "concept": "2ec6c229-afb6-4d95-89d2-c2f5e2715e9a",
+                                "answers": [
+                                    {
+                                        "concept": "a898c0dc-1350-11df-a1f1-0026b9348838",
+                                        "label": "Mother"
+                                    },
+                                    {
+                                        "concept": "a898c1a4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Father"
+                                    },
+                                    {
+                                        "concept": "a898c262-1350-11df-a1f1-0026b9348838",
+                                        "label": "Sibling"
+                                    },
+                                    {
+                                        "concept": "a8a171a0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Childrens home"
+                                    },
+                                    {
+                                        "concept": "a89c9f54-1350-11df-a1f1-0026b9348838",
+                                        "label": "Paternal grandparent"
+                                    },
+                                    {
+                                        "concept": "a89c9e3c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Maternal grandparent"
+                                    },
+                                    {
+                                        "concept": "a898c6f4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Self"
+                                    },
+                                    {
+                                        "concept": "a8a17470-1350-11df-a1f1-0026b9348838",
+                                        "label": "Paternal aunt"
+                                    },
+                                    {
+                                        "concept": "a8a17394-1350-11df-a1f1-0026b9348838",
+                                        "label": "Maternal aunt"
+                                    },
+                                    {
+                                        "concept": "a8a175f6-1350-11df-a1f1-0026b9348838",
+                                        "label": "Paternal uncle"
+                                    },
+                                    {
+                                        "concept": "a8a1752e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Maternal uncle"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Social History (For Youths)",
+            "sections": [
+                {
+                    "label": "Social History",
+                    "questions": [
+                        {
+                            "label": "Where do you stay?",
+                            "id": "stay",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "cdc577ea-fb94-4e51-86b9-00336560c0e9",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Parent",
+                                        "concept": "a89ebec4-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Aunt",
+                                        "concept": "a8a17772-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Uncle",
+                                        "concept": "a898c3e8-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Grandparent",
+                                        "concept": "a898c32a-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Siblings",
+                                        "concept": "a898c262-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Other",
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "Spend days on the street?",
+                            "id": "spendDay",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "5738416d-665d-4955-be8a-dec9339fc0a6",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "Spend nights on the street?",
+                            "id": "spendNight",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "fa40fa53-fdd4-4d17-a80e-190b47fab82a",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "If identifies with staying on the street, how long have you been involved with the street:",
+                            "id": "streetInvolved",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "1accf04f-99bc-44a4-b466-5f3075c3f15d",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Less than 6 months",
+                                        "concept": "474551e6-9192-4cd8-a472-b12d481b5b6b"
+                                    },
+                                    {
+                                        "label": "6 months to 1 year",
+                                        "concept": "16162207-f6b6-4c1b-b2bd-95efc49242f0"
+                                    },
+                                    {
+                                        "label": "1-2years",
+                                        "concept": "fc9fe6c0-81a5-4cb4-a2a8-ad39fa9fd774"
+                                    },
+                                    {
+                                        "label": "2-5years",
+                                        "concept": "82682acf-8e0d-4c3d-beb8-b2927a428359"
+                                    },
+                                    {
+                                        "label": "Greater than 5 years",
+                                        "concept": "6c3df06c-8bc0-457d-9291-1a3ddca225c4"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "If involved with the street, in contact with any of the following",
+                            "id": "streetContact",
+                            "questionOptions": {
+                                "concept": "0ed530ce-5658-45fe-aa57-6e49a7d2d430",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "None",
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Parents",
+                                        "concept": "a89ebec4-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "GrandParents",
+                                        "concept": "a898c32a-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Other relatives",
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Other Relatives(specify):",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                                "rendering": "text"
+                            },
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "streetContact  !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
+                            }
+                        },
+                        {
+                            "label": "How often are you in contact with your family?",
+                            "id": "familyContact",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "c8c36b3c-f7c8-468a-acc2-b0b2b3d69f79",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Daily",
+                                        "concept": "a8a05dc4-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Weekly",
+                                        "concept": "a899d8d2-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "At least once every month",
+                                        "concept": "a899d7f6-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "A few times in a year",
+                                        "concept": "ea2cc3f3-dcb1-4502-b7bc-140ec95bb21b"
+                                    },
+                                    {
+                                        "label": "Not at all",
+                                        "concept": "a899d120-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Education (For Youths)",
+            "sections": [
+                {
+                    "label": "Education",
+                    "questions": [
+                        {
+                            "label": "Have you ever attended school?",
+                            "id": "everAttendedSchool",
+                            "questionOptions": {
+                                "concept": "a8aae64a-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Are you currently attending school?",
+                            "id": "currInSchool",
+                            "questionOptions": {
+                                "concept": "67301b7e-6c84-4455-8de6-b8f6dfdc5f56",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    },
+                                    {
+                                        "concept": "a89c1ef8-1350-11df-a1f1-0026b9348838",
+                                        "label": "Completed"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "If yes, which level have you reached or completed?",
+                            "id": "levelCompleted",
+                            "questionOptions": {
+                                "concept": "a8aae726-1350-11df-a1f1-0026b9348838",
+                                "rendering": "number",
+                                "max": "24",
+                                "min": "0"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "If no,why do you not attend school:",
+                            "id": "notInSchool",
+                            "questionOptions": {
+                                "concept": "70505673-be4c-44eb-9196-bb114f291dba",
+                                "answers": [
+                                    {
+                                        "concept": "6444e4ba-447b-4ccc-adbd-ac6416b7c5f8",
+                                        "label": "Lack of school uniform"
+                                    },
+                                    {
+                                        "concept": "d07dab51-304d-4277-ba31-7031ae6c2f78",
+                                        "label": "Fees"
+                                    },
+                                    {
+                                        "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
+                                        "label": "Illness"
+                                    },
+                                    {
+                                        "concept": "a89de526-1350-11df-a1f1-0026b9348838",
+                                        "label": "School is far"
+                                    },
+                                    {
+                                        "concept": "7e7d4555-362a-498a-b5ed-abcddcfce2a7",
+                                        "label": "Personal choice"
+                                    },
+                                    {
+                                        "concept": "a89ecb6c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Taking care of younger siblings"
+                                    },
+                                    {
+                                        "concept": "cfa0df75-6932-4d5a-b9bb-8133fb8771fb",
+                                        "label": "To get money or food on the street"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other:"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Other(specify):",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                                "rendering": "text"
+                            },
+                            "validators": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Nutrition (For Youths)",
+            "sections": [
+                {
+                    "label": "Nutrition Meals",
+                    "questions": [
+                        {
+                            "label": "How often do you miss meals for an entire day?",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a89ce388-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899d120-1350-11df-a1f1-0026b9348838",
+                                        "label": "Never"
+                                    },
+                                    {
+                                        "concept": "a899d7f6-1350-11df-a1f1-0026b9348838",
+                                        "label": "Monthly"
+                                    },
+                                    {
+                                        "concept": "a899d8d2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Weekly"
+                                    },
+                                    {
+                                        "concept": "65831439-8ba0-4c64-ab62-1f7b7f548fb7",
+                                        "label": "Few times per week"
+                                    },
+                                    {
+                                        "concept": "a8a05dc4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Daily"
+                                    }
+                                ],
+                                "rendering": "select"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Reproductive health (For Youths)",
+            "sections": [
+                {
+                    "label": "Reproductive Health",
+                    "questions": [
+                        {
+                            "label": "Have you started having your monthly period?",
+                            "id": "monthlyPeriod",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a185d2-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Present",
+                                        "concept": "a8a4bd42-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "Absent",
+                                        "concept": "a8a4bc84-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "LMP:",
+                            "id": "lastPeriod",
+                            "questionOptions": {
+                                "concept": "a89ff758-1350-11df-a1f1-0026b9348838",
+                                "rendering": "date"
+                            },
+                            "type": "obs",
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ],
+                            "hide": {
+                                "hideWhenExpression": "sex !== 'F'"
+                            }
+                        },
+                        {
+                            "label": "If you have ever had sex, have you ever been pregnant?",
+                            "id": "everPregnant",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "1e5f1722-2989-4dab-a63e-416625382b68",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "At what age did you have your first pregnancy:",
+                            "type": "obs",
+                            "id": "ageFirstPregn",
+                            "questionOptions": {
+                                "concept": "4ebfed33-debf-481a-b263-62c336115f58",
+                                "rendering": "number",
+                                "max": "50",
+                                "min": "8"
+                            }
+                        },
+                        {
+                            "label": "Are you currently pregnant?",
+                            "id": "currentlyPregnant",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a710ba-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "If currently pregnant, are you enrolled to ANC?",
+                            "id": "ANCEnrolled",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a18140-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "label": "How many pregnancies have you had",
+                            "type": "obs",
+                            "id": "gravida",
+                            "questionOptions": {
+                                "concept": "a8aaf59a-1350-11df-a1f1-0026b9348838",
+                                "rendering": "number",
+                                "max": "50"
+                            }
+                        },
+                        {
+                            "label": "How many pregnancies have you delivered",
+                            "type": "obs",
+                            "id": "parity",
+                            "questionOptions": {
+                                "concept": "a899a920-1350-11df-a1f1-0026b9348838",
+                                "rendering": "number"
+                            }
+                        },
+                        {
+                            "label": "How many of your children live with you",
+                            "type": "obs",
+                            "id": "numberChildren",
+                            "questionOptions": {
+                                "concept": "a89eed5e-1350-11df-a1f1-0026b9348838",
+                                "rendering": "number"
+                            }
+                        },
+                        {
+                            "label": "Are you circumcised(males only)?",
+                            "id": "circumcised",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a18690-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
+                                "answers": [
+                                    {
+                                        "label": "Yes",
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    {
+                                        "label": "No",
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

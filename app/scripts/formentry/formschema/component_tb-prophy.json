@@ -24,13 +24,44 @@
                                         "label": "None"
                                     },
                                     {
-                                        "concept": "a896cc00-1350-11df-a1f1-0026b9348838",
-                                        "label": "Isoniazid"
+                                        "concept": "162724df-5a66-4ae3-bbf6-5dc6dbba4ebb",
+                                        "label": "Isoniazid 100mg"
+                                    },
+                                    {
+                                        "concept": "b150ccdc-e7ec-4f99-b592-6f3fa73b3aea",
+                                        "label": "Isoniazid 300mg"
                                     }
                                 ],
                                 "rendering": "select"
                             },
                             "validators": []
+                        },
+                        {
+                            "label": "Start date of TB Prophylaxis treatment:",
+                            "id": "TbProphTreatment",
+                            "questionOptions": {
+                                "concept": "67785e82-c2f7-4417-8ada-cc8e85abbfc1",
+                                "rendering": "date"
+                            },
+                            "type": "obs",
+                            "validators": [
+                                {
+                                    "type": "date"
+                                },
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "!isEmpty(onTbProphylaxis) && arrayContains(['a896cc00-1350-11df-a1f1-0026b9348838'], onTbProphylaxis) && isEmpty(myValue)",
+                                    "message": "You indicated patient on tb prophylaxis treatment, indicate start date."
+                                },
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "(isEmpty(onTbProphylaxis) || !arrayContains(['a896cc00-1350-11df-a1f1-0026b9348838'], onTbProphylaxis)) && !isEmpty(myValue)",
+                                    "message": "You indicated patient is not on tb prophylaxis treatment, therefore start date should not be indicated."
+                                }
+                            ],
+                            "hide": {
+                                "hideWhenExpression": "onTbProphylaxis !== 'a896cc00-1350-11df-a1f1-0026b9348838'"
+                            }
                         },
                         {
                             "label": "TB prophylaxis adherence",
@@ -157,38 +188,7 @@
                         }
                     ]
                 },
-                {
-                    "label": "TB Prophylaxis Start Date",
-                    "questions": [
-                        {
-                            "label": "Start date of TB Prophylaxis treatment:",
-                            "id": "TbProphTreatment",
-                            "questionOptions": {
-                                "concept": "67785e82-c2f7-4417-8ada-cc8e85abbfc1",
-                                "rendering": "date"
-                            },
-                            "type": "obs",
-                            "validators": [
-                                {
-                                    "type": "date"
-                                },
-                                {
-                                    "type": "js_expression",
-                                    "failsWhenExpression": "!isEmpty(onTbProphylaxis) && arrayContains(['a896cc00-1350-11df-a1f1-0026b9348838'], onTbProphylaxis) && isEmpty(myValue)",
-                                    "message": "You indicated patient on tb prophylaxis treatment, indicate start date."
-                                },
-                                {
-                                    "type": "js_expression",
-                                    "failsWhenExpression": "(isEmpty(onTbProphylaxis) || !arrayContains(['a896cc00-1350-11df-a1f1-0026b9348838'], onTbProphylaxis)) && !isEmpty(myValue)",
-                                    "message": "You indicated patient is not on tb prophylaxis treatment, therefore start date should not be indicated."
-                                }
-                            ],
-                            "hide": {
-                                "hideWhenExpression": "onTbProphylaxis !== 'a896cc00-1350-11df-a1f1-0026b9348838'"
-                            }
-                        }
-                    ]
-                },
+               
                 {
                     "label": "TB Prophylaxis Plan",
                     "isExpanded": "true",

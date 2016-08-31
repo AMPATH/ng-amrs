@@ -40,7 +40,7 @@
                                                 "label": "Childrens home"
                                             },
                                             {
-                                                "concept": "89c9f54-1350-11df-a1f1-0026b9348838",
+                                                "concept": "a89c9f54-1350-11df-a1f1-0026b9348838",
                                                 "label": "Paternal grandparent"
                                             },
                                             {
@@ -325,12 +325,12 @@
                                 "concept": "a8afb8c8-1350-11df-a1f1-0026b9348838",
                                 "answers": [
                                     {
-                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
-                                        "label": "Yes"
+                                        "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                                        "label": "Positive"
                                     },
                                     {
-                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                                        "label": "No"
+                                        "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                                        "label": "Negative"
                                     },
                                     {
                                         "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
@@ -736,7 +736,6 @@
                                     },
                                     "validators": []
                                 }
-                                
                             ]
                         }
                     ]

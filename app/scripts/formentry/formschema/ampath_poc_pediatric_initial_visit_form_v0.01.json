@@ -48,6 +48,10 @@
             "alias": "ros"
         },
         {
+            "formName": "component_peds-review-of-systems",
+            "alias": "pros"
+        },
+        {
             "formName": "component_hospitalization",
             "alias": "hosp"
         },
@@ -90,6 +94,10 @@
         {
             "formName": "component_lab-results",
             "alias": "tests"
+        },
+        {
+            "formName": "component_lab-results",
+            "alias": "tr"
         },
         {
             "formName": "component_who-staging",
@@ -347,8 +355,7 @@
                         "excludeQuestions": [
                             "tbPhase",
                             "tbDefaultDate",
-                            "tb_adherence",
-                            "tbstatus"
+                            "tbadhere"
                         ]
                     }
                 },
@@ -368,13 +375,6 @@
                             "q16c",
                             "tbProphylaxisAdherence"
                         ]
-                    }
-                },
-                {
-                    "reference": {
-                        "form": "tbprophy",
-                        "page": "TB Prophylaxis",
-                        "section": "TB Prophylaxis Start Date"
                     }
                 },
                 {
@@ -410,49 +410,63 @@
             "sections": [
                 {
                     "reference": {
-                        "form": "ros",
+                        "form": "pros",
+                        "page": "Review of systems",
+                        "section": "Chief complaint"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "pros",
                         "page": "Review of systems",
                         "section": "Review of systems General"
                     }
                 },
                 {
                     "reference": {
-                        "form": "ros",
+                        "form": "pros",
                         "page": "Review of systems",
                         "section": "Review of systems HEENT"
                     }
                 },
                 {
                     "reference": {
-                        "form": "ros",
+                        "form": "pros",
                         "page": "Review of systems",
                         "section": "Review of systems Cardiopulmonary"
                     }
                 },
                 {
                     "reference": {
-                        "form": "ros",
+                        "form": "pros",
                         "page": "Review of systems",
                         "section": "Review of systems Gastrointestinal"
                     }
                 },
                 {
                     "reference": {
-                        "form": "ros",
+                        "form": "pros",
                         "page": "Review of systems",
                         "section": "Review of systems Genitourinary"
                     }
                 },
                 {
                     "reference": {
-                        "form": "ros",
+                        "form": "pros",
                         "page": "Review of systems",
                         "section": "Review of systems Musculoskeletal"
                     }
                 },
                 {
                     "reference": {
-                        "form": "ros",
+                        "form": "pros",
+                        "page": "Review of systems",
+                        "section": "Review of systems Psychiatric"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "pros",
                         "page": "Review of systems",
                         "section": "Review of systems Developmental"
                     }
@@ -535,9 +549,61 @@
             "sections": [
                 {
                     "reference": {
-                        "form": "tests",
+                        "form": "tr",
                         "page": "Test Results",
                         "section": "Chemistry Lab Tests"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "CBC"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "CD4"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "Viral Load"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "HIV Test",
+                        "excludeQuestions": [
+                            "hivPcr"
+                        ]
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "TB Test"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "Chest Xray"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "tr",
+                        "page": "Test Results",
+                        "section": "Other Test"
                     }
                 }
             ]
@@ -694,16 +760,16 @@
                                 ]
                             },
                             "validators": [
-                               {
-                                   "type": "date",
-                                   "allowFutureDates": "true"
-                               },
-                               {
-                                   "type": "js_expression",
-                                   "failsWhenExpression": "(new moment(encDate)).isAfter((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
-                                   "message": "Return to clinic date should be greater than the encounter date."
-                               }
-                           ]
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "true"
+                                },
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "(new moment(encDate)).isAfter((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                    "message": "Return to clinic date should be greater than the encounter date."
+                                }
+                            ]
                         }
                     ]
                 }

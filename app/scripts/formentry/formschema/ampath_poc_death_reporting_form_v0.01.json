@@ -15,7 +15,7 @@
                         {
                             "label": "Visit Date",
                             "type": "encounterDatetime",
-                            "id":"encDate",
+                            "id": "encDate",
                             "required": "true",
                             "default": "",
                             "questionOptions": {
@@ -176,8 +176,8 @@
                                     },
                                     "validators": [],
                                     "hide": {
-                                "hideWhenExpression": "isEmpty(deathLoc) || !arrayContains(deathLoc, 'a8aaf3e2-1350-11df-a1f1-0026b9348838')"
-                            }
+                                        "hideWhenExpression": "deathLoc !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
+                                    }
                                 }
                             ]
                         },
@@ -231,8 +231,8 @@
                                     },
                                     "validators": [],
                                     "hide": {
-                                "hideWhenExpression": "isEmpty(deathCause) || !arrayContains(deathCause, 'a8aaf3e2-1350-11df-a1f1-0026b9348838')"
-                            }
+                                        "hideWhenExpression": "isEmpty(deathCause) || !arrayContains(deathCause, 'a8aaf3e2-1350-11df-a1f1-0026b9348838')"
+                                    }
                                 }
                             ]
                         },
@@ -341,17 +341,17 @@
                                     }
                                 ]
                             },
-                           "validators": [
-                               {
-                                   "type": "date",
-                                   "allowFutureDates": "true"
-                               },
-                               {
-                                   "type": "js_expression",
-                                   "failsWhenExpression": "(new moment(encDate)).isAfter((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
-                                   "message": "Return to clinic date should be greater than the encounter date."
-                               }
-                           ]
+                            "validators": [
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "true"
+                                },
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "(new moment(encDate)).isAfter((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                    "message": "Return to clinic date should be greater than the encounter date."
+                                }
+                            ]
                         }
                     ]
                 }

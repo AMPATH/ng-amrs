@@ -116,29 +116,30 @@
                         {
                             "label": "If involved with the street, in contact with any of the following",
                             "id": "streetContact",
-                            "type": "obs",
                             "questionOptions": {
                                 "concept": "0ed530ce-5658-45fe-aa57-6e49a7d2d430",
                                 "rendering": "select",
                                 "answers": [
                                     {
                                         "label": "None",
-                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838"
+                                        "concept": "a899e0ac-1350-11df-a1f1-0026b9348838"
                                     },
                                     {
                                         "label": "Parents",
-                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                        "concept": "a89ebec4-1350-11df-a1f1-0026b9348838"
                                     },
                                     {
                                         "label": "GrandParents",
-                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                        "concept": "a898c32a-1350-11df-a1f1-0026b9348838"
                                     },
                                     {
                                         "label": "Other relatives",
-                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838"
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838"
                                     }
                                 ]
-                            }
+                            },
+                            "type": "obs",
+                            "validators": []
                         },
                         {
                             "label": "Other Relatives(specify):",
@@ -147,7 +148,10 @@
                                 "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                                 "rendering": "text"
                             },
-                            "validators": []
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "streetContact  !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
+                            }
                         },
                         {
                             "label": "How often are you in contact with your family?",

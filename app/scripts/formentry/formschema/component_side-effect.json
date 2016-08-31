@@ -101,6 +101,50 @@
                                         "label": "Steven-Johnson syndrome"
                                     },
                                     {
+                                        "concept": "a8ad21e4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Nausea"
+                                    },
+                                    {
+                                        "concept": "a894b604-1350-11df-a1f1-0026b9348838",
+                                        "label": "Burning sensation"
+                                    },
+                                    {
+                                        "concept": "a890861a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Diarrhea"
+                                    },
+                                    {
+                                        "concept": "a8966d1e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Headache"
+                                    },
+                                    {
+                                        "concept": "a8ad042a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Fatigue"
+                                    },
+                                    {
+                                        "concept": "a89366a0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Jaundice"
+                                    },
+                                    {
+                                        "concept": "a89836ee-1350-11df-a1f1-0026b9348838",
+                                        "label": "Dizzy"
+                                    },
+                                    {
+                                        "concept": "a8932f00-1350-11df-a1f1-0026b9348838",
+                                        "label": "Abdominal pain"
+                                    },
+                                    {
+                                        "concept": "a89cec02-1350-11df-a1f1-0026b9348838",
+                                        "label": "Anxiety"
+                                    },
+                                    {
+                                        "concept": "c80dcaad-ea61-4b88-b1f7-c091d706c7de",
+                                        "label": "Nightmare"
+                                    },
+                                    {
+                                        "concept": "a8935fde-1350-11df-a1f1-0026b9348838",
+                                        "label": "Depression"
+                                    },
+                                    {
                                         "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
                                         "label": "Other"
                                     }
