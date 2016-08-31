@@ -51,6 +51,7 @@
                         },
                         {
                             "label": "Is the patient pregnant? (Fill out PMTCT Form)",
+                            "id":"preg",
                             "questionOptions": {
                                 "concept": "6b4f1d00-0a27-41dd-a299-fb7dc730819c",
                                 "rendering": "select",

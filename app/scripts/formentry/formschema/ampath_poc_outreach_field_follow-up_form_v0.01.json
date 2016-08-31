@@ -116,6 +116,10 @@
                                                 "label": "Research"
                                             },
                                             {
+                                                "concept": "a89cefd6-1350-11df-a1f1-0026b9348838",
+                                                "label": "No show"
+                                            },
+                                            {
                                                 "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
                                                 "label": "Other"
                                             }
@@ -158,6 +162,10 @@
                                     "questionOptions": {
                                         "rendering": "text",
                                         "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "reasonAttemptContact !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
                                     }
                                 }
                             ]
@@ -173,7 +181,8 @@
                             "id": "callAttempts",
                             "questionOptions": {
                                 "rendering": "number",
-                                "concept": "e6c52d7e-3e25-4a83-8f9c-55a03bdc653a"
+                                "concept": "e6c52d7e-3e25-4a83-8f9c-55a03bdc653a",
+                                "min": "1"
                             }
                         },
                         {
@@ -455,17 +464,25 @@
                             "id": "medsRemDays",
                             "questionOptions": {
                                 "rendering": "number",
+                                "min": "0",
                                 "concept": "a89fe006-1350-11df-a1f1-0026b9348838"
                             }
                         },
                         {
-                            "type": "obs",
                             "label": "Date patient found:",
                             "id": "dateFound",
                             "questionOptions": {
                                 "rendering": "date",
                                 "concept": "a89df246-1350-11df-a1f1-0026b9348838"
-                            }
+                            },
+                            "type": "obs",
+                            "validators": [
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "(new moment(encDate)).isBefore((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                    "message": "Date patient found should be less than the encounter date."
+                                }
+                            ]
                         }
                     ]
                 },
@@ -512,12 +529,16 @@
                                     }
                                 },
                                 {
-                                    "type": "obs",
                                     "label": "Other location of contact:",
                                     "id": "otherlocCont",
+                                    "type": "obs",
                                     "questionOptions": {
                                         "rendering": "text",
                                         "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838"
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "locCont !== 'a8aaf3e2-1350-11df-a1f1-0026b9348838'"
                                     }
                                 }
                             ]
@@ -574,6 +595,7 @@
                             "questions": [
                                 {
                                     "label": "Reason for missed visit (tick all that apply):",
+                                    "id": "reasonMissedVisist",
                                     "questionOptions": {
                                         "concept": "a89ef11e-1350-11df-a1f1-0026b9348838",
                                         "answers": [
@@ -655,6 +677,7 @@
                         },
                         {
                             "label": "Date of death:",
+                            "id": "deathDate",
                             "questionOptions": {
                                 "concept": "a89df3d6-1350-11df-a1f1-0026b9348838",
                                 "rendering": "date"
@@ -662,9 +685,14 @@
                             "type": "obs",
                             "validators": [
                                 {
-                                    "type": "date"
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "(new moment(encDate)).isBefore((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                    "message": "Date of death should be less than the encounter date."
                                 }
-                            ]
+                            ],
+                            "hide": {
+                                "hideWhenExpression": "isEmpty(reasonMissedVisist) || !arrayContains(reasonMissedVisist, 'a89335d6-1350-11df-a1f1-0026b9348838')"
+                            }
                         },
                         {
                             "label": "Reason for death:",
@@ -699,7 +727,11 @@
                                 ],
                                 "rendering": "select"
                             },
-                            "type": "obs"
+                            "type": "obs",
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "isEmpty(reasonMissedVisist) || !arrayContains(reasonMissedVisist, 'a89335d6-1350-11df-a1f1-0026b9348838')"
+                            }
                         },
                         {
                             "type": "obs",
@@ -741,6 +773,10 @@
                                         "label": "Other family member"
                                     }
                                 ]
+                            },
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "isEmpty(reasonMissedVisist) || !arrayContains(reasonMissedVisist, 'a89335d6-1350-11df-a1f1-0026b9348838')"
                             }
                         },
                         {
@@ -847,6 +883,7 @@
                         {
                             "label": "Patient care status (choose one):",
                             "required": "true",
+                            "type": "obs",
                             "id": "patstat",
                             "questionOptions": {
                                 "concept": "7c579743-5ef7-4e2c-839f-5b95597cb01c",
@@ -882,7 +919,13 @@
                                 ],
                                 "rendering": "select"
                             },
-                            "type": "obs"
+                            "validators": [
+                                {
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "arrayContains(reasonMissedVisist, 'a89335d6-1350-11df-a1f1-0026b9348838') && !isEmpty(myValue) && myValue !== 'a89335d6-1350-11df-a1f1-0026b9348838'",
+                                    "message": "Patient marked as dead in reason missed visit. Therefore patient status can only be patient dead"
+                                }
+                            ]
                         },
                         {
                             "type": "obsGroup",

@@ -22,6 +22,10 @@
                                     {
                                         "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
                                         "label": "No"
+                                    },
+                                       {
+                                        "concept": "a89ec3f6-1350-11df-a1f1-0026b9348838",
+                                        "label": "Stopped"
                                     }
                                 ],
                                 "rendering": "select"
