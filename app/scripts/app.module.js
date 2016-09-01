@@ -121,7 +121,7 @@
         .state('clinical-dashboard.viral-load-monitoring', {
           url: '/viral-load-monitoring',
           templateUrl: 'views/clinic-dashboard/viral-monitoring.html',
-          controller: 'ClinicDashboardCtrl',
+          controller: 'ViralLoadMonitoringCtrl',
           data: {
             requireLogin: true
           }
