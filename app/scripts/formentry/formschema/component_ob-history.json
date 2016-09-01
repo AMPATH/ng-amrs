@@ -81,7 +81,9 @@
                             "type": "obs",
                             "validators": [
                                 {
-                                    "type": "date"
+                                    "type": "js_expression",
+                                    "failsWhenExpression": "(new moment(encDate)).isAfter((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                    "message": "EDD should be greater than the encounter date."
                                 }
                             ],
                             "hide": {
