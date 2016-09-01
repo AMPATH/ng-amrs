@@ -97,7 +97,13 @@
     function onSaveUserPropertySuccess(data) {
         $scope.savingProperty = false;
         $scope.experiencedSavingErrors = null;
-      dialogs.notify('Success', 'Location(s) saved successfully for the selected user.');
+        dialogs.notify('Success', 'Location(s) saved successfully for the selected user.');
+        $scope.users = [];
+        $scope.selectedUser = {};
+        $scope.selectedLocations.selectedAll = false;
+        $scope.selectedLocations.locations = [];
+        $scope.selectedLocationsAggregateData.selectedAllAgg = false;
+        $scope.selectedLocationsAggregateData.locations = [];
     }
 
     function onSaveUserPropertyError(error) {
