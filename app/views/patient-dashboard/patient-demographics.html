@@ -10,8 +10,20 @@
   <li class="list-group-item markDeceased" style="font-size:large" ng-if="patient.deathDate()">Death Date: {{patient.deathDate()}}</li>
   <li class="list-group-item markDeceased" style="font-size:large" ng-if="patient.deathDate()">Cause Of Death: {{patient.causeOfDeath().display}}</li>
   <li class="list-group-item" style="font-size:large" ng-if="patient.phoneNumber()">Phone Number: {{patient.phoneNumber()}}
-    <button type="button" class="btn btn-primary btn-xs" ng-click="openPersonAttributeManageModal(patient.uuid())">
+    <button type="button" class="btn btn-primary btn-xs" ng-click="openPersonAttributeManageModal(patient.uuid(),'manage-attributes-modal.html')">
       <span ng-if="patient.phoneNumber()==null">Add</span> <span ng-if="patient.phoneNumber()">Edit</span></button>
+  </li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.alternativePhoneNumber()">Alternative Phone Number: {{patient.alternativePhoneNumber()}}
+    <button type="button" class="btn btn-primary btn-xs" ng-click="openPersonAttributeManageModal(patient.uuid(),'manage-attributes-alternativephone-modal.html')">
+      <span ng-if="patient.alternativePhoneNumber()==null">Add</span> <span ng-if="patient.alternativePhoneNumber()">Edit</span></button>
+  </li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.nextofkinPhoneNumber()">Next of Kin Phone Number: {{patient.nextofkinPhoneNumber()}}
+    <button type="button" class="btn btn-primary btn-xs" ng-click="openPersonAttributeManageModal(patient.uuid(),'manage-attributes-nextofkinphone-modal.html')">
+      <span ng-if="patient.nextofkinPhoneNumber()==null">Add</span> <span ng-if="patient.nextofkinPhoneNumber()">Edit</span></button>
+  </li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.patnerPhoneNumber()">Patner Phone Number: {{patient.patnerPhoneNumber()}}
+    <button type="button" class="btn btn-primary btn-xs" ng-click="openPersonAttributeManageModal(patient.uuid(),'manage-attributes-patnerphone-modal.html')">
+      <span ng-if="patient.patnerPhoneNumber()==null">Add</span> <span ng-if="patient.patnerPhoneNumber()">Edit</span></button>
   </li>
   <li class="list-group-item" style="font-size:large" ng-if="patient.address().county">County: {{patient.address().county| titlecase }}</li>
   <li class="list-group-item" style="font-size:large" ng-if="patient.address().subCounty">Sub-County: {{patient.address().subCounty| titlecase }}</li>
@@ -20,5 +32,11 @@
   <li class="list-group-item" style="font-size:large" ng-if="patient.address().stateProvince">State/Province: {{patient.address().stateProvince| titlecase }}</li>
   </li>
 </ul>
-<button ng-if="patient.phoneNumber()==null" type="button" class="btn btn-primary btn-xs" ng-click="openPersonAttributeManageModal(patient.uuid())">
+<button ng-if="patient.phoneNumber()==null" type="button" class="btn btn-primary btn-xs" ng-click="openPersonAttributeManageModal(patient.uuid(),'manage-attributes-modal.html')">
   Add phone number</button>
+<button ng-if="patient.alternativePhoneNumber()==null" type="button" class="btn btn-primary btn-xs" ng-click="openPersonAttributeManageModal(patient.uuid(),'manage-attributes-alternativephone-modal.html')">
+Add alternative phone number</button>
+<button ng-if="patient.nextofkinPhoneNumber()==null" type="button" class="btn btn-primary btn-xs" ng-click="openPersonAttributeManageModal(patient.uuid(),'manage-attributes-nextofkinphone-modal.html')">
+Add next of Kin phone number</button>
+<button ng-if="patient.patnerPhoneNumber()==null" type="button" class="btn btn-primary btn-xs" ng-click="openPersonAttributeManageModal(patient.uuid(),'manage-attributes-patnerphone-modal.html')">
+Add patner phone number</button>
