@@ -17,8 +17,11 @@
         locationUuid: '@',
         reportName: '@',
         enabledControls: '@',
+        indicators: '@',
+        title: '@',
         params: '=',
-        cellFormatter: '&'
+        cellFormatter: '&',
+        accessor: '='
       },
       controller: reportListController,
       link: reportListLink,
@@ -33,18 +36,15 @@
   function reportListController($rootScope, $scope, $stateParams, EtlRestService, HivSummaryIndicatorService, moment,
     $filter, $state, $timeout, $modal) {
     //Patient List Directive Properties & Methods
-    var date = new Date();
-    $scope.startDate = new Date(date.getFullYear(), date.getMonth() - 1, 1);
-    $scope.endDate = date;
     $scope.selectedLocation = $scope.locationUuid || '';
     $scope.selectedIndicatorBox = $stateParams.indicator || '';
     $scope.selectedLocationName = $stateParams.locationName || '';
     $scope.ChangeView = ChangeView;
-
+    $scope.dataVailable = false;
     //Hiv Summary Indicators Service Properties & Methods
     $scope.countBy = 'num_persons';
     $scope.groupBy = 'groupByLocation';
-    $scope.loadHivSummaryIndicators = loadHivSummaryIndicators;
+    $scope.loadReport = loadReport;
     $scope.getIndicatorLabelByName = getIndicatorLabelByName;
     $scope.state = $state.current.name;
     $scope.rotateXAxis = false;
@@ -59,14 +59,11 @@
     $scope.experiencedLoadingError = false;
     $scope.resultIsEmpty = false;
 
-
-    //Dynamic DataTable Params
-    $scope.indicators = []; //set filtered indicators to []
     $scope.currentPage = 1;
     $scope.counter = 0;
     $scope.setCountType = function(val) {
       $scope.countBy = val;
-      loadHivSummaryIndicators();
+      loadReport();
     };
 
     //DataTable Options
@@ -99,43 +96,20 @@
     //scope methods
     function init() {
       $timeout(function() {
-        if (!loadCachedData()) loadIndicatorsSchema();
+        loadIndicatorsSchema();
       }, 1000);
     }
 
-    function loadHivSummaryIndicators() {
+    function loadReport() {
       $scope.experiencedLoadingErrors = false;
       $scope.resultIsEmpty = false;
       if ($scope.isBusy === true) return;
-      $scope.indicators = [];
       $scope.isBusy = true;
-      var locations = '';
-      if ($scope.countBy && $scope.countBy !== '' && $scope.reportName && $scope.reportName !== '' && $scope.startDate && $scope.startDate !== '' && $scope.selectedIndicatorTags.indicatorTags &&
-        $scope.selectedIndicatorTags.indicatorTags !== []) {
-        locations = '';
-      }
-      if ($scope.selectedLocation) {
-        locations = $scope.selectedLocation;
-      } else {
-        locations = getSelectedLocations($scope.selectedLocations);
-      }
-      var indicators = getSelectedIndicators($scope.selectedIndicatorTags);
-      var localParams = {
-        endDate: moment(new Date($scope.endDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-        report: $scope.reportName,
-        startDate: moment(new Date($scope.startDate)).startOf('day').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
-        groupBy: $scope.groupBy,
-        countBy: $scope.countBy,
-        locationUuids: locations,
-        indicators: indicators,
-        order: 'encounter_datetime|asc',
-        startAge: $scope.startAge,
-        endAge: $scope.endAge,
-        gender: ($scope.gender || ['M', 'F']).toString()
-
-      };
-      var params = Object.assign(localParams, $scope.params);
-      EtlRestService.getReport(params, onFetchHivSummaryIndicatorsSuccess, onFetchHivSummaryIndicatorsError);
+      var params = {};
+      params = Object.assign($scope.params, {
+        indicators: $scope.indicators
+      });
+      EtlRestService.getReport($scope.params, onFetchHivSummaryIndicatorsSuccess, onFetchHivSummaryIndicatorsError);
 
     }
 
@@ -145,22 +119,10 @@
       if (result.size === 0) {
         $scope.allDataLoaded = true;
       } else {
-        $scope.indicators.length === 0 ? $scope.indicators.push.apply($scope.indicators, result.result) : $scope.indicators = result.result;
-
+        $scope.dataVailable = true;
+        buildDataTable(result.result);
+        $scope.chartFilters = true;
       }
-      buildDataTable();
-      $scope.chartFilters = true;
-      var indicators = getSelectedIndicators($scope.selectedIndicatorTags);
-      var points = getDataPoints(result.result);
-      var columns = getColumns(indicators.split(/\s*,\s*/));
-      console.log('Data points', points);
-      console.log('Data columns', columns);
-      $scope.datapoints = points;
-      $scope.datacolumns = columns;
-      $scope.datax = {
-        id: "location"
-      };
-
     }
 
     function onFetchHivSummaryIndicatorsError(error) {
@@ -182,11 +144,7 @@
     function onFetchIndicatorsSchemaSuccess(result) {
       $scope.isBusy = false;
       $scope.indicatorTags = result.result;
-      $scope.indicatorTags.unshift({
-        name: 'location'
-      }, {
-        name: 'location_uuid'
-      });
+      //loadHivSummaryIndicators();
     }
 
     function onFetchIndicatorsSchemaError(error) {
@@ -254,24 +212,7 @@
       return indicators;
     }
 
-    function getSelectedLocations(selectedLocationObject) {
-      var locations;
-      try {
-        if (angular.isDefined(selectedLocationObject.locations)) {
-          for (var i = 0; i < selectedLocationObject.locations.length; i++) {
-            if (i === 0) {
-              locations = '' + selectedLocationObject.locations[i].uuId();
-            } else {
-              locations =
-                locations + ',' + selectedLocationObject.locations[i].uuId();
-            }
-          }
-        }
-      } catch (e) {
 
-      }
-      return locations;
-    }
     /**
      * Function to cache data in order to prevent app from hitting the server when a resource is requested
      */
@@ -294,10 +235,10 @@
     /**
      * Functions to populate and define bootstrap data table
      */
-    function buildDataTable() {
+    function buildDataTable(result) {
       $timeout(function() {
-        buildColumns();
-        buildTableControls();
+        buildColumns(result);
+        buildTableControls(result);
       }, 1000);
     }
 
@@ -318,23 +259,27 @@
       });
     }
 
-    function buildColumns() {
+    function buildColumns(result) {
       $scope.columns = [];
-      _.each($scope.indicatorTags, function(header) {
-        if (header.name === 'location')
-          buildSingleColumn(header);
-        _.each($scope.selectedIndicatorTags.indicatorTags, function(selectedIndicator) {
-          if (selectedIndicator.name === header.name) {
-            buildSingleColumn(header);
-          }
-        });
+      var tableIndicators = [{
+        name: 'location'
+      }];
+      var indicators = $scope.indicators.split(',');
+      var arrayLength = indicators.length;
+      for (var i = 0; i < arrayLength; i++) {
+        tableIndicators.push(_.findWhere($scope.indicatorTags, {
+          name: indicators[i]
+        }));
+      }
+      _.each(tableIndicators, function(header) {
+        buildSingleColumn(header);
       });
     }
 
-    function buildTableControls() {
+    function buildTableControls(result) {
       $scope.bsTableControl = {
         options: {
-          data: $scope.indicators,
+          data: result,
           rowStyle: function(row, index) {
             return {
               classes: 'none'
@@ -463,6 +408,15 @@
 
   function reportListLink(scope, element, attrs, vm) {
 
+    scope.$on('loadData', function(event, data) {
+      if (data) {
+        scope.params = Object.assign(scope.params, {
+          locationUuids: data
+        });
+      }
+      //call directive function here
+      scope.loadReport();
+    });
   }
 
 

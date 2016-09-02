@@ -1,1 +1,17 @@
-<report-list report-name="viral-load-monitoring-report" params="viralLoadParams" enabled-controls="'start-date, end-date,indicator,location, ageRangeSlider,gender'"></report-list>
+<report-filters enabled-controls="'start-date, end-date,location,ageRangeSlider,gender'" start-date="startDate" end-date="endDate" selected-locations="selectedLocations" selected-indicator-tags="selectedIndicatorTags" report-name="reportName" start-age="startAge"
+end-age="endAge" gender="gender">
+</report-filters>
+<div class='panel panel-default'>
+  <div style="height: 35px" ng-show='!isBusy && !experiencedLoadingErrors'>
+    <button class="btn btn-info pull-right" ng-click="loadData()">
+      <span class="glyphicon glyphicon-refresh"></span>
+      <span>Generate Reports</span>
+    </button>
+  </div>
+  <report-list title='Patients within VL within one year of EndDate' report-name="viral-load-monitoring-report" params="params" indicators="{{table1Indicators}}" location-uuid="{{selectedLocation.selected.uuId()}}"></report-list>
+
+  <report-list title='Patients with unsuppressed VL within one year of EndDate' report-name="viral-load-monitoring-report" params="params" indicators="{{table2Indicators}}" location-uuid="{{selectedLocation.selected.uuId()}}"></report-list>
+
+  <report-list title='Patients with recent regimen change after unsuppressed VL' report-name="viral-load-monitoring-report" params="params" indicators="{{table3Indicators}}" location-uuid="{{selectedLocation.selected.uuId()}}"></report-list>
+
+</div>
