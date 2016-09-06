@@ -28,10 +28,6 @@
                                         "orderType": "testorder",
                                         "selectableOrders": [
                                             {
-                                                "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                                                "label": "None"
-                                            },
-                                            {
                                                 "concept": "a896dea2-1350-11df-a1f1-0026b9348838",
                                                 "label": "WBC"
                                             },
