@@ -268,8 +268,13 @@
         }
 
         function postOrderError(error) {
+
+            var msg = 'There was an error trying to save the order in the EID system.';
+            if(error && error.data && error.data.message)
+              msg = error.data.message;
+
             $scope.isBusy = false;
-            displayError('There was an error trying to save the order in the EID system.');
+            displayError(msg);
         }
 
         //helper functions
