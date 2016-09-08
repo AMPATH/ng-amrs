@@ -112,6 +112,10 @@
                                                 "label": "Clinical issue"
                                             },
                                             {
+                                                "concept": "a8af61e8-1350-11df-a1f1-0026b9348838",
+                                                "label": "LFTU"
+                                            },
+                                            {
                                                 "concept": "a89a898a-1350-11df-a1f1-0026b9348838",
                                                 "label": "Research"
                                             },
@@ -145,10 +149,6 @@
                                             {
                                                 "concept": "06eb5a64-5b0d-47f9-929f-30e6c51f365e",
                                                 "label": "Low risk"
-                                            },
-                                            {
-                                                "concept": "9f14a13e-b158-4df8-b5ee-45fbf35bd36d",
-                                                "label": "LFTU"
                                             }
                                         ],
                                         "rendering": "select",
