@@ -27,11 +27,11 @@ jshint -W003, -W026, -W033, -W098
     $scope.openPersonAttributeManageModal = openPersonAttributeManageModal;
     $scope.openPersonManageModal = openPersonManageModal;
 
-    function openPersonAttributeManageModal(attributeTypeUuid,modalViewName) {
+    function openPersonAttributeManageModal(patientUuid) {
       var scope = $scope;
       var uibModalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
-        templateUrl: 'views/patient-dashboard/'+ modalViewName,
+        templateUrl: 'views/patient-dashboard/manage-person-attributes-modal.html',
         controller: function($uibModalInstance, $scope, OpenmrsRestService) {
           $scope.$on('attributeSaved', function(event, data) {
             OpenmrsRestService.getPatientService().getPatientByUuid({
