@@ -13,7 +13,7 @@
                     "isExpanded": "true",
                     "questions": [
                         {
-                            "label": "Visit Date",
+                            "label": "Death Reporting Date",
                             "type": "encounterDatetime",
                             "id": "encDate",
                             "required": "true",
