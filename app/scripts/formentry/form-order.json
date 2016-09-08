@@ -15,11 +15,6 @@
     "isVisible":  true
   },
   {
-    "uuid": "1339a535-e38f-44cd-8cf8-f42f7c5f2ab7",
-    "name": "AMPATH POC Adult Return Visit Form v0.01",
-    "isVisible":  true
-  },
-  {
     "uuid": "585ac02c-96f6-4e3b-b41f-8d8d04f149bf",
     "name": "AMPATH POC Pediatric Return Visit Form v0.01",
     "isVisible":  true
@@ -27,11 +22,6 @@
   {
     "uuid": "bd5908a8-9d8d-41a4-a351-2f70fe00eae6",
     "name": "AMPATH POC PMTCT Postnatal Care Encounter Form v0.01",
-    "isVisible":  true
-  },
-  {
-    "uuid": "a2b811ed-6942-405a-b7f8-e7ad6143966c",
-    "name": "AMPATH POC Triage Encounter Form v0.01",
     "isVisible":  true
   },
   {
