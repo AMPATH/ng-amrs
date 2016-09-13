@@ -17,7 +17,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         , 'FormentryUtilService', 'configService', 'SearchDataService',
         '$log', 'FormEntry', 'PersonAttributesRestService',
         'CurrentLoadedFormService', 'UtilService', 'moment', 'EncounterDataService',
-        'HistoricalDataService', 'FormResService', '$q'
+        'HistoricalDataService', 'FormResService', '$q', 'EtlRestService'
     ];
 
     function FormentryCtrl($translate, dialogs, $location,
@@ -27,7 +27,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         configService, SearchDataService,
         $log, FormEntry, PersonAttributesRestService,
         CurrentLoadedFormService, UtilService, moment, EncounterDataService,
-        HistoricalDataService, FormResService, $q) {
+        HistoricalDataService, FormResService, $q, EtlRestService) {
         var vm = $scope;
 
         //Patient variables
@@ -50,7 +50,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         vm.lastFormlyFormSchema = [];//usually is an array of tabs
         vm.changesSaved = false;
 
-
+        var errorObject = {};
         var selectedFormMetadata;
         var selectedFormSchema;
         var selectedFormUuid = $stateParams.formuuid;
@@ -868,6 +868,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             //check if there are unvisited tabs
 
+            errorObject = {};
+
             generatePayload();
             if (hasObsPayload(lastPayload)) {
                 updatePayloadFormUuid(lastPayload, selectedFormUuid);
@@ -909,6 +911,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             //first stage of submitting is to save new obs
 
+            errorObject.model = vm.model;
+            errorObject.stageOne = {};
+            errorObject.stageOne.payload = lastPayload;
+
             $log.log('Submitting new obs...');
             OpenmrsRestService.getEncounterResService()
                 .saveEncounter(JSON.stringify(lastPayload),
@@ -929,9 +935,14 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     var voidedObs = getVoidedObsFromPayload(payloadCopy);
                     if (voidedObs !== undefined) {
                         $log.log('Submitting deleted obs...');
+
+                        errorObject.stageTwo = {};
+                        errorObject.stageTwo.payload = voidedObs;
+
                         submitVoidedObs(voidedObs, function (voidFailed) {
                             $log.log('Submitting deleted obs complete');
                             if (voidFailed) {
+
                                 $log.error('Submitting deleted obs failed');
                                 vm.errorMessage =
                                     'An error occured when trying to void obs';
@@ -948,10 +959,15 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     //third stage of submitting is to update voided obs
                     var updatedObs = getUpdatedObsFromPayload(payloadCopy);
                     if (updatedObs !== undefined) {
+
+                      errorObject.stageThree = {};
+                      errorObject.stageThree.payload = updatedObs;
+
                         $log.log('Submitting updated obs...');
                         submitUpdatedObs(updatedObs, function (updateFailed) {
                             $log.log('Submitting updated obs complete');
                             if (updateFailed) {
+
                                 $log.error('Submitting deleted obs failed');
                                 vm.errorMessage =
                                     'An error occured when trying to update the record';
@@ -976,6 +992,10 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                  angular.isArray(lastPersonAttributePayload.attributes) &&
                  lastPersonAttributePayload.attributes.length > 0) {
                     $log.log('Submitting person attributes..');
+
+                    errorObject.stageFour = {};
+                    errorObject.stageFour.payload = lastPersonAttributePayload;
+
                     submitPersonAttributes(lastPersonAttributePayload, vm.patient,
                         function (submitFailed) {
                             $log.log('Submitting person attributes completed');
@@ -997,6 +1017,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         }
 
         function submitNewObsPayloadFailed(error) {
+
+          if(error.status && error.status >= 400) {
+            errorObject.stageOne.error = error;
+            reportError(1);
+          }
+
             $log.error('Submitting new obs failed', error);
             initializeSubmitStagingObject(vm.fourStageSubmitProcess, false);
             vm.hasFailedNewingRequest = true;
@@ -1007,6 +1033,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                   'An internal server error occurred while trying to save observation. *Error: ' + errorMessage;
                 break;
               case 400:
+
                 vm.errorMessage =
                   'An error occurred while trying to save observation, report this error to your system administrator.' +
                   ' *Error: ' + errorMessage;
@@ -1053,6 +1080,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 },
                     //error callback
                     function (error) {
+
+                        if(error.status >= 400) {
+                          errorObject.stageTwo.error = error;
+                          reportError(2);
+                        }
+
                         $log.log('Error voiding obs: ', obs.uuid);
                         vm.hasFailedVoidingRequest = true;
                         numberOfVoidRequests--;
@@ -1087,6 +1120,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 },
                     //error callback
                     function (error) {
+
+                        if(error.status >= 400) {
+                          errorObject.stageThree.error = error;
+                          reportError(3);
+                        }
+
                         $log.log('Error voiding obs: ', obs.uuid);
                         vm.hasFailedUpdatingingRequest = true;
 
@@ -1110,6 +1149,12 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             },
                 //error callback
                 function (error) {
+
+                    if(error.status >= 400) {
+                      errorObject.stageFour.error = error;
+                      reportError(4);
+                    }
+
                     $log.log('Error saving attribute: ', lastPersonAttributePayload);
                     vm.hasFailedPersonAttributeRequest = true;
 
@@ -1141,6 +1186,17 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
           if(found === undefined) return null;
           return found;
+        }
+
+        function reportError(stage) {
+
+          //send error object to server
+          var obj = {
+            error: errorObject,
+            stage: stage
+          };
+
+          EtlRestService.postFormError(obj);
         }
     }
 })();
