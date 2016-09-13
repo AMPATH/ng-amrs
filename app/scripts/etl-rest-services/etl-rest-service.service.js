@@ -51,7 +51,8 @@
       synchronizeEIDPatientLabResults:synchronizeEIDPatientLabResults,
       getPatientFlowData: getPatientFlowData,
       postOrderToEid: postOrderToEid,
-      invalidateUserSession: invalidateUserSession
+      invalidateUserSession: invalidateUserSession,
+      postFormError: postFormError
     };
     return serviceDefinition;
 
@@ -66,8 +67,20 @@
           get: {
             method: 'GET',
             cache: caching
+          },
+          post: {
+            method: 'POST',
+            cache: caching
           }
         });
+    }
+
+    function postFormError(payload) {
+
+      //post forms errors to etl server for easy troubleshooting
+      var resource = getResource('forms/error');
+
+      return resource.post(payload);
     }
 
     function getClinicalNotesResource(path, cacheProperty) {
