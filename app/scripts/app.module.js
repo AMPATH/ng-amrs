@@ -35,7 +35,8 @@
       'mwl.calendar',
       'app.offline',
       'app.administration',
-      'app.openmrsRestServices'
+      'app.openmrsRestServices',
+      'notification'
     ])
     .config(function ($stateProvider, $stickyStateProvider, $urlRouterProvider) {
       $urlRouterProvider.otherwise('/');

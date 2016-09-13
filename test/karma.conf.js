@@ -102,6 +102,8 @@ module.exports = function (config) {
     'bower_components/keen-js/dist/keen.min.js',
     'bower_components/c3-angular/c3-angular.min.js',
     'bower_components/ion.rangeSlider/js/ion.rangeSlider.js',
+    'bower_components/angular-notification-center/angular-notification-center.js',
+    'bower_components/nes/lib/client.js',
     'bower_components/angular-mocks/angular-mocks.js',
     // endbower
       'app/scripts/**/*.module.js',
@@ -146,18 +148,33 @@ module.exports = function (config) {
       'karma-sinon',
       'karma-mocha',
       'karma-chai',
-      'karma-ng-html2js-preprocessor'
+      'karma-ng-html2js-preprocessor',
+      'karma-babel-preprocessor'
     ],
     preprocessors: {
       'app/views/patient-dashboard/**/*.html': ['ng-html2js'],
       'app/views/clinic-dashboard/**/*.html': ['ng-html2js'],
       'app/views/admin/**/*.html': ['ng-html2js'],
       'app/views/data-analytics/**/*.html': ['ng-html2js'],
-      'app/views/administration/**/*.html': ['ng-html2js']
+      'app/views/administration/**/*.html': ['ng-html2js'],
+      'bower_components/nes/**/*.js': ['babel']
     },
     ngHtml2JsPreprocessor: {
       stripPrefix: 'app/',
       moduleName: 'my.templates'
+    },
+
+    babelPreprocessor: {
+      options: {
+        presets: ['es2015'],
+        sourceMap: 'inline'
+      },
+      filename: function (file) {
+        return file.originalPath.replace(/\.js$/, 'es6.js');
+      },
+      sourceFileName: function (file) {
+        return file.originalPath;
+      }
     },
 
     // Continuous Integration mode
