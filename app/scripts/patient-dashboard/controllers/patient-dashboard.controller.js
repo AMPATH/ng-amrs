@@ -15,7 +15,7 @@
   PatientDashboardCtrl.$nject = ['$rootScope', '$scope', '$stateParams', '$timeout',
     'OpenmrsRestService', 'ClinicalSummaryPdfService'
   ];
-  
+
   function PatientDashboardCtrl($rootScope, $scope, $stateParams, $timeout,
     OpenmrsRestService, ClinicalSummaryPdfService) {
     $scope.patient = {};
@@ -27,9 +27,12 @@
     $scope.HivHistoricalExpanded = true;
 
     $scope.showHivHistoricalSummary = false;
+    $scope.MedicationChangeHistoryExpanded = true;
+
+    $scope.showMedicationChangeHistory = false;
 
     $scope.$on('viewHivHistoricalSummary', viewHivHistoricalSummary);
-
+    $scope.$on('viewMedicationChangeHistory', viewMedicationChangeHistory);
     $scope.generateClinicalSummaryPdf = generateClinicalSummaryPdf;
 
     //exposing labs, reminders, vitals, notes and hivSummary to the controller (from respective directive)
@@ -73,6 +76,9 @@
 
     function viewHivHistoricalSummary() {
       $scope.showHivHistoricalSummary = true;
+    }
+    function viewMedicationChangeHistory() {
+      $scope.showMedicationChangeHistory = true;
     }
 
     fetchLetterhead();

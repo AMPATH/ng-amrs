@@ -1,0 +1,21 @@
+<div>
+  <h4>Medication Change History</h4>
+  <!-- DATATABLE -->
+  <table id="bsTable" class="table table-striped table-condensed table-hover" bs-table-control="bsTableControl">
+  </table>
+  <div ng-show='experiencedLoadingError'>
+    <p class="bg-danger" style="padding:4px;">
+      <b>
+      <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
+      <p>
+  </div>
+  <div ng-show='!isBusy'>
+    <button class="btn btn-info" ng-click="fetchMedicationHistory()">
+      <span class="glyphicon glyphicon-refresh"></span>Reload</button>
+  </div>
+  <div ng-show='isBusy'>
+    <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+    <b>Loading data...</b>
+  </div>
+
+</div>

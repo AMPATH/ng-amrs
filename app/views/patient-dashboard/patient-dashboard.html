@@ -66,6 +66,9 @@
 				<li active-tab-sync index="8" data-ng-glick="activeList(this, 8)" ng-class="{active: activeListId === 8}">
 					<a data-target="#printLabelsTab" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Lab Orders</a>
 				</li>
+				<li active-tab-sync index="8" data-ng-glick="activeList(this, 8)" ng-class="{active: activeListId === 8}">
+					<a data-target="#LocatorForm" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Locator Map</a>
+				</li>
 			</ul>
 			<ul class="nav nav-pills hidden-xs hidden-lg hidden-xl " style="cursor: pointer;">
 				<li active-tab-sync index="1" data-ng-glick="activeList(this, 1)" ng-class="{active: activeListId === 1}">
@@ -94,6 +97,9 @@
 				</li>
 				<li active-tab-sync index="8" data-ng-glick="activeList(this, 8)" ng-class="{active: activeListId === 8}">
 					<a data-target="#printLabelsTab" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Lab Orders</a>
+				</li>
+				<li active-tab-sync index="8" data-ng-glick="activeList(this, 8)" ng-class="{active: activeListId === 8}">
+					<a data-target="#LocatorForm" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Locator Map</a>
 				</li>
 			</ul>
 		</div>
@@ -154,6 +160,16 @@
 							<hiv-summary-historical patient-uuid="{{patient.uuid()}}"></hiv-summary-historical>
 						</accordion-group>
 					</accordion>
+					<accordion ng-show="showMedicationChangeHistory">
+						<accordion-group is-open="MedicationChangeHistoryExpanded">
+							<accordion-heading>
+								<div style="padding:3px;">Medication Change History
+									<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': MedicationChangeHistoryExpanded, 'glyphicon-chevron-right': !MedicationChangeHistoryExpanded}"></i>
+								</div>
+							</accordion-heading>
+							<medication-history patient-uuid="{{patient.uuid()}}"></medication-history>
+						</accordion-group>
+					</accordion>
 				</div>
 			</div>
 			<div class="tab-pane fade in panel panel-default  "id="printLabelsTab">
@@ -177,6 +193,11 @@
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab9">
 				<div class="page-content">
 					<patient-relationship></patient-relationship>
+				</div>
+			</div>
+			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="LocatorForm">
+				<div class="page-content">
+					<outreach-locator-form patient="patient"></outreach-locator-form>
 				</div>
 			</div>
 		</div>
