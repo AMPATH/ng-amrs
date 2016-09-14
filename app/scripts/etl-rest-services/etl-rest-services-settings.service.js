@@ -27,7 +27,8 @@
       restUrlBase: restUrlBase,
       addUrlToList: addUrlToList,
       getUrlBaseList: getUrlBaseList,
-      hasCoockiePersistedCurrentUrlBase: hasCoockiePersistedCurrentUrlBase
+      hasCoockiePersistedCurrentUrlBase: hasCoockiePersistedCurrentUrlBase,
+      getWssUrlBase : getWssUrlBase
     };
     return serviceDefinition;
 
@@ -63,6 +64,11 @@
 
     function getUrlBaseList() {
       return restUrlBaseList;
+    }
+
+    function getWssUrlBase() {
+      var wssUrl = restUrlBase.replace('https:', 'wss:');
+      return wssUrl;
     }
 
     function addUrlToList(url) {

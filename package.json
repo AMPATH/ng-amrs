@@ -5,16 +5,17 @@
   "dependencies": {
     "angular-environment": "^1.0.3",
     "api-check": "^7.5.0",
+    "bootstrap-table": "^1.8.1",
     "karma-html2js-preprocessor": "^0.1.0",
     "pivottable": "^1.6.3",
-    "stacktrace-js": "^1.0.1",
-    "bootstrap-table": "^1.8.1"
+    "stacktrace-js": "^1.0.1"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/AMPATH/ng-amrs.git"
   },
   "devDependencies": {
+    "babel-preset-es2015": "^6.14.0",
     "chai": "^3.0.0",
     "grunt": "^0.4.5",
     "grunt-angular-templates": "^1.0.3",
@@ -46,6 +47,7 @@
     "jasmine-core": "*",
     "jshint-stylish": "^1.0.0",
     "karma": "^0.13.0",
+    "karma-babel-preprocessor": "^6.0.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^0.2.0",
     "karma-html-reporter": "^0.2.6",

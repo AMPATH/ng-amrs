@@ -6,9 +6,9 @@
     .module('app.authentication')
     .controller('LoginCtrl', LoginCtrl);
 
-  LoginCtrl.$inject = ['$scope', 'OpenmrsRestService', '$timeout', 'SessionResService', 'EtlRestService'];
+  LoginCtrl.$inject = ['$scope', 'OpenmrsRestService', '$timeout', 'SessionResService', 'EtlRestService', 'webSocketService', '$http'];
 
-  function LoginCtrl($scope, OpenmrsRestService, $timeout, SessionResService, EtlRestService) {
+  function LoginCtrl($scope, OpenmrsRestService, $timeout, SessionResService, EtlRestService, webSocketService, $http) {
     $scope.errors = '';
     $scope.isVisible = false;
     $scope.CurrentUser = {
@@ -17,6 +17,8 @@
     };
 
     $scope.isBusy = false;
+    $scope.isConnected = false;
+    var client = webSocketService.getWebSocketConnection();
 
     clearCurrentSession();
 
@@ -35,7 +37,11 @@
           OpenmrsRestService.getUserService().getUser({ uuid:  OpenmrsRestService.getAuthService().user.uuid },
             function (data) {
               console.log('Logged in user:', data);
-
+              client.connect({ auth: { headers: { authorization: $http.defaults.headers.common.Authorization } } }, function (err) {
+                $scope.isConnected = true;
+                console.log('client has connected--->', $scope.isConnected);
+                webSocketService.setWebSocketConnection(client);
+              });
             });
           //invalidate etl session
           EtlRestService.invalidateUserSession( function (data) {},function (data) {})
