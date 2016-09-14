@@ -1,6 +1,6 @@
 (function() {
   'use strict';
-  describe.only('Testing notifications directive', function() {
+  describe('Testing notifications directive', function() {
     beforeEach(function() {
       //debugger;
       module('ngAmrsApp');
