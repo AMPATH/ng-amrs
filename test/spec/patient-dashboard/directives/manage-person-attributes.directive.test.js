@@ -23,8 +23,7 @@
 
     beforeEach(inject(function ($injector, $rootScope, $compile, $httpBackend) {
       elm = angular.element(
-        '<manager-person-attributes  attribute-type-uuid="72a759a8-1359-11df-a1f1-0026b9348838" '+
-        'patient-uuid="patient-uuid" attribute-value="0700">'+
+        '<manager-person-attributes  patient="patient">'+
         '</manager-person-attributes>' );
       scope = $rootScope.$new();
       scope.patient = { uuid: 'uuid' };
@@ -42,10 +41,10 @@
     });
 
     it('should have all the scope members defined', function () {
-      var isolateScope = element.isolateScope();
-      expect(isolateScope.patientUuid).to.exist;
-      expect(isolateScope.attributeTypeUuid).to.exist;
-      expect(isolateScope.attributeValue).to.exist;
+      var isolateScope = element.scope();
+      console.log(isolateScope);
+      expect(isolateScope.patient).to.exist;
+
     });
     it('should have save button', function () {
       var elm = element.find('button');
