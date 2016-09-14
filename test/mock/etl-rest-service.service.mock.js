@@ -2,7 +2,7 @@
 /*
 jshint -W098, -W117, -W003, -W026
 */
-(function () {
+(function() {
   'use strict';
 
   var mockedModule = angular
@@ -10,13 +10,14 @@ jshint -W098, -W117, -W003, -W026
 
   mockedModule.factory('EtlRestService', EtlRestService);
   EtlRestService.$inject = ['$q'];
+
   function EtlRestService($q) {
     var numberOfVitalsToReturn = 40;
     var numberOfPatientTestsToReturn = 40;
     var service = {
       isMockService: true,
       getVitals: getVitals,
-      numberOfVitalsToReturn:numberOfVitalsToReturn,
+      numberOfVitalsToReturn: numberOfVitalsToReturn,
 
       getHivSummary: getHivSummary,
       numberOfHivSummaryRecordsToReturn: 20,
@@ -25,7 +26,7 @@ jshint -W098, -W117, -W003, -W026
       numberOfPatientTestsToReturn: numberOfPatientTestsToReturn,
 
       getDailyVisits: getDailyVisits,
-      getDailyPatientList:getDailyPatientList,
+      getDailyPatientList: getDailyPatientList,
 
 
       getAppointmentSchedule: getAppointmentSchedule,
@@ -34,29 +35,68 @@ jshint -W098, -W117, -W003, -W026
       getDefaultersList: getDefaultersList,
       numberOfDefaultersToReturn: 20,
 
-      getPatientsCreatedByPeriod:getPatientsCreatedByPeriod,
-      numberOfPatientCreationRowsToReturn:20,
+      getPatientsCreatedByPeriod: getPatientsCreatedByPeriod,
+      numberOfPatientCreationRowsToReturn: 20,
 
-      getDetailsOfPatientsCreatedInLocation:getDetailsOfPatientsCreatedInLocation,
-      numberOfPatientCreationInLocationRowsToReturn:20,
+      getDetailsOfPatientsCreatedInLocation: getDetailsOfPatientsCreatedInLocation,
+      numberOfPatientCreationInLocationRowsToReturn: 20,
 
       getPatientListByIndicator: getPatientListByIndicator,
       numberOfPatientsToReturn: 20,
 
-      getPatientByIndicatorAndLocation:getPatientByIndicatorAndLocation,
-      getPatientListReportByIndicatorAndLocation:getPatientListReportByIndicatorAndLocation,
+      getPatientByIndicatorAndLocation: getPatientByIndicatorAndLocation,
+      getPatientListReportByIndicatorAndLocation: getPatientListReportByIndicatorAndLocation,
 
       getDataEntryStatistics: getDataEntryStatistics,
-      getPatientLevelReminders:getPatientLevelReminders,
-      getHivOverviewVisualizationReport:getHivOverviewVisualizationReport,
+      getPatientLevelReminders: getPatientLevelReminders,
+      getHivOverviewVisualizationReport: getHivOverviewVisualizationReport,
       synchronizeEIDPatientLabResults: synchronizeEIDPatientLabResults,
-
+      getReport: getReport,
       returnErrorOnNextCall: false
     };
     //debugger;
     return service;
 
-    function synchronizeEIDPatientLabResults(){
+    function synchronizeEIDPatientLabResults() {}
+
+    function getReport(params, successCallback, failedCallback) {
+      if (service.returnErrorOnNextCall === true) {
+        console.log('returning error on get hivSummary');
+        failedCallback({
+          message: 'An error occured'
+        });
+        return;
+      }
+      var limit = 300;
+      var startIndex = 1;
+      var hivSummaryRecords = [];
+
+      var numberOfRecords = limit;
+
+      if (startIndex >= service.numberOfHivSummaryRecordsToReturn) {
+        successCallback({
+          startIndex: startIndex,
+          size: 0,
+          result: []
+        });
+        return;
+      }
+
+      if ((startIndex + limit) > service.numberOfHivSummaryRecordsToReturn) {
+        numberOfRecords = service.numberOfHivSummaryRecordsToReturn - (startIndex + limit);
+      } else {
+        numberOfRecords = limit;
+      }
+
+      for (var i = startIndex; i < (startIndex + numberOfRecords); i++) {
+        hivSummaryRecords.push(getHivSummaryRecord(i));
+      }
+
+      successCallback({
+        startIndex: startIndex,
+        size: numberOfRecords,
+        result: hivSummaryRecords
+      });
     }
 
     function getHivSummary(patientUuid, startIndex, limit, successCallback, failedCallback) {
@@ -69,7 +109,9 @@ jshint -W098, -W117, -W003, -W026
       }
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on get hivSummary');
-        failedCallback({ message: 'An error occured' });
+        failedCallback({
+          message: 'An error occured'
+        });
         return;
       }
 
@@ -88,8 +130,7 @@ jshint -W098, -W117, -W003, -W026
 
       if ((startIndex + limit) > service.numberOfHivSummaryRecordsToReturn) {
         numberOfRecords = service.numberOfHivSummaryRecordsToReturn - (startIndex + limit);
-      }
-      else {
+      } else {
         numberOfRecords = limit;
       }
 
@@ -114,7 +155,9 @@ jshint -W098, -W117, -W003, -W026
       }
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on get vitals');
-        failedCallback({ message: 'An error occured' });
+        failedCallback({
+          message: 'An error occured'
+        });
         return;
       }
 
@@ -133,8 +176,7 @@ jshint -W098, -W117, -W003, -W026
 
       if ((startIndex + limit) > service.numberOfVitalsToReturn) {
         numberOfRecords = numberOfVitalsToReturn - (startIndex + limit);
-      }
-      else {
+      } else {
         numberOfRecords = limit;
       }
 
@@ -160,7 +202,9 @@ jshint -W098, -W117, -W003, -W026
       }
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on get vitals');
-        failedCallback({ message: 'An error occured' });
+        failedCallback({
+          message: 'An error occured'
+        });
         return;
       }
 
@@ -179,8 +223,7 @@ jshint -W098, -W117, -W003, -W026
 
       if ((startIndex + limit) > service.numberOfPatientTestsToReturn) {
         numberOfRecords = numberOfPatientTestsToReturn - (startIndex + limit);
-      }
-      else {
+      } else {
         numberOfRecords = limit;
       }
 
@@ -198,12 +241,14 @@ jshint -W098, -W117, -W003, -W026
 
     function getDefaultersList(locationUuid, defaulterThreshold, successCallback, failedCallback, startIndex, limit) {
       console.log('calling mock getDefaultersList');
-       startIndex = 0;
-       limit = service.numberOfDefaultersToReturn;
+      startIndex = 0;
+      limit = service.numberOfDefaultersToReturn;
 
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on getDefaultersList');
-        failedCallback({ message: 'An error occured' });
+        failedCallback({
+          message: 'An error occured'
+        });
         return;
       }
 
@@ -232,20 +277,21 @@ jshint -W098, -W117, -W003, -W026
 
 
     }
+
     function getHivOverviewVisualizationReport(startDate, endDate, report, groupBy, locationUuids, orderBy,
-      indicators,  successCallback, failedCallback, startIndex, limit){
+      indicators, successCallback, failedCallback, startIndex, limit) {
       console.log('calling mock getHivOverviewVisualizationReport');
-      var result= [{
-          "location_uuid": "08feb14c-1352-11df-a1f1-0026b9348838",
-          "location_id": 2,
-          "patients": 987,
-          "on_nevirapine": 397,
-          "on_lopinavir": 83,
-          "on_efavirenz": 344,
-          "on_atazanavir": 22,
-          "on_raltegravir": 0,
-          "on_other_arv_drugs": 2,
-          "not_on_arv": 142
+      var result = [{
+        "location_uuid": "08feb14c-1352-11df-a1f1-0026b9348838",
+        "location_id": 2,
+        "patients": 987,
+        "on_nevirapine": 397,
+        "on_lopinavir": 83,
+        "on_efavirenz": 344,
+        "on_atazanavir": 22,
+        "on_raltegravir": 0,
+        "on_other_arv_drugs": 2,
+        "not_on_arv": 142
       }];
       successCallback({
         startIndex: 0,
@@ -259,17 +305,17 @@ jshint -W098, -W117, -W003, -W026
       encounterTypeUuids, formUuids, providerUuid, creatorUuid, groupBy, successCallback, failedCallback) {
       switch (subType) {
         case 'by-date-by-encounter-type':
-          if(service.returnErrorOnNextCall === true){
-            if(failedCallback)
-            failedCallback('simulating error!');
-          }else {
+          if (service.returnErrorOnNextCall === true) {
+            if (failedCallback)
+              failedCallback('simulating error!');
+          } else {
             var mockData = readJSON('test/mock/data-entry-stats-view1.json');
-            if(successCallback)
-            successCallback(mockData);
+            if (successCallback)
+              successCallback(mockData);
           }
           break;
       }
-      return  readJSON('test/mock/data-entry-stats-view1.json');
+      return readJSON('test/mock/data-entry-stats-view1.json');
     }
 
     function getAppointmentSchedule(locationUuid, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
@@ -282,7 +328,9 @@ jshint -W098, -W117, -W003, -W026
       }
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on get vitals');
-        failedCallback({ message: 'An error occured' });
+        failedCallback({
+          message: 'An error occured'
+        });
         return;
       }
 
@@ -301,8 +349,7 @@ jshint -W098, -W117, -W003, -W026
 
       if ((startIndex + limit) > service.numberOfAppointmentsToReturn) {
         numberOfRecords = service.numberOfAppointmentsToReturn - (startIndex + limit);
-      }
-      else {
+      } else {
         numberOfRecords = limit;
       }
 
@@ -319,7 +366,7 @@ jshint -W098, -W117, -W003, -W026
     }
     //getDailyNotReturnedVisits Mock
 
-    function getDailyPatientList(locationUuid,report, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
+    function getDailyPatientList(locationUuid, report, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
       if (!startIndex) {
         startIndex = 0;
       }
@@ -329,7 +376,9 @@ jshint -W098, -W117, -W003, -W026
       }
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on get vitals');
-        failedCallback({ message: 'An error occured' });
+        failedCallback({
+          message: 'An error occured'
+        });
         return;
       }
 
@@ -348,8 +397,7 @@ jshint -W098, -W117, -W003, -W026
 
       if ((startIndex + limit) > service.numberOfAppointmentsToReturn) {
         numberOfRecords = service.numberOfAppointmentsToReturn - (startIndex + limit);
-      }
-      else {
+      } else {
         numberOfRecords = limit;
       }
 
@@ -366,7 +414,7 @@ jshint -W098, -W117, -W003, -W026
     }
 
 
- function getDailyVisits(locationUuid, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
+    function getDailyVisits(locationUuid, startDate, endDate, successCallback, failedCallback, startIndex, limit) {
       if (!startIndex) {
         startIndex = 0;
       }
@@ -376,7 +424,9 @@ jshint -W098, -W117, -W003, -W026
       }
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on get vitals');
-        failedCallback({ message: 'An error occured' });
+        failedCallback({
+          message: 'An error occured'
+        });
         return;
       }
 
@@ -395,8 +445,7 @@ jshint -W098, -W117, -W003, -W026
 
       if ((startIndex + limit) > service.numberOfAppointmentsToReturn) {
         numberOfRecords = service.numberOfAppointmentsToReturn - (startIndex + limit);
-      }
-      else {
+      } else {
         numberOfRecords = limit;
       }
 
@@ -416,7 +465,7 @@ jshint -W098, -W117, -W003, -W026
 
 
 
- function getPatientsCreatedByPeriod(startDate, endDate, successCallback, failedCallback, startIndex, limit) {
+    function getPatientsCreatedByPeriod(startDate, endDate, successCallback, failedCallback, startIndex, limit) {
       console.log('calling mock getPatientsCreatedByPeriod');
       var patientCreationRecords = [];
       if (!startIndex) {
@@ -428,7 +477,9 @@ jshint -W098, -W117, -W003, -W026
       }
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on getPatientsCreatedByPeriod');
-        failedCallback({ message: 'An error occured' });
+        failedCallback({
+          message: 'An error occured'
+        });
         return;
       }
 
@@ -445,8 +496,7 @@ jshint -W098, -W117, -W003, -W026
 
       if ((startIndex + limit) > service.numberOfPatientCreationRowsToReturn) {
         numberOfRecords = service.numberOfPatientCreationRowsToReturn - (startIndex + limit);
-      }
-      else {
+      } else {
         numberOfRecords = limit;
       }
 
@@ -457,7 +507,7 @@ jshint -W098, -W117, -W003, -W026
       successCallback({
         startIndex: startIndex,
         size: numberOfRecords,
-        result:patientCreationRecords
+        result: patientCreationRecords
       });
 
     }
@@ -469,11 +519,13 @@ jshint -W098, -W117, -W003, -W026
         startIndex = 0;
       }
 
-       limit = service.numberOfPatientCreationInLocationRowsToReturn;
+      limit = service.numberOfPatientCreationInLocationRowsToReturn;
 
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on getDetailsOfPatientsCreatedInLocation');
-        failedCallback({ message: 'An error occured' });
+        failedCallback({
+          message: 'An error occured'
+        });
         return;
       }
 
@@ -495,7 +547,7 @@ jshint -W098, -W117, -W003, -W026
       successCallback({
         startIndex: startIndex,
         size: numberOfRecords,
-        result:patientCreationRecordsDetails
+        result: patientCreationRecordsDetails
       });
 
 
@@ -628,6 +680,7 @@ jshint -W098, -W117, -W003, -W026
       /* jshint ignore:end */
       return appointmentScheduleEtl;
     }
+
     function getDailyVisitRecord(index) {
       /* jshint ignore:start */
       var appointmentScheduleEtl = {
@@ -727,14 +780,16 @@ jshint -W098, -W117, -W003, -W026
       return hivSummaryEtl;
     }
 
-    function getPatientListReportByIndicatorAndLocation(locationIds,startDate,endDate,reportName,indicator,
-                                                        successCallback, failedCallback,locationUuids,startIndex,limit){
+    function getPatientListReportByIndicatorAndLocation(locationIds, startDate, endDate, reportName, indicator,
+      successCallback, failedCallback, locationUuids, startIndex, limit) {
       console.log('calling mock getPatientListReportByIndicatorAndLocation');
       limit = service.numberOfPatientsToReturn;
 
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on getPatientListReportByIndicatorAndLocation');
-        failedCallback({ message: 'An error occurred' });
+        failedCallback({
+          message: 'An error occurred'
+        });
         return;
       }
 
@@ -760,14 +815,16 @@ jshint -W098, -W117, -W003, -W026
       });
     }
 
-    function getPatientByIndicatorAndLocation(locationIds,startDate,endDate,indicator,successCallback,
-                                              failedCallback,locationUuids,startIndex,limit){
+    function getPatientByIndicatorAndLocation(locationIds, startDate, endDate, indicator, successCallback,
+      failedCallback, locationUuids, startIndex, limit) {
       console.log('calling mock getPatientByIndicatorAndLocation');
-        limit = service.numberOfPatientsToReturn;
+      limit = service.numberOfPatientsToReturn;
 
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on getPatientByIndicatorAndLocation');
-        failedCallback({ message: 'An error occurred' });
+        failedCallback({
+          message: 'An error occurred'
+        });
         return;
       }
 
@@ -792,15 +849,18 @@ jshint -W098, -W117, -W003, -W026
         result: patients
       });
     }
+
     function getPatientListByIndicator(locationUuid, startDate, endDate, indicator, successCallback, failedCallback,
       startIndex, limit) {
       console.log('calling mock getPatientListByIndicator');
 
-        startIndex = startIndex;
-        limit = service.numberOfPatientsToReturn;
+      startIndex = startIndex;
+      limit = service.numberOfPatientsToReturn;
       if (service.returnErrorOnNextCall === true) {
         console.log('returning error on getPatientListByIndicator');
-        failedCallback({ message: 'An error occured' });
+        failedCallback({
+          message: 'An error occured'
+        });
         return;
       }
 
@@ -828,15 +888,15 @@ jshint -W098, -W117, -W003, -W026
 
     function getPatientCreationRecord(index) {
       return {
-        location_id:'location '+index,
-        name:'Clinic '+index,
-        total:'Total'+index
+        location_id: 'location ' + index,
+        name: 'Clinic ' + index,
+        total: 'Total' + index
       }
     }
 
-    function getPatientLevelReminders(referenceDate,patientUuid,report,indicators,successCallback,failedCallback,
-                                      startIndex,limit){
-      var result= [{
+    function getPatientLevelReminders(referenceDate, patientUuid, report, indicators, successCallback, failedCallback,
+      startIndex, limit) {
+      var result = [{
         last_encounter_date: null,
         person_id: null,
         person_uuid: null,
@@ -855,10 +915,10 @@ jshint -W098, -W117, -W003, -W026
 
     function getDetailsOfPatientCreationInLocationRecord(index) {
       return {
-        patient_id:'patient_id '+index,
-        given_name:'given_name '+index,
-        middle_name:'middle_name '+index,
-        family_name:'family_name '+index
+        patient_id: 'patient_id ' + index,
+        given_name: 'given_name ' + index,
+        middle_name: 'middle_name ' + index,
+        family_name: 'family_name ' + index
       }
     }
 
