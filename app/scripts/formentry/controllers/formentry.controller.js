@@ -17,7 +17,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         , 'FormentryUtilService', 'configService', 'SearchDataService',
         '$log', 'FormEntry', 'PersonAttributesRestService',
         'CurrentLoadedFormService', 'UtilService', 'moment', 'EncounterDataService',
-        'HistoricalDataService', 'FormResService', '$q', 'EtlRestService'
+        'HistoricalDataService', 'FormResService', '$q', 'EtlRestService', '$uibModal'
     ];
 
     function FormentryCtrl($translate, dialogs, $location,
@@ -27,7 +27,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
         configService, SearchDataService,
         $log, FormEntry, PersonAttributesRestService,
         CurrentLoadedFormService, UtilService, moment, EncounterDataService,
-        HistoricalDataService, FormResService, $q, EtlRestService) {
+        HistoricalDataService, FormResService, $q, EtlRestService, $uibModal) {
         var vm = $scope;
 
         //Patient variables
@@ -382,47 +382,47 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             // Get the resource associated with json schema
             var resource = _findResource(selectedFormMetadata.resources);
-            if(resource === null) {
-              // TODO: Throw error when we completely move to using database
-              // throw new Error('Form ' + selectedFormMetadata.name + ' has no '
-              //        + 'JSON schema associated with it!');
+            if (resource === null) {
+                // TODO: Throw error when we completely move to using database
+                // throw new Error('Form ' + selectedFormMetadata.name + ' has no '
+                //        + 'JSON schema associated with it!');
 
-              // For now try the filesystem
-              FormsMetaData.getFormSchema(selectedFormMetadata.name,
-                function(schema) {
-                    isSpinnerBusy(false);
-                    selectedFormSchema = schema;
-                    $log.info('Form schema loadded..', selectedFormSchema);
-                    if (createFormAfterLoading && _.isEmpty(selectedFormSchema.referencedForms)) {
-                        createFormFromSchema();
-                    } else if (!_.isEmpty(selectedFormSchema.referencedForms)) {
-                        getFormSchemaReferences(createFormAfterLoading);
-                    }
-                }, function(err) {
-                  isSpinnerBusy(false);
-                  $log.error('An error occured while fetching schema for form '
-                              + selectedFormMetadata.name);
-                  $log.error(err);
-                });
+                // For now try the filesystem
+                FormsMetaData.getFormSchema(selectedFormMetadata.name,
+                    function (schema) {
+                        isSpinnerBusy(false);
+                        selectedFormSchema = schema;
+                        $log.info('Form schema loadded..', selectedFormSchema);
+                        if (createFormAfterLoading && _.isEmpty(selectedFormSchema.referencedForms)) {
+                            createFormFromSchema();
+                        } else if (!_.isEmpty(selectedFormSchema.referencedForms)) {
+                            getFormSchemaReferences(createFormAfterLoading);
+                        }
+                    }, function (err) {
+                        isSpinnerBusy(false);
+                        $log.error('An error occured while fetching schema for form '
+                            + selectedFormMetadata.name);
+                        $log.error(err);
+                    });
             } else {
-              // Fetch from OpenMRS backend.
-              FormResService.getFormSchemaByUuid(resource.valueReference).then(
-                function (schema) {
-                    isSpinnerBusy(false);
-                    selectedFormSchema = schema;
-                    $log.info('Form schema loaded: ', selectedFormSchema);
-                    if (createFormAfterLoading && _.isEmpty(selectedFormSchema.referencedForms)) {
-                        createFormFromSchema();
-                    } else if (!_.isEmpty(selectedFormSchema.referencedForms)) {
-                        getFormSchemaReferences(createFormAfterLoading);
-                    }
-                })
-                .catch(function(err) {
-                  isSpinnerBusy(false);
-                  $log.error('An error occured while fetching schema for form '
-                              + selectedFormMetadata.name);
-                  $log.error(err);
-                });
+                // Fetch from OpenMRS backend.
+                FormResService.getFormSchemaByUuid(resource.valueReference).then(
+                    function (schema) {
+                        isSpinnerBusy(false);
+                        selectedFormSchema = schema;
+                        $log.info('Form schema loaded: ', selectedFormSchema);
+                        if (createFormAfterLoading && _.isEmpty(selectedFormSchema.referencedForms)) {
+                            createFormFromSchema();
+                        } else if (!_.isEmpty(selectedFormSchema.referencedForms)) {
+                            getFormSchemaReferences(createFormAfterLoading);
+                        }
+                    })
+                    .catch(function (err) {
+                        isSpinnerBusy(false);
+                        $log.error('An error occured while fetching schema for form '
+                            + selectedFormMetadata.name);
+                        $log.error(err);
+                    });
             }
         }
 
@@ -430,79 +430,79 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             var referencedFormNames = [];
             var refs = [];
             _.each(selectedFormSchema.referencedForms, function (reference) {
-                if(reference.ref) {
-                  refs.push(reference.ref);
+                if (reference.ref) {
+                    refs.push(reference.ref);
                 } else {
-                  referencedFormNames.push(reference.formName);
+                    referencedFormNames.push(reference.formName);
                 }
             });
             isSpinnerBusy(true);
             // Get from server.
-            if(!_.isEmpty(refs)) {
-              var promises = [];
-              _.each(refs, function(ref) {
-                promises.push(FormResService.getFormByUuid(ref.uuid));
-              });
-              $q.allSettled(promises).then(function(resolvedForms) {
-                  // Get the schema for all components
-                  var schemaMetadataArray = [];
-                  _.each(resolvedForms, function(form) {
-                    $log.debug('Fetching schema details for:',form);
-                    var ampathSchema = _findResource(form.value.resources);
-                    if(ampathSchema === null) {
-                      throw new ReferenceError(
-                        'Form ' + form.name +'has no ampath json schema associated with it'
-                      );
-                    }
-                    ampathSchema.formUuid = form.value.uuid;
-                    schemaMetadataArray.push(ampathSchema);
-                  });
-
-                  // Now pull schemas
-                  var schemaPromises = {};
-                  _.each(schemaMetadataArray, function(schemaData) {
-                    schemaPromises[schemaData.formUuid] =
-                      FormResService.getFormSchemaByUuid(schemaData.valueReference);
-                  });
-
-                  // resolve
-                  $q.allSettled(schemaPromises).then(function(resolved) {
-                    isSpinnerBusy(false);
-                    $log.debug('Number of json schema fetched: ', resolved);
-                    var schemas = {};
-                    _.each(schemaMetadataArray, function(schemaData) {
-                      schemas[schemaData.formUuid] = resolved[schemaData.formUuid].value;
+            if (!_.isEmpty(refs)) {
+                var promises = [];
+                _.each(refs, function (ref) {
+                    promises.push(FormResService.getFormByUuid(ref.uuid));
+                });
+                $q.allSettled(promises).then(function (resolvedForms) {
+                    // Get the schema for all components
+                    var schemaMetadataArray = [];
+                    _.each(resolvedForms, function (form) {
+                        $log.debug('Fetching schema details for:', form);
+                        var ampathSchema = _findResource(form.value.resources);
+                        if (ampathSchema === null) {
+                            throw new ReferenceError(
+                                'Form ' + form.name + 'has no ampath json schema associated with it'
+                            );
+                        }
+                        ampathSchema.formUuid = form.value.uuid;
+                        schemaMetadataArray.push(ampathSchema);
                     });
-                    FormEntry.compileFormSchema(selectedFormSchema, schemas);
+
+                    // Now pull schemas
+                    var schemaPromises = {};
+                    _.each(schemaMetadataArray, function (schemaData) {
+                        schemaPromises[schemaData.formUuid] =
+                            FormResService.getFormSchemaByUuid(schemaData.valueReference);
+                    });
+
+                    // resolve
+                    $q.allSettled(schemaPromises).then(function (resolved) {
+                        isSpinnerBusy(false);
+                        $log.debug('Number of json schema fetched: ', resolved);
+                        var schemas = {};
+                        _.each(schemaMetadataArray, function (schemaData) {
+                            schemas[schemaData.formUuid] = resolved[schemaData.formUuid].value;
+                        });
+                        FormEntry.compileFormSchema(selectedFormSchema, schemas);
+                        if (createFormAfterLoading) {
+                            createFormFromSchema();
+                        }
+                    })
+                        .catch(function (err) {
+                            isSpinnerBusy(false);
+                            console.error('Could not load component schemas', err);
+                            vm.errorMessage = 'Could not load component schemas';
+                        });
+                })
+                    .catch(function (err) {
+                        isSpinnerBusy(false);
+                        console.error('Could not load referenced forms', err);
+                        vm.errorMessage = 'Could not load referenced forms';
+                    });
+            } else {
+                // Go the filesystem way
+                FormsMetaData.getFormSchemasArray(referencedFormNames, function (formSchemas) {
+                    isSpinnerBusy(false);
+                    FormEntry.compileFormSchema(selectedFormSchema, formSchemas);
                     if (createFormAfterLoading) {
                         createFormFromSchema();
                     }
-                  })
-                  .catch(function(err) {
+                }, function (error) {
                     isSpinnerBusy(false);
-                    console.error('Could not load component schemas', err);
-                    vm.errorMessage = 'Could not load component schemas';
-                  });
-              })
-              .catch(function(err) {
-                isSpinnerBusy(false);
-                console.error('Could not load referenced forms', err);
-                vm.errorMessage = 'Could not load referenced forms';
-              });
-            } else {
-              // Go the filesystem way
-              FormsMetaData.getFormSchemasArray(referencedFormNames, function (formSchemas) {
-                  isSpinnerBusy(false);
-                  FormEntry.compileFormSchema(selectedFormSchema, formSchemas);
-                  if (createFormAfterLoading) {
-                      createFormFromSchema();
-                  }
-              }, function (error) {
-                  isSpinnerBusy(false);
-                  console.error('Could not load referenced forms', error);
-                  vm.errorMessage = 'Could not load referenced forms';
-              });
-           }
+                    console.error('Could not load referenced forms', error);
+                    vm.errorMessage = 'Could not load referenced forms';
+                });
+            }
         }
 
         function determineFormToLoad() {
@@ -875,14 +875,14 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 updatePayloadFormUuid(lastPayload, selectedFormUuid);
                 submitFormPayload();
             } else {
-              var dialogPromise = dialogs.confirm('No Obs Entered',
-                'You have not entered any Observations, are you sure you want to proceed and save this form?');
-              dialogPromise.result.then(function () {
-                updatePayloadFormUuid(lastPayload, selectedFormUuid);
-                submitFormPayload()
-              }, function () {
+                var dialogPromise = dialogs.confirm('No Obs Entered',
+                    'You have not entered any Observations, are you sure you want to proceed and save this form?');
+                dialogPromise.result.then(function () {
+                    updatePayloadFormUuid(lastPayload, selectedFormUuid);
+                    submitFormPayload()
+                }, function () {
 
-              });
+                });
             }
 
         }
@@ -898,10 +898,46 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             vm.changesSaved = true;
             vm.hasClickedSubmit = false;
             if (!experiencedSubmitError()) {
-                vm.formSubmitSuccessMessage = 'Form Submitted successfully';
-                dialogs.notify('Success', vm.formSubmitSuccessMessage);
+                setSuccessSubmitMessage();
+                if (!(Array.isArray(selectedEncounterData.orders) && selectedEncounterData.orders.length > 0))
+                    dialogs.notify('Success', vm.formSubmitSuccessMessage);
+                else {
+                    //method to display saved orders
+                    openSuccessMessageWithOrders();
+                }
+
                 $location.path($rootScope.previousState + '/' + $rootScope.previousStateParams.uuid);
             }
+        }
+
+        function openSuccessMessageWithOrders() {
+            var scope = vm;
+            var uibModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'views/formentry/form-submission-success-modal.html',
+                controller: function ($uibModalInstance, $scope) {
+                    $scope.encounterUuid = selectedEncounterData.uuid;
+                    $scope.modalObject = $uibModalInstance;
+                    $scope.ok = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                },
+                size: 'md',
+                resolve: {
+                    patient: function () {
+                        return {
+                            name: 'Name'
+                        };
+                    }
+                }
+            });
+        }
+
+        function setSuccessSubmitMessage() {
+            vm.formSubmitSuccessMessage = 'Form Submitted successfully.';
         }
 
         function submitFormPayload() {
@@ -924,6 +960,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         function submitNewObsPayloadSuccessful(data) {
             $log.log('Submitting new obs successful');
+            selectedEncounterData = data;
             vm.fourStageSubmitProcess.submittingNewObs = false;
             onSubmitStageUpdated();
 
@@ -960,8 +997,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     var updatedObs = getUpdatedObsFromPayload(payloadCopy);
                     if (updatedObs !== undefined) {
 
-                      errorObject.stageThree = {};
-                      errorObject.stageThree.payload = updatedObs;
+                        errorObject.stageThree = {};
+                        errorObject.stageThree.payload = updatedObs;
 
                         $log.log('Submitting updated obs...');
                         submitUpdatedObs(updatedObs, function (updateFailed) {
@@ -989,8 +1026,8 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 //forth stage of submitting is to submit person attributes
                 console.log('Payload person attributes=====', JSON.stringify(lastPersonAttributePayload));
                 if (lastPersonAttributePayload !== undefined &&
-                 angular.isArray(lastPersonAttributePayload.attributes) &&
-                 lastPersonAttributePayload.attributes.length > 0) {
+                    angular.isArray(lastPersonAttributePayload.attributes) &&
+                    lastPersonAttributePayload.attributes.length > 0) {
                     $log.log('Submitting person attributes..');
 
                     errorObject.stageFour = {};
@@ -1016,45 +1053,49 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             }
         }
 
+        function extractSavedOrderNumbers(savedEncounter) {
+
+        }
+
         function submitNewObsPayloadFailed(error) {
 
-          if(error.status && error.status >= 400) {
-            errorObject.stageOne.error = error;
-            reportError(1);
-          }
+            if (error.status && error.status >= 400) {
+                errorObject.stageOne.error = error;
+                reportError(1);
+            }
 
             $log.error('Submitting new obs failed', error);
             initializeSubmitStagingObject(vm.fourStageSubmitProcess, false);
             vm.hasFailedNewingRequest = true;
-            var errorMessage= error.statusText +' ('+error.status+')';
-            switch (error.status||0) {
-              case 500:
-                vm.errorMessage =
-                  'An internal server error occurred while trying to save observation. *Error: ' + errorMessage;
-                break;
-              case 400:
+            var errorMessage = error.statusText + ' (' + error.status + ')';
+            switch (error.status || 0) {
+                case 500:
+                    vm.errorMessage =
+                        'An internal server error occurred while trying to save observation. *Error: ' + errorMessage;
+                    break;
+                case 400:
 
-                vm.errorMessage =
-                  'An error occurred while trying to save observation, report this error to your system administrator.' +
-                  ' *Error: ' + errorMessage;
-                break;
-              case 401:
-                vm.errorMessage =
-                  'Your session has expired, please re-login and try again. *Error:' + errorMessage;
-                break;
-              case -1:
-                vm.errorMessage =
-                  'You seem to be offline, please check your internet connection and try again';
-                break;
-              case 403:
-                vm.errorMessage =
-                  'You require certain privilege(s) for you to submit this form successfully. *Error: ' + errorMessage;
-                break;
-              default:
-                vm.errorMessage =
-                  'An error occurred while trying to save observations. *Error:' + errorMessage;
+                    vm.errorMessage =
+                        'An error occurred while trying to save observation, report this error to your system administrator.' +
+                        ' *Error: ' + errorMessage;
+                    break;
+                case 401:
+                    vm.errorMessage =
+                        'Your session has expired, please re-login and try again. *Error:' + errorMessage;
+                    break;
+                case -1:
+                    vm.errorMessage =
+                        'You seem to be offline, please check your internet connection and try again';
+                    break;
+                case 403:
+                    vm.errorMessage =
+                        'You require certain privilege(s) for you to submit this form successfully. *Error: ' + errorMessage;
+                    break;
+                default:
+                    vm.errorMessage =
+                        'An error occurred while trying to save observations. *Error:' + errorMessage;
             }
-          onSubmitStageUpdated();
+            onSubmitStageUpdated();
         }
 
         function submitVoidedObs(voidedObsPayload, finalCallback) {
@@ -1081,9 +1122,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     //error callback
                     function (error) {
 
-                        if(error.status >= 400) {
-                          errorObject.stageTwo.error = error;
-                          reportError(2);
+                        if (error.status >= 400) {
+                            errorObject.stageTwo.error = error;
+                            reportError(2);
                         }
 
                         $log.log('Error voiding obs: ', obs.uuid);
@@ -1121,9 +1162,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                     //error callback
                     function (error) {
 
-                        if(error.status >= 400) {
-                          errorObject.stageThree.error = error;
-                          reportError(3);
+                        if (error.status >= 400) {
+                            errorObject.stageThree.error = error;
+                            reportError(3);
                         }
 
                         $log.log('Error voiding obs: ', obs.uuid);
@@ -1150,9 +1191,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                 //error callback
                 function (error) {
 
-                    if(error.status >= 400) {
-                      errorObject.stageFour.error = error;
-                      reportError(4);
+                    if (error.status >= 400) {
+                        errorObject.stageFour.error = error;
+                        reportError(4);
                     }
 
                     $log.log('Error saving attribute: ', lastPersonAttributePayload);
@@ -1175,28 +1216,28 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
          * Find a resource of a particular type in an array of resources.
          */
         function _findResource(formResources, resourceType) {
-          var resourceType = resourceType || 'AmpathJsonSchema';
-          if(_.isUndefined(formResources) || !Array.isArray(formResources)) {
-            throw new Error('Argument should be array of form resources');
-          }
+            var resourceType = resourceType || 'AmpathJsonSchema';
+            if (_.isUndefined(formResources) || !Array.isArray(formResources)) {
+                throw new Error('Argument should be array of form resources');
+            }
 
-          var found = _.find(formResources, function(resource) {
-            return resource.dataType === resourceType;
-          });
+            var found = _.find(formResources, function (resource) {
+                return resource.dataType === resourceType;
+            });
 
-          if(found === undefined) return null;
-          return found;
+            if (found === undefined) return null;
+            return found;
         }
 
         function reportError(stage) {
 
-          //send error object to server
-          var obj = {
-            error: errorObject,
-            stage: stage
-          };
+            //send error object to server
+            var obj = {
+                error: errorObject,
+                stage: stage
+            };
 
-          EtlRestService.postFormError(obj);
+            EtlRestService.postFormError(obj);
         }
     }
 })();
