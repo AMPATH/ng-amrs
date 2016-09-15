@@ -53,7 +53,8 @@
       postOrderToEid: postOrderToEid,
       invalidateUserSession: invalidateUserSession,
       getReport:getReport,
-      postFormError: postFormError
+      postFormError: postFormError,
+      uploadFile:uploadFile
     };
     return serviceDefinition;
 
@@ -936,7 +937,10 @@
             errorCallback(error);
         });
     }
-
+    function uploadFile(payload) {
+      var resource = getResource('fileupload');
+      return resource.save({}, payload).$promise;
+    }
     function invalidateUserSession( successCallback, failedCallback) {
       var resource = getResource('session/invalidate',false);
       return resource.get().$promise

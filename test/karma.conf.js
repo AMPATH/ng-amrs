@@ -104,6 +104,7 @@ module.exports = function (config) {
     'bower_components/ion.rangeSlider/js/ion.rangeSlider.js',
     'bower_components/angular-notification-center/angular-notification-center.js',
     'bower_components/nes/lib/client.js',
+    'bower_components/angular-img-http-src/index.js',
     'bower_components/angular-mocks/angular-mocks.js',
     // endbower
       'app/scripts/**/*.module.js',

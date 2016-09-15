@@ -1,0 +1,22 @@
+<h4>Upload Patient Locator Map</h4>
+<div>
+  <div ng-show='experiencedLoadingError'>
+    <p class="bg-danger" style="padding:4px;">
+      <b>
+        <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
+      <p>
+  </div>
+  <div ng-show='isBusy'>
+    <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+    <b>Loading data...</b>
+  </div>
+  <camera class="camera" on-select="getPhoto(photo)"></camera>
+  <hr>
+  <h4 ng-show="photo">New Map</h4>
+  <img ng-show="photo" class='img-responsive' ng-src="{{photo}}">
+  <h4 ng-show="hideExisting">Existing Map</h4>
+  <p class='well' ng-show="noMap">Patient does not have a locator map</p>
+  <img ng-show="hideExisting" class='img-responsive' http-src="{{existing}}">
+  <button ng-show="photo" ng-click='postPhoto()' class="btn btn-primary">Save Map</button>
+  <button ng-show="photo" ng-click='clearPhoto()' class="btn btn-info">Clear</button>
+</div>
