@@ -15,7 +15,8 @@
       scope: {
         patientUuid: '@',
         currentPatient: '=',
-        hivSummary: '='
+        hivSummary: '=',
+        encounterUuid: '='
       },
       controller: labOrdersController,
       link: labOrdersLink,
@@ -31,12 +32,52 @@
     $scope.loadIdentifiers = loadIdentifiers;
     $scope.postOrderToEid = openPostLabOrderModal;
     $scope.fetchAllLabOrders = fetchAllLabOrders;
+    $scope.reloadOrders = reloadOrders;
 
     $scope.selectedEidServer = null;
     $scope.eidServers = [];
     $scope.labOrders = [];
+    $scope.isReadMode = false;
+    $scope.isBusy = false;
+    $scope.experiencedLoadingError = false;
+
+    activate();
+    function activate() {
+      if ($scope.encounterUuid) {
+        $scope.isReadMode = true;
+        fetchEncounterLabOrders($scope.encounterUuid);
+      }
+    }
+
+    function reloadOrders() {
+      if ($scope.isReadMode) {
+        fetchEncounterLabOrders($scope.encounterUuid);
+      } else {
+        fetchAllLabOrders($scope.patientUuid);
+      }
+
+    }
+
+    function fetchEncounterLabOrders(encounterUuid) {
+      $scope.isBusy = true;
+      $scope.experiencedLoadingError = false;
+      OpenmrsRestService.getEncounterResService().getEncounterByUuid(encounterUuid,
+        function (data) {
+          $scope.isBusy = false;
+          $scope.labOrders = data.orders || [];
+        },
+        //error callback
+        function (error) {
+          $scope.isBusy = false;
+          $scope.experiencedLoadingError = true;
+          $scope.labOrders = [];
+        }
+      );
+    }
 
     function fetchAllLabOrders(patientUuid) {
+      $scope.isBusy = true;
+      $scope.experiencedLoadingError = false;
       OpenmrsRestService.getOrderResService().getOrdersByPatientUuid(patientUuid,
         function (result) {
           $scope.isBusy = false;
@@ -45,6 +86,7 @@
         },
         function (error) {
           $scope.isBusy = false;
+          $scope.experiencedLoadingError = true;
           $scope.labOrders = [];
         }, true
       );
@@ -105,7 +147,7 @@
   function labOrdersLink(scope, element, attrs, vm) {
     attrs.$observe('patientUuid', onPatientUuidChanged);
     function onPatientUuidChanged(newVal, oldVal) {
-      if (newVal && newVal != "") {
+      if (newVal && newVal != "" && _.isEmpty(scope.encounterUuid)) {
         scope.isBusy = false;
         scope.fetchAllLabOrders(newVal);
       }
