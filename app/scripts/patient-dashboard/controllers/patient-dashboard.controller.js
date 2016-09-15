@@ -20,9 +20,11 @@
     OpenmrsRestService, ClinicalSummaryPdfService) {
     $scope.patient = {};
     $scope.patient = $rootScope.broadcastPatient;
+    $scope.showMap = showMap;
     $scope.p = null;
     $scope.encounters = [];
     $scope.isBusy = false;
+    $scope.fetchmap = false;
 
     $scope.HivHistoricalExpanded = true;
 
@@ -51,6 +53,10 @@
     $scope.clinicalNotesIsBusy = true;
     $scope.letterHeadIsBusy = true;
 
+    function showMap() {
+      $scope.fetchmap = true;
+    }
+
     function generateClinicalSummaryPdf() {
       var patient = {
         demographics: $scope.patient,
@@ -74,9 +80,11 @@
       });
     }
 
+
     function viewHivHistoricalSummary() {
       $scope.showHivHistoricalSummary = true;
     }
+
     function viewMedicationChangeHistory() {
       $scope.showMedicationChangeHistory = true;
     }

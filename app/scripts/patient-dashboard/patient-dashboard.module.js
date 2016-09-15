@@ -8,6 +8,7 @@
             'dialogs.main',
             'kendo.directives',
             'ngMessages',
-            'app.formentry'
+            'app.formentry',
+            'angular.img'
         ]);
 })();

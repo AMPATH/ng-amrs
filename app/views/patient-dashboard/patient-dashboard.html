@@ -66,9 +66,6 @@
 				<li active-tab-sync index="8" data-ng-glick="activeList(this, 8)" ng-class="{active: activeListId === 8}">
 					<a data-target="#printLabelsTab" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Lab Orders</a>
 				</li>
-				<li active-tab-sync index="8" data-ng-glick="activeList(this, 8)" ng-class="{active: activeListId === 8}">
-					<a data-target="#LocatorForm" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Locator Map</a>
-				</li>
 			</ul>
 			<ul class="nav nav-pills hidden-xs hidden-lg hidden-xl " style="cursor: pointer;">
 				<li active-tab-sync index="1" data-ng-glick="activeList(this, 1)" ng-class="{active: activeListId === 1}">
@@ -98,9 +95,6 @@
 				<li active-tab-sync index="8" data-ng-glick="activeList(this, 8)" ng-class="{active: activeListId === 8}">
 					<a data-target="#printLabelsTab" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Lab Orders</a>
 				</li>
-				<li active-tab-sync index="8" data-ng-glick="activeList(this, 8)" ng-class="{active: activeListId === 8}">
-					<a data-target="#LocatorForm" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Locator Map</a>
-				</li>
 			</ul>
 		</div>
 		<div class="tab-content col-lg-10 ">
@@ -112,6 +106,8 @@
 					<patient-demographics></patient-demographics>
 					<a ng-if="patientRelationships.relationships.length > 0" style="cellpadding:4px;font-size:14px;" data-target="#tab9"  class="btn btn-primary btn-xs" data-toggle="tab">&nbsp;&nbsp;&nbsp;View Relationships</a>
 					<a ng-if="patientRelationships.relationships.length == 0" style="cellpadding:4px;font-size:14px;" data-target="#tab9"  class="btn btn-primary btn-xs" data-toggle="tab">&nbsp;&nbsp;&nbsp;Add new Relationships</a>
+					<button  ng-click='showMap()' class="btn btn-primary btn-xs">Patient Locator Map</button>
+					<outreach-locator-form ng-if="fetchmap" patient="patient"></outreach-locator-form>
 				</div>
 			</div>
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="notesTab">
@@ -193,11 +189,6 @@
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab9">
 				<div class="page-content">
 					<patient-relationship></patient-relationship>
-				</div>
-			</div>
-			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="LocatorForm">
-				<div class="page-content">
-					<outreach-locator-form patient="patient"></outreach-locator-form>
 				</div>
 			</div>
 		</div>
