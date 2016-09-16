@@ -310,14 +310,16 @@
                         }
                     ]
                 },
-                {
+                 {
                     "label": "HIV Test",
                     "questions": [
                         {
                             "label": "Rapid HIV:",
+                            "type": "obs",
                             "id": "hivRapid",
                             "questionOptions": {
                                 "concept": "a8999dfe-1350-11df-a1f1-0026b9348838",
+                                "rendering": "select",
                                 "answers": [
                                     {
                                         "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
@@ -345,17 +347,27 @@
                                     }
                                 ],
                                 "showDate": "true",
-                                "rendering": "select"
-                            },
-                            "type": "obs",
-                            "validators": [
-                                {
-                                    "type": "date"
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(hivRapid) && isEmpty(myValue)",
+                                            "message": "Date result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(hivRapid)"
+                                    }
                                 }
-                            ]
+                            },
+                            "validators": []
                         },
                         {
                             "label": "HIV Long Eliza:",
+                            "type": "obs",
                             "questionOptions": {
                                 "id": "longEliza",
                                 "concept": "a8999fb6-1350-11df-a1f1-0026b9348838",
@@ -386,14 +398,24 @@
                                     }
                                 ],
                                 "showDate": "true",
-                                "rendering": "select"
-                            },
-                            "type": "obs",
-                            "validators": [
-                                {
-                                    "type": "date"
+                                "rendering": "select",
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(longEliza) && isEmpty(myValue)",
+                                            "message": "Date result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(longEliza)"
+                                    }
                                 }
-                            ]
+                            },
+                            "validators": []
                         },
                         {
                             "label": "HIV DNA PCR:",
@@ -423,14 +445,25 @@
                                     }
                                 ],
                                 "showDate": "true",
-                                "rendering": "select"
-                            },
-                            "type": "obs",
-                            "validators": [
-                                {
-                                    "type": "date"
+                                "rendering": "select",
+                                "type": "obs",
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(hivPcr) && isEmpty(myValue)",
+                                            "message": "Date result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(hivPcr)"
+                                    }
                                 }
-                            ]
+                            },
+                            "validators": []
                         }
                     ]
                 },
@@ -692,7 +725,7 @@
                         }
                     ]
                 },
-                {
+               {
                     "label": "Other Test",
                     "questions": [
                         {
@@ -731,14 +764,25 @@
                                     }
                                 ],
                                 "showDate": "true",
-                                "rendering": "select"
+                                "rendering": "select",
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(vdrl_test) && isEmpty(myValue)",
+                                            "message": "Date result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(vdrl_test)"
+                                    }
+                                }
                             },
                             "type": "obs",
-                            "validators": [
-                                {
-                                    "type": "date"
-                                }
-                            ]
+                            "validators": []
                         },
                         {
                             "label": "High vaginal swab:",
@@ -780,19 +824,30 @@
                                     }
                                 ],
                                 "showDate": "true",
-                                "rendering": "select"
+                                "rendering": "select",
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(highvaginalswab_test) && isEmpty(myValue)",
+                                            "message": "Date result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(highvaginalswab_test)"
+                                    }
+                                }
                             },
                             "type": "obs",
-                            "validators": [
-                                {
-                                    "type": "date"
-                                }
-                            ]
+                            "validators": []
                         }
                     ]
                 },
                 {
-                    "label": "CDM Tests",
+                    "label": "Other CDM Tests",
                     "questions": [
                         {
                             "label": "Monofilament Tests:",
@@ -878,9 +933,44 @@
                             ]
                         },
                         {
+                            "label": "LDL:",
+                            "id": "ldl_test",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a898e74c-1350-11df-a1f1-0026b9348838",
+                                "answers": [],
+                                "rendering": "number",
+                                "max": "75",
+                                "min": "0",
+                                "showDate": "true"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "HDL:",
+                            "id": "hdl_test",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a898e602-1350-11df-a1f1-0026b9348838",
+                                "answers": [],
+                                "rendering": "number",
+                                "max": "15",
+                                "min": "0",
+                                "showDate": "true"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
+                        },
+                        {
                             "label": "PDT:",
                             "id": "pdt_test",
-                            "type": "obs",
                             "questionOptions": {
                                 "concept": "a8909f56-1350-11df-a1f1-0026b9348838",
                                 "answers": [
@@ -893,13 +983,30 @@
                                         "label": "Negative"
                                     }
                                 ],
-                                "rendering": "select"
-                            }
+                                "showDate": "true",
+                                "rendering": "select",
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(pdt_test) && isEmpty(myValue)",
+                                            "message": "Date for result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(pdt_test)"
+                                    }
+                                }
+                            },
+                            "type": "obs",
+                            "validators": []
                         },
                         {
                             "label": "ECG:",
                             "id": "ecg_test",
-                            "type": "obs",
                             "questionOptions": {
                                 "concept": "a89dda72-1350-11df-a1f1-0026b9348838",
                                 "answers": [
@@ -912,97 +1019,248 @@
                                         "label": "Abnormal"
                                     }
                                 ],
-                                "rendering": "select"
-                            }
+                                "showDate": "true",
+                                "rendering": "select",
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(ecg_test) && isEmpty(myValue)",
+                                            "message": "Date for result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(ecg_test)"
+                                    }
+                                }
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Echo:",
+                            "id": "echo_test",
+                            "questionOptions": {
+                                "concept": "a89dd9aa-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899e7b4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Normal"
+                                    },
+                                    {
+                                        "concept": "a899e890-1350-11df-a1f1-0026b9348838",
+                                        "label": "Abnormal"
+                                    },
+                                    {
+                                        "concept": "a89dd504-1350-11df-a1f1-0026b9348838",
+                                        "label": "Cardiac arrythmia"
+                                    },
+                                    {
+                                        "concept": "a89dd694-1350-11df-a1f1-0026b9348838",
+                                        "label": "Left ventricular hypertrophy"
+                                    },
+                                    {
+                                        "concept": "a89dd75c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Right ventricular hypertrophy"
+                                    },
+                                    {
+                                        "concept": "a89dd5cc-1350-11df-a1f1-0026b9348838",
+                                        "label": "Atrial fibrillation"
+                                    },
+                                    {
+                                        "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Other"
+                                    }
+                                ],
+                                "showDate": "true",
+                                "rendering": "select",
+                                "shownDateOptions": {
+                                    "validators": [
+                                        {
+                                            "type": "date"
+                                        },
+                                        {
+                                            "type": "js_expression",
+                                            "failsWhenExpression": "!isEmpty(echo_test) && isEmpty(myValue)",
+                                            "message": "Date for result is required."
+                                        }
+                                    ],
+                                    "hide": {
+                                        "hideWhenExpression": "isEmpty(echo_test)"
+                                    }
+                                }
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "TG:",
+                            "id": "tg_test",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a898e8a0-1350-11df-a1f1-0026b9348838",
+                                "answers": [],
+                                "rendering": "number",
+                                "max": "15",
+                                "min": "0",
+                                "showDate": "true"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Cholesteral:",
+                            "id": "chol_test",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a898e4b8-1350-11df-a1f1-0026b9348838",
+                                "answers": [],
+                                "rendering": "number",
+                                "max": "15",
+                                "min": "0",
+                                "showDate": "true"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Microalbumin test, Urine:",
+                            "id": "microAlb_test",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "7129af13-e39a-43b0-9923-6d1de22c9c5e",
+                                "answers": [],
+                                "rendering": "number",
+                                "max": "15",
+                                "min": "0",
+                                "showDate": "true"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Urea:",
+                            "id": "urea_test",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8982550-1350-11df-a1f1-0026b9348838",
+                                "answers": [],
+                                "rendering": "number",
+                                "max": "15",
+                                "min": "0",
+                                "showDate": "true"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
                         }
                     ]
                 },
                 {
-                    "label": "Urinalysis, mycroscopic:",
-                    "type": "obsGroup",
-                    "questionOptions": {
-                        "id": "urinalysis",
-                        "concept": "a8a0aa9a-1350-11df-a1f1-0026b9348838",
-                        "rendering": "group"
-                    },
+                    "label": "Urinalysis, mycroscopic",
                     "questions": [
                         {
-                            "label": "Presence of sugar,Urine:",
-                            "id": "sugar_test",
-                            "type": "obs",
+                            "label": "Urinalysis, mycroscopic:",
+                            "type": "obsGroup",
                             "questionOptions": {
-                                "concept": "a8a47d5a-1350-11df-a1f1-0026b9348838",
-                                "answers": [
-                                    {
-                                        "concept": "a8a1909a-1350-11df-a1f1-0026b9348838",
-                                        "label": "Stronger positive (+++)"
-                                    },
-                                    {
-                                        "concept": "a8a18fdc-1350-11df-a1f1-0026b9348838",
-                                        "label": "Strong positive (++)"
-                                    },
-                                    {
-                                        "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
-                                        "label": "Positive"
-                                    },
-                                    {
-                                        "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
-                                        "label": "Negative"
+                                "id": "urinalysis",
+                                "concept": "a8a0aa9a-1350-11df-a1f1-0026b9348838",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Presence of sugar,Urine:",
+                                    "id": "sugar_test",
+                                    "type": "obs",
+                                    "questionOptions": {
+                                        "concept": "a8a47d5a-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a8a1909a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Stronger positive (+++)"
+                                            },
+                                            {
+                                                "concept": "a8a18fdc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Strong positive (++)"
+                                            },
+                                            {
+                                                "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                                                "label": "Positive"
+                                            },
+                                            {
+                                                "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Negative"
+                                            }
+                                        ]
                                     }
-                                ]
-                            }
-                        },
-                        {
-                            "label": "Presence of protein,Urine:",
-                            "type": "obs",
-                            "id": "protein_test",
-                            "questionOptions": {
-                                "concept": "a8a47ca6-1350-11df-a1f1-0026b9348838",
-                                "answers": [
-                                    {
-                                        "concept": "a8a1909a-1350-11df-a1f1-0026b9348838",
-                                        "label": "Stronger positive (+++)"
-                                    },
-                                    {
-                                        "concept": "a8a18fdc-1350-11df-a1f1-0026b9348838",
-                                        "label": "Strong positive (++)"
-                                    },
-                                    {
-                                        "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
-                                        "label": "Positive"
-                                    },
-                                    {
-                                        "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
-                                        "label": "Negative"
+                                },
+                                {
+                                    "label": "Presence of protein,Urine:",
+                                    "type": "obs",
+                                    "id": "protein_test",
+                                    "questionOptions": {
+                                        "concept": "a8a47ca6-1350-11df-a1f1-0026b9348838",
+                                        "answers": [
+                                            {
+                                                "concept": "a8a1909a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Stronger positive (+++)"
+                                            },
+                                            {
+                                                "concept": "a8a18fdc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Strong positive (++)"
+                                            },
+                                            {
+                                                "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                                                "label": "Positive"
+                                            },
+                                            {
+                                                "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Negative"
+                                            }
+                                        ]
                                     }
-                                ]
-                            }
-                        },
-                        {
-                            "label": "Presence of ketone,Urine:",
-                            "type": "obs",
-                            "id": "ketone_test",
-                            "questionOptions": {
-                                "concept": "b72fa772-19a9-4386-8185-6491ab97e97e",
-                                "answers": [
-                                    {
-                                        "concept": "a8a1909a-1350-11df-a1f1-0026b9348838",
-                                        "label": "Stronger positive (+++)"
-                                    },
-                                    {
-                                        "concept": "a8a18fdc-1350-11df-a1f1-0026b9348838",
-                                        "label": "Strong positive (++)"
-                                    },
-                                    {
-                                        "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
-                                        "label": "Positive"
-                                    },
-                                    {
-                                        "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
-                                        "label": "Negative"
+                                },
+                                {
+                                    "label": "Presence of ketone,Urine:",
+                                    "type": "obs",
+                                    "id": "ketone_test",
+                                    "questionOptions": {
+                                        "concept": "b72fa772-19a9-4386-8185-6491ab97e97e",
+                                        "answers": [
+                                            {
+                                                "concept": "a8a1909a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Stronger positive (+++)"
+                                            },
+                                            {
+                                                "concept": "a8a18fdc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Strong positive (++)"
+                                            },
+                                            {
+                                                "concept": "a896f3a6-1350-11df-a1f1-0026b9348838",
+                                                "label": "Positive"
+                                            },
+                                            {
+                                                "concept": "a896d2cc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Negative"
+                                            }
+                                        ]
                                     }
-                                ]
-                            }
+                                }
+                            ]
                         }
                     ]
                 }
