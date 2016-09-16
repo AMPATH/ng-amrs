@@ -29,10 +29,10 @@
         }));
 
         beforeEach(function () {
-            //this is a hack to load the allSettled function required 
+            //this is a hack to load the allSettled function required
             //by the $q service that is available on the app module
             //the app module does not load well in this case
-            //TODO: Figure out how to remove this hack 
+            //TODO: Figure out how to remove this hack
             $q.allSettled = function (promises) {
                 var deferred = $q.defer(),
                     counter = 0,

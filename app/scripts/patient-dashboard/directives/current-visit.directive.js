@@ -30,37 +30,24 @@ jshint -W003, -W026, -W117, -W098
         '$location',
         'dialogs',
         'UserDefaultPropertiesService',
-        'FormsMetaData'
+        'FormsMetaData',
+        'CachedDataService'
   ];
 
   function currentVisitController($scope, $rootScope, vService, $stateParams,
                                     encService, encModel, $filter, $timeout,
-                                    $location, dialogs, userDefPropService, FormsMetaData) {
+                                    $location, dialogs, userDefPropService, FormsMetaData, CachedDataService) {
 
         $scope.currentVisit = initializeCurrentVisit();
         $scope.loadingVisitTypes = true;
         $scope.checkingIfVisitStarted = true;
         $scope.visitTypesLoaded = false;
-        $scope.formsFilledStatus = [];
+        $scope.formsFilledStatus = CachedDataService.getCachedPocForms();
+        $scope.filledFormsUuid = [];
 
-        FormsMetaData.getFormOrder(function(formOrder){
-          _.each(formOrder, function(order){
-            _.each($rootScope.cachedPocForms, function(form) {
-              if(order.isVisible && order.uuid ===form.uuid) {
-                form.filled = false;
-                $scope.formsFilledStatus.push(form)
-              }
-            });
-          });
-        },function(error){
-          _.each($rootScope.cachedPocForms, function(form)
-          {
-            form.filled=false;
-            $scope.formsFilledStatus.push(form)
-          });
+        _.each($scope.formsFilledStatus, function(form){
+            form.filled = false;
         });
-
-
         $scope.startNewVisit = function() {
              $scope.currentVisit.startDatetime = new Date();
              //Create visit
@@ -190,38 +177,39 @@ jshint -W003, -W026, -W117, -W098
           });
 
          // Function to load saved encounters if visit started
-         function __fetchVisitCompletedEncounters(visitUuid, tryCount) {
-             var tryCount = tryCount || 1;
-             $scope.loadingEncounters = true;
-             vService.getVisitEncounters(visitUuid, function(visitEncounters) {
-                 if(visitEncounters.length > 0) {
-                     $scope.currentVisit.hasCompletedEncounters = true;
-                     $scope.currentVisit.encounters =
-                        encModel.toArrayOfModels(visitEncounters);
-
-                     _.each(visitEncounters, function(encounter) {
-                          var i = _.findIndex($scope.formsFilledStatus, function(entry) {
-                             return entry.encounterTypeUuid === encounter.encounterType.uuid;
-                         });
-                         if(i !== -1) {
-                             $scope.formsFilledStatus[i].filled = true;
-                             return true;
-                        }
-                     });
-                }
-                $scope.loadingEncounters = false;
-            }, function(err) {
-                if(tryCount === 5) {
-                    $scope.errorLoadingEncounters = true;
-                    console.log('Error loading visit encounters for visit uuid ',
-                     visitUuid);
-                    console.trace(err.message());
-                } else {
-                    // Retry
-                    __fetchVisitCompletedEncounters(visitUuid, ++tryCount);
-                }
-            });
-         }
+          function __fetchVisitCompletedEncounters(visitUuid, tryCount) {
+              var tryCount = tryCount || 1;
+              $scope.loadingEncounters = true;
+              vService.getVisitEncounters(visitUuid, function (visitEncounters) {
+                  if (visitEncounters.length > 0) {
+                      $scope.currentVisit.hasCompletedEncounters = true;
+                      $scope.currentVisit.encounters =
+                          encModel.toArrayOfModels(visitEncounters);
+                      //$scope.filledFormsUuid = [];
+                      _.each(visitEncounters, function (encounter) {
+                          var i = _.findIndex($scope.formsFilledStatus, function (entry) {
+                              return entry.uuid === encounter.form.uuid;
+                          });
+                          if (i !== -1) {
+                              $scope.filledFormsUuid.push($scope.formsFilledStatus[i].uuid);
+                              $scope.formsFilledStatus[i].filled = true;
+                              return true;
+                          }
+                      });
+                  }
+                  $scope.loadingEncounters = false;
+              }, function (err) {
+                  if (tryCount === 5) {
+                      $scope.errorLoadingEncounters = true;
+                      console.log('Error loading visit encounters for visit uuid ',
+                          visitUuid);
+                      console.trace(err.message());
+                  } else {
+                      // Retry
+                      __fetchVisitCompletedEncounters(visitUuid, ++tryCount);
+                  }
+              });
+          }
 
          // Function to load Patient's today's visits if any.
          function __getTodayVisits(patientUuid, callback, errorCallback) {
@@ -266,7 +254,7 @@ jshint -W003, -W026, -W117, -W098
          }
 
          function clearFormFilledStatus() {
-             _.each($scope.formsFilledStatus, function(entry) {
+                 _.each($scope.formsFilledStatus, function(entry) {
                  entry.filled = false;
              });
          }

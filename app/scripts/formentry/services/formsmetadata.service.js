@@ -55,7 +55,7 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
             //the function first checks if we have cached form before polling the server
             var deferred = $q.defer();
 
-            //input error checking            
+            //input error checking
             var inputError = _validateFormUuid(formUuid);
             if (inputError) {
                 deferred.reject(inputError);
