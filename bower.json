@@ -1,6 +1,6 @@
 {
   "name": "ng-amrs",
-  "version": "1.5.8-beta",
+  "version": "1.5.8-beta-release",
   "dependencies": {
     "angular": "1.4.7",
     "bootstrap": "^3.2.0",
