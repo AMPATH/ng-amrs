@@ -39,10 +39,7 @@
                                                 "concept": "a898f50c-1350-11df-a1f1-0026b9348838",
                                                 "label": "CBC"
                                             },
-                                            {
-                                                "concept": "a896ca48-1350-11df-a1f1-0026b9348838",
-                                                "label": "ALT"
-                                            },
+                                          
                                             {
                                                 "concept": "a896c8ae-1350-11df-a1f1-0026b9348838",
                                                 "label": "AST"
@@ -93,7 +90,7 @@
                                             },
                                             {
                                                 "concept": "a896ca48-1350-11df-a1f1-0026b9348838",
-                                                "label": "SGPT"
+                                                "label": "SGPT(ALT)"
                                             },
                                             {
                                                 "concept": "a8945d4e-1350-11df-a1f1-0026b9348838",

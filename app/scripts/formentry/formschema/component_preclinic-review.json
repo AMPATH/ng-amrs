@@ -11,15 +11,61 @@
                     "isExpanded": "true",
                     "questions": [
                         {
-                            "type": "personAttribute",
-                            "label": "Transfer in from other AMPATH clinic (specify):",
-                            "id": "transfered_in_to_ampath",
-                            "required": "false",
-                            "default": "",
+                            "type": "obsGroup",
+                            "label": "Transfer in from other centre, detailed",
                             "questionOptions": {
-                                "rendering": "ui-select-extended",
-                                "attributeType": "7ef225db-94db-4e40-9dd8-fb121d9dc370"
-                            }
+                                "concept": "0f8b7f4e-1656-46b7-bc93-d1fe4f193f5d",
+                                "rendering": "group"
+                            },
+                            "questions": [
+                                {
+                                    "label": "Transfer in from other centre:",
+                                    "id": "transferIn",
+                                    "questionOptions": {
+                                        "rendering": "select",
+                                        "concept": "35ed8aad-d6fa-429e-961a-c877e1ad4953",
+                                        "answers": [
+                                            {
+                                                "concept": "a89c2f42-1350-11df-a1f1-0026b9348838",
+                                                "label": "Ampath"
+                                            },
+                                            {
+                                                "concept": "a89c301e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Non-Ampath"
+                                            }
+                                        ]
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
+                                    "type": "personAttribute",
+                                    "label": "If transfer in from other AMPATH clinic (specify):",
+                                    "id": "transfered_in_to_ampath",
+                                    "required": "false",
+                                    "default": "",
+                                    "questionOptions": {
+                                        "rendering": "ui-select-extended",
+                                        "attributeType": "7ef225db-94db-4e40-9dd8-fb121d9dc370"
+                                    },
+                                    "hide": {
+                                        "hideWhenExpression": "transferIn !== 'a89c2f42-1350-11df-a1f1-0026b9348838'"
+                                    }
+                                },
+                                {
+                                    "type": "obs",
+                                    "label": "If non-Ampath, specify:",
+                                    "id": "nonAmpathSpecify",
+                                    "questionOptions": {
+                                        "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
+                                        "rendering": "text"
+                                    },
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "transferIn !== 'a89c301e-1350-11df-a1f1-0026b9348838'"
+                                    }
+                                }
+                            ]
                         },
                         {
                             "label": "Was this visit scheduled?",

@@ -1,0 +1,65 @@
+{
+    "name": "component_assessment-v1.0",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Assessment",
+            "sections": [
+                
+                
+                {
+                    "label": "General comments notes",
+                    "isExpanded":"true",
+                    "questions": [
+                        {
+                            "label": "Clinical comments, general:",
+                            "type": "obs",
+                            "id": "assNote",
+                            "questionOptions": {
+                                "concept": "5e4dc798-2cce-4a1a-97e9-bcf22d64b07c",
+                                "rendering": "text"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "Assessment Notes",
+                    "isExpanded":"true",
+                    "questions": [
+                        {
+                            "label": "Please enter the assessment below:",
+                            "type": "obs",
+                            "id": "assNote",
+                            "required":"false",
+                            "default":"",
+                            "questionOptions": {
+                                "concept": "23f710cc-7f9c-4255-9b6b-c3e240215dba",
+                                "rendering": "textarea",
+                                "rows": 18
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "Overall risk assessment Notes",
+                    "isExpanded":"true",
+                    "questions": [
+                        {
+                            "label": "Please comment on risk factors such as child abuse, safety at home etc:",
+                            "type": "obs",
+                            "id": "overllAssNote",
+                            "required":"false",
+                            "default":"",
+                            "questionOptions": {
+                                "concept": "bf48af84-e16a-4757-81da-582511e88b35",
+                                "rendering": "textarea",
+                                "rows": 18
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
