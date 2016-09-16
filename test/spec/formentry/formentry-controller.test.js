@@ -9,6 +9,13 @@ jshint -W098, -W117, -W030
 (function () {
     'use strict';
     describe('Controller: FormEntry Controller Unit Tests, New Encounter Mode', function () {
+        beforeEach(function () {
+            module('ngAmrsApp');
+            module('app.formentry');
+            module('mock.data');
+            module('ngMock');
+
+        });
 
         var controller;
         var controllerScope;
@@ -27,32 +34,45 @@ jshint -W098, -W117, -W030
             encounterTypeName: 'adultEncounter',
             name: 'test-form',
             encounterTypeUuid: 'encounterTypeUuid',
-            resources: [],
+            resources: [
+                {
+                    name: 'json schema',
+                    resourceVersion: '1.9',
+                    uuid: '002d3f28-a3d3-47b5-a94b-16497c14789e',
+                    valueReference: 'adult uuid',
+                    dataType: 'AmpathJsonSchema'
+                }
+            ],
         };
-
-
-
-        var FormsMetadataMock = {
-            getFormSchema: function(schemaName, callback) {
-                console.log('schemaName', schemaName);
-                callback(mockFormSchema);
-            },
-            getForm: function(uuid) {
-                return mockFormMetadata;
-            }
-        };
+        var $q;
 
         var formsMetaDataGetFormSchemaStub;
-        formsMetaDataGetFormSchemaStub = sinon.spy(FormsMetadataMock, 'getFormSchema');
+        var FormsMetadataMock;
 
-        beforeEach(function(){
-           module('ngAmrsApp');
-           module('app.formentry');
-           module('mock.data');
-           module('ngMock');
+        beforeEach(inject(function (_$q_) {
+            $q = _$q_;
+            FormsMetadataMock = {
+                getFormSchemaByUuid: function (schemaUuid) {
+                    console.log('schemaUuid', schemaUuid);
+                    var promise = {};
+                    promise.then = function (passedFunction) {
+                        passedFunction(mockFormSchema);
+                        return promise;
+                    };
+                    promise.catch = function (passedFunction) {
+                        passedFunction(new Error('error!'));
+                        return promise;
+                    };
+                    return promise;
+                },
+                getForm: function (uuid) {
+                    return mockFormMetadata;
+                }
+            };
+        }));
 
-        });
-        beforeEach(function(){
+
+        beforeEach(function () {
             /*
             Apperently underscore.string is not loading in thr headless browser during the tests
             this library has specific classes for handling string comparison.
@@ -76,6 +96,7 @@ jshint -W098, -W117, -W030
         });
 
         beforeEach(inject(function ($controller, $injector, $rootScope) {
+            formsMetaDataGetFormSchemaStub = sinon.spy(FormsMetadataMock, 'getFormSchemaByUuid');
 
             httpBackend = $injector.get('$httpBackend');
             $state = $injector.get('$state');
@@ -93,79 +114,80 @@ jshint -W098, -W117, -W030
             userResService = OpenmrsRestService.getUserService();
 
             userResService.user = {
-                personUuId: function() {
+                personUuId: function () {
                     return 'user uuid';
                 }
             };
 
             patientModelFactory = $injector.get('PatientModel');
             UtilService = $injector.get('UtilService');
-            unilServiceRegistrationStub =  sinon.spy(UtilService, 'confirmBrowserExit');
+            unilServiceRegistrationStub = sinon.spy(UtilService, 'confirmBrowserExit');
 
             selectedPatient =
-            new patientModelFactory.patient(mockData.getMockPatient());
+                new patientModelFactory.patient(mockData.getMockPatient());
             selectedPatientGetPersonAttributesStub = sinon.spy(selectedPatient, 'getPersonAttributes');
 
             mockFormSchema = mockData.getMockSchema();
             console.log('mock schema', mockFormSchema);
-            rootScope =  $rootScope;
+            rootScope = $rootScope;
             rootScope.broadcastPatient = selectedPatient;
             rootScope.latestEncounterPerType = {};
-			controllerScope = $rootScope.$new();
+            controllerScope = $rootScope.$new();
             console.log('patient', controllerScope.patient);
             dialogService = $injector.get('dialogs');
             $timeout = $injector.get('$timeout');
             PersonAttributesRestService = $injector.get('PersonAttributesRestService');
 
-			controller = $controller('FormentryCtrl',
-            { $rootScope: $rootScope,
-            $scope: controllerScope,
-            $state: $state,
-            $stateParams: $stateParams,
-            FormsMetaData: FormsMetadataMock,
-            OpenmrsRestService: OpenmrsRestService,
-            UtilService: UtilService,
-            FormEntry: FormEntry
-            });
+            controller = $controller('FormentryCtrl',
+                {
+                    $rootScope: $rootScope,
+                    $scope: controllerScope,
+                    $state: $state,
+                    $stateParams: $stateParams,
+                    FormsMetaData: FormsMetadataMock,
+                    OpenmrsRestService: OpenmrsRestService,
+                    UtilService: UtilService,
+                    FormEntry: FormEntry
+                });
 
-		}));
+        }));
 
 
-        var setUpObsUserInputToForm = function() {
-                //simulate valid form state after user has input some valid obs
-                controllerScope.form = {};
-                controllerScope.form.$dirty = true;
-                controllerScope.form.$valid = true;
-                controllerScope.changesSaved = false;
+        var setUpObsUserInputToForm = function () {
+            //simulate valid form state after user has input some valid obs
+            controllerScope.form = {};
+            controllerScope.form.$dirty = true;
+            controllerScope.form.$valid = true;
+            controllerScope.changesSaved = false;
 
-                //fill one obs to enable submit process to continue
-                var q1Key =  CurrentLoadedFormService.
-                        getFieldKeyFromGlobalById('q1');
+            //fill one obs to enable submit process to continue
+            var q1Key = CurrentLoadedFormService.
+                getFieldKeyFromGlobalById('q1');
 
-                var sectionModel =
-                    CurrentLoadedFormService.
-                        getContainingObjectForQuestionKey(controllerScope.model, q1Key);
+            var sectionModel =
+                CurrentLoadedFormService.
+                    getContainingObjectForQuestionKey(controllerScope.model, q1Key);
 
-                sectionModel[q1Key].value = 'question one';
+            sectionModel[q1Key].value = 'question one';
         };
 
-        var setUpPersonAttributeUserInputToForm = function() {
-                //fill one obs to enable submit process to continue
-                var personAttributeKey =  CurrentLoadedFormService.
-                        getFieldKeyFromGlobalById('first_person_attribute');
+        var setUpPersonAttributeUserInputToForm = function () {
+            //fill one obs to enable submit process to continue
+            var personAttributeKey = CurrentLoadedFormService.
+                getFieldKeyFromGlobalById('first_person_attribute');
 
-                var sectionModel =
-                    CurrentLoadedFormService.
-                        getContainingObjectForQuestionKey(controllerScope.model, personAttributeKey);
+            var sectionModel =
+                CurrentLoadedFormService.
+                    getContainingObjectForQuestionKey(controllerScope.model, personAttributeKey);
 
-                sectionModel[personAttributeKey].value = 'question one';
+            sectionModel[personAttributeKey].value = 'question one';
         };
 
-        var getEncounterServiceSaveEncounterStub = function(returnFailureOnNextCall) {
+        var getEncounterServiceSaveEncounterStub = function (returnFailureOnNextCall) {
             var encounterService = OpenmrsRestService.getEncounterResService();
-               return sinon.stub(encounterService, 'saveEncounter',
-                function(payload, onSucesss, onFailure){
-                    if(!returnFailureOnNextCall)
+            return sinon.stub(encounterService, 'saveEncounter',
+                function (payload, onSucesss, onFailure) {
+                    if (!returnFailureOnNextCall)
                         onSucesss({});
                     else
                         onFailure('Error');
@@ -173,401 +195,408 @@ jshint -W098, -W117, -W030
         };
 
         it('FormEntry controller should be defined and have all required services injected',
-        function () {
-			expect(controller).to.exist;
-			expect(controllerScope).to.exist;
-			expect(rootScope).to.exist;
-		});
+            function () {
+                expect(controller).to.exist;
+                expect(controllerScope).to.exist;
+                expect(rootScope).to.exist;
+            });
 
         describe('Controller: FormEntry Controller Loading and activation Unit Tests', function () {
 
             it('should subscribe to rootscope messages upon loading',
-            function () {
-                //test subscription to navigateToQuestion message
-                //this message changes the current page to param.tabTitle
-                var param = {
-                    tabTitle: controllerScope.tabs[1].title //mockschema contains 2pages
-                };
-                console.log('controllerScope', controllerScope.tabs);
-                rootScope.$broadcast('navigateToQuestion',param);
+                function () {
+                    //test subscription to navigateToQuestion message
+                    //this message changes the current page to param.tabTitle
+                    var param = {
+                        tabTitle: controllerScope.tabs[1].title //mockschema contains 2pages
+                    };
+                    console.log('controllerScope', controllerScope.tabs);
+                    rootScope.$broadcast('navigateToQuestion', param);
+                    expect(controllerScope.tabs[1].active).to.equal(true);
 
-                expect(controllerScope.tabs[1].active).to.equal(true);
-
-            });
+                });
 
             it('should register with utilservice to triger confirmation before' +
-            ' browser exit when loading controller',
-            function () {
-                 expect(unilServiceRegistrationStub).to.have.been.calledOnce;
-            });
+                ' browser exit when loading controller',
+                function () {
+                    expect(unilServiceRegistrationStub).to.have.been.calledOnce;
+                });
 
             it('should determine the correct form to load correctly' +
-            ' when loading controller',
-            function () {
-                 expect(controllerScope.encounterType).to.equal(mockFormMetadata.encounterTypeName);
-            });
+                ' when loading controller',
+                function () {
+                    expect(controllerScope.encounterType).to.equal(mockFormMetadata.encounterTypeName);
+                });
 
-             it('should determine the correct form mode' +
-            ' when loading controller',
-            function () {
-                 expect(controllerScope.currentMode.submitLabel).to.equal('Save');
-            });
+            it('should determine the correct form mode' +
+                ' when loading controller',
+                function () {
+                    expect(controllerScope.currentMode.submitLabel).to.equal('Save');
+                });
 
             it('should load pre-form initialization data' +
-            ' when loading controller',
-            function () {
-                 expect(selectedPatientGetPersonAttributesStub).to.have.been.calledOnce;
-            });
+                ' when loading controller',
+                function () {
+                    expect(selectedPatientGetPersonAttributesStub).to.have.been.calledOnce;
+                });
 
 
         });
 
-         describe('Controller: FormEntry Controller Form Loading Functions Unit Tests', function () {
+        describe('Controller: FormEntry Controller Form Loading Functions Unit Tests', function () {
 
             it('should load a form schema when schema is determined correctly',
-            function () {
-                expect(formsMetaDataGetFormSchemaStub).to.have.been.calledOnce;
-            });
+                function () {
+                    expect(formsMetaDataGetFormSchemaStub).to.have.been.calledOnce;
+                });
 
             it('should create a formly schema when a schema has been loaded',
-            function () {
-                expect(createFormSpy).to.have.been.calledOnce;
-                expect(createFormSpy.firstCall.calledWithExactly(mockFormSchema, controllerScope.model)).to.be.true;
-                expect(controllerScope.lastFormlyFormSchema).to.exist;
-                expect(controllerScope.questionMap).to.exist;
-                expect(controllerScope.lastFormlyFormSchema.length > 0).to.be.true;
-                expect(controllerScope.tabs[controllerScope.currentTabIndex].active).to.equal(true);
-                expect(controllerScope.tabs[0].title).to.equal(mockFormSchema.pages[0].label);
-            });
+                function () {
+                    expect(createFormSpy).to.have.been.calledOnce;
+                    expect(createFormSpy.firstCall.calledWithExactly(mockFormSchema, controllerScope.model)).to.be.true;
+                    expect(controllerScope.lastFormlyFormSchema).to.exist;
+                    expect(controllerScope.questionMap).to.exist;
+                    expect(controllerScope.lastFormlyFormSchema.length > 0).to.be.true;
+                    expect(controllerScope.tabs[controllerScope.currentTabIndex].active).to.equal(true);
+                    expect(controllerScope.tabs[0].title).to.equal(mockFormSchema.pages[0].label);
+                });
 
             it('should load required patient  values to model after formly schema creation',
-            function () {
-                //load sex to model
-                expect(controllerScope.model.sex).to.equal(selectedPatient.gender());
+                function () {
+                    //load sex to model
+                    expect(controllerScope.model.sex).to.equal(selectedPatient.gender());
 
-                //load sex to questionmap
-                 expect(controllerScope.questionMap['sex']).to.exist;
-            });
+                    //load sex to questionmap
+                    expect(controllerScope.questionMap['sex']).to.exist;
+                });
 
-             it('should load current provider value to model after schema creation',
-            function () {
-                 var sectionModel =
-                    CurrentLoadedFormService.
-                        getContainingObjectForQuestionKey(controllerScope.model, 'encounterProvider');
+            it('should load current provider value to model after schema creation',
+                function () {
+                    var sectionModel =
+                        CurrentLoadedFormService.
+                            getContainingObjectForQuestionKey(controllerScope.model, 'encounterProvider');
 
-                 expect(sectionModel['encounterProvider'].value).to.equal('user uuid');
-            });
+                    expect(sectionModel['encounterProvider'].value).to.equal('user uuid');
+                });
 
             it('should load current date value to model after schema creation',
-            function () {
-                 var sectionModel =
-                    CurrentLoadedFormService.
-                        getContainingObjectForQuestionKey(controllerScope.model, 'encounterDatetime');
+                function () {
+                    var sectionModel =
+                        CurrentLoadedFormService.
+                            getContainingObjectForQuestionKey(controllerScope.model, 'encounterDatetime');
 
-                 expect(sectionModel['encounterDatetime'].value).to.exist;
+                    expect(sectionModel['encounterDatetime'].value).to.exist;
 
-                 var today = new Date();
-                today.setHours(0, 0, 0, 0);
-                var setDate = new Date(sectionModel['encounterDatetime'].value);
-                setDate.setHours(0, 0, 0, 0);
-                console.log('setDate', setDate);
-                console.log('today', today);
-                expect(today.toISOString() === setDate.toISOString()).to.be.true;
-            });
+                    var today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    var setDate = new Date(sectionModel['encounterDatetime'].value);
+                    setDate.setHours(0, 0, 0, 0);
+                    console.log('setDate', setDate);
+                    console.log('today', today);
+                    expect(today.toISOString() === setDate.toISOString()).to.be.true;
+                });
 
         });
 
         describe('Controller: FormEntry Controller Navigation Functions Unit Tests', function () {
 
             it('should return correct state of current tab when isCurrentTabLast is invoked',
-            function () {
-                //case last tab
-                controllerScope.currentTabIndex = controllerScope.tabs.length - 1;
-                expect(controllerScope.isCurrentTabLast()).to.equal(true);
+                function () {
+                    //case last tab
+                    controllerScope.currentTabIndex = controllerScope.tabs.length - 1;
+                    expect(controllerScope.isCurrentTabLast()).to.equal(true);
 
-                //case not last tab
-                controllerScope.currentTabIndex = 0;
-                expect(controllerScope.isCurrentTabLast()).to.equal(false);
-            });
+                    //case not last tab
+                    controllerScope.currentTabIndex = 0;
+                    expect(controllerScope.isCurrentTabLast()).to.equal(false);
+                });
 
             it('should return correct state of current tab when isCurrentTabFirst is invoked',
-            function () {
-                //case last tab
-                controllerScope.currentTabIndex = 0;
-                expect(controllerScope.isCurrentTabFirst()).to.equal(true);
+                function () {
+                    //case last tab
+                    controllerScope.currentTabIndex = 0;
+                    expect(controllerScope.isCurrentTabFirst()).to.equal(true);
 
-                //case not last tab
-                controllerScope.currentTabIndex = controllerScope.tabs.length - 1;
-                expect(controllerScope.isCurrentTabFirst()).to.equal(false);
-            });
+                    //case not last tab
+                    controllerScope.currentTabIndex = controllerScope.tabs.length - 1;
+                    expect(controllerScope.isCurrentTabFirst()).to.equal(false);
+                });
 
             it('should load the next tab when loadNextTab is invoked',
-            function () {
-                controllerScope.currentTabIndex = 0;
-                controllerScope.loadNextTab();
+                function () {
+                    controllerScope.currentTabIndex = 0;
+                    controllerScope.loadNextTab();
 
-                expect(controllerScope.isCurrentTabFirst()).to.equal(false);
-                expect(controllerScope.currentTabIndex).to.equal(1);
-                expect(controllerScope.tabs[controllerScope.currentTabIndex].active).to.equal(true);
+                    expect(controllerScope.isCurrentTabFirst()).to.equal(false);
+                    expect(controllerScope.currentTabIndex).to.equal(1);
+                    expect(controllerScope.tabs[controllerScope.currentTabIndex].active).to.equal(true);
 
-            });
+                });
 
             it('should load the previous tab when loadPreviousTab is invoked',
-            function () {
-                controllerScope.currentTabIndex = 2;
-                controllerScope.loadPreviousTab();
+                function () {
+                    controllerScope.currentTabIndex = 2;
+                    controllerScope.loadPreviousTab();
 
-                expect(controllerScope.isCurrentTabLast()).to.equal(false);
-                expect(controllerScope.currentTabIndex).to.equal(1);
-                expect(controllerScope.tabs[controllerScope.currentTabIndex].active).to.equal(true);
+                    expect(controllerScope.isCurrentTabLast()).to.equal(false);
+                    expect(controllerScope.currentTabIndex).to.equal(1);
+                    expect(controllerScope.tabs[controllerScope.currentTabIndex].active).to.equal(true);
 
-            });
+                });
 
             it('should launch confirmation dialog when user clicks cancel',
-            function () {
-                var dialogConfirmationStub = sinon.spy(dialogService, 'confirm');
-                controllerScope.cancel();
+                function () {
+                    var dialogConfirmationStub = sinon.spy(dialogService, 'confirm');
+                    controllerScope.cancel();
 
-                expect(dialogConfirmationStub.callCount).to.equal(1);
+                    expect(dialogConfirmationStub.callCount).to.equal(1);
 
-            });
+                });
 
-             it('should launch confirmation when navigation away from the formentry starts ' +
-             'and there are unsaved changes',
-            function () {
+            it('should launch confirmation when navigation away from the formentry starts ' +
+                'and there are unsaved changes',
+                function () {
 
-                //simulate unsaved changes state
-                controllerScope.form = {};
-                controllerScope.form.$dirty = true;
-                controllerScope.changesSaved = false;
+                    //simulate unsaved changes state
+                    controllerScope.form = {};
+                    controllerScope.form.$dirty = true;
+                    controllerScope.changesSaved = false;
 
-                var dialogConfirmationStub = sinon.spy(dialogService, 'confirm');
-                controllerScope.$broadcast('$stateChangeStart',
-                {preventDefault: function(){}}, {name:'name'}, {});
+                    var dialogConfirmationStub = sinon.spy(dialogService, 'confirm');
+                    controllerScope.$broadcast('$stateChangeStart',
+                        { preventDefault: function () { } }, { name: 'name' }, {});
 
-                expect(dialogConfirmationStub.callCount).to.equal(1);
+                    expect(dialogConfirmationStub.callCount).to.equal(1);
 
-            });
+                });
 
         });
 
 
         describe('Controller: FormEntry Form Submission Functions Unit Tests', function () {
             it('should load all tabs not loaded through lazy loading when submit is triggered',
-            function () {
-                 //simulate unsaved changes state
-                controllerScope.form = {};
-                controllerScope.form.$dirty = true;
-                controllerScope.changesSaved = false;
+                function () {
+                    //simulate unsaved changes state
+                    controllerScope.form = {};
+                    controllerScope.form.$dirty = true;
+                    controllerScope.changesSaved = false;
 
-                //simulate some tabs not loaded
-                controllerScope.displayedTabsIndices = [];
-                controllerScope.submit();
+                    //simulate some tabs not loaded
+                    controllerScope.displayedTabsIndices = [];
+                    controllerScope.submit();
 
-                $timeout.flush();
-                expect(controllerScope.displayedTabsIndices.length).to.equal(controllerScope.tabs.length);
+                    $timeout.flush();
+                    expect(controllerScope.displayedTabsIndices.length).to.equal(controllerScope.tabs.length);
 
-            });
+                });
 
             it('should not begin the sumit process when theres one in progress',
-            function () {
-                //simulate unsaved changes state
-                controllerScope.form = {};
-                controllerScope.form.$dirty = true;
-                controllerScope.changesSaved = false;
+                function () {
+                    //simulate unsaved changes state
+                    controllerScope.form = {};
+                    controllerScope.form.$dirty = true;
+                    controllerScope.changesSaved = false;
 
-                //simulate a submit process in progress
-                controllerScope.fourStageSubmitProcess.submittingNewObs = true;
+                    //simulate a submit process in progress
+                    controllerScope.fourStageSubmitProcess.submittingNewObs = true;
 
-                //use this to monitor whether the submit process began
-                controllerScope.hasClickedSubmit = false;
-                controllerScope.submit();
+                    //use this to monitor whether the submit process began
+                    controllerScope.hasClickedSubmit = false;
+                    controllerScope.submit();
 
-                 $timeout.flush();
-                 expect(controllerScope.hasClickedSubmit).to.equal(false);
+                    $timeout.flush();
+                    expect(controllerScope.hasClickedSubmit).to.equal(false);
 
 
-            });
+                });
 
 
             it('should generate payload when the form is valid and submit is initiated',
-            function () {
+                function () {
 
-                //simulate valid form state after user has input some valid obs
-                controllerScope.form = {};
-                controllerScope.form.$dirty = true;
-                controllerScope.form.$valid = true;
-                controllerScope.changesSaved = false;
+                    //simulate valid form state after user has input some valid obs
+                    controllerScope.form = {};
+                    controllerScope.form.$dirty = true;
+                    controllerScope.form.$valid = true;
+                    controllerScope.changesSaved = false;
 
 
-                //set-up spy to see whether the formentry generate payload will be called
-                //meaning a payload has been generated
-                var formentryGeneratePayloadStub = sinon.spy(FormEntry, 'getFormPayload');
-                var personAttributeGeneratePayloadStub = sinon.spy(FormEntry, 'getPersonAttributesPayload');
+                    //set-up spy to see whether the formentry generate payload will be called
+                    //meaning a payload has been generated
+                    var formentryGeneratePayloadStub = sinon.spy(FormEntry, 'getFormPayload');
+                    var personAttributeGeneratePayloadStub = sinon.spy(FormEntry, 'getPersonAttributesPayload');
 
-                controllerScope.submit();
+                    controllerScope.submit();
 
-                 $timeout.flush();
+                    $timeout.flush();
 
-                 expect(formentryGeneratePayloadStub.callCount).to.equal(1);
-                 expect(personAttributeGeneratePayloadStub.callCount).to.equal(1);
-            });
+                    expect(formentryGeneratePayloadStub.callCount).to.equal(1);
+                    expect(personAttributeGeneratePayloadStub.callCount).to.equal(1);
+                });
 
             it('should updated the payload with current form, patient, encountertype, visit' +
-            'when payload is generating',
-            function () {
-                setUpObsUserInputToForm();
+                'when payload is generating',
+                function () {
+                    setUpObsUserInputToForm();
 
-                var submittedPayload;
-                var encounterService = OpenmrsRestService.getEncounterResService();
-                var encounterServiceStub = sinon.stub(encounterService, 'saveEncounter',
-                function(payload, onSucesss, onFailure){
-                     submittedPayload = JSON.parse(payload);
+                    var submittedPayload;
+                    var encounterService = OpenmrsRestService.getEncounterResService();
+                    var encounterServiceStub = sinon.stub(encounterService, 'saveEncounter',
+                        function (payload, onSucesss, onFailure) {
+                            submittedPayload = JSON.parse(payload);
+                        });
+
+                    controllerScope.submit();
+
+                    $timeout.flush();
+
+                    //check payload for patient, form, visit, encountertype
+                    expect(submittedPayload.patient).to.equal(selectedPatient.uuid());
+                    expect(submittedPayload.form).to.equal($stateParams.formuuid);
+                    expect(submittedPayload.encounterType).to.equal(mockFormMetadata.encounterTypeUuid);
+                    expect(submittedPayload.visit).to.equal($stateParams.visitUuid);
+
+                    encounterServiceStub.restore();
                 });
 
-                controllerScope.submit();
+            it('should call the encounter service saveEncounter when submit is initiated',
+                function () {
+                    setUpObsUserInputToForm();
 
-                $timeout.flush();
+                    var encounterService = OpenmrsRestService.getEncounterResService();
+                    var encounterServiceMock = sinon.mock(encounterService);
 
-                //check payload for patient, form, visit, encountertype
-                expect(submittedPayload.patient).to.equal(selectedPatient.uuid());
-                expect(submittedPayload.form).to.equal($stateParams.formuuid);
-                expect(submittedPayload.encounterType).to.equal(mockFormMetadata.encounterTypeUuid);
-                expect(submittedPayload.visit).to.equal($stateParams.visitUuid);
+                    encounterServiceMock.expects("saveEncounter").once();
 
-                encounterServiceStub.restore();
-            });
+                    console.log('saveEncounterStub', encounterServiceMock);
 
-             it('should call the encounter service saveEncounter when submit is initiated',
-            function () {
-                setUpObsUserInputToForm();
+                    controllerScope.submit();
 
-                var encounterService = OpenmrsRestService.getEncounterResService();
-                var encounterServiceMock = sinon.mock(encounterService);
+                    $timeout.flush();
 
-                encounterServiceMock.expects("saveEncounter").once();
+                    encounterServiceMock.verify();
+                    encounterServiceMock.restore();
 
-                console.log('saveEncounterStub', encounterServiceMock);
-
-                controllerScope.submit();
-
-                $timeout.flush();
-
-                encounterServiceMock.verify();
-                encounterServiceMock.restore();
-
-            });
-
-             it('should call the personAttribute service saveUpdatePersonAttribute when submit is initiated',
-            function () {
-                setUpObsUserInputToForm();
-                setUpPersonAttributeUserInputToForm();
-
-                var encounterServiceStub = getEncounterServiceSaveEncounterStub(false);
-
-                //prevent test from failing
-                rootScope.previousStateParams = {};
-               httpBackend.expectGET('views/main/url-selector.html').respond('');
-
-                var called = false;
-                var personAttributesServiceStub = sinon.stub(PersonAttributesRestService,
-                'saveUpdatePersonAttribute', function(payload, person, callback) {
-                    called = true;
-                    callback({});
                 });
 
+            it('should call the personAttribute service saveUpdatePersonAttribute when submit is initiated',
+                function () {
+                    setUpObsUserInputToForm();
+                    setUpPersonAttributeUserInputToForm();
 
-                controllerScope.submit();
+                    var encounterServiceStub = getEncounterServiceSaveEncounterStub(false);
 
-                $timeout.flush();
+                    //prevent test from failing
+                    rootScope.previousStateParams = {};
+                    httpBackend.expectGET('views/main/url-selector.html').respond('');
 
-                expect(called).to.equal(true);
+                    var called = false;
+                    var personAttributesServiceStub = sinon.stub(PersonAttributesRestService,
+                        'saveUpdatePersonAttribute', function (payload, person, callback) {
+                            called = true;
+                            callback({});
+                        });
 
-                encounterServiceStub.restore();
-                personAttributesServiceStub.restore();
 
-            });
+                    controllerScope.submit();
+
+                    $timeout.flush();
+
+                    expect(called).to.equal(true);
+
+                    encounterServiceStub.restore();
+                    personAttributesServiceStub.restore();
+
+                });
 
             it('should notify user of successful submission when submitting is complete',
-            function () {
-                setUpObsUserInputToForm();
+                function () {
+                    setUpObsUserInputToForm();
 
-                var encounterServiceStub = getEncounterServiceSaveEncounterStub(false);
-                //prevent test from failing
-                rootScope.previousStateParams = {};
-              httpBackend.expectGET('views/main/url-selector.html').respond('');
+                    var encounterServiceStub = getEncounterServiceSaveEncounterStub(false);
+                    //prevent test from failing
+                    rootScope.previousStateParams = {};
+                    httpBackend.expectGET('views/main/url-selector.html').respond('');
 
-                //mock personAttributesService saveUpdatePersonAttribute to return success
-                var personAttributesServiceStub = sinon.stub(PersonAttributesRestService,
-                'saveUpdatePersonAttribute', function(payload, person, callback) {
-                    callback({});
+                    //mock personAttributesService saveUpdatePersonAttribute to return success
+                    var personAttributesServiceStub = sinon.stub(PersonAttributesRestService,
+                        'saveUpdatePersonAttribute', function (payload, person, callback) {
+                            callback({});
+                        });
+
+                    //setup spy for notify
+                    var dialogServiceNotifySpy = sinon.spy(dialogService, 'notify');
+
+                    controllerScope.submit();
+
+                    $timeout.flush();
+
+                    expect(dialogServiceNotifySpy.firstCall.calledWithExactly('Success',
+                        controllerScope.formSubmitSuccessMessage)).to.be.true;
+
+                    encounterServiceStub.restore();
+
                 });
-
-                //setup spy for notify
-                var dialogServiceNotifySpy = sinon.spy(dialogService, 'notify');
-
-                controllerScope.submit();
-
-                $timeout.flush();
-
-                expect(dialogServiceNotifySpy.firstCall.calledWithExactly('Success',
-                controllerScope.formSubmitSuccessMessage)).to.be.true;
-
-                encounterServiceStub.restore();
-
-            });
 
             it('should notify user of unsuccessful submission when submitting is complete',
-            function () {
-                setUpObsUserInputToForm();
-                var encounterServiceStub = getEncounterServiceSaveEncounterStub(true);
+                function () {
+                    setUpObsUserInputToForm();
+                    var encounterServiceStub = getEncounterServiceSaveEncounterStub(true);
 
-                //prevent test from failing
-                rootScope.previousStateParams = {};
-                httpBackend.expectGET('views/main/url-selector.html').respond('');
+                    //prevent test from failing
+                    rootScope.previousStateParams = {};
+                    httpBackend.expectGET('views/main/url-selector.html').respond('');
 
-                controllerScope.submit();
+                    controllerScope.submit();
 
-                $timeout.flush();
+                    $timeout.flush();
 
-                expect(controllerScope.errorMessage).to.exist;
-                expect(controllerScope.hasFailedNewingRequest).to.be.true;
+                    expect(controllerScope.errorMessage).to.exist;
+                    expect(controllerScope.hasFailedNewingRequest).to.be.true;
 
-                encounterServiceStub.restore();
+                    encounterServiceStub.restore();
 
-            });
-
-             it('should not have any pending request when submitting is successful',
-            function () {
-                setUpObsUserInputToForm();
-
-                var encounterServiceStub = getEncounterServiceSaveEncounterStub(false);
-                //prevent test from failing
-                rootScope.previousStateParams = {};
-              httpBackend.expectGET('views/main/url-selector.html').respond('');
-
-                //mock personAttributesService saveUpdatePersonAttribute to return success
-                var personAttributesServiceStub = sinon.stub(PersonAttributesRestService,
-                'saveUpdatePersonAttribute', function(payload, person, callback) {
-                    callback({});
                 });
-                controllerScope.submit();
 
-                $timeout.flush();
+            it('should not have any pending request when submitting is successful',
+                function () {
+                    setUpObsUserInputToForm();
 
-                expect(controllerScope.fourStageSubmitProcess.submittingNewObs).to.be.false;
-                expect(controllerScope.fourStageSubmitProcess.submittingUpdatedObs).to.be.false;
-                expect(controllerScope.fourStageSubmitProcess.submittingVoidedObs).to.be.false;
-                expect(controllerScope.fourStageSubmitProcess.submittingPersonAttributes).to.be.false;
+                    var encounterServiceStub = getEncounterServiceSaveEncounterStub(false);
+                    //prevent test from failing
+                    rootScope.previousStateParams = {};
+                    httpBackend.expectGET('views/main/url-selector.html').respond('');
 
-                encounterServiceStub.restore();
+                    //mock personAttributesService saveUpdatePersonAttribute to return success
+                    var personAttributesServiceStub = sinon.stub(PersonAttributesRestService,
+                        'saveUpdatePersonAttribute', function (payload, person, callback) {
+                            callback({});
+                        });
+                    controllerScope.submit();
 
-            });
+                    $timeout.flush();
+
+                    expect(controllerScope.fourStageSubmitProcess.submittingNewObs).to.be.false;
+                    expect(controllerScope.fourStageSubmitProcess.submittingUpdatedObs).to.be.false;
+                    expect(controllerScope.fourStageSubmitProcess.submittingVoidedObs).to.be.false;
+                    expect(controllerScope.fourStageSubmitProcess.submittingPersonAttributes).to.be.false;
+
+                    encounterServiceStub.restore();
+
+                });
         });
 
     });
 
     describe('Controller: FormEntry Controller Unit Tests, Existing Encounter Mode', function () {
+
+        beforeEach(function () {
+            module('ngAmrsApp');
+            module('app.formentry');
+            module('mock.data');
+            module('ngMock');
+
+        });
 
         var controller;
         var controllerScope;
@@ -590,39 +619,58 @@ jshint -W098, -W117, -W030
             encounterTypeName: 'adultEncounter',
             name: 'test-form',
             encounterTypeUuid: 'encounterTypeUuid',
-            resources:[]
+            resources: [
+                {
+                    name: 'json schema',
+                    resourceVersion: '1.9',
+                    uuid: '002d3f28-a3d3-47b5-a94b-16497c14789e',
+                    valueReference: 'adult uuid',
+                    dataType: 'AmpathJsonSchema'
+                }
+            ]
         };
 
         var mockEncounterFromEncountersTab = {
-            formUuid: function() {
+            formUuid: function () {
                 return 'formUuid';
             },
-            encounterTypeName: function() {
+            encounterTypeName: function () {
                 return 'encounterTypeName';
             }
         };
 
-        var FormsMetadataMock = {
-            getFormSchema: function(schemaName, callback) {
-                console.log('schemaName', schemaName);
-                callback(mockFormSchema);
-            },
-            getForm: function(uuid) {
-                return mockFormMetadata;
-            }
-        };
 
+        var FormsMetadataMock;
         var formsMetaDataGetFormSchemaStub;
-        formsMetaDataGetFormSchemaStub = sinon.spy(FormsMetadataMock, 'getFormSchema');
+        var $q;
+        beforeEach(inject(function (_$q_) {
+            $q = _$q_;
+            FormsMetadataMock = {
+                getFormSchemaByUuid: function (schemaUuid) {
+                    console.log('schemaUuid', schemaUuid);
+                    var promise = {};
+                    promise.then = function (passedFunction) {
+                        passedFunction(mockFormSchema);
+                        return promise;
+                    };
+                    promise.catch = function (passedFunction) {
+                        passedFunction(new Error('error!'));
+                        return promise;
+                    };
+                    return promise;
+                },
+                getForm: function (uuid) {
+                    return mockFormMetadata;
+                }
+            };
+            formsMetaDataGetFormSchemaStub = sinon.spy(FormsMetadataMock, 'getFormSchemaByUuid');
+        }));
 
-        beforeEach(function(){
-           module('ngAmrsApp');
-           module('app.formentry');
-           module('mock.data');
-           module('ngMock');
 
-        });
-        beforeEach(function(){
+
+
+
+        beforeEach(function () {
             /*
             Apperently underscore.string is not loading in thr headless browser during the tests
             this library has specific classes for handling string comparison.
@@ -646,13 +694,13 @@ jshint -W098, -W117, -W030
         });
 
         var getEncounterByUuidCalled = false;
-        var setUpEncounterGetEncounterStub = function(encounterService) {
+        var setUpEncounterGetEncounterStub = function (encounterService) {
             encounterServiceGetEncouterStub =
-             sinon.stub(encounterService, 'getEncounterByUuid',
-                function(encUuid, onSuccess, onFailure){
-                    getEncounterByUuidCalled = true;
-                    onSuccess(mockRestObs);
-                });
+                sinon.stub(encounterService, 'getEncounterByUuid',
+                    function (encUuid, onSuccess, onFailure) {
+                        getEncounterByUuidCalled = true;
+                        onSuccess(mockRestObs);
+                    });
         };
 
         beforeEach(inject(function ($controller, $injector, $rootScope) {
@@ -675,17 +723,17 @@ jshint -W098, -W117, -W030
             userResService = OpenmrsRestService.getUserService();
 
             userResService.user = {
-                personUuId: function() {
+                personUuId: function () {
                     return 'user uuid';
                 }
             };
 
             patientModelFactory = $injector.get('PatientModel');
             UtilService = $injector.get('UtilService');
-            unilServiceRegistrationStub =  sinon.spy(UtilService, 'confirmBrowserExit');
+            unilServiceRegistrationStub = sinon.spy(UtilService, 'confirmBrowserExit');
 
             selectedPatient =
-            new patientModelFactory.patient(mockDataService.getMockPatient());
+                new patientModelFactory.patient(mockDataService.getMockPatient());
             selectedPatientGetPersonAttributesStub = sinon.spy(selectedPatient, 'getPersonAttributes');
 
             mockFormSchema = mockDataService.getMockTriageSchema();
@@ -696,73 +744,74 @@ jshint -W098, -W117, -W030
             setUpEncounterGetEncounterStub(encounterService);
 
 
-            rootScope =  $rootScope;
+            rootScope = $rootScope;
             rootScope.broadcastPatient = selectedPatient;
             rootScope.activeEncounter = mockEncounterFromEncountersTab;
-			controllerScope = $rootScope.$new();
+            controllerScope = $rootScope.$new();
             dialogService = $injector.get('dialogs');
             $timeout = $injector.get('$timeout');
             PersonAttributesRestService = $injector.get('PersonAttributesRestService');
 
-			controller = $controller('FormentryCtrl',
-            { $rootScope: $rootScope,
-            $scope: controllerScope,
-            $state: $state,
-            $stateParams: $stateParams,
-            FormsMetaData: FormsMetadataMock,
-            OpenmrsRestService: OpenmrsRestService,
-            UtilService: UtilService,
-            FormEntry: FormEntry
-            });
+            controller = $controller('FormentryCtrl',
+                {
+                    $rootScope: $rootScope,
+                    $scope: controllerScope,
+                    $state: $state,
+                    $stateParams: $stateParams,
+                    FormsMetaData: FormsMetadataMock,
+                    OpenmrsRestService: OpenmrsRestService,
+                    UtilService: UtilService,
+                    FormEntry: FormEntry
+                });
 
-		}));
+        }));
 
 
 
-        afterEach(function(){
+        afterEach(function () {
             encounterServiceGetEncouterStub.restore();
             formEntryUpdateFormWithExistingObsSpy.restore();
             getEncounterByUuidCalled = false;
         });
 
 
-        var setUpObsUserInputToForm = function() {
-                //simulate valid form state after user has input some valid obs
-                controllerScope.form = {};
-                controllerScope.form.$dirty = true;
-                controllerScope.form.$valid = true;
-                controllerScope.changesSaved = false;
+        var setUpObsUserInputToForm = function () {
+            //simulate valid form state after user has input some valid obs
+            controllerScope.form = {};
+            controllerScope.form.$dirty = true;
+            controllerScope.form.$valid = true;
+            controllerScope.changesSaved = false;
 
-                //change value for height
-                var q1Key =  CurrentLoadedFormService.
-                        getFieldKeyFromGlobalById('height');
-                console.log('updated obs key', q1Key);
+            //change value for height
+            var q1Key = CurrentLoadedFormService.
+                getFieldKeyFromGlobalById('height');
+            console.log('updated obs key', q1Key);
 
-                var sectionModel =
-                    CurrentLoadedFormService.
-                        getContainingObjectForQuestionKey(controllerScope.model, q1Key);
-                console.log('updated obs sectionModel', sectionModel);
-                sectionModel[q1Key].value = 150;
+            var sectionModel =
+                CurrentLoadedFormService.
+                    getContainingObjectForQuestionKey(controllerScope.model, q1Key);
+            console.log('updated obs sectionModel', sectionModel);
+            sectionModel[q1Key].value = 150;
 
         };
 
-        var setUpPersonAttributeUserInputToForm = function() {
-                //fill one obs to enable submit process to continue
-                var personAttributeKey =  CurrentLoadedFormService.
-                        getFieldKeyFromGlobalById('first_person_attribute');
+        var setUpPersonAttributeUserInputToForm = function () {
+            //fill one obs to enable submit process to continue
+            var personAttributeKey = CurrentLoadedFormService.
+                getFieldKeyFromGlobalById('first_person_attribute');
 
-                var sectionModel =
-                    CurrentLoadedFormService.
-                        getContainingObjectForQuestionKey(controllerScope.model, personAttributeKey);
+            var sectionModel =
+                CurrentLoadedFormService.
+                    getContainingObjectForQuestionKey(controllerScope.model, personAttributeKey);
 
-                sectionModel[personAttributeKey].value = 'question one';
+            sectionModel[personAttributeKey].value = 'question one';
         };
 
-        var getEncounterServiceSaveEncounterStub = function(returnFailureOnNextCall) {
+        var getEncounterServiceSaveEncounterStub = function (returnFailureOnNextCall) {
             var encounterService = OpenmrsRestService.getEncounterResService();
-               return sinon.stub(encounterService, 'saveEncounter',
-                function(payload, onSucesss, onFailure){
-                    if(!returnFailureOnNextCall)
+            return sinon.stub(encounterService, 'saveEncounter',
+                function (payload, onSucesss, onFailure) {
+                    if (!returnFailureOnNextCall)
                         onSucesss({});
                     else
                         onFailure('Error');
@@ -770,60 +819,60 @@ jshint -W098, -W117, -W030
         };
 
         it('FormEntry controller should be defined and have all required services injected',
-        function () {
-			expect(controller).to.exist;
-			expect(controllerScope).to.exist;
-			expect(rootScope).to.exist;
-		});
+            function () {
+                expect(controller).to.exist;
+                expect(controllerScope).to.exist;
+                expect(rootScope).to.exist;
+            });
 
-         describe('Controller: FormEntry Controller Form Loading and Saving Functions Unit Tests', function () {
+        describe('Controller: FormEntry Controller Form Loading and Saving Functions Unit Tests', function () {
 
             it('should determine the correct form to load correctly' +
-            ' when loading controller',
-            function () {
-                 expect(controllerScope.encounterType).to.equal(mockEncounterFromEncountersTab.encounterTypeName());
-             });
+                ' when loading controller',
+                function () {
+                    expect(controllerScope.encounterType).to.equal(mockEncounterFromEncountersTab.encounterTypeName());
+                });
 
             it('should determine the correct form mode' +
-            ' when loading controller',
-            function () {
-                 expect(controllerScope.currentMode.submitLabel).to.equal('Update');
-            });
+                ' when loading controller',
+                function () {
+                    expect(controllerScope.currentMode.submitLabel).to.equal('Update');
+                });
 
             it('should call the encounter service getEncounterByUuid to get the encounter obs' +
-            ' when loading controller',
-            function () {
-                 expect(getEncounterByUuidCalled).to.be.true;
-                 expect(mockRestObs.form.uuid).to.equal('a2b811ed-6942-405a-b7f8-e7ad6143966c');
-            });
+                ' when loading controller',
+                function () {
+                    expect(getEncounterByUuidCalled).to.be.true;
+                    expect(mockRestObs.form.uuid).to.equal('a2b811ed-6942-405a-b7f8-e7ad6143966c');
+                });
 
             it('should call the FormEntryService updateFormWithExistingObs to populateModelWithData' +
-            ' when loading controller',
-            function () {
-                 expect(formEntryUpdateFormWithExistingObsSpy.callCount >= 1).to.equal(true);
-                 expect(Object.keys(controllerScope.model).length > 3).to.be.true;
-            });
+                ' when loading controller',
+                function () {
+                    expect(formEntryUpdateFormWithExistingObsSpy.callCount >= 1).to.be.true;
+                    expect(Object.keys(controllerScope.model).length > 3).to.be.true;
+                });
 
             it('should call the encounter service saveEncounter when submit is initiated',
-            function () {
-                setUpObsUserInputToForm();
+                function () {
+                    setUpObsUserInputToForm();
 
-                var encounterService = OpenmrsRestService.getEncounterResService();
-                var encounterServiceMock = sinon.mock(encounterService);
+                    var encounterService = OpenmrsRestService.getEncounterResService();
+                    var encounterServiceMock = sinon.mock(encounterService);
 
-                encounterServiceMock.expects("saveEncounter").once();
+                    encounterServiceMock.expects("saveEncounter").once();
 
-                console.log('saveEncounterStub', encounterServiceMock);
+                    console.log('saveEncounterStub', encounterServiceMock);
 
-                controllerScope.submit();
+                    controllerScope.submit();
 
-                $timeout.flush();
+                    $timeout.flush();
 
-                encounterServiceMock.verify();
-                encounterServiceMock.restore();
+                    encounterServiceMock.verify();
+                    encounterServiceMock.restore();
 
-            });
+                });
 
-         });
- });
+        });
+    });
 })();
