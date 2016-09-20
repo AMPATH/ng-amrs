@@ -1,0 +1,55 @@
+<div>
+    <div data-ng-show='isBusy'>
+        <img data-ng-show="isBusy" data-ng-src="images/ajax-loader.gif" autofocus />
+        <b>Loading data...</b>
+    </div>
+    <div data-ng-show="experiencedLoadingError">
+        <p class="bg-danger" style="padding:4px;">
+            <b>
+        <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
+            <p>
+    </div>
+
+    <div style="padding:4px;margin-bottom:0.5cm;">
+        <label for="selectedProgram">Select A Program To Enroll</label>
+        <ui-select ng-model="selectedProgram" theme="bootstrap" on-select="openPatientProgramModal({program:{uuid:selectedProgram.uuid,name:selectedProgram.name}})">
+            <ui-select-match placeholder="Select a program or type to search">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="program in programs | filter: $select.search">
+                <div ng-bind-html="program.name | highlight: $select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+
+    <div data-ng-show='!notEnrolled && !isBusy' class="panel panel-primary" style="padding:2px;">
+        <div class="panel panel-default">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+
+                        <th>Program</th>
+                        <th>Date Enrolled</th>
+                        <th>Date Completed</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="cursor: pointer;" ng-repeat="patientProgram in enrolledProgrames" data-ng-click="openPatientProgramModal({enrolledProgram:patientProgram})">
+                        <td>{{patientProgram.display | titlecase}}</td>
+                        <td>{{patientProgram.dateEnrolled | date: 'MMM dd, yyyy hh:mm a'}}</td>
+                        <td>{{patientProgram.dateCompleted | date: 'MMM dd, yyyy hh:mm a'}}</td>
+                        <td>
+                            <button type="button" class="btn btn-xs">
+                                <span class="glyphicon text-primary glyphicon-edit"></span>
+                            </button>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <pagination boundary-links="true" ng-model="vm.currentPage" total-items="vm.totalItems" items-per-page="vm.entryLimit" ss="pagination-sm"
+        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" rotate="false" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;">
+        </pagination>
+
+    </div>
+</div>

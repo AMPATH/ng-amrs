@@ -1,0 +1,46 @@
+<form name="programEnrollmentForm">
+    <div class="form-group">
+
+        <div style="margin-bottom:20px;">
+            <b>{{selectedProgramName | titlecase}}</b>
+        </div>
+
+        <div>
+            <label for="date-enrolled">Date Enrolled:</label>
+            <div class="input-group">
+                <input type="text" id="date-enrolled" class="form-control" is-open="enrolledDateIsOpen" date-parser="short" datepicker-popup="mediumDate"
+                ng-model="enrolledDate" name="enrolledDate" ng-change="setEnrolledDate(enrolledDate)" placeholder={{enrolledDate}}
+                required max-date="currentDate">
+                <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="enrolledDateIsOpen = !enrolledDateIsOpen">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </button>
+            </span>
+            </div>
+            <div ng-messages="programEnrollmentForm.enrolledDate.$error">
+                <div class="help-block" ng-message="required">Date Enrolled is required.</div>
+            </div>
+        </div>
+
+        <div>
+            <label for="date-completed">Date Completed:</label>
+            <div class="input-group">
+                <input type="text" id="date-completed" class="form-control" is-open="completedDateIsOpen" date-parser="short" datepicker-popup="mediumDate"
+                ng-model="completedDate" name="completedDate" ng-change="setcompletedDate(completedDate)" placeholder={{completedDate}}
+                required max-date="currentDate">
+                <span class="input-group-btn">
+              <button type="button" class="btn btn-default" ng-click="completedDateIsOpen = !completedDateIsOpen">
+                <i class="glyphicon glyphicon-calendar"></i>
+              </button>
+            </span>
+            </div>
+
+        </div>
+
+    </div>
+    <div ng-show="hasError" style="margin-bottom:10px;">
+        <span class="text-danger"> <i class="glyphicon glyphicon-exclamation-sign"></i> {{errorMessage}}</span>
+    </div>
+
+    <button class="btn btn-primary" type="submit" ng-click="updateEnrollment()"><span>Save<i ng-show="saving" style="font-size:14px" class="fa fa-spinner fa-spin"></i></span></button>
+</form>

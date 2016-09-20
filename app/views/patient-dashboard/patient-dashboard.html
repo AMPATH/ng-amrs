@@ -66,6 +66,9 @@
 				<li active-tab-sync index="8" data-ng-glick="activeList(this, 8)" ng-class="{active: activeListId === 8}">
 					<a data-target="#printLabelsTab" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Lab Orders</a>
 				</li>
+                <li active-tab-sync index="8" data-ng-glick="activeList(this, 8)" ng-class="{active: activeListId === 8}">
+					<a data-target="#programsTab" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Programs</a>
+				</li>
 			</ul>
 			<ul class="nav nav-pills hidden-xs hidden-lg hidden-xl " style="cursor: pointer;">
 				<li active-tab-sync index="1" data-ng-glick="activeList(this, 1)" ng-class="{active: activeListId === 1}">
@@ -94,6 +97,9 @@
 				</li>
 				<li active-tab-sync index="8" data-ng-glick="activeList(this, 8)" ng-class="{active: activeListId === 8}">
 					<a data-target="#printLabelsTab" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Lab Orders</a>
+				</li>
+                <li active-tab-sync index="8" data-ng-glick="activeList(this, 8)" ng-class="{active: activeListId === 8}">
+					<a data-target="#programsTab" data-toggle="tab"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Programs</a>
 				</li>
 			</ul>
 		</div>
@@ -189,6 +195,11 @@
 			<div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="tab9">
 				<div class="page-content">
 					<patient-relationship></patient-relationship>
+				</div>
+			</div>
+            <div class="tab-pane fade in panel panel-default  " style="padding:4px;" id="programsTab">
+				<div class="page-content">
+					<patient-program  patient-uuid="{{patient.uuid()}}"></patient-program>
 				</div>
 			</div>
 		</div>
