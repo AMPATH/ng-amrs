@@ -105,6 +105,8 @@ module.exports = function (config) {
     'bower_components/angular-notification-center/angular-notification-center.js',
     'bower_components/nes/lib/compiled.js',
     'bower_components/angular-img-http-src/index.js',
+    'bower_components/bower-pdfkit/pdfkit-0.7.1.js',
+    'bower_components/bower-pdfkit/blob-stream-v0.1.3.js',
     'bower_components/angular-mocks/angular-mocks.js',
     // endbower
       'app/scripts/**/*.module.js',

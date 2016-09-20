@@ -1,41 +1,21 @@
-
-<div ng-controller="PrintLabelsCtrl as vm" >
-  <div class="row">
-    <div class="col-md-12">
-      <span>
-    <button ng-click='vm.toggleSettings()' class="btn pull-right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-      </button>
-      <span>
-    <strong class="text-danger" ng-if='!vm.defaultPrinter'>No default printer configured</strong>
-      <strong ng-if='vm.defaultPrinter'>Using : {{vm.defaultPrinter}}</strong>
-    </span>
-      </span>
-    </div>
-  </div>
-  <div ng-if='!vm.printServerConfigure'>
-    <div class="form-group">
-      <label for="printServerUrl">Print Server Location</label>
-      <div class="input-group">
-        <input ng-model="vm.printServerUrl" type="text" class="form-control" id="printServerUrl" placeholder="https://{server location}/">
-        <span class="input-group-btn">
-       <button ng-click='vm.printServerUrlChange()' class="btn btn-default" type="button">Find Printers</button>
-     </span>
-      </div>
-    </div>
-    <div class="form-group">
-      <select ng-if='vm.printers.length >= 1' class="form-control" ng-model="vm.defaultPrinter">
-        <option ng-repeat="opt in vm.printers">{{opt.name}}</option>
-      </select>
-    </div>
-    <button class="btn btn-success" ng-click='vm.saveSettings()'>Save</button>
-  </div>
-  <div ng-if='vm.printServerConfigure'>
+<div>
+  <div>
 
     <div class="row">
+      <div ng-show='experiencedLoadingError'>
+        <p class="bg-danger" style="padding:4px;">
+          <b>
+            <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
+          <p>
+      </div>
+      <div ng-show='isBusy'>
+        <img ng-show="isBusy" src="images/ajax-loader.gif" autofocus />
+        <b>Loading data...</b>
+      </div>
       <div class="col-md-4">
         <div class="form-group">
           <label for="patientIdentifer">Patient Identifer</label>
-          <select class="form-control" ng-if="identifiers.length >= 1" ng-model="vm.patientIdentifer">
+          <select class="form-control" ng-if="identifiers.length >= 1" ng-model="patientIdentifer">
             <option ng-repeat="opt in identifiers" value="{{opt.identifier}}">{{opt.identifierType.display}}</option>
           </select>
         </div>
@@ -44,10 +24,10 @@
         <div class="form-group">
           <label for="patientIdentifer">Collection Date</label>
           <div class="input-group">
-            <input type="text" class="form-control" datepicker-popup="mediumDate" is-open="vm.valuationDatePickerIsOpen" ng-click="vm.valuationDatePickerOpen()" ng-model="vm.valuationDate" />
+            <input type="text" class="form-control" datepicker-popup="mediumDate" is-open="valuationDatePickerIsOpen" ng-click="valuationDatePickerOpen()" ng-model="valuationDate" />
             <span class="input-group-btn">
               <button type="button" class="btn btn-default"
-                      ng-click="vm.valuationDatePickerOpen()">
+                      ng-click="valuationDatePickerOpen()">
                 <i class="glyphicon glyphicon-calendar"></i>
               </button>
             </span>
@@ -57,7 +37,7 @@
       <div class="col-md-4">
         <div class="form-group">
           <label for="patientIdentifer">Number of copies</label>
-          <input type="text" class="form-control" ng-model="vm.copies" />
+          <input type="text" class="form-control" ng-model="copies" />
         </div>
       </div>
     </div>
@@ -66,7 +46,7 @@
         <thead>
           <tr>
             <th>
-              <input type="checkbox" ng-model="vm.allItemsSelected" ng-change="vm.selectAll()">
+              <input type="checkbox" ng-model="allItemsSelected" ng-change="selectAll()">
             </th>
             <th>Collection Date</th>
             <th>Test Name</th>
@@ -76,30 +56,30 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="order in vm.testsOrdered.groupMembers">
+          <tr ng-repeat="order in labOrders">
             <td>
-              <input type="checkbox" ng-model="order.isChecked" ng-change="vm.selectEntity()">
+              <input type="checkbox" ng-model="order.isChecked" ng-change="selectEntity()">
             </td>
             <td>
-              {{vm.valuationDate | date:'dd/MM/yyyy'}}
+              {{valuationDate | date:'dd/MM/yyyy'}}
             </td>
             <td>
-              {{order.value.name.display}}
+              {{order.display}}
             </td>
             <td>
-              {{vm.provider.display}}
+              {{order.orderer.display}}
             </td>
             <td>
-              {{vm.patientIdentifer}}
+              {{patientIdentifer}}
             </td>
             <td>
-              <button ng-click="vm.printLabel(order)" class="btn btn-xs"><span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+              <button ng-click="printLabel(order)" class="btn btn-xs"><span class="glyphicon glyphicon-print" aria-hidden="true"></span>
               </button>
             </td>
           </tr>
         </tbody>
       </table>
-      <button ng-click="vm.printMultipleLabels()" class="btn">Print Selected <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+      <button ng-click="printMultipleLabels()" class="btn">Print Selected <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
       </button>
     </div>
   </div>
