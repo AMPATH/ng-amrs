@@ -24,6 +24,17 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('gruntify-eslint');
   // Define the configuration for all the tasks
   grunt.initConfig({
+      babel: {
+        options: {
+            sourceMap: true,
+            presets: ['babel-preset-es2015']
+        },
+        dist: {
+            files: {
+                'bower_components/nes/lib/compiled.js': 'bower_components/nes/lib/client.js'
+            }
+        }
+    },
     bower: grunt.file.readJSON('bower.json'),
     // Project settings
     yeoman: appConfig,
@@ -472,6 +483,7 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.registerTask('default', ['babel']);
   /**
    * The custom tasks maintenance-branch, snapshot and release-prepare are
    * created to automate releases. However the only task that ties up all
@@ -597,7 +609,8 @@ module.exports = function(grunt) {
     grunt.task.run([
       'clean:server',
       'version',
-      'wiredep',
+      'babel',
+      'wiredep',  
       'concurrent:server',
       'autoprefixer:server',
       'connect:livereload',
@@ -607,6 +620,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'babel',
     'wiredep',
     'concurrent:test',
     'autoprefixer',
@@ -621,6 +635,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'version',
+    'babel',
     'wiredep',
     'mkdir:all',
     'useminPrepare',

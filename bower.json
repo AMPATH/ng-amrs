@@ -138,7 +138,7 @@
     },
     "nes": {
       "main": [
-        "lib/client.js"
+        "lib/compiled.js"
       ]
     }
   }
