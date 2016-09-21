@@ -1,0 +1,62 @@
+<form name="personForm">
+    <div class="form-group">
+
+
+        <div>
+            <div class="input-group">
+                <label for="identifierType">Patient Identifier Type:</label>
+                <select class="form-control" required ng-model="identifierType" name="identifierType" id="identifierType" ng-options="type.val as type.label for type in commonIdentifierTypes"
+                ng-change="setIdentifierType(identifierType)" placeholder={{attributeName}}>
+                </select>
+            </div>
+            <div ng-messages="personForm.identifierType.$error">
+                <div class="help-block" ng-message="required">Identifier Type is required.</div>
+            </div>
+        </div>
+
+
+        <div>
+            <div class="input-group">
+                <label for="patientIdentifier">Patient Identifier</label>
+                <input type="text" id="patientIdentifier" class="form-control" required ng-model="patientIdentifier" name="patientIdentifier"
+                ng-change="setPatientIdentifier(patientIdentifier)" placeholder={{patientIdentifier}}>
+            </div>
+            <div ng-if="identifierValidity">
+                <span style="color:red;" class="glyphicon glyphicon-exclamation-sign">
+                        {{identifierValidity}}
+                    </span>
+            </div>
+            <div ng-messages="personForm.patientIdentifier.$error">
+                <div class="help-block" ng-message="required">Identifier is required.</div>
+            </div>
+        </div>
+
+        <div>
+            <div class="input-group">
+                <label for="preferredIdentifier">Preferred</label>
+                <select class="form-control" required ng-model="preferredIdentifier" id="preferredIdentifier" ng-options="opt as opt.label for opt in preferOptions"
+                ng-change="setPreferredIdentifier(preferredIdentifier)" placeholder={{preferredIdentifier}}>
+                </select>
+            </div>
+        </div>
+
+
+        <div>
+            <label for="selectedLocation.selected">Identifier Location</label>
+            <ui-select required ng-model="selectedLocation.selected" theme="bootstrap" on-select="onIdentifierLocationSelection({name:selectedLocation.selected.name(),uuid:selectedLocation.selected.uuId()})"
+            ng-disabled="isBusy">
+                <ui-select-match placeholder="Select a location or type to search">{{$select.selected.name()}}</ui-select-match>
+                <ui-select-choices repeat="location in locations | propsFilter: {name: $select.search, description: $select.search} ">
+                    <div ng-bind-html="location.name() | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select>
+            <div ng-if="invalidLocationCheck">
+                <span style="color:red;" class="glyphicon glyphicon-exclamation-sign">
+                        {{invalidLocationCheck}}
+                    </span>
+            </div>
+        </div>
+    </div>
+    <button ng-disabled="personForm.patientIdentifier.$invalid && personForm.identifierType.$invalid && personForm.selectedLocation.selected.$invalid"
+    class="btn btn-primary" type="button" ng-click="updatePatientIdentifier()"><span>Save<i ng-show="saving" style="font-size:14px" class="fa fa-spinner fa-spin"></i></span></button>
+</form>

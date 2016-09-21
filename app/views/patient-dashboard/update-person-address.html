@@ -1,0 +1,38 @@
+<form name="personForm">
+    <div class="form-group">
+        <div>
+            <label for="address1">County</label>
+            <input type="text" id="address1" class="form-control" ng-model="address1" name="address1" ng-change="setAddress1(address1)"
+            placeholder={{address1}}>
+            <br>
+            <label for="address2">Sub County</label>
+            <input type="text" id="address2" class="form-control" ng-model="address2" name="address2" ng-change="setAddress2(address2)"
+            placeholder={{address2}}>
+            <br>
+            <label for="address3">Estate Landmark</label>
+            <input type="text" id="address3" class="form-control" ng-model="address3" name="address3" ng-change="setAddress3(address3)"
+            placeholder={{address3}}>
+            <br>
+            <label for="cityVillage">City Village</label>
+            <input type="text" id="cityVillage" class="form-control" ng-model="cityVillage" name="cityVillage" ng-change="setCityVillage(cityVillage)"
+            placeholder={{cityVillage}}>
+            <br>
+            <label for="stateProvince">State Province</label>
+            <input type="text" id="stateProvince" class="form-control" ng-model="stateProvince" name="stateProvince" ng-change="setStateProvince(stateProvince)"
+            placeholder={{stateProvince}}>
+            <br>
+            <div>
+                <div class="input-group">
+                    <label for="preferredAddress">Preferred</label>
+                    <select class="form-control" required ng-model="preferredAddress" id="preferredAddress" ng-options="opt as opt.label for opt in preferOptions"
+                    ng-change="setpreferredAddress(preferredAddress)" placeholder={{preferredAddress}}>
+                    </select>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button class="btn btn-primary" type="button" ng-click="updatePersonAddress()"><span>Save<i ng-show="saving" style="font-size:14px" class="fa fa-spinner fa-spin"></i></span></button>
+
+    </div>
+</form>

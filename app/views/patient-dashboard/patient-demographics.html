@@ -1,5 +1,7 @@
 <ul class="list-group">
-  <li class="list-group-item" style="font-size:large" ng-if="patient.fullNames()">Name: {{patient.fullNames() | titlecase }}</li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.fullNames()">Name: {{patient.fullNames() | titlecase }}
+      <button type="button" class="btn btn-primary btn-xs" ng-click="openPersonNameModal(patient.uuid())">Edit</button>
+  </li>
   <li class="list-group-item" style="font-size:large" ng-if="patient.healthCenter()">Health Center: {{patient.healthCenter()}}</li>
   <li class="list-group-item" style="font-size:large" ng-if="patient.isTestorFakePatient()">Test Patient</li>
   <li ng-class="{'list-group-item markDeceased': patient.deathDate(), 'list-group-item': !patient.deathDate()}" style="font-size:large">Deceased:
@@ -23,3 +25,8 @@
 </ul>
 <button type="button" class="btn btn-primary btn-xs" ng-click="openPersonAttributeManageModal(patient.uuid())">
   <span ng-if="patient.phoneNumber()==null">Add Contacts</span> <span ng-if="patient.phoneNumber()">Edit Contacts</span></button>
+<button type="button" class="btn btn-primary btn-xs" ng-click="openPersonIdentifierModal(patient.uuid())">Edit Identifier</button>
+<button type="button" class="btn btn-primary btn-xs" ng-click="openPersonAddressModal(patient.uuid())">
+    <span ng-if="patient.address().county==null">Add</span>
+    <span ng-if="patient.address().county">Edit</span> Address
+</button>

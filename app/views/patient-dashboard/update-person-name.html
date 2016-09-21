@@ -1,0 +1,46 @@
+<form name="personForm">
+    <div class="form-group">
+        <div ng-if="personNameError">
+            <span style="padding:2px; margin-bottom: 5px !important;color:red; " class="glyphicon glyphicon-exclamation-sign">
+                {{personNameError}}
+            </span>
+        </div>
+        <div>
+            <label for="givenName">Given Name</label>
+            <input type="text" id="givenName" class="form-control" ng-model="givenName" name="givenName" ng-change="setGivenName(givenName)"
+            placeholder={{givenName}}>
+            <br>
+            <label for="middleName">Middle Name</label>
+            <input type="text" id="middleName" class="form-control" ng-model="middleName" name="middleName" ng-change="setMiddleName(middleName)"
+            placeholder={{middleName}}>
+            <br>
+            <label for="familyName">Family Name</label>
+            <input type="text" id="familyName" class="form-control" ng-model="familyName" name="familyName" ng-change="setFamilyName(familyName)"
+            placeholder={{familyName}}>
+
+            <br>
+            <label for="preferred">Preferred</label>
+            <select class="form-control" required ng-model="preferred" id="preferred" ng-options="opt as opt.label for opt in preferOptions"
+            ng-change="setPreferred(preferred)" placeholder={{preferred}}>
+
+                <div ng-messages="personForm.preferred.$error">
+                    <div class="help-block" ng-message="required">Preferred is required.</div>
+                </div>
+                <div ng-if="invalidPreferredName">
+                    <span style="color:red;" class="glyphicon glyphicon-exclamation-sign">
+                        {{invalidPreferredName}}
+                    </span>
+                </div>
+
+            </select>
+            <br>
+        </div>
+        <button class="btn btn-primary" type="button" ng-click="updatePersonName()"><span>Save<i ng-show="saving" style="font-size:14px" class="fa fa-spinner fa-spin"></i></span></button>
+
+
+
+    </div>
+    </div>
+
+
+</form>
