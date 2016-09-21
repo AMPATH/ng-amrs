@@ -55,6 +55,8 @@
       name: 'gender'
     }, {
       name: 'age'
+    }, {
+      name: 'has_pending_vl_test'
     }];
     if ($scope.supplementColumns) {
       $scope.patientTags = $scope.patientTags.concat($scope.supplementColumns);
