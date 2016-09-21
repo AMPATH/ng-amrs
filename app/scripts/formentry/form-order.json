@@ -98,5 +98,40 @@
     "uuid": "67773c89-32be-4d85-a132-db0efed71324",
     "name": "CDM POC Hypertension and Diabetes Return Visit Form v0.01",
     "isVisible":  true
+  },
+  {
+    "uuid": "c63d014d-c413-4e23-8e9a-5bd6ac90efbb",
+    "name": "AMPATH POC Pediatric Initial Visit Form v1.0",
+    "isVisible": true
+  },
+  {
+    "uuid": "a996cd5f-bdef-441e-88d2-6227c7a01df5",
+    "name": "AMPATH POC Pediatric Return Visit Form v1.0",
+    "isVisible": true
+  },
+  {
+    "uuid": "c3691a4b-a88f-46fe-901e-267f4c548111",
+    "name": "AMPATH POC Youth Initial Visit Form v1.0",
+    "isVisible": true
+  },
+  {
+    "uuid": "4bfeedb9-085f-497e-aa34-6694008fae8c",
+    "name": "AMPATH POC Youth Return Visit Form v1.0",
+    "isVisible": true
+  },
+  {
+    "uuid": "a42cb4fa-3eb9-483c-af87-1a5fe37de0db",
+    "name": "AMPATH POC Dermatology Encounter Form v0.01",
+    "isVisible": true
+  },
+  {
+    "uuid": "9f4b564e-c66c-4b7f-a5dd-785a054696a6",
+    "name": "AMPATH POC Adult/Pediatric Between Visit Medication Refill Form v1.0",
+    "isVisible": true
+  },
+  {
+    "uuid": "bd9493a6-c7ee-4280-ad22-fdf864b669d8",
+    "name": "AMPATH POC Adult/Pediatric Transit Medication Refill Form v1.0",
+    "isVisible": true
   }
 ]

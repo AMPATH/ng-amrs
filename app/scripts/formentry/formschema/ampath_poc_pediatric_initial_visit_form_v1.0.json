@@ -1,5 +1,5 @@
 {
-    "name": "Pediatric Initial Encounter Form v0.01",
+    "name": "Pediatric Initial Encounter Form v1.0",
     "uuid": "xxxx",
     "processor": "EncounterFormProcessor",
     "referencedForms": [

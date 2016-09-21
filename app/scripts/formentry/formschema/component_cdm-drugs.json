@@ -10,8 +10,136 @@
                     "label": "Current Medication",
                     "questions": [
                         {
+                            "label": "Were all medicines taken as prescibed in the last one month?",
+                            "id": "allMedsTaken",
+                            "questionOptions": {
+                                "concept": "a89ac346-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "Current HTN-DM Medication:",
+                            "type": "obs",
+                            "id": "htnDmMeds",
+                            "questionOptions": {
+                                "concept": "dfc42ca9-3a51-462d-9ac2-c84173d3c19d",
+                                "answers": [
+                                    {
+                                        "concept": "a8a43d54-1350-11df-a1f1-0026b9348838",
+                                        "label": "Amitriptyline"
+                                    },
+                                    {
+                                        "concept": "a8a43c96-1350-11df-a1f1-0026b9348838",
+                                        "label": "Amlodipine"
+                                    },
+                                    {
+                                        "concept": "a8a438cc-1350-11df-a1f1-0026b9348838",
+                                        "label": "Atenolol"
+                                    },
+                                    {
+                                        "concept": "a8a43f98-1350-11df-a1f1-0026b9348838",
+                                        "label": "Atorvastatin"
+                                    },
+                                    {
+                                        "concept": "a89b5cf2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Enalapril"
+                                    },
+                                    {
+                                        "concept": "49e26010-8e72-4cdb-baf7-fcbc1aab2de3",
+                                        "label": "Felodipine"
+                                    },
+                                    {
+                                        "concept": "a8a4314c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Glibenclamide"
+                                    },
+                                    {
+                                        "concept": "a8a4320a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Gliclazide"
+                                    },
+                                    {
+                                        "concept": "a8a43386-1350-11df-a1f1-0026b9348838",
+                                        "label": "Glimepiride"
+                                    },
+                                    {
+                                        "concept": "a89b5dd8-1350-11df-a1f1-0026b9348838",
+                                        "label": "HCTZ"
+                                    },
+                                    {
+                                        "concept": "a8a42ecc-1350-11df-a1f1-0026b9348838",
+                                        "label": "Insulin 70/30"
+                                    },
+                                    {
+                                        "concept": "a8a42fbc-1350-11df-a1f1-0026b9348838",
+                                        "label": "Insulin NPH"
+                                    },
+                                    {
+                                        "concept": "01983012-5416-448d-b9c7-c9ec9c2062b4",
+                                        "label": "Insulin glargine"
+                                    },
+                                    {
+                                        "concept": "a8a43084-1350-11df-a1f1-0026b9348838",
+                                        "label": "Insulin humalogue"
+                                    },
+                                    {
+                                        "concept": "dde8dd1e-b8d6-467b-acf0-8b54cf87a9e4",
+                                        "label": "Junior ASA"
+                                    },
+                                    {
+                                        "concept": "a8a43692-1350-11df-a1f1-0026b9348838",
+                                        "label": "Lisinopril/HCTZ"
+                                    },
+                                    {
+                                        "concept": "a8a43750-1350-11df-a1f1-0026b9348838",
+                                        "label": "Losartan"
+                                    },
+                                    {
+                                        "concept": "a8a4344e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Metformin"
+                                    },
+                                    {
+                                        "concept": "a8a4380e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Metropolol"
+                                    },
+                                    {
+                                        "concept": "a8938aa4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Nifedipine"
+                                    },
+                                    {
+                                        "concept": "0fab19f5-cc9e-4d04-b3c0-bd10223b458a",
+                                        "label": "Pregabalin"
+                                    },
+                                    {
+                                        "concept": "a8a4411e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Sildenafil"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "validators": [],
+                            "disable": {
+                                "disableWhenExpression": "allMedsTaken !== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "label": "Medication Adherence",
+                    "questions": [
+                        {
                             "type": "obsGroup",
-                            "label": "CDM drug missed",
+                            "label": "CDM Medication",
                             "questionOptions": {
                                 "concept": "a622edd7-5d74-4751-b9e9-7fdadb4d4fea",
                                 "rendering": "repeating"
@@ -19,69 +147,113 @@
                             "questions": [
                                 {
                                     "label": "Drug missed:",
+                                    "type": "obs",
                                     "questionOptions": {
+                                        "rendering": "select",
                                         "concept": "f9f721e5-d123-49d5-976f-a24d3c5b5a90",
                                         "answers": [
                                             {
-                                                "concept": "a8a4344e-1350-11df-a1f1-0026b9348838",
-                                                "label": "Metformin"
-                                            },
-                                            {
-                                                "concept": "a8a4314c-1350-11df-a1f1-0026b9348838",
-                                                "label": "Glibenclamide"
-                                            },
-                                            {
-                                                "concept": "f749638f-ed2d-4a5c-a1e9-759ffe1592eb",
-                                                "label": "Insulin"
-                                            },
-                                            {
-                                                "concept": "a89b5cf2-1350-11df-a1f1-0026b9348838",
-                                                "label": "Enalapril"
-                                            },
-                                            {
-                                                "concept": "a89b5dd8-1350-11df-a1f1-0026b9348838",
-                                                "label": "HCTZ"
-                                            },
-                                            {
-                                                "concept": "a8a43692-1350-11df-a1f1-0026b9348838",
-                                                "label": "Lisinopril/HCTZ"
-                                            },
-                                            {
-                                                "concept": "a8938aa4-1350-11df-a1f1-0026b9348838",
-                                                "label": "Nifedipine"
-                                            },
-                                            {
-                                                "concept": "a8a438cc-1350-11df-a1f1-0026b9348838",
-                                                "label": "Atenolol"
-                                            },
-                                            {
-                                                "concept": "49e26010-8e72-4cdb-baf7-fcbc1aab2de3",
-                                                "label": "Felodipine"
+                                                "concept": "a8a43d54-1350-11df-a1f1-0026b9348838",
+                                                "label": "Amitriptyline"
                                             },
                                             {
                                                 "concept": "a8a43c96-1350-11df-a1f1-0026b9348838",
                                                 "label": "Amlodipine"
                                             },
                                             {
+                                                "concept": "a8a438cc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Atenolol"
+                                            },
+                                            {
+                                                "concept": "a8a43f98-1350-11df-a1f1-0026b9348838",
+                                                "label": "Atorvastatin"
+                                            },
+                                            {
+                                                "concept": "a89b5cf2-1350-11df-a1f1-0026b9348838",
+                                                "label": "Enalapril"
+                                            },
+                                            {
+                                                "concept": "49e26010-8e72-4cdb-baf7-fcbc1aab2de3",
+                                                "label": "Felodipine"
+                                            },
+                                            {
+                                                "concept": "a8a4314c-1350-11df-a1f1-0026b9348838",
+                                                "label": "Glibenclamide"
+                                            },
+                                            {
+                                                "concept": "a8a4320a-1350-11df-a1f1-0026b9348838",
+                                                "label": "Gliclazide"
+                                            },
+                                            {
+                                                "concept": "a8a43386-1350-11df-a1f1-0026b9348838",
+                                                "label": "Glimepiride"
+                                            },
+                                            {
+                                                "concept": "a89b5dd8-1350-11df-a1f1-0026b9348838",
+                                                "label": "HCTZ"
+                                            },
+                                            {
+                                                "concept": "a8a42ecc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Insulin 70/30"
+                                            },
+                                            {
+                                                "concept": "a8a42fbc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Insulin NPH"
+                                            },
+                                            {
+                                                "concept": "01983012-5416-448d-b9c7-c9ec9c2062b4",
+                                                "label": "Insulin glargine"
+                                            },
+                                            {
+                                                "concept": "a8a43084-1350-11df-a1f1-0026b9348838",
+                                                "label": "Insulin humalogue"
+                                            },
+                                            {
+                                                "concept": "dde8dd1e-b8d6-467b-acf0-8b54cf87a9e4",
+                                                "label": "Junior ASA"
+                                            },
+                                            {
+                                                "concept": "a8a43692-1350-11df-a1f1-0026b9348838",
+                                                "label": "Lisinopril/HCTZ"
+                                            },
+                                            {
                                                 "concept": "a8a43750-1350-11df-a1f1-0026b9348838",
                                                 "label": "Losartan"
+                                            },
+                                            {
+                                                "concept": "a8a4344e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Metformin"
+                                            },
+                                            {
+                                                "concept": "a8a4380e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Metropolol"
+                                            },
+                                            {
+                                                "concept": "a8938aa4-1350-11df-a1f1-0026b9348838",
+                                                "label": "Nifedipine"
+                                            },
+                                            {
+                                                "concept": "0fab19f5-cc9e-4d04-b3c0-bd10223b458a",
+                                                "label": "Pregabalin"
+                                            },
+                                            {
+                                                "concept": "a8a4411e-1350-11df-a1f1-0026b9348838",
+                                                "label": "Sildenafil"
                                             }
-                                        ],
-                                        "rendering": "select"
+                                        ]
                                     },
-                                    "type": "obs",
-                                    "validators": []
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "allMedsTaken !== 'a899b42e-1350-11df-a1f1-0026b9348838'"
+                                    }
                                 },
                                 {
                                     "label": "Number of doses missed in the last one week:",
                                     "id": "missedDose",
+                                    "type": "obs",
                                     "questionOptions": {
                                         "concept": "72f25963-d68c-47be-9524-b28953d8d2d8",
                                         "answers": [
-                                            {
-                                                "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
-                                                "label": "None"
-                                            },
                                             {
                                                 "concept": "a89ac6b6-1350-11df-a1f1-0026b9348838",
                                                 "label": "Few"
@@ -97,11 +269,14 @@
                                         ],
                                         "rendering": "select"
                                     },
-                                    "type": "obs",
-                                    "validators": []
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "allMedsTaken !== 'a899b42e-1350-11df-a1f1-0026b9348838'"
+                                    }
                                 },
                                 {
                                     "label": "Reason:",
+                                    "type": "obs",
                                     "id": "reasonMissed",
                                     "questionOptions": {
                                         "concept": "d4cc8605-61f5-49cf-92da-d6b39ef4dabb",
@@ -116,7 +291,7 @@
                                             },
                                             {
                                                 "concept": "a89eb8c0-1350-11df-a1f1-0026b9348838",
-                                                "label": "Side Effects"
+                                                "label": "Side effects"
                                             },
                                             {
                                                 "concept": "a89ced88-1350-11df-a1f1-0026b9348838",
@@ -127,19 +302,12 @@
                                                 "label": "Other"
                                             }
                                         ],
-                                        "rendering": "multiCheckbox"
+                                        "rendering": "select"
                                     },
-                                    "type": "obs",
-                                    "validators": []
-                                },
-                                {
-                                    "label": " Other Reasons(specify):",
-                                    "type": "obs",
-                                    "questionOptions": {
-                                        "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
-                                        "rendering": "text"
-                                    },
-                                    "validators": []
+                                    "validators": [],
+                                    "hide": {
+                                        "hideWhenExpression": "allMedsTaken !== 'a899b42e-1350-11df-a1f1-0026b9348838'"
+                                    }
                                 }
                             ]
                         }
@@ -157,6 +325,105 @@
                             },
                             "questions": [
                                 {
+                                    "label": "Name of drug:",
+                                    "questionOptions": {
+                                        "concept": "78809200-7f7f-4d6f-b515-31088765d442",
+                                        "answers": [
+                                            {
+                                                "concept": "5f249221-d451-4b3b-9e25-59146703d052",
+                                                "label": "Gliclazide 30mg"
+                                            },
+                                            {
+                                                "concept": "e71bb18a-6acb-41a9-9885-8fe134a1933f",
+                                                "label": "Gliclazide 60mg"
+                                            },
+                                            {
+                                                "concept": "c5bed405-475d-4fad-859a-76df68c473ba",
+                                                "label": "Gliclazide 80mg"
+                                            },
+                                            {
+                                                "concept": "1ec6d128-75d3-47df-b077-3b810b77b59d",
+                                                "label": "Gliclazide 120mg"
+                                            },
+                                            {
+                                                "concept": "a6be6647-74dd-4208-a6c1-22fbb14c589f",
+                                                "label": "Glibenclamide 2.5mg"
+                                            },
+                                            {
+                                                "concept": "4a37b4e7-3970-4a5b-9973-97578856d457",
+                                                "label": "Glibenclamide 5mg"
+                                            },
+                                            {
+                                                "concept": "c9676ca6-12d2-4fd6-9b83-d1f5f23ccc2b",
+                                                "label": "Glibenclamide 7.5mg"
+                                            },
+                                            {
+                                                "concept": "ea502d7c-c331-42c3-8f59-cfc73adcc7d6",
+                                                "label": "Glibenclamide 10mg"
+                                            },
+                                            {
+                                                "concept": "bd69d4d4-beaf-4113-9821-0dc7d02d2543",
+                                                "label": "Glimepiride 1mg"
+                                            },
+                                            {
+                                                "concept": "9e56ecbc-64ab-4f24-94f3-027e5f9071c4",
+                                                "label": "Glimepiride 2mg"
+                                            },
+                                            {
+                                                "concept": "fd4909e3-1098-4b1e-ac15-2aa53671c60c",
+                                                "label": "Glimepiride 4mg"
+                                            },
+                                            {
+                                                "concept": "21934204-868a-4c5c-a238-fe18324c9fe3",
+                                                "label": "Insulin 70/30 susp inj"
+                                            },
+                                            {
+                                                "concept": "38b9c977-f6d7-4d19-b75a-ade8c5a8da1f",
+                                                "label": "Insulin 70/30 100IU/ML inj"
+                                            },
+                                            {
+                                                "concept": "a8a42fbc-1350-11df-a1f1-0026b9348838",
+                                                "label": "Insulin NPH"
+                                            },
+                                            {
+                                                "concept": "0ea94c19-1e35-4aaa-9dd8-07bc48048145",
+                                                "label": "Insulin humalogue"
+                                            },
+                                            {
+                                                "concept": "01983012-5416-448d-b9c7-c9ec9c2062b4",
+                                                "label": "Insulin glargine"
+                                            },
+                                            {
+                                                "concept": "5347d982-9137-4829-b77b-864a07436508",
+                                                "label": "Metformin 500mg"
+                                            },
+                                            {
+                                                "concept": "21659445-3cfc-4a33-aaa4-9fa12ff0d48e",
+                                                "label": "Metformin 750mg"
+                                            },
+                                            {
+                                                "concept": "5406f76f-1255-4af8-b63a-8b70b92737d7",
+                                                "label": "Metformin 850mg"
+                                            },
+                                            {
+                                                "concept": "bc65c466-0a3d-4606-8edc-8563787deea3",
+                                                "label": "Metformin 1000mg"
+                                            },
+                                            {
+                                                "concept": "d938b638-e91e-491b-96cd-790add567396",
+                                                "label": "Pioglitazone 15mg"
+                                            },
+                                            {
+                                                "concept": "381ea54a-8118-4178-820f-b7afa5d93b66",
+                                                "label": "Pioglitazone 30mg"
+                                            }
+                                        ],
+                                        "rendering": "multiCheckbox"
+                                    },
+                                    "type": "obs",
+                                    "validators": []
+                                },
+                                {
                                     "label": "Plan:",
                                     "id": "antiDiabeticPlan",
                                     "questionOptions": {
@@ -172,58 +439,17 @@
                                             },
                                             {
                                                 "concept": "a89b7c50-1350-11df-a1f1-0026b9348838",
-                                                "label": "Change Regimen"
+                                                "label": "Change regimen"
                                             },
                                             {
                                                 "concept": "a89b7d36-1350-11df-a1f1-0026b9348838",
-                                                "label": " Stop All"
+                                                "label": " Stop all"
                                             }
                                         ],
                                         "rendering": "select"
                                     },
                                     "type": "obs",
                                     "validators": []
-                                },
-                                {
-                                    "label": "Name of drug:",
-                                    "questionOptions": {
-                                        "concept": "78809200-7f7f-4d6f-b515-31088765d442",
-                                        "answers": [
-                                            {
-                                                "concept": "a8a4344e-1350-11df-a1f1-0026b9348838",
-                                                "label": "Metformin"
-                                            },
-                                            {
-                                                "concept": "a8a4314c-1350-11df-a1f1-0026b9348838",
-                                                "label": "Glibenclamide"
-                                            },
-                                            {
-                                                "concept": "a8a42ecc-1350-11df-a1f1-0026b9348838",
-                                                "label": "Insulin 70/30"
-                                            },
-                                            {
-                                                "concept": "a8a42fbc-1350-11df-a1f1-0026b9348838",
-                                                "label": "NPH"
-                                            },
-                                            {
-                                                "concept": "a8a43084-1350-11df-a1f1-0026b9348838",
-                                                "label": "Humalogue"
-                                            }
-                                        ],
-                                        "rendering": "select"
-                                    },
-                                    "type": "obs",
-                                    "validators": []
-                                },
-                                {
-                                    "label": "Milligrams:",
-                                    "questionOptions": {
-                                        "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
-                                        "max": "1000",
-                                        "min": "0",
-                                        "rendering": "number"
-                                    },
-                                    "type": "obs"
                                 },
                                 {
                                     "label": "Frequency:",
@@ -283,11 +509,11 @@
                                             },
                                             {
                                                 "concept": "a89b7c50-1350-11df-a1f1-0026b9348838",
-                                                "label": "Change Regimen"
+                                                "label": "Change regimen"
                                             },
                                             {
                                                 "concept": "a89b7d36-1350-11df-a1f1-0026b9348838",
-                                                "label": " Stop All"
+                                                "label": " Stop all"
                                             }
                                         ],
                                         "rendering": "select"
@@ -301,60 +527,146 @@
                                         "concept": "7c4a06ce-11eb-496f-b4db-516ab8d78aa8",
                                         "answers": [
                                             {
-                                                "concept": "a89b5cf2-1350-11df-a1f1-0026b9348838",
-                                                "label": "Enalapril"
+                                                "concept": "12309904-5f80-4d65-b8e7-e04c183ecc0b",
+                                                "label": "Amlodipine 2.5mg"
                                             },
                                             {
-                                                "concept": "a89b5dd8-1350-11df-a1f1-0026b9348838",
-                                                "label": "HCTZ"
+                                                "concept": "568771d5-3116-4ed7-a85d-3f7f0b9a4e54",
+                                                "label": "Amlodipine 5mg"
                                             },
                                             {
-                                                "concept": "a8a43692-1350-11df-a1f1-0026b9348838",
-                                                "label": "Lisinopril/HCTZ"
+                                                "concept": "2edd97ef-6642-4052-b86b-ab33aaebe579",
+                                                "label": "Amlodipine 10mg"
                                             },
                                             {
-                                                "concept": "a8a43750-1350-11df-a1f1-0026b9348838",
-                                                "label": "Losartan"
+                                                "concept": "7540e598-880a-449e-a936-7ad11b9977f0",
+                                                "label": "Atenolol 25mg"
                                             },
                                             {
-                                                "concept": "a8938aa4-1350-11df-a1f1-0026b9348838",
-                                                "label": "Nifidipine"
+                                                "concept": "0e3f486b-1dad-43e8-96ec-c3858ae3a5af",
+                                                "label": "Atenolol 50mg"
                                             },
                                             {
-                                                "concept": "a8a43c96-1350-11df-a1f1-0026b9348838",
-                                                "label": "Amlodipine"
+                                                "concept": "eafc9e55-5750-434d-874e-5bbfdd652a79",
+                                                "label": "Atenolol 75mg"
                                             },
                                             {
-                                                "concept": "49e26010-8e72-4cdb-baf7-fcbc1aab2de3",
-                                                "label": "Felodipine"
+                                                "concept": "d6e8c3ea-5068-41b7-aaf0-a17d32382aa8",
+                                                "label": "Atenolol 100mg"
                                             },
                                             {
-                                                "concept": "a8a438cc-1350-11df-a1f1-0026b9348838",
-                                                "label": "Atenolol"
+                                                "concept": "49e9bb6e-45ca-44b7-b895-7c3fcfd75d7c",
+                                                "label": "Atorvastatin 10mg"
                                             },
                                             {
-                                                "concept": "dde8dd1e-b8d6-467b-acf0-8b54cf87a9e4",
-                                                "label": "J ASA"
+                                                "concept": "c24c8f86-5236-4132-9496-0cc0770f7683",
+                                                "label": "Atorvastatin 20mg"
                                             },
                                             {
-                                                "concept": "a8a43f98-1350-11df-a1f1-0026b9348838",
-                                                "label": "Atorvastatin"
+                                                "concept": "6c242143-e467-402e-9196-b34545dde56f",
+                                                "label": "Atorvastatin 40mg"
+                                            },
+                                            {
+                                                "concept": "437ece6d-f321-47a8-bcc8-a469104942a9",
+                                                "label": "Atorvastatin 60mg"
+                                            },
+                                            {
+                                                "concept": "96ccf18f-3486-4f3d-95e6-ea11e20afa69",
+                                                "label": "Atorvastatin 80mg"
+                                            },
+                                            {
+                                                "concept": "23ea18e1-676d-440c-8e30-5bbe3b7fd77a",
+                                                "label": "Enalapril 2.5mg"
+                                            },
+                                            {
+                                                "concept": "c28c7ddd-667c-48bc-9f3a-688c086f8018",
+                                                "label": "Enalapril 5mg"
+                                            },
+                                            {
+                                                "concept": "8d0194ed-84cb-4345-b85a-63a5b73fa5e4",
+                                                "label": "Enalapril 10mg"
+                                            },
+                                            {
+                                                "concept": "11836dc4-9a08-4d5b-a91c-bede87786b50",
+                                                "label": "Enalapril 15mg"
+                                            },
+                                            {
+                                                "concept": "5c903a4e-39bf-4563-b3cb-c731a17b3ffe",
+                                                "label": "Enalapril 20mg"
+                                            },
+                                            {
+                                                "concept": "9fca88ba-47b1-4d67-83da-ecdfd2aa0349",
+                                                "label": "Felodipine 2.5mg"
+                                            },
+                                            {
+                                                "concept": "5856e0a6-3b75-4531-a1ef-9209919fb6f5",
+                                                "label": "Felodipine 5mg"
+                                            },
+                                            {
+                                                "concept": "035bf78a-6504-4133-9a5b-74d8ccbee878",
+                                                "label": "Felodipine 10mg"
+                                            },
+                                            {
+                                                "concept": "39d7fef8-cb51-40aa-ae42-8128725d252b",
+                                                "label": "HCTZ 12.5mg"
+                                            },
+                                            {
+                                                "concept": "1b2cc2a8-b565-4599-8f89-c9fe39e2a340",
+                                                "label": "HCTZ 25mg"
+                                            },
+                                            {
+                                                "concept": "19c6df2b-486c-48df-805a-7333898ea093",
+                                                "label": "HCTZ 50mg"
+                                            },
+                                            {
+                                                "concept": "99d1a61c-eb23-416f-bd3b-1cfc4228ba21",
+                                                "label": "Lisinopril 20mg/HCTZ 12.5mg"
+                                            },
+                                            {
+                                                "concept": "02838e06-ce3b-4804-88fc-aac8393a17ed",
+                                                "label": "Losartan 25mg"
+                                            },
+                                            {
+                                                "concept": "a113493b-7584-46a1-ba58-628d11b67623",
+                                                "label": "Losartan 50mg"
+                                            },
+                                            {
+                                                "concept": "80059522-192d-4d9b-a05a-72f546860700",
+                                                "label": "Losartan 75mg"
+                                            },
+                                            {
+                                                "concept": "8efcb46c-295d-40c7-944b-9604f9759864",
+                                                "label": "Losartan 100mg"
+                                            },
+                                            {
+                                                "concept": "c2ddb9b2-8023-4251-8735-e113357af8db",
+                                                "label": "Metropolol 25mg"
+                                            },
+                                            {
+                                                "concept": "52795770-4584-422e-a2b7-774b30b75088",
+                                                "label": "Metropolol 50mg"
+                                            },
+                                            {
+                                                "concept": "887f8caf-1c18-47f8-9927-a57365bcadba",
+                                                "label": "Metropolol 100mg"
+                                            },
+                                            {
+                                                "concept": "bb168b83-6eb3-490b-922c-f71768960597",
+                                                "label": "Nifidipine 20mg"
+                                            },
+                                            {
+                                                "concept": "bb168b83-6eb3-490b-922c-f71768960597",
+                                                "label": "Nifidipine 40mg"
+                                            },
+                                            {
+                                                "concept": "59611435-e869-4a8d-8e58-649b7630e471",
+                                                "label": "Junior ASA 75mg"
                                             }
                                         ],
-                                        "rendering": "select"
+                                        "rendering": "multiCheckbox"
                                     },
                                     "type": "obs",
                                     "validators": []
-                                },
-                                {
-                                    "label": "Milligrams:",
-                                    "questionOptions": {
-                                        "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
-                                        "max": "1000",
-                                        "min": "0",
-                                        "rendering": "number"
-                                    },
-                                    "type": "obs"
                                 },
                                 {
                                     "label": "Frequency:",
@@ -414,11 +726,11 @@
                                             },
                                             {
                                                 "concept": "a89b7c50-1350-11df-a1f1-0026b9348838",
-                                                "label": "Change Regimen"
+                                                "label": "Change regimen"
                                             },
                                             {
                                                 "concept": "a89b7d36-1350-11df-a1f1-0026b9348838",
-                                                "label": " Stop All"
+                                                "label": " Stop all"
                                             }
                                         ],
                                         "rendering": "select"
@@ -432,28 +744,54 @@
                                         "concept": "b4c2cd42-76d9-41ab-ba8f-1b8537409d02",
                                         "answers": [
                                             {
-                                                "concept": "a89b5cf2-1350-11df-a1f1-0026b9348838",
-                                                "label": "Amitriptylline"
+                                                "concept": "1580641e-e04f-4681-9bf2-e25c1ff43af4",
+                                                "label": "Amitriptyline 25mg"
                                             },
                                             {
-                                                "concept": "a89b5dd8-1350-11df-a1f1-0026b9348838",
-                                                "label": "Carbamazepine"
+                                                "concept": "d3930059-0032-48c5-bb05-3ac77497b3ae",
+                                                "label": "Amitriptyline 50mg"
+                                            },
+                                            {
+                                                "concept": "caf1accf-7e15-48da-93ac-33cf9acf2e15",
+                                                "label": "Carbamazepine 100mg"
+                                            },
+                                            {
+                                                "concept": "1e26e5aa-8d84-49d9-8360-6a0584168a8c",
+                                                "label": "Carbamazepine 200mg"
+                                            },
+                                            {
+                                                "concept": "ba516eca-4f7c-4e12-9e8b-326ef0e80ca0",
+                                                "label": "Gabapentin 150mg"
+                                            },
+                                            {
+                                                "concept": "9807c55e-a312-4ba8-916c-f48f2b0de74d",
+                                                "label": "Gabapentin 300mg"
+                                            },
+                                            {
+                                                "concept": "a0da0d58-0be5-44d5-8249-b3525c060df1",
+                                                "label": "Pregabalin 150mg"
+                                            },
+                                            {
+                                                "concept": "0d588c8c-a14b-4883-9984-4be2ee97dc71",
+                                                "label": "Pregabalin 300mg"
+                                            },
+                                            {
+                                                "concept": "a515a6b4-95c4-4910-b9fb-e9bd4d5763a4",
+                                                "label": "Sildenafil 25mg"
+                                            },
+                                            {
+                                                "concept": "faa56aa5-3c04-4f5b-9cb2-8f30c51f2a55",
+                                                "label": "Sildenafil 50mg"
+                                            },
+                                            {
+                                                "concept": "bb8ab6c5-0bcf-4198-b820-2e34aaf3c95e",
+                                                "label": "Sildenafil 75mg"
                                             }
                                         ],
-                                        "rendering": "select"
+                                        "rendering": "multiCheckbox"
                                     },
                                     "type": "obs",
                                     "validators": []
-                                },
-                                {
-                                    "label": "Milligrams:",
-                                    "questionOptions": {
-                                        "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
-                                        "max": "1000",
-                                        "min": "0",
-                                        "rendering": "number"
-                                    },
-                                    "type": "obs"
                                 },
                                 {
                                     "label": "Frequency:",
