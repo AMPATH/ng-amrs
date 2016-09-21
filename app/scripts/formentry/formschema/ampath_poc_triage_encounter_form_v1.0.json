@@ -132,6 +132,7 @@
                 },
                 {
                     "label": "PWPs",
+                    "isExpanded": "true",
                     "questions": [
                         {
                             "label": "Civil status:",
@@ -411,6 +412,7 @@
                 },
                 {
                     "label": "General History (Ped/Youth Specific)",
+                    "isExpanded": "true",
                     "questions": [
                         {
                             "type": "obsGroup",
@@ -538,6 +540,7 @@
                         },
                         {
                             "label": "HIV disclosure:",
+                            "required": "true",
                             "type": "obs",
                             "questionOptions": {
                                 "rendering": "select",
@@ -1585,6 +1588,101 @@
                             }
                         }
                     ]
+                }
+            ]
+        },
+        {
+            "label": "Relationship(peds only)",
+            "sections": [
+                {
+                    "label": "Relationship",
+                    "questions": [
+                        {
+                            "label": "Siblings less than 18 months:",
+                            "required": "true",
+                            "type": "obs",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8a0bbde-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    },
+                                    {
+                                        "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
+                                        "label": "N/A"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        },
+                        {
+                            "label": "If yes for siblings < 18 months, are they registered in pediatric HIV clinic:",
+                            "type": "obs",
+                            "required": "true",
+                            "questionOptions": {
+                                "rendering": "select",
+                                "concept": "a8a0bd00-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    },
+                                    {
+                                        "concept": "a899b50a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Unknown"
+                                    }
+                                ]
+                            },
+                            "validators": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Disclosure Plan",
+            "questions": [
+                {
+                    "label": "Child disclosure plan :",
+                    "required": "true",
+                    "type": "obs",
+                    "questionOptions": {
+                        "rendering": "select",
+                        "concept": "7cad5b2e-867f-4f6e-9e15-4b205712bd31",
+                        "answers": [
+                            {
+                                "concept": "a89ad3a4-1350-11df-a1f1-0026b9348838",
+                                "label": "N/A"
+                            },
+                            {
+                                "concept": "a899e0ac-1350-11df-a1f1-0026b9348838",
+                                "label": "Not initiated "
+                            },
+                            {
+                                "concept": "29b25c26-f947-4d72-9e4a-54b9e936be7a",
+                                "label": "Initiated"
+                            },
+                            {
+                                "concept": "a8af5018-1350-11df-a1f1-0026b9348838",
+                                "label": "Continued"
+                            },
+                            {
+                                "concept": "a89c1ef8-1350-11df-a1f1-0026b9348838",
+                                "label": "Completed"
+                            }
+                        ]
+                    },
+                    "validators": []
                 }
             ]
         }
