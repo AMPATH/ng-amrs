@@ -73,35 +73,12 @@
                   </tbody>
                 </table>
               </div>
-              <!-- <pagination boundary-links="true" ng-model="vm.currentPage" total-items="vm.totalItems" items-per-page="vm.entryLimit"
-                          ss="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" rotate="false"
-                          style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;">
-              </pagination> -->
             </div>
         </div>
         <!-- Add a section for incomplete forms -->
-        <div data-ng-show="visitStarted" class="panel panel-info">
-          <div class="panel-heading px-nested-panel-heading clearfix">
-              <form class="form-inline">
-              <div class="form-group">
-                  <label for="search-textbox">Choose a Form to Fill:</label>
-                  <div class="input-group">
-                      <input class="form-control" id="search-textbox" placeholder="Filter..." type="text" ng-model="searchString" />
-                      <div class="input-group-btn">
-                          <button class="btn btn-default pull-right" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                      </div>
-                  </div>
-              </div>
-              </form>
-          </div>
-            <div class="panel-body px-nested-panel-body animate-repeat">
-                <span data-ng-repeat="status in formsFilledStatus | filter:{ name: searchString}">
-                    <p data-ng-hide="status.filled" class="form-list-item">
-                        <a href="#/form/{{status.uuid}}/patient/{{patientUuid}}/visit/{{currentVisit.uuid}}">
-                          <span class="glyphicon glyphicon-plus-sign" style="letter-spacing: normal;"/><span style="font-family:Arial, Helvetica, sans-serif;"> {{status.name}}</span></a>
-                    </p>
-                </span>
-            </div>
+        <div data-ng-show="visitStarted" >
+            <opemrs-forms patient="patient" current-visit="currentVisit" excluded-forms="filledFormsUuid"></opemrs-forms>
+
         </div>
         <div class="panel-footer">
             <button class="btn btn-danger" data-ng-click="cancelVisit(currentVisit)">
