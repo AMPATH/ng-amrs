@@ -54,7 +54,9 @@
                 uuid: enrollmentUuid,
                 dateCompleted: dateCompleted
             };
-            if (payLoad.dateCompleted == undefined) {
+            
+            //delete dateCompleted property  if the dateCompleted is null at enrollment
+            if (payLoad.dateCompleted == undefined && enrollmentUuid == undefined) {
                 delete payLoad['dateCompleted'];
             }
 

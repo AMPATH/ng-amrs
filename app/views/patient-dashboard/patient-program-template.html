@@ -1,13 +1,13 @@
 <div>
-    <div data-ng-show='isBusy'>
+    <div ng-show='isBusy'>
         <img data-ng-show="isBusy" data-ng-src="images/ajax-loader.gif" autofocus />
-        <b>Loading data...</b>
-    </div>
+        <b>Loading {{loadingData}}...</b>       
+    </div>          
     <div data-ng-show="experiencedLoadingError">
         <p class="bg-danger" style="padding:4px;">
             <b>
-        <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span>An error occured while loading. Please try again.</b>
-            <p>
+               <span style="color:red;" class="glyphicon glyphicon-exclamation-sign"></span> {{errorMessage}}</b>
+        <p>
     </div>
 
     <div style="padding:4px;margin-bottom:0.5cm;">
@@ -47,7 +47,7 @@
                 </tbody>
             </table>
         </div>
-        <pagination boundary-links="true" ng-model="vm.currentPage" total-items="vm.totalItems" items-per-page="vm.entryLimit" ss="pagination-sm"
+        <pagination boundary-links="true" ng-model="currentPage" total-items="totalItems" items-per-page="entryLimit" ss="pagination-sm"
         previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" rotate="false" style="margin-top: 0px; margin-bottom: 0px; margin-left:2px;">
         </pagination>
 

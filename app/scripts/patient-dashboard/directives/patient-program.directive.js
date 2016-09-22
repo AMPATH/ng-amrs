@@ -23,7 +23,9 @@
         $scope.enrolledProgrames = '';
         $scope.notEnrolled = '';
         $scope.experiencedLoadingError = false;
-        
+        $scope.errorMessage = '';
+        $scope.isBusyt = true;
+        $scope.loadingData = '';
         //functions
         $scope.openPatientProgramModal = openPatientProgramModal;
         EnrollmentHelperService.setSelectedPatient($scope.patientUuid);
@@ -39,8 +41,9 @@
         }
 
         function getPatientPrograms(patientId) {
-
+            $scope.isBusy = true;
             $scope.notEnrolled = '';
+            $scope.loadingData = 'Program Enrollment';
             var customFetchColumns = 'custom:(uuid,display,dateEnrolled,dateCompleted,program:(uuid))';
             ProgramEnrollmentResService.getProgramEnrollmentByPatientUuid(patientId,
                 function (data) {
@@ -48,11 +51,16 @@
                         $scope.enrolledProgrames = data.results;
                         if (data.results.length <= 0)
                             $scope.notEnrolled = true;
+                        $scope.isBusy = false;
+                        $scope.loadingData = '';
                     }
                 },
                 function (error) {
                     console.log(error)
+                    $scope.isBusy = false;
                     $scope.experiencedLoadingError = true;
+                    $scope.errorMessage = 'Error Occured While Loading Patient Programs';
+                    $scope.loadingData = '';
                 }, customFetchColumns);
         }
 
@@ -61,19 +69,25 @@
         }
 
         function getPrograms() {
+            $scope.isBusy = true;
+            $scope.loadingData = 'Programs';
             ProgramResService.getPrograms(
                 function (data) {
                     if (data) {
                         $scope.programs = data.results;
                         if (data.results.length <= 0)
                             $scope.notEnrolled = true;
+                        $scope.loadingData = '';
+                        $scope.isBusy = false;
                     }
-
+                    $scope.isBusy = false;
                 },
                 function (error) {
-                    console.log(error)
+                    console.log(error);
+                    $scope.isBusy = false;
                     $scope.experiencedLoadingError = true;
-
+                    $scope.errorMessage = 'Error Occured While Loading Programs';
+                    $scope.loadingData = '';
                 });
         }
 
@@ -89,7 +103,7 @@
             }
 
             var selectedPatient = EnrollmentHelperService.getSelectedPatient();
-            var uibModalInstance = $uibModal.open({
+            $uibModal.open({
                 animation: $scope.animationsEnabled,
                 templateUrl: 'views/patient-dashboard/patient-program-modal.html',
                 windowClass: 'patient-program-modal',

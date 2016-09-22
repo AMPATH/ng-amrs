@@ -1,4 +1,4 @@
-<form name="programEnrollmentForm">
+<form name="programEnrollmentForm" novalidate>
     <div class="form-group">
 
         <div style="margin-bottom:20px;">
@@ -6,10 +6,10 @@
         </div>
 
         <div>
-            <label for="date-enrolled">Date Enrolled:</label>
+            <label for="enrolledDate">Date Enrolled:</label>
             <div class="input-group">
-                <input type="text" id="date-enrolled" class="form-control" is-open="enrolledDateIsOpen" date-parser="short" datepicker-popup="mediumDate"
-                ng-model="enrolledDate" name="enrolledDate" ng-change="setEnrolledDate(enrolledDate)" placeholder={{enrolledDate}}
+                <input type="text" id="denrolledDate" class="form-control" is-open="enrolledDateIsOpen" date-parser="short" datepicker-popup="mediumDate"
+                ng-model="enrolledDate" name="enrolledDate" placeholder={{enrolledDate}}
                 required max-date="currentDate">
                 <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="enrolledDateIsOpen = !enrolledDateIsOpen">
@@ -23,11 +23,11 @@
         </div>
 
         <div>
-            <label for="date-completed">Date Completed:</label>
+            <label for="completedDate">Date Completed:</label>
             <div class="input-group">
-                <input type="text" id="date-completed" class="form-control" is-open="completedDateIsOpen" date-parser="short" datepicker-popup="mediumDate"
-                ng-model="completedDate" name="completedDate" ng-change="setcompletedDate(completedDate)" placeholder={{completedDate}}
-                required max-date="currentDate">
+                <input type="text" id="completedDate" class="form-control" is-open="completedDateIsOpen" date-parser="short" datepicker-popup="mediumDate"
+                ng-model="completedDate" name="completedDate" placeholder={{completedDate}}
+                 max-date="currentDate">
                 <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="completedDateIsOpen = !completedDateIsOpen">
                 <i class="glyphicon glyphicon-calendar"></i>
@@ -38,6 +38,7 @@
         </div>
 
     </div>
+    
     <div ng-show="hasError" style="margin-bottom:10px;">
         <span class="text-danger"> <i class="glyphicon glyphicon-exclamation-sign"></i> {{errorMessage}}</span>
     </div>
