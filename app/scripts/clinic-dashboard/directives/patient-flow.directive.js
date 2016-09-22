@@ -49,6 +49,7 @@
       $scope.finalProviderReport = [];
       $scope.selectedLocation = $stateParams.locationuuid || '';
       $scope.showGenerateButton=showGenerateButton;
+      $scope.statsByLocation =null;
 
       //getter setter binding
       $scope.startDate = ClinicDashboardService.getStartDate() || new Date();
@@ -65,6 +66,7 @@
       //DataTable Options for providers
       $scope.columns = [];
       $scope.bsTableControl = {options: {}};
+      $scope.bsTableLocationWaitTimes = {options: {}};
       $scope.exportList = [
         {name: 'Export Basic', value: ''},
         {name: 'Export All', value: 'all'},
@@ -217,10 +219,13 @@
         }
 
         function loadPatientFlowSuccessful(results) {
+         // console.log('results',results)
             $scope.patientStatuses = results.result;
             $scope.averageWaitingTime = results.averageWaitingTime;
             $scope.medianWaitingTime = results.medianWaitingTime;
             $scope.incompleteVisitsCount = results.incompleteVisitsCount;
+            $scope.statsByLocation=results.statsByLocation;
+            console.log('$scope.medianWaitingTime', $scope.statsByLocation)
 
 
             $scope.isBusy = false;
@@ -229,6 +234,7 @@
             transformVisitsToDummyEncounters();
             groupEncountersByProvider();
             buildDataTable();
+            buildLocationWaitTimesTable();
 
         }
 
@@ -625,6 +631,143 @@
         }
 
       }
+      //columns for locations stats wait time
+      $scope.locationWaitTimesColumn =[
+        {
+          name: 'location',
+          headers:'location'
+        },
+        {
+          name: 'totalVisitsCount',
+          headers:'# Visits'
+        },
+        {
+          name: 'completeVisitsCount',
+          headers:'# Completed'
+        },
+        {
+          name: 'medianWaitingTime.medianClinicianWaitingTime',
+          headers:'median_Clinician_Waiting_Time'
+        },
+        {
+          name: 'medianWaitingTime.medianTriageWaitingTime',
+          headers:'median_Triage_Waiting_Time'
+        },
+        {
+          name: 'medianWaitingTime.medianVisitCompletionTime',
+          headers:'median_Visit_Completion_Time'
+        }];
+
+      function buildLocationWaitTimesTable() {
+        locationWaitTimesColumns();
+        locationWaitTimesTableControls();
+
+      }
+
+      function locationWaitTimesColumns() {
+        $scope.columns = [];
+        _.each($scope.locationWaitTimesColumn, function (header) {
+          //var visible =(header!=='location_uuid');
+          $scope.columns.push({
+            field: header.name,
+            title: $filter('titlecase')(header.headers.toString().split('_').join(' ')),
+            align: 'center',
+            valign: 'center',
+            sortable:true,
+            visible:true,
+            tooltip: true,
+            formatter: function (value, row, index) {
+              return locationWaitTimeCellFormatter(value, row, index, header);
+
+            },
+            events:'actionEvents'
+          });
+        });
+
+      }
+
+
+      function locationWaitTimesTableControls() {
+        $scope.bsTableLocationWaitTimes = {
+          options: {
+            data: $scope.statsByLocation,
+            rowStyle: function (row, index) {
+              return {classes: 'none'};
+            },
+            tooltip: true,
+            classes: 'table table-hover',
+            cache: false,
+            height: 550,
+            detailView: false,
+            //detailFormatter: detailFormatter,
+            striped: true,
+            selectableRows: true,
+            showFilter: true,
+            pagination: false,
+            pageSize: 20,
+            pageList: [5, 10, 25, 50, 100, 200],
+            search: true,
+            trimOnSearch: true,
+            singleSelect: false,
+            showColumns: true,
+            showRefresh: true,
+            showMultiSort: true,
+            showPaginationSwitch: true,
+            smartDisplay: true,
+            idField: 'visit_id',
+            minimumCountColumns: 2,
+            clickToSelect: true,
+            showToggle: false,
+            maintainSelected: true,
+            showExport: true,
+            toolbar: '#toolbar',
+            toolbarAlign: 'left',
+            exportTypes: ['json', 'xml', 'csv', 'txt', 'png', 'sql', 'doc', 'excel', 'powerpoint', 'pdf'],
+            columns: $scope.columns,
+            exportOptions: {fileName: ''},
+            iconSize: undefined,
+            iconsPrefix: 'glyphicon', // glyphicon of fa (font awesome)
+            icons: {
+              paginationSwitchDown: 'glyphicon-chevron-down',
+              paginationSwitchUp: 'glyphicon-chevron-up',
+              refresh: 'glyphicon-refresh',
+              toggle: 'glyphicon-list-alt',
+              columns: 'glyphicon-th',
+              sort: 'glyphicon-sort',
+              plus: 'glyphicon-plus',
+              minus: 'glyphicon-minus',
+              detailOpen: 'glyphicon-plus',
+              detailClose: 'glyphicon-minus'
+            }
+
+          }
+        };
+      }
+
+      /**
+       * Function to add button on each cell
+       */
+      function locationWaitTimeCellFormatter(value, row, index, header) {
+
+        if(header ==='location'){
+
+          return '<div class="" style="padding: inherit; width:100%; max-width: 300px" ><span ' +
+            'class="text-info text-capitalize">'+value+'</span></div>';
+
+        }
+
+        if (value === null || value === undefined) {
+          return '-';
+        }
+
+        return ['<a class="clickLink"',
+          'title="  " data-toggle="tooltip"',
+          'data-placement="top"',
+          'href="javascript:void(0)" >' + value + '</a>'
+        ].join('');
+
+      }
+
 
 
     }
