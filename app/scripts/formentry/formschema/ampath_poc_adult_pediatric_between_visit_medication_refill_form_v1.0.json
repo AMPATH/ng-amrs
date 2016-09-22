@@ -1,6 +1,6 @@
 {
-    "name": "AMPATH Adult/Ped Transit/Between Visit Med Refill Encounter Form",
-    "version": "0.01",
+    "name": "AMPATH Adult/Ped Between Visit Med Refill Encounter Form",
+    "version": "1.0",
     "encounterType": "uuid",
     "processor": "EncounterFormProcessor",
     "form": "uuid",
@@ -28,10 +28,6 @@
         {
             "formName": "component_other-medication",
             "alias": "omed"
-        },
-        {
-            "formName": "component_lab-orders",
-            "alias": "lo"
         }
     ],
     "pages": [
@@ -99,25 +95,6 @@
                                     {
                                         "concept": "a89ee9a8-1350-11df-a1f1-0026b9348838",
                                         "label": "Ped"
-                                    }
-                                ]
-                            },
-                            "type": "obs",
-                            "validators": []
-                        },
-                        {
-                            "label": "Patient current care program  :",
-                            "questionOptions": {
-                                "rendering": "select",
-                                "concept": "a8afbb16-1350-11df-a1f1-0026b9348838",
-                                "answers": [
-                                    {
-                                        "concept": "a89c2f42-1350-11df-a1f1-0026b9348838",
-                                        "label": "Ampath Plus"
-                                    },
-                                    {
-                                        "concept": "a89c301e-1350-11df-a1f1-0026b9348838",
-                                        "label": "Non Ampath Plus"
                                     }
                                 ]
                             },

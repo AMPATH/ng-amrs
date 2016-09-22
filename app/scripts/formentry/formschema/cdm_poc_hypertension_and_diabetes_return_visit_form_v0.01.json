@@ -1,0 +1,358 @@
+{
+    "name": "HTN-DM Return Encounter Form v0.01",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "referencedForms": [
+        {
+            "formName": "component_follow-up-reason-v1.0",
+            "alias": "fur"
+        },
+        {
+            "formName": "component_chief-complaints-v1.0",
+            "alias": "cc"
+        },
+        {
+            "formName": "component_ob-history",
+            "alias": "obhist"
+        },
+        {
+            "formName": "component_vitals",
+            "alias": "vt"
+        },
+        {
+            "formName": "component_physical-exams-v1.0",
+            "alias": "pe"
+        },
+        {
+            "formName": "component_lab-results-v1.0",
+            "alias": "lr"
+        },
+        {
+            "formName": "component_cdm-drugs",
+            "alias": "cdmdrugs"
+        },
+        {
+            "formName": "component_problem-list",
+            "alias": "pl"
+        },
+        {
+            "formName": "component_lab-orders-v1.0",
+            "alias": "lo"
+        },
+        {
+            "formName": "component_referral-v1.0",
+            "alias": "ref"
+        }
+    ],
+    "pages": [
+        {
+            "label": "Encounter Details",
+            "sections": [
+                {
+                    "label": "Encounter Details",
+                    "questions": [
+                        {
+                            "label": "Visit Date",
+                            "type": "encounterDatetime",
+                            "required": "true",
+                            "default": "",
+                            "id": "encDate",
+                            "questionOptions": {
+                                "rendering": "date"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "encounterProvider",
+                            "label": "Provider",
+                            "id": "provider",
+                            "required": "true",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        },
+                        {
+                            "type": "encounterLocation",
+                            "label": "Facility name (site/satellite clinic required):",
+                            "id": "location",
+                            "required": "true",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Follow-up Reason",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "fur",
+                        "page": "Follow-up Reason",
+                        "section": "Follow-up Reason"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Chief Complaints",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "cc",
+                        "page": "Chief Complaints",
+                        "section": "Chief Complaints"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "OB/Gyn",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "obhist",
+                        "page": "OB/Gyn History",
+                        "section": "OB/Gyn History",
+                        "excludeQuestions": [
+                            "menStatus",
+                            "preg",
+                            "deliveryDate",
+                            "lastDelivery",
+                            "onFamilyPlanning",
+                            "fpMethod",
+                            "reasonNotOnFamilyPlanning"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Current Medication & Adherence",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "cdmdrugs",
+                        "page": "Medication",
+                        "section": "Current Medication"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "cdmdrugs",
+                        "page": "Medication",
+                        "section": "Medication Adherence"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Vitals",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "vt",
+                        "page": "Vitals",
+                        "section": "Vital Signs",
+                        "excludeQuestions": [
+                            "muac",
+                            "oxygen",
+                            "bmi"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Physical Exam",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "pe",
+                        "page": "Physical Exam",
+                        "section": "Physical Exam",
+                        "excludeQuestions": [
+                            "heent",
+                            "musculo"
+                        ]
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "pe",
+                        "page": "Physical Exam",
+                        "section": "Physical Exams, Notes"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Lab Results",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "lr",
+                        "page": "Test Results",
+                        "section": "Chemistry Lab Tests",
+                        "excludeQuestions": [
+                            "sgptalt_test",
+                            "ast_test",
+                            "hgbgdl_test",
+                            "testWBCmm",
+                            "platelets_test",
+                            "alcmm_test",
+                            "mcv_test",
+                            "cd4_test",
+                            "cd4percent_test",
+                            "viralLoad_test",
+                            "vljust",
+                            "hivRapid",
+                            "longEliza",
+                            "hivPcr"
+                        ]
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "lr",
+                        "page": "Test Results",
+                        "section": "Chest Xray"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "lr",
+                        "page": "Test Results",
+                        "section": "Urinalysis, mycroscopic"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "lr",
+                        "page": "Test Results",
+                        "section": "Other CDM Tests"
+                    }
+                }
+                 
+            ]
+        },
+        {
+            "label": "Complications",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "pl",
+                        "page": "Problem list",
+                        "section": "Problem List"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Medication Plan",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "cdmdrugs",
+                        "page": "Medication",
+                        "section": "Medication Plan"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Lab Orders",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "lo",
+                        "page": "Test orders",
+                        "section": "Test Orders",
+                        "excludeQuestions": [
+                            "vljust"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Referral Orders",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "ref",
+                        "page": "Referrals",
+                        "section": "Referrals",
+                        "excludeQuestions": [
+                            "hospitalization",
+                            "hospReason",
+                            "tranferCare",
+                            "transfered_out_to_ampath"
+                        ]
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "ref",
+                        "page": "Referrals",
+                        "section": "Continue Care in Clinic"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "ref",
+                        "page": "Referrals",
+                        "section": "Continue Care in Dispensary"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "ref",
+                        "page": "Referrals",
+                        "section": "Reasons for COE referral"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Next Appointment",
+            "sections": [
+                {
+                    "label": "Next appointment",
+                    "isExpanded": "true",
+                    "questions": [
+                        {
+                            "label": "Return to clinic Date:",
+                            "type": "obs",
+                            "required": "true",
+                            "questionOptions": {
+                                "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
+                                "rendering": "date",
+                                "weeksList": [
+                                    2,
+                                    4,
+                                    8,
+                                    12,
+                                    16
+                                ]
+                            },
+                            "validators": [
+                                {
+                                    "type": "date",
+                                    "allowFutureDates": "true"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

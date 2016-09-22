@@ -1,6 +1,6 @@
 {
-    "name": "AMPATH Adult/Ped Transit/Between Visit Med Refill Encounter Form",
-    "version": "0.01",
+    "name": "AMPATH Adult/Ped Transit Med Refill Encounter Form",
+    "version": "1.0",
     "encounterType": "uuid",
     "processor": "EncounterFormProcessor",
     "form": "uuid",
@@ -28,10 +28,6 @@
         {
             "formName": "component_other-medication",
             "alias": "omed"
-        },
-        {
-            "formName": "component_lab-orders",
-            "alias": "lo"
         }
     ],
     "pages": [
@@ -106,15 +102,11 @@
                             "validators": []
                         },
                         {
-                            "label": "Patient current care program  :",
+                            "label": "Patient current care program:",
                             "questionOptions": {
                                 "rendering": "select",
                                 "concept": "a8afbb16-1350-11df-a1f1-0026b9348838",
                                 "answers": [
-                                    {
-                                        "concept": "a89c2f42-1350-11df-a1f1-0026b9348838",
-                                        "label": "Ampath Plus"
-                                    },
                                     {
                                         "concept": "a89c301e-1350-11df-a1f1-0026b9348838",
                                         "label": "Non Ampath Plus"
@@ -123,209 +115,6 @@
                             },
                             "type": "obs",
                             "validators": []
-                        },
-                        {
-                            "label": "Mother Deceased:",
-                            "questionOptions": {
-                                "rendering": "select",
-                                "concept": "a8a0b670-1350-11df-a1f1-0026b9348838",
-                                "answers": [
-                                    {
-                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
-                                        "label": "Yes"
-                                    },
-                                    {
-                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                                        "label": "No"
-                                    }
-                                ]
-                            },
-                            "type": "obs",
-                            "validators": [],
-                            "hide": {
-                                "hideWhenExpression": "pattype !== 'a89ee9a8-1350-11df-a1f1-0026b9348838'"
-                            }
-                        },
-                        {
-                            "label": "Father Deceased:",
-                            "questionOptions": {
-                                "rendering": "select",
-                                "concept": "a8a0b670-1350-11df-a1f1-0026b9348838",
-                                "answers": [
-                                    {
-                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
-                                        "label": "Yes"
-                                    },
-                                    {
-                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
-                                        "label": "No"
-                                    }
-                                ]
-                            },
-                            "type": "obs",
-                            "validators": [],
-                            "hide": {
-                                "hideWhenExpression": "pattype !== 'a89ee9a8-1350-11df-a1f1-0026b9348838'"
-                            }
-                        },
-                        {
-                            "label": "Was this visit scheduled?",
-                            "questionOptions": {
-                                "rendering": "select",
-                                "concept": "a89ff9a6-1350-11df-a1f1-0026b9348838",
-                                "answers": [
-                                    {
-                                        "concept": "a89b6440-1350-11df-a1f1-0026b9348838",
-                                        "label": "Scheduled visit"
-                                    },
-                                    {
-                                        "concept": "a89ff816-1350-11df-a1f1-0026b9348838",
-                                        "label": "Unscheduled Visit Early"
-                                    },
-                                    {
-                                        "concept": "a89ff8de-1350-11df-a1f1-0026b9348838",
-                                        "label": "Unscheduled Visit Late"
-                                    }
-                                ]
-                            },
-                            "type": "obs",
-                            "validators": []
-                        },
-                        {
-                            "type": "obsGroup",
-                            "label": "Individual who picked/picking drugs detailed",
-                            "questionOptions": {
-                                "concept": "a8a36d7a-1350-11df-a1f1-0026b9348838",
-                                "rendering": "group"
-                            },
-                            "questions": [
-                                {
-                                    "label": "Individual who picked/picking drugs",
-                                    "questionOptions": {
-                                        "concept": "a89cd410-1350-11df-a1f1-0026b9348838",
-                                        "answers": [
-                                            {
-                                                "concept": "a898c0dc-1350-11df-a1f1-0026b9348838",
-                                                "label": "Mother"
-                                            },
-                                            {
-                                                "concept": "a898c1a4-1350-11df-a1f1-0026b9348838",
-                                                "label": "Father"
-                                            },
-                                            {
-                                                "concept": "a89cd0fa-1350-11df-a1f1-0026b9348838",
-                                                "label": "Husband"
-                                            },
-                                            {
-                                                "concept": "a89cd1c2-1350-11df-a1f1-0026b9348838",
-                                                "label": "Wife"
-                                            },
-                                            {
-                                                "concept": "a898c32a-1350-11df-a1f1-0026b9348838",
-                                                "label": " Grandparent"
-                                            },
-                                            {
-                                                "concept": "a89cd280-1350-11df-a1f1-0026b9348838",
-                                                "label": "Care taker/Guardian"
-                                            },
-                                            {
-                                                "concept": "a8aaf07c-1350-11df-a1f1-0026b9348838",
-                                                "label": "Friend/Colleague"
-                                            },
-                                            {
-                                                "concept": "a89cd352-1350-11df-a1f1-0026b9348838",
-                                                "label": "Neighbor"
-                                            },
-                                            {
-                                                "concept": "a898c262-1350-11df-a1f1-0026b9348838",
-                                                "label": "Sibling"
-                                            },
-                                            {
-                                                "concept": "a8a17470-1350-11df-a1f1-0026b9348838",
-                                                "label": "Paternal Aunt"
-                                            },
-                                            {
-                                                "concept": "a8a17394-1350-11df-a1f1-0026b9348838",
-                                                "label": "Maternal Aunt"
-                                            },
-                                            {
-                                                "concept": "a8a175f6-1350-11df-a1f1-0026b9348838",
-                                                "label": "Paternal Uncle"
-                                            },
-                                            {
-                                                "concept": "a8a1752e-1350-11df-a1f1-0026b9348838",
-                                                "label": "Maternal Uncle"
-                                            },
-                                            {
-                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                                                "label": "Other"
-                                            }
-                                        ],
-                                        "rendering": "select"
-                                    },
-                                    "type": "obs"
-                                },
-                                {
-                                    "label": "Other (Specify)",
-                                    "questionOptions": {
-                                        "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
-                                        "rendering": "text"
-                                    },
-                                    "type": "obs"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "obsGroup",
-                            "label": "Reason for not picking own Meds detailed",
-                            "questionOptions": {
-                                "concept": "a8a36cbc-1350-11df-a1f1-0026b9348838",
-                                "rendering": "group"
-                            },
-                            "questions": [
-                                {
-                                    "label": "Reason for not picking own Meds",
-                                    "questionOptions": {
-                                        "concept": "a89de3a0-1350-11df-a1f1-0026b9348838",
-                                        "answers": [
-                                            {
-                                                "concept": "a89de152-1350-11df-a1f1-0026b9348838",
-                                                "label": "Travelling"
-                                            },
-                                            {
-                                                "concept": "a89de21a-1350-11df-a1f1-0026b9348838",
-                                                "label": "Work/School"
-                                            },
-                                            {
-                                                "concept": "a89de2d8-1350-11df-a1f1-0026b9348838",
-                                                "label": "Too sick to come"
-                                            },
-                                            {
-                                                "concept": "a897fdaa-1350-11df-a1f1-0026b9348838",
-                                                "label": "Lacked Transport/Fare"
-                                            },
-                                            {
-                                                "concept": "a8a8b0b4-1350-11df-a1f1-0026b9348838",
-                                                "label": " Inpatient care or hospitalization"
-                                            },
-                                            {
-                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                                                "label": " Other"
-                                            }
-                                        ],
-                                        "rendering": "select"
-                                    },
-                                    "type": "obs"
-                                },
-                                {
-                                    "label": "Other Reason(Specify)",
-                                    "questionOptions": {
-                                        "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
-                                        "rendering": "text"
-                                    },
-                                    "type": "obs"
-                                }
-                            ]
                         }
                     ]
                 }

@@ -1,0 +1,222 @@
+{
+    "name": "component_dermatology-medication",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "pages": [
+        {
+            "label": "Dermatology Medication",
+            "sections": [
+                {
+                    "label": "Dermatology medications",
+                    "questions": [
+                        {
+                            "label": "Taking any oral medication for derm condition?",
+                            "id": "oralDermMeds",
+                            "questionOptions": {
+                                "concept": "18b2545a-175c-4a3d-a34c-7fa258c22719",
+                                "answers": [
+                                    {
+                                        "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "concept": "a899b42e-1350-11df-a1f1-0026b9348838",
+                                        "label": "No"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": []
+                        },
+                        {
+                            "label": "If yes, name of medication:",
+                            "id": "dermDrugs",
+                            "questionOptions": {
+                                "concept": "a2e3ab86-f02f-4647-90c0-250e7fc915a4",
+                                "answers": [
+                                    {
+                                        "concept": "a8971174-1350-11df-a1f1-0026b9348838",
+                                        "label": "Acyclovir"
+                                    },
+                                    {
+                                        "concept": "a898a8b8-1350-11df-a1f1-0026b9348838",
+                                        "label": "Albendazole"
+                                    },
+                                    {
+                                        "concept": "a893a098-1350-11df-a1f1-0026b9348838",
+                                        "label": "Amoxicillin"
+                                    },
+                                    {
+                                        "concept": "fe88a6fa-db8f-4bf7-b18c-1a36f60b3f75",
+                                        "label": "Azathioprine"
+                                    },
+                                    {
+                                        "concept": "a89715b6-1350-11df-a1f1-0026b9348838",
+                                        "label": "Cefuroxime"
+                                    },
+                                    {
+                                        "concept": "a893a78c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Cetirizine"
+                                    },
+                                    {
+                                        "concept": "a8989102-1350-11df-a1f1-0026b9348838",
+                                        "label": "Chlorpheniramine"
+                                    },
+                                    {
+                                        "concept": "a890cea4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Chloroquine"
+                                    },
+                                    {
+                                        "concept": "a8971836-1350-11df-a1f1-0026b9348838",
+                                        "label": "Ciprofloxacin"
+                                    },
+                                    {
+                                        "concept": "a89898a0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Cloxacillin"
+                                    },
+                                    {
+                                        "concept": "d18cd4de-7ca8-4dff-b592-c4323f7ba634",
+                                        "label": "Colchicine"
+                                    },
+                                    {
+                                        "concept": "a890c9e0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Dapsone"
+                                    },
+                                    {
+                                        "concept": "a890cc42-1350-11df-a1f1-0026b9348838",
+                                        "label": "Doxycycline"
+                                    },
+                                    {
+                                        "concept": "a893a78c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Erythromycin"
+                                    },
+                                    {
+                                        "concept": "a8971e12-1350-11df-a1f1-0026b9348838",
+                                        "label": "Fluconazole"
+                                    },
+                                    {
+                                        "concept": "e9b252fd-7906-49b7-9d7d-b9a1a8ce518b",
+                                        "label": "Fexofenadine "
+                                    },
+                                    {
+                                        "concept": "a89535f2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Flucloxacillin"
+                                    },
+                                    {
+                                        "concept": "a8a43e12-1350-11df-a1f1-0026b9348838",
+                                        "label": "Gabapentin"
+                                    },
+                                    {
+                                        "concept": "39f56b5f-c553-447f-997c-eca6b1cda769",
+                                        "label": "Griseofulvin"
+                                    },
+                                    {
+                                        "concept": "d0b62bdc-df1d-486e-a17c-b92b576a90d0",
+                                        "label": "Hydroxychloroquine"
+                                    },
+                                    {
+                                        "concept": "c95aee2d-24f6-43bf-ac5f-150e1b530797",
+                                        "label": "Isotretinoin"
+                                    },
+                                    {
+                                        "concept": "a898b650-1350-11df-a1f1-0026b9348838",
+                                        "label": "Loratidine"
+                                    },
+                                    {
+                                        "concept": "a8938504-1350-11df-a1f1-0026b9348838",
+                                        "label": "Mebendazole"
+                                    },
+                                    {
+                                        "concept": "3a4d0add-c1db-4318-92ea-a35f70107d5d",
+                                        "label": "Methotrexate"
+                                    },
+                                    {
+                                        "concept": "a8937f0a-1350-11df-a1f1-0026b9348838",
+                                        "label": "Metronidazole"
+                                    },
+                                    {
+                                        "concept": "2fae49f2-4666-4812-a565-3c8778e1253c",
+                                        "label": "Montelukast"
+                                    },
+                                    {
+                                        "concept": "a89560e0-1350-11df-a1f1-0026b9348838",
+                                        "label": "Prednisone"
+                                    },
+                                    {
+                                        "concept": "a898997c-1350-11df-a1f1-0026b9348838",
+                                        "label": "Ranitidine"
+                                    },
+                                    {
+                                        "concept": "a8a43a52-1350-11df-a1f1-0026b9348838",
+                                        "label": "Spironolactone"
+                                    },
+                                    {
+                                        "concept": "707602f2-dd34-4837-bb80-b82114ee7f92",
+                                        "label": "Terbinafine"
+                                    }
+                                ],
+                                "rendering": "multiCheckbox"
+                            },
+                            "type": "obs",
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "oralDermMeds!== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                            }
+                        },
+                        {
+                            "label": "What is the current dose that the patient is on?",
+                            "type": "obs",
+                            "questionOptions": {
+                                "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
+                                "rendering": "number"
+                            },
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "oralDermMeds!== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                            }
+                        },
+                        {
+                            "label": "Frequency:",
+                            "questionOptions": {
+                                "concept": "a8a06184-1350-11df-a1f1-0026b9348838",
+                                "answers": [
+                                    {
+                                        "concept": "a8a05dc4-1350-11df-a1f1-0026b9348838",
+                                        "label": "Daily"
+                                    },
+                                    {
+                                        "concept": "a8a05aea-1350-11df-a1f1-0026b9348838",
+                                        "label": "Twice daily"
+                                    },
+                                    {
+                                        "concept": "a8a05b9e-1350-11df-a1f1-0026b9348838",
+                                        "label": "Three times daily"
+                                    },
+                                    {
+                                        "concept": "a8a05cfc-1350-11df-a1f1-0026b9348838",
+                                        "label": "Four times daily"
+                                    },
+                                    {
+                                        "concept": "a899d8d2-1350-11df-a1f1-0026b9348838",
+                                        "label": "Once weekly"
+                                    },
+                                    {
+                                        "concept": "f17377b6-3f56-44cc-8754-8b2b86529cd0",
+                                        "label": "Five times weekly"
+                                    }
+                                ],
+                                "rendering": "select"
+                            },
+                            "type": "obs",
+                            "validators": [],
+                            "hide": {
+                                "hideWhenExpression": "oralDermMeds!== 'a899b35c-1350-11df-a1f1-0026b9348838'"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

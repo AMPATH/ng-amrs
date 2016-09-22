@@ -1,0 +1,186 @@
+{
+    "name": "Ampath Poc Dermatology Encounter Form v0.01",
+    "uuid": "xxxx",
+    "processor": "EncounterFormProcessor",
+    "referencedForms": [
+        {
+            "formName": "component_hpi",
+            "alias": "hpi"
+        },
+        {
+            "formName": "component_physical-exams-v1.0",
+            "alias": "ph"
+        },
+        {
+            "formName": "component_dermatology-medication",
+            "alias": "dm"
+        },
+        {
+            "formName": "component_other-medication",
+            "alias": "om"
+        },
+        {
+            "formName": "component_problem-list",
+            "alias": "pl"
+        },
+        {
+            "formName": "component_assessment-v1.0",
+            "alias": "ass1"
+        }
+    ],
+    "pages": [
+        {
+            "label": "Encounter Details",
+            "sections": [
+                {
+                    "label": "Encounter Details",
+                    "isExpanded": "true",
+                    "questions": [
+                        {
+                            "label": "Visit date",
+                            "type": "encounterDatetime",
+                            "required": "true",
+                            "default": "",
+                            "id": "encDate",
+                            "questionOptions": {
+                                "rendering": "date"
+                            },
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "encounterProvider",
+                            "label": "Provider",
+                            "id": "provider",
+                            "required": "true",
+                            "default": "",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        },
+                        {
+                            "type": "encounterLocation",
+                            "label": "Facility name (site/satellite clinic required):",
+                            "id": "location",
+                            "required": "true",
+                            "questionOptions": {
+                                "rendering": "ui-select-extended"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "HPI",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "hpi",
+                        "page": "History presenting illness",
+                        "section": "History Presenting Illness, Notes"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Exam",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "ph",
+                        "page": "Physical Exam",
+                        "section": "Physical Exams, Notes"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Medication Monitoring",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "dm",
+                        "page": "Dermatology Medication",
+                        "section": "Dermatology medications"
+                    }
+                },
+                {
+                    "reference": {
+                        "form": "om",
+                        "page": "Other medication",
+                        "section": "Other Medications"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Diagonosis",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "pl",
+                        "page": "Problem list",
+                        "section": "Problem List",
+                        "excludeQuestions": [
+                            "probResolved"
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Assessment",
+            "sections": [
+                {
+                    "reference": {
+                        "form": "ass1",
+                        "page": "Assessment",
+                        "section": "Assessment Notes"
+                    }
+                }
+            ]
+        },
+         {
+            "label": "Next Appointment",
+            "sections": [
+                {
+                    "label": "Next appointment",
+                    "isExpanded": "true",
+                    "questions": [
+                        {
+                            "label": "Return to clinic Date:",
+                            "type": "obs",
+                            "required": "true",
+                            "questionOptions": {
+                                "concept": "a8a666ba-1350-11df-a1f1-0026b9348838",
+                                "rendering": "date",
+                                "weeksList": [
+                                    2,
+                                    4,
+                                    8,
+                                    12,
+                                    16
+                                ]
+                            },
+                           "validators": [
+                               {
+                                   "type": "date",
+                                   "allowFutureDates": "true"
+                               },
+                               {
+                                   "type": "js_expression",
+                                   "failsWhenExpression": "(new moment(encDate)).isAfter((new moment(myValue)), 'day') || (new moment(encDate)).isSame((new moment(myValue)), 'day')",
+                                   "message": "Return to clinic date should be greater than the encounter date."
+                               }
+                           ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
