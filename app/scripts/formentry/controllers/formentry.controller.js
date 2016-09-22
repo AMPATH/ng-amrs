@@ -904,12 +904,40 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             }
         }
 
+        /*
+         * since we are migrating to angular 2,
+         * this fix sort out obs voiding issue
+         */
+        function removeVoidedValues(obs) {
+
+          _.each(obs, function (row) {
+
+            if(row.voided && row.value === "") {
+              delete row.value;
+            }
+
+            //loop through all properties of an object
+            for (var key in row) {
+              if (row.hasOwnProperty(key)) {
+
+                if(Array.isArray(row[key]))
+                  removeVoidedValues(row[key]);
+              }
+            }
+          });
+        }
+
         function submitFormPayload() {
             initializeSubmitStagingObject(vm.fourStageSubmitProcess, true);
             resetErrorFlags();
             isSpinnerBusy(true);
 
             //first stage of submitting is to save new obs
+
+            //TODO - APTS-146-fix
+
+            if(lastPayload && lastPayload.obs && Array.isArray(lastPayload.obs))
+              removeVoidedValues(lastPayload.obs);
 
             errorObject.model = vm.model;
             errorObject.stageOne = {};
