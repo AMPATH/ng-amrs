@@ -43,7 +43,7 @@
     "startbootstrap-sb-admin-2": "https://github.com/BlackrockDigital/startbootstrap-sb-admin-2.git#~v3.3.7",
     "kendo-ui": "2016.1.412+SP3",
     "offline": "~0.7.15",
-    "angular-formentry": "https://github.com/AMPATH/openmrs-angularFormentry.git#0.1.9",
+    "angular-formentry": "https://github.com/AMPATH/openmrs-angularFormentry.git#0.2.0",
     "openmrs-ngresource": "https://github.com/AMPATH/openmrs-ngresource.git#0.2.3",
     "angular-cache": "^4.5.0",
     "angular-bar-code-scanner": "~1.0.0",
