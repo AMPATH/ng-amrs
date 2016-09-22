@@ -36,8 +36,9 @@
         {{hivSummary.cd4OrderDate() | date:'dd-MM-yyyy'}}</span>
     </i>
     <li class="list-group-item" style="font-size:large">Current ARV Regimen: {{hivSummary.curArvMeds()}}</li>
+    <li class="list-group-item" style="font-size:large">Current ARV Regimen Start Date: {{hivSummary.arvStartDate()| date:'dd-MM-yyyy'}}</li>
     <li class="list-group-item" style="font-size:large">Enrollment Date: {{hivSummary.enrollmentDate()| date:'dd-MM-yyyy'}}</li>
-    <li class="list-group-item" style="font-size:large">ARV Start Date: {{hivSummary.arvStartDate()| date:'dd-MM-yyyy'}}</li>
+    <li class="list-group-item" style="font-size:large">ARV Initiation Start Date: {{hivSummary.arvFirstRegimenStartDate()| date:'dd-MM-yyyy'}}</li>
     <li class="list-group-item" style="font-size:large">INH Prophylaxis Start Date :{{hivSummary.tbProphylaxisStartDate() | date:'dd-MM-yyyy'}}</li>
     <li class="list-group-item" style="font-size:large">Current Who Stage: {{hivSummary.curWhoStage()}}</li>
 </ul>
