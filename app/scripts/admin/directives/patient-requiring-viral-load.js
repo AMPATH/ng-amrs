@@ -112,6 +112,12 @@
       if (patients.size === 0) {
         $scope.allDataLoaded = true;
       } else {
+
+        //loop through each row and transform the has_pending_vl_test column
+         _.each(patients.result, function(row) {
+           row.has_pending_vl_test = row.has_pending_vl_test === 0 ? 'No' : 'Yes';
+         });
+
         $scope.patients.length != 0 ? $scope.patients.push.apply($scope.patients, patients.result) :
           $scope.patients = patients.result;
         $scope.nextStartIndex += patients.size;
