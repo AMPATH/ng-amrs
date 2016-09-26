@@ -419,6 +419,7 @@
                         },
                         {
                             "label": "HIV DNA PCR:",
+                            "type": "obs",
                             "questionOptions": {
                                 "id": "hivPcr",
                                 "concept": "a898fe80-1350-11df-a1f1-0026b9348838",
