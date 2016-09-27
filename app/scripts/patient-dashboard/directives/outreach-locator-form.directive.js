@@ -71,7 +71,7 @@ jshint -W003, -W026
       var personAttributePayload = {
         attributes: [{
           value: url,
-          attributeType: '384a8759-35bb-48e5-94da-2741f12185f5'
+          attributeType: '1a12beb8-a869-42f2-bebe-09834d40fd59'
         }]
       };
       var person = {
