@@ -110,8 +110,8 @@
 				</div>
 				<div style="margin-top: 2px;">
 					<patient-demographics></patient-demographics>
-					<a ng-if="patientRelationships.relationships.length > 0" style="cellpadding:4px;font-size:14px;" data-target="#tab9"  class="btn btn-primary btn-xs" data-toggle="tab">&nbsp;&nbsp;&nbsp;View Relationships</a>
-					<a ng-if="patientRelationships.relationships.length == 0" style="cellpadding:4px;font-size:14px;" data-target="#tab9"  class="btn btn-primary btn-xs" data-toggle="tab">&nbsp;&nbsp;&nbsp;Add new Relationships</a>
+					<a ng-if="patientRelationships.relationships.length > 0" data-target="#tab9"  class="btn btn-primary btn-xs" data-toggle="tab">&nbsp;&nbsp;&nbsp;View Relationships</a>
+					<a ng-if="patientRelationships.relationships.length == 0" data-target="#tab9"  class="btn btn-primary btn-xs" data-toggle="tab">&nbsp;&nbsp;&nbsp;Add new Relationships</a>
 					<button  ng-click='showMap()' class="btn btn-primary btn-xs">Patient Locator Map</button>
 					<outreach-locator-form ng-if="fetchmap" patient="patient"></outreach-locator-form>
 				</div>
