@@ -28,7 +28,7 @@
   function clinicalRemindersController($scope, $rootScope, EtlRestService, $state, $filter) {
     //report params
     $scope.reportName='clinical-reminder-report';
-    $scope.reminderIndicators='needs_vl_coded,overdue_vl_lab_order,months_since_last_vl_date,new_viral_load_present, vl_error'; //comma separated indicators
+    $scope.reminderIndicators='needs_vl_coded,overdue_vl_lab_order,months_since_last_vl_date,new_viral_load_present,ordered_vl_has_error'; //comma separated indicators
     $scope.referenceDate= new Date();
     $scope.criticalReminders =[];
     $scope.isBusy=false;
@@ -109,6 +109,7 @@
     }
 
     function constructReminders(reminders){
+      console.log('reminders',reminders)
       //Viral Load Followups
       var labs ='Last viral load: none';
       if (reminders.last_vl_date) labs ='Last viral load: '+reminders.viral_load+ ' on '+$filter('date')(reminders.last_vl_date, "dd/MM/yyyy")+', '+reminders.months_since_last_vl_date+' months ago.';
@@ -151,11 +152,11 @@
         var labs='';
         pushReminderNotification(title,message,labs,'success',true);
       }
-      
+
       //Viral Load Error
-      if(reminders.vl_error = 1){
+      if(reminders.ordered_vl_has_error ===1){
         var title = 'Lab Error Reminder';
-        var message ='Error processing Viral Load.';
+        var message ='Viral load test that was ordered on (' + $filter('date')( reminders.vl_error_order_date, "dd/MM/yyyy")+') resulted to an error. Please re-order.'  ;
         var labs='';
         pushReminderNotification(title,message,labs,'warning',true);
       }
