@@ -382,7 +382,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
             // Get the resource associated with json schema
             var resource = _findResource(selectedFormMetadata.resources);
-            if(resource === null) {
+            if(true) {
               // TODO: Throw error when we completely move to using database
               // throw new Error('Form ' + selectedFormMetadata.name + ' has no '
               //        + 'JSON schema associated with it!');
