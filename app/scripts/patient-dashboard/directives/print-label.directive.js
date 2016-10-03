@@ -35,7 +35,8 @@ jshint -W003, -W026
     $scope.opens = [];
     $scope.copies = 2;
     $scope.patient = $rootScope.broadcastPatient;
-    $scope.patientIdentifer = $scope.patient.commonIdentifiers().ampathMrsUId;
+    $scope.patientIdentifer = $scope.patient.commonIdentifiers().ampathMrsUId ||
+      $scope.patient.commonIdentifiers().amrsMrn || $scope.patient.commonIdentifiers().cCC || $scope.patient.commonIdentifiers().kenyaNationalId
     $scope.$watch(function() {
       return $scope.valuationDatePickerIsOpen;
     }, function(value) {
@@ -113,19 +114,19 @@ jshint -W003, -W026
         });
         var svgPath = convertToPath(barcodeString);
 
-        doc = drawText(doc, 'Date Ordered : '+label.orderDate, {
+        doc = drawText(doc, 'Date Ordered : ' + label.orderDate, {
           x: 2,
           y: 2
         });
-        doc = drawText(doc, 'Test : '+label.testName, {
+        doc = drawText(doc, 'Test : ' + label.testName, {
           x: 2,
           y: 15
         });
-        doc = drawText(doc, 'Patient ID : '+label.identifier, {
+        doc = drawText(doc, 'Patient ID : ' + label.identifier, {
           x: 2,
           y: 30
         });
-        doc = drawText(doc, 'Order Number : '+label.orderNumber, {
+        doc = drawText(doc, 'Order Number : ' + label.orderNumber, {
           x: 2,
           y: 45
         });
