@@ -51,6 +51,11 @@
     $scope.nextStartIndex = 0;
     $scope.allDataLoaded = false;
 
+
+    $scope.additionalColumns = [{
+      name: 'has_pending_vl_test'
+    }]
+
     //init
     loadPatientList();
 
