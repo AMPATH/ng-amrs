@@ -59,7 +59,7 @@ jshint -W026, -W116, -W098, -W003, -W068, -W069, -W004, -W033, -W030, -W117
       var personAttributeResource = getPersonAttributeResource();
       var patient = personAttribute.person;
       var patientUuid = patient.uuid();
-      personAttributeResource.delete({uuid:patientUuid, personattributeuuid:personAttribute.attribute.uuid},
+      personAttributeResource.delete({uuid:patientUuid, personattributeuuid:personAttribute.attribute,v:'!purge'},
         function(data) {
           if (successCallback) {
             successCallback(data);

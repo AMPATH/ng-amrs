@@ -19,17 +19,18 @@ jshint -W003, -W026, -W033, -W098
   }
 
   PatientDemographicsCtrl.$inject = ['$rootScope', '$scope', '$stateParams',
-    'OpenmrsRestService', '$state', '$uibModal'
+    'OpenmrsRestService', '$state', '$uibModal', 'PersonAttributesRestService'
   ];
 
   function PatientDemographicsCtrl($rootScope, $scope, $stateParams,
-    OpenmrsRestService, $state, $uibModal) {
+    OpenmrsRestService, $state, $uibModal,PersonAttributesRestService) {
     $scope.openPersonAttributeManageModal = openPersonAttributeManageModal;
     $scope.openPersonManageModal = openPersonManageModal;
     $scope.openPersonNameModal = openPersonNameModal;
     $scope.openPersonAddressModal = openPersonAddressModal;
     $scope.openPersonIdentifierModal = openPersonIdentifierModal;
-    
+    $scope.voidAttirbute = voidAttirbute;
+
     function openPersonAttributeManageModal(attributeTypeUuid) {
       var scope = $scope;
       var uibModalInstance = $uibModal.open({
@@ -99,8 +100,8 @@ jshint -W003, -W026, -W033, -W098
         }
       });
     }
-    
-    
+
+
     function openPersonNameModal(patient) {
       var scope = $scope;
       var uibModalInstance = $uibModal.open({
@@ -136,7 +137,7 @@ jshint -W003, -W026, -W033, -W098
         }
       });
     }
-   
+
      function openPersonIdentifierModal(patientUuid) {
       var scope = $scope;
       var uibModalInstance = $uibModal.open({
@@ -172,7 +173,34 @@ jshint -W003, -W026, -W033, -W098
         }
       });
     }
-    
+    function voidAttirbute(personattributeuuid) {
+      var scope = $scope;
+      var getPersonAttributes = $scope.patient.getPersonAttributes();
+      var attributeUuid = _.pluck(_.where(getPersonAttributes, {
+        attributeType: personattributeuuid
+      }), 'uuid');
+
+      var personAttribute = {
+        person: $scope.patient,
+        attribute: attributeUuid
+      };
+
+      PersonAttributesRestService.voidPersonAttribute(personAttribute, function(data) {
+          if (data) {
+            OpenmrsRestService.getPatientService().getPatientByUuid({
+                uuid: scope.patient.uuid()
+              },
+              function(data) {
+                console.log('Patient Data:', data);
+                $scope.patient = data;
+              });
+          }
+        },
+        //error callback
+        function(error) {
+          console.log('Error', error);
+        });
+    }
      function openPersonAddressModal(patientUuid) {
       var scope = $scope;
       var uibModalInstance = $uibModal.open({
@@ -207,9 +235,9 @@ jshint -W003, -W026, -W033, -W098
           }
         }
       });
-    }   
+    }
     /*Avoid the round trip and use the rootScope patient selected during
-    search process    
+    search process
     */
     //handle the case for unloaded patient
 

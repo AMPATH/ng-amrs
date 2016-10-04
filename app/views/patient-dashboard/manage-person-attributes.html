@@ -10,65 +10,55 @@
             id="phone" placeholder="Patient Phone Number">
     <div ng-messages="patientPhoneForm.patientPhoneNumber.$error">
         <div class="help-block" ng-message="required">This field is required</div>
+        <div class="help-block" ng-message="minlength">Phone number should be 10 digits or more</div>
         <div class="help-block" ng-message="pattern">Valid phone number is required</div>
-        <div class="help-block" ng-message="minlength">Phone number should be 10 digits</div>
     </div>
   </div>
   <div class="form-group" ng-class="{ 'has-error': patientPhoneForm.alternativePhoneNumber.$touched && patientPhoneForm.alternativePhoneNumber.$invalid }">
     <label for="altphone">Alternative phone number</label>
     <input ng-model="alternativePhoneNumber" class="form-control" type="text"
           name="alternativePhoneNumber"
-          required
           ng-minlength="10"
-          required
           ng-pattern="/^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/"
           ng-maxlength="15"
           id="altphone" placeholder="Alternative Phone Number">
     <div ng-messages="patientPhoneForm.alternativePhoneNumber.$error">
-      <div class="help-block" ng-message="required">This field is required</div>
+      <div class="help-block" ng-message="minlength">Phone number should be 10 digits or more</div>
       <div class="help-block" ng-message="pattern">Valid phone number is required</div>
-      <div class="help-block" ng-message="minlength">Phone number should be 10 digits</div>
     </div>
   </div>
-  <div class="form-group" ng-class="{ 'has-error': patientPhoneForm.nextofkinPhoneNumber.$touched && patientPhoneForm.nextofkinPhoneNumber.$invalid }">
+  <div class="form-group" ng-class="{ 'has-error': patientPhoneForm.nextofkinPhoneNumber.$invalid }">
     <label for="nextofkinphone">Next of Kin phone number</label>
     <input ng-model="nextofkinPhoneNumber" class="form-control" type="text"
           name="nextofkinPhoneNumber"
-          required
           ng-minlength="10"
-          required
           ng-pattern="/^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/"
           ng-maxlength="15"
           id="nextofkinphone" placeholder="Next of Kin Phone Number">
     <div ng-messages="patientPhoneForm.nextofkinPhoneNumber.$error">
-      <div class="help-block" ng-message="required">This field is required</div>
+      <div class="help-block" ng-message="minlength">Phone number should be 10 digits or more</div>
       <div class="help-block" ng-message="pattern">Valid phone number is required</div>
-      <div class="help-block" ng-message="minlength">Phone number should be 10 digits</div>
     </div>
   </div>
-  <div class="form-group" ng-class="{ 'has-error': patientPhoneForm.patnerPhoneNumber.$touched && patientPhoneForm.patnerPhoneNumber.$invalid }">
+  <div class="form-group" ng-class="{ 'has-error': patientPhoneForm.patnerPhoneNumber.$invalid }">
     <label for="spousePhone">Spouse phone number</label>
     <input ng-model="patnerPhoneNumber" class="form-control" type="text"
           name="patnerPhoneNumber"
-          required
           ng-minlength="10"
-          required
           ng-pattern="/^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,3})|(\(?\d{2,3}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$/"
           ng-maxlength="15"
           id="spousePhone" placeholder="Spouse Phone Number">
     <div ng-messages="patientPhoneForm.patnerPhoneNumber.$error">
-      <div class="help-block" ng-message="required">This field is required</div>
+      <div class="help-block" ng-message="minlength">Phone number should be 10 digits or more</div>
       <div class="help-block" ng-message="pattern">Valid phone number is required</div>
-      <div class="help-block" ng-message="minlength">Phone number should be 10 digits</div>
     </div>
 </div>
-<div class="form-group" ng-class="{ 'has-error': patientPhoneForm.contactEmailAddress.$touched && patientPhoneForm.contactEmailAddress.$invalid }">
+<div class="form-group" ng-class="{ 'has-error': patientPhoneForm.contactEmailAddress.$invalid }">
    <label for="contactEmail">Email Address</label>
    <input name="contactEmailAddress" class="form-control" type="text"
           type="email"
           ng-model="contactEmailAddress"
-          ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
-          required>
+          ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" placeholder="Contact Email Address">
    <div ng-messages="patientPhoneForm.contactEmailAddress.$error">
    <div ng-message="pattern">Please enter a valid email address!</div>
    </div>
@@ -76,5 +66,5 @@
 <div ng-show="error" class="text-danger">
 <span ng-bind="errorMessage"></span>
 </div>
-<button ng-disabled="patientPhoneForm.patientPhoneNumber.$touched && patientPhoneForm.patientPhoneNumber.$invalid || patientPhoneForm.alternativePhoneNumber.$touched && patientPhoneForm.alternativePhoneNumber.$invalid || patientPhoneForm.nextofkinPhoneNumber.$touched && patientPhoneForm.nextofkinPhoneNumber.$invalid || patientPhoneForm.patnerPhoneNumber.$touched && patientPhoneForm.patnerPhoneNumber.$invalid || patientPhoneForm.contactEmailAddress.$touched && patientPhoneForm.contactEmailAddress.$invalid "class="btn btn-primary" type="button" ng-click="saveAttribute()"><span>Save<i ng-show="saving" style="font-size:14px" class="fa fa-spinner fa-spin"></i></span></button>
+<button ng-disabled="patientPhoneForm.patientPhoneNumber.$touched && patientPhoneForm.patientPhoneNumber.$invalid || patientPhoneForm.alternativePhoneNumber.$invalid || patientPhoneForm.nextofkinPhoneNumber.$invalid || patientPhoneForm.patnerPhoneNumber.$invalid || patientPhoneForm.contactEmailAddress.$invalid "class="btn btn-primary" type="button" ng-click="saveAttribute()"><span>Save<i ng-show="saving" style="font-size:14px" class="fa fa-spinner fa-spin"></i></span></button>
 </form>
