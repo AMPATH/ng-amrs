@@ -642,17 +642,18 @@
           headers:'# Visits'
         },
         {
-          name: 'completeVisitsCount',
-          headers:'# Completed'
-        },
-        {
-          name: 'medianWaitingTime.medianClinicianWaitingTime',
-          headers:'median_Clinician_Waiting_Time'
+          name: 'incompleteVisitsCount',
+          headers:'# Incomplete'
         },
         {
           name: 'medianWaitingTime.medianTriageWaitingTime',
           headers:'median_Triage_Waiting_Time'
         },
+        {
+          name: 'medianWaitingTime.medianClinicianWaitingTime',
+          headers:'median_Clinician_Waiting_Time'
+        },
+
         {
           name: 'medianWaitingTime.medianVisitCompletionTime',
           headers:'median_Visit_Completion_Time'

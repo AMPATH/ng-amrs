@@ -10,7 +10,7 @@
             <div class="input-group">
                 <input type="text" id="denrolledDate" class="form-control" is-open="enrolledDateIsOpen" date-parser="short" datepicker-popup="mediumDate"
                 ng-model="enrolledDate" name="enrolledDate" placeholder={{enrolledDate}}
-                required max-date="currentDate">
+                required >
                 <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="enrolledDateIsOpen = !enrolledDateIsOpen">
                 <i class="glyphicon glyphicon-calendar"></i>
@@ -27,7 +27,7 @@
             <div class="input-group">
                 <input type="text" id="completedDate" class="form-control" is-open="completedDateIsOpen" date-parser="short" datepicker-popup="mediumDate"
                 ng-model="completedDate" name="completedDate" placeholder={{completedDate}}
-                 max-date="currentDate">
+                 >
                 <span class="input-group-btn">
               <button type="button" class="btn btn-default" ng-click="completedDateIsOpen = !completedDateIsOpen">
                 <i class="glyphicon glyphicon-calendar"></i>
@@ -38,7 +38,7 @@
         </div>
 
     </div>
-    
+
     <div ng-show="hasError" style="margin-bottom:10px;">
         <span class="text-danger"> <i class="glyphicon glyphicon-exclamation-sign"></i> {{errorMessage}}</span>
     </div>
