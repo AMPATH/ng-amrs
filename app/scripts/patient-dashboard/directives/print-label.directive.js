@@ -35,8 +35,8 @@ jshint -W003, -W026
     $scope.opens = [];
     $scope.copies = 2;
     $scope.patient = $rootScope.broadcastPatient;
-    $scope.patientIdentifer = $scope.patient.commonIdentifiers().ampathMrsUId ||
-      $scope.patient.commonIdentifiers().amrsMrn || $scope.patient.commonIdentifiers().cCC || $scope.patient.commonIdentifiers().kenyaNationalId
+    $scope.patientIdentifer = $scope.patient.commonIdentifiers().ampathMrsUId
+
     $scope.$watch(function() {
       return $scope.valuationDatePickerIsOpen;
     }, function(value) {
@@ -99,6 +99,12 @@ jshint -W003, -W026
       }
       generateBarcodes(labels);
     };
+
+    function getAlternativeIdentifer(identifiers) {
+      if ($scope.patient.commonIdentifiers().ampathMrsUId === undefined) {
+        $scope.patientIdentifer = identifiers[0].identifier;
+      }
+    }
 
     function generateBarcodes(labels) {
       var doc = new PDFDocument({
@@ -220,6 +226,8 @@ jshint -W003, -W026
 
     function onFetchIdentifersSuccess(identifiers) {
       $scope.identifiers = identifiers.results;
+      getAlternativeIdentifer(identifiers.results);
+
     }
 
     function onFetchOrdesSuccess(result) {
