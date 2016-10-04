@@ -61,7 +61,6 @@
             $scope.saving = false;
             $scope.$emit('attributeSaved',data.person);
           }
-
         },
         //error callback
         function(error) {
@@ -70,6 +69,7 @@
           console.log('Error', error);
         });
     }
+
   }
 
   function managePersonAttributesDirectiveLink(scope, element, attrs, vm) {

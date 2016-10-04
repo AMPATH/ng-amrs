@@ -12,10 +12,18 @@
   <li class="list-group-item markDeceased" style="font-size:large" ng-if="patient.deathDate()">Death Date: {{patient.deathDate()}}</li>
   <li class="list-group-item markDeceased" style="font-size:large" ng-if="patient.deathDate()">Cause Of Death: {{patient.causeOfDeath().display}}</li>
   <li class="list-group-item" style="font-size:large" ng-if="patient.phoneNumber()">Phone Number: {{patient.phoneNumber()}} </li>
-  <li class="list-group-item" style="font-size:large" ng-if="patient.alternativePhoneNumber()">Alternative Phone Number: {{patient.alternativePhoneNumber()}} </li>
-  <li class="list-group-item" style="font-size:large" ng-if="patient.nextofkinPhoneNumber()">Next of Kin Phone Number: {{patient.nextofkinPhoneNumber()}}</li>
-  <li class="list-group-item" style="font-size:large" ng-if="patient.patnerPhoneNumber()">Spouse Phone Number: {{patient.patnerPhoneNumber()}}</li>
-  <li class="list-group-item" style="font-size:large" ng-if="patient.contactEmailAddress()">Email Address: {{patient.contactEmailAddress()}}</li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.alternativePhoneNumber()">Alternative Phone Number: {{patient.alternativePhoneNumber()}}
+    <button type="button" class="btn btn-primary btn-xs" ng-click="voidAttirbute('c725f524-c14a-4468-ac19-4a0e6661c930')">Delete</button>
+  </li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.nextofkinPhoneNumber()">Next of Kin Phone Number: {{patient.nextofkinPhoneNumber()}}
+    <button type="button" class="btn btn-primary btn-xs" ng-click="voidAttirbute('a657a4f1-9c0f-444b-a1fd-445bb91dd12d')">Delete</button>
+  </li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.patnerPhoneNumber()">Spouse Phone Number: {{patient.patnerPhoneNumber()}}
+    <button type="button" class="btn btn-primary btn-xs" ng-click="voidAttirbute('b0a08406-09c0-4f8b-8cb5-b22b6d4a8e46')">Delete</button>
+  </li>
+  <li class="list-group-item" style="font-size:large" ng-if="patient.contactEmailAddress()">Email Address: {{patient.contactEmailAddress()}}
+    <button type="button" class="btn btn-primary btn-xs" ng-click="voidAttirbute('2f65dbcb-3e58-45a3-8be7-fd1dc9aa0faa')">Delete</button>
+  </li>
   <li class="list-group-item" style="font-size:large" ng-if="patient.address().county">County: {{patient.address().county| titlecase }}</li>
   <li class="list-group-item" style="font-size:large" ng-if="patient.address().subCounty">Sub-County: {{patient.address().subCounty| titlecase }}</li>
   <li class="list-group-item" style="font-size:large" ng-if="patient.address().estateLandmark">Estate/Landmark: {{patient.address().estateLandmark| titlecase }}</li>
