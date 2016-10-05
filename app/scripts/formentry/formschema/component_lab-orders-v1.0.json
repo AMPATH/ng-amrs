@@ -39,7 +39,7 @@
                                                 "concept": "a898f50c-1350-11df-a1f1-0026b9348838",
                                                 "label": "CBC"
                                             },
-                                          
+
                                             {
                                                 "concept": "a896c8ae-1350-11df-a1f1-0026b9348838",
                                                 "label": "AST"
@@ -127,10 +127,6 @@
                                             {
                                                 "concept": "a89dda72-1350-11df-a1f1-0026b9348838",
                                                 "label": "ECGn"
-                                            },
-                                            {
-                                                "concept": "a8aaf3e2-1350-11df-a1f1-0026b9348838",
-                                                "label": "Other"
                                             }
                                         ]
                                     }
@@ -142,10 +138,7 @@
                                         "rendering": "text"
                                     },
                                     "type": "obs",
-                                    "validators": [],
-                                    "hide": {
-                                        "hideWhenExpression": "isEmpty(order1) || !arrayContains(order1, 'a8aaf3e2-1350-11df-a1f1-0026b9348838')"
-                                    }
+                                    "validators": []
                                 },
                                 {
                                     "label": "Viral load justification:",
