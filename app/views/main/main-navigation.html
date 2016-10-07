@@ -12,7 +12,7 @@
         <a class="navbar-brand" href="#/" rel="home" title="point of care">
           <!--<img style="max-width:100px; margin-top: -10px; padding-bottom: 2px;"
                src="images/ampathLogo.png" alt="P.O.C">-->
-               <img src="images/Logo-large.png" style="max-height:40px; margin-top: -10px;" alt="P.O.C">
+          <img src="images/Logo-large.png" style="max-height:40px; margin-top: -10px;" alt="P.O.C">
         </a>
       </div>
       <div class="navbar-collapse" ng-class="{collapse: isCollapsed}">
@@ -24,59 +24,73 @@
           <li ui-sref-active="active" ui-sref="clinical-dashboard" ng-click="isCollapsed = true">
             <a href="#/clinical-dashboard/test"><span><span class="icon-i-care-staff-area" aria-hidden="true"></span>&nbsp;Clinic Dashboard</span></a>
           </li>
-          <li ui-sref-active="active" ui-sref="labordersearch" ng-click="isCollapsed = true">
-            <a href="#/labordersearch"><span class="glyphicon glyphicon-search "  aria-hidden="true"></span><span >&nbsp;Lab Order Search</span></a>
-          <li ui-sref-active="active" ui-sref="admin.view-selection" ng-click="isCollapsed = true">
-            <a href="#/admin-dashboard/view-selection">
-
-              <b><span class="glyphicon glyphicon-stats"></span></b> Data Analytics
-              <span style="font-size:9px;"></span>
-            </a>
-          </li>
         </ul>
         <ul style="cursor: pointer;" class="nav navbar-nav navbar-right">
-          <li ui-sref-active="active" ui-sref="system-administration" ng-click="isCollapsed = true" ng-if="hasPrivileges('Edit Users')">
-            <a href="#/administration"><span><span class="fa fa-cog" aria-hidden="true"></span>&nbsp;Admin Dashboard</span></a>
-          </li>
-          <li ng-hide="isUserLoggedIn" ui-sref-active="active" ng-click="isCollapsed = true">
-            <a ui-sref="login" ng-href="#/dashboard">Sign In</a>
-          </li>
-          <li ui-sref-active="active" class="dropdown" ng-show="isUserLoggedIn" ng-class="{ open : dd1 }" ng-init="dd1 = false" ng-click="dd1 = !dd1">
+          <li ui-sref-active="active" class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle">
-              <span class="glyphicon glyphicon-user"></span> {{username}}
-               </a>
+              <i class="fa fa-th" aria-hidden="true"></i> More
+            </a>
             <ul role="menu" class="dropdown-menu">
-              <li>
-                <a><span>  Location: {{location}} <br/>  Role: {{role}}</span></a>
-              </li>
-              <li class="divider"></li>
-              <li ui-sref-active="active" ng-click="isCollapsed = true">
-                <a ui-sref="url-selector" ng-href="#/url-selector">
-                  <span class="glyphicon glyphicon-hdd"></span> Switch Servers
+              <li ui-sref-active="active" ui-sref="labordersearch" ng-click="isCollapsed = true">
+                <a href="#/labordersearch"><span class="glyphicon glyphicon-search "  aria-hidden="true"></span><span >&nbsp;Lab Order Search</span></a>
+                <li ui-sref-active="active" ui-sref="admin.view-selection" ng-click="isCollapsed = true">
+                  <a href="#/admin-dashboard/view-selection">
 
-                </a>
-              </li>
-              <li ui-sref-active="active" ng-click="isCollapsed = true" >
-                <a><span class="glyphicon glyphicon-warning-sign"> Logging</span></a>
-              <center>
-                <span log-switcher ng-model="switchStatus"></span>
-              </center>
-              </li>
-              <li class="divider"></li>
-              <li ui-sref-active="active" ng-click="isCollapsed = true">
-                <a ui-sref="user-default-properties" ng-href="#/user-default-properties">
-                  <span class="glyphicon glyphicon-user"></span> User Default Properties
-                </a>
-              </li>
-              <li class="divider"></li>
-              <li ui-sref-active="active" ng-click="isCollapsed = true" >
-                <a ui-sref="login" ng-href="#/dashboard" data-ng-click="logOut()">
-                  <span class="glyphicon glyphicon-log-out"></span> Logout
+                    <b><span class="glyphicon glyphicon-stats"></span></b> Data Analytics
+                    <span style="font-size:9px;"></span>
+                  </a>
+                </li>
+                <li ui-sref-active="active" ui-sref="admin.view-selection" ng-click="isCollapsed = true">
+                  <a href="#/admin-dashboard/view-selection">
 
-                </a>
-              </li>
+                    <b><span class="glyphicon glyphicon-stats"></span></b> Data Analytics
+                    <span style="font-size:9px;"></span>
+                  </a>
+                </li>
+                <li ui-sref-active="active" ui-sref="system-administration" ng-click="isCollapsed = true" ng-if="hasPrivileges('Edit Users')">
+                  <a href="#/administration"><span><span class="fa fa-cog" aria-hidden="true"></span>&nbsp;Admin Dashboard</span></a>
+                </li>
             </ul>
-          </li>
+            </li>
+            <li ng-hide="isUserLoggedIn" ui-sref-active="active" ng-click="isCollapsed = true">
+              <a ui-sref="login" ng-href="#/dashboard">Sign In</a>
+            </li>
+            <li ui-sref-active="active" class="dropdown" ng-show="isUserLoggedIn" ng-class="{ open : dd1 }" ng-init="dd1 = false" ng-click="dd1 = !dd1">
+              <a data-toggle="dropdown" class="dropdown-toggle">
+                <span class="glyphicon glyphicon-user"></span> {{username}}
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li>
+                  <a><span>  Location: {{location}} <br/>  Role: {{role}}</span></a>
+                </li>
+                <li class="divider"></li>
+                <li ui-sref-active="active" ng-click="isCollapsed = true">
+                  <a ui-sref="url-selector" ng-href="#/url-selector">
+                    <span class="glyphicon glyphicon-hdd"></span> Switch Servers
+
+                  </a>
+                </li>
+                <li ui-sref-active="active" ng-click="isCollapsed = true">
+                  <a><span class="glyphicon glyphicon-warning-sign"> Logging</span></a>
+                  <center>
+                    <span log-switcher ng-model="switchStatus"></span>
+                  </center>
+                </li>
+                <li class="divider"></li>
+                <li ui-sref-active="active" ng-click="isCollapsed = true">
+                  <a ui-sref="user-default-properties" ng-href="#/user-default-properties">
+                    <span class="glyphicon glyphicon-user"></span> User Default Properties
+                  </a>
+                </li>
+                <li class="divider"></li>
+                <li ui-sref-active="active" ng-click="isCollapsed = true">
+                  <a ui-sref="login" ng-href="#/dashboard" data-ng-click="logOut()">
+                    <span class="glyphicon glyphicon-log-out"></span> Logout
+
+                  </a>
+                </li>
+              </ul>
+            </li>
         </ul>
       </div>
     </div>
