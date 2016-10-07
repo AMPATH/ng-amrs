@@ -123,7 +123,7 @@
       <span class="text-danger"> <i class="glyphicon glyphicon-exclamation-sign"></i> {{errorMessage}}</span>
   </div>
   <div>
-      <button ng-disabled="isBusy || hasError | hasLoadingError || !hasLoadingTimeRequiredInputs" class="btn btn-primary" ng-click="postOrder()">
+      <button ng-disabled="isBusy || hasError || hasLoadingError || !hasLoadingTimeRequiredInputs" class="btn btn-primary" ng-click="postOrder()">
             <span>Post Order<i ng-show="isBusy" style="font-size: 14px;" class="fa fa-spinner fa-spin ng-hide"></i></span>
             </button>
       <button class="btn btn-default" style="margin-left:4px;" ng-click="closeDialogWindow()">Cancel</button>

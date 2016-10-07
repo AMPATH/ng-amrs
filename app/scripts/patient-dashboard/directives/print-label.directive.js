@@ -78,7 +78,9 @@ jshint -W003, -W026
             labels.push({
               orderDate: $filter('date')(order.dateActivated, 'dd/MM/yyyy'),
               testName: order.display,
-              identifier: $scope.patientIdentifer,
+              identifier: $scope.identifiers.map(function(elem) {
+                return elem.identifier;
+              }).join(","),
               orderNumber: order.orderNumber
             });
           }
@@ -87,12 +89,15 @@ jshint -W003, -W026
       generateBarcodes(labels);
     };
     $scope.printLabel = function(order) {
+      console.log($scope.identifiers)
       var labels = [];
       for (var c = 0; c < $scope.copies; c++) {
         var label = {
           orderDate: $filter('date')(order.dateActivated, 'dd/MM/yyyy'),
           testName: order.display,
-          identifier: $scope.patientIdentifer,
+          identifier: $scope.identifiers.map(function(elem) {
+            return elem.identifier;
+          }).join(","),
           orderNumber: order.orderNumber
         };
         labels.push(label);
@@ -203,7 +208,7 @@ jshint -W003, -W026
       doc.text(text, options.x, options.y, {
         width: bounds.width,
         height: bounds.height,
-        ellipsis: true
+        ellipsis: false
       });
       return doc;
     }
