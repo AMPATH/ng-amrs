@@ -54,7 +54,8 @@
       invalidateUserSession: invalidateUserSession,
       getReport:getReport,
       postFormError: postFormError,
-      uploadFile:uploadFile
+      uploadFile:uploadFile,
+      getClinicLabOrdersData:getClinicLabOrdersData
     };
     return serviceDefinition;
 
@@ -899,6 +900,32 @@
       var params = {
         locationUuids: locationUuids,
         dateStarted: visitDate
+      };
+
+      if (typeof successCallback === 'function') {
+        return resource.get(params).$promise.then(function (response) {
+          successCallback(response);
+        }, function (error) {
+          if (typeof failedCallback === 'function') {
+            failedCallback('Error processing request', error);
+          }
+          console.error(error);
+        });
+      } else {
+        return resource.get(params).$promise.then(function (response) {
+          return response;
+        }, function (response) {
+          // Something went crazy
+          return $q.reject(response);
+        });
+      }
+    }
+    function getClinicLabOrdersData(locationUuids, dateActivated, successCallback, failedCallback) {
+      var resource = getResource('clinic-lab-orders-data');
+
+      var params = {
+        locationUuids: locationUuids,
+        dateActivated: dateActivated
       };
 
       if (typeof successCallback === 'function') {
