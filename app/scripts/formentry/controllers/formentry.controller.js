@@ -430,11 +430,9 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
             var referencedFormNames = [];
             var refs = [];
             _.each(selectedFormSchema.referencedForms, function (reference) {
-                if(reference.ref) {
-                  refs.push(reference.ref);
-                } else {
+                
                   referencedFormNames.push(reference.formName);
-                }
+                
             });
             isSpinnerBusy(true);
             // Get from server.
