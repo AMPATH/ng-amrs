@@ -103,6 +103,14 @@
             requireLogin: true
           },
         })
+        .state('clinical-dashboard.clinic-lab-orders', {
+          url: '/clinic-lab-orders',
+          templateUrl: 'views/clinic-dashboard/clinic-lab-orders-container.html',
+          controller: 'ClinicDashboardCtrl',
+          data: {
+            requireLogin: true
+          }
+      })
         .state('clinical-dashboard.daily-appointments', {
           url: '/daily-appointments',
           templateUrl: 'views/clinic-dashboard/daily-appointments-tab.html',
