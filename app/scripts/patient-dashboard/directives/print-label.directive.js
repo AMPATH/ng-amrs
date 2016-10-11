@@ -78,9 +78,7 @@ jshint -W003, -W026
             labels.push({
               orderDate: $filter('date')(order.dateActivated, 'dd/MM/yyyy'),
               testName: order.display,
-              identifier: $scope.identifiers.map(function(elem) {
-                return elem.identifier;
-              }).join(","),
+              identifier: $scope.patientIdentifer,
               orderNumber: order.orderNumber
             });
           }
@@ -95,9 +93,7 @@ jshint -W003, -W026
         var label = {
           orderDate: $filter('date')(order.dateActivated, 'dd/MM/yyyy'),
           testName: order.display,
-          identifier: $scope.identifiers.map(function(elem) {
-            return elem.identifier;
-          }).join(","),
+          identifier: $scope.patientIdentifer,
           orderNumber: order.orderNumber
         };
         labels.push(label);
