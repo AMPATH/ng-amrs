@@ -70,6 +70,31 @@
       </table>
     </div>
   </div>
+
+  <div class="panel-info" ng-show="orderType.type === 'DNAPCR'">
+      <h5 style="margin-top: 2px; margin-bottom:2px; font-weight:bold;"><span>DNAPCR Summary Info</span></h5>
+      <hr style="margin-top: 1px; margin-bottom: 2px;" />
+
+      <table class="table">
+        <tbody>
+          <tr class="after_table row_0">
+            <td>Hiv Status Of Mother</td>
+            <td>{{HivStatusOfMother}}</td>
+          </tr>
+          <tr>
+            <td>Infant Prophylaxis</td>
+            <td>{{InfantProphylaxis}}</td>
+          </tr>
+          <tr>
+            <td>Infant Feeding</td>
+            <td>{{InfantFeeding}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
   <div class="clear"></div>
 
   <div ng-hide="isBusy" class="container-fluid">

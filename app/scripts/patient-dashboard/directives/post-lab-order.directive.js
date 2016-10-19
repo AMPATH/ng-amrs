@@ -26,11 +26,11 @@
 
   postLabOrderController.$inject = ['$scope', 'IdentifierResService', 'UtilService',
     'OrderResService', 'LabPostingHelperService', 'EtlRestService', 'LabOrderSearchService', '$filter',
-    'moment', 'dialogs'
+    'moment', 'dialogs', 'ConceptResService'
   ];
 
   function postLabOrderController($scope, IdentifierResService, UtilService,
-    OrderResService, labPostingHelper, EtlRestService, LabOrderSearchService, $filter, moment, dialogs) {
+    OrderResService, labPostingHelper, EtlRestService, LabOrderSearchService, $filter, moment, dialogs, ConceptResService) {
 
     var customOrderObjectDefinition =
       'custom:(display,uuid,orderNumber,accessionNumber,orderReason,orderReasonNonCoded,urgency,action,' +
@@ -85,6 +85,9 @@
     $scope.postOrder = postOrder;
     $scope.closeDialogWindow = closeDialogWindow;
     $scope.hasLoadingTimeRequiredInputs = true;
+    $scope.getDnaPcrConcepts = getDnaPcrConcepts;
+
+    var payload = {};
 
     activate();
 
@@ -99,6 +102,7 @@
       extractHivSummaryInformation();
       loadIdentifers();
       $scope.hasLoadingTimeRequiredInputs = hasLoadingTimeRequiredInputs();
+      payload = getPayload();
     }
 
     function loadIdentifers() {
@@ -225,7 +229,6 @@
     function postOrder() {
       if ($scope.isBusy) return;
       if (!isUserInputValid()) return;
-      var payload = getPayload();
 
       if (!$scope.hasError) {
 
@@ -322,8 +325,37 @@
       $scope.hasError = false;
       $scope.errorMessage = '';
     }
+
+    function getDnaPcrConcepts(){
+      ConceptResService.getConceptByUuid(payload.motherHivStatusUuid, onGetHivStatusOfMotherCallbackSuccess, onGetHivStatusOfMotherCallbackError);
+      ConceptResService.getConceptByUuid(payload.infantProphylaxisUuid, onGetInfantProphylaxisCallbackSuccess, onGetInfantProphylaxisCallbackError);
+      ConceptResService.getConceptByUuid(payload.feedingTypeUuid, onGetInfantFeedingCallbackSuccess, onGetInfantFeedingCallbackError);
+    }
+    function onGetHivStatusOfMotherCallbackSuccess(data){
+      $scope.HivStatusOfMother = data.name.display;
+    }
+    function onGetHivStatusOfMotherCallbackError(error){
+      console.log("Concept fetch error:",error)
+    }
+    function onGetInfantProphylaxisCallbackSuccess(data){
+      $scope.InfantProphylaxis = data.name.display;
+    }
+    function onGetInfantProphylaxisCallbackError(error){
+      console.log("Concept fetch error:",error)
+    }
+    function onGetInfantFeedingCallbackSuccess(data){
+      $scope.InfantFeeding = data.name.display;
+    }
+    function onGetInfantFeedingCallbackError(error){
+      console.log("Concept fetch error:",error)
+    }
+
   }
 
-  function postLabOrderLink(scope, element, attrs, vm) {}
+  function postLabOrderLink(scope, element, attrs, vm) {
+    if (scope.orderType.type === 'DNAPCR') {
+      scope.getDnaPcrConcepts();
+    }
+  }
 
 })();
