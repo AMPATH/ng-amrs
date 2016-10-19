@@ -149,7 +149,6 @@
 
     function isUserInputValid() {
       clearErrorMessage();
-      s
       if (_.isEmpty($scope.selectedLabLocation)) {
         displayError('Lab Location is required.');
         return false;
