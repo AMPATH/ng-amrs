@@ -79,7 +79,7 @@
           </tr>
         </tbody>
       </table>
-      <button ng-click="printMultipleLabels()" class="btn">Print Selected <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+      <button ng-disabled="isBusy || experiencedLoadingError" ng-click="printMultipleLabels()" class="btn">Print Selected <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
       </button>
     </div>
   </div>

@@ -87,7 +87,6 @@ jshint -W003, -W026
       generateBarcodes(labels);
     };
     $scope.printLabel = function(order) {
-      console.log($scope.identifiers)
       var labels = [];
       for (var c = 0; c < $scope.copies; c++) {
         var label = {
