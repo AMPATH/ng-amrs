@@ -2,7 +2,7 @@
 /*
  jshint -W003, -W026
  */
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -85,7 +85,7 @@
     $scope.postOrder = postOrder;
     $scope.closeDialogWindow = closeDialogWindow;
     $scope.hasLoadingTimeRequiredInputs = true;
-    $scope.getDnaPcrConcepts = getDnaPcrConcepts;
+    $scope.getDnaPcrConcepts = displayDnaPcrInputs;
 
     var payload = {};
 
@@ -102,7 +102,7 @@
       extractHivSummaryInformation();
       loadIdentifers();
       $scope.hasLoadingTimeRequiredInputs = hasLoadingTimeRequiredInputs();
-      payload = getPayload();
+      displayDnaPcrInputs(); 
     }
 
     function loadIdentifers() {
@@ -213,7 +213,7 @@
       var ot = $scope.orderType.type;
       if ($scope.orderType.type === 'VL') {
         labPostingHelper.getViralLoadJustification($scope.order.encounter.obs)
-          .then(function(justification) {
+          .then(function (justification) {
             $scope.justification = justification;
           });
       }
@@ -234,11 +234,11 @@
 
         $scope.isBusy = true;
 
+        var payload = getPayload();
+
         EtlRestService.postOrderToEid($scope.selectedLabLocation, payload,
           postOrderSuccessful, postOrderError);
       }
-
-      //clearErrorMessage();
 
     }
 
@@ -274,19 +274,19 @@
 
       if ($scope.orderType.type === 'DNAPCR')
         payload =
-        labPostingHelper.createDnaPcrPayload(order, obs, locationUuid,
-          patientIdentifier, patientName, sex, birthDate, $scope.dateReceived);
+          labPostingHelper.createDnaPcrPayload(order, obs, locationUuid,
+            patientIdentifier, patientName, sex, birthDate, $scope.dateReceived);
 
       if ($scope.orderType.type === 'VL')
         payload =
-        labPostingHelper.createViralLoadPayload(order, obs, locationUuid,
-          patientIdentifier, patientName, sex, birthDate, $scope.dateReceived,
-          $scope.artStartDateInitial, $scope.artStartDateCurrent, $scope.selectedSampleType, $scope.currentArtRegimenId);
+          labPostingHelper.createViralLoadPayload(order, obs, locationUuid,
+            patientIdentifier, patientName, sex, birthDate, $scope.dateReceived,
+            $scope.artStartDateInitial, $scope.artStartDateCurrent, $scope.selectedSampleType, $scope.currentArtRegimenId);
 
       if ($scope.orderType.type === 'CD4')
         payload =
-        labPostingHelper.createCD4Payload(order, obs, locationUuid,
-          patientIdentifier, patientName, sex, birthDate, $scope.dateReceived);
+          labPostingHelper.createCD4Payload(order, obs, locationUuid,
+            patientIdentifier, patientName, sex, birthDate, $scope.dateReceived);
 
       return payload;
     }
@@ -326,36 +326,42 @@
       $scope.errorMessage = '';
     }
 
-    function getDnaPcrConcepts(){
-      ConceptResService.getConceptByUuid(payload.motherHivStatusUuid, onGetHivStatusOfMotherCallbackSuccess, onGetHivStatusOfMotherCallbackError);
-      ConceptResService.getConceptByUuid(payload.infantProphylaxisUuid, onGetInfantProphylaxisCallbackSuccess, onGetInfantProphylaxisCallbackError);
-      ConceptResService.getConceptByUuid(payload.feedingTypeUuid, onGetInfantFeedingCallbackSuccess, onGetInfantFeedingCallbackError);
+    function displayDnaPcrInputs() {
+      var payload = getPayload();
+
+      if (payload.motherHivStatusUuid || payload.infantProphylaxisUuid || payload.feedingTypeUuid) {
+        getDnaPcrConcepts(payload.motherHivStatusUuid, payload.infantProphylaxisUuid, payload.feedingTypeUuid);
+      }
     }
-    function onGetHivStatusOfMotherCallbackSuccess(data){
+
+    function getDnaPcrConcepts(motherHivStatusUuid, infantProphylaxisUuid, feedingTypeUuid) {
+      ConceptResService.getConceptByUuid(motherHivStatusUuid, onGetHivStatusOfMotherCallbackSuccess, onGetHivStatusOfMotherCallbackError);
+      ConceptResService.getConceptByUuid(infantProphylaxisUuid, onGetInfantProphylaxisCallbackSuccess, onGetInfantProphylaxisCallbackError);
+      ConceptResService.getConceptByUuid(feedingTypeUuid, onGetInfantFeedingCallbackSuccess, onGetInfantFeedingCallbackError);
+    }
+    function onGetHivStatusOfMotherCallbackSuccess(data) {
       $scope.HivStatusOfMother = data.name.display;
     }
-    function onGetHivStatusOfMotherCallbackError(error){
-      console.log("Concept fetch error:",error)
+    function onGetHivStatusOfMotherCallbackError(error) {
+      console.log("Concept fetch error:", error)
     }
-    function onGetInfantProphylaxisCallbackSuccess(data){
+    function onGetInfantProphylaxisCallbackSuccess(data) {
       $scope.InfantProphylaxis = data.name.display;
     }
-    function onGetInfantProphylaxisCallbackError(error){
-      console.log("Concept fetch error:",error)
+    function onGetInfantProphylaxisCallbackError(error) {
+      console.log("Concept fetch error:", error)
     }
-    function onGetInfantFeedingCallbackSuccess(data){
+    function onGetInfantFeedingCallbackSuccess(data) {
       $scope.InfantFeeding = data.name.display;
     }
-    function onGetInfantFeedingCallbackError(error){
-      console.log("Concept fetch error:",error)
+    function onGetInfantFeedingCallbackError(error) {
+      console.log("Concept fetch error:", error)
     }
 
   }
 
   function postLabOrderLink(scope, element, attrs, vm) {
-    if (scope.orderType.type === 'DNAPCR') {
-      scope.getDnaPcrConcepts();
-    }
+
   }
 
 })();
