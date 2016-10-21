@@ -28,7 +28,7 @@
   function clinicalRemindersController($scope, $rootScope, EtlRestService, $state, $filter) {
     //report params
     $scope.reportName='clinical-reminder-report';
-    $scope.reminderIndicators='needs_vl_coded,overdue_vl_lab_order,months_since_last_vl_date,new_viral_load_present,ordered_vl_has_error'; //comma separated indicators
+    $scope.reminderIndicators='needs_vl_coded,overdue_vl_lab_order,months_since_last_vl_date,new_viral_load_present,ordered_vl_has_error,is_on_inh_treatment'; //comma separated indicators
     $scope.referenceDate= new Date();
     $scope.criticalReminders =[];
     $scope.isBusy=false;
@@ -157,6 +157,22 @@
       if(reminders.ordered_vl_has_error ===1){
         var title = 'Lab Error Reminder';
         var message ='Viral load test that was ordered on (' + $filter('date')( reminders.vl_error_order_date, "dd/MM/yyyy")+') resulted to an error. Please re-order.'  ;
+        var labs='';
+        pushReminderNotification(title,message,labs,'warning',true);
+      }
+
+      //INH Treatment Reminder - first 5 months
+      if(reminders.is_on_inh_treatment > 0 && reminders.is_on_inh_treatment <=5){
+        var title = 'INH Treatment Reminder';
+        var message ='Patient started INH treatment on (' + $filter('date')( reminders.tb_prophylaxis_start_date, "dd/MM/yyyy")+'). Expected to end on (' + $filter('date')( reminders.tb_prophylaxis_end_date, "dd/MM/yyyy")+'), '+reminders.inh_treatment_days_remaining+' days remaining.' ;
+        var labs='';
+        pushReminderNotification(title,message,labs,'warning',true);
+      }
+
+      //INH Treatment Reminder - last month
+      if(reminders.is_on_inh_treatment > 0 && reminders.is_on_inh_treatment > 5){
+        var title = 'INH Treatment Reminder';
+        var message ='Patient has been on INH treatment for the last 5 months, expected to end on (' + $filter('date')( reminders.tb_prophylaxis_end_date, "dd/MM/yyyy")+').';
         var labs='';
         pushReminderNotification(title,message,labs,'warning',true);
       }
