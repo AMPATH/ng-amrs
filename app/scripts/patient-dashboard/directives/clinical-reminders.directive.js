@@ -162,7 +162,7 @@
       }
 
       //INH Treatment Reminder - first 5 months
-      if(reminders.is_on_inh_treatment > 0 && reminders.is_on_inh_treatment <=5){
+      if(reminders.is_on_inh_treatment && reminders.inh_treatment_days_remaining > 30){
         var title = 'INH Treatment Reminder';
         var message ='Patient started INH treatment on (' + $filter('date')( reminders.tb_prophylaxis_start_date, "dd/MM/yyyy")+'). Expected to end on (' + $filter('date')( reminders.tb_prophylaxis_end_date, "dd/MM/yyyy")+'), '+reminders.inh_treatment_days_remaining+' days remaining.' ;
         var labs='';
@@ -170,7 +170,7 @@
       }
 
       //INH Treatment Reminder - last month
-      if(reminders.is_on_inh_treatment > 0 && reminders.is_on_inh_treatment > 5){
+      if(reminders.is_on_inh_treatment && reminders.inh_treatment_days_remaining <= 30){
         var title = 'INH Treatment Reminder';
         var message ='Patient has been on INH treatment for the last 5 months, expected to end on (' + $filter('date')( reminders.tb_prophylaxis_end_date, "dd/MM/yyyy")+').';
         var labs='';
