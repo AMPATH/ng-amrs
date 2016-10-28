@@ -9,13 +9,13 @@
 					<h5 style="padding-top: 10px">Health Center: {{patient.healthCenter()}}</h5>
 				</div>
 				<div class="col-sm-6">
-					<h5 style="padding-top: 10px">AMRS UID: <span ng-if="patient.commonIdentifiers().ampathMrsUId">{{patient.commonIdentifiers().ampathMrsUId}}</span>
+					<h5 style="padding-top: 10px">AMRS UID: <span ng-if="patient.commonIdentifiers().ampathMrsUId">{{patient.commonIdentifiersDisplay().ampathMrsUId}}</span>
             <span ng-if="patient.commonIdentifiers().ampathMrsUId==null">Not Available</span></h5>
-					<h5 style="padding-top: 10px">AMRS MRN: <span ng-if="patient.commonIdentifiers().amrsMrn">{{patient.commonIdentifiers().amrsMrn}}</span>
+					<h5 style="padding-top: 10px">AMRS MRN: <span ng-if="patient.commonIdentifiers().amrsMrn">{{patient.commonIdentifiersDisplay().amrsMrn}}</span>
             <span ng-if="patient.commonIdentifiers().amrsMrn==null">Not Available</span></h5>
-					<h5 style="padding-top: 10px">CCC:<span ng-if="patient.commonIdentifiers().cCC"> {{patient.commonIdentifiers().cCC}} </span>
+					<h5 style="padding-top: 10px">CCC:<span ng-if="patient.commonIdentifiers().cCC"> {{patient.commonIdentifiersDisplay().cCC}} </span>
             <span ng-if="patient.commonIdentifiers().cCC==null">Not Available</span></h5>
-					<h5 style="padding-top: 10px">National ID: <span ng-if="patient.commonIdentifiers().kenyaNationalId">{{patient.commonIdentifiers().kenyaNationalId}}</span>
+					<h5 style="padding-top: 10px">National ID: <span ng-if="patient.commonIdentifiers().kenyaNationalId">{{patient.commonIdentifiersDisplay().kenyaNationalId}}</span>
             <span ng-if="patient.commonIdentifiers().kenyaNationalId==null">Not Available</span></h5>
 
 				</div>
