@@ -519,10 +519,11 @@
     function generateMoh731PdfReport(locationName, rowData) {
       if (!$scope.selectedLocations) return;
       var location = $scope.selectedLocations.allAggregated === true ? $scope.locationSummary : rowData["location"];
+      var county=CachedDataService.getCountyByLocation(location);
       var headerParams = {
         facilityName: location,
         district: 'N/A',
-        county: 'N/A',
+        county: county,
         facility: location,
         startDate: $filter('date')($scope.startDate, 'd/M/yy'),
         endDate: $filter('date')($scope.endDate, 'd/M/yy')
