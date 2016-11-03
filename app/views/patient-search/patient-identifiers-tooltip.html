@@ -1,0 +1,14 @@
+<div>
+	<div style="margin-bottom: 4px;" align="left">
+		<span ng-if="patient.commonIdentifiers().ampathMrsUId">AMRS UID: {{patient.commonIdentifiersDisplay().ampathMrsUId}}</span>
+	</div>
+	<div style="margin-bottom: 4px;" align="left">
+		<span ng-if="patient.commonIdentifiers().amrsMrn">AMRS MRN: {{patient.commonIdentifiersDisplay().amrsMrn}}</span>
+	</div>
+	<div style="margin-bottom: 4px;"  align="left">
+		<span ng-if="patient.commonIdentifiers().cCC">CCC: {{patient.commonIdentifiersDisplay().cCC}}</span>
+	</div>
+	<div align="left">
+		<span ng-if="patient.commonIdentifiers().kenyaNationalId">National ID: {{patient.commonIdentifiersDisplay().kenyaNationalId}}</span>
+	</div>
+</div>
