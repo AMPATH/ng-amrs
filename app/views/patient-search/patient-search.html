@@ -40,11 +40,24 @@
         <tr style="cursor: pointer;" ng-click="loadPatient(patient.uuid())" ng-repeat="patient in patients = patients | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
           <td>{{ ($index + 1) + (currentPage - 1) * 10}}</td>
           <td><span ng-if="patient.commonIdentifiers().kenyaNationalId"> {{patient.commonIdentifiers().kenyaNationalId}}
-            <span ng-if="patient.commonIdentifiers().amrsMrn|| patient.commonIdentifiers().ampathMrsUId">,</span></span>
+            <span ng-if="patient.commonIdentifiers().amrsMrn || patient.commonIdentifiers().ampathMrsUId">,</span></span>
             <span ng-if="patient.commonIdentifiers().amrsMrn">{{patient.commonIdentifiers().amrsMrn}}
              <span ng-if="patient.commonIdentifiers().ampathMrsUId">,</span></span>
-             <span ng-if="patient.commonIdentifiers().ampathMrsUId">{{patient.commonIdentifiers().ampathMrsUId}}</span>
+             <span ng-if="patient.commonIdentifiers().ampathMrsUId">{{patient.commonIdentifiers().ampathMrsUId}}
+             <span ng-if="patient.commonIdentifiers().cCC">,</span></span>
+             <span ng-if="patient.commonIdentifiers().cCC">{{patient.commonIdentifiers().cCC}}</span>
              <span ng-if="patient.commonIdentifiers().default">{{patient.commonIdentifiers().default}}</span>
+             
+             <span class="ellipsis badge" ng-click="tooltipIsOpen = !tooltipIsOpen;  $event.stopPropagation();" 
+                ng-show="(patient.commonIdentifiers().amrsMrn || patient.commonIdentifiers().ampathMrsUId) && patient.commonIdentifiers().kenyaNationalId || patient.commonIdentifiers().cCC">
+               <i class="fa fa-ellipsis-h" style="vertical-align: bottom;"></i>
+             </span>
+
+             <span ng-if="tooltipIsOpen">
+              <label>
+                <span uib-tooltip-template="'views/patient-search/patient-identifiers-tooltip.html'" tooltip-is-open="tooltipIsOpen" tooltip-placement="bottom" tooltip-class="ellipsisTooltip"></span>
+              </label>
+             </span>
            </td>
            <td>{{patient.fullNames()}}</td>
            <td>{{patient.gender()}}</td>

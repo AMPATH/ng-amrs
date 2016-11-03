@@ -547,3 +547,19 @@ width:100%}
 .patient-program-modal .modal-dialog {
    width:330px;
 }
+/********************************************************************/
+/*** PATIENT SEARCH ***/
+/* Specify styling for tooltip contents */
+.tooltip.ellipsisTooltip .tooltip-inner {
+    color: white;
+    background-color: #428bca;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+  /* Tooltip arrow */
+.tooltip.ellipsisTooltip .tooltip-arrow {
+    display: none;
+}
+ /* Ellipsis badge*/
+.ellipsis.badge {
+  background-color: #428bca;
+}
