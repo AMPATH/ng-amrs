@@ -396,7 +396,7 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
                   if(typeof schema === 'Error'){
                       throw schema;
                   }
-                  selectedFormSchema = schema;
+                  selectedFormSchema = schema;                
                   $log.info('Form schema loaded: ', selectedFormSchema);
                   if (createFormAfterLoading) {
                       createFormFromSchema();
@@ -459,11 +459,23 @@ jshint -W098, -W003, -W068, -W004, -W033, -W030, -W117, -W069, -W106
 
         function loadPatientRequiredValuesToModelAndQuestionMap() {
             //load gender to model
-            vm.model.sex = vm.patient.gender();
-
+            var gender = vm.patient.gender();
+            vm.model.sex = gender;
+            vm.model.age = vm.patient.age();
+            
+            //define gender based constant:
+            if (gender === 'F') vm.model.gendercreatconstant = 0.85;
+            if (gender === 'M') vm.model.gendercreatconstant = 1;
+            
             //load ender to QuestionMap
             vm.questionMap['sex'] = {
                 key: 'sex'
+            };
+            vm.questionMap['age'] = {
+                key: 'age'
+            };
+            vm.questionMap['gendercreatconstant'] = {
+                key: 'gendercreatconstant'
             };
         }
 
