@@ -54,8 +54,13 @@
             }
           };
 
+          personAttributePayload.attributes = _.filter(personAttributePayload.attributes, function(attribute){
+            return attribute.value !== undefined && attribute.value !== null && attribute.value.trim().length > 0;
+          });
+
       $scope.saving = true;
       $scope.error = false;
+      personAttributePayload
       PersonAttributesRestService.saveUpdatePersonAttribute(personAttributePayload, person, function(data) {
           if (data) {
             $scope.saving = false;
