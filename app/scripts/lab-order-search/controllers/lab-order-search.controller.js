@@ -40,8 +40,11 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
         }
       };
 
-      $scope.$on('bar-code-scan-event', function(event, parameters) {
-        submitForm();
+      $scope.$watch('orderID', function(newVal, oldVal) {
+        if(newVal !== oldVal && newVal.indexOf('$') != -1) {
+          $scope.orderID = $scope.orderID.replace('$', '');
+          submitForm();
+        }
       });
 
       function submitForm() {
@@ -144,3 +147,4 @@ jscs:disable disallowQuotedKeysInObjects, safeContextKeyword, requireDotNotation
       };
     }
 })();
+

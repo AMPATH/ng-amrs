@@ -5,7 +5,7 @@
       <div class="input-group">
         <input type="text" ng-disabled="isLoading" name="orderID" id="search-textbox" class="form-control"
           ng-model="orderID" placeholder="Enter Order ID and press Enter or Search button"
-        focus="true" data-bar-code-scanner required>
+        focus="true" data-bar-code-scanner required ng-model-options="{ debounce: 1000 }">
         <div class="input-group-btn">
           <button ng-show="isLoading" class="btn btn-primary ladda-button" data-style="expand-right">
             <img ng-style="{background:'white'}" src="images/ajax-loader.gif" />
@@ -29,3 +29,4 @@
   <div class="search-result"></div>
   <div ng-show="showNoResult" class="search-no-result">0 result found for <span style="color:grey">{{orderID}}</span></div>
 </div>
+
