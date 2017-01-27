@@ -25,10 +25,10 @@
     };
   }
 
-  clinicalAnalyticsController.$inject = ['$scope', 'moment',
+  clinicalAnalyticsController.$inject = ['$scope', 'moment', '$timeout',
     '$loading', '$stateParams', 'ClinicalAnalyticsService', 'EtlRestService', '$modal'];
 
-  function clinicalAnalyticsController($scope, moment, $loading,
+  function clinicalAnalyticsController($scope, moment, $timeout, $loading,
                                        $stateParams, ClinicalAnalyticsService, EtlRestService, $modal) {
     $scope.selectedLocation = $stateParams.locationuuid || '';
     $scope.startDate = new Date(new Date().setYear(new Date().getFullYear() - 1));
@@ -37,7 +37,9 @@
     $scope.width = 0;
     //init bstable
     $scope.columns = [];
-    $scope.bsTableControl = {options: {}};
+    $scope.bsTableControl = {
+      options: {}
+    };
     //range slider definition
     $scope.rangeSlider = $("#rangeSlider");
     $scope.rangeSlider.ionRangeSlider({
@@ -57,9 +59,10 @@
       onFinish: function (data) {
         $scope.startDate = new Date(moment.unix(data.from).startOf('month'));
         $scope.endDate = new Date(moment.unix(data.to).endOf('month'));
-        generateGraph($scope.hivComparative, $scope.startDate, $scope.endDate);
+        
         generateGraph($scope.art, $scope.startDate, $scope.endDate);
         generateGraph($scope.patientStatus, $scope.startDate, $scope.endDate);
+        generateGraph($scope.hivComparative, $scope.startDate, $scope.endDate);
       },
     });
 
@@ -223,6 +226,8 @@
       chart.startDate = new Date(startDate);
       chart.endDate = new Date(endDate);
       chart.selectedLocations = selectedLocations;
+      //reset bstable
+       $scope.bsTableControl.options={};
       //hit the server
       EtlRestService.getHivOverviewVisualizationReport(
         moment(new Date(startDate)).startOf('month').format('YYYY-MM-DDTHH:mm:ss.SSSZZ'),
@@ -247,8 +252,12 @@
                 chart.chartDefinition);
               //build tabular view
               if (chart.reportName === 'clinical-hiv-comparative-overview-report') {
-                $scope.bsTableControl = ClinicalAnalyticsService.generateDataTable(result.result);
-                addClickListenerOnTableCells();
+                chart.isBusy = true;
+                 $timeout(function () {
+                    $scope.bsTableControl = ClinicalAnalyticsService.generateDataTable(result.result);
+                    addClickListenerOnTableCells();
+                    chart.isBusy = false;
+                 }, 2000);
               }
             }
           }

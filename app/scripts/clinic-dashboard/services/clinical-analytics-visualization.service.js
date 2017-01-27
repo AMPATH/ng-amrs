@@ -19,7 +19,7 @@
     function defineXAndYAxis(columnDefinition) {
       var dataColumns = [];
       _.each(columnDefinition, function (column) {
-        dataColumns.push({id: column.indicator, type: column.chartType, name: column.name});
+        dataColumns.push({ id: column.indicator, type: column.chartType, name: column.name });
       });
       return dataColumns;
     }
@@ -27,15 +27,18 @@
     function generateDataTable(data) {
       var columns = [];
       var headers = [
-        {indicator: 'reporting_date', title: 'Reporting Month'},
-        {indicator: 'currently_in_care_total', title: 'Patients In Care'},
-        {indicator: 'on_art_total', title: 'Patients On ART'},
-        {indicator: 'not_on_art_total', title: 'Patients Not On ART'},
-        {indicator: 'patients_requiring_vl', title: 'Patients Qualified For VL'},
-        {indicator: 'tested_appropriately', title: 'On ART with VL'},
-        {indicator: 'not_tested_appropriately', title: 'On ART without VL'},
-        {indicator: 'virally_suppressed', title: 'Virally Suppressed'},
-        {indicator: 'not_virally_suppressed', title: 'Not Virally Suppressed'}
+        { indicator: 'reporting_date', title: 'Reporting Month' },
+        { indicator: 'currently_in_care_total', title: 'Patients In Care' },
+        { indicator: 'on_art_total', title: 'Patients On ART' },
+        { indicator: 'not_on_art_total', title: 'Patients Not On ART' },
+        { indicator: 'patients_requiring_vl', title: 'Patients Qualified For VL' },
+        { indicator: 'tested_appropriately', title: 'On ART with VL' },
+        { indicator: 'not_tested_appropriately', title: 'On ART without VL' },
+        { indicator: 'due_for_annual_vl', title: 'Due For Annual VL' },
+        { indicator: 'pending_vl_orders', title: 'Ordered & Pending VL Result' },
+        { indicator: 'missing_vl_order', title: 'Missing VL Order' },
+        { indicator: 'virally_suppressed', title: 'Virally Suppressed' },
+        { indicator: 'not_virally_suppressed', title: 'Not Virally Suppressed' }
       ];
       _.each(headers, function (header) {
         //var visible =(header!=='location_uuid');
@@ -44,6 +47,7 @@
           title: header.title.toString(),
           align: 'center',
           valign: 'center',
+          class: header === 'reporting_date' ? 'bst-table-min-width' : undefined,
           sortable: true,
           visible: true,
           tooltip: true,
@@ -63,28 +67,19 @@
         options: {
           data: data,
           rowStyle: function (row, index) {
-            return {classes: 'none'};
+            return { classes: 'none' };
           },
           tooltip: true,
           classes: 'table table-hover',
           cache: false,
           height: 360,
-          detailView: true,
-          detailFormatter: function (index, row) {
-            var html = [];
-            $.each(row, function (key, value) {
-              _.each(headers, function (header) {
-                if (key === header.indicator)html.push('<p><b>' + header.title + ':</b> ' + value + '</p>');
-              });
-            });
-            return html.join('');
-          },
+          detailView: false,
           striped: true,
           selectableRows: true,
           showFilter: true,
           pagination: true,
-          pageSize: 10,
-          pageNumber:1,
+          pageSize: 100,
+          pageNumber: 1,
           pageList: [5, 10, 25, 50, 100, 200],
           search: false,
           trimOnSearch: true,
@@ -94,7 +89,7 @@
           showMultiSort: true,
           showPaginationSwitch: true,
           smartDisplay: true,
-          idField: 'location_id',
+          idField: 'reporting_month',
           minimumCountColumns: 2,
           clickToSelect: true,
           showToggle: false,
@@ -104,7 +99,6 @@
           toolbarAlign: 'left',
           exportTypes: ['json', 'xml', 'csv', 'txt', 'png', 'sql', 'doc', 'excel', 'powerpoint', 'pdf'],
           columns: columns,
-          exportOptions: {fileName: ''},
           iconSize: undefined,
           iconsPrefix: 'glyphicon', // glyphicon of fa (font awesome)
           icons: {
@@ -118,7 +112,9 @@
             minus: 'glyphicon-minus',
             detailOpen: 'glyphicon-plus',
             detailClose: 'glyphicon-minus'
-          }
+          },
+          fixedColumns: true,
+          fixedNumber: 1
         }
       };
     }
@@ -133,8 +129,8 @@
         var dataPoint = {};
         dataPoint[xAxis] = data[i][xAxis];
         _.each(chartObject.dataColumns, function (column) {
-          data[i][column.id]= (data[i][column.id]);
-          var val=(data[i][column.id]).toFixed(1);
+          data[i][column.id] = (data[i][column.id]);
+          var val = (data[i][column.id]).toFixed(1);
           plotValues.push(val);
           dataPoint[column.id] = val;
         });
