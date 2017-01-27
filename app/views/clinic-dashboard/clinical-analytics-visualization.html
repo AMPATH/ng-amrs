@@ -24,7 +24,7 @@
               <li>Indicator Definitions</li>
             </ul>
 
-            <div >
+            <div id="hivComparativeChart">
               <c3chart bindto-id="hivComparativeChart"
                        chart-data="hivComparative.chart.dataPoints"
                        chart-columns="hivComparative.chart.dataColumns"
@@ -66,12 +66,15 @@
             </div>
             <div >
               <!-- DATATABLE -->
-              <div id="toolbar">
+              <span class="text-primary " ng-hide="bsTableControl.options.data"><strong><p class="text-center">Please wait... rendering table</p></strong></span>
+              <div ng-show="bsTableControl.options.data">
+              <div id="toolbar2">
 
               </div>
-              <table id="bsTable2" class="table table-striped table-condensed table-hover"
+              <table id="bsWixTable2" class="table table-striped table-condensed table-hover"
                      bs-table-control="bsTableControl">
               </table>
+              </div>
             </div>
             <div>
               <uib-accordion close-others="true">
@@ -100,6 +103,30 @@
                   The denominator includes those patients who are active in care, on ART, required a viral load and got
                   a viral load. The numerator includes those patients who required a viral load and the result was less than 1000
                     </span>
+                </uib-accordion-group>
+                 <uib-accordion-group heading="On ART without VL:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                  Patients who are under ART and are missing Viral Load in past year
+                    </span>
+                </uib-accordion-group>
+                 <uib-accordion-group heading="Due For Annual VL:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                 In a specific month, these are patients who need new Annual Viral Load  but none was ordered in that month.
+                 For example, If a patient had an annual VL on 10/2015, the he/she will be due on 10/2016 and not any other month
+                  </span>
+                </uib-accordion-group>
+                 <uib-accordion-group heading="Ordered & Pending VL Result:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                 In a specific month, these are patients with pending Viral Load Orders that
+                  have not resulted.
+                   </span>
+                </uib-accordion-group>
+                <uib-accordion-group heading="Missing VL Order:" is-open="false" style="padding: 5px!important;">
+                  <span class="text-muted">
+                 From reporting start-date to a specific month, these are patients on ART, with no Viral Load  and
+                  no Viral Load Test Order (Patients whose Viral Load Test Order not placed)
+                 
+                  </span>
                 </uib-accordion-group>
               </uib-accordion>
             </div>
@@ -293,6 +320,15 @@
 
   <hr>
 
-  <p class="small text-muted pull-right">Use the spanner to change filter parameters</p>
+  <p class="small text-muted pull-right">
+    <a class="btn btn-success" href="javascript:window.print()">
+      <span class="glyphicon glyphicon-print"></span>
+      <span>Click to Print</span>
+    </a>
+  
+  </p>
 
 </div>
+<style type="text/css" media="print">
+  @page { size: A2 landscape; }
+</style>
