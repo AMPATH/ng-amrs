@@ -34,7 +34,14 @@
           </tr>
           <tr>
             <td><strong>Identifier</strong></td>
-            <td>{{patientIdentifier}}</td>
+            <td>
+              <select class="form-control" ng-model="patientIdentifier">
+  <option ng-repeat="item in identifiers"
+          value="{{item.identifier}}">
+       {{item.identifier}}
+  </option>
+</select>
+            </td>
           </tr>
           <tr>
             <td><strong>Gender</strong></td>
@@ -72,85 +79,85 @@
   </div>
 
   <div class="panel-info" ng-show="orderType.type === 'DNAPCR'">
-      <h5 style="margin-top: 2px; margin-bottom:2px; font-weight:bold;"><span>DNAPCR Summary Info</span></h5>
-      <hr style="margin-top: 1px; margin-bottom: 2px;" />
+    <h5 style="margin-top: 2px; margin-bottom:2px; font-weight:bold;"><span>DNAPCR Summary Info</span></h5>
+    <hr style="margin-top: 1px; margin-bottom: 2px;" />
 
-      <table class="table">
-        <tbody>
-          <tr class="after_table row_0">
-            <td>Hiv Status Of Mother</td>
-            <td>{{HivStatusOfMother}}</td>
-          </tr>
-          <tr>
-            <td>Infant Prophylaxis</td>
-            <td>{{InfantProphylaxis}}</td>
-          </tr>
-          <tr>
-            <td>Infant Feeding</td>
-            <td>{{InfantFeeding}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
+    <table class="table">
+      <tbody>
+        <tr class="after_table row_0">
+          <td>Hiv Status Of Mother</td>
+          <td>{{HivStatusOfMother}}</td>
+        </tr>
+        <tr>
+          <td>Infant Prophylaxis</td>
+          <td>{{InfantProphylaxis}}</td>
+        </tr>
+        <tr>
+          <td>Infant Feeding</td>
+          <td>{{InfantFeeding}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
-  <div class="clear"></div>
+</div>
 
-  <div ng-hide="isBusy" class="container-fluid">
+<div class="clear"></div>
 
-      <div class="row">
-          <div>
-              <div class="form-group">
-                  <label for="eidServer">Lab Location</label>
-                  <select class="form-control" id="eidServer" ng-model="selectedLabLocation">
+<div ng-hide="isBusy" class="container-fluid">
+
+  <div class="row">
+    <div>
+      <div class="form-group">
+        <label for="eidServer">Lab Location</label>
+        <select class="form-control" id="eidServer" ng-model="selectedLabLocation">
                       <option ng-repeat="lab in labLocations" value="{{lab.value}}">{{lab.name}}</option>
                   </select>
-              </div>
-          </div>
       </div>
+    </div>
+  </div>
 
-      <div class="row" ng-show="orderType.type === 'VL'">
-          <!--ng-if="orderType.type === 'VL'"-->
-          <div>
-              <div class="form-group">
-                  <label for="sampleType">Sample Type</label>
-                  <select class="form-control" id="sampleType" ng-model="selectedSampleType">
+  <div class="row" ng-show="orderType.type === 'VL'">
+    <!--ng-if="orderType.type === 'VL'"-->
+    <div>
+      <div class="form-group">
+        <label for="sampleType">Sample Type</label>
+        <select class="form-control" id="sampleType" ng-model="selectedSampleType">
                       <option ng-repeat="sample in sampleTypes" value="{{sample.id}}" >{{sample.display}}</option>
                   </select>
-              </div>
-          </div>
       </div>
+    </div>
+  </div>
 
-      <div class="row">
-          <div>
-              <div class="form-group">
-                  <label for="dateReceived">Date Received</label>
-                  <div class="input-group">
-                      <input type="text" id="dateReceived" class="form-control" is-open="dateReceivedOpened" datepicker-popup="mediumDate" ng-model="dateReceived"
-                          style="">
-                      <span class="input-group-btn">
+  <div class="row">
+    <div>
+      <div class="form-group">
+        <label for="dateReceived">Date Received</label>
+        <div class="input-group">
+          <input type="text" id="dateReceived" class="form-control" is-open="dateReceivedOpened" datepicker-popup="mediumDate" ng-model="dateReceived"
+            style="">
+          <span class="input-group-btn">
   							<button type="button" class="btn btn-default" ng-click="dateReceivedOpened = !dateReceivedOpened">
   								<i class="glyphicon glyphicon-calendar"></i>
   							</button>
               			</span>
-                  </div>
-              </div>
-          </div>
+        </div>
       </div>
+    </div>
+  </div>
 
 
-  </div>
-  <div ng-show="isBusy">
-      Processing request...
-  </div>
-  <div ng-show="hasError">
-      <span class="text-danger"> <i class="glyphicon glyphicon-exclamation-sign"></i> {{errorMessage}}</span>
-  </div>
-  <div>
-      <button ng-disabled="isBusy || hasError || hasLoadingError || !hasLoadingTimeRequiredInputs" class="btn btn-primary" ng-click="postOrder()">
+</div>
+<div ng-show="isBusy">
+  Processing request...
+</div>
+<div ng-show="hasError">
+  <span class="text-danger"> <i class="glyphicon glyphicon-exclamation-sign"></i> {{errorMessage}}</span>
+</div>
+<div>
+  <button ng-disabled="isBusy || hasError || hasLoadingError || !hasLoadingTimeRequiredInputs" class="btn btn-primary" ng-click="postOrder()">
             <span>Post Order<i ng-show="isBusy" style="font-size: 14px;" class="fa fa-spinner fa-spin ng-hide"></i></span>
             </button>
-      <button class="btn btn-default" style="margin-left:4px;" ng-click="closeDialogWindow()">Cancel</button>
-  </div>
+  <button class="btn btn-default" style="margin-left:4px;" ng-click="closeDialogWindow()">Cancel</button>
+</div>
 </div>
