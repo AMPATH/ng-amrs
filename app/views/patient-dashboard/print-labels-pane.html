@@ -15,8 +15,8 @@
       <div class="col-md-4">
         <div class="form-group">
           <label for="patientIdentifer">Patient Identifer</label>
-          <select class="form-control" ng-if="identifiers.length >= 1" ng-model="patientIdentifer">
-            <option ng-repeat="opt in identifiers" value="{{opt.identifier}}">{{opt.identifierType.display}}</option>
+          <select class="form-control" ng-if="identifiers.length >= 1" ng-model="patientIdentifer.identifier" ng-options="i.identifier as (i.identifierType.display+ '-' + i.identifier)  for i in identifiers">
+            <option></option>
           </select>
         </div>
       </div>
@@ -24,7 +24,8 @@
         <div class="form-group">
           <label for="patientIdentifer">Collection Date</label>
           <div class="input-group">
-            <input type="text" class="form-control" datepicker-popup="mediumDate" is-open="valuationDatePickerIsOpen" ng-click="valuationDatePickerOpen()" ng-model="valuationDate" />
+            <input type="text" class="form-control" datepicker-popup="mediumDate" is-open="valuationDatePickerIsOpen" ng-click="valuationDatePickerOpen()"
+              ng-model="valuationDate" />
             <span class="input-group-btn">
               <button type="button" class="btn btn-default"
                       ng-click="valuationDatePickerOpen()">
@@ -70,7 +71,7 @@
               {{order.orderer.display}}
             </td>
             <td>
-              {{patientIdentifer}}
+              {{patientIdentifer.identifier}}
             </td>
             <td>
               <button ng-click="printLabel(order)" class="btn btn-xs"><span class="glyphicon glyphicon-print" aria-hidden="true"></span>

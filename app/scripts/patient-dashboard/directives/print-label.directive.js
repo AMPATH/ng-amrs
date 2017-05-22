@@ -2,7 +2,7 @@
 /*
 jshint -W003, -W026
 */
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -29,21 +29,21 @@ jshint -W003, -W026
     $rootScope, $filter) {
     $scope.loadIdentifers = loadIdentifers;
     $scope.labOrders = [];
-    $scope.patientIdentifer = '';
+    $scope.patientIdentifer = { identifier: '' }
     $scope.valuationDate = new Date();
     $scope.valuationDatePickerIsOpen = false;
     $scope.opens = [];
     $scope.copies = 2;
     $scope.patient = $rootScope.broadcastPatient;
-    $scope.patientIdentifer = $scope.patient.commonIdentifiers().ampathMrsUId
+    $scope.patientIdentifer.identifier = $scope.patient.commonIdentifiers().ampathMrsUId
 
-    $scope.$watch(function() {
+    $scope.$watch(function () {
       return $scope.valuationDatePickerIsOpen;
-    }, function(value) {
+    }, function (value) {
       $scope.opens.push('valuationDatePickerIsOpen: ' + value + ' at: ' + new Date());
     });
 
-    $scope.valuationDatePickerOpen = function($event) {
+    $scope.valuationDatePickerOpen = function ($event) {
 
       if ($event) {
         $event.preventDefault();
@@ -51,13 +51,13 @@ jshint -W003, -W026
       }
       this.valuationDatePickerIsOpen = true;
     };
-    $scope.selectAll = function() {
+    $scope.selectAll = function () {
       // Loop through all the entities and set their isChecked property
       for (var i = 0; i < $scope.labOrders.length; i++) {
         $scope.labOrders[i].isChecked = $scope.allItemsSelected;
       }
     };
-    $scope.selectEntity = function() {
+    $scope.selectEntity = function () {
       // If any entity is not checked, then uncheck the "allItemsSelected" checkbox
       for (var i = 0; i < $scope.labOrders.length; i++) {
         if (!$scope.labOrders[i].isChecked) {
@@ -69,7 +69,7 @@ jshint -W003, -W026
       //If not the check the "allItemsSelected" checkbox
       $scope.allItemsSelected = true;
     };
-    $scope.printMultipleLabels = function() {
+    $scope.printMultipleLabels = function () {
       var labels = [];
       for (var i = 0; i < $scope.labOrders.length; i++) {
         var order = $scope.labOrders[i];
@@ -78,7 +78,7 @@ jshint -W003, -W026
             labels.push({
               orderDate: $filter('date')(order.dateActivated, 'dd/MM/yyyy'),
               testName: order.display,
-              identifier: $scope.patientIdentifer,
+              identifier: $scope.patientIdentifer.identifier,
               orderNumber: order.orderNumber
             });
           }
@@ -86,13 +86,14 @@ jshint -W003, -W026
       }
       generateBarcodes(labels);
     };
-    $scope.printLabel = function(order) {
+
+    $scope.printLabel = function (order) {
       var labels = [];
       for (var c = 0; c < $scope.copies; c++) {
         var label = {
           orderDate: $filter('date')(order.dateActivated, 'dd/MM/yyyy'),
           testName: order.display,
-          identifier: $scope.patientIdentifer,
+          identifier: $scope.patientIdentifer.identifier,
           orderNumber: order.orderNumber
         };
         labels.push(label);
@@ -102,7 +103,7 @@ jshint -W003, -W026
 
     function getAlternativeIdentifer(identifiers) {
       if ($scope.patient.commonIdentifiers().ampathMrsUId === undefined) {
-        $scope.patientIdentifer = identifiers[0].identifier;
+        $scope.patientIdentifer.identifier = identifiers[0].identifier;
       }
     }
 
@@ -110,7 +111,7 @@ jshint -W003, -W026
       var doc = new PDFDocument({
         size: [162, 92]
       });
-      labels.forEach(function(label, i) {
+      labels.forEach(function (label, i) {
         if (i > 0) {
           doc.addPage();
         }
@@ -145,7 +146,7 @@ jshint -W003, -W026
 
       doc.end();
       var stream = doc.pipe(blobStream());
-      stream.on('finish', function() {
+      stream.on('finish', function () {
 
         //var blob = stream.toBlob('application/pdf');
         var url = stream.toBlobURL('application/pdf');
